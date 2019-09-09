@@ -22,7 +22,7 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "Math/Functor.h"
-#include "../../Utils/HistMaker.C"
+#include "../../utils/HistMaker.C"
 //
 
 void SetErrors(TH2D *h_rate, TH2D *h_total){

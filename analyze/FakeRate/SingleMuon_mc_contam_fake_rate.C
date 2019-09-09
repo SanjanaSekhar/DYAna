@@ -1,4 +1,4 @@
-#include "../../Utils/NTupleReader.C"
+#include "../../utils/NTupleReader.C"
 
 
 bool in_Z_window(Double_t m){
@@ -12,7 +12,7 @@ void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
 {
 
 
-    if(fin == "") fin = string("EOS_files/2017/diboson_files_may29.txt");
+    if(fin == "") fin = string("EOS_files/2017/diboson_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/MuMu_fake_rate_contam_test.root", false);
     nt.year = 2017;
     nt.nJobs = nJobs;
@@ -108,7 +108,7 @@ void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
 
 
 
-                if( (mu_p != -1) && no_bjets && nt.met_pt < 25.){
+                if( (mu_p != -1) && nt.has_nobjets && nt.met_pt < 25.){
                     mu_pt = nt.mu_Pt[mu_extra];
                     mu_eta = nt.mu_Eta[mu_extra];
                     pass = iso[mu_extra];

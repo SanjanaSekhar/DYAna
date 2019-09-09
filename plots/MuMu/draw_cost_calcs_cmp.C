@@ -22,9 +22,9 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "Math/Functor.h"
-#include "../../Utils/HistMaker.C"
-#include "../../Utils/root_files.h"
-#include "../../Utils/PlotUtils.C"
+#include "../../utils/HistMaker.C"
+#include "../../utils/root_files.h"
+#include "../../utils/PlotUtils.C"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
 

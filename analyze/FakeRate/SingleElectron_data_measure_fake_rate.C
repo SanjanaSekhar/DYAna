@@ -1,4 +1,4 @@
-#include "../../Utils/NTupleReader.C"
+#include "../../utils/NTupleReader.C"
 
 
 bool in_Z_window(Double_t m){
@@ -12,9 +12,9 @@ void SingleElectron_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin=
 {
 
 
-    if(fin == "") fin = string("EOS_files/2017/SingleElectron_files.txt");
+    if(fin == "") fin = string("EOS_files/2018/SingleElectron_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/ElEl_fake_rate_test.root", true);
-    nt.year = 2017;
+    nt.year = 2018;
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_electrons =  true;

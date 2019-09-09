@@ -22,8 +22,8 @@
 #include "Math/Functor.h"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
-#include "../../Utils/HistMaker.C"
-#include "../../Utils/root_files.h"
+#include "../../utils/HistMaker.C"
+#include "../../utils/root_files.h"
 
 void make_pt_cmp(TTree *t1, TH1F *h_def_ratio, TH1F *h_alt_ratio, bool is_data=false){
     //read event data
