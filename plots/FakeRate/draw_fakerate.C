@@ -136,26 +136,28 @@ void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag
 void draw_fakerate(){
     /*
 
-    TFile *f = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron_data_fakerate_june25.root");
-    TFile *f_mc = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron_mc_fakerate_contam_june25.root");
+    TFile *f = TFile::Open("../analyze/output_files/2018/SingleElectron18_data_meas_fake_rate_sep9.root");
+    TFile *f_mc = TFile::Open("../analyze/output_files/2018/SingleElectron18_mc_contam_fake_rate_sep9.root");
+    TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_corrected_sep9.root", "RECREATE");
     int FLAG = FLAG_ELECTRONS;
-    Float_t pt_bins[] = {10,20,35,60,100, 1000};
-    int n_pt_bins = 5;
+    Float_t pt_bins[] = {10,20,35,60, 1000};
+    int n_pt_bins = 4;
     */
 
     ///*
-    TFile *f = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon_data_fakerate_june25.root");
-    TFile *f_mc = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon_mc_fakerate_contam_june25.root");
+    TFile *f = TFile::Open("../analyze/output_files/2018/SingleMuon18_data_meas_fake_rate_sep9.root");
+    TFile *f_mc = TFile::Open("../analyze/output_files/2018/SingleMuon18_mc_contam_fake_rate_sep9.root");
+    TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_corrected_sep9.root", "RECREATE");
     int FLAG = FLAG_MUONS;
-    Float_t pt_bins[] = {10,20,26,35,1000};
+    Float_t pt_bins[] = {10,20,26,32,1000};
     int n_pt_bins = 4;
     //*/
 
     //
+    bool write_out = true;
     Float_t eta_bins[] = {0,1.479,2.4};
     int n_eta_bins = 2;
 
-    bool write_out = true;
 
     TH2D *h_rate = new TH2D("h_rate", "passing iso cuts", n_eta_bins, eta_bins, n_pt_bins, pt_bins);
     TH2D *h_total = new TH2D("h_total", "passing iso cuts", n_eta_bins, eta_bins, n_pt_bins, pt_bins);
@@ -191,8 +193,6 @@ void draw_fakerate(){
 
     SetErrors(h_rate_new, h_total_new);
     if(write_out){
-        TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon_data_fakerate_corrected_june25.root", "RECREATE");
-        //TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron_data_fakerate_corrected_june25.root", "RECREATE");
         f_new->cd();
         h_rate_new->Write();
         h_total_new->Write();
@@ -222,7 +222,7 @@ void draw_fakerate(){
     rate_barrel ->Draw("E1");
     rate_barrel->GetXaxis()->SetTitle("p_t (Gev)");
     rate_barrel->GetXaxis()->SetRangeUser(10,500);
-    rate_barrel->GetYaxis()->SetRangeUser(0, 0.7);
+    rate_barrel->GetYaxis()->SetRangeUser(0, 0.9);
     c1->Update();
 
     //TCanvas *c2 = new TCanvas("c2", "Histograms", 200, 10, 900, 700);
@@ -233,6 +233,8 @@ void draw_fakerate(){
     rate_endcap->SetLineColor(kRed);
     //rate_endcap->GetXaxis()->SetRangeUser(10,100);
     rate_endcap->GetYaxis()->SetRangeUser(0, 0.5);
+
+
     TLegend *leg1 = new TLegend(0.5, 0.65, 0.75, 0.8);
     leg1->AddEntry(rate_barrel, "Barrel", "f");
     leg1->AddEntry(rate_endcap, "Endcap",  "f");
