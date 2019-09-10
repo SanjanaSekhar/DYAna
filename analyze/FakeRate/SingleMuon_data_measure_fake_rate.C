@@ -12,9 +12,9 @@ void SingleMuon_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin="")
 {
 
 
-    if(fin == "") fin = string("EOS_files/2018/SingleMuon_files.txt");
+    if(fin == "") fin = string("EOS_files/2017/SingleMuon_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/MuMu_fake_rate_test.root", true);
-    nt.year = 2018;
+    nt.year = 2017;
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_muons = true;

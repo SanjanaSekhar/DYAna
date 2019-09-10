@@ -1,5 +1,6 @@
 
 *.pyc
+*.swo
 *.root
 *.o
 *.log
@@ -8,6 +9,7 @@
 *.d
 *.pcm
 *.so
+*.tgz
 
 *FileDump.py
 *.db

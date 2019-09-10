@@ -3,13 +3,13 @@
 
 
 
-void EMu_data_check_Mu(int nJobs =1, int iJob = 0, string fin = "")
+void EMu_reco_data(int nJobs =1, int iJob = 0, string fin = "")
 {
 
 
-    if (fin == "") fin = string("EOS_files/2016/SingleMuon_files_test.txt");
+    if (fin == "") fin = string("EOS_files/2017/SingleMuon_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/EMu_data_test.root", true);
-    nt.year = 2016;
+    nt.year = 2017;
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_emu = true;
@@ -27,7 +27,7 @@ void EMu_data_check_Mu(int nJobs =1, int iJob = 0, string fin = "")
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.emu_ids  && nt.cm_m > 50.){
+            if(nt.good_trigger && nt.emu_ids  && nt.cm_m > 130.){
                 nt.fillEvent();
 
                 bool one_iso = nt.mu_iso0 ^ nt.el_iso0;

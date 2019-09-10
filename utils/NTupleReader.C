@@ -75,6 +75,8 @@ void NTupleReader::setupSFs(){
 
     setup_pileup_systematic(&pu_sys, year);
 
+    setup_btag_SFs(&b_reader, &btag_effs, year);
+
     if(do_muons || do_emu){
         printf("getting muon SFs \n");
         setup_mu_SFs(&era1, &era2, year);
@@ -150,8 +152,8 @@ bool NTupleReader::getNextFile(){
             tin->SetBranchAddress("jetAK4CHS_GenJetPt", &jet_genPt);
 
             if(year == 2016) {
-                //tin->SetBranchAddress("jetAK4CHS_CSVv2", &jet_CSV);
-                tin->SetBranchAddress("jetAK4CHS_CMVAv2", &jet_btag);
+                tin->SetBranchAddress("jetAK4CHS_CSVv2", &jet_btag);
+                //tin->SetBranchAddress("jetAK4CHS_CMVAv2", &jet_btag);
             }
             else{
                 tin->SetBranchAddress("jetAK4CHS_DeepCSV", &jet_btag);
@@ -360,6 +362,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("pdf_weights", &pdf_weights, "pdf_weights[60]/F");
         outTrees[idx]->Branch("jet1_flavour", &jet1_flavour, "jet1_flavour/I");
         outTrees[idx]->Branch("jet2_flavour", &jet2_flavour, "jet2_flavour/I");
+        outTrees[idx]->Branch("jet1_btag_SF", &jet1_btag_SF);
+        outTrees[idx]->Branch("jet2_btag_SF", &jet2_btag_SF);
         outTrees[idx]->Branch("is_tau_event", &is_tau_event);
         outTrees[idx]->Branch("pu_NtrueInt", &pu_NtrueInt);
 
@@ -411,14 +415,13 @@ void NTupleReader::setupRC(){
     char path[400], env_var[400];
 
     if (year == 2016){
-        sprintf(path, "%s/src/Analysis/B2GTTrees/Utils/roccor_Run2_v3/RoccoR2016.txt", getenv("CMSSW_BASE"));
+        sprintf(path, "%s/src/Analysis/DYAna/utils/roccor_Run2_v3/RoccoR2016.txt", getenv("CMSSW_BASE"));
     }
     else if(year ==2017){
-        sprintf(path, "%s/src/Analysis/B2GTTrees/Utils/roccor_Run2_v3/RoccoR2017.txt", getenv("CMSSW_BASE"));
+        sprintf(path, "%s/src/Analysis/DYAna/utils/roccor_Run2_v3/RoccoR2017.txt", getenv("CMSSW_BASE"));
     }
     else if(year == 2018){
-        sprintf(path, "%s/src/Analysis/B2GTTrees/Utils/roccor_Run2_v3/RoccoR2018.txt", getenv("CMSSW_BASE"));
-        //sprintf(path, "%s/src/Analysis/B2GTTrees/Utils/roccor_Run2_v3/RoccoR2017.txt", getenv("CMSSW_BASE"));
+        sprintf(path, "%s/src/Analysis/DYAna/utils/roccor_Run2_v3/RoccoR2018.txt", getenv("CMSSW_BASE"));
     }
 
    
@@ -430,7 +433,9 @@ void NTupleReader::setupRC(){
 
 void NTupleReader::getEvent(int i){
     tin->GetEntry(i);
-    if(year == 2016) bjet_med_cut = 0.6321;
+    //if(year == 2016) bjet_med_cut = 0.6321; //cmva (old)
+    if(year == 2016) bjet_med_cut = 0.8484; //CSVv2 (old)
+    //if(year == 2016) bjet_med_cut = 0.6321; //DeepCSV
     if(year == 2017) bjet_med_cut = 0.4941;
     if(year == 2018) bjet_med_cut = 0.4184;
     event_idx = i;
@@ -644,6 +649,11 @@ void NTupleReader::fillEventSFs(){
     pu_SF = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_nom);
     pu_SF_up = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_up);
     pu_SF_down = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_down);
+
+
+    jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, 0);
+    jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, 0);
+
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
 
     if(pdf_size <60){

@@ -9,6 +9,7 @@
 #include "TTree.h"
 #include "TLorentzVector.h"
 #include "ScaleFactors.C"
+#include "BTagUtils.C"
 #include "HistMaker.C"
 #include "roccor_Run2_v3/RoccoR.cc"
 
@@ -108,6 +109,10 @@ class NTupleReader{
         Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF, era2_HLT_SF, era2_iso_SF, era2_id_SF,
                  era1_trk_SF, era2_trk_SF,
                  jet1_b_weight, jet2_b_weight, pu_SF, pu_SF_up, pu_SF_down;
+        Double_t jet1_btag_SF, jet1_btag_SF_up, jet1_btag_SF_down, jet2_btag_SF, jet2_btag_SF_up, jet2_btag_SF_down;
+
+        BTag_readers b_reader;
+        BTag_effs btag_effs;
 
         Double_t el1_pt, el2_pt, el1_eta, el2_eta;
         Double_t el_id_SF, el_reco_SF, el_HLT_SF;

@@ -325,7 +325,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
         if (l==0) t = t_WJets;
         if (l==1) t = t_QCD;
         if (l==2) t = t_WJets_MC;
-        Double_t m, xF, cost, jet1_cmva, jet2_cmva, gen_weight;
+        Double_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
         Double_t jet1_pt, jet2_pt, pu_SF;
 
         Double_t el_id_SF, el_reco_SF;
@@ -340,8 +340,8 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
         nJets = 2;
         pu_SF=1;
         t->SetBranchAddress("met_pt", &met_pt);
-        t->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-        t->SetBranchAddress("jet1_CMVA", &jet1_cmva);
+        t->SetBranchAddress("jet2_btag", &jet2_btag);
+        t->SetBranchAddress("jet1_btag", &jet1_btag);
         t->SetBranchAddress("jet1_pt", &jet1_pt);
         t->SetBranchAddress("jet2_pt", &jet2_pt);
         //t1->SetBranchAddress("evt_fakerate", &evt_fakerate);
@@ -369,7 +369,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
         Long64_t size  =  t->GetEntries();
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
             if(l==0){
                 //iso_lep: 0 = muons, 1 electrons
                 if(iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);
@@ -426,7 +426,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
 void gen_emu_template(TTree *t1, TH2F *h, 
         bool is_data = false, int year=2016, float m_low = 150., float m_high = 999999.){
     Long64_t size  =  t1->GetEntries();
-    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_cmva, jet2_cmva, gen_weight;
+    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_btag, jet2_btag, gen_weight;
     Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
     Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
     Double_t jet1_pt, jet2_pt, jet1_b_weight, jet2_b_weight, pu_SF;
@@ -442,8 +442,8 @@ void gen_emu_template(TTree *t1, TH2F *h,
     t1->SetBranchAddress("el", &el);
     t1->SetBranchAddress("mu", &mu);
     t1->SetBranchAddress("met_pt", &met_pt);
-    t1->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-    t1->SetBranchAddress("jet1_CMVA", &jet1_cmva);
+    t1->SetBranchAddress("jet2_btag", &jet2_btag);
+    t1->SetBranchAddress("jet1_btag", &jet1_btag);
     t1->SetBranchAddress("jet1_pt", &jet1_pt);
     t1->SetBranchAddress("jet2_pt", &jet2_pt);
     t1->SetBranchAddress("nJets", &nJets);
@@ -462,7 +462,7 @@ void gen_emu_template(TTree *t1, TH2F *h,
 
     for (int i=0; i<size; i++) {
         t1->GetEntry(i);
-        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
         TLorentzVector cm;
         cm = *el + *mu;
         m = cm.M();

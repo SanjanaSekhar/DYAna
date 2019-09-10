@@ -59,18 +59,20 @@ class TempMaker{
         string sys_label = string("");
         TTree *t_in;
 
-        Double_t m, xF, cost, gen_weight, reweight_a, reweight_s, reweight_alpha, jet1_cmva, jet2_cmva, cost_st, gen_cost;
+        Double_t m, xF, cost, gen_weight, reweight_a, reweight_s, reweight_alpha, jet1_btag, jet2_btag, cost_st, gen_cost;
         Double_t evt_weight;
         Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
         Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF;
         Double_t el_id_SF, el_reco_SF, pu_SF, pu_SF_up, pu_SF_down, el_HLT_SF;
-        Double_t jet1_pt, jet2_pt, jet1_b_weight, jet2_b_weight, jet1_eta, jet2_eta;
+        Double_t jet1_pt, jet2_pt, jet1_eta, jet2_eta;
         Double_t mu1_pt, mu1_eta, mu2_pt, mu2_eta;
         Double_t el1_pt, el1_eta, el2_pt, el2_eta;
         Double_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, 
                  mu_RF_up, mu_RF_down, pdf_up, pdf_down;
         Double_t mu_p_SF, mu_m_SF, mu_p_SF_up, mu_m_SF_up, mu_p_SF_down, mu_m_SF_down, alphaS_up, alphaS_down;
         Float_t cost_pt, met_pt, el1_charge, el2_charge, mu1_charge, mu2_charge;
+        Double_t jet1_btag_SF = 1.0;
+        Double_t jet2_btag_SF = 1.0;
 
         Float_t pdf_weights[60];
         TLorentzVector *lep_p=0;

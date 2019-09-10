@@ -17,14 +17,14 @@ void TempMaker::setup(){
     t_in->SetBranchAddress("m", &m);
     t_in->SetBranchAddress("xF", &xF);
     t_in->SetBranchAddress("cost", &cost);
-    t_in->SetBranchAddress("jet1_CMVA", &jet1_cmva);
-    t_in->SetBranchAddress("jet2_CMVA", &jet2_cmva);
+    t_in->SetBranchAddress("jet1_btag", &jet1_btag);
+    t_in->SetBranchAddress("jet2_btag", &jet2_btag);
     t_in->SetBranchAddress("met_pt", &met_pt);
     t_in->SetBranchAddress("jet1_pt", &jet1_pt);
     t_in->SetBranchAddress("jet2_pt", &jet2_pt);
     t_in->SetBranchAddress("jet1_eta", &jet1_eta);
     t_in->SetBranchAddress("jet2_eta", &jet2_eta);
-    t_in->SetBranchAddress("has_no_bjets", &has_no_bjets);
+    t_in->SetBranchAddress("has_nobjets", &has_no_bjets);
 
     if(do_muons){
         t_in->SetBranchAddress("mu_p", &lep_p);
@@ -73,6 +73,8 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("mu_RF_up", &mu_RF_up);
         t_in->SetBranchAddress("mu_RF_down", &mu_RF_down);
         t_in->SetBranchAddress("pu_NtrueInt", &pu_NtrueInt);
+        t_in->SetBranchAddress("jet1_btag_SF", &jet1_btag_SF);
+        t_in->SetBranchAddress("jet2_btag_SF", &jet2_btag_SF);
         t_in->SetBranchAddress("jet1_flavour", &jet1_flavour);
         t_in->SetBranchAddress("jet2_flavour", &jet2_flavour);
         t_in->SetBranchAddress("alpha_up", &alphaS_up);
@@ -270,13 +272,15 @@ Double_t TempMaker::getEvtWeight(){
         *systematic = 1.;
     }
     double base_weight = gen_weight * (*systematic) * pu_SF;
-    jet1_b_weight = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
-    jet2_b_weight = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
+    if(do_btag_sys != 0){
+        jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
+        jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
+    }
     if (nJets >= 1){
-        base_weight *= jet1_b_weight;
+        base_weight *= jet1_btag_SF;
     }
     if (nJets >= 2){
-        base_weight *= jet2_b_weight;
+        base_weight *= jet2_btag_SF;
     }
 
 

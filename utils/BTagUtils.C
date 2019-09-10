@@ -26,8 +26,10 @@ Double_t btag_eff(Double_t pt, Double_t eta,TH2D *mc_eff){
     int ybin = y_ax->FindBin(std::abs(eta));
 
     Double_t eff = mc_eff->GetBinContent(xbin, ybin);
-    if(eff == 0) printf("Warning: 0 efficiency for pt %.0f, eta %1.1f \n!", pt, eta);
-    //printf("Efficiency is %f \n", eff);
+    if(eff < 1e-8){
+        eff = 1e-8;
+        //printf("Warning: 0 efficiency for pt %.0f, eta %1.1f! \n", pt, eta);
+    }
     return eff;
 }
 
@@ -40,14 +42,16 @@ Double_t btag_weight_helper(Double_t pt, Double_t eta, Double_t SF, TH2D *mc_eff
     int ybin = y_ax->FindBin(std::abs(eta));
 
     Double_t eff = mc_eff->GetBinContent(xbin, ybin);
-    if(eff == 0) printf("Warning: 0 efficiency for pt %.0f, eta %1.1f \n!", pt, eta);
+    if(eff < 1e-8){
+        eff = 1e-8;
+        //printf("Warning: 0 efficiency for pt %.0f, eta %1.1f! \n", pt, eta);
+    }
     //printf("Efficiency is %f \n", eff);
     Double_t weight = (1-SF*eff)/(1-eff);
     return weight;
 }
 Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs btag_effs, BTag_readers b_readers, int systematic = 0){
     //compute weighting from btagging scale factors
-
     Double_t weight, bjet_SF;
 
     char const *sys;
@@ -132,7 +136,6 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
     if(year == 2017) calib = BTagCalibration("DeepCSV", "SFs/2017/DeepCSV_94XSF_V4_B_F.csv");
     if(year == 2018) calib = BTagCalibration("DeepCSV", "SFs/2018/DeepCSV_102XSF_V1.csv");
 
-
     btag_r->b_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
     btag_r->b_reader.load(calib, BTagEntry::FLAV_B, "comb");
     btag_r->c_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
@@ -140,25 +143,11 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
     btag_r->udsg_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
     btag_r->udsg_reader.load(calib, BTagEntry::FLAV_UDSG, "incl");
 
-    /*
-    btag_r->b_reader_up = BTagCalibrationReader(BTagEntry::OP_MEDIUM, "up");
-    btag_r->b_reader_up.load(calib, BTagEntry::FLAV_B, "comb");
-    btag_r->c_reader_up = BTagCalibrationReader(BTagEntry::OP_MEDIUM, "up");
-    btag_r->c_reader_up.load(calib, BTagEntry::FLAV_C, "comb");
-    btag_r->udsg_reader_up = BTagCalibrationReader(BTagEntry::OP_MEDIUM, "up");
-    btag_r->udsg_reader_up.load(calib, BTagEntry::FLAV_UDSG, "incl");
-    printf("3 \n");
 
-    btag_r->b_reader_down = BTagCalibrationReader(BTagEntry::OP_MEDIUM, "down");
-    btag_r->b_reader_down.load(calib, BTagEntry::FLAV_B, "comb");
-    btag_r->c_reader_down = BTagCalibrationReader(BTagEntry::OP_MEDIUM, "down");
-    btag_r->c_reader_down.load(calib, BTagEntry::FLAV_C, "comb");
-    btag_r->udsg_reader_down = BTagCalibrationReader(BTagEntry::OP_MEDIUM, "down");
-    btag_r->udsg_reader_down.load(calib, BTagEntry::FLAV_UDSG, "incl");
-    printf("4 \n");
-    */
-
-    TFile *f0 = TFile::Open("SFs/2016/BTag_efficiency_may24.root");
+    TFile *f0;
+    if (year == 2016)  f0 = TFile::Open("SFs/2016/BTag_efficiency_may24.root");
+    if (year == 2017)  f0 = TFile::Open("SFs/2017/Btag_eff_MC_2017.root");
+    if (year == 2018)  f0 = TFile::Open("SFs/2018/Btag_eff_MC_2018.root");
     TDirectory *subdir0 = gDirectory;
     TH2D *b_eff = (TH2D *) subdir0->Get("b_eff")->Clone();
     TH2D *c_eff = (TH2D *) subdir0->Get("c_eff")->Clone();

@@ -5,8 +5,8 @@
 #include "RooDataHist.h"
 #include "RooFormulaVar.h"
 #include "HiggsAnalysis/CombinedLimit/interface/RooParametricHist.h"
-#include "../../Utils/TemplateMaker_systematics.C"
-#include "../../Utils/root_files.h"
+#include "../../utils/TemplateMaker_systematics.C"
+#include "../../utils/root_files.h"
 
 Double_t m_low;
 Double_t m_high;

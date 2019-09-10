@@ -7,9 +7,9 @@ void ElEl_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", bool do_ss 
 {
 
 
-    if(fin == "") fin = string("EOS_files/2016/DY_files_test.txt");
+    if(fin == "") fin = string("EOS_files/2017/DY_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/ElEl_dy_test.root", false);
-    nt.year = 2016;
+    nt.year = 2017;
     nt.do_samesign = do_ss;
 
 
@@ -19,7 +19,13 @@ void ElEl_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", bool do_ss 
     nt.do_SFs = true;
     nt.setupSFs();
     nt.setupOutputTree("T_sig");
-    nt.setupOutputTree("T_back");
+    nt.setupOutputTree("T_DY_back");
+    nt.setupOutputTree("T_WJets");
+    nt.setupOutputTree("T_QCD");
+    nt.setupOutputTree("T_ss");
+
+    int iso_el;
+    nt.outTrees[2]->Branch("iso_el", &iso_el); 
 
 
     while(nt.getNextFile()){
@@ -27,18 +33,34 @@ void ElEl_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", bool do_ss 
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.good_sign && nt.dielec_id &&
-                    nt.el_iso0 && nt.el_iso1 && nt.cm_m > 130. ){
+            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
-                nt.parseGenParts(false);
 
-                if(nt.signal_event && !nt.failed_match){
-                    nt.nSignal++;
-                    nt.outTrees[0]->Fill();
+                bool one_iso = nt.el_iso0 ^ nt.el_iso1;
+
+
+                //pick the category
+                if(nt.opp_sign && nt.el_iso0 && nt.el_iso1){ //signal region
+                    nt.parseGenParts();
+                    if(nt.signal_event && !nt.failed_match){
+                        nt.nSignal++;
+                        nt.outTrees[0]->Fill();
+                    }
+                    else{
+                        nt.outTrees[1]->Fill();
+                    }
                 }
-                else{
-                    nt.outTrees[1]->Fill();
+                else if(!nt.opp_sign && nt.el_iso0 && nt.el_iso1){ //samesign region
+                    nt.outTrees[4]->Fill();
+                }
+                else if(one_iso){ //wjets control region
+                    if(nt.el_iso0) iso_el = 0;
+                    else           iso_el = 1;
+                    nt.outTrees[2]->Fill();
+                }
+                else if(!nt.el_iso0 && !nt.el_iso1){ //qcd control region
+                    nt.outTrees[3]->Fill();
                 }
 
 

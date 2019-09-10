@@ -7,8 +7,8 @@ void ElEl_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="")
 {
 
 
-    if(fin == "") fin = string("EOS_files/2017/TTbar_files.txt");
-    NTupleReader nt(fin.c_str(),"output_files/ElEl_back_june25.root", false);
+    if(fin == "") fin = string("EOS_files/2018/PhotIndEE_files.txt");
+    NTupleReader nt(fin.c_str(),"output_files/ElEl17_photInd_sep10.root", false);
     nt.year = 2017;
     nt.do_samesign = true;
 

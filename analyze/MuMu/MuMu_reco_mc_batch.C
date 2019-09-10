@@ -5,9 +5,9 @@
 
 void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", bool do_ss=false)
 {
-    if(fin == "") fin = string("EOS_files/2018/DY_files_test.txt");
+    if(fin == "") fin = string("EOS_files/2017/DY_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/MuMu_DY_test17.root", false);
-    nt.year = 2018;
+    nt.year = 2017;
     nt.do_samesign = do_ss;
 
     nt.nJobs = nJobs;
@@ -20,6 +20,13 @@ void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", bool do_ss=
     nt.setupRC();
     nt.setupOutputTree("T_sig");
     nt.setupOutputTree("T_DY_back");
+    nt.setupOutputTree("T_WJets");
+    nt.setupOutputTree("T_QCD");
+    nt.setupOutputTree("T_ss");
+
+
+    int iso_mu;
+    nt.outTrees[2]->Branch("iso_mu", &iso_mu); 
 
     while(nt.getNextFile()){
 
@@ -32,13 +39,28 @@ void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", bool do_ss=
                 nt.fillEventSFs();
                 nt.parseGenParts();
                 nt.fillEventRC();
+                bool one_iso = nt.mu_iso0 ^ nt.mu_iso1;
 
-                if(nt.signal_event && !nt.failed_match){
-                    nt.nSignal++;
-                    nt.outTrees[0]->Fill();
+                //pick the category
+                if(nt.opp_sign && nt.mu_iso0 && nt.mu_iso1){ //signal region
+                    if(nt.signal_event && !nt.failed_match){
+                        nt.nSignal++;
+                        nt.outTrees[0]->Fill();
+                    }
+                    else{
+                        nt.outTrees[1]->Fill();
+                    }
                 }
-                else{
-                    nt.outTrees[1]->Fill();
+                else if(!nt.opp_sign && nt.mu_iso0 && nt.mu_iso1){ //samesign region
+                    nt.outTrees[4]->Fill();
+                }
+                else if(one_iso){ //wjets control region
+                    if(nt.mu_iso0) iso_mu = 0;
+                    else           iso_mu = 1;
+                    nt.outTrees[2]->Fill();
+                }
+                else if(!nt.mu_iso0 && !nt.mu_iso1){ //qcd control region
+                    nt.outTrees[3]->Fill();
                 }
 
             }
