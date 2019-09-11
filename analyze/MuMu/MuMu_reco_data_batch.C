@@ -3,13 +3,12 @@
 
 
 
-void MuMu_reco_data_batch(int nJobs =1, int iJob = 0, string fin="", bool do_ss=false)
+void MuMu_reco_data_batch(int nJobs =1, int iJob = 0, string fin="", int year = -1)
 {
 
-    if(fin == "") fin = string("EOS_files/2017/SingleMuon_files.txt");
+    if(fin == "") fin = string("EOS_files/2017/SingleMuon_files_test.txt");
     NTupleReader nt(fin.c_str(),"output_files/MuMu_data_test.root", true);
-    nt.year = 2017;
-    nt.do_samesign = false;
+    if (year == -1) nt.year = 2017;
 
     nt.nJobs = nJobs;
     nt.iJob = iJob;

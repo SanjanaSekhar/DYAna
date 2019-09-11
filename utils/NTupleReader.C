@@ -92,7 +92,7 @@ void NTupleReader::setupSFs(){
 }
 
 bool NTupleReader::getNextFile(){
-    if(fileCount != 0) fin->Close();
+    if(fileCount != 0 && fin != nullptr) fin->Close();
     char lines[300];
     while(fgets(lines, 300, root_files)){
         if(lines[0] == '#' || is_empty_line(lines)) continue; //comment line
@@ -125,6 +125,10 @@ bool NTupleReader::getNextFile(){
 
             printf("Opening file: %s   ", lines);
             fin=  TFile::Open(lines);
+            if(fin == nullptr){
+                printf("Zombie File! Skipping \n");
+                return getNextFile();
+            }
 
             if(!is_data && do_SFs){
                 fin->cd("EventCounter");

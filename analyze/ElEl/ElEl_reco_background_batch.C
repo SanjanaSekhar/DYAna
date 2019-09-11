@@ -3,14 +3,13 @@
 
 
 
-void ElEl_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="")
+void ElEl_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
 {
 
 
-    if(fin == "") fin = string("EOS_files/2018/PhotIndEE_files.txt");
-    NTupleReader nt(fin.c_str(),"output_files/ElEl17_photInd_sep10.root", false);
-    nt.year = 2017;
-    nt.do_samesign = true;
+    if(fin == "") fin = string("EOS_files/2016/WT_files.txt");
+    NTupleReader nt(fin.c_str(),"output_files/ElEl16_WT_sep11.root", false);
+    if (year == -1) nt.year = 2016;
 
     nt.nJobs = nJobs;
     nt.iJob = iJob;

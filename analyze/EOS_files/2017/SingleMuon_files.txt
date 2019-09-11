@@ -186,7 +186,6 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_266.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_267.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_268.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_269.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_27.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_270.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_271.root
@@ -684,7 +683,6 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_714.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_715.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_716.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_717.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_718.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_719.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0000/B2GTTreeNtupleExtra_72.root
@@ -1438,7 +1436,6 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1438.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1439.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1440.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1441.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1442.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1443.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017B-31Mar2018-v1/190819_235611/0001/B2GTTreeNtupleExtra_1444.root
@@ -4421,7 +4418,6 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1666.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1667.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1668.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1669.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1670.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1671.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017C-31Mar2018-v1/190819_235739/0001/B2GTTreeNtupleExtra_1672.root
@@ -14375,7 +14371,6 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3876.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3877.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3878.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3879.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3880.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3881.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Aug19/SingleMuon/B2GAnaFW_9_4_X_V0_Run2017F-31Mar2018-v1/190820_000216/0003/B2GTTreeNtupleExtra_3882.root
