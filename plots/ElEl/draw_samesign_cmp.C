@@ -1,4 +1,4 @@
-
+#define STAND_ALONE
 
 
 #include <stdio.h>
@@ -29,12 +29,11 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_ELECTRONS;
+int year = 2017;
 
 
 void draw_samesign_cmp(){
-    init();
-    init_ss();
-    init_emu_ss();
+    init(year);
 
 
 
@@ -94,23 +93,20 @@ void draw_samesign_cmp(){
     QCD_cost->SetFillColor(kRed -7);
 
     bool do_RC = false;
-    bool qcd_from_emu = false;
     float m_low = 150.;
     float m_high = 10000.;
     bool ss = true;
     bool in_os_region = false;
 
-    make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, true, type,  do_RC, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_back, back_m, back_cost, back_pt, back_xf, false, type,  do_RC, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, false, type,  do_RC, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, true, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_back, back_m, back_cost, back_pt, back_xf, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, false, type,  do_RC, year, m_low, m_high, ss);
 
-    
-    if(qcd_from_emu) make_qcd_from_emu_m_cost_pt_xf_hist(t_emu_ss_data, t_emu_ss_ttbar, t_emu_ss_diboson, t_emu_ss_dy, QCD_m, QCD_cost, QCD_pt, QCD_xf, m_low, m_high);
-    
 
-    else
-        Fakerate_est_el(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, m_low, m_high, ss, in_os_region);
-   
+
+
+    Fakerate_est_el(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
+
 
     printf("Integrals of data, QCD, back, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), back_m->Integral(), DY_m->Integral());
 
@@ -134,15 +130,8 @@ void draw_samesign_cmp(){
     }
     if(from_fit){
         float qcd_ratio, dy_ratio;
-        if(qcd_from_emu){
-            //qcd_ratio = 0.51;
-            qcd_ratio = 0.8;
-            dy_ratio = 1.4;
-        }
-        else{
             qcd_ratio = 0.85;
             dy_ratio = 1.15;
-        }
 
         QCD_m->Scale(qcd_ratio);
         QCD_pt->Scale(qcd_ratio);

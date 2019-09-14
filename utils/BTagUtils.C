@@ -1,7 +1,8 @@
 
+#include "TH2D.h"
+#ifndef STAND_ALONE
 #include "CondFormats/BTauObjects/interface/BTagCalibration.h"
 #include "CondTools/BTau/interface/BTagCalibrationReader.h"
-#include "TH2D.h"
 
 typedef struct {
     BTagCalibrationReader b_reader;
@@ -160,3 +161,4 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
     b_effs->udsg_eff = udsg_eff;
     printf("Btag SF's set up \n");
 }
+#endif

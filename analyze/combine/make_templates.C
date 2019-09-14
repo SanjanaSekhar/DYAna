@@ -399,14 +399,13 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/sep10_2017_test.root");
-    year = 2017;
+    const TString fout_name("combine/templates/sep14_2018_test.root");
+    year = 2018;
 
 
 
     printf("Initializing files \n");
     init(year);
-    init_ss(year);
     init_emu(year);
     printf("Setting up SFs... ");
     setup_all_SFs(year);

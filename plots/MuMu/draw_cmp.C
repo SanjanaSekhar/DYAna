@@ -1,4 +1,4 @@
-
+#define STAND_ALONE
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -21,20 +21,26 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "Math/Functor.h"
-#include "root_files.h"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
 #include "../../utils/HistMaker.C"
 #include "../../utils/root_files.h"
 
+
+
 const int type = FLAG_MUONS;
+const int year = 2017;
+
 
 
 
 void draw_cmp(){
+
+
+    
     setTDRStyle();
-    init(2016);
-    mumu_init();
+    init(year);
+    init_indv_bkgs(year);
 
     int n_pt_bins = 40;
     TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins, 0, 1000);
@@ -134,13 +140,13 @@ void draw_cmp(){
     float m_low = 150.;
     float m_high = 100000.;
 
-    make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, true, type, do_RC, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_mc, mc_m, mc_cost, mc_pt, mc_xf, false, type,  do_RC, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, false, type, do_RC, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, false, type, do_RC, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_wt, wt_m, wt_cost, wt_pt, wt_xf, false, type, do_RC, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_gamgam, gg_m, gg_cost, gg_pt, gg_xf, false, type, do_RC, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, false, type,  do_RC, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, true, type, do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_mc, mc_m, mc_cost, mc_pt, mc_xf, false, type,  do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, false, type, do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, false, type, do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_wt, wt_m, wt_cost, wt_pt, wt_xf, false, type, do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_gamgam, gg_m, gg_cost, gg_pt, gg_xf, false, type, do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, false, type,  do_RC, year, m_low, m_high);
 
     symmetrize1d(gg_cost);
 
@@ -149,11 +155,13 @@ void draw_cmp(){
 
     bool ss_qcd = true;
     bool in_os_region = true;
-    Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, m_low, m_high, ss_qcd, in_os_region);
+    Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, 
+            year, m_low, m_high, ss_qcd, in_os_region);
     //QCD_cost->Scale(0.);
 
 
 
+    printf("Data integral is %.2f \n", data_m->Integral());
     printf("DY integral is %.2f \n", mc_cost->Integral());
     printf("ttbar integral is %.2f \n", ttbar_cost->Integral());
 
@@ -289,7 +297,8 @@ void draw_cmp(){
  
     //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
     int iPeriod = 4; 
-    //CMS_lumi(pad1, iPeriod, 33 );
+    writeExtraText = false;
+    CMS_lumi(pad1, year, 33 );
 
 
 
@@ -354,7 +363,7 @@ void draw_cmp(){
    cost_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    cost_ratio->GetXaxis()->SetLabelSize(20);
 
-    //CMS_lumi(cost_pad1, iPeriod, 11);
+    CMS_lumi(cost_pad1, year, 11);
 
     //TCanvas *c_cost_cut = new TCanvas("c_cost_cut", "Histograms", 200, 10, 900, 700);
     //c_cost_cut->cd();
@@ -417,7 +426,7 @@ void draw_cmp(){
    pt_ratio->GetXaxis()->SetTitleOffset(3.);
    pt_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    pt_ratio->GetXaxis()->SetLabelSize(20);
-    //CMS_lumi(pt_pad1, iPeriod, 11 );
+    CMS_lumi(pt_pad1, year, 11 );
     c_pt->Update();
 
 
@@ -481,7 +490,7 @@ void draw_cmp(){
    xf_ratio->GetXaxis()->SetTitleOffset(3.);
    xf_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    xf_ratio->GetXaxis()->SetLabelSize(20);
-    //CMS_lumi(xf_pad1, iPeriod, 11 );
+    CMS_lumi(xf_pad1, year, 11 );
     c_xf->Update();
  
     float m_chi2 = computeChi2(m_ratio);

@@ -137,7 +137,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
         else tm.do_electrons = true;
         tm.do_RC = turn_on_RC;
-        tm.is_gen_level = true;
+        tm.is_gen_level = false;
 
         tm.setup_systematic(sys_label);
         tm.setup();

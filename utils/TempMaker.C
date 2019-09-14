@@ -104,7 +104,8 @@ void TempMaker::setup(){
                 t_in->SetBranchAddress("gen_el_m", &gen_lep_m);
             }
             t_in->SetBranchAddress("el_id_SF", &el_id_SF);
-            t_in->SetBranchAddress("el_HLT_SF", &el_HLT_SF);
+            if(year == 2016) t_in->SetBranchAddress("el_HLT_SF", &el_HLT_SF);
+            else el_HLT_SF = 1.;
             t_in->SetBranchAddress("el_reco_SF", &el_reco_SF);
             if(do_elScale_sys || do_elSmear_sys){
                 if(do_elScale_sys >0){
@@ -205,13 +206,14 @@ void TempMaker::setup_systematic(const string &s_label){
 void TempMaker::getEvent(int i){
     t_in->GetEntry(i);
     not_cosmic = notCosmic(*lep_p, *lep_m);
-
+    cm = *lep_p + *lep_m;
 
 
 
 }
 
 void TempMaker::doCorrections(){
+    bool did_something = false;
     if(do_muons){
         if(!do_RC || do_muRC_sys != 0){
 
@@ -233,6 +235,7 @@ void TempMaker::doCorrections(){
             }
             lep_p->SetPtEtaPhiE(lep_p->Pt() * mu_p_corr, lep_p->Eta(), lep_p->Phi(), mu_p_corr * lep_p->E());
             lep_m->SetPtEtaPhiE(lep_m->Pt() * mu_m_corr, lep_m->Eta(), lep_m->Phi(), mu_m_corr * lep_m->E());
+            did_something = true;
 
 
         }
@@ -243,12 +246,15 @@ void TempMaker::doCorrections(){
         if(do_elScale_sys || do_elSmear_sys){
             lep_p->SetPtEtaPhiE(lep_p->Pt() * (elp_rescale), lep_p->Eta(), lep_p->Phi(), lep_p->E() *(elp_rescale));
             lep_m->SetPtEtaPhiE(lep_m->Pt() * (elm_rescale), lep_m->Eta(), lep_m->Phi(), lep_m->E() *(elm_rescale));
+            did_something = true;
         }
     }
-    TLorentzVector cm = *lep_p + *lep_m;
-    m = cm.M();
-    xF = compute_xF(cm);
-    cost = get_cost(*lep_p, *lep_m);
+    if(did_something){
+        cm = *lep_p + *lep_m;
+        m = cm.M();
+        xF = compute_xF(cm);
+        cost = get_cost(*lep_p, *lep_m);
+    }
 
     if(std::isnan(cost_st)){
         printf("Gen level cost is Nan, using reco level \n");
@@ -258,7 +264,10 @@ void TempMaker::doCorrections(){
 }
 
 Double_t TempMaker::getEvtWeight(){
-    if(is_data) return 1.;
+    if(is_data){
+        evt_weight = 1.;
+        return 1.;
+    }
 
 
     if(do_pileup_sys == -1) pu_SF = pu_SF_down;
@@ -273,8 +282,10 @@ Double_t TempMaker::getEvtWeight(){
     }
     double base_weight = gen_weight * (*systematic) * pu_SF;
     if(do_btag_sys != 0){
+#ifndef STAND_ALONE
         jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
         jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
+#endif
     }
     if (nJets >= 1){
         base_weight *= jet1_btag_SF;
