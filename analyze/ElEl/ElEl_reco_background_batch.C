@@ -9,7 +9,8 @@ void ElEl_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int 
 
     if(fin == "") fin = string("EOS_files/2016/WT_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/ElEl16_WT_sep11.root", false);
-    if (year == -1) nt.year = 2016;
+    if (year == -1) year = 2016;
+    nt.year = year;
 
     nt.nJobs = nJobs;
     nt.iJob = iJob;
