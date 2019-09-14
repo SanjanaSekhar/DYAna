@@ -22,26 +22,10 @@
 #include "TSystem.h"
 #include "TH2D.h"
 #include "Math/Functor.h"
+#include "TempMaker.C"
 
 using namespace std;
 
-#define FLAG_MUONS  0
-#define FLAG_ELECTRONS  1
-#define FLAG_EMU  2
-
-#define FLAG_M_BINS 0
-#define FLAG_PT_BINS 1
-
-Double_t bcdef_lumi16 = 3.119 + 4.035 + 4.270 +  2.615 + 5.809;
-Double_t gh_lumi16 =  8.754 + 7.655;
-Double_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
-Double_t el_lumi16 = 35.9;
-
-Double_t mu_lumi17 = 42.13;
-Double_t el_lumi17 = 41.52;
-
-Double_t mu_lumi18 = 60.43;
-Double_t el_lumi18 = 58.83;
 
 
 void cleanup_hist(TH1 *h){
@@ -100,223 +84,12 @@ void symmetrize1d(TH1F *h){
 }
 
 
-void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
-    float err_sum = 0.;
-    for(int i=1; i<= h_errs->GetNbinsX(); i++){
-        for(int j=1; j<= h_errs->GetNbinsY(); j++){
-            float err = h_fr->GetBinError(i,j);
-            float num = h_errs->GetBinContent(i,j);
-            err_sum += err*err*num*num;
-        }
-    }
-    //increase error sum by 50% to approximate subtraction of 2 fail template
-    err_sum *= 1.50;
-    float n_err_events = h_errs->Integral();
-    for(int i=1; i<= h->GetNbinsX(); i++){
-        float bin_num = h->GetBinContent(i);
-        float scaling = pow(bin_num/n_err_events, 2);
-        float num_err = pow(h->GetBinError(i),2);
-        float weight_err = scaling * err_sum;
-        float new_err = sqrt(num_err + weight_err);
-        //printf("Err was %.1f, is now %.1f \n", sqrt(num_err), new_err);
-
-        h->SetBinError(i, new_err);
-    }
-}
-
-void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH2F *h){
-    float err_sum = 0.;
-    for(int i=1; i<= h_errs->GetNbinsX(); i++){
-        for(int j=1; j<= h_errs->GetNbinsY(); j++){
-            float err = h_fr->GetBinError(i,j);
-            float num = h_errs->GetBinContent(i,j);
-            err_sum += err*err*num*num;
-        }
-    }
-    //increase error sum by 50% to approximate subtraction of 2 fail template
-    err_sum *= 1.50;
-    float n_err_events = h_errs->Integral();
-    for(int i=1; i<= h->GetNbinsX(); i++){
-        for(int j=1; j<= h->GetNbinsY(); j++){
-            float bin_num = h->GetBinContent(i, j);
-            float scaling = pow(bin_num/n_err_events, 2);
-            float num_err = pow(h->GetBinError(i,j),2);
-            float weight_err = scaling * err_sum;
-            float new_err = sqrt(num_err + weight_err);
-            //printf("Err was %.1f, is now %.1f \n", sqrt(num_err), new_err);
-
-            h->SetBinError(i,j, new_err);
-        }
-    }
-}
-    
-
-
-
-double get_cost(TLorentzVector lep_p, TLorentzVector lep_m, bool do_reco_flip = true){
-
-    TLorentzVector cm = lep_p + lep_m;
-    double root2 = sqrt(2);
-    double lep_p_pls = (lep_p.E()+lep_p.Pz())/root2;
-    double lep_p_min = (lep_p.E()-lep_p.Pz())/root2;
-    double lep_m_pls = (lep_m.E()+lep_m.Pz())/root2;
-    double lep_m_min = (lep_m.E()-lep_m.Pz())/root2;
-    double qt2 = cm.Px()*cm.Px()+cm.Py()*cm.Py();
-    double cm_m2 = cm.M2();
-    //cost_p = cos(theta)_r (reconstructed collins soper angle, sign
-    //may be 'wrong' if lepton pair direction is not the same as inital
-    //quark direction)
-    double cost = 2*(lep_m_pls*lep_p_min - lep_m_min*lep_p_pls)/sqrt(cm_m2*(cm_m2 + qt2));
-    if(cm.Pz() <0. && do_reco_flip) cost = -cost;
-    return cost;
-}
-
-bool notCosmic(TLorentzVector v1, TLorentzVector v2){
-    Double_t ang = v1.Angle(v2.Vect());
-    return ang < (TMath::Pi() - 0.005);
-}
-Double_t compute_xF(TLorentzVector cm){
-    return  abs(2.*cm.Pz()/13000.); 
-}
-
-bool goodElEta(Float_t el1_eta){
-    el1_eta = abs(el1_eta);
-    return (el1_eta < 1.4442) || (el1_eta > 1.566 && el1_eta < 2.5); 
-}
-
-double get_cost_v2(TLorentzVector lep_p, TLorentzVector lep_m){
-
-    double Ebeam = 6500.;
-    double Pbeam = sqrt(Ebeam*Ebeam - 0.938*0.938);
-    TLorentzVector cm = lep_p + lep_m;
-    TLorentzVector p1(0., 0., Pbeam, Ebeam);
-    TLorentzVector p2(0., 0., -Pbeam, Ebeam);
-
-    if(cm.Pz() < 0. ){
-        TLorentzVector p = p1;
-        p1 = p2;
-        p2 = p;
-    }
-
-    TVector3 beta = -cm.BoostVector();
-    lep_m.Boost(beta);
-    lep_p.Boost(beta);
-    p1.Boost(beta);
-    p2.Boost(beta);
-
-    // Now calculate the direction of the new z azis
-
-    TVector3 p1u = p1.Vect();
-    p1u.SetMag(1.0);
-    TVector3 p2u = p2.Vect();
-    p2u.SetMag(1.0);
-    TVector3 bisec = p1u - p2u;
-    bisec.SetMag(1.0);
-    TVector3 plep = lep_m.Vect();
-    double cost = TMath::Cos(plep.Angle(bisec));
-    return cost;
-}
-
-bool has_no_bjets(Int_t nJets, Double_t jet1_pt, Double_t jet2_pt, 
-        Double_t jet1_cmva, Double_t jet2_cmva){
-    Double_t med_btag = 0.4432;
-    if(nJets ==0) return true;
-    else if(nJets == 1){
-        if(jet1_pt < 20.) return true;
-        else return jet1_cmva < med_btag;
-    }
-    else{
-        return (jet1_pt < 20. || jet1_cmva < med_btag) && (jet2_pt < 20. || jet2_cmva < med_btag);
-    }
-}
-
-typedef struct {
-    TH2D *h;
-} FakeRate;
-//
-//static type means functions scope is only this file, to avoid conflicts
-void setup_new_el_fakerate(FakeRate *FR, int year){
-    TFile *f0;
-    if (year == 2016) f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron_data_fakerate_corrected_june25.root");
-    if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate_corrected_sep9.root");
-    if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_corrected_sep9.root");
-    TH2D *h1 = (TH2D *) gDirectory->Get("h_rate_new")->Clone();
-    h1->SetDirectory(0);
-    FR->h = h1;
-    f0->Close();
-}
-void setup_new_mu_fakerate(FakeRate *FR, int year){
-    TFile *f0;
-    if (year == 2016) f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon_data_fakerate_corrected_june25.root");
-    if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate_corrected_sep9.root");
-    if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_corrected_sep9.root");
-    TDirectory *subdir = gDirectory;
-    TH2D *h1 = (TH2D *) subdir->Get("h_rate_new")->Clone();
-    h1->SetDirectory(0);
-    FR->h = h1;
-    f0->Close();
-}
-
-
-Double_t get_new_fakerate_prob(Double_t pt, Double_t eta, TH2D *h){
-    //pt=35;
-    if (pt >= 150) pt =150 ;
-    if(abs(eta) > 2.4) eta = 2.3;
-
-    Double_t variation = 0.;
-    Double_t err;
-
-
-    TAxis* x_ax =  h->GetXaxis();
-    TAxis *y_ax =  h->GetYaxis();
-
-    int xbin = x_ax->FindBin(std::abs(eta));
-    int ybin = y_ax->FindBin(pt);
-
-    Double_t prob = h->GetBinContent(xbin, ybin);
-    err = h->GetBinError(xbin, ybin);
-    //printf("prob err %.2f %.2f \n", prob, err);
-    prob += err * variation;
-    //printf("prob: %.2f \n", prob);
-    if(prob < 0.001 || prob >= 0.99){
-        printf("Warning: %.2f Rate for pt %.0f, eta %1.1f! \n"
-                "err %.2f varr %.2f \n",
-                prob, pt, eta, err, variation);
-        ybin -=1;
-        prob = h->GetBinContent(xbin, ybin);
-        err = h->GetBinError(xbin, ybin);
-        prob += err * variation;
-        if(prob < 0.001) printf("Tried 1 lower pt bin and still 0 fakerate \n");
-    }
-
-    prob = min(prob, 0.98);
-    prob = max(prob, 0.02);
-    //printf("Efficiency is %f \n", eff);
-    return prob;
-}
-Double_t get_new_fakerate_unc(Double_t pt, Double_t eta, TH2D *h){
-    //pt=35;
-    if (pt >= 150) pt =150 ;
-    if(abs(eta) > 2.4) eta = 2.3;
-
-    Double_t err;
-
-
-    TAxis* x_ax =  h->GetXaxis();
-    TAxis *y_ax =  h->GetYaxis();
-
-    int xbin = x_ax->FindBin(std::abs(eta));
-    int ybin = y_ax->FindBin(pt);
-
-    err = h->GetBinError(xbin, ybin);
-    return err;
-}
 
 
 void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt, TH1F *h_xf, bool is_data = false, 
         int year=2016, float m_low = 150., float m_high = 999999., bool ss = false){
     Long64_t size  =  t1->GetEntries();
-    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_cmva, jet2_cmva, gen_weight;
+    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_btag, jet2_btag, gen_weight;
     Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
     Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
     Double_t jet1_pt, jet2_pt, pu_SF;
@@ -331,8 +104,8 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
     t1->SetBranchAddress("el", &el);
     t1->SetBranchAddress("mu", &mu);
     t1->SetBranchAddress("met_pt", &met_pt);
-    t1->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-    t1->SetBranchAddress("jet1_CMVA", &jet1_cmva);
+    t1->SetBranchAddress("jet2_btag", &jet2_btag);
+    t1->SetBranchAddress("jet1_btag", &jet1_btag);
     t1->SetBranchAddress("jet1_pt", &jet1_pt);
     t1->SetBranchAddress("jet2_pt", &jet2_pt);
     t1->SetBranchAddress("nJets", &nJets);
@@ -351,7 +124,7 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
 
     for (int i=0; i<size; i++) {
         t1->GetEntry(i);
-        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
         TLorentzVector cm;
         cm = *el + *mu;
         m = cm.M();
@@ -461,159 +234,42 @@ void make_qcd_from_emu_m_cost_pt_xf_hist(TTree *t_data, TTree *t_ttbar, TTree *t
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, bool is_data=false, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
         int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
     //read event data
-    Long64_t size  =  t1->GetEntries();
-    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_cmva, jet2_cmva, gen_weight;
-    Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
-    Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
-    Double_t jet1_pt, jet2_pt, pu_SF;
-    Double_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt;
-    TLorentzVector *mu_p = 0;
-    TLorentzVector *mu_m = 0;
-    TLorentzVector *el_p = 0;
-    TLorentzVector *el_m = 0;
-    TLorentzVector cm;
-    Float_t met_pt;
-    Int_t nJets;
-    nJets = 2;
-    pu_SF=1;
-    t1->SetBranchAddress("m", &m);
-    t1->SetBranchAddress("xF", &xF);
-    t1->SetBranchAddress("cost", &cost);
-    t1->SetBranchAddress("met_pt", &met_pt);
-    t1->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-    t1->SetBranchAddress("jet1_CMVA", &jet1_cmva);
-    t1->SetBranchAddress("jet1_pt", &jet1_pt);
-    t1->SetBranchAddress("jet2_pt", &jet2_pt);
-    t1->SetBranchAddress("nJets", &nJets);
-    if(!is_data){
-        t1->SetBranchAddress("gen_weight", &gen_weight);
-        t1->SetBranchAddress("pu_SF", &pu_SF);
-    }
-    if(flag1 == FLAG_MUONS){
-        t1->SetBranchAddress("mu_p", &mu_p);
-        t1->SetBranchAddress("mu_m", &mu_m);
-        t1->SetBranchAddress("mu1_pt", &mu1_pt);
-        t1->SetBranchAddress("mu2_pt", &mu2_pt);
-        if(!is_data){
-            t1->SetBranchAddress("era1_HLT_SF", &era1_HLT_SF);
-            t1->SetBranchAddress("era1_iso_SF", &era1_iso_SF);
-            t1->SetBranchAddress("era1_id_SF", &era1_id_SF);
-            t1->SetBranchAddress("era2_HLT_SF", &era2_HLT_SF);
-            t1->SetBranchAddress("era2_iso_SF", &era2_iso_SF);
-            t1->SetBranchAddress("era2_id_SF", &era2_id_SF);
-        }
-        if(turn_on_RC){
-            t1->SetBranchAddress("mu_p_SF", &mu_p_SF);
-            t1->SetBranchAddress("mu_m_SF", &mu_m_SF);
-            t1->SetBranchAddress("mu_p_SF_alt", &mu_p_SF_alt);
-            t1->SetBranchAddress("mu_m_SF_alt", &mu_m_SF_alt);
-        }
-        for (int i=0; i<size; i++) {
-            t1->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
-            bool not_cosmic = notCosmic(*mu_p, *mu_m);
+        TempMaker tm(t1, is_data, year);
+        if(flag1 == FLAG_MUONS) tm.do_muons = true;
+        else tm.do_electrons = true;
+        tm.do_RC = turn_on_RC;
 
-            cm = *mu_p + *mu_m;
-            Double_t pt = cm.Pt();
-            cost = get_cost(*mu_p, *mu_m);
-            if(turn_on_RC){
-                TLorentzVector mu_p_new, mu_m_new;
-                mu_p_new.SetPtEtaPhiE(mu_p->Pt() * mu_p_SF, mu_p->Eta(), mu_p->Phi(), mu_p_SF * mu_p->E());
-                mu_m_new.SetPtEtaPhiE(mu_m->Pt() * mu_m_SF, mu_m->Eta(), mu_m->Phi(), mu_m_SF * mu_m->E());
-                //double new_cost = get_cost(mu_p_new, mu_m_new);
-                double new_cost = get_cost(mu_p_new, mu_m_new);
-                cm = mu_p_new + mu_m_new;
-                //if(cm.M() < 150.) continue;
-                cost = new_cost;
-                m = cm.M();
-                pt = cm.Pt();
-                xF = compute_xF(cm);
-                //printf("old mass %.3f new mass %.3f \n", mu_p->M(), mu_p_new.M());
-                   
+        tm.setup();
+        int nEvents=0;
 
+        for (int i=0; i<tm.nEntries; i++) {
+            tm.getEvent(i);
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+
+            if(pass){
+                nEvents++;
+                tm.doCorrections();
+                tm.getEvtWeight();
+                double pt = tm.cm.Pt();
+
+                h_m->Fill(tm.m,tm.evt_weight);
+                h_pt->Fill(pt,tm.evt_weight);
+                h_xf->Fill(tm.xF, tm.evt_weight);
+
+                if(ss){
+                    h_cost->Fill(-tm.cost, 0.5* tm.evt_weight);
+                    h_cost->Fill(tm.cost, 0.5* tm.evt_weight);
+                }
+                else h_cost->Fill(tm.cost, tm.evt_weight);
             }
-            if(m >= m_low && m <= m_high && met_pt < 50. && no_bjets && not_cosmic){
-
-                if(is_data){
-                    h_m->Fill(m);
-                    if(ss){
-                        h_cost->Fill(cost, 0.5);
-                        h_cost->Fill(-cost, 0.5);
-                    }
-                    else h_cost->Fill(cost);
-                    h_pt->Fill(pt);
-                    h_xf->Fill(xF);
-                }
-                else{
-
-                    Double_t era1_weight = gen_weight *pu_SF * era1_HLT_SF * era1_iso_SF * era1_id_SF;
-                    Double_t era2_weight = gen_weight *pu_SF * era2_HLT_SF * era2_iso_SF * era2_id_SF;
-                    Double_t tot_weight;
-                    if(year == 2016) tot_weight = 1000*(bcdef_lumi16 * era1_weight + gh_lumi16 *era2_weight);
-                    if(year == 2017) tot_weight = 1000*(mu_lumi17 * era1_weight);
-                    if(year == 2018) tot_weight = 1000*(mu_lumi18 * era1_weight);
-                    //Double_t weight = gen_weight;
-                    h_m->Fill(m,tot_weight);
-                    if(ss){
-                        h_cost->Fill(-cost, 0.5* tot_weight);
-                        h_cost->Fill(cost, 0.5* tot_weight);
-                    }
-                    else h_cost->Fill(cost, tot_weight);
-                    h_pt->Fill(pt,tot_weight);
-                    h_xf->Fill(xF, tot_weight);
-                }
 
 
-            }
+        
         }
-    }
-    else if(flag1==FLAG_ELECTRONS) {
-        t1->SetBranchAddress("el_p", &el_p);
-        t1->SetBranchAddress("el_m", &el_m);
-        if(!is_data) t1->SetBranchAddress("el_id_SF", &el_id_SF);
-        if(!is_data) t1->SetBranchAddress("el_reco_SF", &el_reco_SF);
-        if(!is_data) t1->SetBranchAddress("el_HLT_SF", &el_HLT_SF);
-        for (int i=0; i<size; i++) {
-            t1->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
-            bool not_cosmic = notCosmic(*el_p, *el_m);
-            if(m >= m_low && m <= m_high && met_pt < 50.  && no_bjets && not_cosmic){
-                TLorentzVector cm = *el_p + *el_m;
-                Double_t pt = cm.Pt();
-                cost = get_cost(*el_p, *el_m);
-                if(is_data){
-                    h_m->Fill(m);
-                    if(ss){
-                        h_cost->Fill(cost, 0.5);
-                        h_cost->Fill(-cost, 0.5);
-                    }
-                    else h_cost->Fill(cost);
-                    h_pt->Fill(pt);
-                    h_xf->Fill(xF);
-                }
-                else{
-
-                    Double_t el_lumi;
-                    if(year == 2016) el_lumi = el_lumi16;
-                    if(year == 2017) el_lumi = el_lumi17;
-                    if(year == 2018) el_lumi = el_lumi18;
-
-                    Double_t tot_weight = gen_weight *pu_SF * el_id_SF * el_reco_SF * el_HLT_SF * 1000. * el_lumi;
-                    h_m->Fill(m, tot_weight);
-                    if(ss){
-                        h_cost->Fill(-cost, 0.5* tot_weight);
-                        h_cost->Fill(cost, 0.5* tot_weight);
-                    }
-                    else h_cost->Fill(cost, tot_weight);
-                    h_pt->Fill(pt, tot_weight);
-                    h_xf->Fill(xF, tot_weight);
-                }
-            }
-        }
-    }
+        printf("Selected %i events \n", nEvents);
 
 
-    t1->ResetBranchAddresses();
+    tm.finish();
 }
 
 
@@ -635,7 +291,7 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
         if (l==1) t = t_QCD;
         if (l==2) t = t_WJets_contam;
         if (l==3) t = t_QCD_contam;
-        Double_t m, xF, cost, jet1_cmva, jet2_cmva, gen_weight;
+        Double_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
         Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
         Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF;
         Double_t jet1_pt, jet2_pt,  pu_SF;
@@ -653,8 +309,8 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
         t->SetBranchAddress("xF", &xF);
         t->SetBranchAddress("cost", &cost);
         t->SetBranchAddress("met_pt", &met_pt);
-        t->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-        t->SetBranchAddress("jet1_CMVA", &jet1_cmva);
+        t->SetBranchAddress("jet2_btag", &jet2_btag);
+        t->SetBranchAddress("jet1_btag", &jet1_btag);
         t->SetBranchAddress("jet1_pt", &jet1_pt);
         t->SetBranchAddress("jet2_pt", &jet2_pt);
         t->SetBranchAddress("mu1_pt", &mu1_pt);
@@ -667,7 +323,7 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
         t->SetBranchAddress("mu_p", &mu_p);
         t->SetBranchAddress("mu_m", &mu_m);
         if(l==0 || l==2 ){
-            t->SetBranchAddress("iso_muon", &iso_mu);
+            t->SetBranchAddress("iso_mu", &iso_mu);
         }
         if(l==2 || l==3){
             t->SetBranchAddress("gen_weight", &gen_weight);
@@ -683,7 +339,7 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
         Long64_t size  =  t->GetEntries();
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
             bool not_cosmic = notCosmic(*mu_p, *mu_m);
             if(l==0){
                 if(iso_mu ==1) mu1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, FR.h);
@@ -783,7 +439,7 @@ void Fakerate_est_el(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_Q
         if (l==1) t = t_QCD;
         if (l==2) t = t_WJets_MC;
         if (l==3) t = t_QCD_MC;
-        Double_t m, xF, cost, jet1_cmva, jet2_cmva, gen_weight;
+        Double_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
         Double_t jet1_pt, jet2_pt, pu_SF;
         Double_t el_id_SF, el_reco_SF;
         Double_t evt_fakerate, el1_fakerate, el2_fakerate, el1_eta, el1_pt, el2_eta, el2_pt;
@@ -799,8 +455,8 @@ void Fakerate_est_el(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_Q
         t->SetBranchAddress("xF", &xF);
         t->SetBranchAddress("cost", &cost);
         t->SetBranchAddress("met_pt", &met_pt);
-        t->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-        t->SetBranchAddress("jet1_CMVA", &jet1_cmva);
+        t->SetBranchAddress("jet2_btag", &jet2_btag);
+        t->SetBranchAddress("jet1_btag", &jet1_btag);
         t->SetBranchAddress("jet1_pt", &jet1_pt);
         t->SetBranchAddress("jet2_pt", &jet2_pt);
         //t1->SetBranchAddress("evt_fakerate", &evt_fakerate);
@@ -832,7 +488,7 @@ void Fakerate_est_el(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_Q
         Long64_t size  =  t->GetEntries();
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
             bool not_cosmic = notCosmic(*el_p, *el_m);
             if(l==0){
                 double err;
@@ -922,7 +578,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         if (l==0) t = t_WJets;
         if (l==1) t = t_QCD;
         if (l==2) t = t_WJets_MC;
-        Double_t m, xF, cost, jet1_cmva, jet2_cmva, gen_weight;
+        Double_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
         Double_t jet1_pt, jet2_pt, pu_SF;
 
         Double_t el_id_SF, el_reco_SF;
@@ -937,8 +593,8 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         nJets = 2;
         pu_SF=1;
         t->SetBranchAddress("met_pt", &met_pt);
-        t->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-        t->SetBranchAddress("jet1_CMVA", &jet1_cmva);
+        t->SetBranchAddress("jet2_btag", &jet2_btag);
+        t->SetBranchAddress("jet1_btag", &jet1_btag);
         t->SetBranchAddress("jet1_pt", &jet1_pt);
         t->SetBranchAddress("jet2_pt", &jet2_pt);
         //t1->SetBranchAddress("evt_fakerate", &evt_fakerate);
@@ -966,7 +622,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         Long64_t size  =  t->GetEntries();
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
             if(l==0){
                 //iso_lep: 0 = muons, 1 electrons
                 if(iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);

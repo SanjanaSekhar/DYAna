@@ -27,8 +27,25 @@
 #include "Math/Functor.h"
 #include "ScaleFactors.C"
 #include "BTagUtils.C"
-#include "HistMaker.C"
+#include "HistUtils.C"
 
+#define FLAG_MUONS  0
+#define FLAG_ELECTRONS  1
+#define FLAG_EMU  2
+
+#define FLAG_M_BINS 0
+#define FLAG_PT_BINS 1
+
+Double_t bcdef_lumi16 = 3.119 + 4.035 + 4.270 +  2.615 + 5.809;
+Double_t gh_lumi16 =  8.754 + 7.655;
+Double_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
+Double_t el_lumi16 = 35.9;
+
+Double_t mu_lumi17 = 42.13;
+Double_t el_lumi17 = 41.52;
+
+Double_t mu_lumi18 = 60.43;
+Double_t el_lumi18 = 58.83;
 
 class TempMaker{
     public:
@@ -79,6 +96,7 @@ class TempMaker{
         TLorentzVector *lep_m=0;
         TLorentzVector *gen_lep_p=0;
         TLorentzVector *gen_lep_m=0;
+        TLorentzVector cm;
         Double_t pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
 
@@ -118,12 +136,16 @@ el_SFs el_SF;
 mu_SFs era1_SFs, era2_SFs;
 pileup_systematics pu_sys;
 
+#ifndef STAND_ALONE
 BTag_readers b_reader;
 BTag_effs btag_effs;
+#endif
 
 void setup_all_SFs(int year){
     printf("Setting up SF's \n");
+#ifndef STAND_ALONE
     setup_btag_SFs(&b_reader, &btag_effs, year);
+#endif
     setup_el_SF(&el_SF, year);
     setup_mu_SFs(&era1_SFs, &era2_SFs,  year);
     setup_pileup_systematic(&pu_sys, year); 

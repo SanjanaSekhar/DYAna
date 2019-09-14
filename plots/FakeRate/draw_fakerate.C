@@ -1,4 +1,4 @@
-
+#define STAND_ALONE
 //perform fits to Reconstructed MuMu data to extract Asym
 
 #include <stdio.h>
@@ -34,7 +34,7 @@ void SetErrors(TH2D *h_rate, TH2D *h_total){
             Double_t n = h_total->GetBinContent(i,j);
             Double_t r = h_rate->GetBinContent(i,j);
             Double_t err = sqrt(r*(1-r)/n);
-            if(r <=0){
+            if(r <=0.012){
                 if (j != 0){
                     printf("Substituting 0 rate with 1 lower pt bin \n");
                     r = h_rate->GetBinContent(i, j-1);
@@ -134,27 +134,27 @@ void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag
 
 
 void draw_fakerate(){
-    /*
+    ///*
 
     TFile *f = TFile::Open("../analyze/output_files/2018/SingleElectron18_data_meas_fake_rate_sep9.root");
-    TFile *f_mc = TFile::Open("../analyze/output_files/2018/SingleElectron18_mc_contam_fake_rate_sep9.root");
+    TFile *f_mc = TFile::Open("../analyze/output_files/2018/SingleElectron18_mc_contam_fake_rate_sep13.root");
     TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_corrected_sep9.root", "RECREATE");
     int FLAG = FLAG_ELECTRONS;
     Float_t pt_bins[] = {10,20,35,60, 1000};
     int n_pt_bins = 4;
-    */
-
-    ///*
-    TFile *f = TFile::Open("../analyze/output_files/2018/SingleMuon18_data_meas_fake_rate_sep9.root");
-    TFile *f_mc = TFile::Open("../analyze/output_files/2018/SingleMuon18_mc_contam_fake_rate_sep9.root");
-    TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_corrected_sep9.root", "RECREATE");
-    int FLAG = FLAG_MUONS;
-    Float_t pt_bins[] = {10,20,26,32,1000};
-    int n_pt_bins = 4;
     //*/
 
+    /*
+    TFile *f = TFile::Open("../analyze/output_files/2017/SingleMuon17_data_meas_fake_rate_sep11.root");
+    TFile *f_mc = TFile::Open("../analyze/output_files/2017/SingleMuon17_mc_contam_fake_rate_sep9.root");
+    TFile *f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate_corrected_sep11.root", "RECREATE");
+    int FLAG = FLAG_MUONS;
+    Float_t pt_bins[] = {10,20,26,35,1000};
+    int n_pt_bins = 4;
+    */
+
     //
-    bool write_out = true;
+    bool write_out = false;
     Float_t eta_bins[] = {0,1.479,2.4};
     int n_eta_bins = 2;
 

@@ -75,6 +75,16 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
     {
       lumiText += lumi_sqrtS;
     }
+  else if(iPeriod==2016){
+      lumiText += "2016 (36 fb^{-1})";
+  }
+  else if(iPeriod==2017){
+      lumiText += "2017 (42 fb^{-1})";
+  }
+  else if(iPeriod==2018){
+      lumiText += "2018 (59 fb^{-1})";
+  }
+
    
   std::cout << lumiText << endl;
 
@@ -95,7 +105,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       latex.SetTextFont(cmsTextFont);
       latex.SetTextAlign(11); 
       latex.SetTextSize(cmsTextSize*t);    
-      latex.DrawLatex(l,1-t+lumiTextOffset*t,cmsText);
+      if(draw_CMS) latex.DrawLatex(l,1-t+lumiTextOffset*t,cmsText);
     }
   
   pad->cd();
@@ -137,7 +147,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       latex.SetTextFont(cmsTextFont);
       latex.SetTextSize(cmsTextSize*t);
       latex.SetTextAlign(align_);
-      latex.DrawLatex(posX_, posY_, cmsText);
+      if(draw_CMS) latex.DrawLatex(posX_, posY_, cmsText);
       if( writeExtraText ) 
         {
           latex.SetTextFont(extraTextFont);

@@ -1,4 +1,4 @@
-
+#define STAND_ALONE
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -24,31 +24,21 @@
 #include "Math/Functor.h"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
-#include "../../Utils/HistMaker.C"
-#include "../../Utils/root_files.h"
+#include "../../utils/HistMaker.C"
+#include "../../utils/root_files.h"
+
+int year = 2017;
 
 
 
 
 
-void draw_emu_new(){
+void draw_cmp(){
     setTDRStyle();
-    init_emu();
+    init_emu(year);
+    init_emu_indv_bkgs(year);
 
                                 
-    //TFile *f_ttbar = TFile::Open("../analyze/output_files/EMu_TTbar_Mu_june29.root");
-    TFile *f_ttbar = TFile::Open("../analyze/output_files/EMu_ttbar_mar7.root");
-    TTree *t_ttbar = (TTree *)f_ttbar->Get("T_data");
-
-    TFile *f_diboson = TFile::Open("../analyze/output_files/EMu_diboson_mar19.root");
-    TTree *t_diboson = (TTree *)f_diboson->Get("T_data");
-
-    TFile *f_wt = TFile::Open("../analyze/output_files/EMu_wt_back_mar18.root");
-    TTree *t_wt = (TTree *)f_wt->Get("T_data");
-
-    t_ttbar->Print(); 
-    t_diboson->Print();
-    t_wt->Print();
 
     TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
     TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
@@ -62,14 +52,13 @@ void draw_emu_new(){
     Double_t m_low = 150;
     Double_t m_high = 10000;
 
-    int type  = FLAG_MUONS;
+    make_emu_m_cost_pt_xf_hist(t_emu_data, data_m, h_dummy, h_dummy, h_dummy, true,  year, m_low, m_high);
+    make_emu_m_cost_pt_xf_hist(t_emu_ttbar, ttbar_m, h_dummy, h_dummy, h_dummy, false,  year, m_low, m_high);
+    make_emu_m_cost_pt_xf_hist(t_emu_diboson, diboson_m, h_dummy, h_dummy, h_dummy, false,  year, m_low, m_high);
+    make_emu_m_cost_pt_xf_hist(t_emu_wt, wt_m, h_dummy, h_dummy, h_dummy, false,  year, m_low, m_high);
+    make_emu_m_cost_pt_xf_hist(t_emu_dy, dy_m, h_dummy, h_dummy, h_dummy, false,  year, m_low, m_high);
 
-    make_emu_m_cost_pt_xf_hist(t_emu_data, data_m, h_dummy, h_dummy, h_dummy, true, type);
-    make_emu_m_cost_pt_xf_hist(t_ttbar, ttbar_m, h_dummy, h_dummy, h_dummy, false, type);
-    make_emu_m_cost_pt_xf_hist(t_diboson, diboson_m, h_dummy, h_dummy, h_dummy, false, type);
-    make_emu_m_cost_pt_xf_hist(t_wt, wt_m, h_dummy, h_dummy, h_dummy, false, type);
-    make_emu_m_cost_pt_xf_hist(t_emu_dy, dy_m, h_dummy, h_dummy, h_dummy, false, type);
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD,t_emu_WJets_contam, qcd_m, type);
+    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  FLAG_MUONS, year, m_low, m_high);
 
     //correct for wrong ttbar xsec
     //ttbar_m->Scale(831.76/730.6);
@@ -177,11 +166,10 @@ void draw_emu_new(){
    h_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    h_ratio->GetXaxis()->SetLabelSize(20);
  
-    writeExtraText = true;
+    writeExtraText = false;
     extraText = "Preliminary";
     //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
-    int iPeriod = 4; 
-    CMS_lumi(pad1, iPeriod, 11 );
+    CMS_lumi(pad1, year, 11 );
 }
 
 
