@@ -8,13 +8,15 @@ bool in_Z_window(Double_t m){
 }
 
 
-void SingleElectron_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
+void SingleElectron_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="", int year=-1)
 {
 
 
-    if(fin == "") fin = string("EOS_files/2017/diboson_files.txt");
+    if(fin == "") fin = string("EOS_files/2017/non_QCD_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/ElEl_fake_rate_contam_test.root", false);
-    nt.year = 2017;
+    if(year == -1) nt.year = 2017;
+    nt.year = year;
+
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_electrons =  true;

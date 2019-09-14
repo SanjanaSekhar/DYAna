@@ -3,7 +3,7 @@
 
 void template_check(){
     
-        int year = 2017;
+        int year = 2018;
         init(year);
         setup_all_SFs(year);
         string sys_label = string("");
@@ -105,7 +105,7 @@ void template_check(){
         leg->AddEntry(h1_mumu_back, "Straight Hist", "f");
         leg->Draw();
 
-        c_mumu->Print("mumu17_template_check.png");
+        c_mumu->Print("mumu18_template_check.png");
 
 
         h_elel_alpha->Scale(norm * alpha_denom);
@@ -139,7 +139,7 @@ void template_check(){
 
         leg->Draw();
 
-        c_elel->Print("elel17_template_check.png");
+        c_elel->Print("elel18_template_check.png");
 
 
         /*

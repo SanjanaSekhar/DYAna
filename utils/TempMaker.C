@@ -282,7 +282,7 @@ Double_t TempMaker::getEvtWeight(){
     }
     double base_weight = gen_weight * (*systematic) * pu_SF;
     if(do_btag_sys != 0){
-#if ndef STAND_ALONE
+#ifndef STAND_ALONE
         jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
         jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
 #endif

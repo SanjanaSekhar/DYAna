@@ -37,12 +37,15 @@ void compute_norms(FILE *root_files, Double_t *norms, unsigned int *nFiles){
             *(end+1) = 0;
 
             TFile *f1=  TFile::Open(lines);
-            (*nFiles)++;
-            f1->cd("EventCounter");
-            TDirectory *subdir = gDirectory;
-            TH1D *t1 = (TH1D *)subdir->Get("totweight");
-            sample_weight += t1->GetSumOfWeights();
-            f1->Close();
+            if(f1 == nullptr) continue;
+            else{
+                (*nFiles)++;
+                f1->cd("EventCounter");
+                TDirectory *subdir = gDirectory;
+                TH1D *t1 = (TH1D *)subdir->Get("totweight");
+                sample_weight += t1->GetSumOfWeights();
+                f1->Close();
+            }
         }
     }
     norms[sample_i] = sample_xsec/sample_weight;
@@ -289,8 +292,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
 
 
     outTrees[idx]->Branch("has_nobjets", &has_nobjets, "has_nobjets/I");
-    outTrees[idx]->Branch("jet1_btag", &jet1_btag, "jet1_btag/D");
-    outTrees[idx]->Branch("jet2_btag", &jet2_btag, "jet2_btag/D");
+    outTrees[idx]->Branch("jet1_btag", &jet1_btag);
+    outTrees[idx]->Branch("jet2_btag", &jet2_btag);
     /*
     if(year != 2016){
         outTrees[idx]->Branch("jet1_btag", &jet1_btag, "jet1_btag/D");

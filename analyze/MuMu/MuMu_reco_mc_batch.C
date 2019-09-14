@@ -7,7 +7,8 @@ void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", int year =-
 {
     if(fin == "") fin = string("EOS_files/2017/DY_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/MuMu_DY_test17.root", false);
-    if (year == -1) nt.year = 2016;
+    if (year == -1) year = 2016;
+    nt.year = year;
 
     nt.nJobs = nJobs;
     nt.iJob = iJob;

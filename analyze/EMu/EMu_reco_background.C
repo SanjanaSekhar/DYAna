@@ -3,12 +3,15 @@
 
 
 
-void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "")
+void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
 {
 
-    if(fin == "") fin = string("EOS_files/2017/TTbar_files.txt");
+    if(fin == "") fin = string("EOS_files/2018/TTbar_files.txt");
     NTupleReader nt(fin.c_str() ,"output_files/EMu_test.root", false);
-    nt.year = 2017;
+    if (year == -1) year = 2018;
+    nt.year = year;
+
+
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_emu = true;

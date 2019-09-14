@@ -179,7 +179,6 @@ void make_ss_mc_templates(int year){
 void make_ss_templates(int year=2016){
 
     init(year);
-    init_ss(year);
 
 
     ss_fout = TFile::Open(ss_fout_name, "RECREATE");
