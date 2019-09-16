@@ -29,7 +29,7 @@
 #include "root_files.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2017;
+const int year = 2018;
 
 
 void draw_cmp(){
@@ -248,6 +248,12 @@ void draw_cmp(){
     leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");
     leg1->AddEntry(QCD_m, "QCD + WJets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
+
+
+    TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
+    TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
+    TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
+
     leg1->Draw();
 
     //gPad->BuildLegend();
@@ -317,7 +323,6 @@ void draw_cmp(){
     cost_stack->SetMinimum(1);
     data_cost->Draw("P E same");
     cost_pad1->Update();
-    TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
     leg2->Draw();
 
     CMS_lumi(cost_pad1, year, 11 );
@@ -385,7 +390,6 @@ void draw_cmp(){
     data_pt->Draw("P E same");
     pt_pad1->SetLogy();
     c_pt->Update();
-    TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
     leg3->Draw();
 
     c_pt->cd();
@@ -449,7 +453,6 @@ void draw_cmp(){
     data_xf->Draw("P E same");
     xf_pad1->SetLogy();
     c_xf->Update();
-    TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
     leg4->Draw();
 
     c_xf->cd();

@@ -27,7 +27,7 @@
 #include "../../utils/HistMaker.C"
 #include "../../utils/root_files.h"
 
-int year = 2017;
+int year = 2018;
 
 
 
@@ -102,7 +102,7 @@ void draw_cmp(){
     pad1->cd();
     pad1->SetLogy();
     m_stack->Draw("hist");
-    m_stack->SetMaximum(65000);
+    m_stack->SetMaximum(10000);
     gStyle->SetEndErrorSize(4);
     data_m->SetMarkerStyle(kFullCircle);
     data_m->SetMarkerColor(1);

@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_ELECTRONS;
-int year = 2017;
+int year = 2018;
 
 
 void draw_samesign_cmp(){
@@ -234,6 +234,12 @@ void draw_samesign_cmp(){
     leg1->AddEntry(DY_m, "DY (miss-sign)", "f");
     leg1->AddEntry(QCD_m, "QCD + WJets", "f");
     leg1->AddEntry(back_m, "t#bar{t} + wt + WW + WZ + ZZ", "f");
+
+
+    TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
+    TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
+    TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
+
     leg1->Draw();
 
     //gPad->BuildLegend();
@@ -300,10 +306,10 @@ void draw_samesign_cmp(){
     data_cost->SetMarkerStyle(kFullCircle);
     data_cost->SetMarkerColor(1);
     cost_stack->SetMinimum(1);
-    cost_stack->SetMaximum(2000);
+    cost_stack->SetMaximum(3000);
     data_cost->Draw("P E same");
     cost_pad1->Update();
-    leg1->Draw();
+    leg2->Draw();
 
     c_cost->Update();
 
@@ -371,7 +377,7 @@ void draw_samesign_cmp(){
     data_pt->Draw("P E same");
     pt_pad1->SetLogy();
     c_pt->Update();
-    leg1->Draw();
+    leg3->Draw();
 
     c_pt->cd();
     TPad *pt_pad2 = new TPad("pt_pad2", "pad2", 0.,0,.98,0.3);
@@ -434,7 +440,7 @@ void draw_samesign_cmp(){
     data_xf->Draw("P E same");
     xf_pad1->SetLogy();
     c_xf->Update();
-    leg1->Draw();
+    leg4->Draw();
 
     c_xf->cd();
     TPad *xf_pad2 = new TPad("xf_pad2", "pad2", 0.,0,.98,0.3);

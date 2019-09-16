@@ -29,7 +29,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2017;
+const int year = 2018;
 
 
 
@@ -228,7 +228,7 @@ void draw_cmp(){
     pad1->cd();
     pad1->SetLogy();
     m_stack->Draw("hist");
-    m_stack->SetMaximum(65000);
+    m_stack->SetMaximum(75000);
     gStyle->SetEndErrorSize(4);
     data_m->SetMarkerStyle(kFullCircle);
     data_m->SetMarkerColor(1);

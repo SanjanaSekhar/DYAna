@@ -221,7 +221,7 @@ void init_emu(int year){
         f_emu_back = TFile::Open("../analyze/output_files/2016/EMu16_comb_back_sep15.root");
         t_emu_back = (TTree *)f_emu_back->Get("T_sig");
 
-        f_emu_dy = TFile::Open("../analyze/output_files/2016/EMu16_dy_sep14.root");
+        f_emu_dy = TFile::Open("../analyze/output_files/2016/EMu16_dy_sep15.root");
         t_emu_dy = (TTree *)f_emu_dy->Get("T_sig");
 
         f_emu_WJets_contam = TFile::Open("../analyze/output_files/2016/EMu16_fakes_contam_sep15.root");

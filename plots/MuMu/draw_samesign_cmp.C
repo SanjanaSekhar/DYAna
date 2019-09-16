@@ -1,4 +1,4 @@
-
+#define STAND_ALONE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,13 +28,13 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
+int year = 2016;
 
 
 
 void draw_samesign_cmp(){
     setTDRStyle();
-    init();
-    init_ss();
+    init(year);
 
     TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", 30, 150, 2000);
 
@@ -88,12 +88,12 @@ void draw_samesign_cmp(){
     int m_high = 10000.;
     bool ss = true;
 
-    make_m_cost_pt_xf_hist(t_mumu_ss_data, data_m, data_cost, data_pt, data_xf, true, type,  do_RC, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_back, diboson_m, diboson_cost, diboson_pt, diboson_xf, false, type,  do_RC, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, false, type,  do_RC, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_data, data_m, data_cost, data_pt, data_xf, true, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_back, diboson_m, diboson_cost, diboson_pt, diboson_xf, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, false, type,  do_RC, year, m_low, m_high, ss);
 
     bool in_os_region = false;
-    Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, m_low, m_high, ss, in_os_region);
+    Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
 
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), diboson_m->Integral(), DY_m->Integral());
 
@@ -187,12 +187,15 @@ void draw_samesign_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg3 = new TLegend(0.3, 0.3);
-    leg3->AddEntry(data_pt, "data", "p");
-    leg3->AddEntry(DY_pt, "DY (miss-sign)", "f");
-    leg3->AddEntry(QCD_pt, "QCD + WJets", "f");
-    leg3->AddEntry(diboson_m, "t#bar{t} + wt + WW + WZ + ZZ", "f");
-    leg3->Draw();
+    TLegend *leg1 = new TLegend(0.3, 0.3);
+    leg1->AddEntry(data_pt, "data", "p");
+    leg1->AddEntry(DY_pt, "DY (miss-sign)", "f");
+    leg1->AddEntry(QCD_pt, "QCD + WJets", "f");
+    leg1->AddEntry(diboson_m, "t#bar{t} + wt + WW + WZ + ZZ", "f");
+    TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
+    TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
+    TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
+    leg1->Draw();
 
     //gPad->BuildLegend();
     c_m->cd();
@@ -261,7 +264,7 @@ void draw_samesign_cmp(){
     cost_stack->SetMinimum(1);
     data_cost->Draw("P E same");
 
-    leg3->Draw();
+    leg2->Draw();
     cost_pad1->Update();
 
     c_cost->Update();
