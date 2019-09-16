@@ -8,8 +8,6 @@
 #include "TRandom3.h"
 #include "TTree.h"
 #include "TLorentzVector.h"
-#include "ScaleFactors.C"
-#include "BTagUtils.C"
 #include "HistMaker.C"
 #include "roccor_Run2_v3/RoccoR.cc"
 

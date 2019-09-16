@@ -9,7 +9,7 @@ void EMu_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year = -1)
 
     if (fin == "") fin = string("EOS_files/2017/SingleMuon_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/EMu_data_test.root", true);
-    if (year == -1) year = 2016;
+    if (year == -1) year = 2017;
     nt.year = year;
 
     nt.nJobs = nJobs;
@@ -41,12 +41,12 @@ void EMu_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year = -1)
                 else if(!nt.opp_sign && nt.mu_iso0 && nt.el_iso0){ //samesign region
                     nt.outTrees[3]->Fill();
                 }
-                else if(one_iso){ //wjets control region
+                else if(nt.opp_sign && one_iso){ //wjets control region
                     if(nt.mu_iso0) iso_lep = 0;
                     else          iso_lep = 1;
                     nt.outTrees[1]->Fill();
                 }
-                else if(!nt.mu_iso0 && !nt.el_iso0){ //qcd control region
+                else if(nt.opp_sign && !nt.mu_iso0 && !nt.el_iso0){ //qcd control region
                     nt.outTrees[2]->Fill();
                 }
             }

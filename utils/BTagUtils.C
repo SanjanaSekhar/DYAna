@@ -1,6 +1,6 @@
 
-#include "TH2D.h"
 #ifndef STAND_ALONE
+#include "TH2D.h"
 #include "CondFormats/BTauObjects/interface/BTagCalibration.h"
 #include "CondTools/BTau/interface/BTagCalibrationReader.h"
 

@@ -44,12 +44,12 @@ void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-
                 else if(!nt.opp_sign && nt.mu_iso0 && nt.el_iso0){ //samesign region
                     nt.outTrees[3]->Fill();
                 }
-                else if(one_iso){ //wjets control region
+                else if(nt.opp_sign && one_iso){ //wjets control region
                     if(nt.mu_iso0) iso_lep = 0;
                     else          iso_lep = 1;
                     nt.outTrees[1]->Fill();
                 }
-                else if(!nt.mu_iso0 && !nt.el_iso0){ //qcd control region
+                else if(nt.opp_sign && !nt.mu_iso0 && !nt.el_iso0){ //qcd control region
                     nt.outTrees[2]->Fill();
                 }
             }

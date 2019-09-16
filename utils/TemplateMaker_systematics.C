@@ -16,7 +16,7 @@ void cleanup_template(TH2F *h){
         for(int j=0; j<= h->GetNbinsY()+1; j++){
             //printf("%i %i \n", i,j);
             float val = h->GetBinContent(i,j);
-            if(val< 0.) h->SetBinContent(i,j,0.);
+            if(val< 1e-8) h->SetBinContent(i,j,1e-8);
         }
     }
 }
@@ -118,6 +118,8 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
+    cleanup_template(h_sym);
+    cleanup_template(h_alpha);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events \n \n", n);
     return 0;
@@ -334,11 +336,13 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
         Double_t evt_fakerate, lep1_fakerate, lep2_fakerate, el1_eta, el1_pt, mu1_eta, mu1_pt;
         TLorentzVector *el = 0;
         TLorentzVector *mu = 0;
-        Int_t iso_lep;
-        Float_t met_pt;
+        Int_t iso_lep, no_bjets;
+        Float_t met_pt, el_charge, mu_charge;
         Int_t nJets;
         nJets = 2;
         pu_SF=1;
+        t->SetBranchAddress("el1_charge", &el_charge);
+        t->SetBranchAddress("mu1_charge", &mu_charge);
         t->SetBranchAddress("met_pt", &met_pt);
         t->SetBranchAddress("jet2_btag", &jet2_btag);
         t->SetBranchAddress("jet1_btag", &jet1_btag);
@@ -346,6 +350,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
         t->SetBranchAddress("jet2_pt", &jet2_pt);
         //t1->SetBranchAddress("evt_fakerate", &evt_fakerate);
         //t1->SetBranchAddress("el_fakerate", &el1_fakerate);
+        t->SetBranchAddress("has_nobjets", &no_bjets);
         t->SetBranchAddress("el1_pt", &el1_pt);
         t->SetBranchAddress("mu1_pt", &mu1_pt);
         t->SetBranchAddress("el1_eta", &el1_eta);
@@ -369,7 +374,6 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
         Long64_t size  =  t->GetEntries();
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
             if(l==0){
                 //iso_lep: 0 = muons, 1 electrons
                 if(iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);
@@ -405,12 +409,12 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
             }
 
             TLorentzVector cm = *el + *mu;
-            cost = get_cost(*el, *mu);
-            float pt = cm.Pt();
-            float xF = compute_xF(cm); 
+            bool opp_sign = ((abs(el_charge - mu_charge)) > 0.01);
             float m = cm.M();
-            bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets;
+            bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && opp_sign;
             if(pass){
+                float xF = compute_xF(cm); 
+                cost = get_cost(*el, *mu);
                 h->Fill(xF, cost, 0.5*evt_fakerate);
                 h->Fill(xF, -cost, 0.5*evt_fakerate);
             }
@@ -431,8 +435,8 @@ void gen_emu_template(TTree *t1, TH2F *h,
     Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
     Double_t jet1_pt, jet2_pt, jet1_b_weight, jet2_b_weight, pu_SF;
     jet1_b_weight = jet2_b_weight =1.;
-    Float_t met_pt;
-    Int_t nJets;
+    Float_t met_pt, el_charge, mu_charge;
+    Int_t nJets, no_bjets;
     nJets = 2;
     pu_SF=1;
     TLorentzVector *el=0;
@@ -441,12 +445,15 @@ void gen_emu_template(TTree *t1, TH2F *h,
 
     t1->SetBranchAddress("el", &el);
     t1->SetBranchAddress("mu", &mu);
+    t1->SetBranchAddress("el1_charge", &el_charge);
+    t1->SetBranchAddress("mu1_charge", &mu_charge);
     t1->SetBranchAddress("met_pt", &met_pt);
     t1->SetBranchAddress("jet2_btag", &jet2_btag);
     t1->SetBranchAddress("jet1_btag", &jet1_btag);
     t1->SetBranchAddress("jet1_pt", &jet1_pt);
     t1->SetBranchAddress("jet2_pt", &jet2_pt);
     t1->SetBranchAddress("nJets", &nJets);
+    t1->SetBranchAddress("has_nobjets", &no_bjets);
     if(!is_data){
         t1->SetBranchAddress("gen_weight", &gen_weight);
         t1->SetBranchAddress("pu_SF", &pu_SF);
@@ -462,14 +469,16 @@ void gen_emu_template(TTree *t1, TH2F *h,
 
     for (int i=0; i<size; i++) {
         t1->GetEntry(i);
-        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
+        bool opp_sign = ((abs(el_charge - mu_charge)) > 0.01);
         TLorentzVector cm;
         cm = *el + *mu;
         m = cm.M();
         double cost = get_cost(*el, *mu);
         xF  = compute_xF(cm); 
 
-        if(m >= m_low && m <= m_high && met_pt < 50. && no_bjets){
+        bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && opp_sign;
+
+        if(pass){
             if(is_data){
                 h->Fill(xF, cost, 0.5);
                 h->Fill(xF, -cost, 0.5);

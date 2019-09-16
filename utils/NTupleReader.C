@@ -564,8 +564,8 @@ void NTupleReader::getEvent(int i){
 
 
             emu_ids = el_IDMedium_NoIso[0] && mu_IsTightMuon[0] &&
-                mu_Pt[0] > min_pt &&  el_ScaleCorr[1] * el_Pt[1] > 15. &&
-                abs(mu_Eta[0])  && goodElEta(el_SCEta[1]);
+                mu_Pt[0] > min_pt &&  el_ScaleCorr[0] * el_Pt[0] > 15. &&
+                abs(mu_Eta[0])  && goodElEta(el_SCEta[0]);
 
             el_iso0 = el_IDMedium[0];
             mu_iso0 = mu_PFIso[0] < mu_iso_cut;
