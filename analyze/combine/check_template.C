@@ -1,11 +1,11 @@
 #include "make_templates.C"
 
 
-void template_check(){
+void check_template(){
     
-        int year = 2018;
+        int year = 2017;
         init(year);
-        setup_all_SFs(year);
+        //setup_all_SFs(year);
         string sys_label = string("");
 
         char title[100];
@@ -37,20 +37,21 @@ void template_check(){
 
         TH2F * h_elel_plain = new TH2F("elel_plain", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
 
-        double m_low = 200.;
+        double m_low = 150.;
        
-        double m_high = 250.;
-        Double_t alpha_denom = alphas_denom[1];
+        double m_high = 200.;
+        Double_t alpha_denom = alphas_denom[0];
 
         bool ss = false;
 
-        gen_mc_template(t_elel_mc, alpha_denom, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS, do_RC, "");
         //h_elel_sym->Print("all");
         //h_elel_asym->Print("all");
         //h_elel_alpha->Print("all");
 
 
         gen_mc_template(t_mumu_mc, alpha_denom, h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, do_RC, "");
+
+        gen_mc_template(t_elel_mc, alpha_denom, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS, do_RC, "");
         TTree *mumu_ts[1] = {t_mumu_mc};
         printf("Making mumu back \n");
         gen_combined_background_template(1, mumu_ts, h_mumu_plain, year, m_low, m_high, FLAG_MUONS,  do_RC, ss, "");
@@ -63,19 +64,22 @@ void template_check(){
 
 
 
+
         TH2F *h_elel_dy, *h_mumu_dy;
-        float afb = 0.59;
+        float afb = 0.60;
+        //alpha_denom = 0.05;
 
         printf("trying to add");
 
         double norm = 3./4./(2.+alpha_denom);
 
-        h_mumu_alpha->Scale(norm * alpha_denom);
-
         auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
         auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
         h_mumu_pl.Scale(0.5);
         h_mumu_mn.Scale(0.5);
+
+        h_mumu_alpha->Scale(norm * alpha_denom);
+
         h_mumu_dy = (TH2F *) h_mumu_pl.Clone("h_mumu_dy");
         h_mumu_dy->Add(&h_mumu_pl, &h_mumu_mn, (norm + afb), (norm - afb));
 
@@ -92,6 +96,8 @@ void template_check(){
         h1_mumu_back->SetLineColor(kGreen +3);
         h1_mumu_templ->SetLineColor(kBlack);
         h1_mumu_lo->SetLineColor(kRed+1);
+        h1_mumu_back->Print("all");
+        h1_mumu_templ->Print("all");
 
 
         TCanvas *c_mumu = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
@@ -105,7 +111,7 @@ void template_check(){
         leg->AddEntry(h1_mumu_back, "Straight Hist", "f");
         leg->Draw();
 
-        c_mumu->Print("mumu18_template_check.png");
+        c_mumu->Print("mumu17_template_checka.png");
 
 
         h_elel_alpha->Scale(norm * alpha_denom);
@@ -139,7 +145,7 @@ void template_check(){
 
         leg->Draw();
 
-        c_elel->Print("elel18_template_check.png");
+        c_elel->Print("elel17_template_checka.png");
 
 
         /*

@@ -8,8 +8,8 @@ class DY_AFB(PhysicsModel):
     def doParametersOfInterest(self):
         """Create POI and other parameters, and define the POI set."""
 
-        self.modelBuilder.doVar("Afb[0.6,-0.75,0.75]");
-        self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
+        self.modelBuilder.doVar("Afb[0.6,-0.68,0.68]");
+        self.modelBuilder.doVar("A0[0.05, 0., 1.0]");
         self.modelBuilder.doSet("POI","Afb,A0")
 
         # ss templates
@@ -17,7 +17,7 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.doVar("Rdy_ee_ss[1.0,0.0,10.0]");
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
-        self.modelBuilder.factory_('expr::Norm("3.0/(4.0*(2.0+@0))",Alph)')
+        self.modelBuilder.factory_('expr::Norm("3.0/4.0/(2.0+@0)",Alph)')
         self.modelBuilder.factory_('expr::RAlph("@0*@1",Alph,Norm)')
         self.modelBuilder.factory_('expr::Rpl("(@0+@1)",Norm,Afb)')
         self.modelBuilder.factory_('expr::Rmn("(@0-@1)",Norm,Afb)')

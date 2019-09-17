@@ -39,8 +39,8 @@ int n_m_bins = 6;
 Double_t m_bins[] = {150, 200,   250,    350,    500,    700, 100000};
 Double_t alphas_num[6] = {0.125, 0.115, 0.07, 0.065, 0.05, 0.04};
 Double_t alpha_num_unc[6] = {0.04, 0.04, 0.04, 0.04,   0.03, 0.03};
-Double_t alphas_denom[6] = {0.15, 0.13, 0.08, 0.065, 0.07, 0.045};
-Double_t alpha_denom_unc[6] = {0.05, 0.03, 0.03, 0.04,   0.04, 0.04};
+Double_t alphas_denom[6] =    {0.15, 0.13, 0.08, 0.07, 0.07, 0.045};
+Double_t alpha_denom_unc[6] = {0.04, 0.02, 0.02, 0.03,   0.03, 0.04};
 
 void init(int year){
     //MC templates
@@ -145,7 +145,7 @@ void init(int year){
         t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
 
 
-        f_mumu_WJets_contam = TFile::Open("../analyze/output_files/2017/MuMu17_fakes_contam_sep10.root");
+        f_mumu_WJets_contam = TFile::Open("../analyze/output_files/2017/MuMu17_fakes_contam_sep15.root");
         t_mumu_WJets_contam = (TTree *)f_mumu_WJets_contam->Get("T_WJets");
         t_mumu_QCD_contam = (TTree *)f_mumu_WJets_contam->Get("T_QCD");
         return;

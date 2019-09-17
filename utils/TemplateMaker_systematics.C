@@ -9,6 +9,29 @@
 using namespace std;
 
 
+void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
+    //avoid negative pdfs by fixing up template edges
+    int n_xf_bins = h_sym->GetNbinsX();
+    int n_cost_bins = h_sym->GetNbinsY();
+
+    for(int i=1; i<=n_xf_bins; i++){
+        for(int j=1; j<= n_cost_bins/2; j++){
+            //printf("%i %i \n", i,j);
+            float val_sym = h_sym->GetBinContent(i,j);
+            float val_asym = h_asym->GetBinContent(i,j);
+            if(val_sym - 2*abs(val_asym) <= 0.){
+                //at LO needs to sym/2, give some cushion b/c of alpha term
+                float val_asym_new = -val_sym/2.5;
+                int opp_j = (n_cost_bins + 1) -j;
+                h_asym->SetBinContent(i, j, val_asym_new);
+                h_asym->SetBinContent(i, opp_j, -val_asym_new);
+                printf("Fixed up bin %i %i. Old asym val was %.2f, new is %.2f \n\n", i, j, val_asym, val_asym_new);
+            }
+        }
+
+    }
+}
+
 
 void cleanup_template(TH2F *h){
     //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
@@ -96,6 +119,7 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
             n++;
             double gen_cost = tm.cost_st;
             double denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
+            //double denom = 3./4./(2.+alpha_denom)*(1.+gen_cost*gen_cost + alpha_denom * (1. - gen_cost*gen_cost));
             double reweight_a = gen_cost/ denom;
             double reweight_s = (1 + gen_cost*gen_cost)/denom;
             double reweight_alpha = (1 - gen_cost*gen_cost)/denom;
@@ -118,8 +142,8 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
-    cleanup_template(h_sym);
-    cleanup_template(h_alpha);
+    //cleanup_template(h_sym);
+    fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events \n \n", n);
     return 0;
