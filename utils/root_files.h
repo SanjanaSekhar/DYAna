@@ -46,7 +46,7 @@ void init(int year){
     //MC templates
     printf("init year %i  \n", year);
     if(year == 2016){
-        f_elel_data = TFile::Open("../analyze/output_files/2016/ElEl16_data_sep11.root");
+        f_elel_data = TFile::Open("../analyze/output_files/2016/ElEl16_data_sep16.root");
         t_elel_data = (TTree *)f_elel_data->Get("T_sig"); 
         t_elel_ss_data = (TTree *)f_elel_data->Get("T_ss");
         t_elel_WJets = (TTree *) f_elel_data->Get("T_WJets");
