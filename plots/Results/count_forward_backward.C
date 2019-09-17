@@ -1,3 +1,4 @@
+#define STAND_ALONE
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -20,19 +21,18 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "Math/Functor.h"
-#include "../../Utils/HistMaker.C"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
-#include "../../Utils/root_files.h"
+#include "../../utils/HistMaker.C"
+#include "../../utils/root_files.h"
 
 
 
-
+int year = 2017;
 
 
 void count_forward_backward(){
-    init();
-    init_gamgam();
+    init(year);
 
     int flag_type = FLAG_M_BINS;
 
@@ -62,24 +62,24 @@ void count_forward_backward(){
         TH1F *h_dummy = new TH1F("dummy", "", 100, 0, 100.);
         bool do_RC = true;
         int type = FLAG_MUONS;
-        make_m_cost_pt_xf_hist(t_mumu_data, h_dummy, mumu_data_cost, h_dummy, h_dummy, true, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_mumu_back, h_dummy, mumu_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_mumu_gamgam, h_dummy, mumu_gam_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_mumu_nosig, h_dummy, mumu_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_mumu_mc, h_dummy, mumu_dy_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_mumu_data, h_dummy, mumu_data_cost, h_dummy, h_dummy, true, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_mumu_back, h_dummy, mumu_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_mumu_gamgam, h_dummy, mumu_gam_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_mumu_nosig, h_dummy, mumu_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_mumu_mc, h_dummy, mumu_dy_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
         bool ss_qcd = true;
         bool in_os_region = true;
-        Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_dummy, mumu_QCD_cost, h_dummy, h_dummy, var_low, var_high, ss_qcd, in_os_region);
+        Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_dummy, mumu_QCD_cost, h_dummy, h_dummy, year, var_low, var_high, ss_qcd, in_os_region);
 
 
         type = FLAG_ELECTRONS;
-        make_m_cost_pt_xf_hist(t_elel_data, h_dummy, elel_data_cost, h_dummy, h_dummy, true, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_elel_back, h_dummy, elel_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_elel_gamgam, h_dummy, elel_gam_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_elel_nosig, h_dummy, elel_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
-        make_m_cost_pt_xf_hist(t_elel_mc, h_dummy, elel_dy_cost, h_dummy, h_dummy, false, type, do_RC, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_elel_data, h_dummy, elel_data_cost, h_dummy, h_dummy, true, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_elel_back, h_dummy, elel_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_elel_gamgam, h_dummy, elel_gam_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_elel_nosig, h_dummy, elel_mc_back_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
+        make_m_cost_pt_xf_hist(t_elel_mc, h_dummy, elel_dy_cost, h_dummy, h_dummy, false, type, do_RC, year, var_low, var_high);
 
-        Fakerate_est_el(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_dummy, elel_QCD_cost, h_dummy, h_dummy, var_low, var_high, ss_qcd);
+        Fakerate_est_el(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_dummy, elel_QCD_cost, h_dummy, h_dummy, year, var_low, var_high, ss_qcd);
 
         double n_mumu_f_data = mumu_data_cost->GetBinContent(2);
         double n_mumu_b_data = mumu_data_cost->GetBinContent(1);
