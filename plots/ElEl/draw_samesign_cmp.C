@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_ELECTRONS;
-int year = 2018;
+int year = 2016;
 
 
 void draw_samesign_cmp(){

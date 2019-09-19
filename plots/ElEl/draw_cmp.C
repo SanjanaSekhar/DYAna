@@ -29,7 +29,7 @@
 #include "root_files.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2018;
 
 
 void draw_cmp(){
