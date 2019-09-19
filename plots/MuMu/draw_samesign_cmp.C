@@ -28,7 +28,7 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
-int year = 2016;
+int year = 2018;
 
 
 
@@ -100,7 +100,7 @@ void draw_samesign_cmp(){
 
     Double_t n_data = data_m->Integral();
     Double_t n_est = diboson_m->Integral() + QCD_m->Integral() + DY_m->Integral();
-    bool normalize = false;
+    bool normalize = true;
     
     if(normalize){
         Double_t n_data = data_m->Integral();
@@ -261,7 +261,8 @@ void draw_samesign_cmp(){
     cost_stack->Draw("hist");
     data_cost->SetMarkerStyle(kFullCircle);
     data_cost->SetMarkerColor(1);
-    cost_stack->SetMaximum(300);
+    double c_max = std::max(cost_stack->GetMaximum(), data_cost->GetMaximum())* 1.2;
+    cost_stack->SetMaximum(c_max);
     cost_stack->SetMinimum(1);
     data_cost->Draw("P E same");
 

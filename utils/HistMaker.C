@@ -92,9 +92,9 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
     Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_btag, jet2_btag, gen_weight;
     Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
     Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
-    Double_t jet1_pt, jet2_pt, pu_SF;
-    Float_t met_pt;
-    Int_t nJets;
+    Double_t jet1_pt, jet2_pt, pu_SF, jet1_btag_SF, jet2_btag_SF;
+    Float_t met_pt, mu1_charge, el1_charge;
+    Int_t nJets, no_bjets;
     nJets = 2;
     pu_SF=1;
     TLorentzVector *el=0;
@@ -103,14 +103,19 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
 
     t1->SetBranchAddress("el", &el);
     t1->SetBranchAddress("mu", &mu);
+    t1->SetBranchAddress("mu1_charge", &mu1_charge);
+    t1->SetBranchAddress("el1_charge", &el1_charge);
     t1->SetBranchAddress("met_pt", &met_pt);
     t1->SetBranchAddress("jet2_btag", &jet2_btag);
     t1->SetBranchAddress("jet1_btag", &jet1_btag);
     t1->SetBranchAddress("jet1_pt", &jet1_pt);
     t1->SetBranchAddress("jet2_pt", &jet2_pt);
     t1->SetBranchAddress("nJets", &nJets);
+    t1->SetBranchAddress("has_nobjets", &no_bjets);
     if(!is_data){
         t1->SetBranchAddress("gen_weight", &gen_weight);
+        t1->SetBranchAddress("jet1_btag_SF", &jet1_btag_SF);
+        t1->SetBranchAddress("jet2_btag_SF", &jet2_btag_SF);
         t1->SetBranchAddress("pu_SF", &pu_SF);
         t1->SetBranchAddress("era1_HLT_SF", &era1_HLT_SF);
         t1->SetBranchAddress("era1_iso_SF", &era1_iso_SF);
@@ -124,14 +129,14 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
 
     for (int i=0; i<size; i++) {
         t1->GetEntry(i);
-        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
         TLorentzVector cm;
         cm = *el + *mu;
         m = cm.M();
         double cost = get_cost(*el, *mu);
         double xf = compute_xF(cm); 
+        bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
 
-        if(m >= m_low && m <= m_high && met_pt < 50. && no_bjets){
+        if(m >= m_low && m <= m_high && met_pt < 50. && no_bjets && opp_sign){
             if(is_data){
                 h_m->Fill(m);
                 if(ss) h_cost->Fill(abs(cost));
@@ -142,16 +147,18 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
             else{
                 nEvents++;
                 Double_t evt_weight = gen_weight * pu_SF * el_id_SF * el_reco_SF;
-                Double_t era1_weight = era1_iso_SF * era1_id_SF;
-                Double_t era2_weight = era2_iso_SF * era2_id_SF;
-                era1_weight *= era1_HLT_SF;
-                era2_weight *= era2_HLT_SF;
+                Double_t era1_SF = era1_iso_SF * era1_id_SF * era1_HLT_SF;
+                Double_t era2_SF = era2_iso_SF * era2_id_SF * era2_HLT_SF;
+
+                if(nJets >= 1) evt_weight *= jet1_btag_SF;
+                if(nJets >= 2) evt_weight *= jet2_btag_SF;
 
                 //printf(" %.2e %.2e %.2e \n", tot_weight, tot_weight *era1_weight, tot_weight *era2_weight);
                 Double_t tot_weight;
-                if(year ==2016) tot_weight = 1000 * (evt_weight * era2_weight * gh_lumi16 + evt_weight * era1_weight * bcdef_lumi16);
-                if(year ==2017) tot_weight = 1000 * evt_weight * era1_weight * mu_lumi17;
-                if(year ==2018) tot_weight = 1000 * evt_weight * era1_weight * mu_lumi18;
+                if(year ==2016) tot_weight = 1000 * (evt_weight * era2_SF * gh_lumi16 + evt_weight * era1_SF * bcdef_lumi16);
+                if(year ==2017) tot_weight = 1000 * evt_weight * era1_SF * mu_lumi17;
+                if(year ==2018) tot_weight = 1000 * evt_weight * era1_SF * mu_lumi18;
+
                 h_m->Fill(m, tot_weight);
                 if(ss) h_cost->Fill(abs(cost), tot_weight);
                 else h_cost->Fill(cost, tot_weight);
@@ -324,6 +331,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
+            else if(ss && flag1 == FLAG_MUONS)  pass = pass && !opp_sign;
             if(pass){
                 if(l==0 && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3), min(tm.mu1_pt, 150.));
                 if(l==0 && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3), min(tm.mu2_pt, 150.));
@@ -390,6 +398,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                 if(is_data) tot_evt_weight = evt_reweight; 
                 else{
                     tot_evt_weight = evt_reweight * tm.getEvtWeight();
+                    //printf("%.3e %.3e \n", tm.getEvtWeight(), tot_evt_weight);
                 }
 
 
@@ -408,7 +417,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             }
         }
         printf("After iter %i current fakerate est is %.0f \n", l, h_cost->Integral());
-        printf("N is %i \n", n);
+        //printf("N is %i \n", n);
 
     }
     cleanup_hist(h_m);
@@ -416,7 +425,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
     set_fakerate_errors(h_err, FR.h, h_cost);
-    if(ss){
+    if(ss && flag1 != FLAG_MUONS){
         float scaling = 1.0;
         if(in_os_region) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
         else scaling = tot_weight_ss / (tot_weight_ss + tot_weight_os);
@@ -497,6 +506,7 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
         }
 
         Long64_t size  =  t->GetEntries();
+        int n=0;
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
             bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
@@ -521,9 +531,11 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
                 if(year ==2018) mc_weight = 1000 * era1_weight * mu_lumi18;
 
 
+
                 if(iso_mu ==1) mu1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, FR.h);
                 else           mu1_fakerate = get_new_fakerate_prob(mu2_pt, mu2_eta, FR.h);
                 evt_fakerate = -(mu1_fakerate * mc_weight)/(1-mu1_fakerate);
+                //printf("%.3e %.3e \n", mc_weight, evt_fakerate);
             }
             if(l==3){
                 Double_t era1_weight = gen_weight * era1_HLT_SF *  era1_id_SF;
@@ -542,9 +554,10 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
             bool pass = m >= m_low && m <= m_high && met_pt < 50.  && no_bjets && not_cosmic;
             bool opp_sign = ((abs(mu1_charge - mu2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
-            else pass = pass && !opp_sign;
+            //else pass = pass && !opp_sign;
 
             if(pass){
+                n++;
                 //if(l==3) printf("Evt rate %.2e \n", evt_fakerate);
                 TLorentzVector cm = *mu_p + *mu_m;
 
@@ -563,6 +576,7 @@ void Fakerate_est_mu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree 
             }
         }
         printf("After iter %i current fakerate est is %.0f \n", l, h_cost->Integral());
+        printf("N is %i \n", n);
     }
     cleanup_hist(h_m);
     cleanup_hist(h_pt);
@@ -750,10 +764,12 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         TLorentzVector *el = 0;
         TLorentzVector *mu = 0;
         Int_t iso_lep;
-        Float_t met_pt;
-        Int_t nJets;
+        Float_t met_pt, el1_charge, mu1_charge;
+        Int_t nJets, no_bjets;
         nJets = 2;
         pu_SF=1;
+        t->SetBranchAddress("mu1_charge", &mu1_charge);
+        t->SetBranchAddress("el1_charge", &el1_charge);
         t->SetBranchAddress("met_pt", &met_pt);
         t->SetBranchAddress("jet2_btag", &jet2_btag);
         t->SetBranchAddress("jet1_btag", &jet1_btag);
@@ -768,6 +784,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         t->SetBranchAddress("nJets", &nJets);
         t->SetBranchAddress("el", &el);
         t->SetBranchAddress("mu", &mu);
+        t->SetBranchAddress("has_nobjets", &no_bjets);
 
         if(l==0 || l==2 ){
             t->SetBranchAddress("iso_lep", &iso_lep);
@@ -784,7 +801,6 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         Long64_t size  =  t->GetEntries();
         for (int i=0; i<size; i++) {
             t->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_btag, jet2_btag);
             if(l==0){
                 //iso_lep: 0 = muons, 1 electrons
                 if(iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);
@@ -824,7 +840,8 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
 
             TLorentzVector cm = *el + *mu;
             float m = cm.M();
-            bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && 
+            bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
+            bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && opp_sign && 
                 ((flag1 == FLAG_MUONS && mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && el1_pt > 29.));
             if(pass){
                 //if(l==3) printf("Evt fr %.2e \n", evt_fakerate);

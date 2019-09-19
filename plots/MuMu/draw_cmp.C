@@ -153,10 +153,9 @@ void draw_cmp(){
     //gg_cost->Scale(0.);
     //gg_m->Scale(0.);
 
-    bool ss_qcd = true;
+    bool ss_qcd = false;
     bool in_os_region = true;
-    Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, 
-            year, m_low, m_high, ss_qcd, in_os_region);
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, type, year, m_low, m_high, ss_qcd, in_os_region);
     //QCD_cost->Scale(0.);
 
 
@@ -228,7 +227,7 @@ void draw_cmp(){
     pad1->cd();
     pad1->SetLogy();
     m_stack->Draw("hist");
-    m_stack->SetMaximum(75000);
+    //m_stack->SetMaximum(75000);
     gStyle->SetEndErrorSize(4);
     data_m->SetMarkerStyle(kFullCircle);
     data_m->SetMarkerColor(1);
