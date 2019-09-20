@@ -91,18 +91,13 @@ void TwoDToSymIdxs(int nYbins, int i, int j, int &sym1_idx, int &sym2_idx){
 }
 
 
-
-
-char* replace(char* str, char* a, char* b)
-{
-    int len  = strlen(str);
-    int lena = strlen(a), lenb = strlen(b);
-    for (char* p = str; (p = strstr(p, a)); ++p) {
-        if (lena != lenb) // shift end as needed
-            memmove(p+lenb, p+lena,
-                    len - (p - str) + lenb);
-        memcpy(p, b, lenb);
-    }
-    return str;
+bool replace(std::string& str, const std::string& from, const std::string& to) {
+//from https://stackoverflow.com/questions/3418231/replace-part-of-a-string-with-another-string
+    size_t start_pos = str.find(from);
+    if(start_pos == std::string::npos)
+        return false;
+    str.replace(start_pos, from.length(), to);
+    return true;
 }
+
 #endif

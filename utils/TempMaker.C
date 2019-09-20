@@ -190,7 +190,7 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("FAC") != string::npos && sys_shift < 0) systematic = &mu_F_down;
         else if(sys_label.find("alphaS") != string::npos && sys_shift < 0) systematic = &alphaS_down;
         else if(sys_label.find("alphaS") != string::npos && sys_shift > 0) systematic = &alphaS_up;
-        else if(sys_label.find("alpha") != string::npos) systematic = &one;
+        else if(sys_label.find("alphaDen") != string::npos) systematic = &one;
         else if(sys_label.find("pdf") != string::npos){
             if(sys_shift > 0) sscanf(sys_label.c_str(), "_pdf%iUp", &do_pdf_sys);
             else sscanf(sys_label.c_str(), "_pdf%iDown", &do_pdf_sys);

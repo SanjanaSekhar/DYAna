@@ -52,6 +52,10 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int fla
         R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", sign_scaling , 0., 1.);
         fprintf(f_log, "%s param %.4f 0.05 \n", R_sign_param, sign_scaling);
     }
+    else{
+        R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", 1.0, 0.99, 1.01);
+        fprintf(f_log, "%s param %.4f 0.0001 \n", R_sign_param, 1.0);
+    }
     for(int i=1; i <= n_xf_bins; i++){
         for(int j=1; j <= n_cost_bins; j++){
 
@@ -76,6 +80,12 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int fla
             sprintf(form_name2_os, "%s_form_%i",h_name, sym2_idx); 
             //prevent underflowing by fixing super small bins
             content = max(content, 0.001);
+            if(flag == FLAG_MUONS){
+                //muons only use opposite sign fakes
+                content *= 2.;
+                error *= 2.;
+            }
+
             if (content < error){
                 content = error/2.;
                 error = 0.1*content;
@@ -83,6 +93,7 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int fla
             else if(content < 2.5 * error){
                 error = 0.3*content;
             }
+            error = max(error, 0.0001);
             if(j<=(n_cost_bins/2)){
                 //printf("first fill \n");
                 RooRealVar *bin = new RooRealVar(bin_name, bin_name, content, 0., 10000.);
@@ -167,7 +178,10 @@ void make_qcd_templates(int year, FILE* f_log){
             n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
     h_mumu_qcd->SetDirectory(0);
     bool ss = true;
+    printf("making ElEl fakes template \n");
     float elel_sign_scaling = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS, ss);
+    printf("making MuMu fakes template \n");
+    ss = false; // muons use os only for their fakes
     float mumu_sign_scaling = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, ss);
 
     //combined os and ss regions to estimate qcd, scale it to estimate amount
@@ -399,8 +413,8 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/sep16_2017_test.root");
-    year = 2017;
+    const TString fout_name("combine/templates/sep19_2018_test.root");
+    year = 2018;
 
 
 
@@ -460,7 +474,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         fout->cd();
         gDirectory->cd(dirname);
         w->Write();
-        //write_groups(year, f_log);
+        write_groups(year, f_log);
         fclose(f_log);
         cleanup_mc_templates();
     }

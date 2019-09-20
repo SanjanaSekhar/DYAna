@@ -19,13 +19,18 @@ void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
             //printf("%i %i \n", i,j);
             float val_sym = h_sym->GetBinContent(i,j);
             float val_asym = h_asym->GetBinContent(i,j);
+            int opp_j = (n_cost_bins + 1) -j;
             if(val_sym - 2*abs(val_asym) <= 0.){
                 //at LO needs to sym/2, give some cushion b/c of alpha term
                 float val_asym_new = -val_sym/2.5;
-                int opp_j = (n_cost_bins + 1) -j;
                 h_asym->SetBinContent(i, j, val_asym_new);
                 h_asym->SetBinContent(i, opp_j, -val_asym_new);
                 printf("Fixed up bin %i %i. Old asym val was %.2f, new is %.2f \n\n", i, j, val_asym, val_asym_new);
+            }
+            if(val_sym < 1e-5){
+                val_sym = 1e-5;
+                h_sym->SetBinContent(i, j, val_sym);
+                h_sym->SetBinContent(i, opp_j, val_sym);
             }
         }
 
@@ -248,6 +253,7 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
             bool opp_sign = false;
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
+
             if(!ss) pass = pass && opp_sign;
             if(pass){
                 double evt_reweight = 0.;
@@ -335,7 +341,8 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
         h->Scale(0.);
         printf("zeroing Fakes template \n");
     }
-    float scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
+    float scaling = 1.;
+    if(ss) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     return scaling;
 }
 

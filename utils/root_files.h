@@ -92,7 +92,7 @@ void init(int year){
         t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
 
 
-        f_mumu_WJets_contam = TFile::Open("../analyze/output_files/2016/MuMu16_fakes_contam_sep14.root");
+        f_mumu_WJets_contam = TFile::Open("../analyze/output_files/2016/MuMu16_fakes_contam_sep15.root");
         t_mumu_WJets_contam = (TTree *)f_mumu_WJets_contam->Get("T_WJets");
         t_mumu_QCD_contam = (TTree *)f_mumu_WJets_contam->Get("T_QCD");
         return;

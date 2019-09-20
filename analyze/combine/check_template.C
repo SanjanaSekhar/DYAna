@@ -37,10 +37,10 @@ void check_template(){
 
         TH2F * h_elel_plain = new TH2F("elel_plain", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
 
-        double m_low = 150.;
+        double m_low = 500.;
        
-        double m_high = 200.;
-        Double_t alpha_denom = alphas_denom[0];
+        double m_high = 700.;
+        Double_t alpha_denom = alphas_denom[4];
 
         bool ss = false;
 
@@ -66,7 +66,7 @@ void check_template(){
 
 
         TH2F *h_elel_dy, *h_mumu_dy;
-        float afb = 0.60;
+        float afb = 0.70;
         //alpha_denom = 0.05;
 
         printf("trying to add");
@@ -96,6 +96,8 @@ void check_template(){
         h1_mumu_back->SetLineColor(kGreen +3);
         h1_mumu_templ->SetLineColor(kBlack);
         h1_mumu_lo->SetLineColor(kRed+1);
+        h_mumu_pl.Print("all");
+        h_mumu_mn.Print("all");
         h1_mumu_back->Print("all");
         h1_mumu_templ->Print("all");
 
