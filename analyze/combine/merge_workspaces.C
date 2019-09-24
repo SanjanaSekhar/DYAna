@@ -4,8 +4,8 @@
 void merge_workspaces(){
 
 
-    const TString f1_s("combine/templates/sep19_2018_test.root");
-    const TString fout_s("combine/templates/sep19_2018_merge.root");
+    const TString f1_s("combine/templates/sep20_2018_test.root");
+    const TString fout_s("combine/templates/sep20_2018_merge.root");
     TFile *f1 = TFile::Open(f1_s, "READ");
     TFile *fout = TFile::Open(fout_s, "RECREATE");
     char dirname[40];

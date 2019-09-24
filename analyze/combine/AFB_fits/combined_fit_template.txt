@@ -18,10 +18,10 @@ process                  alpha   fpl     fmn     bk      gam    qcd    alpha   f
 process                  -2      0       -1      1       5      2      -2      0       -1      1       5       2       4        4       3       1       1          3       2       1   
 rate                     -1      -1      -1      -1      -1     1      -1      -1      -1      -1      -1      1      -1       -1      -1       1      -1         -1       1      -1   
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-lumi            lnN     1.025  1.025   1.025   1.025   1.025    -      1.025  1.025  1.025   1.025   1.025     -     1.025   1.025   1.025     -     1.025       1.025      -      1.025
 dy_xsec         lnN     1.02   1.02    1.02      -       -      -      1.02   1.02   1.02     -       -        -     1.02    1.02    1.02      -       -         1.02       -       -   
 bk_xsec         lnN      -       -        -     1.05     -      -       -       -       -     1.05     -       -       -       -       -       -      1.05         -        -      1.05 
 gam_xsec        lnN      -       -        -      -      1.4     -       -       -       -      -      1.4      -       -       -       -       -       -           -        -       -   
+lumiYR          lnN     1.025  1.025   1.025   1.025   1.025    -      1.025  1.025  1.025   1.025   1.025     -     1.025   1.025   1.025     -     1.025       1.025      -      1.025
 
 PuYR            shape    1.0     1.0     1.0     1.0     1.0    -       1.0     1.0     1.0    1.0     1.0     -       -       -       -       -       -           -        -       -  
 BTAGYR          shape    1.0     1.0     1.0     1.0     1.0    -       1.0     1.0     1.0    1.0     1.0     -       -       -       -       -       -           -        -       -  
@@ -111,13 +111,14 @@ pdf60           shape    1.0     1.0     1.0     -       -      -      1.0     1
 # Add the systematics
 eeYR_qcd rateParam eeYR* qcd 1.0
 emuYR_qcd rateParam emuYR* qcd 1.0
-muYR_qcd rateParam muYR* qcd 1.0
+muYR_qcd rateParam mumuYR* qcd 1.0
+Rdy_eeYR_ss rateParam eeYR_ss dy 1.0 [0.,100.]
 
 eeYR_qcd param 1.0  0.4
 emuYR_qcd param 1.0  0.4
 muYR_qcd param 1.0  0.4
 
-#qcd ratio as a flat param
+#samesign norm 
 Rdy_eeYR_ss flatParam
 
 

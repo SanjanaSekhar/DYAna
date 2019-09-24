@@ -1,0 +1,20 @@
+{
+    "ee_qcd" : "ee_fakes_norm",
+    "mu_qcd" : "mumu fakes norm",
+    "emu_qcd" : "emu fakes norm",
+    "Rdy_ee_ss": "ee dy miss sign param",
+    "R_ee_os_fakes": "ee fakes ratio os to ss",
+    "alpha" : "#alpha (gauge boson polarization)",
+    "alphaDen" : "unweighting #alpha from aMC@NLO",
+     "alphaS" : "#alpha_{S}",
+     "FAC": "factorization scale",
+     "RENORM": "renormalization scale",
+     "Pu": "pileup",
+     "muRC" : "Rochestor_corrections",
+     "pdfs" : "pdfs (group)",
+     "ee_fake_shape" : "ee_fake_shape (group)",
+     "mumu_fake_shape" : "mumu_fake_shape (group)",
+     "emu_fake_shape" : "emu_fake_shape (group)"
+
+
+}
