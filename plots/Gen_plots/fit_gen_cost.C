@@ -54,7 +54,9 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
             && (!phot_ind || q1_id == 22 || q2_id ==22)
            //&& ((abs(lep_pls->Eta()) < 2.5) && (abs(lep_mns->Eta()) < 2.5))
                 ){
-            nSelected++;
+
+            if(gen_weight > 0.) nSelected++;
+            else nSelected--;
 
             double mu_p_pls = (lep_pls->E()+lep_pls->Pz())/root2;
             double mu_p_min = (lep_pls->E()-lep_pls->Pz())/root2;
@@ -98,8 +100,8 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
 }
 void fit_gen_cost(){
     gStyle->SetOptStat(0);
-    TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m200_may23.root");
-    //TFile *f= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m500_evts.root");
+    TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m200_may6.root");
     TTree *t_gen1 = (TTree *)f1->Get("T_lhe");
 
 
@@ -108,7 +110,7 @@ void fit_gen_cost(){
     TH1F *h_pt = new TH1F("h_pt", "", 20, 0., 300.);
     TH1F *h_xf = new TH1F("h_xf", "", 20, 0., 1.);
     float m_low = 200.;
-    float m_high = 400.;
+    float m_high =400.;
 
     int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high);
 
@@ -119,7 +121,7 @@ void fit_gen_cost(){
     func->SetParameter(1,0.1);
     //func->SetParLimits(1, -1.0, 1.0);
 
-    //func->FixParameter(1, 0.098);
+    //func->FixParameter(1, 0.094);
     
     Double_t nB = h_cost->Integral(1,10);
     Double_t nF = h_cost->Integral(11,20);
@@ -129,11 +131,14 @@ void fit_gen_cost(){
     h_cost->Fit(func);
 
     Double_t AFB = ((nF - nB))/((nF+nB));
-    Double_t dAFB = (1.-AFB*AFB)/sqrt((nEvents));
+    //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));
+    Double_t B = (1. - AFB)*nEvents/2.;
+    Double_t F = (1. + AFB)*nEvents/2.;
+    Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
 
     printf("Mass range from %.0f to %.0f \n", m_low, m_high);
     printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
     printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
-    printf("Counting: NF %.0f NB %.0f \n", nF, nB);
+    printf("Counting: NF %.0f NB %.0f \n", F, B);
     printf("Counting: AFB %.4f +/- %.4f \n", AFB, dAFB);
 }

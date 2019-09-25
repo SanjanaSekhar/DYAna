@@ -4,9 +4,10 @@
 #include "RooRealVar.h"
 #include "RooDataHist.h"
 #include "RooFormulaVar.h"
-#include "HiggsAnalysis/CombinedLimit/interface/RooParametricHist.h"
 #include "../../utils/TemplateMaker_systematics.C"
 #include "../../utils/root_files.h"
+
+#include "HiggsAnalysis/CombinedLimit/interface/RooParametricHist.h"
 
 Double_t m_low;
 Double_t m_high;

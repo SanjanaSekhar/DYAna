@@ -1,4 +1,4 @@
-
+#define STAND_ALONE
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -21,107 +21,32 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "Math/Functor.h"
-#include "../../utils/HistMaker.C"
-#include "../../utils/root_files.h"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
-#include "root_files.h"
+#include "../../utils/HistMaker.C"
+#include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
 
-void make_pileup_hist(TTree *t1, TH1F *h_before, TH1F *h_after, bool is_data=false, int flag1 = FLAG_MUONS){
-    //read event data
-    Long64_t size  =  t1->GetEntries();
-    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_cmva, jet2_cmva, gen_weight;
-    Double_t bcdef_HLT_SF, bcdef_iso_SF, bcdef_id_SF;
-    Double_t gh_HLT_SF, gh_iso_SF, gh_id_SF, el_id_SF, el_reco_SF;
-    Double_t jet1_pt, jet2_pt, jet1_b_weight, jet2_b_weight, pu_SF;
-    jet1_b_weight = jet2_b_weight = 1.0;
-    TLorentzVector *mu_p = 0;
-    TLorentzVector *mu_m = 0;
-    TLorentzVector *el_p = 0;
-    TLorentzVector *el_m = 0;
-    TLorentzVector cm;
-    Float_t met_pt;
-    Int_t nJets;
-    Int_t pu_NtrueInt;
-    nJets = 2;
-    pu_SF=1;
-    t1->SetBranchAddress("m", &m);
-    t1->SetBranchAddress("xF", &xF);
-    t1->SetBranchAddress("cost", &cost);
-    t1->SetBranchAddress("met_pt", &met_pt);
-    t1->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-    t1->SetBranchAddress("jet1_CMVA", &jet1_cmva);
-    t1->SetBranchAddress("jet1_pt", &jet1_pt);
-    t1->SetBranchAddress("jet2_pt", &jet2_pt);
-    t1->SetBranchAddress("pu_NtrueInt", &pu_NtrueInt);
-    if(!is_data){
-        t1->SetBranchAddress("nJets", &nJets);
-        t1->SetBranchAddress("gen_weight", &gen_weight);
-        t1->SetBranchAddress("jet1_b_weight", &jet1_b_weight);
-        t1->SetBranchAddress("jet2_b_weight", &jet2_b_weight);
-        t1->SetBranchAddress("pu_SF", &pu_SF);
-    }
-    if(flag1 == FLAG_MUONS){
-        t1->SetBranchAddress("mu_p", &mu_p);
-        t1->SetBranchAddress("mu_m", &mu_m);
-        if(!is_data){
-            t1->SetBranchAddress("bcdef_HLT_SF", &bcdef_HLT_SF);
-            t1->SetBranchAddress("bcdef_iso_SF", &bcdef_iso_SF);
-            t1->SetBranchAddress("bcdef_id_SF", &bcdef_id_SF);
-            t1->SetBranchAddress("gh_HLT_SF", &gh_HLT_SF);
-            t1->SetBranchAddress("gh_iso_SF", &gh_iso_SF);
-            t1->SetBranchAddress("gh_id_SF", &gh_id_SF);
-        }
-        for (int i=0; i<size; i++) {
-            t1->GetEntry(i);
-            bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
-
-            if(m >= 150. && met_pt < 50. && no_bjets){
-                cm = *mu_p + *mu_m;
-                Double_t pt = cm.Pt();
-                if(is_data){
-                    h_before->Fill(pu_NtrueInt);
-                }
-                else{
-                    Double_t bcdef_weight = gen_weight * bcdef_HLT_SF * bcdef_iso_SF * bcdef_id_SF;
-                    Double_t gh_weight = gen_weight * gh_HLT_SF * gh_iso_SF * gh_id_SF;
-                    if (nJets >= 1){
-                        bcdef_weight *= jet1_b_weight;
-                        gh_weight *= jet1_b_weight;
-                    }
-                    if (nJets >= 2){
-                        bcdef_weight *= jet2_b_weight;
-                        gh_weight *= jet2_b_weight;
-                    }
-                    //Double_t weight = gen_weight;
-                    Double_t evt_weight = (bcdef_weight*bcdef_lumi + gh_weight*gh_lumi) *1000;
-                    h_before->Fill(pu_NtrueInt, evt_weight);
-                    h_after->Fill(pu_NtrueInt, evt_weight *pu_SF);
-
-                }
-
-
-            }
-        }
-    }
-
-    if(is_data) printf("N data events is %.0f \n", h_before->Integral());
-    t1->ResetBranchAddresses();
-}
 
 
 void draw_pileup(){
     setTDRStyle();
+    int year = 2018;
 
-    TFile *f7 = TFile::Open("../analyze/SFs/DataPileupHistogram_69200.root");
+    init(year);
+    init_indv_bkgs(year);
+
+    TFile *f7;
+
+    if(year == 2016) f7 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_69200.root");
+    else if(year == 2017) f7 = TFile::Open("../analyze/SFs/2017/Data17PileupHistogram_69200.root");
+    else if(year == 2018) f7 = TFile::Open("../analyze/SFs/2018/Data18PileupHistogram_69200.root");
+
     TH1D *data_pu = (TH1D *) f7->Get("pileup")->Clone();
     data_pu->Scale(1./data_pu->Integral());
     data_pu->SetDirectory(0);
 
-    init();
-    mumu_init();
     TH1F *mc_pu_before = new TH1F("mc_pu_before", "MC signal", 100, 0, 100);
     TH1F *mc_nosig_pu_before = new TH1F("mc_nosig_pu_before", "MC signal", 100, 0, 100);
     TH1F *ttbar_pu_before = new TH1F("ttbar_pu_before", "MC signal", 100, 0, 100);
@@ -158,11 +83,11 @@ void draw_pileup(){
 
 
 
-    make_pileup_hist(t_mumu_mc, mc_pu_before, mc_pu_after, false, type);
-    make_pileup_hist(t_mumu_nosig, mc_nosig_pu_before, mc_nosig_pu_after, false, type);
-    make_pileup_hist(t_ttbar, ttbar_pu_before, ttbar_pu_after, false, type);
-    make_pileup_hist(t_wt, wt_pu_before, wt_pu_after, false);
-    make_pileup_hist(t_diboson, diboson_pu_before, diboson_pu_after, false, type);
+    make_pileup_hist(t_mumu_mc, mc_pu_before, mc_pu_after, false, year, type);
+    make_pileup_hist(t_mumu_nosig, mc_nosig_pu_before, mc_nosig_pu_after, false, year, type);
+    make_pileup_hist(t_mumu_ttbar, ttbar_pu_before, ttbar_pu_after, false, year, type);
+    make_pileup_hist(t_mumu_wt, wt_pu_before, wt_pu_after, false,year, type);
+    make_pileup_hist(t_mumu_diboson, diboson_pu_before, diboson_pu_after, false, year, type);
 
 
 
@@ -214,7 +139,6 @@ void draw_pileup(){
     before_pad1->Draw();
     before_pad1->cd();
     pu_before_stack->Draw("hist");
-    pu_before_stack->GetXaxis()->SetRangeUser(0.,50.);
     data_pu->SetMarkerStyle(kFullCircle);
     data_pu->SetMarkerColor(1);
     //pu_before_stack->SetMinimum(1);
@@ -268,7 +192,6 @@ void draw_pileup(){
    before_ratio->GetYaxis()->SetLabelSize(15);
    // X axis before_ratio plot settings
    before_ratio->GetXaxis()->SetTitle("Number of vertices before reweighting");
-   before_ratio->GetXaxis()->SetRangeUser(0.,50.);
    before_ratio->GetXaxis()->SetTitleSize(20);
    before_ratio->GetXaxis()->SetTitleFont(43);
    before_ratio->GetXaxis()->SetTitleOffset(3.);
@@ -276,7 +199,8 @@ void draw_pileup(){
    before_ratio->GetXaxis()->SetLabelSize(20);
 
     int iPeriod = 4; 
-    CMS_lumi(c_pu_before, iPeriod, 11 );
+    writeExtraText = false;
+    CMS_lumi(before_pad1, year, 33 );
     c_pu_before->Update();
 
     TCanvas *c_pu_after = new TCanvas("c_pu_after", "Histograms", 200, 10, 900, 700);
@@ -286,7 +210,6 @@ void draw_pileup(){
     after_pad1->Draw();
     after_pad1->cd();
     pu_after_stack->Draw("hist");
-    pu_after_stack->GetXaxis()->SetRangeUser(0.,50.);
     data_pu->SetMarkerStyle(kFullCircle);
     data_pu->SetMarkerColor(1);
     //pu_after_stack->SetMinimum(1);
@@ -306,7 +229,9 @@ void draw_pileup(){
     leg4->Draw();
 
 
-    CMS_lumi(c_pu_after, iPeriod, 11 );
+    writeExtraText = false;
+    CMS_lumi(after_pad1, year, 33 );
+
     c_pu_after->cd();
 
 
@@ -344,7 +269,6 @@ void draw_pileup(){
    after_ratio->GetYaxis()->SetLabelSize(15);
    // X axis after_ratio plot settings
    after_ratio->GetXaxis()->SetTitle("Pileup after reweighting");
-   after_ratio->GetXaxis()->SetRangeUser(0.,50.);
    after_ratio->GetXaxis()->SetTitleSize(20);
    after_ratio->GetXaxis()->SetTitleFont(43);
    after_ratio->GetXaxis()->SetTitleOffset(3.);

@@ -854,3 +854,38 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
     cleanup_hist(h_m);
     printf("Total fakerate est is %.0f \n", h_m->Integral());
 }
+
+
+
+void make_pileup_hist(TTree *t1, TH1F *h_before, TH1F *h_after, bool is_data=false, int year = 2016, int flag1 = FLAG_MUONS){
+    //read event data
+        TempMaker tm(t1, is_data, year);
+        if(flag1 == FLAG_MUONS) tm.do_muons = true;
+        else tm.do_electrons = true;
+
+        tm.setup();
+        int nEvents=0;
+        double m_low = 150.;
+        double m_high = 100000.;
+
+        for (int i=0; i<tm.nEntries; i++) {
+            tm.getEvent(i);
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+
+            if(pass){
+                nEvents++;
+                    Double_t evt_weight = tm.getEvtWeight();
+                    h_before->Fill(tm.pu_NtrueInt, evt_weight/tm.pu_SF);
+                    h_after->Fill(tm.pu_NtrueInt, evt_weight);
+
+                }
+
+        
+        }
+        printf("Selected %i events \n", nEvents);
+
+
+    tm.finish();
+}
+
+

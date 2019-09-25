@@ -335,7 +335,6 @@ Double_t get_el_HLT_SF(Double_t el1_pt, Double_t el1_eta, Double_t el2_pt, Doubl
 void setup_pu_SFs(pileup_SFs *pu_SF, int year){
     TFile *f7;
 
-    //all use 2016 for now
     if(year == 2016) f7 = TFile::Open("SFs/2016/Data16PileupHistogram_69200.root");
     else if(year == 2017) f7 = TFile::Open("SFs/2017/Data17PileupHistogram_69200.root");
     else if(year == 2018) f7 = TFile::Open("SFs/2018/Data18PileupHistogram_69200.root");
