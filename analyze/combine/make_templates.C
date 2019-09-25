@@ -412,8 +412,8 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/sep19_2018_test.root");
-    year = 2018;
+    const TString fout_name("combine/templates/sep20_2016_test.root");
+    year = 2016;
 
 
 

@@ -9,6 +9,7 @@
 *.d
 *.pcm
 *.so
+*.json
 *.tgz
 
 *FileDump.py
