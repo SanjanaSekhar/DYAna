@@ -3,7 +3,7 @@
 
 
 
-void ElEl_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
+void ElEl_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
 {
 
 
@@ -31,7 +31,7 @@ void ElEl_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int 
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 130.){
+            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 50.){
                 nt.fillEvent();
                 nt.fillEventSFs();
 

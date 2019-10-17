@@ -347,7 +347,8 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
 }
 
 void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2F *h, 
-        int year, float m_low = 150., float m_high = 10000.){
+        int year, float m_low = 150., float m_high = 10000., bool ss = false){
+    //need to change this to TempMaker class at some point...
     FakeRate el_FR, mu_FR;
     //TH2D *FR;
     setup_new_el_fakerate(&el_FR, year);
@@ -446,8 +447,10 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
             if(pass){
                 float xF = compute_xF(cm); 
                 cost = get_cost(*el, *mu);
-                h->Fill(xF, cost, 0.5*evt_fakerate);
-                h->Fill(xF, -cost, 0.5*evt_fakerate);
+                if(ss) h->Fill(xF, -abs(cost), evt_fakerate);
+                else{
+                    h->Fill(xF, cost, evt_fakerate);
+                }
             }
         }
 
@@ -459,7 +462,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
 
 
 void gen_emu_template(TTree *t1, TH2F *h, 
-        bool is_data = false, int year=2016, float m_low = 150., float m_high = 999999.){
+        bool is_data = false, int year=2016, float m_low = 150., float m_high = 999999., bool ss= true){
     Long64_t size  =  t1->GetEntries();
     Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_btag, jet2_btag, gen_weight;
     Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
@@ -511,8 +514,8 @@ void gen_emu_template(TTree *t1, TH2F *h,
 
         if(pass){
             if(is_data){
-                h->Fill(xF, cost, 0.5);
-                h->Fill(xF, -cost, 0.5);
+                if(ss) h->Fill(xF, -abs(cost), 1.);
+                else h->Fill(xF, cost, 1.);
             }
             else{
                 nEvents++;
@@ -533,8 +536,9 @@ void gen_emu_template(TTree *t1, TH2F *h,
                 if(year ==2016) tot_weight = 1000 * (evt_weight * era2_weight * gh_lumi16 + evt_weight * era1_weight * bcdef_lumi16);
                 if(year ==2017) tot_weight = 1000 * evt_weight * era1_weight * mu_lumi17;
                 if(year ==2018) tot_weight = 1000 * evt_weight * era1_weight * mu_lumi18;
-                h->Fill(xF, cost, 0.5 *tot_weight);
-                h->Fill(xF, -cost, 0.5 *tot_weight);
+                if(ss) h->Fill(xF, -abs(cost), tot_weight);
+                else h->Fill(xF, cost, tot_weight);
+
             }
 
 

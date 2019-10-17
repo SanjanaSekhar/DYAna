@@ -1,4 +1,3 @@
-
 #ifndef STAND_ALONE
 #include "TH2D.h"
 #include "CondFormats/BTauObjects/interface/BTagCalibration.h"

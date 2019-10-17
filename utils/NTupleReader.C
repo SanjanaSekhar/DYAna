@@ -158,13 +158,11 @@ bool NTupleReader::getNextFile(){
             tin->SetBranchAddress("jetAK4CHS_HadronFlavour", &jet_hadronflavour);
             tin->SetBranchAddress("jetAK4CHS_GenJetPt", &jet_genPt);
 
-            if(year == 2016) {
-                tin->SetBranchAddress("jetAK4CHS_CSVv2", &jet_btag);
-                //tin->SetBranchAddress("jetAK4CHS_CMVAv2", &jet_btag);
-            }
-            else{
-                tin->SetBranchAddress("jetAK4CHS_DeepCSV", &jet_btag);
-            }
+            tin->SetBranchAddress("jetAK4CHS_DeepCSV", &jet_btag);
+            //if(year == 2016) {
+            //    tin->SetBranchAddress("jetAK4CHS_CSVv2", &jet_btag);
+            //    //tin->SetBranchAddress("jetAK4CHS_CMVAv2", &jet_btag);
+            //}
 
 
             tin->SetBranchAddress("met_MuCleanOnly_size", &met_size);
@@ -189,17 +187,10 @@ bool NTupleReader::getNextFile(){
                 //tin->SetBranchAddress("mu_SumPUPt", &mu_SumPUPt);
                 //tin->SetBranchAddress("mu_SumPhotonPt", &mu_SumPhotonPt);
                 //
-                if(year == 2016){
-                    tin->SetBranchAddress("HLT_IsoMu24", &HLT_IsoMu24);
-                    tin->SetBranchAddress("HLT_IsoTkMu24", &HLT_IsoTkMu24);
-                }
-                else if(year == 2017){
-                    tin->SetBranchAddress("HLT_IsoMu27", &HLT_IsoMu27);
-                    tin->SetBranchAddress("HLT_IsoTkMu27", &HLT_IsoTkMu27);
-                }
-                else if(year == 2018){
-                    tin->SetBranchAddress("HLT_IsoMu24", &HLT_IsoMu24);
-                }
+                tin->SetBranchAddress("HLT_IsoMu24", &HLT_IsoMu24);
+                tin->SetBranchAddress("HLT_IsoTkMu24", &HLT_IsoTkMu24);
+                tin->SetBranchAddress("HLT_IsoMu27", &HLT_IsoMu27);
+                tin->SetBranchAddress("HLT_IsoTkMu27", &HLT_IsoTkMu27);
 
             }
             if(do_electrons || do_emu){
@@ -221,17 +212,13 @@ bool NTupleReader::getNextFile(){
                 tin->SetBranchAddress("el_ScaleCorrGainDown", &el_ScaleCorrGainDown);
                 tin->SetBranchAddress("el_ScaleSmearUp", &el_ScaleSmearUp);
                 tin->SetBranchAddress("el_ScaleSmearDown", &el_ScaleSmearDown);
+                tin->SetBranchAddress("el_IDMediumNoIso", &el_IDMedium_NoIso);
+                tin->SetBranchAddress("el_GoodCharge", &el_GoodCharge);
 
-                if(year == 2016){
-                    tin->SetBranchAddress("HLT_Ele27_WPTight_Gsf", &HLT_El27);
-                    tin->SetBranchAddress("el_IDMedium_NoIso", &el_IDMedium_NoIso);
-                }
-                else{
-                    tin->SetBranchAddress("el_IDMediumNoIso", &el_IDMedium_NoIso);
-                    tin->SetBranchAddress("HLT_Ele32_WPTight_Gsf", &HLT_El32);
-                    tin->SetBranchAddress("HLT_Ele35_WPTight_Gsf", &HLT_El35);
-                    tin->SetBranchAddress("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL", &HLT_doubleEl23);
-                }
+                tin->SetBranchAddress("HLT_Ele27_WPTight_Gsf", &HLT_El27);
+                tin->SetBranchAddress("HLT_Ele32_WPTight_Gsf", &HLT_El32);
+                tin->SetBranchAddress("HLT_Ele35_WPTight_Gsf", &HLT_El35);
+                tin->SetBranchAddress("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL", &HLT_doubleEl23);
 
             }
 
@@ -313,8 +300,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("mu_p", "TLorentzVector", &mu_p);
         outTrees[idx]->Branch("mu1_pt", &mu1_pt, "mu1_pt/D");
         outTrees[idx]->Branch("mu2_pt", &mu2_pt, "mu2_pt/D");
-        outTrees[idx]->Branch("mu1_charge", &mu1_charge, "mu1_charge/F");
-        outTrees[idx]->Branch("mu2_charge", &mu2_charge, "mu2_charge/F");
+        outTrees[idx]->Branch("mu1_charge", &mu1_charge);
+        outTrees[idx]->Branch("mu2_charge", &mu2_charge);
 
 
         if(do_RC){
@@ -333,18 +320,20 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("el2_eta", &el2_eta, "el2_eta/D");
         outTrees[idx]->Branch("el_m", "TLorentzVector", &el_m);
         outTrees[idx]->Branch("el_p", "TLorentzVector", &el_p);
-        outTrees[idx]->Branch("el1_charge", &el1_charge, "el1_charge/F");
-        outTrees[idx]->Branch("el2_charge", &el2_charge, "el2_charge/F");
+        outTrees[idx]->Branch("el1_charge", &el1_charge);
+        outTrees[idx]->Branch("el2_charge", &el2_charge);
+        outTrees[idx]->Branch("el1_gc", &el1_gc);
+        outTrees[idx]->Branch("el2_gc", &el2_gc);
     }
     if(do_emu){
         outTrees[idx]->Branch("el", "TLorentzVector", &el);
         outTrees[idx]->Branch("mu", "TLorentzVector", &mu);
         outTrees[idx]->Branch("mu1_eta", &mu1_eta, "mu1_eta/D");
         outTrees[idx]->Branch("mu1_pt", &mu1_pt, "mu1_pt/D");
-        outTrees[idx]->Branch("mu1_charge", &mu1_charge, "mu1_charge/F");
+        outTrees[idx]->Branch("mu1_charge", &mu1_charge);
         outTrees[idx]->Branch("el1_pt", &el1_pt, "el1_pt/D");
         outTrees[idx]->Branch("el1_eta", &el1_eta, "el1_eta/D");
-        outTrees[idx]->Branch("el1_charge", &el1_charge, "el1_charge/F");
+        outTrees[idx]->Branch("el1_charge", &el1_charge);
     }
 
 
@@ -441,8 +430,8 @@ void NTupleReader::setupRC(){
 void NTupleReader::getEvent(int i){
     tin->GetEntry(i);
     //if(year == 2016) bjet_med_cut = 0.6321; //cmva (old)
-    if(year == 2016) bjet_med_cut = 0.8484; //CSVv2 (old)
-    //if(year == 2016) bjet_med_cut = 0.6321; //DeepCSV
+    //if(year == 2016) bjet_med_cut = 0.8484; //CSVv2 (old)
+    if(year == 2016) bjet_med_cut = 0.6321; //DeepCSV
     if(year == 2017) bjet_med_cut = 0.4941;
     if(year == 2018) bjet_med_cut = 0.4184;
     event_idx = i;
@@ -626,6 +615,9 @@ void NTupleReader::fillEvent(){
         el2_eta = el_Eta[1];
         el1_charge = el_Charge[0];
         el2_charge = el_Charge[1];
+
+        el1_gc = el_GoodCharge[0];
+        el2_gc = el_GoodCharge[1];
 
         cost = get_cost(el_p, el_m, false);
         if(cm.Pz() < 0.) cost_r = -cost;

@@ -35,12 +35,18 @@ void gof_helper(int label_num=0, int idx=0){
     int bin_low = h_test->GetXaxis()->FindBin(t_obs);
     int bin_high = h_test->GetXaxis()->FindBin(max);
     float integral = h_test->Integral();
-    printf("Data gof is %.0f. p-value is %.3f based on %.0f toys \n", t_obs, h_test->Integral(bin_low, bin_high)/integral, integral);
+    double p_value = h_test->Integral(bin_low, bin_high)/integral;
+    printf("Data gof is %.0f. p-value is %.3f based on %.0f toys \n", t_obs, p_value, integral);
+
+    char p_str[100];
+    sprintf(p_str, "Data gof is %.0f p-value is %.2f", t_obs, p_value);
+
+
 
 
 
     char fout_name[100];
-    sprintf(fout_name, "GoodnessOfFit/%s_bin%i.png", label.c_str(), idx);
+    sprintf(fout_name, "GoodnessOfFit/gof_%s_bin%i.png", label.c_str(), idx);
     
     TCanvas *c = new TCanvas("c","",  800,800);
     h_test->Draw("hist");
@@ -49,6 +55,15 @@ void gof_helper(int label_num=0, int idx=0){
     l->SetLineColor(kRed);
     l->SetLineWidth(2);
     l->Draw("same");
+
+    TLatex latex;
+
+    latex.SetTextSize(0.025);
+    latex.SetTextAlign(13);  //align at top
+    latex.SetNDC(kTRUE);
+    latex.DrawLatex(0.75, 0.6, p_str);
+
+
     c->Print(fout_name);
 
 

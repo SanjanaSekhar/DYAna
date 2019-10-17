@@ -3,7 +3,7 @@
 
 
 
-void MuMu_reco_data_batch(int nJobs =1, int iJob = 0, string fin="", int year = -1)
+void MuMu_reco_data(int nJobs =1, int iJob = 0, string fin="", int year = -1)
 {
 
     if(fin == "") fin = string("EOS_files/2017/SingleMuon_files_test.txt");
@@ -29,7 +29,7 @@ void MuMu_reco_data_batch(int nJobs =1, int iJob = 0, string fin="", int year = 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
 
-            if(nt.good_trigger && nt.dimuon_id && nt.cm_m > 130.){
+            if(nt.good_trigger && nt.dimuon_id && nt.cm_m > 50.){
                 nt.fillEvent();
                 nt.fillEventRC();
                 bool one_iso = nt.mu_iso0 ^ nt.mu_iso1;
@@ -61,9 +61,4 @@ void MuMu_reco_data_batch(int nJobs =1, int iJob = 0, string fin="", int year = 
     nt.finish();
 
     return;
-}
-
-int main(){
-    MuMu_reco_data_batch();
-    return 0;
 }

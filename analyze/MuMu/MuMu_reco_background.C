@@ -3,11 +3,11 @@
 
 
 
-void MuMu_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int year = -1)
+void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year = -1)
 {
 
     if(fin == "") fin = string("EOS_files/2016/WT_files.txt");
-    NTupleReader nt(fin.c_str(),"output_files/MuMu16_WT_sep11.root", false);
+    NTupleReader nt(fin.c_str(),"output_files/test.root", false);
     if (year == -1) year = 2016;
     nt.year = year;
     printf("Year is %i \n", nt.year);
@@ -35,8 +35,14 @@ void MuMu_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int 
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.dimuon_id && nt.cm_m > 130.){
+            if(nt.good_trigger && nt.dimuon_id && nt.cm_m > 50.){
+            //if(true){
                 nt.fillEvent();
+                //printf("Trigger %i, n_mu %i, mu1 pt id, iso %.0f %f %i \n",
+                        //nt.good_trigger, nt.mu_size, nt.mu1_pt, nt.mu_IsTightMuon[0], nt.mu_iso0);
+                //printf("mu2 pt id, iso %.0f %f %i \n",
+                        //nt.mu2_pt, nt.mu_IsTightMuon[1], nt.mu_iso1);
+
                 nt.fillEventSFs();
                 nt.fillEventRC();
                 bool one_iso = nt.mu_iso0 ^ nt.mu_iso1;
@@ -69,7 +75,3 @@ void MuMu_reco_background_batch(int nJobs =1, int iJob = 0, string fin ="", int 
     return;
 }
 
-int main(){
-    MuMu_reco_background_batch();
-    return 0;
-}

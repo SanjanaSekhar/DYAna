@@ -122,7 +122,8 @@ class NTupleReader{
         Double_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down, alpha_up, alpha_down;
         Int_t nJets, jet1_flavour, jet2_flavour, pu_NtrueInt, has_nobjets;
         Bool_t is_tau_event;
-        Float_t met_pt, mu1_charge, mu2_charge, el1_charge, el2_charge;
+        Float_t met_pt, mu1_charge, mu2_charge, el1_charge, el2_charge; 
+        Int_t el1_gc, el2_gc;
         TLorentzVector cm, gen_cm;
         TLorentzVector mu_p, mu_m, gen_mu_p_vec, gen_mu_m_vec;
         TLorentzVector el_p, el_m, gen_el_p_vec, gen_el_m_vec;
@@ -148,7 +149,7 @@ class NTupleReader{
                 jet_btag[JET_SIZE], jet_hadronflavour[JET_SIZE], jet_genPt[JET_SIZE];
 
         Float_t el_Pt[EL_SIZE], el_Eta[EL_SIZE], el_Phi[EL_SIZE], el_E[EL_SIZE], 
-                el_Charge[EL_SIZE], el_SCEta[EL_SIZE];
+                el_Charge[EL_SIZE], el_SCEta[EL_SIZE], el_GoodCharge[EL_SIZE];
 
         Int_t el_IDMedium[EL_SIZE], el_IDMedium_NoIso[EL_SIZE];
 

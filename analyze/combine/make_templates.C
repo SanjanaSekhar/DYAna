@@ -18,7 +18,7 @@
 //#include"Minuit2/Minuit2Minimizer.h"
 #include "Math/Functor.h"
 #include "make_ss_templates.C"
-#include "make_emu_templates.C"
+//#include "make_emu_templates.C"
 #include "TemplateUtils.h"
 
 
@@ -30,115 +30,6 @@ TH2F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_back,  *h_mumu_dy_gg, *h_
 
 
 
-
-void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int flag){
-    //convert a hist to a parametric hist 
-    RooArgList *bin_list = new RooArgList();
-    RooArgList *bin_list_os = new RooArgList();
-    RooArgList *bin_list_ss = new RooArgList();
-
-    TH1F *h1 = convert2d(h);
-
-    char h_name[40];
-    char h_ss_name[40];
-    char R_sign_param[40];
-    sprintf(h_name, "%s_qcd_param", h->GetName());
-    RooRealVar *R_qcd_sign_fraction;
-    fprintf(f_log, "\n");
-    sprintf(h_ss_name, "%s_ss_qcd_param", h->GetName());
-    sprintf(R_sign_param, "R_%s_os_fakes", h->GetName());
-    if(flag == FLAG_ELECTRONS){
-        R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", sign_scaling , 0., 1.);
-        fprintf(f_log, "%s param %.4f 0.05 \n", R_sign_param, sign_scaling);
-    }
-    else{
-        R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", 1.0, 0.99, 1.01);
-        fprintf(f_log, "%s param %.4f 0.0001 \n", R_sign_param, 1.0);
-    }
-    for(int i=1; i <= n_xf_bins; i++){
-        for(int j=1; j <= n_cost_bins; j++){
-
-
-
-            int g_idx = TwoDToOneDIdx(n_cost_bins, i, j);
-            int sym1_idx, sym2_idx;
-            TwoDToSymIdxs(n_cost_bins, i,j, sym1_idx, sym2_idx);
-            //printf("i,j: %i %i ", i,j);
-            //printf("g_idx, sym1, sym2: %i %i %i  \n", g_idx, sym1_idx, sym2_idx);
-
-            double content = h1->GetBinContent(g_idx);
-            double error = h1->GetBinError(g_idx);
-            if(content<0) printf("Bin %i Content is %.0f \n", j, content);
-
-            //printf("Bin %.1f error %.1f \n", content,error);
-            char bin_name[40];
-            char form_name_ss[40], form_name1_os[40], form_name2_os[40];
-            sprintf(bin_name, "%s_bin%i",h_name, g_idx); 
-            sprintf(form_name_ss, "%s_form_%i",h_ss_name, g_idx); 
-            sprintf(form_name1_os, "%s_form_%i",h_name, sym1_idx); 
-            sprintf(form_name2_os, "%s_form_%i",h_name, sym2_idx); 
-            //prevent underflowing by fixing super small bins
-            content = max(content, 0.001);
-            if(flag == FLAG_MUONS){
-                //muons only use opposite sign fakes
-                content *= 2.;
-                error *= 2.;
-            }
-
-            if (content < error){
-                content = error/2.;
-                error = 0.1*content;
-            }
-            else if(content < 2.5 * error){
-                error = 0.3*content;
-            }
-            error = max(error, 0.0001);
-            if(j<=(n_cost_bins/2)){
-                //printf("first fill \n");
-                RooRealVar *bin = new RooRealVar(bin_name, bin_name, content, 0., 10000.);
-                fprintf(f_log, "%s param %.4f %.4f \n", bin_name, content, error);
-                RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0*@1", RooArgList(*bin, *R_qcd_sign_fraction));
-                RooFormulaVar *form_ss = new RooFormulaVar(form_name_ss, form_name_ss, "@0*(1.0 - @1)", RooArgList(*bin, *R_qcd_sign_fraction));
-                //form1->Print();
-                //form_ss->Print();
-                bin_list->add(*bin);
-                bin_list_ss->add(*form_ss);
-                bin_list_os->add(*form1);
-            }
-
-            else{
-                //printf("2nd fill \n");
-                int old_j = sym2_idx % n_cost_bins;
-                int old_g_idx = TwoDToOneDIdx(n_cost_bins, i, old_j);
-                sprintf(bin_name, "%s_bin%i",h_name, old_g_idx); 
-                //printf("Looking for bin %s \n", bin_name);
-                RooRealVar *bin = (RooRealVar *) bin_list->find(bin_name);
-                if(bin==nullptr) printf("NULL lookup of %s from bin list \n", bin_name);
-                RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0*@1", RooArgList(*bin, *R_qcd_sign_fraction));
-                //form1->Print();
-                bin_list_os->add(*form1);
-            }
-        }
-    
-    }
-    bin_list_ss->Print();
-    bin_list_os->Print();
-    char norm_ss_name[40], norm_name[40];
-    sprintf(norm_ss_name, "%s_norm", h_ss_name);
-    sprintf(norm_name, "%s_norm", h_name);
-    RooAddition *norm_ss = new RooAddition(norm_ss_name, norm_ss_name, *bin_list_ss);
-
-    RooAddition *norm = new RooAddition(norm_name, norm_name, *bin_list_os);
-
-    RooParametricHist *p= new RooParametricHist (h_name, h_name, *var, *bin_list_os, *h_dummy);
-    RooParametricHist *p_ss= new RooParametricHist (h_ss_name, h_ss_name, *var_ss, *bin_list_ss, *h1);
-
-    
-    w->import(*p_ss);
-    w->import(*p, RooFit::RecycleConflictNodes());
-    w->import(*norm,RooFit::RecycleConflictNodes());
-    w->import(*norm_ss,RooFit::RecycleConflictNodes());
-}
 
 
 void make_data_templates(int year){
@@ -182,6 +73,7 @@ void make_qcd_templates(int year, FILE* f_log){
     printf("making MuMu fakes template \n");
     ss = false; // muons use os only for their fakes
     float mumu_sign_scaling = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, ss);
+   
 
     //combined os and ss regions to estimate qcd, scale it to estimate amount
     //in os region 
@@ -386,19 +278,19 @@ void convert_mc_templates(int year, const string &sys_label){
 
 void write_groups(int year, FILE *f_log){
 
-    char label[4][40], intro[4][40];
-    int sizes[4] = {40,20,20,60};
-    sprintf(intro[0], "emu%i_fake_shape group = ", year%2000);
-    sprintf(intro[1], "ee%i_fake_shape group = ", year%2000);
-    sprintf(intro[2], "mumu%i_fake_shape group = ", year%2000);
-    sprintf(intro[3], "pdfs group = ");
+    char label[3][40], intro[3][40];
+    int sizes[3] = {20,20,60};
+    sprintf(intro[0], "ee%i_fake_shape group = ", year%2000);
+    sprintf(intro[1], "mumu%i_fake_shape group = ", year%2000);
+    sprintf(intro[2], "pdfs group = ");
+    //sprintf(intro[3], "emu%i_fake_shape group = ", year%2000);
 
-    sprintf(label[0], "emu%i_qcd_param_bin", year%2000);
-    sprintf(label[1], "ee%i_qcd_param_bin", year%2000);
-    sprintf(label[2], "mumu%i_qcd_param_bin", year%2000);
-    sprintf(label[3], "pdf");
+    sprintf(label[0], "ee%i_qcd_param_bin", year%2000);
+    sprintf(label[1], "mumu%i_qcd_param_bin", year%2000);
+    sprintf(label[2], "pdf");
+    //sprintf(label[3], "emu%i_qcd_param_bin", year%2000);
 
-    for(int i=0; i<4; i++){
+    for(int i=0; i<3; i++){
         fprintf(f_log, "\n %s", intro[i]);
         for(int j=1; j<=sizes[i]; j++){
 
@@ -412,14 +304,14 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/sep20_2016_test.root");
-    year = 2016;
+    const TString fout_name("combine/templates/oct15_2018_high_bins.root");
+    year = 2018;
 
 
 
     printf("Initializing files \n");
     init(year);
-    init_emu(year);
+    //init_emu(year);
     printf("Setting up SFs... ");
     setup_all_SFs(year);
     printf("   done \n");
@@ -459,9 +351,9 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         make_data_templates(year);
         make_ss_data_templates(year);
         make_ss_mc_templates(year);
-        make_emu_data_templates(year);
-        make_emu_qcd_templates(year, f_log);
-        make_emu_mc_templates(year);
+        //make_emu_data_templates(year);
+        //make_emu_qcd_templates(year, f_log);
+        //make_emu_mc_templates(year);
         make_qcd_templates(year,f_log);
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
             printf("Making MC templates for sys %s \n", (*iter).c_str());

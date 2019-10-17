@@ -3,10 +3,10 @@
 
 
 
-void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
+void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 {
-    if(fin == "") fin = string("EOS_files/2017/DY_files.txt");
-    NTupleReader nt(fin.c_str(),"output_files/MuMu_DY_test17.root", false);
+    if(fin == "") fin = string("EOS_files/2016/DY_files_test.txt");
+    NTupleReader nt(fin.c_str(),"output_files/MuMu_DY_test16.root", false);
     if (year == -1) year = 2016;
     nt.year = year;
 
@@ -34,7 +34,8 @@ void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", int year =-
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
             if(nt.good_trigger && nt.good_sign && nt.dimuon_id &&
-                    nt.mu_iso0 && nt.mu_iso1 && nt.cm_m > 130. ){
+                    nt.cm_m > 130. ){
+                    //nt.cm_m > 50. && nt.cm_m < 130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
                 nt.parseGenParts();
@@ -80,7 +81,3 @@ void MuMu_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", int year =-
     return;
 }
 
-int main(){
-    MuMu_reco_mc_batch();
-    return 0;
-}

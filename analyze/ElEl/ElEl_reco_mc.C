@@ -3,13 +3,13 @@
 
 
 
-void ElEl_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
+void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
 {
 
 
     if(fin == "") fin = string("EOS_files/2017/DY_files_test.txt");
     NTupleReader nt(fin.c_str(),"output_files/ElEl_dy_test.root", false);
-    if (year == -1) year = 2016;
+    if (year == -1) year = 2017;
     nt.year = year;
 
 
@@ -33,7 +33,7 @@ void ElEl_reco_mc_batch(int nJobs =1, int iJob = 0, string fin = "", int year=-1
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 130. ){
+            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 50. && nt.cm_m <  130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
 

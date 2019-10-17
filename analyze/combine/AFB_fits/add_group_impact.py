@@ -39,6 +39,7 @@ def quadDiff(unc1, unc2):
 
 uncs = []
 for f in (sys.argv[1],sys.argv[2]):
+    print(f)
     uncs.append( getTripletFromFile(f) )
 
 diff = quadDiff(uncs[0],uncs[1])
