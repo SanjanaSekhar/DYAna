@@ -19,10 +19,10 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     nt.setupSFs();
     nt.setupRC();
     nt.setupOutputTree("T_sig");
-    nt.setupOutputTree("T_DY_back");
     nt.setupOutputTree("T_WJets");
     nt.setupOutputTree("T_QCD");
     nt.setupOutputTree("T_ss");
+    nt.setupOutputTree("T_DY_back");
 
 
     int iso_mu;
@@ -33,35 +33,35 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.good_sign && nt.dimuon_id &&
-                    nt.cm_m > 130. ){
-                    //nt.cm_m > 50. && nt.cm_m < 130. ){
+            if(nt.good_trigger && nt.loose_dimuon_id &&
+                    //nt.cm_m > 130. ){
+                    nt.cm_m > 50. && nt.cm_m < 130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
                 nt.parseGenParts();
                 nt.fillEventRC();
-                bool one_iso = nt.mu_iso0 ^ nt.mu_iso1;
+                bool one_tight = nt.mu_tight_id0 ^ nt.mu_tight_id1;
 
                 //pick the category
-                if(nt.opp_sign && nt.mu_iso0 && nt.mu_iso1){ //signal region
+                if(nt.opp_sign && nt.tight_dimuon_id){ //signal region
                     if(nt.signal_event && !nt.failed_match){
                         nt.nSignal++;
                         nt.outTrees[0]->Fill();
                     }
                     else{
-                        nt.outTrees[1]->Fill();
+                        nt.outTrees[4]->Fill();
                     }
                 }
-                else if(!nt.opp_sign && nt.mu_iso0 && nt.mu_iso1){ //samesign region
-                    nt.outTrees[4]->Fill();
-                }
-                else if(one_iso){ //wjets control region
-                    if(nt.mu_iso0) iso_mu = 0;
-                    else           iso_mu = 1;
-                    nt.outTrees[2]->Fill();
-                }
-                else if(!nt.mu_iso0 && !nt.mu_iso1){ //qcd control region
+                else if(!nt.opp_sign && nt.tight_dimuon_id){ //samesign region
                     nt.outTrees[3]->Fill();
+                }
+                else if(one_tight){ //wjets control region
+                    if(nt.mu_tight_id0) iso_mu = 0;
+                    else           iso_mu = 1;
+                    nt.outTrees[1]->Fill();
+                }
+                else if(!nt.mu_tight_id0 && !nt.mu_tight_id1){ //qcd control region
+                    nt.outTrees[2]->Fill();
                 }
 
             }

@@ -35,8 +35,7 @@ void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.dimuon_id && nt.cm_m > 50.){
-            //if(true){
+            if(nt.good_trigger && nt.loose_dimuon_id && nt.cm_m > 50. ){
                 nt.fillEvent();
                 //printf("Trigger %i, n_mu %i, mu1 pt id, iso %.0f %f %i \n",
                         //nt.good_trigger, nt.mu_size, nt.mu1_pt, nt.mu_IsTightMuon[0], nt.mu_iso0);
@@ -45,21 +44,21 @@ void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
 
                 nt.fillEventSFs();
                 nt.fillEventRC();
-                bool one_iso = nt.mu_iso0 ^ nt.mu_iso1;
+                bool one_tight = nt.mu_tight_id0 ^ nt.mu_tight_id1;
 
                 //pick the category
-                if(nt.opp_sign && nt.mu_iso0 && nt.mu_iso1){ //signal region
+                if(nt.opp_sign && nt.tight_dimuon_id){ //signal region
                     nt.outTrees[0]->Fill();
                 }
-                else if(!nt.opp_sign && nt.mu_iso0 && nt.mu_iso1){ //samesign region
+                else if(!nt.opp_sign && nt.tight_dimuon_id){ //samesign region
                     nt.outTrees[3]->Fill();
                 }
-                else if(one_iso){ //wjets control region
-                    if(nt.mu_iso0) iso_mu = 0;
+                else if(one_tight){ //wjets control region
+                    if(nt.mu_tight_id0) iso_mu = 0;
                     else           iso_mu = 1;
                     nt.outTrees[1]->Fill();
                 }
-                else if(!nt.mu_iso0 && !nt.mu_iso1){ //qcd control region
+                else if(!nt.mu_tight_id0 && !nt.mu_tight_id1){ //qcd control region
                     nt.outTrees[2]->Fill();
                 }
 

@@ -122,7 +122,7 @@ class NTupleReader{
         Double_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down, alpha_up, alpha_down;
         Int_t nJets, jet1_flavour, jet2_flavour, pu_NtrueInt, has_nobjets;
         Bool_t is_tau_event;
-        Float_t met_pt, mu1_charge, mu2_charge, el1_charge, el2_charge; 
+        Float_t met_pt, met_phi, mu1_charge, mu2_charge, el1_charge, el2_charge; 
         Int_t el1_gc, el2_gc;
         TLorentzVector cm, gen_cm;
         TLorentzVector mu_p, mu_m, gen_mu_p_vec, gen_mu_m_vec;
@@ -140,7 +140,7 @@ class NTupleReader{
         Float_t gen_Pt[GEN_SIZE], gen_Eta[GEN_SIZE], gen_Phi[GEN_SIZE], gen_E[GEN_SIZE];
 
         Float_t mu_Pt[MU_SIZE], mu_Eta[MU_SIZE], mu_Phi[MU_SIZE], mu_E[MU_SIZE], 
-                mu_Charge[MU_SIZE], mu_IsHighPtMuon[MU_SIZE], mu_IsTightMuon[MU_SIZE];
+                mu_Charge[MU_SIZE], mu_IsHighPtMuon[MU_SIZE], mu_IsTightMuon[MU_SIZE], mu_IsMediumMuon[MU_SIZE], mu_IsLooseMuon[MU_SIZE];
         Float_t mu_SumChargedHadronPt[MU_SIZE], mu_SumNeutralHadronPt[MU_SIZE], mu_SumPUPt[MU_SIZE], mu_SumPhotonPt[MU_SIZE],
                 mu_NumberTrackerLayers[MU_SIZE];
 
@@ -168,8 +168,8 @@ class NTupleReader{
 
 
         int elp_index, elm_index;
-        bool good_sign, opp_sign, good_trigger, dimuon_id, emu_ids,
-             mu_iso0, mu_iso1, dielec_id, el_iso0, el_iso1;
+        bool good_sign, opp_sign, good_trigger, dimuon_accep, loose_dimuon_id, tight_dimuon_id, emu_ids,
+             mu_iso0, mu_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
 
         bool signal_event, failed_match;
 
@@ -178,5 +178,16 @@ class NTupleReader{
         void applyRC();
 };
         
+float ang_dist(float t1, float t2){
+    float dist = t1 - t2;
+    float pi = 3.14159;
+    if (dist < -pi){
+        dist += 2.*pi;
+    }
+    if( dist  > pi ){
+        dist -= 2.*pi;
+    }
+    return dist;
+}
 
 

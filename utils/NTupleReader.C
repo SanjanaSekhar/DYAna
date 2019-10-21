@@ -167,6 +167,7 @@ bool NTupleReader::getNextFile(){
 
             tin->SetBranchAddress("met_MuCleanOnly_size", &met_size);
             tin->SetBranchAddress("met_MuCleanOnly_Pt", &met_pt);
+            tin->SetBranchAddress("met_MuCleanOnly_Phi", &met_phi);
 
             if(do_muons || do_emu){
 
@@ -177,6 +178,8 @@ bool NTupleReader::getNextFile(){
                 tin->SetBranchAddress("mu_E", &mu_E);
                 tin->SetBranchAddress("mu_Charge", &mu_Charge);
 
+                tin->SetBranchAddress("mu_IsLooseMuon", &mu_IsLooseMuon);
+                tin->SetBranchAddress("mu_IsMediumMuon", &mu_IsMediumMuon);
                 tin->SetBranchAddress("mu_IsTightMuon", &mu_IsTightMuon);
                 tin->SetBranchAddress("mu_NumberTrackerLayers", &mu_NumberTrackerLayers);
                 tin->SetBranchAddress("mu_Iso04", &mu_PFIso);
@@ -438,7 +441,7 @@ void NTupleReader::getEvent(int i){
     if(mu_size > MU_SIZE || el_size > EL_SIZE ||  gen_size >GEN_SIZE) printf("WARNING: MU_SIZE EL_SIZE OR GEN_SIZE TOO LARGE \n");
     if(met_size != 1) printf("WARNING: Met size not equal to 1\n");
     if(do_muons){
-        opp_sign = good_trigger = dimuon_id = mu_iso0 = mu_iso1 = false;
+        opp_sign = good_trigger = dimuon_accep = loose_dimuon_id = tight_dimuon_id = mu_iso0 = mu_iso1 = mu_tight_id0 = mu_tight_id1 = false;
         if(mu_size >= 2){
 
             opp_sign = ((abs(mu_Charge[0] - mu_Charge[1])) > 0.01);
@@ -458,13 +461,18 @@ void NTupleReader::getEvent(int i){
                 good_trigger = HLT_IsoMu24;
                 min_pt = 26.;
             }
-
-            dimuon_id = mu_IsTightMuon[0] && mu_IsTightMuon[1] &&
-                mu_Pt[0] > min_pt &&  mu_Pt[1] > 15. &&
+            dimuon_accep = mu_Pt[0] > min_pt &&  mu_Pt[1] > 15. &&
                 abs(mu_Eta[0]) < 2.4 && abs(mu_Eta[1]) < 2.4;
-            //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2 for iso cuts
+            loose_dimuon_id = dimuon_accep && mu_IsLooseMuon[0] && mu_IsLooseMuon[1];
+
             mu_iso0 = mu_PFIso[0] < mu_iso_cut;
             mu_iso1 = mu_PFIso[1] < mu_iso_cut;
+
+            mu_tight_id0 = mu_Pt[0] > min_pt && abs(mu_Eta[0]) < 2.4 && mu_iso0 && mu_IsTightMuon[0];
+            mu_tight_id1 = mu_Pt[1] > 15. && abs(mu_Eta[1]) < 2.4 && mu_iso1 && mu_IsTightMuon[1];
+            
+            tight_dimuon_id = loose_dimuon_id && mu_tight_id0 && mu_tight_id1;
+            //See https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideMuonIdRun2 for iso cuts
 
             if(mu_Charge[0] >0){
                 mu_p.SetPtEtaPhiM(mu_Pt[0], mu_Eta[0], mu_Phi[0], mu_mass);

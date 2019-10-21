@@ -8,13 +8,14 @@ bool in_Z_window(Double_t m){
 }
 
 
-void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
+void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="", int year = -1)
 {
 
 
     if(fin == "") fin = string("EOS_files/2017/diboson_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/MuMu_fake_rate_contam_test.root", false);
-    nt.year = 2017;
+    if (year == -1) year = 2016;
+    nt.year = year;
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_muons = true;
@@ -25,8 +26,9 @@ void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
     nt.nOutTrees++;
     nt.outTrees[0] = tout;
     tout->SetDirectory(0);
-    Double_t mu_pt, mu_eta, gen_weight;
+    Double_t mu_pt, mu_eta, mt, gen_weight;
     Bool_t pass;
+    tout->Branch("mt", &mt);
     tout->Branch("mu_pt", &mu_pt);
     tout->Branch("mu_eta", &mu_eta);
     tout->Branch("pass", &pass);
@@ -37,8 +39,11 @@ void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
 
-            if(nt.good_trigger &&  nt.dimuon_id && nt.mu_size >= 3
-                    && nt.mu_Pt[2] > 15. && abs(nt.mu_Eta[2]) < 2.4 &&  nt.mu_IsTightMuon[2]){
+            bool tri_muon_id = nt.mu_size >= 3 && nt.mu_IsLooseMuon[0] && nt.mu_IsLooseMuon[1] && nt.mu_IsLooseMuon[2] && 
+                nt.mu_Pt[0] > 29. &&  nt.mu_Pt[1] > 15. && nt.mu_Pt[2] > 15.  && 
+                abs(nt.mu_Eta[0]) < 2.4 && abs(nt.mu_Eta[1]) < 2.4  && abs(nt.mu_Eta[2]) < 2.4;  ;
+
+            if(nt.good_trigger &&  tri_muon_id && nt.met_pt < 25.){
 
                 //Want events with 3 muons, 2 from Z and 1 extra
 
@@ -67,10 +72,9 @@ void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
                 bool m12_in_Z = in_Z_window(m12);
 
                 bool iso[3];
-                iso[0] = nt.mu_PFIso[0] < nt.mu_iso_cut;
-                iso[1] = nt.mu_PFIso[1] < nt.mu_iso_cut;
-                iso[2] = nt.mu_PFIso[2] < nt.mu_iso_cut;
-
+                iso[0] = nt.mu_IsTightMuon[0] && nt.mu_PFIso[0] < nt.mu_iso_cut;
+                iso[1] = nt.mu_IsTightMuon[1] &&  nt.mu_PFIso[1] < nt.mu_iso_cut;
+                iso[2] = nt.mu_IsTightMuon[2] &&  nt.mu_PFIso[2] < nt.mu_iso_cut;
 
                 if(m01_in_Z && !m02_in_Z && !m12_in_Z && nt.mu_Charge[0] * nt.mu_Charge[1] < 0 && iso[0] && iso[1]){
                     mu_extra = 2;
@@ -107,10 +111,12 @@ void SingleMuon_mc_contam_fake_rate(int nJobs =1, int iJob=0, string fin="")
                 }
 
 
-
-                if( (mu_p != -1) && nt.has_nobjets && nt.met_pt < 25.){
+                if( (mu_p != -1) ){
+                    double dphi = ang_dist(nt.mu_Phi[mu_extra], nt.met_phi);
                     mu_pt = nt.mu_Pt[mu_extra];
                     mu_eta = nt.mu_Eta[mu_extra];
+                    mt = sqrt(mu_pt * nt.met_pt * (1. - TMath::Cos(dphi)));
+                    //printf("%.1f \n", mt);
                     pass = iso[mu_extra];
                     nEvents++;
                     tout->Fill();
