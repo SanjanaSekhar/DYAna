@@ -16,7 +16,7 @@ void unzero_bins(TH1 *h){
     }
 }
 
-void make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, char h2_label[80], char ratio_label[80], 
+TCanvas* make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, char h2_label[80], char ratio_label[80], 
         char axis_label[80], bool logy=false, bool write_out = true){
 
     unzero_bins(h1);
@@ -87,5 +87,87 @@ void make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, char h
     //int iPeriod = 4; 
     //CMS_lumi(pad1, iPeriod, 33 );
     if(write_out) c->Print(title.c_str());
-    return;
+    return c;
 }
+
+
+std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel, float max =-1., bool logy = true){
+
+    TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
+    TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
+    pad1->SetBottomMargin(0);
+    pad1->Draw();
+    pad1->cd();
+    if(logy) pad1->SetLogy();
+    h_stack->Draw("hist");
+    if(max > 0. ) h_stack->SetMaximum(max);
+    h_stack->SetMinimum(0.1);
+    gStyle->SetEndErrorSize(4);
+    h_data->SetMarkerStyle(kFullCircle);
+    h_data->SetMarkerColor(1);
+    h_data->DrawCopy("P E same");
+
+
+    leg->Draw();
+
+    c->cd();
+    TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
+    //pad2->SetTopMargin(0);
+    pad2->SetBottomMargin(0.2);
+    pad2->SetGridy();
+    pad2->Draw();
+    pad2->cd();
+
+
+    TList *stackHists = h_stack->GetHists();
+    TH1* sum = (TH1*)stackHists->At(0)->Clone();
+    sum->Reset();
+
+    for (int i=0;i<stackHists->GetSize();++i) {
+      sum->Add((TH1*)stackHists->At(i));
+    }
+    auto h_ratio = (TH1F *) h_data->Clone("h_ratio" + label);
+    float center = 1.0;
+    bool do_diff = false;
+    if(do_diff){
+        center = 0.0;
+        h_ratio->Add(sum, -1.);
+    }
+    h_ratio->SetMinimum(center - 0.5);
+    h_ratio->SetMaximum(center + 0.5);
+    h_ratio->Sumw2();
+    h_ratio->SetStats(0);
+    h_ratio->Divide(sum);
+    h_ratio->SetMarkerStyle(21);
+    h_ratio->Draw("ep");
+    TLine *l1 = new TLine(150,1,2000,1);
+    l1->SetLineStyle(2);
+    l1->Draw();
+    c->cd();
+
+    h_ratio->SetTitle("");
+    // Y axis m_ratio plot settings
+   h_ratio->GetYaxis()->SetTitle("Obs/Exp");
+   h_ratio->GetYaxis()->SetNdivisions(505);
+   h_ratio->GetYaxis()->SetTitleSize(20);
+   h_ratio->GetYaxis()->SetTitleFont(43);
+   h_ratio->GetYaxis()->SetTitleOffset(1.2);
+   h_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+   h_ratio->GetYaxis()->SetLabelSize(15);
+   // X axis m_ratio plot settings
+   h_ratio->GetXaxis()->SetTitle(xlabel);
+   h_ratio->GetXaxis()->SetTitleSize(20);
+   h_ratio->GetXaxis()->SetTitleFont(43);
+   h_ratio->GetXaxis()->SetTitleOffset(3.);
+   h_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+   h_ratio->GetXaxis()->SetLabelSize(20);
+
+   float chi2 = computeChi2(h_ratio);
+   int n_bins = h_ratio->GetNbinsX();
+
+   printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
+   return std::make_pair(c, pad1);
+}
+
+
+

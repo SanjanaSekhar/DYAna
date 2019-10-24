@@ -238,7 +238,8 @@ void make_qcd_from_emu_m_cost_pt_xf_hist(TTree *t_data, TTree *t_ttbar, TTree *t
 }
 
 
-void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, bool is_data=false, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
+void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
+        bool is_data=false, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
         int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
     //read event data
         TempMaker tm(t1, is_data, year);
@@ -262,6 +263,9 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
                 h_m->Fill(tm.m,tm.evt_weight);
                 h_pt->Fill(pt,tm.evt_weight);
                 h_xf->Fill(tm.xF, tm.evt_weight);
+                if(h_phi != nullptr) h_phi->Fill(tm.cm.Phi(), tm.evt_weight);
+                if(h_rap != nullptr) h_rap->Fill(tm.cm.Rapidity(), tm.evt_weight);
+                //if(h_phi != nullptr) h_phi->Fill(tm.lep_p->Phi(), tm.evt_weight);
 
                 if(ss){
                     h_cost->Fill(-tm.cost, 0.5* tm.evt_weight);
@@ -279,8 +283,8 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
     tm.finish();
 }
 
-void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, int flag1 = FLAG_MUONS,
-        int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool in_os_region=true){
+void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
+        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool in_os_region=true){
     TLorentzVector *lep_p=0;
     TLorentzVector *lep_m=0;
     Double_t pt;
@@ -331,7 +335,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
-            else if(ss && flag1 == FLAG_MUONS)  pass = pass && !opp_sign;
+            //else if(ss && flag1 == FLAG_MUONS)  pass = pass && !opp_sign;
             if(pass){
                 if(l==0 && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3), min(tm.mu1_pt, 150.));
                 if(l==0 && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3), min(tm.mu2_pt, 150.));
@@ -402,14 +406,22 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                 }
 
 
-                if(!ss) h_cost->Fill(tm.cost, tot_evt_weight);
+                if(!ss){
+                    h_cost->Fill(tm.cost, tot_evt_weight);
+                    h_rap->Fill(tm.cm.Rapidity(), tot_evt_weight);
+                }
                 else{
                     h_cost->Fill(tm.cost, 0.5*tot_evt_weight);
                     h_cost->Fill(-tm.cost, 0.5*tot_evt_weight);
+                    h_rap->Fill(tm.cm.Rapidity(), 0.5 * tot_evt_weight);
+                    h_rap->Fill(-tm.cm.Rapidity(), 0.5 * tot_evt_weight);
                 }
+                
                 h_m->Fill(tm.m, tot_evt_weight);
                 h_pt->Fill(tm.cm.Pt(), tot_evt_weight);
                 h_xf->Fill(tm.xF, tot_evt_weight);
+                h_phi->Fill(tm.cm.Phi(), tot_evt_weight);
+                //if(h_phi != nullptr) h_phi->Fill(tm.lep_p->Phi(), tot_evt_weight);
                 if(opp_sign) tot_weight_os += tot_evt_weight;
                 else tot_weight_ss += tot_evt_weight;
 
@@ -425,7 +437,8 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
     set_fakerate_errors(h_err, FR.h, h_cost);
-    if(ss && flag1 != FLAG_MUONS){
+    //if(ss && flag1 != FLAG_MUONS){
+    if(ss){
         float scaling = 1.0;
         if(in_os_region) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
         else scaling = tot_weight_ss / (tot_weight_ss + tot_weight_os);
@@ -434,6 +447,8 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
         h_pt->Scale(scaling);
         h_xf->Scale(scaling);
         h_cost->Scale(scaling);
+        h_phi->Scale(scaling);
+        h_rap->Scale(scaling);
     }
     Double_t err;
     printf("Total fakerate est is %.0f +/- %.0f \n", h_cost->IntegralAndError(1, h_cost->GetNbinsX(), err), err);

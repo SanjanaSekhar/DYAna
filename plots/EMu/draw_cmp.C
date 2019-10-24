@@ -27,7 +27,7 @@
 #include "../../utils/HistMaker.C"
 #include "../../utils/root_files.h"
 
-int year = 2017;
+int year = 2016;
 
 
 
@@ -68,7 +68,8 @@ void draw_cmp(){
     Double_t mc_count = ttbar_m->Integral() + diboson_m->Integral() + wt_m->Integral() + dy_m->Integral();
 
     Double_t fake_unc = 0.40 * fake_count;
-    Double_t mc_unc = 0.05 * mc_count;
+    double bkg_scale_unc = pow(0.05*0.05 + 0.025*0.025, 0.5);
+    Double_t mc_unc = bkg_scale_unc* mc_count;
 
     printf("Data count %.0f \n", data_count);
     printf("MC count %.0f \n", mc_count);

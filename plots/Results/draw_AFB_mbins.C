@@ -31,20 +31,20 @@ void draw_AFB_mbins(){
     Double_t y_sm[6] =      {0.622, 0.611, 0.596, 0.597, 0.592, 0.590};
     Double_t y_sm_errs[6] = {0.004, 0.004, 0.005, 0.004, 0.004, 0.004};
 
-    Double_t y_comb[6] =      {0.614, 0.582, 0.630, 0.584, 0.606, 0.568};
-    Double_t y_comb_errs[6] = {0.016, 0.020, 0.022, 0.028, 0.045, 0.065};
+    Double_t y_comb[6] =      {0.625, 0.604, 0.602, 0.586, 0.643, 0.570};
+    Double_t y_comb_errs[6] = {0.007, 0.010, 0.011, 0.014, 0.024, 0.030};
 
     Double_t y_mumu[6] =      {0.608, 0.577, 0.640, 0.611, 0.630, 0.588};
-    Double_t y_mumu_errs[6] = {0.020, 0.027, 0.029, 0.036, 0.060, 0.094};
+    Double_t y_mumu_errs[6] = {0.010, 0.014, 0.015, 0.018, 0.031, 0.042};
 
 
     Double_t y_elel[6] =      {0.627, 0.609, 0.610, 0.549, 0.577, 0.542};
-    Double_t y_elel_errs[6] = {0.024, 0.031, 0.034, 0.043, 0.066, 0.085};
+    Double_t y_elel_errs[6] = {0.011, 0.016, 0.016, 0.022, 0.033, 0.044};
 
 
     Double_t ratio[6], ratio_errs[6];
     for(int i=0; i<6; i++){
-        ratio[i] = y_comb[i]/y_sm[i];
+        ratio[i] = y_sm[i]/y_sm[i];
         ratio_errs[i] = y_comb_errs[i]/y_sm[i];
     }
     float chi2_sep(0.), chi2_comb(0.);
@@ -60,9 +60,9 @@ void draw_AFB_mbins(){
 
     //TGraphErrors *g_sm = new TGraphErrors(6, x, y_sm, x_err, y_sm_errs);
     TGraph *g_sm = new TGraphErrors(6, x, y_sm);
-    TGraphErrors *g_comb = new TGraphErrors(6, x, y_comb, x_err, y_comb_errs);
-    TGraphErrors *g_mumu = new TGraphErrors(6, x, y_mumu, x_err, y_mumu_errs);
-    TGraphErrors *g_elel = new TGraphErrors(6, x, y_elel, x_err, y_elel_errs);
+    TGraphErrors *g_comb = new TGraphErrors(6, x, y_sm, x_err, y_comb_errs);
+    TGraphErrors *g_mumu = new TGraphErrors(6, x, y_sm, x_err, y_mumu_errs);
+    TGraphErrors *g_elel = new TGraphErrors(6, x, y_sm, x_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(6, x, ratio, x_err, ratio_errs);
 
     g_sm->SetMarkerColor(kBlue);
@@ -145,7 +145,7 @@ void draw_AFB_mbins(){
     g_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetXaxis()->SetLabelSize(20);
     int iPeriod = 4; 
-    CMS_lumi(pad1, iPeriod, 0 );
+    //CMS_lumi(pad1, iPeriod, 0 );
     c_m->Update();
     
 }
