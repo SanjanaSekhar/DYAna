@@ -143,7 +143,7 @@ void init(int year){
         t_mumu_back = (TTree *) f_mumu_back ->Get("T_sig");
         t_mumu_ss_back = (TTree *)f_mumu_back->Get("T_ss");
 
-        f_mumu_gamgam = TFile::Open("../analyze/output_files/2017/MuMu17_photInd_sep14.root");
+        f_mumu_gamgam = TFile::Open("../analyze/output_files/2017/MuMu17_photInd_oct21.root");
         t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
 
 
@@ -197,7 +197,7 @@ void init(int year){
         t_mumu_back = (TTree *) f_mumu_back ->Get("T_sig");
         t_mumu_ss_back = (TTree *)f_mumu_back->Get("T_ss");
 
-        f_mumu_gamgam = TFile::Open("../analyze/output_files/2018/MuMu18_photInd_sep11.root");
+        f_mumu_gamgam = TFile::Open("../analyze/output_files/2018/MuMu18_photInd_oct21.root");
         t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
 
 

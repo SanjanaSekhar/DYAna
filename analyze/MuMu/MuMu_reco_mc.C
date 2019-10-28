@@ -26,7 +26,7 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 
 
     int iso_mu;
-    nt.outTrees[2]->Branch("iso_mu", &iso_mu); 
+    nt.outTrees[1]->Branch("iso_mu", &iso_mu); 
 
     while(nt.getNextFile()){
 
@@ -34,8 +34,8 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
             if(nt.good_trigger && nt.loose_dimuon_id &&
-                    //nt.cm_m > 130. ){
-                    nt.cm_m > 50. && nt.cm_m < 130. ){
+                    nt.cm_m > 130. ){
+                    //nt.cm_m > 50. && nt.cm_m < 130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
                 nt.parseGenParts();

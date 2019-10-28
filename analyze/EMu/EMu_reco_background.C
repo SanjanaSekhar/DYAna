@@ -35,13 +35,13 @@ void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-
                 nt.fillEvent();
                 nt.fillEventSFs();
 
-                bool one_iso = nt.mu_iso0 ^ nt.el_iso0;
+                bool one_iso = nt.mu_tight_id0 ^ nt.el_iso0;
 
                 //pick the category
-                if(nt.opp_sign && nt.mu_iso0 && nt.el_iso0){ //signal region
+                if(nt.opp_sign && nt.mu_tight_id0 && nt.el_iso0){ //signal region
                     nt.outTrees[0]->Fill();
                 }
-                else if(!nt.opp_sign && nt.mu_iso0 && nt.el_iso0){ //samesign region
+                else if(!nt.opp_sign && nt.mu_tight_id0 && nt.el_iso0){ //samesign region
                     nt.outTrees[3]->Fill();
                 }
                 else if(nt.opp_sign && one_iso){ //wjets control region
@@ -49,7 +49,7 @@ void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-
                     else          iso_lep = 1;
                     nt.outTrees[1]->Fill();
                 }
-                else if(nt.opp_sign && !nt.mu_iso0 && !nt.el_iso0){ //qcd control region
+                else if(nt.opp_sign && !nt.mu_tight_id0 && !nt.el_iso0){ //qcd control region
                     nt.outTrees[2]->Fill();
                 }
             }

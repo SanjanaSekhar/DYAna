@@ -18,7 +18,7 @@ parser.add_option("-c", "--cut", dest='cut_str', default = "m>130.", help="Strin
 fin_str = sys.argv[1]
 fout_str = sys.argv[2]
 
-print("Copying trees from %s to %s. Using cut string %s" % (fin_str, fout_str, options.cut_str)
+print("Copying trees from %s to %s. Using cut string %s" % (fin_str, fout_str, options.cut_str))
 
 fin = r.TFile.Open(fin_str, "READ")
 fout = r.TFile.Open(fout_str, "RECREATE")

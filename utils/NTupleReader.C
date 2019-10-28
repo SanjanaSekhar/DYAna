@@ -560,12 +560,15 @@ void NTupleReader::getEvent(int i){
             }
 
 
-            emu_ids = el_IDMedium_NoIso[0] && mu_IsTightMuon[0] &&
+            emu_ids = el_IDMedium_NoIso[0] && mu_IsLooseMuon[0] &&
                 mu_Pt[0] > min_pt &&  el_ScaleCorr[0] * el_Pt[0] > 15. &&
                 abs(mu_Eta[0])  && goodElEta(el_SCEta[0]);
 
             el_iso0 = el_IDMedium[0];
+
             mu_iso0 = mu_PFIso[0] < mu_iso_cut;
+
+            mu_tight_id0 = mu_Pt[0] > min_pt && abs(mu_Eta[0]) < 2.4 && mu_iso0 && mu_IsTightMuon[0];
 
             mu.SetPtEtaPhiE(mu_Pt[0], mu_Eta[0], mu_Phi[0], mu_E[0]);
             el.SetPtEtaPhiE(el_ScaleCorr[0] * el_Pt[0], el_Eta[0], el_Phi[0], el_ScaleCorr[0] * el_E[0]);

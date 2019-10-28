@@ -22,7 +22,7 @@
 #include "TSystem.h"
 #include "TH2D.h"
 #include "Math/Functor.h"
-#include "../TemplateMaker_systematics.C"
+#include "../../utils/TemplateMaker_systematics.C"
 
 float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool ss = false){
@@ -146,7 +146,7 @@ float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_conta
 
                 Double_t y = abs(tm.cm.Rapidity());
 
-                h->Fill(y, cm.m, tot_evt_weight);
+                h->Fill(y, tm.m, tot_evt_weight);
 
 
             }
@@ -170,26 +170,44 @@ float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_conta
 
 void make_ilya_templates(){
 
-    int year = 2016;
+    TFile *f_elel_mc, *f_elel_back, *f_elel_data, *f_elel_QCD, *f_elel_WJets, *f_elel_WJets_contam, *f_elel_QCD_contam;
+    TTree *t_elel_mc, *t_elel_back, *t_elel_data, *t_elel_QCD, *t_elel_WJets, *t_elel_WJets_contam, *t_elel_QCD_contam, *t_elel_nosig;
 
-    auto f_mumu_data = TFile::Open("../analyze/output_files/MuMu_QCD_est_mlow_feb21.root");
-    auto t_mumu_WJets = (TTree *)f_mumu_data->Get("T_WJets");
-    auto t_mumu_QCD = (TTree *)f_mumu_data->Get("T_QCD");
+    TFile *f_mumu_mc, *f_mumu_back, *f_mumu_data, *f_mumu_QCD, *f_mumu_WJets, *f_mumu_WJets_contam, *f_mumu_QCD_contam;
+    TTree *t_mumu_mc, *t_mumu_back, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam, *t_mumu_nosig;
+
+    int year = 2018;
+
+    if(year == 2017){
+        f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu17_data_mlow_oct21.root");
+        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu17_fakes_contam_mlow_oct24.root");
+
+        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl17_data_mlow_oct21.root");
+        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl17_fakes_contam_oct24.root");
+    }
+    else if(year == 2018){
+        f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_data_mlow_oct21.root");
+        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_fakes_contam_mlow_oct24.root");
+
+        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_data_mlow_oct21.root");
+        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_fakes_contam_oct24.root");
+    }
 
 
-    auto f_mumu_back = TFile::Open("../analyze/output_files/MuMu_WJets_mc_mlow_comb_mar6.root");
-    auto t_mumu_WJets_contam = (TTree *)f_mumu_back->Get("T_WJets");
-    auto t_mumu_QCD_contam = (TTree *)f_mumu_back->Get("T_QCD");
+    t_mumu_WJets = (TTree *)f_mumu_data->Get("T_WJets");
+    t_mumu_QCD = (TTree *)f_mumu_data->Get("T_QCD");
 
 
-    auto f_elel_data = TFile::Open("../analyze/output_files/elel_QCD_est_mlow_feb21.root");
-    auto t_elel_WJets = (TTree *)f_elel_data->Get("T_WJets");
-    auto t_elel_QCD = (TTree *)f_elel_data->Get("T_QCD");
+    t_mumu_WJets_contam = (TTree *)f_mumu_WJets_contam->Get("T_WJets");
+    t_mumu_QCD_contam = (TTree *)f_mumu_WJets_contam->Get("T_QCD");
 
 
-    auto f_elel_back = TFile::Open("../analyze/output_files/elel_WJets_mc_mlow_comb_mar6.root");
-    auto t_elel_WJets_contam = (TTree *)f_elel_back->Get("T_WJets");
-    auto t_elel_QCD_contam = (TTree *)f_elel_back->Get("T_QCD");
+    t_elel_WJets = (TTree *)f_elel_data->Get("T_WJets");
+    t_elel_QCD = (TTree *)f_elel_data->Get("T_QCD");
+
+
+    t_elel_WJets_contam = (TTree *)f_elel_WJets_contam->Get("T_WJets");
+    t_elel_QCD_contam = (TTree *)f_elel_WJets_contam->Get("T_QCD");
 
 
     float eta_bins[] = {0., 1.0, 1.25, 1.5, 2.4};
@@ -203,11 +221,13 @@ void make_ilya_templates(){
     float m_low = 50.;
     float m_high = 14000.;
     bool ss = true;
-    float elel_sign_scaling = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel, year, m_low, m_high, FLAG_ELECTRONS, ss);
-    ss = false; // muons use os only for their fakes
-    float mumu_sign_scaling = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu, year, m_low, m_high, FLAG_MUONS, ss);
+    float elel_sign_scaling = gen_ilya_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel, year, m_low, m_high, FLAG_ELECTRONS, ss);
+    float mumu_sign_scaling = gen_ilya_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu, year, m_low, m_high, FLAG_MUONS, ss);
 
-    TFile *fout = new TFile("lepton_pair_fakes_est_2016.root", "RECREATE");
+    char fname[80];
+    sprintf(fname, "lepton_pair_fakes_est_%i.root", year);
+    printf("Writing out to %s \n", fname);
+    TFile *fout = new TFile(fname, "RECREATE");
     fout->cd();
     h_elel->Write();
     h_mumu->Write();

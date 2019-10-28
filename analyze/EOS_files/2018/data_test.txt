@@ -1,1 +1,6 @@
-/uscms_data/d3/oamram/cmssw_ntuple_makers/2017/src/Analysis/B2GTTrees/test/data_test.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug6/SingleMuon/B2GAnaFW_10_2_X_Run2018A-17Sep2018-v2/190806_145831/0000/B2GTTreeNtupleExtra_1.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug6/SingleMuon/B2GAnaFW_10_2_X_Run2018A-17Sep2018-v2/190806_145831/0000/B2GTTreeNtupleExtra_10.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug6/SingleMuon/B2GAnaFW_10_2_X_Run2018A-17Sep2018-v2/190806_145831/0000/B2GTTreeNtupleExtra_100.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug6/SingleMuon/B2GAnaFW_10_2_X_Run2018A-17Sep2018-v2/190806_145831/0000/B2GTTreeNtupleExtra_101.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug6/SingleMuon/B2GAnaFW_10_2_X_Run2018A-17Sep2018-v2/190806_145831/0000/B2GTTreeNtupleExtra_102.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug6/SingleMuon/B2GAnaFW_10_2_X_Run2018A-17Sep2018-v2/190806_145831/0000/B2GTTreeNtupleExtra_103.root
