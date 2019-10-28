@@ -22,24 +22,10 @@
 #include "Math/Functor.h"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
+#include "results.h"
 
 void draw_AFB_mbins(){
     setTDRStyle();
-    Double_t x[6] = {175., 225., 300., 425., 600., 850.};
-    Double_t x_err[6] = {25., 25., 50., 75., 100., 150.};
-
-    Double_t y_sm[6] =      {0.622, 0.611, 0.596, 0.597, 0.592, 0.590};
-    Double_t y_sm_errs[6] = {0.004, 0.004, 0.005, 0.004, 0.004, 0.004};
-
-    Double_t y_comb[6] =      {0.625, 0.604, 0.602, 0.586, 0.643, 0.570};
-    Double_t y_comb_errs[6] = {0.007, 0.010, 0.011, 0.014, 0.024, 0.030};
-
-    Double_t y_mumu[6] =      {0.608, 0.577, 0.640, 0.611, 0.630, 0.588};
-    Double_t y_mumu_errs[6] = {0.010, 0.014, 0.015, 0.018, 0.031, 0.042};
-
-
-    Double_t y_elel[6] =      {0.627, 0.609, 0.610, 0.549, 0.577, 0.542};
-    Double_t y_elel_errs[6] = {0.011, 0.016, 0.016, 0.022, 0.033, 0.044};
 
 
     Double_t ratio[6], ratio_errs[6];
@@ -58,12 +44,12 @@ void draw_AFB_mbins(){
 
 
 
-    //TGraphErrors *g_sm = new TGraphErrors(6, x, y_sm, x_err, y_sm_errs);
-    TGraph *g_sm = new TGraphErrors(6, x, y_sm);
-    TGraphErrors *g_comb = new TGraphErrors(6, x, y_sm, x_err, y_comb_errs);
-    TGraphErrors *g_mumu = new TGraphErrors(6, x, y_sm, x_err, y_mumu_errs);
-    TGraphErrors *g_elel = new TGraphErrors(6, x, y_sm, x_err, y_elel_errs);
-    TGraphErrors *g_ratio = new TGraphErrors(6, x, ratio, x_err, ratio_errs);
+    //TGraphErrors *g_sm = new TGraphErrors(6, m, y_sm, x_err, y_sm_errs);
+    TGraph *g_sm = new TGraphErrors(6, m, y_sm);
+    TGraphErrors *g_comb = new TGraphErrors(6, m, y_sm, m_err, y_comb_errs);
+    TGraphErrors *g_mumu = new TGraphErrors(6, m, y_sm, m_err, y_mumu_errs);
+    TGraphErrors *g_elel = new TGraphErrors(6, m, y_sm, m_err, y_elel_errs);
+    TGraphErrors *g_ratio = new TGraphErrors(6, m, ratio, m_err, ratio_errs);
 
     g_sm->SetMarkerColor(kBlue);
     g_sm->SetLineColor(kBlue);
