@@ -35,7 +35,8 @@
 void draw_charge_cut(){
     const int type = FLAG_ELECTRONS;
     int year = 2016;
-    char *fin = "../analyze/output_files/2017/ElEl17_dy_oct15.root";
+    char *fin = "../analyze/output_files/2018/ElEl18_dy_sep13.root";
+    char *fin2 = "../analyze/output_files/2018/ElEl18_dy_oct31.root";
 
 
     TFile *f = TFile::Open(fin);
@@ -43,6 +44,8 @@ void draw_charge_cut(){
     TTree *T_sig = (TTree *) gDirectory->Get("T_sig");
     TTree *T_ss = (TTree *) gDirectory->Get("T_ss");
 
+    TFile *f2 = TFile::Open(fin2);
+    TTree *T_sig2 = (TTree *) gDirectory->Get("T_sig");
 
 
 
@@ -60,14 +63,15 @@ void draw_charge_cut(){
     float m_high= 20000.;
 
     make_m_cost_pt_xf_hist(T_sig, sig_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(T_ss, ss_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(T_sig2, sig_cut_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
+    //make_m_cost_pt_xf_hist(T_ss, ss_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
 
-    TFile *f_dummy = (TFile*) TFile::Open("dummy.root", "RECREATE");
-    TTree *T_sig_cut = T_sig->CopyTree("el1_gc * el2_gc > 0.1");
-    TTree *T_ss_cut = T_ss->CopyTree("el1_gc * el2_gc > 0.1");
+    //TFile *f_dummy = (TFile*) TFile::Open("dummy.root", "RECREATE");
+    //TTree *T_sig_cut = T_sig->CopyTree("el1_gc * el2_gc > 0.1");
+    //TTree *T_ss_cut = T_ss->CopyTree("el1_gc * el2_gc > 0.1");
 
-    make_m_cost_pt_xf_hist(T_sig_cut, sig_cut_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(T_ss_cut, ss_cut_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
+    //make_m_cost_pt_xf_hist(T_sig_cut, sig_cut_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
+    //make_m_cost_pt_xf_hist(T_ss_cut, ss_cut_m, dummy, dummy, dummy, dummy, dummy,  false, type,  do_RC, year, m_low, m_high);
 
 
     sig_m->SetLineColor(kBlue);
@@ -82,8 +86,8 @@ void draw_charge_cut(){
     ss_cut_m->SetLineColor(kRed);
     ss_cut_m->SetLineWidth(3);
 
-    make_ratio_plot("ElEl_sig_charge_cut.pdf", sig_cut_m, "Charge Quality Cut", sig_m, "No Cut", "Cut/No Cut", "os ee M_{ee}", true, true);
-    make_ratio_plot("ElEl_ss_charge_cut.pdf", ss_cut_m, "Charge Quality Cut", ss_m, "No Cut", "Cut/No Cut", "ss ee M_{ee}", true, true);
+    make_ratio_plot("ElEl_tightID_cmp.pdf", sig_cut_m, "Tight ID", sig_m, "Medium ID", "Tight/Med", "os ee M_{ee}", true, true);
+    //make_ratio_plot("ElEl_ss_charge_cut.pdf", ss_cut_m, "Charge Quality Cut", ss_m, "No Cut", "Cut/No Cut", "ss ee M_{ee}", true, true);
 
 }
 
