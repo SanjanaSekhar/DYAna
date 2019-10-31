@@ -1,0 +1,10 @@
+##PhotInd M150
+!idx = 17 xsec = 0.36
+#################
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct30/PhotInd_M150/B2GAnaFW_9_4_X_oamram-crab_PhotInd_M150_2016_step2b-722d342ee61704392dd37792585c69c0/191030_191105/0000/B2GTTreeNtupleExtra_1.root
+
+##PhotInd M500
+!idx = 18 xsec = 0.027
+#################
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct30/PhotInd_M500/B2GAnaFW_9_4_X_oamram-crab_PhotInd_M500_2016_step2b-722d342ee61704392dd37792585c69c0/191030_204705/0000/B2GTTreeNtupleExtra_1.root
+
