@@ -205,6 +205,7 @@ bool NTupleReader::getNextFile(){
                 tin->SetBranchAddress("el_E", &el_E);
                 tin->SetBranchAddress("el_Charge", &el_Charge);
                 tin->SetBranchAddress("el_IDMedium", &el_IDMedium);
+                tin->SetBranchAddress("el_IDTight", &el_IDTight);
                 tin->SetBranchAddress("el_SCEta", &el_SCEta);
                 tin->SetBranchAddress("el_ScaleCorr", &el_ScaleCorr);
                 tin->SetBranchAddress("el_ScaleCorrStatUp", &el_ScaleCorrStatUp);
@@ -216,6 +217,7 @@ bool NTupleReader::getNextFile(){
                 tin->SetBranchAddress("el_ScaleSmearUp", &el_ScaleSmearUp);
                 tin->SetBranchAddress("el_ScaleSmearDown", &el_ScaleSmearDown);
                 tin->SetBranchAddress("el_IDMediumNoIso", &el_IDMedium_NoIso);
+                tin->SetBranchAddress("el_IDTightNoIso", &el_IDTight_NoIso);
                 tin->SetBranchAddress("el_GoodCharge", &el_GoodCharge);
 
                 tin->SetBranchAddress("HLT_Ele27_WPTight_Gsf", &HLT_El27);
@@ -513,12 +515,12 @@ void NTupleReader::getEvent(int i){
                 min_pt = 35.;
             }
 
-            dielec_id = el_IDMedium_NoIso[0] && el_IDMedium_NoIso[1] &&
+            dielec_id = el_IDTight_NoIso[0] && el_IDTight_NoIso[1] &&
                 el_ScaleCorr[0] * el_Pt[0] > min_pt &&  el_ScaleCorr[1] * el_Pt[1] > 15. &&
                 goodElEta(el_SCEta[0]) && goodElEta(el_SCEta[1]);
 
-            el_iso0 = el_IDMedium[0];
-            el_iso1 = el_IDMedium[1];
+            el_iso0 = el_IDTight[0];
+            el_iso1 = el_IDTight[1];
 
 
             if(el_Charge[0] >0){
@@ -560,11 +562,11 @@ void NTupleReader::getEvent(int i){
             }
 
 
-            emu_ids = el_IDMedium_NoIso[0] && mu_IsLooseMuon[0] &&
+            emu_ids = el_IDTight_NoIso[0] && mu_IsLooseMuon[0] &&
                 mu_Pt[0] > min_pt &&  el_ScaleCorr[0] * el_Pt[0] > 15. &&
                 abs(mu_Eta[0])  && goodElEta(el_SCEta[0]);
 
-            el_iso0 = el_IDMedium[0];
+            el_iso0 = el_IDTight[0];
 
             mu_iso0 = mu_PFIso[0] < mu_iso_cut;
 

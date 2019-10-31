@@ -187,7 +187,7 @@ void make_ilya_templates(){
     }
     else if(year == 2018){
         f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_data_mlow_oct21.root");
-        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_fakes_contam_mlow_oct24.root");
+        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_fakes_contam_oct30.root");
 
         f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_data_mlow_oct21.root");
         f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_fakes_contam_oct24.root");

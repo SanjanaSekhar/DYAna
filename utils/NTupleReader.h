@@ -151,7 +151,7 @@ class NTupleReader{
         Float_t el_Pt[EL_SIZE], el_Eta[EL_SIZE], el_Phi[EL_SIZE], el_E[EL_SIZE], 
                 el_Charge[EL_SIZE], el_SCEta[EL_SIZE], el_GoodCharge[EL_SIZE];
 
-        Int_t el_IDMedium[EL_SIZE], el_IDMedium_NoIso[EL_SIZE];
+        Int_t el_IDMedium[EL_SIZE], el_IDMedium_NoIso[EL_SIZE], el_IDTight[EL_SIZE], el_IDTight_NoIso[EL_SIZE];
 
         Float_t el_ScaleCorr[EL_SIZE], el_ScaleCorrStatUp[EL_SIZE], el_ScaleCorrStatDown[EL_SIZE],
                                        el_ScaleCorrGainUp[EL_SIZE], el_ScaleCorrGainDown[EL_SIZE],
