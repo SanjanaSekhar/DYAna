@@ -312,7 +312,7 @@ Double_t TempMaker::getEvtWeight(){
 
         if(year==2016) evt_weight = 1000*(era1_weight*bcdef_lumi16 + era2_weight*gh_lumi16);
         if(year==2017) evt_weight = 1000*(era1_weight*mu_lumi17);
-        if(year==2018) evt_weight = 1000*(era1_weight*mu_lumi18);
+        if(year==2018) evt_weight = 1000*(era1_weight*mu_lumi18_era1 + era2_weight*mu_lumi18_era2);
     }
     if(do_electrons){
         if(do_elID_sys) el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF, do_elID_sys) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF, do_elID_sys);

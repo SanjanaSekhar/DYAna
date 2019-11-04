@@ -41,11 +41,13 @@ Double_t gh_lumi16 =  8.754 + 7.655;
 Double_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
 Double_t el_lumi16 = 35.9;
 
-Double_t mu_lumi17 = 42.13;
+Double_t mu_lumi17 = 42.14;
 Double_t el_lumi17 = 41.52;
 
-Double_t mu_lumi18 = 60.43;
-Double_t el_lumi18 = 58.83;
+Double_t mu_lumi18_era1 = 9.08;
+Double_t mu_lumi18_era2 = 52.23;
+Double_t mu_lumi18 = mu_lumi18_era1 + mu_lumi18_era2;
+Double_t el_lumi18 = 59.74;
 
 class TempMaker{
     public:
