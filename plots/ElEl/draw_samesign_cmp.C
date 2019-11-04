@@ -1,6 +1,5 @@
 #define STAND_ALONE
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -26,11 +25,11 @@
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
 #include "../../utils/HistMaker.C"
-#include "../../utils/PlotUtils.C"
 #include "../../utils/root_files.h"
+#include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-int year = 2018;
+int year = 2016;
 
 
 void draw_samesign_cmp(){

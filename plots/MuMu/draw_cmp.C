@@ -178,7 +178,7 @@ void draw_cmp(){
     //gg_cost->Scale(0.);
     //gg_m->Scale(0.);
 
-    bool ss_qcd = false;
+    bool ss_qcd = true;
     bool in_os_region = true;
     make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss_qcd, in_os_region);
     //QCD_cost->Scale(0.);

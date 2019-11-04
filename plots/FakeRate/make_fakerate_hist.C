@@ -33,8 +33,9 @@ void SetErrors(TH2D *h_rate, TH2D *h_total){
             //binomial distribution divided by n
             Double_t n = h_total->GetBinContent(i,j);
             Double_t r = h_rate->GetBinContent(i,j);
+            Double_t r_prev = h_rate->GetBinContent(i, j-1);
             Double_t err = sqrt(r*(1-r)/n);
-            if(r <=0.012){
+            if(r <=0.01 && r_prev > 2. * r){
                 if (j != 0){
                     printf("Substituting 0 rate with 1 lower pt bin \n");
                     r = h_rate->GetBinContent(i, j-1);
@@ -160,14 +161,19 @@ void make_fakerate_hist(){
         pt_bins = pt_bins_;
         n_pt_bins = 4;
         if(year == 2018){
-            f = TFile::Open("../analyze/output_files/2018/SingleElectron18_data_meas_fake_rate_sep9.root");
-            f_mc = TFile::Open("../analyze/output_files/2018/SingleElectron18_mc_contam_fake_rate_sep13.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_oct18.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2018/El18_data_fake_rate_nov1.root");
+            f_mc = TFile::Open("../analyze/output_files/2018/El18_mc_contam_fake_rate_nov1.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_nov1.root", "RECREATE");
         }
         else if(year == 2017){
-            f = TFile::Open("../analyze/output_files/2017/SingleElectron17_meas_fake_rate_sep4.root");
-            f_mc = TFile::Open("../analyze/output_files/2017/SingleElectron17_mc_contam_fake_rate_sep13.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate_oct18.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2017/El17_data_fake_rate_nov1.root");
+            f_mc = TFile::Open("../analyze/output_files/2017/El17_mc_contam_fake_rate_nov1.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate_nov1.root", "RECREATE");
+        }
+        else if(year == 2016){
+            f = TFile::Open("../analyze/output_files/2016/El16_data_fake_rate_nov1.root");
+            f_mc = TFile::Open("../analyze/output_files/2016/El16_mc_contam_fake_rate_nov1.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate_nov1.root", "RECREATE");
         }
         else{
             printf("Somethign went wrong.. \n");
@@ -188,6 +194,11 @@ void make_fakerate_hist(){
             f = TFile::Open("../analyze/output_files/2017/Mu17_data_fake_rate_oct18.root");
             f_mc = TFile::Open("../analyze/output_files/2017/Mu17_mc_contam_fake_rate_oct18.root");
             if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate_oct18.root", "RECREATE");
+        }
+        else if(year == 2016){
+            f = TFile::Open("../analyze/output_files/2016/Mu16_data_fake_rate_oct30.root");
+            f_mc = TFile::Open("../analyze/output_files/2016/Mu16_mc_contam_fake_rate_oct30.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate_oct30.root", "RECREATE");
         }
         else{
             printf("Somethign went wrong.. \n");

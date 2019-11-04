@@ -27,10 +27,9 @@
 #include "../../utils/HistMaker.C"
 #include "../../utils/root_files.h"
 #include "../../utils/PlotUtils.C"
-#include "root_files.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2017;
 
 
 void draw_cmp(){
@@ -92,15 +91,15 @@ void draw_cmp(){
     TH1F *wt_phi = new TH1F("wt_phi", "tw + #bar{t}w", n_phi_bins, -4,4);
 
     int n_rap_bins = 20;
-    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -4.,4.);
-    TH1F *mc_rap = new TH1F("mc_rap", "MC Signal (qqbar, qglu, qbarglu)", n_rap_bins, -4,4);
-    TH1F *mc_nosig_rap = new TH1F("mc_nosig_rap", "MC no signal (qq, gluglu qbarqbar)", n_rap_bins, -4.,4.);
-    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -4.,4.);
-    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -4,4);
-    TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -4,4);
-    TH1F *gg_rap = new TH1F("gg_rap", "QCD", n_rap_bins, -4,4);
-    TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -4,4);
-    TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -4,4);
+    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
+    TH1F *mc_rap = new TH1F("mc_rap", "MC Signal (qqbar, qglu, qbarglu)", n_rap_bins, -2.5,2.5);
+    TH1F *mc_nosig_rap = new TH1F("mc_nosig_rap", "MC no signal (qq, gluglu qbarqbar)", n_rap_bins, -2.5,2.5);
+    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.5,2.5);
+    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
+    TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
+    TH1F *gg_rap = new TH1F("gg_rap", "QCD", n_rap_bins, -2.5,2.5);
+    TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
+    TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
     mc_nosig_cost->SetFillColor(kMagenta);
     mc_nosig_m->SetFillColor(kMagenta);
