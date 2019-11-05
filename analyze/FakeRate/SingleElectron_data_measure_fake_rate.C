@@ -65,9 +65,9 @@ void SingleElectron_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin=
                 bool m12_in_Z = in_Z_window(m12);
 
                 bool iso[3];
-                iso[0] = nt.el_IDMedium[0];
-                iso[1] = nt.el_IDMedium[1];
-                iso[2] = nt.el_IDMedium[2];
+                iso[0] = nt.el_IDTight[0];
+                iso[1] = nt.el_IDTight[1];
+                iso[2] = nt.el_IDTight[2];
 
                 if(m01_in_Z && !m02_in_Z && !m12_in_Z && nt.el_Charge[0] * nt.el_Charge[1] < 0 && iso[0] && iso[1]){
                     el_extra = 2;

@@ -37,10 +37,6 @@ void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
             nt.getEvent(i);
             if(nt.good_trigger && nt.loose_dimuon_id && nt.cm_m > 50. ){
                 nt.fillEvent();
-                //printf("Trigger %i, n_mu %i, mu1 pt id, iso %.0f %f %i \n",
-                        //nt.good_trigger, nt.mu_size, nt.mu1_pt, nt.mu_IsTightMuon[0], nt.mu_iso0);
-                //printf("mu2 pt id, iso %.0f %f %i \n",
-                        //nt.mu2_pt, nt.mu_IsTightMuon[1], nt.mu_iso1);
 
                 nt.fillEventSFs();
                 nt.fillEventRC();

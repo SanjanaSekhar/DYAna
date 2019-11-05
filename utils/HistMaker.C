@@ -157,7 +157,7 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
                 Double_t tot_weight;
                 if(year ==2016) tot_weight = 1000 * (evt_weight * era2_SF * gh_lumi16 + evt_weight * era1_SF * bcdef_lumi16);
                 if(year ==2017) tot_weight = 1000 * evt_weight * era1_SF * mu_lumi17;
-                if(year==2018) tot_weight = 1000*  evt_weight * (era1_weight*mu_lumi18_era1 + era2_weight*mu_lumi18_era2);
+                if(year==2018) tot_weight = 1000*  evt_weight * (era1_SF*mu_lumi18_era1 + era2_SF*mu_lumi18_era2);
 
                 h_m->Fill(m, tot_weight);
                 if(ss) h_cost->Fill(abs(cost), tot_weight);

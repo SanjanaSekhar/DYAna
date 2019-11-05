@@ -515,7 +515,7 @@ void NTupleReader::getEvent(int i){
                 min_pt = 35.;
             }
 
-            dielec_id = el_IDTight_NoIso[0] && el_IDTight_NoIso[1] &&
+            dielec_id = el_IDMedium_NoIso[0] && el_IDMedium_NoIso[1] &&
                 el_ScaleCorr[0] * el_Pt[0] > min_pt &&  el_ScaleCorr[1] * el_Pt[1] > 15. &&
                 goodElEta(el_SCEta[0]) && goodElEta(el_SCEta[1]);
 
@@ -562,7 +562,7 @@ void NTupleReader::getEvent(int i){
             }
 
 
-            emu_ids = el_IDTight_NoIso[0] && mu_IsLooseMuon[0] &&
+            emu_ids = el_IDMedium_NoIso[0] && mu_IsLooseMuon[0] &&
                 mu_Pt[0] > min_pt &&  el_ScaleCorr[0] * el_Pt[0] > 15. &&
                 abs(mu_Eta[0])  && goodElEta(el_SCEta[0]);
 
