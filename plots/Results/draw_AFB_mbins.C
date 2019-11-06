@@ -28,28 +28,29 @@ void draw_AFB_mbins(){
     setTDRStyle();
 
 
-    Double_t ratio[6], ratio_errs[6];
-    for(int i=0; i<6; i++){
+    Double_t ratio[n_m_bins], ratio_errs[n_m_bins];
+    for(int i=0; i<n_m_bins; i++){
         ratio[i] = y_sm[i]/y_sm[i];
         ratio_errs[i] = y_comb_errs[i]/y_sm[i];
+        printf("%f ", ratio_errs[i]);
     }
     float chi2_sep(0.), chi2_comb(0.);
-    for(int i=0; i<6; i++){
+    for(int i=0; i<n_m_bins; i++){
         chi2_comb += pow((y_sm[i] - y_comb[i])/y_comb_errs[i],2);
         chi2_sep += pow((y_sm[i] - y_mumu[i])/y_mumu_errs[i],2);
         chi2_sep += pow((y_sm[i] - y_elel[i])/y_elel_errs[i],2);
     }
-    printf("Combined chisq is %.2f, p-value is %.3f \n", chi2_comb, ROOT::Math::chisquared_cdf_c(chi2_comb, 6));
+    printf("Combined chisq is %.2f, p-value is %.3f \n", chi2_comb, ROOT::Math::chisquared_cdf_c(chi2_comb, n_m_bins));
     printf("sep chisq is %.2f, p-value is %.3f \n", chi2_sep, ROOT::Math::chisquared_cdf_c(chi2_comb, 12));
 
 
 
-    //TGraphErrors *g_sm = new TGraphErrors(6, m, y_sm, x_err, y_sm_errs);
-    TGraph *g_sm = new TGraphErrors(6, m, y_sm);
-    TGraphErrors *g_comb = new TGraphErrors(6, m, y_sm, m_err, y_comb_errs);
-    TGraphErrors *g_mumu = new TGraphErrors(6, m, y_sm, m_err, y_mumu_errs);
-    TGraphErrors *g_elel = new TGraphErrors(6, m, y_sm, m_err, y_elel_errs);
-    TGraphErrors *g_ratio = new TGraphErrors(6, m, ratio, m_err, ratio_errs);
+    //TGraphErrors *g_sm = new TGraphErrors(n_m_bins, m, y_sm, x_err, y_sm_errs);
+    TGraph *g_sm = new TGraphErrors(n_m_bins, m, y_sm);
+    TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_sm, m_err, y_comb_errs);
+    TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_sm, m_err, y_mumu_errs);
+    TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_sm, m_err, y_elel_errs);
+    TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
     g_sm->SetMarkerColor(kBlue);
     g_sm->SetLineColor(kBlue);
@@ -73,7 +74,7 @@ void draw_AFB_mbins(){
 
 
 
-    TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 900, 700);
+    TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
     TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
     pad1->SetBottomMargin(0.012);
     pad1->Draw();
@@ -91,7 +92,7 @@ void draw_AFB_mbins(){
     g_sm->GetYaxis()->SetNdivisions(505);
     g_sm->GetYaxis()->SetTitleSize(20);
     g_sm->GetYaxis()->SetTitleFont(43);
-    g_sm->GetYaxis()->SetTitleOffset(1.2);
+    //g_sm->GetYaxis()->SetTitleOffset(1.2);
     g_sm->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_sm->GetYaxis()->SetLabelSize(15);
 
@@ -112,7 +113,7 @@ void draw_AFB_mbins(){
     pad2->cd();
     g_ratio->Draw("APE");
     g_ratio->GetYaxis()->SetRangeUser(0.8, 1.20);
-    g_ratio->GetXaxis()->SetLimits(100., 1000.);
+    g_ratio->GetXaxis()->SetLimits(100., 1400.);
     g_ratio->Draw("APE");
 
 
@@ -120,11 +121,11 @@ void draw_AFB_mbins(){
     g_ratio->GetYaxis()->SetNdivisions(505);
     g_ratio->GetYaxis()->SetTitleSize(20);
     g_ratio->GetYaxis()->SetTitleFont(43);
-    g_ratio->GetYaxis()->SetTitleOffset(1.2);
+    //g_ratio->GetYaxis()->SetTitleOffset(1.2);
     g_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetYaxis()->SetLabelSize(15);
     // X axis g_ratio plot settings
-    g_ratio->GetXaxis()->SetTitle("M (GeV)");
+    g_ratio->GetXaxis()->SetTitle("M_{ll} (GeV)");
     g_ratio->GetXaxis()->SetTitleSize(20);
     g_ratio->GetXaxis()->SetTitleFont(43);
     g_ratio->GetXaxis()->SetTitleOffset(3.);

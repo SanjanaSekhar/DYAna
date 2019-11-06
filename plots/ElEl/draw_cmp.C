@@ -29,7 +29,7 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2017;
+const int year = 2016;
 
 
 void draw_cmp(){
@@ -57,6 +57,17 @@ void draw_cmp(){
     TH1F *QCD_xf = new TH1F("QCD_xf", "MC signal", xf_nbins, 0, 0.5);
     TH1F *gg_xf = new TH1F("gg_xf", "MC signal", xf_nbins, 0, 0.5);
 
+    /*
+    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, m_bins);
+    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bins);
+    TH1F *mc_nosig_m = new TH1F("mc_nosig_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, m_bins);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, m_bins);
+    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, m_bins);
+    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, m_bins);
+    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, m_bins);
+    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, m_bins);
+    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, m_bins);
+    */
     int n_m_bins = 30;
     TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 150, 2000);
     TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 150, 2000);
@@ -173,6 +184,9 @@ void draw_cmp(){
     make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, 
             type, year, m_low, m_high, ss_qcd, in_os_region);
 
+
+    data_m->Print("all");
+    mc_m->Print("all");
     /*
     QCD_m->Scale(0.6);
     QCD_cost->Scale(0.6);
