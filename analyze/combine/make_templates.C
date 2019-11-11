@@ -355,7 +355,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         make_qcd_templates(year,f_log);
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
             printf("Making MC templates for sys %s \n", (*iter).c_str());
-            Double_t alpha_denom = alphas_denom[i];
+            Double_t alpha_denom = amc_alpha[i];
 
             make_mc_templates(year, alpha_denom, *iter);
             convert_mc_templates(year, *iter);
