@@ -81,7 +81,7 @@ void draw_AFB_mbins(){
     pad1->cd();
     g_sm->Draw("ALP");
     g_sm->GetYaxis()->SetRangeUser(0.2, 0.75);
-    g_sm->GetXaxis()->SetLimits(100., 1000.);
+    g_sm->GetXaxis()->SetLimits(100., 1400.);
     g_sm->Draw("ALP");
     g_mumu->Draw("PE same");
     g_elel->Draw("PE same");

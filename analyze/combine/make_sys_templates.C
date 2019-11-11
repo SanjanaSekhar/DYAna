@@ -191,12 +191,11 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
             if(i_sys % nJobs == iJob){
                 printf("Making MC templates for sys %s \n", (*iter).c_str());
 
-                Double_t alpha_num = alphas_num[i];
-                Double_t alpha_denom = alphas_denom[i];
+                Double_t alpha_denom = amc_alpha[i];
 
 
-                if(iter->find("alphaDenUp") != string::npos) alpha_denom = alphas_denom[i] + alpha_denom_unc[i];
-                if(iter->find("alphaDenDown") != string::npos) alpha_denom = alphas_denom[i] - alpha_denom_unc[i];
+                if(iter->find("alphaDenUp") != string::npos) alpha_denom = amc_alpha[i] + amc_alpha_unc[i];
+                if(iter->find("alphaDenDown") != string::npos) alpha_denom = amc_alpha[i] - amc_alpha_unc[i];
 
                 printf("alpha_denom %.2f \n", alpha_denom);
 

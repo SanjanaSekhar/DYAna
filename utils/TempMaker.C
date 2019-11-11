@@ -82,8 +82,8 @@ void TempMaker::setup(){
 
         if(do_muons){
             if(is_gen_level){
-                t_in->SetBranchAddress("gen_mu_p", &gen_lep_m);
-                t_in->SetBranchAddress("gen_mu_m", &gen_lep_p);
+                t_in->SetBranchAddress("gen_mu_p", &gen_lep_p);
+                t_in->SetBranchAddress("gen_mu_m", &gen_lep_m);
             }
             t_in->SetBranchAddress("era1_HLT_SF", &era1_HLT_SF);
             t_in->SetBranchAddress("era1_iso_SF", &era1_iso_SF);
