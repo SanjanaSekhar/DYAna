@@ -27,9 +27,9 @@ bool do_RC = true;
 
 void write_roo_hist(TH1F *h, RooRealVar *my_var){
     my_var->Print();
-    h->Print("all");
+    //h->Print("all");
     RooDataHist r(h->GetName(), h->GetName(), *my_var, h);
-    r.Print();
+    //r.Print();
     w->import(r);
     delete h;
 }

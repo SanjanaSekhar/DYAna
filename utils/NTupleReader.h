@@ -50,6 +50,7 @@ class NTupleReader{
         bool getNextFile();
         void finish();
         bool parseGenParts(bool PRINT);
+        int selectAnyGenParts(bool PRINT);
 
 
 
@@ -172,6 +173,8 @@ class NTupleReader{
              mu_iso0, mu_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
 
         bool signal_event, failed_match;
+
+        bool print_gen_warning = true;
 
         Double_t quark_dir_eta;
  private:

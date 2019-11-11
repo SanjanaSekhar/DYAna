@@ -176,21 +176,29 @@ void make_ilya_templates(){
     TFile *f_mumu_mc, *f_mumu_back, *f_mumu_data, *f_mumu_QCD, *f_mumu_WJets, *f_mumu_WJets_contam, *f_mumu_QCD_contam;
     TTree *t_mumu_mc, *t_mumu_back, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam, *t_mumu_nosig;
 
-    int year = 2018;
+    int year = 2016;
+
+    if(year == 2016){
+        f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu16_data_oct30.root");
+        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu16_fakes_contam_mlow_nov6.root");
+
+        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl16_data_mlow_nov1.root");
+        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl16_fakes_contam_mlow_nov4.root");
+    }
 
     if(year == 2017){
         f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu17_data_mlow_oct21.root");
-        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu17_fakes_contam_mlow_oct24.root");
+        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu17_fakes_contam_mlow_nov6.root");
 
-        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl17_data_mlow_oct21.root");
-        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl17_fakes_contam_oct24.root");
+        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl17_data_mlow_nov1.root");
+        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl17_fakes_contam_mlow_nov4.root");
     }
     else if(year == 2018){
         f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_data_mlow_oct21.root");
-        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_fakes_contam_oct30.root");
+        f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu18_fakes_contam_mlow_nov6.root");
 
-        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_data_mlow_oct21.root");
-        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_fakes_contam_oct24.root");
+        f_elel_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_data_mlow_nov1.root");
+        f_elel_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/ElEl18_fakes_contam_mlow_nov4.root");
     }
 
 
@@ -224,14 +232,27 @@ void make_ilya_templates(){
     float elel_sign_scaling = gen_ilya_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel, year, m_low, m_high, FLAG_ELECTRONS, ss);
     float mumu_sign_scaling = gen_ilya_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu, year, m_low, m_high, FLAG_MUONS, ss);
 
-    char fname[80];
+    char fname[80], mu_plot_name[80], el_plot_name[80];
     sprintf(fname, "lepton_pair_fakes_est_%i.root", year);
+    sprintf(mu_plot_name, "mu_fakes_est_%i.png", year);
+    sprintf(el_plot_name, "el_fakes_est_%i.png", year);
     printf("Writing out to %s \n", fname);
     TFile *fout = new TFile(fname, "RECREATE");
     fout->cd();
     h_elel->Write();
     h_mumu->Write();
     fout->Close();
+
+    TH1D *h_mu_proj = h_mumu->ProjectionY();
+    TH1D *h_el_proj = h_elel->ProjectionY();
+
+    TCanvas *c1 = new TCanvas("c1", "", 1000, 800);
+    h_mu_proj->Draw();
+    c1->Print(mu_plot_name);
+
+    TCanvas *c2 = new TCanvas("c2", "", 1000, 800);
+    h_el_proj->Draw();
+    c2->Print(el_plot_name);
 }
 
     
