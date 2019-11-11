@@ -99,8 +99,11 @@ void draw_graph_ratio(TGraphErrors *g_data, TGraphErrors *g_mc, TGraphErrors *g_
     g_ratio->GetXaxis()->SetTitleOffset(3.);
     g_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetXaxis()->SetLabelSize(20);
-    int iPeriod = 4; 
-    //CMS_lumi(pad1, iPeriod, 0 );
+    int iPeriod = -1; 
+    writeExtraText = true;
+    extraTextFont = cmsTextFont;
+    extraText = TString(title);
+    CMS_lumi(pad1, iPeriod, 33 );
     c_m->Update();
 }
 
@@ -214,8 +217,8 @@ void plot_counting_cmp(){
             afb_mc[j-1] = (n_for - n_back) / (n_for + n_back);
             double afb_mc_st = (n_for_st - n_back_st) / (n_for_st + n_back_st);
 
-            //double afb_meas = y_amc[j-1];
-            double afb_meas = y_comb[j-1];
+            double afb_meas = y_amc[j-1];
+            //double afb_meas = y_comb[j-1];
             
             double f_for = (1 + afb_meas)/2.;
             double f_back = (1 - afb_meas)/2.;

@@ -30,26 +30,26 @@ void draw_AFB_mbins(){
 
     Double_t ratio[n_m_bins], ratio_errs[n_m_bins];
     for(int i=0; i<n_m_bins; i++){
-        ratio[i] = y_sm[i]/y_sm[i];
-        ratio_errs[i] = y_comb_errs[i]/y_sm[i];
+        ratio[i] = y_powheg[i]/y_powheg[i];
+        ratio_errs[i] = y_comb_errs[i]/y_powheg[i];
         printf("%f ", ratio_errs[i]);
     }
     float chi2_sep(0.), chi2_comb(0.);
     for(int i=0; i<n_m_bins; i++){
-        chi2_comb += pow((y_sm[i] - y_comb[i])/y_comb_errs[i],2);
-        chi2_sep += pow((y_sm[i] - y_mumu[i])/y_mumu_errs[i],2);
-        chi2_sep += pow((y_sm[i] - y_elel[i])/y_elel_errs[i],2);
+        chi2_comb += pow((y_powheg[i] - y_comb[i])/y_comb_errs[i],2);
+        chi2_sep += pow((y_powheg[i] - y_mumu[i])/y_mumu_errs[i],2);
+        chi2_sep += pow((y_powheg[i] - y_elel[i])/y_elel_errs[i],2);
     }
     printf("Combined chisq is %.2f, p-value is %.3f \n", chi2_comb, ROOT::Math::chisquared_cdf_c(chi2_comb, n_m_bins));
     printf("sep chisq is %.2f, p-value is %.3f \n", chi2_sep, ROOT::Math::chisquared_cdf_c(chi2_comb, 12));
 
 
 
-    //TGraphErrors *g_sm = new TGraphErrors(n_m_bins, m, y_sm, x_err, y_sm_errs);
-    TGraph *g_sm = new TGraphErrors(n_m_bins, m, y_sm);
-    TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_sm, m_err, y_comb_errs);
-    TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_sm, m_err, y_mumu_errs);
-    TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_sm, m_err, y_elel_errs);
+    //TGraphErrors *g_sm = new TGraphErrors(n_m_bins, m, y_powheg, x_err, y_powheg_errs);
+    TGraph *g_sm = new TGraphErrors(n_m_bins, m, y_powheg);
+    TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_powheg, m_err, y_comb_errs);
+    TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_powheg, m_err, y_mumu_errs);
+    TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_powheg, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
     g_sm->SetMarkerColor(kBlue);
@@ -131,8 +131,9 @@ void draw_AFB_mbins(){
     g_ratio->GetXaxis()->SetTitleOffset(3.);
     g_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetXaxis()->SetLabelSize(20);
-    int iPeriod = 4; 
-    //CMS_lumi(pad1, iPeriod, 0 );
+    int iPeriod = -1; 
+    writeExtraText = false;
+    CMS_lumi(pad1, iPeriod, 33 );
     c_m->Update();
     
 }
