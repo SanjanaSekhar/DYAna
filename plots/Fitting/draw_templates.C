@@ -1,6 +1,7 @@
 #define STAND_ALONE
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
+#include "utils.C"
 #include "../../utils/TemplateMaker_systematics.C"
 #include "../../utils/root_files.h"
 
@@ -8,23 +9,6 @@ TH2F *h_elel_asym, *h_elel_sym, *h_elel_alpha, *h_elel_back,  *h_elel_dy_gg, *h_
 TH2F *h_elel_mc_count, *h_elel_sym_count;
 TH2F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_back,  *h_mumu_dy_gg, *h_mumu_data, *h_mumu_mc, *h_mumu_qcd, *h_mumu_gam;
 
-TH1F* convert2d(TH2F *h_2d){
-    int n_xf_bins = h_2d->GetNbinsX();
-    int n_cost_bins = h_2d->GetNbinsY();
-
-    TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_xf_bins * n_cost_bins, 0, n_xf_bins*n_cost_bins);
-    for(int i=1; i<=n_xf_bins; i++){
-        for(int j=1; j<= n_cost_bins; j++){
-            float content = h_2d->GetBinContent(i,j);
-            float error = h_2d->GetBinError(i,j);
-            int gbin = (i-1)*n_cost_bins + j;
-            //printf("gbin %i: i j %i %i \n", gbin, i, j);
-            h_1d->SetBinContent(gbin, content);
-            h_1d->SetBinError(gbin, error);
-        }
-    }
-    return h_1d;
-}
 
 
 void draw_templates(){
@@ -37,7 +21,7 @@ void draw_templates(){
         string sys_label = "";
 
         for(int i=0; i<n_m_bins; i++){
-            Double_t alpha_denom = alphas_denom[i];
+            Double_t alpha_denom = amc_alpha[i];
             double m_low = m_bins[i];
             double m_high = m_bins[i+1];
 

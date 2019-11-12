@@ -40,7 +40,7 @@ void check_template(){
         double m_low = 500.;
        
         double m_high = 700.;
-        Double_t alpha_denom = alphas_denom[4];
+        Double_t alpha_denom = amc_alpha[4];
 
         bool ss = false;
 
