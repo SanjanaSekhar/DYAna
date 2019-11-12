@@ -2,95 +2,6 @@
 TTree *t_elel_mc_raw, *t_elel_nosig_raw, *t_elel_back_raw;
 TTree *t_mumu_mc_raw, *t_mumu_nosig_raw, *t_mumu_back_raw;
 
-void init_condor_files(int year){
-    printf("init year %i  \n", year);
-    if(year == 2016){
-
-        f_elel_mc = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2016/ElEl16_dy_sep12.root");
-        t_elel_mc_raw = (TTree *)f_elel_mc->Get("T_sig");
-        t_elel_nosig_raw = (TTree *) f_elel_mc->Get("T_DY_back");
-
-        f_elel_back = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2016/ElEl16_comb_back_sep14.root");
-        t_elel_back_raw = (TTree *) f_elel_back ->Get("T_sig");
-
-        f_elel_gamgam = TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2016/ElEl16_photInd_sep11.root");
-        t_elel_gamgam = (TTree *)f_elel_gamgam->Get("T_sig");
-
-
-        //-------------------------------------------------------------------------------
-
-        f_mumu_mc = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2016/MuMu16_dy_sep12.root");
-        t_mumu_mc_raw = (TTree *)f_mumu_mc->Get("T_sig");
-        t_mumu_nosig_raw = (TTree *) f_mumu_mc->Get("T_DY_back");
-
-        f_mumu_back = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2016/MuMu16_comb_back_sep14.root");
-        t_mumu_back_raw = (TTree *) f_mumu_back ->Get("T_sig");
-
-        f_mumu_gamgam = TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2016/MuMu16_photInd_sep11.root");
-        t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
-
-        return;
-    }
-    if (year == 2017){
-
-
-        f_elel_mc = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2017/ElEl17_dy_sep10.root");
-        t_elel_mc_raw = (TTree *)f_elel_mc->Get("T_sig");
-        t_elel_nosig_raw = (TTree *) f_elel_mc->Get("T_DY_back");
-
-        f_elel_back = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2017/ElEl17_comb_back_sep10.root");
-        t_elel_back_raw = (TTree *) f_elel_back ->Get("T_sig");
-
-        f_elel_gamgam = TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2017/ElEl17_photInd_sep14.root");
-        t_elel_gamgam = (TTree *)f_elel_gamgam->Get("T_sig");
-
-        //-------------------------------------------------------------------------------
-
-
-        f_mumu_mc = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2017/MuMu17_dy_sep10.root");
-        t_mumu_mc_raw = (TTree *)f_mumu_mc->Get("T_sig");
-        t_mumu_nosig_raw = (TTree *) f_mumu_mc->Get("T_DY_back");
-
-        f_mumu_back = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2017/MuMu17_comb_back_sep10.root");
-        t_mumu_back_raw = (TTree *) f_mumu_back ->Get("T_sig");
-
-        f_mumu_gamgam = TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2017/MuMu17_photInd_sep14.root");
-        t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
-
-        return;
-
-    }
-    if (year ==2018){
-
-        f_elel_mc = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2018/ElEl18_dy_sep13.root");
-        t_elel_mc_raw = (TTree *)f_elel_mc->Get("T_sig");
-        t_elel_nosig_raw = (TTree *) f_elel_mc->Get("T_DY_back");
-
-        f_elel_back = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2018/ElEl18_comb_back_sep14.root");
-        t_elel_back_raw = (TTree *) f_elel_back ->Get("T_sig");
-
-        f_elel_gamgam = TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2018/ElEl18_photInd_sep11.root");
-        t_elel_gamgam = (TTree *)f_elel_gamgam->Get("T_sig");
-
-
-
-        //-------------------------------------------------------------------------------
-
-
-        f_mumu_mc = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2018/MuMu18_dy_sep13.root");
-        t_mumu_mc_raw = (TTree *)f_mumu_mc->Get("T_sig");
-        t_mumu_nosig_raw = (TTree *) f_mumu_mc->Get("T_DY_back");
-
-        f_mumu_back = (TFile*) TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2018/MuMu18_comb_back_sep14.root");
-        t_mumu_back_raw = (TTree *) f_mumu_back ->Get("T_sig");
-
-        f_mumu_gamgam = TFile::Open("root://131.225.204.161:1094//store/user/oamram/Condor_inputs/DY_files/2018/MuMu18_photInd_sep11.root");
-        t_mumu_gamgam = (TTree *)f_mumu_gamgam->Get("T_sig");
-
-    }
-}
-
-
 
 void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0){
 
@@ -98,7 +9,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
     const TString pdf_fout_name("output_files/sep19_sys.root");
     TFile *pdf_fout = TFile::Open(pdf_fout_name, "RECREATE");
 
-    init_condor_files(year);
+    init_mc(year);
 
 
 
@@ -161,6 +72,12 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
     int i_start=0;
     int i_max = n_m_bins;
 
+    t_elel_mc_raw = t_elel_mc->CloneTree();
+    t_mumu_mc_raw = t_mumu_mc->CloneTree();
+
+    t_elel_back_raw = t_elel_back->CloneTree();
+    t_mumu_back_raw = t_mumu_back->CloneTree();
+
 
     for(int i=i_start; i<i_max; i++){
 
@@ -173,18 +90,27 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
         m_low = m_bins[i];
         m_high = m_bins[i+1];
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
-
         char cut_str[100];
         printf("Cutting templates \n");
         sprintf(cut_str, "(m > %.0f) && (m < %0.f)", m_low - 15., m_high+15.);
-       
+
+        /*
+        t_elel_mc = new TTree();
+        t_elel_back = new TTree();
+
+        t_mumu_mc = new TTree();
+        t_mumu_back = new TTree();
+
         t_elel_mc = t_elel_mc_raw->CopyTree(cut_str);
-        t_elel_nosig = t_elel_nosig_raw->CopyTree(cut_str);
         t_elel_back = t_elel_back_raw->CopyTree(cut_str);
 
         t_mumu_mc = t_mumu_mc_raw->CopyTree(cut_str);
-        t_mumu_nosig = t_mumu_nosig_raw->CopyTree(cut_str);
         t_mumu_back = t_mumu_back_raw->CopyTree(cut_str);
+        */
+
+
+
+       
 
         int i_sys =0;
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
@@ -204,6 +130,13 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
             }
             i_sys++;
         }
+        /*
+        t_elel_mc->Delete();
+        t_elel_back->Delete();
+        t_mumu_mc->Delete();
+        t_mumu_back->Delete();
+        */
+
         pdf_fout->cd();
         gDirectory->cd(dirname);
         w->Write();
