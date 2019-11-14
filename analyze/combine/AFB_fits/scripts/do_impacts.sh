@@ -2,9 +2,9 @@
 set -x 
 
 #for idx in 0 1 2 3 4 5
-for idx in 0 1 2 3 4 5 6 7
-do
-#idx=$1
+#for idx in 0 1 2 3 4 5 6 7
+#do
+idx=$1
 
     comb_card=cards/combined_fit_mbin${idx}.txt
     workspace=workspaces/combined_fit_impacts_${idx}.root
@@ -23,7 +23,7 @@ do
     plotImpacts.py -i impacts/mbin${idx}.json -o impacts/impact_plot_mbin${idx} -t impacts/rename.json --POI Afb
     #rm higgsCombine_initialFit*
     #rm higgsCombine_paramFit_Test_*
-done
+#done
 
 
 

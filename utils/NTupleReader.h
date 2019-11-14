@@ -132,7 +132,8 @@ class NTupleReader{
         Float_t scale_Weights[10], pdf_weights[60], alpha_weights[2];
 
 
-
+        UInt_t evt_RunNumber, evt_LumiBlock;
+        ULong64_t evt_EventNumber;
 
         UInt_t el_size, mu_size, gen_size, jet_size, met_size, alphas_size, scale_size, pdf_size;
         Int_t gen_id[GEN_SIZE], gen_status[GEN_SIZE];

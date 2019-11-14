@@ -150,6 +150,10 @@ bool NTupleReader::getNextFile(){
             fin->cd("B2GTTreeMaker");
             tin = (TTree *)gDirectory->Get("B2GTree");
 
+            tin->SetBranchAddress("evt_RunNumber", &evt_RunNumber);
+            tin->SetBranchAddress("evt_LumiBlock", &evt_LumiBlock);
+            tin->SetBranchAddress("evt_EventNumber", &evt_EventNumber);
+
             tin->SetBranchAddress("jetAK4CHS_size", &jet_size);
             tin->SetBranchAddress("jetAK4CHS_Pt", &jet_Pt);
             tin->SetBranchAddress("jetAK4CHS_Eta", &jet_Eta);

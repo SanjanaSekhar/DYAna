@@ -342,6 +342,9 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
         printf("zeroing Fakes template \n");
     }
     float scaling = 1.;
+    // remove outliers
+    tot_weight_os = std::max(0., tot_weight_os);
+    tot_weight_ss = std::max(0., tot_weight_ss);
     if(ss) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     return scaling;
 }

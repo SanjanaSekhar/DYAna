@@ -1,5 +1,5 @@
 ################ TTbar files
-!idx = 16 xsec = 72.48
+!idx = 16 xsec = 87.33
 #########################
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug31/TT_DiLept_TuneCP5_13TeV-amcatnlo-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/190901_010630/0000/B2GTTreeNtupleExtra_1.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Aug31/TT_DiLept_TuneCP5_13TeV-amcatnlo-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/190901_010630/0000/B2GTTreeNtupleExtra_10.root
