@@ -42,8 +42,8 @@ Double_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
 Double_t el_lumi16 = 35.9;
 
 Double_t mu_lumi17 = 42.14;
-Double_t el_era1_lumi = 20.0;
-Double_t el_era2_lumi = 21.52;
+Double_t el_era1_lumi = 4.823 + 9.664;
+Double_t el_era2_lumi = 4.252 + 9.278 + 13.540;
 Double_t el_lumi17 = 41.52;
 
 Double_t mu_lumi18_era1 = 9.08;

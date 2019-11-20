@@ -259,6 +259,7 @@ Double_t get_HLT_SF(Double_t mu1_pt, Double_t mu1_eta, Double_t mu2_pt, Double_t
     }
 
 
+    /*
     TAxis *x_ax_MC_EFF =  h_MC_EFF->GetXaxis();
     TAxis *y_ax_MC_EFF =  h_MC_EFF->GetYaxis();
     int xbin1_MC_EFF = x_ax_MC_EFF->FindBin(std::fabs(mu1_eta));
@@ -271,9 +272,12 @@ Double_t get_HLT_SF(Double_t mu1_pt, Double_t mu1_eta, Double_t mu2_pt, Double_t
     Double_t MC_EFF2 = h_MC_EFF->GetBinContent(xbin2_MC_EFF, ybin2_MC_EFF);
     Double_t result = (1 - (1-MC_EFF1*SF1)*(1-MC_EFF2*SF2))/
                       (1 - (1-MC_EFF1)*(1-MC_EFF2));
+    printf("%.1f %.1f High pt %.3f Avg: %.3f comb %.3f \n", mu1_pt, mu2_pt, SF1, (SF1+ SF2)/2., result);
+    */
+    Double_t result = SF1;
     if(result < 0.01) printf("0 HLT SF for Pt %.1f, Eta %1.2f \n", mu1_pt, mu1_eta);
     if(TMath::IsNaN(result)){ 
-        printf("Nan mu HLT SF for Pt1 %.2f, Eta1 %.2f Pt2 %.2f Eta2 %.2f  %.2f %.2f %.2f %.2f \n", mu1_pt, mu1_eta, mu2_pt, mu2_eta, MC_EFF1, MC_EFF2, SF1, SF2);
+        printf("Nan mu HLT SF for Pt1 %.2f, Eta1 %.2f Pt2 %.2f Eta2 %.2f  %.2f %.2f \n", mu1_pt, mu1_eta, mu2_pt, mu2_eta, SF1, SF2);
         result = 1;
     }
     //printf("Result, SF1 = (%0.3f, %0.3f) \n", result, SF1);
@@ -281,18 +285,26 @@ Double_t get_HLT_SF(Double_t mu1_pt, Double_t mu1_eta, Double_t mu2_pt, Double_t
 }
 
 Double_t get_el_HLT_SF(Double_t el1_pt, Double_t el1_eta, Double_t el2_pt, Double_t el2_eta, 
-        TH2D *h_SF, TH2D *h_MC_EFF, int systematic = 0){
-    //Get HLT SF for event with 2 elons
+        TH2D *h_SF,  int systematic = 0){
+    float sys1_unc_mult = 1.0;
+    float sys2_unc_mult = 1.0;
+    //printf("Getting HLT for %.2f %.2f %.2f %.2f \n", mu1_pt, mu1_eta, mu2_pt, mu2_eta);
+    //Get HLT SF for event with 2 Muons
     //stay in range of histogram
-    //restrict to < 200 pt
-    if (el1_pt >= 350.) el1_pt = 350.;
-    if (el2_pt >= 350.) el2_pt = 350.;
+    if (el1_pt >= 200.){
+        sys1_unc_mult = 1.5;
+        el1_pt = 150.;
+    }
+    if (el2_pt >= 200.){
+        sys2_unc_mult = 1.5;
+        el2_pt = 150.;
+    }
     TAxis *x_ax_SF =  h_SF->GetXaxis();
     TAxis *y_ax_SF =  h_SF->GetYaxis();
-    int xbin1_SF = x_ax_SF->FindBin(el1_eta);
+    int xbin1_SF = x_ax_SF->FindBin(std::abs(el1_eta));
     int ybin1_SF = y_ax_SF->FindBin(el1_pt);
 
-    int xbin2_SF = x_ax_SF->FindBin(el2_eta);
+    int xbin2_SF = x_ax_SF->FindBin(std::abs(el2_eta));
     int ybin2_SF = y_ax_SF->FindBin(el2_pt);
 
     Double_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
@@ -306,27 +318,17 @@ Double_t get_el_HLT_SF(Double_t el1_pt, Double_t el1_eta, Double_t el2_pt, Doubl
         //SF2_err = min(SF2_err, 0.001);
         //SF1_err = std::max(SF1_err, 0.01);
         //SF2_err = std::max(SF2_err, 0.01);
-        SF1 += SF1_err * systematic;
-        SF2 += SF2_err * systematic;
+        SF1 += sys1_unc_mult * SF1_err * systematic;
+        SF2 += sys2_unc_mult * SF2_err * systematic;
     }
 
 
-    TAxis *x_ax_MC_EFF =  h_MC_EFF->GetXaxis();
-    TAxis *y_ax_MC_EFF =  h_MC_EFF->GetYaxis();
-    int xbin1_MC_EFF = x_ax_MC_EFF->FindBin(el1_eta);
-    int ybin1_MC_EFF = y_ax_MC_EFF->FindBin(el1_pt);
-
-    int xbin2_MC_EFF = x_ax_MC_EFF->FindBin(el2_eta);
-    int ybin2_MC_EFF = y_ax_MC_EFF->FindBin(el2_pt);
-
-    Double_t MC_EFF1 = h_MC_EFF->GetBinContent(xbin1_MC_EFF, ybin1_MC_EFF);
-    Double_t MC_EFF2 = h_MC_EFF->GetBinContent(xbin2_MC_EFF, ybin2_MC_EFF);
-    Double_t result = (1 - (1-MC_EFF1*SF1)*(1-MC_EFF2*SF2))/
-                      (1 - (1-MC_EFF1)*(1-MC_EFF2));
+    Double_t result = SF1;
+    printf("Pt %.1f eta %.2f SF %.3f \n", el1_pt, el1_eta, result);
     if(result < 0.01) printf("0 EL HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
     
     if(TMath::IsNaN(result)){ 
-        printf("Nan EL HLT SF for Pt %.1f, Eta %1.2f  %.2f %.2f %.2f %.2f \n", el1_pt, el1_eta, MC_EFF1, MC_EFF2, SF1, SF2);
+        printf("Nan EL HLT SF for Pt %.1f, Eta %1.2f  %.2f %.2f  \n", el1_pt, el1_eta, SF1, SF2);
         result = 1;
     }
     //if(abs(result -1.0) > 0.2) printf("Result, SF1 = (%0.3f, %0.3f) \n", result, SF1);

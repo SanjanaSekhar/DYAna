@@ -16,19 +16,23 @@ void ElEl_ilya_check(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
     nt.do_electrons = true;
 
 
+    std::set<ULong64_t>  evts = {297058495, 297202109, 296572658}; 
 
     while(nt.getNextFile()){
 
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
+            if(evts.find(nt.evt_EventNumber) != evts.end()){
 
-            if(nt.HLT_El27 && nt.el_iso0 && nt.el_iso1 && 
-                    nt.el_Pt[0] > 30. && nt.el_Pt[1] > 30. && nt.cm_m > 50.){
+            //if(nt.HLT_El27 && nt.el_iso0 && nt.el_iso1 && 
+                    //nt.el_Pt[0] > 30. && nt.el_Pt[1] > 30. && nt.cm_m > 50.){
                 nt.fillEvent();
                 printf("Run %i Lumiblock %i Event Num %llu \n", nt.evt_RunNumber, nt.evt_LumiBlock, nt.evt_EventNumber);
-                printf("Electron 1 pt eta phi: %.2f %.2f %.2f \n", nt.el_Pt[0], nt.el_Eta[0], nt.el_Phi[0]);
-                printf("Electron 2 pt eta phi: %.2f %.2f %.2f \n", nt.el_Pt[1], nt.el_Eta[1], nt.el_Phi[1]);
+                printf("Trigger %i \n", nt.HLT_El27);
+
+                printf("Electron 1 TightID %i : pt eta phi: %.2f %.2f %.2f \n", nt.el_iso0, nt.el_Pt[0], nt.el_Eta[0], nt.el_Phi[0]);
+                printf("Electron 2 TightID %i : pt eta phi: %.2f %.2f %.2f \n", nt.el_iso1, nt.el_Pt[1], nt.el_Eta[1], nt.el_Phi[1]);
                 printf("Dielectron pt rap phi m: %.2f %.2f %.2f %.2f \n", nt.cm.Pt(), nt.cm.Rapidity(), nt.cm.Phi(), nt.cm.M());
                 //if(nt.nEvents > 100) return;
             }
