@@ -22,11 +22,12 @@
 #include "TSystem.h"
 #include "../../utils/root_files.h"
 
-int make_gen_cost(TTree *t_gen, TH1F *h_cost, float m_low, float m_high){
+int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt, TH1F *h_xf,  
+        float m_low, float m_high){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     double gen_weight, m, cost, cost_st;
-    //t_gen->SetBranchAddress("gen_p", &gen_lep_p);
-    //t_gen->SetBranchAddress("gen_m", &gen_lep_m);
+    t_gen->SetBranchAddress("gen_p", &gen_lep_p);
+    t_gen->SetBranchAddress("gen_m", &gen_lep_m);
     t_gen->SetBranchAddress("m", &m);
     t_gen->SetBranchAddress("cost", &cost);
     t_gen->SetBranchAddress("cost_st", &cost_st);
@@ -41,8 +42,19 @@ int make_gen_cost(TTree *t_gen, TH1F *h_cost, float m_low, float m_high){
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
         if(m >= m_low && m <= m_high){
-            nEvents++;
-            h_cost->Fill(cost_st, gen_weight);
+            if(gen_weight >0) nEvents++;
+            else  nEvents--;
+            cm = *gen_lep_p + *gen_lep_m;
+
+            h_cost_st->Fill(cost_st, gen_weight);
+            h_cost_r->Fill(cost, gen_weight);
+
+
+            double xf = abs(2.*cm.Pz()/13000.);
+            double pt = cm.Pt();
+
+            h_pt->Fill(pt, gen_weight);
+            h_xf->Fill(xf, gen_weight);
 
         }
     }
@@ -55,7 +67,7 @@ int make_gen_cost(TTree *t_gen, TH1F *h_cost, float m_low, float m_high){
 
 
 
-void fit_amc_gen_level(){
+void fit_amc_gen_cost(){
 
     TFile *f_gen = TFile::Open("Results/DY_gen_level_nov8.root");
     TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -66,6 +78,8 @@ void fit_amc_gen_level(){
     TH1F *h_cost1 = new TH1F("h_cost1", "", n_bins, -1., 1.);
     TH1F *h_cost2 = new TH1F("h_cost2", "", n_bins, -1., 1.);
 
+    TH1F *h_dummy = new TH1F("h_dummy", "", 100, -1., 1.);
+
     int nEvents = 0;
 
 
@@ -74,8 +88,8 @@ void fit_amc_gen_level(){
         float m_low = m_bins[m_idx];
         float m_high = m_bins[m_idx+1];
 
-        nEvents = make_gen_cost(t_gen_mu,  h_cost1, m_low, m_high);
-        nEvents += make_gen_cost(t_gen_el,  h_cost1, m_low, m_high);
+        nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_dummy, h_dummy, m_low, m_high);
+        nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_dummy, h_dummy, m_low, m_high);
         //int nEvents2 = make_gen_cost(t_gen_el,  h_cost2, m_low, m_high);
 
 
@@ -101,6 +115,7 @@ void fit_amc_gen_level(){
         Double_t B = (1. - AFB)*nEvents/2.;
         Double_t F = (1. + AFB)*nEvents/2.;
         Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
+        //Double_t dAFB = sqrt(4.*nF*nB/pow(nF+nB, 3));
 
         printf("Mass range from %.0f to %.0f \n", m_low, m_high);
         printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));

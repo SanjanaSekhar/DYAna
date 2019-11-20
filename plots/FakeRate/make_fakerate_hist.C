@@ -146,9 +146,9 @@ void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag
 
 void make_fakerate_hist(){
 
-    bool write_out = true;
+    bool write_out = false;
     int year = 2018;
-    int FLAG = FLAG_MUONS;
+    int FLAG = FLAG_ELECTRONS;
     int n_pt_bins = 4;
     TFile *f, *f_mc, *f_new; 
     Float_t *pt_bins;
@@ -260,12 +260,15 @@ void make_fakerate_hist(){
     //SetErrors(rate_barrel, total_barrel);
     //SetErrors(rate_endcap, total_endcap);
 
-    
+    char title[100]; 
+    if(FLAG == FLAG_MUONS) sprintf(title, "Muons Fakerate: %i ", year);
+    else sprintf(title, "Electrons Fakerate: %i ", year);
 
     TCanvas *c1 = new TCanvas("c1", "Histograms", 200, 10, 900, 700);
     c1->SetLogx();
-    if(FLAG == FLAG_MUONS) rate_barrel->SetTitle("Muons fakerate");
-    else rate_barrel->SetTitle("Electrons fakerate");
+
+
+    rate_barrel->SetTitle(title);
     rate_barrel->SetStats(0);
     rate_barrel->SetLineWidth(3);
     rate_barrel ->Draw("E1");

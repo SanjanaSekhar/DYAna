@@ -25,15 +25,18 @@
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
 #include "../../utils/HistMaker.C"
+#include "../../utils/PlotUtils.C"
 #include "../../utils/root_files.h"
 
-int year = 2016;
+int year = 2018;
 
 
 
 
 
 void draw_cmp(){
+
+    printf("Year is %i \n", year);
     setTDRStyle();
     init_emu(year);
     init_emu_indv_bkgs(year);
@@ -88,14 +91,31 @@ void draw_cmp(){
     qcd_m->SetFillColor(kRed -7);
 
     THStack *m_stack = new THStack("m_stack", "EMu Mass Distribution: Data vs MC ; m_{e#mu} (GeV)");
-    m_stack->Add(dy_m);
     m_stack->Add(diboson_m);
+    m_stack->Add(qcd_m);
+    m_stack->Add(dy_m);
     m_stack->Add(wt_m);
     m_stack->Add(ttbar_m);
-    m_stack->Add(qcd_m);
 
+    gStyle->SetLegendBorderSize(0);
+    TLegend *leg1 = new TLegend(0.5, 0.65, 0.75, 0.8);
+    leg1->AddEntry(data_m, "data", "p");
+    leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
+    leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");
+    leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
+    leg1->AddEntry(qcd_m, "QCD and W+Jets", "f");
+    leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
 
+    int iPeriod = 4; 
+    writeExtraText = false;
+    
+    TCanvas *c_m;
+    TPad *p_m;
 
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", -1., true);
+    CMS_lumi(p_m, year, 33 );
+
+    /*
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
     pad1->SetBottomMargin(0);
@@ -110,15 +130,6 @@ void draw_cmp(){
     data_m->DrawCopy("P E same");
 
 
-    gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.5, 0.65, 0.75, 0.8);
-    leg1->AddEntry(data_m, "data", "p");
-    leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
-    leg1->AddEntry(qcd_m, "QCD and W+Jets", "f");
-    leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");
-    leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
-    leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
-    leg1->Draw();
 
     //gPad->BuildLegend();
     c_m->cd();
@@ -171,6 +182,7 @@ void draw_cmp(){
     extraText = "Preliminary";
     //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
     CMS_lumi(pad1, year, 11 );
+    */
 }
 
 

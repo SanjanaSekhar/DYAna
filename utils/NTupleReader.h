@@ -114,7 +114,7 @@ class NTupleReader{
         BTag_effs btag_effs;
 
         Double_t el1_pt, el2_pt, el1_eta, el2_eta;
-        Double_t el_id_SF, el_reco_SF, el_HLT_SF;
+        Double_t el_id_SF, el_reco_SF, el_HLT_SF1, el_HLT_SF2;
         Float_t elp_scale_stat_up, elp_scale_stat_down, elp_scale_gain_up, elp_scale_gain_down, elp_scale_syst_up, elp_scale_syst_down, 
                 elm_scale_stat_up, elm_scale_stat_down, elm_scale_gain_up, elm_scale_gain_down, elm_scale_syst_up, elm_scale_syst_down, 
              elp_smear_up, elp_smear_down, elm_smear_up, elm_smear_down;

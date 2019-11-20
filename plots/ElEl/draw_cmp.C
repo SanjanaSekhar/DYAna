@@ -29,7 +29,9 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2018;
+const bool write_out = true;
+char *plot_dir = "Paper_plots/";
 
 
 void draw_cmp(){
@@ -47,15 +49,16 @@ void draw_cmp(){
     TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins, 0, 1000);
     TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins, 0, 1000);
 
-    int xf_nbins = 10;
-    TH1F *mc_xf = new TH1F("mc_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *mc_nosig_xf = new TH1F("mc_nosig_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *data_xf = new TH1F("data_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *ttbar_xf = new TH1F("ttbar_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *diboson_xf = new TH1F("diboson_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *wt_xf = new TH1F("wt_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *QCD_xf = new TH1F("QCD_xf", "MC signal", xf_nbins, 0, 0.5);
-    TH1F *gg_xf = new TH1F("gg_xf", "MC signal", xf_nbins, 0, 0.5);
+    int n_xf_bins1 = 5;
+    float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};
+    TH1F *mc_xf = new TH1F("mc_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *mc_nosig_xf = new TH1F("mc_nosig_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *data_xf = new TH1F("data_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *ttbar_xf = new TH1F("ttbar_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *diboson_xf = new TH1F("diboson_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *wt_xf = new TH1F("wt_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *QCD_xf = new TH1F("QCD_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *gg_xf = new TH1F("gg_xf", "MC signal", n_xf_bins1,  xf_bins1);
 
     /*
     TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, m_bins);
@@ -185,8 +188,6 @@ void draw_cmp(){
             type, year, m_low, m_high, ss_qcd, in_os_region);
 
 
-    data_m->Print("all");
-    mc_m->Print("all");
     /*
     QCD_m->Scale(0.6);
     QCD_cost->Scale(0.6);
@@ -281,7 +282,9 @@ void draw_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.3, 0.3);
+    float x_size = 0.3;
+    float y_size = 0.3;
+    TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(mc_m, "DY (q#bar{q}, qg #bar{q}g)", "f");
     leg1->AddEntry(mc_nosig_m, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");
@@ -297,31 +300,52 @@ void draw_cmp(){
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
     writeExtraText = false;
+    char plt_file[100];
 
 
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)", -1., true);
     CMS_lumi(p_m, year, 33 );
+    sprintf(plt_file, "%sElEl%i_m_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_m->Print(plt_file);
 
     
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
+
+    float x_start = 0.45;
+    float y_start = 0.3;
+    leg2->SetX1(x_start);
+    leg2->SetX2(x_start+x_size);
+    leg2->SetY1(y_start);
+    leg2->SetY2(y_start+y_size);
+
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", -1., false);
     CMS_lumi(p_cost, year, 33);
+    sprintf(plt_file, "%sElEl%i_cost_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_cost->Print(plt_file);
 
     TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
     std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dielectron pt (GeV)", -1., true);
     CMS_lumi(p_pt, year, 33);
+    sprintf(plt_file, "%sElEl%i_pt_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_pt->Print(plt_file);
 
     TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
     std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)", -1., true);
     CMS_lumi(p_xf, year, 33);
+    sprintf(plt_file, "%sElEl%i_xf_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_xf->Print(plt_file);
 
     TLegend *leg5 = (TLegend *) leg1->Clone("leg5");
     std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dielectron #phi", -1., true);
     CMS_lumi(p_phi, year, 33);
+    sprintf(plt_file, "%sElEl%i_phi_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_phi->Print(plt_file);
 
     TLegend *leg6 = (TLegend *) leg1->Clone("leg6");
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dielectron Y", -1., true);
     CMS_lumi(p_rap, year, 33);
+    sprintf(plt_file, "%sElEl%i_rap_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_rap->Print(plt_file);
 
 
 }

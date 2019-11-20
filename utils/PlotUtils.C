@@ -7,6 +7,19 @@
 #include "TProfile.h"
 #include "TStyle.h"
 
+float computeChi2(TH1 *h){
+    // only use on ratio plots, with expected value of 1
+    float sum = 0.;
+    int nBins = h->GetNbinsX();
+    for(int i=1; i<= nBins; i++){
+        float val = h->GetBinContent(i);
+        float err = h->GetBinError(i);
+        if (val > 0. && err > 0.){
+            sum += std::pow((val-1)/err,2);
+        }
+    }
+    return sum;
+}
 
 void unzero_bins(TH1 *h){
     int nBins = h->GetNbinsX();
@@ -91,7 +104,8 @@ TCanvas* make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, ch
 }
 
 
-std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel, float max =-1., bool logy = true){
+std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel, 
+        float max =-1., bool logy = true, bool logx= false){
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
@@ -99,6 +113,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     pad1->Draw();
     pad1->cd();
     if(logy) pad1->SetLogy();
+    if(logx) pad1->SetLogx();
     h_stack->Draw("hist");
     if(max > 0. ) h_stack->SetMaximum(max);
     h_stack->SetMinimum(0.1);
@@ -117,6 +132,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
+    if(logx) pad2->SetLogx();
 
 
     TList *stackHists = h_stack->GetHists();

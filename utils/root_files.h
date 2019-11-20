@@ -1,3 +1,6 @@
+#ifndef ROOT_FILES
+#define ROOT_FILES
+
 #include "TROOT.h"
 #include "TTree.h"
 #include "TFile.h"
@@ -235,50 +238,50 @@ void init_emu(int year){
 
 
     if(year == 2016){
-        f_emu_data = TFile::Open("../analyze/output_files/2016/EMu16_data_sep15.root");
+        f_emu_data = TFile::Open("../analyze/output_files/2016/EMu16_data_nov13.root");
         t_emu_data = (TTree *)f_emu_data->Get("T_sig");
         t_emu_WJets = (TTree *)f_emu_data->Get("T_WJets");
         t_emu_QCD = (TTree *)f_emu_data->Get("T_QCD");
 
                              
-        f_emu_back = TFile::Open("../analyze/output_files/2016/EMu16_comb_back_sep15.root");
+        f_emu_back = TFile::Open("../analyze/output_files/2016/EMu16_comb_back_nov13.root");
         t_emu_back = (TTree *)f_emu_back->Get("T_sig");
 
-        f_emu_dy = TFile::Open("../analyze/output_files/2016/EMu16_dy_sep15.root");
+        f_emu_dy = TFile::Open("../analyze/output_files/2016/EMu16_dy_nov13.root");
         t_emu_dy = (TTree *)f_emu_dy->Get("T_sig");
 
-        f_emu_WJets_contam = TFile::Open("../analyze/output_files/2016/EMu16_fakes_contam_sep15.root");
+        f_emu_WJets_contam = TFile::Open("../analyze/output_files/2016/EMu16_fakes_contam_nov13.root");
         t_emu_WJets_contam = (TTree *)f_emu_WJets_contam->Get("T_WJets");
     }
     if (year == 2017){
-        f_emu_data = TFile::Open("../analyze/output_files/2017/EMu17_data_sep15.root");
+        f_emu_data = TFile::Open("../analyze/output_files/2017/EMu17_data_nov13.root");
         t_emu_data = (TTree *)f_emu_data->Get("T_sig");
         t_emu_WJets = (TTree *)f_emu_data->Get("T_WJets");
         t_emu_QCD = (TTree *)f_emu_data->Get("T_QCD");
 
                              
-        f_emu_back = TFile::Open("../analyze/output_files/2017/EMu17_comb_back_sep15.root");
+        f_emu_back = TFile::Open("../analyze/output_files/2017/EMu17_comb_back_nov13.root");
         t_emu_back = (TTree *)f_emu_back->Get("T_sig");
 
-        f_emu_dy = TFile::Open("../analyze/output_files/2017/EMu17_dy_sep15.root");
+        f_emu_dy = TFile::Open("../analyze/output_files/2017/EMu17_dy_nov13.root");
         t_emu_dy = (TTree *)f_emu_dy->Get("T_sig");
 
-        f_emu_WJets_contam = TFile::Open("../analyze/output_files/2017/EMu17_fakes_contam_sep15.root");
+        f_emu_WJets_contam = TFile::Open("../analyze/output_files/2017/EMu17_fakes_contam_nov13.root");
         t_emu_WJets_contam = (TTree *)f_emu_WJets_contam->Get("T_WJets");
     }
     if (year == 2018){
-        f_emu_data = TFile::Open("../analyze/output_files/2018/EMu18_data_sep15.root");
+        f_emu_data = TFile::Open("../analyze/output_files/2018/EMu18_data_nov13.root");
         t_emu_data = (TTree *)f_emu_data->Get("T_sig");
         t_emu_WJets = (TTree *)f_emu_data->Get("T_WJets");
         t_emu_QCD = (TTree *)f_emu_data->Get("T_QCD");
 
-        f_emu_back = TFile::Open("../analyze/output_files/2018/EMu18_comb_back_sep15.root");
+        f_emu_back = TFile::Open("../analyze/output_files/2018/EMu18_comb_back_nov13.root");
         t_emu_back = (TTree *)f_emu_back->Get("T_sig");
 
-        f_emu_dy = TFile::Open("../analyze/output_files/2018/EMu18_dy_sep15.root");
+        f_emu_dy = TFile::Open("../analyze/output_files/2018/EMu18_dy_nov13.root");
         t_emu_dy = (TTree *)f_emu_dy->Get("T_sig");
 
-        f_emu_WJets_contam = TFile::Open("../analyze/output_files/2018/EMu18_fakes_contam_sep15.root");
+        f_emu_WJets_contam = TFile::Open("../analyze/output_files/2018/EMu18_fakes_contam_nov13.root");
         t_emu_WJets_contam = (TTree *)f_emu_WJets_contam->Get("T_WJets");
     }
 
@@ -291,33 +294,33 @@ void init_emu(int year){
 
 void init_emu_indv_bkgs(int year){
     if(year == 2016){
-        f_emu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2016/EMu16_TTbar_sep15.root");
+        f_emu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2016/EMu16_ttbar_nov14.root");
         t_emu_ttbar = (TTree *) f_emu_ttbar ->Get("T_sig");
 
-        f_emu_wt = (TFile*) TFile::Open("../analyze/output_files/2016/EMu16_WT_sep15.root");
+        f_emu_wt = (TFile*) TFile::Open("../analyze/output_files/2016/EMu16_wt_nov13.root");
         t_emu_wt = (TTree *) f_emu_wt ->Get("T_sig");
 
-        f_emu_diboson = (TFile*) TFile::Open("../analyze/output_files/2016/EMu16_diboson_sep15.root");
+        f_emu_diboson = (TFile*) TFile::Open("../analyze/output_files/2016/EMu16_diboson_nov13.root");
         t_emu_diboson = (TTree *) f_emu_diboson ->Get("T_sig");
     }
     if(year == 2017){
-        f_emu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2017/EMu17_TTbar_sep15.root");
+        f_emu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2017/EMu17_ttbar_nov14.root");
         t_emu_ttbar = (TTree *) f_emu_ttbar ->Get("T_sig");
 
-        f_emu_wt = (TFile*) TFile::Open("../analyze/output_files/2017/EMu17_WT_sep15.root");
+        f_emu_wt = (TFile*) TFile::Open("../analyze/output_files/2017/EMu17_wt_nov13.root");
         t_emu_wt = (TTree *) f_emu_wt ->Get("T_sig");
 
-        f_emu_diboson = (TFile*) TFile::Open("../analyze/output_files/2017/EMu17_diboson_sep15.root");
+        f_emu_diboson = (TFile*) TFile::Open("../analyze/output_files/2017/EMu17_diboson_nov13.root");
         t_emu_diboson = (TTree *) f_emu_diboson ->Get("T_sig");
     }
     if(year == 2018){
-        f_emu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2018/EMu18_TTbar_sep15.root");
+        f_emu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2018/EMu18_ttbar_nov14.root");
         t_emu_ttbar = (TTree *) f_emu_ttbar ->Get("T_sig");
 
-        f_emu_wt = (TFile*) TFile::Open("../analyze/output_files/2018/EMu18_WT_sep15.root");
+        f_emu_wt = (TFile*) TFile::Open("../analyze/output_files/2018/EMu18_wt_nov13.root");
         t_emu_wt = (TTree *) f_emu_wt ->Get("T_sig");
 
-        f_emu_diboson = (TFile*) TFile::Open("../analyze/output_files/2018/EMu18_diboson_sep15.root");
+        f_emu_diboson = (TFile*) TFile::Open("../analyze/output_files/2018/EMu18_diboson_nov13.root");
         t_emu_diboson = (TTree *) f_emu_diboson ->Get("T_sig");
     }
 }
@@ -325,7 +328,7 @@ void init_emu_indv_bkgs(int year){
 
 void init_indv_bkgs(int year){
     if(year == 2016){
-        f_mumu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2016/MuMu16_ttbar_nov4.root");
+        f_mumu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2016/MuMu16_ttbar_nov14.root");
         t_mumu_ttbar = (TTree *) f_mumu_ttbar ->Get("T_sig");
 
         f_mumu_wt = (TFile*) TFile::Open("../analyze/output_files/2016/MuMu16_WT_oct29.root");
@@ -337,7 +340,7 @@ void init_indv_bkgs(int year){
 
         // ---------------------------------------------------------------------------------------------
 
-        f_elel_ttbar = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_ttbar_nov4.root");
+        f_elel_ttbar = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_ttbar_nov14.root");
         t_elel_ttbar = (TTree *) f_elel_ttbar ->Get("T_sig");
 
         f_elel_wt = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_wt_nov4.root");
@@ -347,7 +350,7 @@ void init_indv_bkgs(int year){
         t_elel_diboson = (TTree *) f_elel_diboson ->Get("T_sig");
     }
     if(year == 2017){
-        f_mumu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_ttbar_nov4.root");
+        f_mumu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_ttbar_nov14.root");
         t_mumu_ttbar = (TTree *) f_mumu_ttbar ->Get("T_sig");
 
         f_mumu_wt = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_WT_oct21.root");
@@ -359,7 +362,7 @@ void init_indv_bkgs(int year){
 
         // ---------------------------------------------------------------------------------------------
 
-        f_elel_ttbar = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_ttbar_nov4.root");
+        f_elel_ttbar = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_ttbar_nov14.root");
         t_elel_ttbar = (TTree *) f_elel_ttbar ->Get("T_sig");
 
         f_elel_wt = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_wt_nov4.root");
@@ -369,7 +372,7 @@ void init_indv_bkgs(int year){
         t_elel_diboson = (TTree *) f_elel_diboson ->Get("T_sig");
     }
     if(year == 2018){
-        f_mumu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2018/MuMu18_ttbar_nov4.root");
+        f_mumu_ttbar = (TFile*) TFile::Open("../analyze/output_files/2018/MuMu18_ttbar_nov14.root");
         t_mumu_ttbar = (TTree *) f_mumu_ttbar ->Get("T_sig");
 
         f_mumu_wt = (TFile*) TFile::Open("../analyze/output_files/2018/MuMu18_WT_oct21.root");
@@ -381,7 +384,7 @@ void init_indv_bkgs(int year){
 
         // ---------------------------------------------------------------------------------------------
 
-        f_elel_ttbar = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_ttbar_nov4.root");
+        f_elel_ttbar = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_ttbar_nov14.root");
         t_elel_ttbar = (TTree *) f_elel_ttbar ->Get("T_sig");
 
         f_elel_wt = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_wt_nov4.root");
@@ -394,4 +397,4 @@ void init_indv_bkgs(int year){
 
 
 
-
+#endif

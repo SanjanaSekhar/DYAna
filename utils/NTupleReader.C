@@ -404,7 +404,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
             outTrees[idx]->Branch("gen_el_p", "TLorentzVector", &gen_el_p_vec);
             outTrees[idx]->Branch("el_id_SF", &el_id_SF);
             outTrees[idx]->Branch("el_reco_SF", &el_reco_SF);
-            outTrees[idx]->Branch("el_HLT_SF", &el_HLT_SF);
+            outTrees[idx]->Branch("el_HLT_SF1", &el_HLT_SF1);
+            outTrees[idx]->Branch("el_HLT_SF2", &el_HLT_SF2);
         }
     }
 }
@@ -729,7 +730,8 @@ void NTupleReader::fillEventSFs(){
 
         el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF);
         el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF);
-        el_HLT_SF = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF, el_SF.HLT_MC_EFF);
+        el_HLT_SF1 = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF1);
+        el_HLT_SF2 = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF2);
     }
     if(do_emu){
 

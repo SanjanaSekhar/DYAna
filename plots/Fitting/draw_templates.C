@@ -14,7 +14,7 @@ TH2F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_back,  *h_mumu_dy_gg, *h_
 void draw_templates(){
         gStyle->SetOptStat(0);
     
-        int year = 2016;
+        int year = 2018;
         init(year);
         char *plot_dir = "template_plots";
         //setup_all_SFs(year);

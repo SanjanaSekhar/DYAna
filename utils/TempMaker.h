@@ -42,6 +42,8 @@ Double_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
 Double_t el_lumi16 = 35.9;
 
 Double_t mu_lumi17 = 42.14;
+Double_t el_era1_lumi = 20.0;
+Double_t el_era2_lumi = 21.52;
 Double_t el_lumi17 = 41.52;
 
 Double_t mu_lumi18_era1 = 9.08;
@@ -82,7 +84,7 @@ class TempMaker{
         Double_t evt_weight;
         Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
         Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF;
-        Double_t el_id_SF, el_reco_SF, pu_SF, pu_SF_up, pu_SF_down, el_HLT_SF;
+        Double_t el_id_SF, el_reco_SF, pu_SF, pu_SF_up, pu_SF_down, el_HLT_SF, el_HLT_SF1, el_HLT_SF2;
         Double_t jet1_pt, jet2_pt, jet1_eta, jet2_eta;
         Double_t mu1_pt, mu1_eta, mu2_pt, mu2_eta;
         Double_t el1_pt, el1_eta, el2_pt, el2_eta;

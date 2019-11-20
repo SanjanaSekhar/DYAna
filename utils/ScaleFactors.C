@@ -38,8 +38,8 @@ typedef struct {
 typedef struct{
     TH2D *ID_SF;
     TH2D *RECO_SF;
-    TH2D *HLT_SF;
-    TH2D *HLT_MC_EFF;
+    TH2D *HLT_SF1;
+    TH2D *HLT_SF2;
 } el_SFs;
 
 double get_var(Double_t vals[100]){
@@ -223,12 +223,19 @@ Double_t get_HLT_SF_1el(Double_t el1_pt, Double_t el1_eta, TH2D *h_SF){
 }
 
 Double_t get_HLT_SF(Double_t mu1_pt, Double_t mu1_eta, Double_t mu2_pt, Double_t mu2_eta, TH2D *h_SF, TH2D *h_MC_EFF, int systematic = 0){
+    float sys1_unc_mult = 1.0;
+    float sys2_unc_mult = 1.0;
     //printf("Getting HLT for %.2f %.2f %.2f %.2f \n", mu1_pt, mu1_eta, mu2_pt, mu2_eta);
     //Get HLT SF for event with 2 Muons
     //stay in range of histogram
-    if(mu1_pt < 26.) mu1_pt = 26.01;
-    if (mu1_pt >= 350.) mu1_pt = 350.;
-    if (mu2_pt >= 350.) mu2_pt = 350.;
+    if (mu1_pt >= 350.){
+        sys1_unc_mult = 1.5;
+        mu1_pt = 350.;
+    }
+    if (mu2_pt >= 350.){
+        sys2_unc_mult = 1.5;
+        mu2_pt = 350.;
+    }
     mu1_eta = abs(mu1_eta);
     mu2_eta = abs(mu2_eta);
     TAxis *x_ax_SF =  h_SF->GetXaxis();
@@ -244,12 +251,11 @@ Double_t get_HLT_SF(Double_t mu1_pt, Double_t mu1_eta, Double_t mu2_pt, Double_t
     if(systematic != 0){
         Double_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
         Double_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
-        SF1_err = sqrt(SF1_err*SF1_err + 0.005*0.005);
-        SF2_err = sqrt(SF2_err*SF2_err + 0.005*0.005);
+
         //printf("SF is %.3f +/- %.3f \n", SF1, SF1_err);
         //printf("SF is %.3f +/- %.3f \n", SF2, SF2_err);
-        SF1 += SF1_err * systematic;
-        SF2 += SF2_err * systematic;
+        SF1 += sys1_unc_mult * SF1_err * systematic;
+        SF2 += sys2_unc_mult * SF2_err * systematic;
     }
 
 
@@ -475,19 +481,22 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
 
 void setup_el_SF(el_SFs *sf, int year){
     //Setup electron SF's
-    TFile *f_id, *f_reco, *f_hlt;
+    TFile *f_id, *f_reco, *f_hlt1, *f_hlt2;
     if(year == 2016){
-        f_hlt = TFile::Open("SFs/2016/El_HLT.root");
+        f_hlt1 = TFile::Open("SFs/2016/El_HLT.root");
+        f_hlt2 = f_hlt1;
         f_id = TFile::Open("SFs/2016/El_ID.root");
         f_reco = TFile::Open("SFs/2016/El_RECO.root");
     }
     else if(year == 2017){
-        f_hlt = TFile::Open("SFs/2016/El_HLT.root");
+        f_hlt1 = TFile::Open("SFs/2017/El_BC_HLT.root");
+        f_hlt2 = TFile::Open("SFs/2017/El_DEF_HLT.root");
         f_id = TFile::Open("SFs/2017/El_ID.root");
         f_reco = TFile::Open("SFs/2017/El_RECO.root");
     }
     else if(year == 2018){
-        f_hlt = TFile::Open("SFs/2016/El_HLT.root");
+        f_hlt1 = TFile::Open("SFs/2018/El_HLT.root");
+        f_hlt2 = f_hlt1;
         f_id = TFile::Open("SFs/2018/El_ID.root");
         f_reco = TFile::Open("SFs/2018/El_RECO.root");
     }
@@ -502,15 +511,16 @@ void setup_el_SF(el_SFs *sf, int year){
     sf->RECO_SF = h2;
     f_reco->Close();
 
-    TH2D *h_hltsf = (TH2D *) f_hlt->Get("EGamma_SF2D")->Clone();
-    h_hltsf->SetDirectory(0);
-    sf->HLT_SF = h_hltsf;
-    TH2D *h_hltmc = (TH2D *) f_hlt->Get("EGamma_EffMC2D")->Clone();
-    h_hltmc->SetDirectory(0);
-    sf->HLT_MC_EFF = h_hltmc;
-    f_hlt->Close();
+    TH2D *h_hltsf1 = (TH2D *) f_hlt1->Get("EGamma_SF2D")->Clone();
+    h_hltsf1->SetDirectory(0);
+    sf->HLT_SF1 = h_hltsf1;
+
+    TH2D *h_hltsf2 = (TH2D *) f_hlt2->Get("EGamma_SF2D")->Clone();
+    h_hltsf2->SetDirectory(0);
+    sf->HLT_SF2 = h_hltsf2;
+
     
-    if(sf->HLT_SF == NULL || sf->ID_SF == NULL || sf->RECO_SF == NULL ) printf("Something wrong setup electron SF'S !!!! \n\n\n");
+    if(sf->HLT_SF1 == NULL || sf->HLT_SF2 == NULL || sf->ID_SF == NULL || sf->RECO_SF == NULL ) printf("Something wrong setup electron SF'S !!!! \n\n\n");
 }
 
 void setup_pileup_systematic(pileup_systematics *pu_sys, int year){
