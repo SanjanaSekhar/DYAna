@@ -1,7 +1,7 @@
 
 
 
-void make_graph(){
+void make_hlt_SF(){
 
     double eta_bins[] = {0., 1.44, 2.5};
     // Eta_1
@@ -57,7 +57,7 @@ void make_graph(){
     //*/
 
 
-    TFile *fout = TFile::Open("2018/El_DEF_HLT.root", "RECREATE");
+    TFile *fout = TFile::Open("2018/El_HLT.root", "RECREATE");
     TH2D *h_sf = new TH2D("EGamma_SF2D", "", 2,eta_bins, n_bins, pt_bins); 
 
 
