@@ -51,6 +51,7 @@ parser.add_option("--tarname", dest='tarname', default = "Analysis", help="Name 
 parser.add_option("--tarexclude", dest='tarexclude', default = '', 
         help="Name of directories to exclude from the tar (relative to cmssw_base), format as comma separated string (eg 'dir1, dir2') ")
 parser.add_option("--dy", dest='DY', default = False, action="store_true",  help="Shortcut to create tarball for DY AFB analysis (DYAna directory)")
+parser.add_option("--root_files", dest='root_files', default = False, action="store_true",  help="Shortcut to create tarball for root files of AFB analysis")
 
 
 cwd = os.getcwd()
@@ -106,7 +107,7 @@ def submit_jobs(lofjobs):
         condor_file.write('Executable = %s\n'% sub_file)
         condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
         #condor_file.write('request_disk = 500000\n') # modify these requirements depending on job
-        condor_file.write('request_memory = 4000\n')
+        if(options.with_combine): condor_file.write('request_memory = 6000\n')
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write("Transfer_Input_Files = %s, %s \n" %(script_location, sub_file))
         condor_file.write('WhenToTransferOutput = ON_EXIT \n')
@@ -126,27 +127,38 @@ def submit_jobs(lofjobs):
 if options.tar:
     tar_cmd = "tar" 
     excludeList = options.tarexclude.split(',')
-    print options.DY
     if options.DY:
         print "Using DY tarball options"
         excludeList = ['Analysis/DYAna/analyze/input_files', 'Analysis/DYAna/analyze/condor_jobs', 'Analysis/DYAna/analyze/output_files', 'Analysis/DYAna/generator_stuff', 
                        'Analysis/DYAna/test' ]
         options.tarname = "Analysis"
-    for item in excludeList:
-        #tar_cmd += " --exclude='`%s`' " % ("echo $CMSSW_BASE/src/" + item)
-        tar_cmd += " --exclude='%s' " % (item)
-    tar_cmd += " --exclude='%s' " %'.git' 
-    tar_cmd += " --exclude='%s' " %'*.tgz' 
-    tar_cmd += " --exclude='%s' " %'Analysis/DYAna/analyze/my_script.sh'
-    tar_cmd += " -zcf %s -C %s %s" % (options.tarname + ".tgz", "$CMSSW_BASE/src/", options.tarname)
+        for item in excludeList:
+            #tar_cmd += " --exclude='`%s`' " % ("echo $CMSSW_BASE/src/" + item)
+            tar_cmd += " --exclude='%s' " % (item)
+        tar_cmd += " --exclude='%s' " %'.git' 
+        tar_cmd += " --exclude='%s' " %'*.tgz' 
+        tar_cmd += " --exclude='%s' " %'Analysis/DYAna/analyze/my_script.sh'
+        tar_cmd += " -zcf %s -C %s %s" % (options.tarname + ".tgz", "$CMSSW_BASE/src/", options.tarname)
+    if options.root_files:
+        print "Tarring root files"
+        options.tarname = "output_files"
+        include_files = ['2016/MuMu16*dy*', '2016/MuMu16*comb_back*', '2016/MuMu16*photInd*', 
+                         '2016/ElEl16*dy*', '2016/ElEl16*comb_back*', '2016/ElEl16*photInd*', 
+                         '2017/MuMu17*dy*', '2017/MuMu17*comb_back*', '2017/MuMu17*photInd*', 
+                         '2017/ElEl17*dy*', '2017/ElEl17*comb_back*', '2017/ElEl17*photInd*', 
+                         '2018/MuMu18*dy*', '2018/MuMu18*comb_back*', '2018/MuMu18*photInd*', 
+                         '2018/ElEl18*dy*', '2018/ElEl18*comb_back*', '2018/ElEl18*photInd*']
+        tar_cmd = "tar -cf %s" % (options.tarname + ".tgz")
+        for item in include_files:
+            tar_cmd += " " + "output_files/"+item
     print "Executing tar command %s \n" % tar_cmd
     os.system(tar_cmd)
     cp_cmd = "xrdcp -f %s %s" %(options.tarname + ".tgz", EOS_base + "Condor_inputs/")
     print cp_cmd
     os.system(cp_cmd)
     sys.exit("Finished tarring")
-    #rm_cmd = "rm %s" %(options.tarname + ".tgz")
-    #os.system(rm_cmd)
+    rm_cmd = "rm %s" %(options.tarname + ".tgz")
+    os.system(rm_cmd)
 
 elif (options.haddEOS):
     if(options.outdir != "condor_jobs/"): o_dir = options.outdir

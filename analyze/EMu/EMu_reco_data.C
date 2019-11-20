@@ -42,7 +42,7 @@ void EMu_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year = -1)
                     nt.outTrees[3]->Fill();
                 }
                 else if(nt.opp_sign && one_iso){ //wjets control region
-                    if(nt.mu_iso0) iso_lep = 0;
+                    if(nt.mu_tight_id0) iso_lep = 0;
                     else          iso_lep = 1;
                     nt.outTrees[1]->Fill();
                 }

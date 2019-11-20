@@ -4,8 +4,8 @@ do_plot=${1:-false}
 
 #mask_params="mask_Y16_emu16=1,mask_Y17_emu17=1,mask_Y18_emu18=1" 
 
-#for idx in 5 6 7
-for idx in 0 1 2 3 4 5 6 7
+for idx in 5 6 7
+#for idx in 0 1 2 3 4 5 6 7
 do
 #idx=0
     workspace=workspaces/combined_fit_yall_${idx}.root
