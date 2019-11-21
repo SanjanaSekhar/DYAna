@@ -4,15 +4,15 @@
 void merge_workspaces(){
 
 
-    const TString f1_s("combine/templates/nov11_2018.root");
-    const TString fout_s("combine/templates/nov11_2018_merge.root");
+    const TString f1_s("combine/templates/nov21_2016.root");
+    const TString fout_s("combine/templates/nov21_2016_merge.root");
     TFile *f1 = TFile::Open(f1_s, "READ");
     TFile *fout = TFile::Open(fout_s, "RECREATE");
     char dirname[40];
 
 
-    char *sys_base = "root://131.225.204.161:1094//store/user/oamram/Condor_outputs/templ18_sys_nov11";
-    char *pdf_base = "root://131.225.204.161:1094//store/user/oamram/Condor_outputs/templ18_pdf_nov11";
+    char *sys_base = "root://131.225.204.161:1094//store/user/oamram/Condor_outputs/templ16_sys_nov20";
+    char *pdf_base = "root://131.225.204.161:1094//store/user/oamram/Condor_outputs/templ16_pdf_nov20";
     int num_sys_files = 10;
     int num_pdf_files = 10;
 

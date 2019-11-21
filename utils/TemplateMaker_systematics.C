@@ -208,8 +208,8 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
     TLorentzVector *lep_m=0;
     Double_t pt;
     FakeRate FR;
-    float tot_weight_os = 0.;
-    float tot_weight_ss = 0.;
+    double tot_weight_os = 0.;
+    double tot_weight_ss = 0.;
     if(flag1 == FLAG_MUONS) setup_new_mu_fakerate(&FR, year);
     else setup_new_el_fakerate(&FR, year);
     //TH2D *FR;
@@ -343,8 +343,8 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
     }
     float scaling = 1.;
     // remove outliers
-    tot_weight_os = std::max(0., tot_weight_os);
-    tot_weight_ss = std::max(0., tot_weight_ss);
+    tot_weight_os = std::max(1e-4, tot_weight_os);
+    tot_weight_ss = std::max(1e-4, tot_weight_ss);
     if(ss) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     return scaling;
 }

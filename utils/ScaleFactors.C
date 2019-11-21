@@ -324,7 +324,6 @@ Double_t get_el_HLT_SF(Double_t el1_pt, Double_t el1_eta, Double_t el2_pt, Doubl
 
 
     Double_t result = SF1;
-    printf("Pt %.1f eta %.2f SF %.3f \n", el1_pt, el1_eta, result);
     if(result < 0.01) printf("0 EL HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
     
     if(TMath::IsNaN(result)){ 
