@@ -3,17 +3,16 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
     float err_sum = 0.;
     for(int i=1; i<= h_errs->GetNbinsX(); i++){
         for(int j=1; j<= h_errs->GetNbinsY(); j++){
+            float fr = h_fr->GetBinContent(i,j);
             float err = h_fr->GetBinError(i,j);
             float num = h_errs->GetBinContent(i,j);
             err_sum += err*err*num*num;
         }
     }
-    //increase error sum by 50% to approximate subtraction of 2 fail template
-    err_sum *= 1.50;
-    float n_err_events = h_errs->Integral();
+    float n_events = h->Integral();
     for(int i=1; i<= h->GetNbinsX(); i++){
         float bin_num = h->GetBinContent(i);
-        float scaling = pow(bin_num/n_err_events, 2);
+        float scaling = pow(bin_num/n_events, 2);
         float num_err = pow(h->GetBinError(i),2);
         float weight_err = scaling * err_sum;
         float new_err = sqrt(num_err + weight_err);
@@ -32,8 +31,6 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH2F *h){
             err_sum += err*err*num*num;
         }
     }
-    //increase error sum by 50% to approximate subtraction of 2 fail template
-    err_sum *= 1.50;
     float n_err_events = h_errs->Integral();
     for(int i=1; i<= h->GetNbinsX(); i++){
         for(int j=1; j<= h->GetNbinsY(); j++){

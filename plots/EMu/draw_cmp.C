@@ -28,7 +28,9 @@
 #include "../../utils/PlotUtils.C"
 #include "../../utils/root_files.h"
 
-int year = 2018;
+int year = 2016;
+const bool write_out = true;
+char *plot_dir = "Paper_plots/";
 
 
 
@@ -111,78 +113,15 @@ void draw_cmp(){
     
     TCanvas *c_m;
     TPad *p_m;
+    char plt_file[100];
+    sprintf(plt_file, "%sEMu%i_m_cmp.pdf", plot_dir, year % 2000);
 
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", -1., true);
     CMS_lumi(p_m, year, 33 );
-
-    /*
-    TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 900, 700);
-    TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
-    pad1->SetBottomMargin(0);
-    pad1->Draw();
-    pad1->cd();
-    pad1->SetLogy();
-    m_stack->Draw("hist");
-    m_stack->SetMaximum(10000);
-    gStyle->SetEndErrorSize(4);
-    data_m->SetMarkerStyle(kFullCircle);
-    data_m->SetMarkerColor(1);
-    data_m->DrawCopy("P E same");
+    if(write_out) c_m->Print(plt_file);
 
 
 
-    //gPad->BuildLegend();
-    c_m->cd();
-    TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
-    //pad2->SetTopMargin(0);
-    pad2->SetBottomMargin(0.2);
-    pad2->Draw();
-    pad2->cd();
-
-
-
-    TList *stackHists = m_stack->GetHists();
-    TH1* m_mc_sum = (TH1*)stackHists->At(0)->Clone();
-    m_mc_sum->Reset();
-
-    for (int i=0;i<stackHists->GetSize();++i) {
-      m_mc_sum->Add((TH1*)stackHists->At(i));
-    }
-    auto h_ratio = (TH1F *) data_m->Clone("h_ratio");
-    h_ratio->SetMinimum(0.75);
-    h_ratio->SetMaximum(1.25);
-    h_ratio->Sumw2();
-    h_ratio->SetStats(0);
-    h_ratio->Divide(m_mc_sum);
-    h_ratio->SetMarkerStyle(21);
-    h_ratio->Draw("ep");
-    TLine *l1 = new TLine(150,1,1000,1);
-    l1->SetLineStyle(2);
-    l1->Draw();
-    c_m->cd();
-
-    h_ratio->SetTitle("");
-    // Y axis h_ratio plot settings
-   h_ratio->GetYaxis()->SetTitle("Data/MC");
-   h_ratio->GetYaxis()->SetNdivisions(505);
-   h_ratio->GetYaxis()->SetTitleSize(20);
-   h_ratio->GetYaxis()->SetTitleFont(43);
-   h_ratio->GetYaxis()->SetTitleOffset(1.2);
-   h_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetYaxis()->SetLabelSize(15);
-   // X axis h_ratio plot settings
-   h_ratio->GetXaxis()->SetTitle("M_{e#mu} (GeV)");
-   h_ratio->GetXaxis()->SetTitleSize(20);
-   h_ratio->GetXaxis()->SetTitleFont(43);
-   h_ratio->GetXaxis()->SetTitleOffset(3.);
-   h_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetXaxis()->SetLabelSize(20);
- 
-    writeExtraText = false;
-    extraText = "Preliminary";
-    //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
-    CMS_lumi(pad1, year, 11 );
-    */
 }
 
 
