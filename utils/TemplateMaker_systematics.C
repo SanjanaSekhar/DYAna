@@ -22,7 +22,7 @@ void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
             int opp_j = (n_cost_bins + 1) -j;
             if(val_sym - 2*abs(val_asym) <= 0.){
                 //at LO needs to sym/2, give some cushion b/c of alpha term
-                float val_asym_new = -val_sym/2.5;
+                float val_asym_new = -val_sym/2.8;
                 h_asym->SetBinContent(i, j, val_asym_new);
                 h_asym->SetBinContent(i, opp_j, -val_asym_new);
                 printf("Fixed up bin %i %i. Old asym val was %.2f, new is %.2f \n\n", i, j, val_asym, val_asym_new);
@@ -200,7 +200,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
 
 
 
-float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
+std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool ss = false){
     h->Sumw2();
     TH2D *h_err;
@@ -261,6 +261,8 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
                 if(flag1 == FLAG_MUONS){
                     Double_t mu1_fakerate, mu2_fakerate; 
                     if(l==0){
+                        if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
+                        if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = mu1_fakerate/(1-mu1_fakerate);
                     }
 
@@ -344,7 +346,11 @@ float gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TT
     tot_weight_os = std::max(1e-4, tot_weight_os);
     tot_weight_ss = std::max(1e-4, tot_weight_ss);
     if(ss) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
-    return scaling;
+    
+    Double_t err;
+    Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);
+    printf("Total fakerate est is %.0f +/- %.0f \n", integ, err);
+    return std::make_pair(scaling, err/integ);
 }
 
 void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2F *h, 

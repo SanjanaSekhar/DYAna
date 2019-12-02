@@ -29,7 +29,7 @@ void ElEl_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
 
-            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 50.){
+            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 130.){
                 nt.fillEvent();
                 bool one_iso = nt.el_iso0 ^ nt.el_iso1;
 

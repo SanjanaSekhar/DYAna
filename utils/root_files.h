@@ -34,10 +34,14 @@ TTree *t_mumu_gamgam, *t_elel_gamgam;
 
 const int n_xf_bins = 4;
 Float_t xf_bins[] = {0., 0.04, 0.07, 0.10, 1.0};
-const int n_cost_bins = 10;
-Float_t cost_bins[] = {-1.0, -.8, -.6, -.4, -.2, 0., 0.2, 0.4, 0.6, 0.8, 1.0};
+//const int n_cost_bins = 10;
+//Float_t cost_bins[] = {-1.0, -.8, -.6, -.4, -.2, 0., 0.2, 0.4, 0.6, 0.8, 1.0};
+//Float_t cost_ss_bins[] = {-1.0, -0.8, -0.6, -0.4, -0.2, 0.0};
+
+const int n_cost_bins = 8;
+Float_t cost_bins[] = {-1.0, -.75, -.5, -.25, 0., 0.25, 0.5, 0.75, 1.0};
 const int n_cost_ss_bins = n_cost_bins/2;
-Float_t cost_ss_bins[] = {-1.0, -0.8, -0.6, -0.4, -0.2, 0.0};
+Float_t cost_ss_bins[] = {-1.0, -0.75, -0.5, -0.25, 0.0};
 const int n_m_bins = 8;
 Double_t m_bins[] = {150, 171, 200,  250, 320, 510, 700, 1000, 14000};
 

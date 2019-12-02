@@ -66,11 +66,12 @@ void make_qcd_templates(int year, FILE* f_log){
             n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
     h_mumu_qcd->SetDirectory(0);
     bool ss = true;
+    float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
     printf("making ElEl fakes template \n");
-    float elel_sign_scaling = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS, ss);
+    std::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS, ss);
     printf("making MuMu fakes template \n");
     ss = false; // muons use os only for their fakes
-    float mumu_sign_scaling = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, ss);
+    std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, ss);
    
 
     //combined os and ss regions to estimate qcd, scale it to estimate amount
@@ -80,8 +81,8 @@ void make_qcd_templates(int year, FILE* f_log){
 
     printf("Integral of QCD templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral());
 
-    convert_qcd_to_param_hist(h_elel_qcd, f_log, elel_sign_scaling, FLAG_ELECTRONS);
-    convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, FLAG_MUONS);
+    convert_qcd_to_param_hist(h_elel_qcd, f_log, elel_sign_scaling, elel_err, FLAG_ELECTRONS);
+    convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, mumu_err, FLAG_MUONS);
 
     printf("Made qcd templates \n");
 }
@@ -277,7 +278,9 @@ void convert_mc_templates(int year, const string &sys_label){
 void write_groups(int year, FILE *f_log){
 
     char label[3][40], intro[3][40];
-    int sizes[3] = {20,20,60};
+    int sizes[3];
+    sizes[0] = sizes[1] = n_xf_bins * n_cost_ss_bins;
+    sizes[2] = 60;
     sprintf(intro[0], "ee%i_fake_shape group = ", year%2000);
     sprintf(intro[1], "mumu%i_fake_shape group = ", year%2000);
     sprintf(intro[2], "pdfs group = ");
@@ -302,8 +305,8 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/nov21_2016.root");
-    year = 2016;
+    const TString fout_name("combine/templates/nov25_widebins_2018.root");
+    year = 2018;
 
 
 

@@ -17,8 +17,8 @@ idx=$1
 
 
     text2workspace.py $comb_card --keyword-value M_BIN=${idx} -P Analysis.DYAna.my_model:dy_AFB -o $workspace --channel-masks
-    combineTool.py -M Impacts -d $workspace -m 125 --doInitialFit --robustFit 1 
-    combineTool.py -M Impacts -d $workspace -m 125 --doFits --robustFit 1 --named $pars --parallel 8
+    combineTool.py -M Impacts -d $workspace -m 125 --doInitialFit 
+    combineTool.py -M Impacts -d $workspace -m 125 --doFits --named $pars --parallel 8
     combineTool.py -M Impacts -d $workspace -m 125 -o impacts/mbin${idx}.json --named $pars
     plotImpacts.py -i impacts/mbin${idx}.json -o impacts/impact_plot_mbin${idx} -t impacts/rename.json --POI Afb
     #rm higgsCombine_initialFit*

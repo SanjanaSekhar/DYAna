@@ -104,7 +104,7 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
     return true;
 }
 
-void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int flag){
+void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, float sign_scale_err, int flag){
     //convert a hist to a parametric hist 
     RooArgList *bin_list = new RooArgList();
     RooArgList *bin_list_os = new RooArgList();
@@ -121,13 +121,13 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int fla
     fprintf(f_log, "\n");
     sprintf(h_ss_name, "%s_ss_qcd_param", h->GetName());
     sprintf(R_sign_param, "R_%s_os_fakes", h->GetName());
-    if(flag == FLAG_ELECTRONS){
-        R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", sign_scaling , 0., 1.);
-        fprintf(f_log, "%s param %.4f 0.05 \n", R_sign_param, sign_scaling);
+    if(sign_scaling > 0.99){
+        sign_scaling = 0.995;
+        sign_scale_err = 0.0001;
     }
-    else{
-        R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", 1.0, 0.99, 1.01);
-        fprintf(f_log, "%s param %.4f 0.0001 \n", R_sign_param, 1.0);
+    if(flag == FLAG_ELECTRONS){
+        R_qcd_sign_fraction = new RooRealVar(R_sign_param, "Fraction of os fakes events", sign_scaling , 0., 0.9995);
+        fprintf(f_log, "%s param %.4f %.5f \n", R_sign_param, sign_scaling, sign_scale_err);
     }
     for(int i=1; i <= n_xf_bins; i++){
         for(int j=1; j <= n_cost_bins; j++){
@@ -170,14 +170,22 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int fla
             if(j<=(n_cost_bins/2)){
                 //printf("first fill \n");
                 RooRealVar *bin = new RooRealVar(bin_name, bin_name, content, 0., 10000.);
+                bin_list->add(*bin);
                 fprintf(f_log, "%s param %.4f %.4f \n", bin_name, content, error);
-                RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0*@1", RooArgList(*bin, *R_qcd_sign_fraction));
-                RooFormulaVar *form_ss = new RooFormulaVar(form_name_ss, form_name_ss, "@0*(1.0 - @1)", RooArgList(*bin, *R_qcd_sign_fraction));
+                //for os region multiply by 0.5 because there are two bins (both signs)
+                if(flag == FLAG_ELECTRONS){
+                    RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0*@1", RooArgList(*bin, *R_qcd_sign_fraction));
+                    RooFormulaVar *form_ss = new RooFormulaVar(form_name_ss, form_name_ss, "@0*(1.0 - @1)", RooArgList(*bin, *R_qcd_sign_fraction));
+                    bin_list_os->add(*form1);
+                    bin_list_ss->add(*form_ss);
+                }
+                else{
+                    RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0", RooArgList(*bin));
+                    bin_list_os->add(*form1);
+                }
+
                 //form1->Print();
                 //form_ss->Print();
-                bin_list->add(*bin);
-                bin_list_ss->add(*form_ss);
-                bin_list_os->add(*form1);
             }
 
             else{
@@ -188,9 +196,17 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, int fla
                 //printf("Looking for bin %s \n", bin_name);
                 RooRealVar *bin = (RooRealVar *) bin_list->find(bin_name);
                 if(bin==nullptr) printf("NULL lookup of %s from bin list \n", bin_name);
-                RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0*@1", RooArgList(*bin, *R_qcd_sign_fraction));
+
+                if(flag == FLAG_ELECTRONS){
+                    RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0*@1", RooArgList(*bin, *R_qcd_sign_fraction));
+                    bin_list_os->add(*form1);
+                }
+                else{
+                    RooFormulaVar *form1 = new RooFormulaVar(form_name1_os, form_name1_os, "0.5*@0", RooArgList(*bin));
+                    bin_list_os->add(*form1);
+                }
+
                 //form1->Print();
-                bin_list_os->add(*form1);
             }
         }
     

@@ -11,7 +11,7 @@ do
     sed -i "s/YR/${year}/g" $card
     cat cards/y20${year}_mbin${idx}_bins.txt >> $card
     text2workspace.py $card --keyword-value M_BIN=${idx} -P Analysis.DYAna.my_model:dy_AFB -o $workspace --channel-masks
-    combine -M FitDiagnostics $workspace --saveShapes --saveWorkspace --skipBOnlyFit --plot --robustFit 1
+    combine -M FitDiagnostics $workspace --saveWorkspace --skipBOnlyFit
     #PostFitShapesFromWorkspace -w higgsCombineTest.FitDiagnostics.mH120.root -f fitDiagnostics.root:fit_s --postfit -o shapes/combined_fit_shapes_mbin${idx}.root
     rm -r $plotdir
     mkdir $plotdir
