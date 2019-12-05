@@ -34,8 +34,10 @@ TTree *t_mumu_gamgam, *t_elel_gamgam;
 
 const int n_xf_bins = 4;
 Float_t xf_bins[] = {0., 0.04, 0.07, 0.10, 1.0};
-const int n_cost_bins = 10;
-Float_t cost_bins[] = {-1.0, -.8, -.6, -.4, -.2, 0., 0.2, 0.4, 0.6, 0.8, 1.0};
+//const int n_cost_bins = 10;
+//Float_t cost_bins[] = {-1.0, -.8, -.6, -.4, -.2, 0., 0.2, 0.4, 0.6, 0.8, 1.0};
+const int n_cost_bins = 8;
+Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.0};
 const int n_cost_ss_bins = n_cost_bins/2;
 Float_t cost_ss_bins[] = {-1.0, -0.8, -0.6, -0.4, -0.2, 0.0};
 const int n_m_bins = 8;
@@ -141,7 +143,7 @@ void init(int year){
     printf("init year %i  \n", year);
     init_mc(year);
     if(year == 2016){
-        f_elel_data = TFile::Open("../analyze/output_files/2016/ElEl16_data_nov1.root");
+        f_elel_data = TFile::Open("../analyze/output_files/2016/ElEl16_data_dec4.root");
         t_elel_data = (TTree *)f_elel_data->Get("T_sig"); 
         t_elel_ss_data = (TTree *)f_elel_data->Get("T_ss");
         t_elel_WJets = (TTree *) f_elel_data->Get("T_WJets");
@@ -157,7 +159,7 @@ void init(int year){
 
         //-------------------------------------------------------------------------------
 
-        f_mumu_data = TFile::Open("../analyze/output_files/2016/MuMu16_data_oct30.root");
+        f_mumu_data = TFile::Open("../analyze/output_files/2016/MuMu16_data_dec4.root");
         t_mumu_data = (TTree *)f_mumu_data->Get("T_sig"); 
         t_mumu_ss_data = (TTree *)f_mumu_data->Get("T_ss");
         t_mumu_WJets = (TTree *) f_mumu_data->Get("T_WJets");

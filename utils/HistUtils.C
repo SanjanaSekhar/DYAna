@@ -133,7 +133,7 @@ typedef struct {
 //static type means functions scope is only this file, to avoid conflicts
 void setup_new_el_fakerate(FakeRate *FR, int year){
     TFile *f0;
-    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate_nov1.root");
+    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate_dec4.root");
     else if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate_nov1.root");
     else if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_nov1.root");
     else printf("Year was %i ?? \n", year);
@@ -144,7 +144,7 @@ void setup_new_el_fakerate(FakeRate *FR, int year){
 }
 void setup_new_mu_fakerate(FakeRate *FR, int year){
     TFile *f0;
-    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate_oct30.root");
+    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate_dec4.root");
     else if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate_oct18.root");
     else if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_oct18.root");
     else printf("Year was %i ?? \n", year);

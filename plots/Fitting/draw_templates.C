@@ -16,7 +16,7 @@ void draw_templates(){
     
         int year = 2018;
         init(year);
-        char *plot_dir = "template_plots";
+        char *plot_dir = "Paper_plots/template_plots";
         //setup_all_SFs(year);
         string sys_label = "";
 

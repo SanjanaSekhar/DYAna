@@ -14,11 +14,11 @@ TH2F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_back,  *h_mumu_dy_gg, *h_
 void sys_check(){
         gStyle->SetOptStat(0);
     
-        int year = 2016;
+        int year = 2018;
         init(year);
-        char *plot_dir = "template_plots";
-        char *sys = "RENORM";
-        int i = 0;
+        char *plot_dir = "Paper_plots/template_plots";
+        char *sys = "_Pu18";
+        int i = 2;
         //setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
@@ -114,7 +114,7 @@ void sys_check(){
 
 
         TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
-        h1_elel_plain->SetTitle(mu_title);
+        h1_elel_plain->SetTitle(el_title);
         h1_elel_plain->Draw("hist");
         h1_elel_sys_up->Draw("hist same");
         h1_elel_sys_down->Draw("hist same");
