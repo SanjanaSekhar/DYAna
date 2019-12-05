@@ -156,9 +156,9 @@ if options.tar:
     cp_cmd = "xrdcp -f %s %s" %(options.tarname + ".tgz", EOS_base + "Condor_inputs/")
     print cp_cmd
     os.system(cp_cmd)
-    sys.exit("Finished tarring")
     rm_cmd = "rm %s" %(options.tarname + ".tgz")
     os.system(rm_cmd)
+    sys.exit("Finished tarring")
 
 elif (options.haddEOS):
     if(options.outdir != "condor_jobs/"): o_dir = options.outdir

@@ -1,1 +1,1 @@
-/uscms/home/oamram/Utils/doCondor.py
+../utils/doCondor.py

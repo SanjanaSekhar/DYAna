@@ -437,7 +437,6 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
         h_rap->Scale(scaling);
     }
     Double_t err;
-    h_cost->Print("all");
     printf("Total fakerate est is %.0f +/- %.0f \n", h_cost->IntegralAndError(1, h_cost->GetNbinsX(), err), err);
     return;
 }
