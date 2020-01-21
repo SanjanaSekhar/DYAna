@@ -106,6 +106,7 @@ void TempMaker::setup(){
             t_in->SetBranchAddress("el_id_SF", &el_id_SF);
             t_in->SetBranchAddress("el_reco_SF", &el_reco_SF);
             t_in->SetBranchAddress("el_HLT_SF", &el_HLT_SF);
+            el_HLT_SF = 1.;
             if(do_elScale_sys || do_elSmear_sys){
                 if(do_elScale_sys >0){
                     if(sys_label.find("elScaleStat") != string::npos){
@@ -183,6 +184,8 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("elSmear") != string::npos) do_elSmear_sys = sys_shift;
 
 
+        else if(sys_label.find("REFAC") != string::npos && sys_shift > 0) systematic = &mu_RF_up;
+        else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) systematic = &mu_RF_down;
         else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) systematic = &mu_R_up;
         else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) systematic = &mu_R_down;
         else if(sys_label.find("FAC") != string::npos && sys_shift > 0) systematic = &mu_F_up;
@@ -260,6 +263,21 @@ void TempMaker::doCorrections(){
         cost_st = cost;
     }
 
+}
+
+void TempMaker::fixRFNorm(TH2 *h, int mbin){
+    double avg = 1.;
+    if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = h_R_up[mbin];
+    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = h_R_down[mbin];
+    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = h_F_up[mbin];
+    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = h_F_down[mbin];
+    else if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = h_RF_up[mbin];
+    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = h_RF_down[mbin];
+
+    if(avg != 1.){
+        printf("Sys label was %s, correcting average weight by %.3f \n", sys_label.c_str(), 1./avg);
+    }
+    h->Scale(1./avg);
 }
 
 Double_t TempMaker::getEvtWeight(){

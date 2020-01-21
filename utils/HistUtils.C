@@ -1,3 +1,13 @@
+#ifndef HIST_UTILS
+#define HIST_UTILS
+int find_bin(double * bins, double val){
+    int bin =0;
+    while(1){
+        if( val >= bins[bin] && val <= bins[bin+1]) break;
+        bin++;
+    }
+    return bin;
+}
 
 void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
     float err_sum = 0.;
@@ -208,4 +218,7 @@ Double_t get_new_fakerate_unc(Double_t pt, Double_t eta, TH2D *h){
 
     err = h->GetBinError(xbin, ybin);
     return err;
+
 }
+
+#endif

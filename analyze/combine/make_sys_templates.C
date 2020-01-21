@@ -6,7 +6,7 @@ TTree *t_mumu_mc_raw, *t_mumu_nosig_raw, *t_mumu_back_raw;
 void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0){
 
     //const TString pdf_fout_name("combine/templates/sep19_2016_pdf.root");
-    const TString pdf_fout_name("output_files/sep19_sys.root");
+    const TString pdf_fout_name("output_files/sys_test.root");
     TFile *pdf_fout = TFile::Open(pdf_fout_name, "RECREATE");
 
     init_mc(year);
@@ -33,7 +33,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
         }
     }
     else{
-      vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_alphaDen", "_alphaS"  };
+      vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_REFAC", "_alphaDen", "_alphaS"  };
       
       
       
