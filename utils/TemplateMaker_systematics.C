@@ -5,7 +5,6 @@
 #include "TempMaker.C"
 
 
-
 using namespace std;
 
 
@@ -143,6 +142,10 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     }
 
     tm.finish();
+    int mbin = find_bin(m_bins, m_low + 0.1);
+    tm.fixRFNorm(h_sym, mbin);
+    tm.fixRFNorm(h_asym, mbin);
+    tm.fixRFNorm(h_alpha, mbin);
 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);
@@ -150,7 +153,7 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
-    printf("MC templates generated from %i events \n \n", n);
+    printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral());
     return 0;
 }
 

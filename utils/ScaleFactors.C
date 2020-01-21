@@ -7,6 +7,7 @@
 #include "TFile.h"
 #include "TH2D.h"
 #include "TGraphAsymmErrors.h"
+#include "HistUtils.C"
 
 
 
@@ -153,6 +154,10 @@ Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic 
 
 Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic = 0){
     float sys_unc_mult = 1.0;
+    //get SF for eta's in overlap region (already vetoed superclusters in the
+    //region)
+    if(!goodElEta(eta)) eta = eta * 1.1;
+
     if( pt <= 25.) pt = 25;
     if (pt >= 450.){
         pt = 350.;
@@ -170,8 +175,8 @@ Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic = 0){
         result += (systematic * err);
     }
 
-    if(result < 0.01){
-        printf("0 el SF for Pt %.1f, Eta %1.2f \n", pt, eta);
+    if(result < 0.01 || result > 10.){
+        printf("%.2f el SF for Pt %.1f, Eta %1.2f \n", result, pt, eta);
         result = 1;
     }
     return result;

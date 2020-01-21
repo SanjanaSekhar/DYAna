@@ -28,6 +28,7 @@
 #include "ScaleFactors.C"
 #include "BTagUtils.C"
 #include "HistUtils.C"
+#include "bins.h"
 
 #define FLAG_MUONS  0
 #define FLAG_ELECTRONS  1
@@ -51,6 +52,16 @@ Double_t mu_lumi18_era2 = 52.23;
 Double_t mu_lumi18 = mu_lumi18_era1 + mu_lumi18_era2;
 Double_t el_lumi18 = 59.74;
 
+
+//Average renorm and fac scale reweights for each mass bin (to remove
+//normalization component)
+double h_R_up[8] = { 1.044, 1.039, 1.033, 1.026, 1.019, 1.009, 0.998, 0.985, }; 
+double h_R_down[8] = { 0.947, 0.953, 0.960, 0.969, 0.979, 0.992, 1.004, 1.020, }; 
+double h_F_up[8] = { 0.976, 0.975, 0.975, 0.973, 0.968, 0.961, 0.957, 0.950, }; 
+double h_F_down[8] = { 1.020, 1.020, 1.018, 1.018, 1.021, 1.025, 1.028, 1.033, }; 
+double h_RF_up[8] = { 1.023, 1.018, 1.012, 1.003, 0.990, 0.973, 0.965, 0.956, }; 
+double h_RF_down[8] = { 0.972, 0.979, 0.983, 0.991, 0.999, 1.008, 1.016, 1.025, };
+
 class TempMaker{
     public:
         TempMaker(TTree *t, bool isdata = false, int year = 2016);
@@ -60,6 +71,7 @@ class TempMaker{
         void getEvent(int i);
         void doCorrections();
         Double_t getEvtWeight();
+        void fixRFNorm(TH2 *h, int mbin);
         void finish();
 
 
@@ -84,7 +96,7 @@ class TempMaker{
         Double_t evt_weight;
         Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
         Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF;
-        Double_t el_id_SF, el_reco_SF, pu_SF, pu_SF_up, pu_SF_down, el_HLT_SF;
+        Double_t el_id_SF, el_reco_SF, el_HLT_SF, pu_SF, pu_SF_up, pu_SF_down;
         Double_t jet1_pt, jet2_pt, jet1_eta, jet2_eta;
         Double_t mu1_pt, mu1_eta, mu2_pt, mu2_eta;
         Double_t el1_pt, el1_eta, el2_pt, el2_eta;
