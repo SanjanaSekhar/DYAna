@@ -240,6 +240,9 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
             bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+            //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
+            //pass = pass && good_eta;
+
 
             if(pass){
                 nEvents++;
@@ -318,6 +321,9 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             tm.getEvent(i);
 
             bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets;
+
+            //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
+            //pass = pass && good_eta;
 
             bool opp_sign = false;
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
