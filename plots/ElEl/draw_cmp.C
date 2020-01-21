@@ -49,8 +49,8 @@ void draw_cmp(){
     TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins, 0, 1000);
     TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins, 0, 1000);
 
-    int n_xf_bins1 = 5;
-    float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};
+    int n_xf_bins1 = 4;
+    float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.5};
     TH1F *mc_xf = new TH1F("mc_xf", "MC signal", n_xf_bins1,  xf_bins1);
     TH1F *mc_nosig_xf = new TH1F("mc_nosig_xf", "MC signal", n_xf_bins1,  xf_bins1);
     TH1F *data_xf = new TH1F("data_xf", "MC signal", n_xf_bins1,  xf_bins1);
@@ -165,7 +165,7 @@ void draw_cmp(){
     gg_rap->SetFillColor(kOrange);
 
     float m_low = 150.;
-    float m_high = 100000.;
+    float m_high = 14000.;
 
     bool do_RC = false;
     make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type, do_RC, year, m_low, m_high);
