@@ -267,15 +267,15 @@ void TempMaker::doCorrections(){
 
 void TempMaker::fixRFNorm(TH2 *h, int mbin){
     double avg = 1.;
-    if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = h_R_up[mbin];
+    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = h_RF_up[mbin];
+    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = h_RF_down[mbin];
+    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = h_R_up[mbin];
     else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = h_R_down[mbin];
     else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = h_F_up[mbin];
     else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = h_F_down[mbin];
-    else if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = h_RF_up[mbin];
-    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = h_RF_down[mbin];
 
     if(avg != 1.){
-        printf("Sys label was %s, correcting average weight by %.3f \n", sys_label.c_str(), 1./avg);
+        printf("Sys label was %s, mbin %i correcting average weight by %.3f \n", sys_label.c_str(), mbin, 1./avg);
     }
     h->Scale(1./avg);
 }

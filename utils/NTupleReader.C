@@ -133,6 +133,7 @@ bool NTupleReader::getNextFile(){
                 return getNextFile();
             }
 
+            /*
             if(!is_data && do_SFs){
                 fin->cd("EventCounter");
                 TDirectory *subdir = gDirectory;
@@ -144,7 +145,9 @@ bool NTupleReader::getNextFile(){
                 pu_sys.ratio_pileup_up->Divide(pu_sys.data_pileup_up, mc_pileup);
                 pu_sys.ratio_pileup_down->Divide(pu_sys.data_pileup_down, mc_pileup);
 
+
             }
+            */
 
 
             fin->cd("B2GTTreeMaker");
@@ -665,6 +668,8 @@ void NTupleReader::fillEventSFs(){
     pu_SF = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_nom);
     pu_SF_up = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_up);
     pu_SF_down = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_down);
+
+    //printf("%i %.3f %.3f %.3f \n", pu_NtrueInt, pu_SF, pu_SF_up, pu_SF_down);
 
 
     jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, 0);

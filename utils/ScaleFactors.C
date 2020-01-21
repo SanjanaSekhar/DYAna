@@ -156,7 +156,7 @@ Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic = 0){
     float sys_unc_mult = 1.0;
     //get SF for eta's in overlap region (already vetoed superclusters in the
     //region)
-    if(!goodElEta(eta)) eta = eta * 1.1;
+    if(!goodElEta(eta)) eta = eta * 1.2;
 
     if( pt <= 25.) pt = 25;
     if (pt >= 450.){
@@ -525,7 +525,36 @@ void setup_el_SF(el_SFs *sf, int year){
     if(sf->HLT_SF == NULL || sf->HLT_MC_EFF == NULL || sf->ID_SF == NULL || sf->RECO_SF == NULL ) printf("Something wrong setup electron SF'S !!!! \n\n\n");
 }
 
+
 void setup_pileup_systematic(pileup_systematics *pu_sys, int year){
+
+    TFile *fin;
+    if(year == 2016){
+        fin = TFile::Open("SFs/2016/pu_SF.root");
+    }
+    if(year == 2017){
+        fin = TFile::Open("SFs/2017/pu_SF.root");
+    }
+    if(year == 2018){
+        fin = TFile::Open("SFs/2018/pu_SF.root");
+    }
+
+
+    pu_sys->ratio_pileup_nom = (TH1D *) fin->Get("pu_ratio")->Clone();
+    pu_sys->ratio_pileup_nom->SetDirectory(0);
+
+    pu_sys->ratio_pileup_up = (TH1D *) fin->Get("pu_ratio_up")->Clone();
+    pu_sys->ratio_pileup_up->SetDirectory(0);
+
+    pu_sys->ratio_pileup_down = (TH1D *) fin->Get("pu_ratio_down")->Clone();
+    pu_sys->ratio_pileup_down->SetDirectory(0);
+}
+
+
+
+
+
+void setup_pileup_systematic_old(pileup_systematics *pu_sys, int year){
 
 
     TFile *f7, *f8, *f9;
