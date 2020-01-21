@@ -105,8 +105,7 @@ void TempMaker::setup(){
             }
             t_in->SetBranchAddress("el_id_SF", &el_id_SF);
             t_in->SetBranchAddress("el_reco_SF", &el_reco_SF);
-            t_in->SetBranchAddress("el_HLT_SF1", &el_HLT_SF1);
-            t_in->SetBranchAddress("el_HLT_SF2", &el_HLT_SF2);
+            t_in->SetBranchAddress("el_HLT_SF", &el_HLT_SF);
             if(do_elScale_sys || do_elSmear_sys){
                 if(do_elScale_sys >0){
                     if(sys_label.find("elScaleStat") != string::npos){
@@ -317,17 +316,10 @@ Double_t TempMaker::getEvtWeight(){
     if(do_electrons){
         if(do_elID_sys) el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF, do_elID_sys) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF, do_elID_sys);
         if(do_elRECO_sys) el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_sys) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_sys);
-        if(do_elHLT_sys){
-            el_HLT_SF1 = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF1,  do_elHLT_sys);
-            el_HLT_SF2 = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF2,  do_elHLT_sys);
-        }
+        if(do_elHLT_sys) el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_sys);
+        
 
 
-        if(year == 2017){
-            //only year with split SFs
-            el_HLT_SF = (el_HLT_SF1 * el_era1_lumi + el_HLT_SF2 * el_era2_lumi)/(el_era1_lumi + el_era2_lumi);
-        }
-        else el_HLT_SF = el_HLT_SF1;
 
         evt_weight = base_weight * el_id_SF *el_reco_SF * el_HLT_SF * 1000. * el_lumi;
 

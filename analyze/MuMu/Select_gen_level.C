@@ -27,6 +27,8 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 
     TLorentzVector gen_p, gen_m, cm;
     double cost_st,cost,m, gen_weight;
+
+    double mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
    
 
     t_el->Branch("gen_p", "TLorentzVector", &gen_p);
@@ -35,6 +37,15 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_el->Branch("m", &m);
     t_el->Branch("cost_st", &cost_st);
     t_el->Branch("cost", &cost);
+    t_el->Branch("mu_R_up", &mu_R_up);
+    t_el->Branch("mu_R_down", &mu_R_down);
+    t_el->Branch("mu_F_up", &mu_F_up);
+    t_el->Branch("mu_F_down", &mu_F_down);
+    t_el->Branch("mu_RF_up", &mu_RF_up);
+    t_el->Branch("mu_RF_down", &mu_RF_down);
+    t_el->Branch("inc_id1", &nt.inc_id1);
+    t_el->Branch("inc_id2", &nt.inc_id2);
+    
 
     t_mu->Branch("gen_p", "TLorentzVector", &gen_p);
     t_mu->Branch("gen_m", "TLorentzVector", &gen_m);
@@ -42,6 +53,14 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_mu->Branch("m", &m);
     t_mu->Branch("cost_st", &cost_st);
     t_mu->Branch("cost", &cost);
+    t_mu->Branch("mu_R_up", &mu_R_up);
+    t_mu->Branch("mu_R_down", &mu_R_down);
+    t_mu->Branch("mu_F_up", &mu_F_up);
+    t_mu->Branch("mu_F_down", &mu_F_down);
+    t_mu->Branch("mu_RF_up", &mu_RF_up);
+    t_mu->Branch("mu_RF_down", &mu_RF_down);
+    t_mu->Branch("inc_id1", &nt.inc_id1);
+    t_mu->Branch("inc_id2", &nt.inc_id2);
 
     t_tau->Branch("gen_p", "TLorentzVector", &gen_p);
     t_tau->Branch("gen_m", "TLorentzVector", &gen_m);
@@ -56,6 +75,15 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
             nt.fillEvent();
+
+
+            mu_F_up = nt.scale_Weights[0];
+            mu_F_down = nt.scale_Weights[1];
+            mu_R_up = nt.scale_Weights[2];
+            mu_R_down = nt.scale_Weights[4];
+            mu_RF_up = nt.scale_Weights[3];
+            mu_RF_down = nt.scale_Weights[5];
+
             int gen_id = nt.selectAnyGenParts(false);
             gen_p = nt.gen_mu_p_vec;
             gen_m = nt.gen_mu_m_vec;

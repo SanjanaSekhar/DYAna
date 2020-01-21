@@ -408,8 +408,7 @@ void NTupleReader::setupOutputTree(char treeName[100]){
             outTrees[idx]->Branch("gen_el_p", "TLorentzVector", &gen_el_p_vec);
             outTrees[idx]->Branch("el_id_SF", &el_id_SF);
             outTrees[idx]->Branch("el_reco_SF", &el_reco_SF);
-            outTrees[idx]->Branch("el_HLT_SF1", &el_HLT_SF1);
-            outTrees[idx]->Branch("el_HLT_SF2", &el_HLT_SF2);
+            outTrees[idx]->Branch("el_HLT_SF", &el_HLT_SF);
         }
     }
 }
@@ -679,10 +678,10 @@ void NTupleReader::fillEventSFs(){
         }
     }
     if(scale_size > 0){
-        mu_R_up = scale_Weights[2];
-        mu_R_down = scale_Weights[4];
         mu_F_up = scale_Weights[0];
         mu_F_down = scale_Weights[1];
+        mu_R_up = scale_Weights[2];
+        mu_R_down = scale_Weights[4];
         mu_RF_up = scale_Weights[3];
         mu_RF_down = scale_Weights[5];
     }
@@ -734,8 +733,7 @@ void NTupleReader::fillEventSFs(){
 
         el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF);
         el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF);
-        el_HLT_SF1 = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF1);
-        el_HLT_SF2 = get_el_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF2);
+        el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF, el_SF.HLT_MC_EFF);
     }
     if(do_emu){
 
@@ -1047,8 +1045,8 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
 
     else{ 
         //printf("%i %i \n", inc_1, inc_2);
-        int inc_id1 = gen_id[inc_1];
-        int inc_id2 = gen_id[inc_2];
+        inc_id1 = gen_id[inc_1];
+        inc_id2 = gen_id[inc_2];
         if(abs(gen_Dau0ID[inc_1]) == TAU){
             if(gen_tau_p == -1 || gen_tau_m == -1){
                 printf("Didn't record tau's :( \n");
@@ -1141,7 +1139,6 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
 
 
 int NTupleReader::selectAnyGenParts(bool PRINT = false){
-    //returns false if unable to match all gen parts
 
     char out_buff[50000];
     bool print_out = false;
@@ -1300,8 +1297,8 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
 
     else{ 
         //printf("%i %i \n", inc_1, inc_2);
-        int inc_id1 = gen_id[inc_1];
-        int inc_id2 = gen_id[inc_2];
+        inc_id1 = gen_id[inc_1];
+        inc_id2 = gen_id[inc_2];
         if((abs(inc_id1) <= 6 && abs(inc_id2) <= 6) && (inc_id1 * inc_id2 < 0)){ //a quark and anti quark
             //qq-bar
             signal_event = true;
