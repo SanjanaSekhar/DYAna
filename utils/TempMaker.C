@@ -193,6 +193,18 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("alphaS") != string::npos && sys_shift < 0) systematic = &alphaS_down;
         else if(sys_label.find("alphaS") != string::npos && sys_shift > 0) systematic = &alphaS_up;
         else if(sys_label.find("alphaDen") != string::npos) systematic = &one;
+
+        else if(sys_label.find("MET" != string::npos)){
+            t_in->SetBranchAddress("met_pt", &dummy);
+            if(sys_label.find("METJEC") != string::npos && sys_shift > 0) t_in->SetBranchAddress("met_jec_up", &met_pt);
+            else if(sys_label.find("METJEC") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_jec_down", &met_pt);
+            else if(sys_label.find("METJER") != string::npos && sys_shift > 0) t_in->SetBranchAddress("met_jer_up", &met_pt);
+            else if(sys_label.find("METJER") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_jer_down", &met_pt);
+            else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
+        }
+                
+
+
         else if(sys_label.find("pdf") != string::npos){
             if(sys_shift > 0) sscanf(sys_label.c_str(), "_pdf%iUp", &do_pdf_sys);
             else sscanf(sys_label.c_str(), "_pdf%iDown", &do_pdf_sys);

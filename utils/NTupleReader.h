@@ -124,6 +124,8 @@ class NTupleReader{
         Int_t nJets, jet1_flavour, jet2_flavour, pu_NtrueInt, has_nobjets;
         Bool_t is_tau_event;
         Float_t met_pt, met_phi, mu1_charge, mu2_charge, el1_charge, el2_charge; 
+        Float_t met_syst_pt[14], met_syst_phi[14];
+        Float_t met_jec_up, met_jec_down, met_jer_up, met_jer_down;
         Int_t el1_gc, el2_gc;
         TLorentzVector cm, gen_cm;
         TLorentzVector mu_p, mu_m, gen_mu_p_vec, gen_mu_m_vec;
