@@ -5,7 +5,10 @@
 //! Do q-qbar and q-gluon cases
 
 
+#define STAND_ALONE
+
 #include "compute_AFB.C"
+#include "../utils/HistUtils.C"
 
 // Global definitions 
 
@@ -19,11 +22,6 @@ struct particle {         //!< individual particle structure
     float spin;             //! spin (helicity) info
 } ;
 
-struct eventcm {          //!< useful info in various frames
-    double coststar;        //! t-scattering angle
-    double mtt;             //! invariant mass of ttbar pair
-    double xF;              //! Feynman x of ttbar pair
-} ;
 Double_t get_AFB(char  infile[120], double m_low, double m_high, int correct_AFB_mbin = -1, bool print = false);
 Double_t get_AFB(int Zp_mass, Double_t cpl, int m_bin, bool correct_AFB = false, bool print = false);
 
@@ -74,9 +72,8 @@ Double_t get_AFB(int Zp_mass, Double_t cpl, int m_bin, bool correct_AFB = false,
 Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_mbin = -1, bool print = false){
 
     // Local variables 
-    int i, j, k, iqk=0, iqb=0, itq=0, itb=0, ig1=0, ig2=0, ijt, njet=0, npflavor=0, nevent, nfit;
-    int iqk_extra = 0, iqb_extra=0;
-    int nqqb=0, ngg=0, itbq, itbb, itqk, itqb, itlp, itnu;
+    int i, j, k, njet=0, npflavor=0, nevent, nfit;
+    int nqqb=0, ngg=0; 
     int nup, idrup; 
     float xwgtup, scalup, aqedup, aqcdup;
     double alpha;
@@ -96,15 +93,10 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
         return -1.;
     }
 
+    //TH1F *h_cost = new TH1F("h", "", 20, -1, 1);
+
     //  Book Histograms
 
-    gStyle->SetOptFit(101);
-    gStyle->SetHistLineWidth(2);
-    static vector<TH1F*> hp(12);
-
-    double root2 = sqrt(2.);
-    double Ebeam = 6500.;
-    double Pbeam = sqrt(Ebeam*Ebeam - 0.938*0.938);
 
     nevent=0; nfit=0;
     int event_num =0;
@@ -112,6 +104,8 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
     int nFail =0;
     Double_t nF = 0, nB = 0;
     Double_t n_utype=0, n_dtype=0;
+
+    int nQQbar =0, nQQ = 0, nQGlu = 0, nGluGlu = 0;
 
     // Scan throught file first for the beginning of an event record	
 
@@ -131,9 +125,11 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
 
             std::vector<particle> up;
 
-            iqk = -1; iqb = -1; itq = -1; itb = -1; ig1 = -1; ig2 = -1; ijt = -1;
-            iqk_extra = -1;
-            iqb_extra = -1; //in case event with 2 quarks or 2 anti quarks
+            int imu_m = -1; 
+            int imu_p = -1;
+            int inc1 = -1;
+            int inc2 = -1;
+
             njet = 0; npflavor = 0; nqqb = 0; ngg = 0;
             int qtype = 0; // type of quark, uct = 0 , dsb = 1
 
@@ -147,40 +143,47 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
 
             //  Do event by event analysis here	
 
-            // first, flag the stable final particles	   
             for(i=0; i<nup; ++i) {
                 if(up[i].mother[0] == 0 && up[i].mother[1] == 0) {
-                    if(up[i].id == 1 || (up[i].id == 2 || (up[i].id == 3 || (up[i].id == 4 || up[i].id == 5)))) {
-                        if(iqk == -1) iqk = i; 
-                        else{ 
-                            iqk_extra = i;
-                            //printf("Found double quark event \n");
-                        }
-                        continue;
-                    }
-                    if(up[i].id == -1 || (up[i].id == -2 || (up[i].id == -3|| (up[i].id == -4 || up[i].id == -5)))) {
-                        if (iqb == -1) iqb = i; 
-                        else{ 
-                            iqb_extra = i;
-                            //printf("Found double quark event \n");
-                        }
-                        continue;
-                    }
-                    if(ig1 == -1) {ig1 = i;} else {ig2 = i;}
-                    continue;
+                    if(inc1 == -1) inc1 = i;
+                    else if(inc2 == -1) inc2 = i;
                 }
-                if(up[i].id == 13) {itq = i; continue;}
-                if(up[i].id == -13) {itb = i; continue;}
+                if(up[i].id == 13) {imu_m = i; continue;}
+                if(up[i].id == -13) {imu_p = i; continue;}
 
             }
-
-
-
-            if(((iqk == -1) && (ig1 == -1 && iqb_extra == -1)) ||
-                    ((iqb == -1) && (ig1 == -1 && iqk_extra ==-1)) ||
-                    ((iqk == -1 && iqb == -1) && (ig2 == -1)) )   {
+            int inc1_id = up[inc1].id;
+            int inc2_id = up[inc2].id;
+            float quark_dir = 0.;
+            if((abs(inc1_id) <= 6 && abs(inc2) <= 6) && (inc1_id * inc2_id < 0)){ //a quark and anti quark
+                //qq-bar
+                if(inc1_id>0) quark_dir = up[inc1].p[2];
+                else quark_dir = up[inc2].p[2];
+                nQQbar++;
+            }
+            else if(((abs(inc1_id) <= 6) && (inc2_id == 21)) ||
+                    ((abs(inc2_id) <= 6) && (inc1_id == 21))){ //qglu
+                if(inc1_id == 21){
+                    if(inc2_id <0) quark_dir = up[inc1].p[2];//qbar-glu, want glu dir
+                    else up[inc2].p[2];//q-glu ,want q dir
+                }
+                else if(inc2_id == 21) {
+                    if(inc1_id <0) quark_dir = up[inc2].p[2];//qbar-glu, want glu dir
+                    else up[inc1].p[2];//q-glu ,want q dir
+                }
+                nQGlu++;
+            }
+            else if((abs(inc1_id) <= 6) && (abs(inc2_id) <= 6) && (inc1_id * inc2_id >0)){ //2 quarks
+                nQQ++;
+                continue;
+            }
+            else if((inc1_id == 21) && (inc2_id == 21)){ //gluglu
+                nGluGlu++;
+                continue;
+            }
+            else {
                 printf("unable to determine initial state for event %i \n", event_num);
-                printf("indices are %i %i %i %i \n", iqk, iqb, ig1, ig2);
+                printf("indices are %i %i \n", inc1, inc2);
                 printf("printing particles \n");
                 for(i=0; i<nup; i++){
                     printf("%d %d %d %d \n", up[i].id, up[i].status, up[i].mother[0], up[i].mother[1]);
@@ -188,78 +191,42 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
                 nFail++;
                 continue;
             }
-            if(itq == -1 || itb == -1){
+            if(imu_m == -1 || imu_p == -1){
                 printf("no mus \n");
                 nFail++;
                 continue;
             }
 
-            if(abs(up[iqk].id) % 2 == 0) qtype = 0; //u-type quark
             else qtype = 1;
-            //          if(njet < 1) continue;
-            //          if(njet > 0) continue;
-            //          if(njet < 1) continue;
 
-            // Next build 4-vectors for all 6 particles
-
-            TLorentzVector tq(up[itq].p[0], up[itq].p[1], up[itq].p[2], up[itq].p[3]);
-            TLorentzVector tb(up[itb].p[0], up[itb].p[1], up[itb].p[2], up[itb].p[3]);
-            TLorentzVector p1(0., 0., Pbeam, Ebeam);
-            TLorentzVector p2(0., 0., -Pbeam, Ebeam);
-            if(iqk > -1 && up[iqk].p[2] < 0.) {
-                TLorentzVector p = p1;
-                p1 = p2;
-                p2 = p;
-            }
-            else {
-                if(iqb > -1 && up[iqb].p[2] > 0.) {
-                    TLorentzVector p = p1;
-                    p1 = p2;
-                    p2 = p;
-                }
-            }
+            TLorentzVector mu_m(up[imu_m].p[0], up[imu_m].p[1], up[imu_m].p[2], up[imu_m].p[3]);
+            TLorentzVector mu_p(up[imu_p].p[0], up[imu_p].p[1], up[imu_p].p[2], up[imu_p].p[3]);
 
             // Create vectors for the parents
-            TLorentzVector cm = tq + tb;
-            Double_t pt = cm.Pt();
+            TLorentzVector cm = mu_m + mu_p;
             nTotal++;
 
             //printf("M is %.0f \n", cm.M());
             if(cm.M() >= m_low && cm.M() <= m_high){
                 ++nevent;
-                // Invariant mass of pair
-                double mass = cm.M();
-
-                double xF = 2.*cm.Pz()/13000.;
-
-                // Boost everything into the t-tbar rest frame
-
-                TVector3 beta = -cm.BoostVector();
-                tq.Boost(beta);
-                tb.Boost(beta);
-                p1.Boost(beta);
-                p2.Boost(beta);
-
-                // Now calculate the direction of the new z azis
-
-                TVector3 p1u = p1.Vect();
-                p1u.SetMag(1.0);
-                TVector3 p2u = p2.Vect();
-                p2u.SetMag(1.0);
-                TVector3 pzu = p1u - p2u;
-                pzu.SetMag(1.0);
-                tq.RotateUz(pzu);
-                double costcs = tq.CosTheta();
 
 
+                double cost = get_cost(mu_p, mu_m, false);
+
+                double cost_st;
+                if(quark_dir < 0){
+                    cost_st = -cost;
+                }
+                else cost_st = cost;
+                //h_cost->Fill(cost_st);
 
 
-                if(costcs > 0.){ 
+                if(cost_st > 0.){ 
                     nF+= 1.;} 
                 else {
                     nB += 1.;}
 
-                if(up[iqk].id % 2 == 0 || up[iqb].id % 2 == 0) //even id means u-type (unfilled will be -1)
+                if(inc1_id % 2 == 0 || inc2_id % 2 == 0) //u-type quark
                     n_utype++;
                 else n_dtype++;
 
@@ -267,13 +234,14 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
             }
         }
     }
+    //h_cost->Draw();
 
     /* close input file */
 
     fclose(ifp);
 
     Double_t AFB = ((nF - nB))/((nF+nB));
-    Double_t dAFB = (1.-AFB*AFB)/sqrt((nF+nB));
+    Double_t dAFB = sqrt(4.*nF*nB/pow(nF+nB, 3));
     Double_t u_frac = n_utype/(n_utype + n_dtype);
 
     if(correct_AFB_mbin > -1)
@@ -288,6 +256,7 @@ Double_t get_AFB(char infile[120], double m_low, double m_high, int correct_AFB_
                 AFB, dAFB, u_frac, nFail);
 
         printf("Selected  %d out of %i events\n", nevent, nTotal);
+        printf("nQQbar %i nQGlu %i nQQ %i nGluGlu %i \n", nQQbar, nQGlu, nQQ, nGluGlu);
         printf("\n");
     }
 

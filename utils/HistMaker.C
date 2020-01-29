@@ -582,6 +582,7 @@ void make_pileup_hist(TTree *t1, TH1F *h_before, TH1F *h_after, bool is_data=fal
             if(pass){
                 nEvents++;
                     Double_t evt_weight = tm.getEvtWeight();
+                    if(tm.pu_SF < 1e-4) tm.pu_SF = 1.0;
                     h_before->Fill(tm.pu_NtrueInt, evt_weight/tm.pu_SF);
                     h_after->Fill(tm.pu_NtrueInt, evt_weight);
 

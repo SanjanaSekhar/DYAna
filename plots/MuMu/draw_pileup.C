@@ -32,7 +32,7 @@ const int type = FLAG_MUONS;
 
 void draw_pileup(){
     setTDRStyle();
-    int year = 2018;
+    int year = 2017;
 
     init(year);
     init_indv_bkgs(year);
@@ -100,6 +100,9 @@ void draw_pileup(){
     Double_t pu_before_tot = ttbar_pu_before->Integral() + wt_pu_before->Integral() + diboson_pu_before->Integral() + 
                             mc_nosig_pu_before->Integral() + mc_pu_before->Integral();
 
+    printf("pu_before_tot: %.3e \n", pu_before_tot);
+    printf("%.2e %.2e %.2e %.2e %.2e \n", ttbar_pu_before->Integral(), wt_pu_before->Integral(), diboson_pu_before->Integral(), 
+            mc_nosig_pu_before->Integral(), mc_pu_before->Integral());
     ttbar_pu_before->Scale(1./pu_before_tot);
     wt_pu_before->Scale(1./pu_before_tot);
     diboson_pu_before->Scale(1./pu_before_tot);
@@ -108,6 +111,7 @@ void draw_pileup(){
 
     Double_t pu_after_tot = ttbar_pu_after->Integral() + wt_pu_after->Integral() + diboson_pu_after->Integral() + 
                             mc_nosig_pu_after->Integral() + mc_pu_after->Integral();
+    printf("pu_after_tot: %.3e \n", pu_after_tot);
 
     ttbar_pu_after->Scale(1./pu_after_tot);
     wt_pu_after->Scale(1./pu_after_tot);
@@ -115,7 +119,7 @@ void draw_pileup(){
     mc_nosig_pu_after->Scale(1./pu_after_tot);
     mc_pu_after->Scale(1./pu_after_tot);
 
-    printf("%.3e %.3e %.3e \n", mc_nosig_pu_after, mc_pu_after, ttbar_pu_after);
+    printf("%.3e %.3e %.3e \n", mc_nosig_pu_after->Integral(), mc_pu_after->Integral(), ttbar_pu_after->Integral());
 
     THStack *pu_before_stack = new THStack("pu_before_stack", "DiMuon Pileup; # Primary Vertices");
     pu_before_stack->Add(ttbar_pu_before);

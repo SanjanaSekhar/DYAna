@@ -31,6 +31,7 @@ void unzero_bins(TH1 *h){
 
 TCanvas* make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, char h2_label[80], char ratio_label[80], 
         char axis_label[80], bool logy=false, bool write_out = true){
+    //ratio is done as h1/h2
 
     unzero_bins(h1);
     unzero_bins(h2);
