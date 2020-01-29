@@ -133,6 +133,7 @@ bool NTupleReader::getNextFile(){
                 return getNextFile();
             }
 
+            /*
             if(!is_data && do_SFs){
                 fin->cd("EventCounter");
                 TDirectory *subdir = gDirectory;
@@ -144,7 +145,9 @@ bool NTupleReader::getNextFile(){
                 pu_sys.ratio_pileup_up->Divide(pu_sys.data_pileup_up, mc_pileup);
                 pu_sys.ratio_pileup_down->Divide(pu_sys.data_pileup_down, mc_pileup);
 
+
             }
+            */
 
 
             fin->cd("B2GTTreeMaker");
@@ -169,9 +172,17 @@ bool NTupleReader::getNextFile(){
             //}
 
 
-            tin->SetBranchAddress("met_MuCleanOnly_size", &met_size);
-            tin->SetBranchAddress("met_MuCleanOnly_Pt", &met_pt);
-            tin->SetBranchAddress("met_MuCleanOnly_Phi", &met_phi);
+            if(year == 2017){
+                tin->SetBranchAddress("met_Corr_size", &met_size);
+                tin->SetBranchAddress("met_Corr_Pt", &met_pt);
+                tin->SetBranchAddress("met_Corr_Phi", &met_phi);
+            }
+            else{
+                tin->SetBranchAddress("met_MuCleanOnly_size", &met_size);
+                tin->SetBranchAddress("met_MuCleanOnly_Pt", &met_pt);
+                tin->SetBranchAddress("met_MuCleanOnly_Phi", &met_phi);
+            }
+
 
             if(do_muons || do_emu){
 
@@ -256,6 +267,17 @@ bool NTupleReader::getNextFile(){
 
                 tin->SetBranchAddress("gen_Dau0ID", &gen_Dau0ID);
                 tin->SetBranchAddress("gen_Dau1ID", &gen_Dau1ID);
+
+                if(year == 2017){
+                    tin->SetBranchAddress("metCorrsyst_Pt", &met_syst_pt);
+                    tin->SetBranchAddress("metCorrsyst_Phi", &met_syst_phi);
+                }
+                else{
+                    tin->SetBranchAddress("metsyst_Pt", &met_syst_pt);
+                    tin->SetBranchAddress("metsyst_Phi", &met_syst_phi);
+                }
+
+
             }
 
 
@@ -285,6 +307,7 @@ void NTupleReader::setupOutputTree(char treeName[100]){
     outTrees[idx]->Branch("jet2_eta", &jet2_eta, "jet2_eta/D");
     outTrees[idx]->Branch("nJets", &nJets, "nJets/I");
     outTrees[idx]->Branch("met_pt", &met_pt, "met_Pt/F");
+    outTrees[idx]->Branch("met_phi", &met_phi, "met_Phi/F");
 
 
     outTrees[idx]->Branch("has_nobjets", &has_nobjets, "has_nobjets/I");
@@ -354,6 +377,10 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("pu_SF", &pu_SF);
         outTrees[idx]->Branch("pu_SF_up", &pu_SF_up);
         outTrees[idx]->Branch("pu_SF_down", &pu_SF_down);
+        outTrees[idx]->Branch("met_jec_up", &met_jec_up);
+        outTrees[idx]->Branch("met_jec_down", &met_jec_down);
+        outTrees[idx]->Branch("met_jer_up", &met_jer_up);
+        outTrees[idx]->Branch("met_jer_down", &met_jer_down);
         outTrees[idx]->Branch("gen_weight", &gen_weight, "gen_weight/D");
         outTrees[idx]->Branch("gen_m", &gen_m, "gen_m/D");
         outTrees[idx]->Branch("mu_R_up", &mu_R_up);
@@ -666,6 +693,8 @@ void NTupleReader::fillEventSFs(){
     pu_SF_up = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_up);
     pu_SF_down = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_down);
 
+    //printf("%i %.3f %.3f %.3f \n", pu_NtrueInt, pu_SF, pu_SF_up, pu_SF_down);
+
 
     jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, 0);
     jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, 0);
@@ -688,6 +717,10 @@ void NTupleReader::fillEventSFs(){
     else{
         mu_R_up = mu_R_down = mu_F_up = mu_F_down = mu_RF_up = mu_RF_down = 1.0;
     }
+    met_jer_up = met_syst_pt[0];
+    met_jer_down = met_syst_pt[1];
+    met_jec_up = met_syst_pt[2];
+    met_jec_down = met_syst_pt[3];
 
     if(alphas_size >= 2){
         alpha_up = alpha_weights[0];
