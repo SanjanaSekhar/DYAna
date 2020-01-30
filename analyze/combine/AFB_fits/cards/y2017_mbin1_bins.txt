@@ -1,0 +1,39 @@
+
+R_ee17_os_fakes param 0.6368 0.06900 
+ee17_qcd_param_bin1 param 303.1668 25.1578 
+ee17_qcd_param_bin2 param 162.2752 28.6309 
+ee17_qcd_param_bin3 param 68.6351 20.5905 
+ee17_qcd_param_bin4 param 85.0132 26.7096 
+ee17_qcd_param_bin5 param 36.1248 8.7570 
+ee17_qcd_param_bin6 param 58.0233 15.2582 
+ee17_qcd_param_bin7 param 59.8534 14.9874 
+ee17_qcd_param_bin8 param 43.0668 14.5106 
+ee17_qcd_param_bin9 param 9.1841 2.5650 
+ee17_qcd_param_bin10 param 11.8139 3.5442 
+ee17_qcd_param_bin11 param 15.9177 4.7753 
+ee17_qcd_param_bin12 param 24.0108 7.8816 
+ee17_qcd_param_bin13 param 0.4820 0.0482 
+ee17_qcd_param_bin14 param 5.9862 1.7959 
+ee17_qcd_param_bin15 param 8.1290 2.4387 
+ee17_qcd_param_bin16 param 31.2495 8.7064 
+
+mumu17_qcd_param_bin1 param 129.4838 6.6733 
+mumu17_qcd_param_bin2 param 42.0114 7.8010 
+mumu17_qcd_param_bin3 param 36.4360 8.0792 
+mumu17_qcd_param_bin4 param 29.1737 8.0056 
+mumu17_qcd_param_bin5 param 8.0591 1.6769 
+mumu17_qcd_param_bin6 param 6.0231 1.8069 
+mumu17_qcd_param_bin7 param 10.8754 3.5576 
+mumu17_qcd_param_bin8 param 9.5159 2.8548 
+mumu17_qcd_param_bin9 param 1.0901 0.3270 
+mumu17_qcd_param_bin10 param 2.9573 0.8872 
+mumu17_qcd_param_bin11 param 3.5095 1.0529 
+mumu17_qcd_param_bin12 param 3.0654 0.9196 
+mumu17_qcd_param_bin13 param 0.0886 0.0089 
+mumu17_qcd_param_bin14 param 0.2281 0.0228 
+mumu17_qcd_param_bin15 param 1.3754 0.4126 
+mumu17_qcd_param_bin16 param 4.5141 1.6186 
+
+ ee17_fake_shape group =  ee17_qcd_param_bin1 ee17_qcd_param_bin2 ee17_qcd_param_bin3 ee17_qcd_param_bin4 ee17_qcd_param_bin5 ee17_qcd_param_bin6 ee17_qcd_param_bin7 ee17_qcd_param_bin8 ee17_qcd_param_bin9 ee17_qcd_param_bin10 ee17_qcd_param_bin11 ee17_qcd_param_bin12 ee17_qcd_param_bin13 ee17_qcd_param_bin14 ee17_qcd_param_bin15 ee17_qcd_param_bin16
+ mumu17_fake_shape group =  mumu17_qcd_param_bin1 mumu17_qcd_param_bin2 mumu17_qcd_param_bin3 mumu17_qcd_param_bin4 mumu17_qcd_param_bin5 mumu17_qcd_param_bin6 mumu17_qcd_param_bin7 mumu17_qcd_param_bin8 mumu17_qcd_param_bin9 mumu17_qcd_param_bin10 mumu17_qcd_param_bin11 mumu17_qcd_param_bin12 mumu17_qcd_param_bin13 mumu17_qcd_param_bin14 mumu17_qcd_param_bin15 mumu17_qcd_param_bin16
+ pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60
