@@ -104,6 +104,7 @@ class TempMaker{
                  mu_RF_up, mu_RF_down, pdf_up, pdf_down;
         Double_t mu_p_SF, mu_m_SF, mu_p_SF_up, mu_m_SF_up, mu_p_SF_down, mu_m_SF_down, alphaS_up, alphaS_down;
         Float_t cost_pt, met_pt, el1_charge, el2_charge, mu1_charge, mu2_charge;
+        Float_t dummy;
         Double_t jet1_btag_SF = 1.0;
         Double_t jet2_btag_SF = 1.0;
 

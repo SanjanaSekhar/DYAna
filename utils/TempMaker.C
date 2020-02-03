@@ -194,7 +194,7 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("alphaS") != string::npos && sys_shift > 0) systematic = &alphaS_up;
         else if(sys_label.find("alphaDen") != string::npos) systematic = &one;
 
-        else if(sys_label.find("MET" != string::npos)){
+        else if(sys_label.find("MET") != string::npos){
             t_in->SetBranchAddress("met_pt", &dummy);
             if(sys_label.find("METJEC") != string::npos && sys_shift > 0) t_in->SetBranchAddress("met_jec_up", &met_pt);
             else if(sys_label.find("METJEC") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_jec_down", &met_pt);
