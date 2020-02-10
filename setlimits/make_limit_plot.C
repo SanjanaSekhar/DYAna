@@ -3,8 +3,9 @@
 #include "find_kl_limit.C"
 
 Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test){
+    //printf("kl_start %.3f \n", kl_start);
     Double_t kl_min = 0.05;
-    Double_t kl_max = 2.2;
+    Double_t kl_max = 1.8;
     Double_t kl_step = 0.05;
     Double_t alpha = 0.05;
     Double_t pval = 0.;
@@ -14,11 +15,15 @@ Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test)
     for(kl = kl_start; kl >= kl_min && kl <= kl_max; kl-=kl_step){
         //printf("%.2f kl \n", kl);
         pval = test_Zp(f1, M_Zp, kl, AFB_test);
-        if (pval > alpha && kl < kl_start) return kl;
+        //printf("kl, kl_start, pval = %.2f %.2f %.3f \n", kl, kl_start, pval);
+        if (pval > alpha && kl < kl_start){
+            //printf("return \n");
+            return kl;
+        }
         else if(pval  > alpha){
             //printf("Started too low, changing kl start from %.2f to %.2f\n", kl_start, kl_start +2*kl_step);
             kl_start = kl_start + 2*kl_step;
-            kl = kl_start;
+            kl = kl_start + kl_step;
             //printf("%i %.2f \n", m, kl);
         }
     }
@@ -72,13 +77,13 @@ TGraph *makeAFillGraph(int len, Double_t *x, Double_t *y1, Double_t *y2, int lin
 void make_limit_plot(){
     int n_m_bins = 100;
     int n_trials = 200;
-    int m_start = 1000;
-    //int m_max = 1500;
-    int m_max = 3500;
-    int m_step = 40;
+    int m_start = 1500;
+    int m_max = 4000;
+    int m_step = 100;
     int m;
     int i=0;
-    Double_t kl_start = 2.2;
+    bool inc_meas_limit = true;
+    Double_t kl_start = 1.;
     Double_t kl_min = 0.05;
     Double_t kl_step = 0.05;
     FILE *f1 = fopen("AFBs.txt", "r");
@@ -88,27 +93,28 @@ void make_limit_plot(){
              kl_expected_lim_upup[n_m_bins], kl_expected_lim_down[n_m_bins],    
              kl_expected_lim_downdown[n_m_bins], kl_lim_trials[n_m_bins][n_trials],
              kl_limit_stds[n_m_bins];
+    Double_t meas_lim =1.0;
 
     for(m = m_start; m <=m_max; m+=m_step){
         printf("trying m=%i \n", m);
-        if(m > 2490 || m<1990) m_step = 50;
-        if(m > 2990) m_step = 100;
-        else m_step = 40;
-        Double_t meas_lim = get_kl_limit(f1, m, kl_start, AFB_measured);
-        Double_t exp_lim  = get_kl_limit(f1, m, kl_start, AFB_SM);
-        if(meas_lim <= 0.09 || exp_lim <= 0.09 || meas_lim >=2.2 || exp_lim >= 2.2){
-            printf("bad lim for m=%i exp = %.2f meas = %.2f \n", m, exp_lim, meas_lim); 
-            continue;
+        if(inc_meas_limit){
+            meas_lim = get_kl_limit(f1, m, kl_start, AFB_measured);
+            if(meas_lim <= 0.04 || meas_lim >=2.){
+                printf("bad lim for m=%i meas = %.2f \n", m, meas_lim); 
+                continue;
+            }
+            if(i>0) meas_lim = max(meas_lim, kl_limit[i-1]);
+            kl_limit[i] = meas_lim;
         }
-        if(i>0) meas_lim = max(meas_lim, kl_limit[i-1]);
+        Double_t exp_lim  = get_kl_limit(f1, m, kl_start, AFB_SM);
+        printf("EXP LIM IS %.2f \n", exp_lim);
         if(i>0) exp_lim = max(exp_lim, kl_expected_lim[i-1]);
         masses[i] = m;
-        kl_limit[i] = meas_lim;
         kl_expected_lim[i] = exp_lim;
         //generate random expected limits
-        Double_t AFB_rand[6];
+        Double_t AFB_rand[n_bins];
         for(int j=0; j<n_trials; j++){
-            for(int k=0; k<6; k++){
+            for(int k=0; k<n_bins; k++){
                 AFB_rand[k] = r3->Gaus(AFB_SM[k], AFB_unc[k]);
             }
             kl_lim_trials[i][j] = get_kl_limit(f1, m, kl_expected_lim[i]+2*kl_step, AFB_rand);
@@ -121,14 +127,10 @@ void make_limit_plot(){
         i++;
     }
     setTDRStyle();
-    TGraph *meas = new TGraph(i, masses, kl_limit);    
     TGraph *exp = new TGraph(i, masses, kl_expected_lim);    
     TGraph *one_sig = makeAFillGraph(i, masses, kl_expected_lim_down, kl_expected_lim_up, 0, kGreen+1, 1001);
     TGraph *two_sig = makeAFillGraph(i, masses, kl_expected_lim_downdown, kl_expected_lim_upup, 0, kOrange, 1001);
 
-    meas->SetLineColor(1);
-    meas->SetLineStyle(1);
-    meas->SetLineWidth(4);
 
     exp->SetLineColor(1);
     exp->SetLineStyle(2);
@@ -139,10 +141,11 @@ void make_limit_plot(){
 	legbb->SetBorderSize(0);  
 	legbb->SetTextSize(0.040);
 	legbb->SetTextFont(42);
-	legbb->AddEntry(meas,"Observed","l");
 	legbb->AddEntry(exp,"Expected","l");
 	legbb->AddEntry(one_sig,"#pm 1 std. deviation","f");
 	legbb->AddEntry(two_sig,"#pm 2 std. deviation","f");
+
+
 
     TCanvas *c1 = new TCanvas("c1", "", 1200, 800);
     two_sig->SetTitle("Z' Limits");
@@ -154,13 +157,22 @@ void make_limit_plot(){
     two_sig->Draw("Af");
     one_sig->Draw("fsames");
     exp->Draw("Csames");
-    meas->Draw("Csames");
+
+    if(inc_meas_limit){
+        TGraph *meas = new TGraph(i, masses, kl_limit);    
+        meas->SetLineColor(1);
+        meas->SetLineStyle(1);
+        meas->SetLineWidth(4);
+        legbb->AddEntry(meas,"Observed","l");
+        meas->Draw("Csames");
+    }
+
+
     legbb->Draw();
     
-    writeExtraText = true;
+    writeExtraText = false;
     extraText = "Preliminary";
-    //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
-    int iPeriod = 4; 
+    int iPeriod = -1; 
     CMS_lumi( c1, iPeriod, 0 );
 
 }

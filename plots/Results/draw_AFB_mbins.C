@@ -30,7 +30,7 @@ void draw_AFB_mbins(){
 
     Double_t ratio[n_m_bins], ratio_errs[n_m_bins];
     for(int i=0; i<n_m_bins; i++){
-        ratio[i] = y_powheg[i]/y_powheg[i];
+        ratio[i] = y_comb[i]/y_powheg[i];
         ratio_errs[i] = y_comb_errs[i]/y_powheg[i];
         printf("%f ", ratio_errs[i]);
     }
@@ -47,9 +47,9 @@ void draw_AFB_mbins(){
 
     //TGraphErrors *g_sm = new TGraphErrors(n_m_bins, m, y_powheg, x_err, y_powheg_errs);
     TGraph *g_sm = new TGraphErrors(n_m_bins, m, y_powheg);
-    TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_powheg, m_err, y_comb_errs);
-    TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_powheg, m_err, y_mumu_errs);
-    TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_powheg, m_err, y_elel_errs);
+    TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_comb, m_err, y_comb_errs);
+    TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_mumu, m_err, y_mumu_errs);
+    TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
     g_sm->SetMarkerColor(kBlue);
@@ -132,8 +132,9 @@ void draw_AFB_mbins(){
     g_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetXaxis()->SetLabelSize(20);
     int iPeriod = -1; 
-    writeExtraText = false;
-    CMS_lumi(pad1, iPeriod, 33 );
+    writeExtraText = true;
+    draw_CMS = true;
+    CMS_lumi(pad1, iPeriod, 11 );
     c_m->Update();
     
 }

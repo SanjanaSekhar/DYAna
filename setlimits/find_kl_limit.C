@@ -2,10 +2,6 @@
 //#include "madgraph_lhe_reader.C"
 #include "read_AFBs_from_file.C"
 
-//Double_t AFB_SM[6] =  {0.620,  0.615, 0.603, 0.590, 0.586, 0.588};
-Double_t AFB_SM[6] = {0.60, 0.612, 0.603, 0.602, 0.60, 0.60};
-Double_t AFB_unc[6] = {0.014, 0.020,0.020,0.027,0.044, 0.059};
-Double_t AFB_measured[6] = {0.609, 0.578, 0.600, 0.574, 0.579, 0.532};
 
 Double_t test_stat(Double_t *x, Double_t *params){
     //6 x values are asymmetries in the 6 different mass bins
@@ -17,7 +13,7 @@ Double_t test_stat(Double_t *x, Double_t *params){
 
     //
     Double_t log_L = 0; 
-    for(int i=0; i<6; i++){
+    for(int i=0; i<n_bins; i++){
         //Null hypothesis is Zprime, Alternate is SM
         Double_t chi_sm = pow((x[i] - AFB_SM[i])/AFB_unc[i],2);
         Double_t chi_zp = pow((x[i] - params[i])/AFB_unc[i],2);
@@ -44,13 +40,12 @@ Double_t test_Zp(FILE *f1, int M_Zp, Double_t cpl, Double_t *AFB_test){
     //return pvalue for a given Zp mass
 
 
-    Double_t AFB_Zp[6];
+    Double_t AFB_Zp[n_bins];
 
     read_AFBs(f1, AFB_Zp, M_Zp, cpl);
     /*
-    printf("AFBs are: ");
-    for(int i = 0; i<6; i++){
-        //AFB_Zp[i] =  get_AFB(M_Zp, cpl, i);
+    printf("AFBs(%i, %.2f) are: ", M_Zp, cpl);
+    for(int i = 0; i<n_bins; i++){
         printf("%.2f ", AFB_Zp[i]);
     }
     printf("\n");
@@ -60,11 +55,11 @@ Double_t test_Zp(FILE *f1, int M_Zp, Double_t cpl, Double_t *AFB_test){
 
     TH1D * h_dist = new TH1D("h_dist1", "Distribution of test statistic", 400,-50,50);
     TRandom3 *r3 = new TRandom3();
-    Double_t x[6]; //randomly generated x vals
+    Double_t x[n_bins]; //randomly generated x vals
     //Find distribution of test statistic under Null hypothesis (ZPrime is
     //there)
     for(int i=0; i<n_trials; i++){
-        for(int j=0; j<6; j++){
+        for(int j=0; j<n_bins; j++){
             x[j] = r3->Gaus(AFB_Zp[j], AFB_unc[j]);
         }
         Double_t test_val = test_stat(x, AFB_Zp);
@@ -89,7 +84,9 @@ Double_t test_Zp(FILE *f1, int M_Zp, Double_t cpl, Double_t *AFB_test){
 }
 
 
+/*
 void find_kl_limit(){
+    
     Double_t *AFB_test = AFB_measured;
     int m_start = 1000;
     int m_max = 3300;
@@ -111,14 +108,14 @@ void find_kl_limit(){
     m=2300.;
     kl = 1.0;
 
-    /*
-    pval = test_Zp(f1, m, kl, AFB_test);
-    Double_t AFB_Zp[6];
-    read_AFBs(f1, AFB_Zp, m, kl);
-    Double_t t_obs = test_stat(AFB_test, AFB_Zp);
-    Double_t pval2 = ROOT::Math::chisquared_cdf(t_obs, 6);
-    printf("test stat %.2f numeric %.3f analytic %.3f \n", t_obs, pval, pval2);
-    */
+    
+    //pval = test_Zp(f1, m, kl, AFB_test);
+    //Double_t AFB_Zp[6];
+    //read_AFBs(f1, AFB_Zp, m, kl);
+    //Double_t t_obs = test_stat(AFB_test, AFB_Zp);
+    //Double_t pval2 = ROOT::Math::chisquared_cdf(t_obs, 6);
+    //printf("test stat %.2f numeric %.3f analytic %.3f \n", t_obs, pval, pval2);
+    
 
     for(m = m_start; m <=m_max; m+=m_step){
         for(kl = kl_start; kl >= kl_min && kl <= kl_max; kl-=kl_step){
@@ -128,7 +125,7 @@ void find_kl_limit(){
             pval = test_Zp(f1, m, kl, AFB_test);
             if (pval > alpha && kl < kl_start) break;
             else if(pval  > alpha){
-                printf("Started too low, changing kl start from %.2f to %.2f\n", kl_start, kl_start +2*kl_step);
+                //printf("Started too low, changing kl start from %.2f to %.2f\n", kl_start, kl_start +2*kl_step);
                 kl_start = kl_start + 2*kl_step;
                 kl = kl_start;
                 printf("%i %.2f \n", m, kl);
@@ -150,6 +147,7 @@ void find_kl_limit(){
 
     return;
 }
+*/
    
 
 
