@@ -1,9 +1,9 @@
 #include "make_templates.C"
-TTree *t_elel_mc_raw, *t_elel_nosig_raw, *t_elel_back_raw;
-TTree *t_mumu_mc_raw, *t_mumu_nosig_raw, *t_mumu_back_raw;
+
 
 
 void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0){
+    //type0 is pdfs, type1 other sys
 
     //const TString pdf_fout_name("combine/templates/sep19_2016_pdf.root");
     const TString pdf_fout_name("output_files/sys_test.root");
@@ -72,13 +72,16 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
     int i_start=0;
     int i_max = n_m_bins;
 
+    /*
     t_elel_mc_raw = t_elel_mc->CloneTree();
     t_mumu_mc_raw = t_mumu_mc->CloneTree();
 
     t_elel_back_raw = t_elel_back->CloneTree();
     t_mumu_back_raw = t_mumu_back->CloneTree();
+    */
 
 
+    printf("loop start \n");
     for(int i=i_start; i<i_max; i++){
 
         pdf_fout->cd();

@@ -7,7 +7,7 @@ ls -la
 pwd
 cd Analysis/DYAna/analyze
 mkdir output_files
-echo '.x MuMu/MuMu_reco_mc.C('$2','$3', "EOS_files/2018/DY_files.txt", 2018);' > cmd.txt
+echo '.x ElEl/ElEl_reco_mc.C('$2','$3', "EOS_files/2016/DY_files.txt", 2016);' > cmd.txt
 #echo '.x FakeRate/SingleMuon_data_measure_fake_rate.C('$2','$3', "EOS_files/2016/SingleMuon_files.txt", 2016);' > cmd.txt
 #echo '.x EMu/EMu_reco_background.C('$2','$3', "EOS_files/2016/DY_files.txt", 2016);' > cmd.txt
 #echo '.x MuMu/Add_Pileup.C('$2','$3', "EOS_files/2018/DY_files_test.txt", 2018);' > cmd.txt
