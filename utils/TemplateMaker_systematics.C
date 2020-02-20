@@ -200,6 +200,41 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
     return 0;
 }
 
+int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy, 
+        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
+        const string &sys_label = "" ){
+
+    TH2F h_sym = TH2F("h_sym", "Symmetric template of mc",
+            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+    h_sym.SetDirectory(0);
+    TH2F h_alpha = TH2F("h_alpha", "Gauge boson polarization template of mc",
+            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+    h_alpha.SetDirectory(0);
+    TH2F h_asym = TH2F("h_asym", "Asymmetric template of mc",
+            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+    h_asym.SetDirectory(0);
+
+    gen_mc_template(t1, alpha, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1, turn_on_RC, sys_label);
+
+
+    double norm = 3./4./(2.+alpha);
+
+    auto h_pl = h_sym + h_asym;
+    auto h_mn = h_sym - h_asym;
+    h_pl.Scale(0.5);
+    h_mn.Scale(0.5);
+
+    h_alpha.Scale(norm * alpha);
+    
+
+    h_dy->Add(&h_pl, &h_mn, (norm + afb), (norm - afb));
+    h_dy->Add(&h_alpha);
+
+    return 1;
+}
+
+
+
 
 
 

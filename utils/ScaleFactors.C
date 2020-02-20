@@ -344,9 +344,9 @@ Double_t get_el_HLT_SF(Double_t el1_pt, Double_t el1_eta, Double_t el2_pt, Doubl
 void setup_pu_SFs(pileup_SFs *pu_SF, int year){
     TFile *f7;
 
-    if(year == 2016) f7 = TFile::Open("SFs/2016/Data16PileupHistogram_69200.root");
-    else if(year == 2017) f7 = TFile::Open("SFs/2017/Data17PileupHistogram_69200.root");
-    else if(year == 2018) f7 = TFile::Open("SFs/2018/Data18PileupHistogram_69200.root");
+    if(year == 2016) f7 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_69200.root");
+    else if(year == 2017) f7 = TFile::Open("../analyze/SFs/2017/Data17PileupHistogram_69200.root");
+    else if(year == 2018) f7 = TFile::Open("../analyze/SFs/2018/Data18PileupHistogram_69200.root");
 
     TH1D *data_pileup = (TH1D *) f7->Get("pileup")->Clone();
     data_pileup->Scale(1./data_pileup->Integral());
@@ -369,7 +369,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
 
 
     if(year == 2016){
-        f1 = TFile::Open("SFs/2016/Mu_BCDEF_HLT.root");
+        f1 = TFile::Open("../analyze/SFs/2016/Mu_BCDEF_HLT.root");
         f1->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
         era1->HLT_SF = (TH2D *) gDirectory->Get("abseta_pt_ratio")->Clone();
         era1->HLT_SF->SetDirectory(0);
@@ -378,7 +378,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         era1->HLT_MC_EFF->SetDirectory(0);
         f1->Close();
 
-        f4 = TFile::Open("SFs/2016/Mu_GH_HLT.root");
+        f4 = TFile::Open("../analyze/SFs/2016/Mu_GH_HLT.root");
         f4->cd("IsoMu24_OR_IsoTkMu24_PtEtaBins");
         era2->HLT_SF = (TH2D *) gDirectory->Get("abseta_pt_ratio")->Clone();
         era2->HLT_SF ->SetDirectory(0);
@@ -387,26 +387,26 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         era2->HLT_MC_EFF ->SetDirectory(0);
         f4->Close();
 
-        f2 = TFile::Open("SFs/2016/Mu_BCDEF_ID.root");
+        f2 = TFile::Open("../analyze/SFs/2016/Mu_BCDEF_ID.root");
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_eta_pt")->Clone();
         ID_1->SetDirectory(0);
         era1->ID_SF = ID_1;
         f2->Close();
 
-        f3 = TFile::Open("SFs/2016/Mu_BCDEF_ISO.root");
+        f3 = TFile::Open("../analyze/SFs/2016/Mu_BCDEF_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")->Clone();
         ISO_1->SetDirectory(0);
         era1->ISO_SF = ISO_1;
         f3->Close();
 
 
-        f5 = TFile::Open("SFs/2016/Mu_GH_ID.root");
+        f5 = TFile::Open("../analyze/SFs/2016/Mu_GH_ID.root");
         TH2D *ID_2 = (TH2D *) f5->Get("NUM_TightID_DEN_genTracks_eta_pt")->Clone();
         ID_2->SetDirectory(0);
         era2->ID_SF = ID_2;
         f5->Close();
 
-        f6 = TFile::Open("SFs/2016/Mu_GH_ISO.root");
+        f6 = TFile::Open("../analyze/SFs/2016/Mu_GH_ISO.root");
         TH2D *ISO_2 = (TH2D *) f6->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")->Clone();
         ISO_2->SetDirectory(0);
         era2->ISO_SF = ISO_2;
@@ -415,7 +415,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
     }
     else if(year == 2017){
         printf("hlt\n");
-        f1 = TFile::Open("SFs/2017/Mu_HLT.root");
+        f1 = TFile::Open("../analyze/SFs/2017/Mu_HLT.root");
         f1->cd("IsoMu27_PtEtaBins");
         era1->HLT_SF = (TH2D *) gDirectory->Get("abseta_pt_ratio")->Clone();
         era1->HLT_SF->SetDirectory(0);
@@ -427,7 +427,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         era2->HLT_MC_EFF = era1->HLT_MC_EFF;
 
         printf("id\n");
-        f2 = TFile::Open("SFs/2017/Mu_ID.root");
+        f2 = TFile::Open("../analyze/SFs/2017/Mu_ID.root");
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
         era1->ID_SF = ID_1;
@@ -435,7 +435,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         f2->Close();
 
         printf("iso\n");
-        f3 = TFile::Open("SFs/2017/Mu_ISO.root");
+        f3 = TFile::Open("../analyze/SFs/2017/Mu_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")->Clone();
         ISO_1->SetDirectory(0);
         era1->ISO_SF = ISO_1;
@@ -445,7 +445,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
 
     }
     else if(year == 2018){
-        f1 = TFile::Open("SFs/2018/Mu_per1_HLT.root");
+        f1 = TFile::Open("../analyze/SFs/2018/Mu_per1_HLT.root");
         f1->cd("IsoMu24_PtEtaBins");
         era1->HLT_SF = (TH2D *) gDirectory->Get("abseta_pt_ratio")->Clone();
         era1->HLT_SF->SetDirectory(0);
@@ -454,7 +454,7 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         era1->HLT_MC_EFF->SetDirectory(0);
         f1->Close();
 
-        f4 = TFile::Open("SFs/2018/Mu_per2_HLT.root");
+        f4 = TFile::Open("../analyze/SFs/2018/Mu_per2_HLT.root");
         f4->cd("IsoMu24_PtEtaBins");
         era2->HLT_SF = (TH2D *) gDirectory->Get("abseta_pt_ratio")->Clone();
         era2->HLT_SF->SetDirectory(0);
@@ -463,14 +463,14 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         era2->HLT_MC_EFF->SetDirectory(0);
         f4->Close();
 
-        f2 = TFile::Open("SFs/2018/Mu_ID.root");
+        f2 = TFile::Open("../analyze/SFs/2018/Mu_ID.root");
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_TrackerMuons_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
         era1->ID_SF = ID_1;
         era2->ID_SF = ID_1;
         f2->Close();
 
-        f3 = TFile::Open("SFs/2018/Mu_ISO.root");
+        f3 = TFile::Open("../analyze/SFs/2018/Mu_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")->Clone();
         ISO_1->SetDirectory(0);
         era1->ISO_SF = ISO_1;
@@ -488,19 +488,19 @@ void setup_el_SF(el_SFs *sf, int year){
     //Setup electron SF's
     TFile *f_id, *f_reco, *f_hlt, *f_hlt2;
     if(year == 2016){
-        f_hlt = TFile::Open("SFs/2016/El_HLT.root");
-        f_id = TFile::Open("SFs/2016/El_ID.root");
-        f_reco = TFile::Open("SFs/2016/El_RECO.root");
+        f_hlt = TFile::Open("../analyze/SFs/2016/El_HLT.root");
+        f_id = TFile::Open("../analyze/SFs/2016/El_ID.root");
+        f_reco = TFile::Open("../analyze/SFs/2016/El_RECO.root");
     }
     else if(year == 2017){
-        f_hlt = TFile::Open("SFs/2017/El_HLT.root");
-        f_id = TFile::Open("SFs/2017/El_ID.root");
-        f_reco = TFile::Open("SFs/2017/El_RECO.root");
+        f_hlt = TFile::Open("../analyze/SFs/2017/El_HLT.root");
+        f_id = TFile::Open("../analyze/SFs/2017/El_ID.root");
+        f_reco = TFile::Open("../analyze/SFs/2017/El_RECO.root");
     }
     else if(year == 2018){
-        f_hlt = TFile::Open("SFs/2018/El_HLT.root");
-        f_id = TFile::Open("SFs/2018/El_ID.root");
-        f_reco = TFile::Open("SFs/2018/El_RECO.root");
+        f_hlt = TFile::Open("../analyze/SFs/2018/El_HLT.root");
+        f_id = TFile::Open("../analyze/SFs/2018/El_ID.root");
+        f_reco = TFile::Open("../analyze/SFs/2018/El_RECO.root");
     }
 
     TH2D *h1 = (TH2D *) f_id->Get("EGamma_SF2D")->Clone();
@@ -530,13 +530,13 @@ void setup_pileup_systematic(pileup_systematics *pu_sys, int year){
 
     TFile *fin;
     if(year == 2016){
-        fin = TFile::Open("SFs/2016/pu_SF.root");
+        fin = TFile::Open("../analyze/SFs/2016/pu_SF.root");
     }
     if(year == 2017){
-        fin = TFile::Open("SFs/2017/pu_SF.root");
+        fin = TFile::Open("../analyze/SFs/2017/pu_SF.root");
     }
     if(year == 2018){
-        fin = TFile::Open("SFs/2018/pu_SF.root");
+        fin = TFile::Open("../analyze/SFs/2018/pu_SF.root");
     }
 
 
@@ -559,19 +559,19 @@ void setup_pileup_systematic_old(pileup_systematics *pu_sys, int year){
 
     TFile *f7, *f8, *f9;
     if(year == 2016){
-        f7 = TFile::Open("SFs/2016/Data16PileupHistogram_69200.root");
-        f8 = TFile::Open("SFs/2016/Data16PileupHistogram_66017.root");
-        f9 = TFile::Open("SFs/2016/Data16PileupHistogram_72383.root");
+        f7 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_69200.root");
+        f8 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_66017.root");
+        f9 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_72383.root");
     }
     if(year == 2017){
-        f7 = TFile::Open("SFs/2017/Data17PileupHistogram_69200.root");
-        f8 = TFile::Open("SFs/2017/Data17PileupHistogram_66017.root");
-        f9 = TFile::Open("SFs/2017/Data17PileupHistogram_72383.root");
+        f7 = TFile::Open("../analyze/SFs/2017/Data17PileupHistogram_69200.root");
+        f8 = TFile::Open("../analyze/SFs/2017/Data17PileupHistogram_66017.root");
+        f9 = TFile::Open("../analyze/SFs/2017/Data17PileupHistogram_72383.root");
     }
     if(year == 2018){
-        f7 = TFile::Open("SFs/2018/Data18PileupHistogram_69200.root");
-        f8 = TFile::Open("SFs/2018/Data18PileupHistogram_66017.root");
-        f9 = TFile::Open("SFs/2018/Data18PileupHistogram_72383.root");
+        f7 = TFile::Open("../analyze/SFs/2018/Data18PileupHistogram_69200.root");
+        f8 = TFile::Open("../analyze/SFs/2018/Data18PileupHistogram_66017.root");
+        f9 = TFile::Open("../analyze/SFs/2018/Data18PileupHistogram_72383.root");
     }
 
 
