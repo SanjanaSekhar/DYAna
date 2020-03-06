@@ -24,6 +24,8 @@
 const TString ss_fout_name("combine/templates/feb12_ss_qcd_fakerate_param.root");
 TFile * ss_fout;
 
+TH1F *h1_elel_ss_dy, *h1_elel_ss_back,  *h1_elel_ss_data, *h1_elel_ss_qcd;
+TH1F *h1_mumu_ss_dy, *h1_mumu_ss_back,  *h1_mumu_ss_data, *h1_mumu_ss_qcd;
 
 
 
@@ -80,18 +82,16 @@ void make_ss_data_templates(int year){
             n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
     h_mumu_data->SetDirectory(0);
     bool ss = true;
+    bool scramble_data = false;
 
-    gen_data_template(t_elel_ss_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS, do_RC, ss);
-    gen_data_template(t_mumu_ss_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS,  do_RC, ss);
-    auto h1_elel_data = convert2d(h_elel_data);
-    auto h1_mumu_data = convert2d(h_mumu_data);
+
+    gen_data_template(t_elel_ss_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS, scramble_data, ss);
+    gen_data_template(t_mumu_ss_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS,  scramble_data, ss);
+    h1_elel_ss_data = convert2d(h_elel_data);
+    h1_mumu_ss_data = convert2d(h_mumu_data);
 
 
     printf("Integral of data templates were %.2f %.2f \n", h_elel_data->Integral(), h_mumu_data->Integral()); 
-    //h_elel_data->Write();
-    //h_mumu_data->Write();
-    write_roo_hist(h1_elel_data, var_ss);
-    write_roo_hist(h1_mumu_data, var_ss);
     printf("Made ss data templates \n");
 }
 
@@ -150,29 +150,44 @@ void make_ss_mc_templates(int year){
     elel_ts[0] = t_elel_ss_dy;
     gen_combined_background_template(1, elel_ts, h_elel_dy, year, m_low, m_high, FLAG_ELECTRONS,  do_RC, ss);
 
-    auto h1_elel_bk = convert2d(h_elel_bk);
-    auto h1_mumu_bk = convert2d(h_mumu_bk);
+    h1_elel_ss_back = convert2d(h_elel_bk);
+    h1_mumu_ss_back = convert2d(h_mumu_bk);
 
-    auto h1_elel_dy = convert2d(h_elel_dy);
-    auto h1_mumu_dy = convert2d(h_mumu_dy);
-
-
+    h1_elel_ss_dy = convert2d(h_elel_dy);
+    h1_mumu_ss_dy = convert2d(h_mumu_dy);
 
 
+
+    
     printf("Integral of dy templates are %.2f %.2f \n", h_elel_dy->Integral(), h_mumu_dy->Integral()); 
     printf("Integral of bkg templates are %.2f %.2f \n", h_elel_bk->Integral(), h_mumu_bk->Integral()); 
-    write_roo_hist(h1_elel_dy, var_ss);
-    write_roo_hist(h1_mumu_dy, var_ss);
     printf("Made ss dy templates \n");
 
-    write_roo_hist(h1_elel_bk, var_ss);
-    write_roo_hist(h1_mumu_bk, var_ss);
     printf("Made ss bk templates \n");
 
 
 }
 
 
+void write_out_ss_templates(){
+    h1_mumu_ss_data->Write();
+    h1_mumu_ss_back->Write();
+    h1_mumu_ss_dy->Write();
+
+    h1_mumu_ss_data->Reset();
+    h1_mumu_ss_back->Reset();
+    h1_mumu_ss_dy->Reset();
+
+
+    h1_elel_ss_data->Write();
+    h1_elel_ss_back->Write();
+    h1_elel_ss_dy->Write();
+
+    h1_elel_ss_data->Reset();
+    h1_elel_ss_back->Reset();
+    h1_elel_ss_dy->Reset();
+
+}
 
 
 
@@ -208,6 +223,7 @@ void make_ss_templates(int year=2016){
         ss_fout->cd();
         gDirectory->cd(dirname);
         w->Write();
+        write_out_ss_templates();
         fclose(f_log);
     }
     printf("Templates written to %s \n", ss_fout_name.Data());

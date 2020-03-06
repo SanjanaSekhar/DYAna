@@ -142,12 +142,12 @@ if options.tar:
     if options.root_files:
         print "Tarring root files"
         options.tarname = "output_files"
-        include_files = ['2016/MuMu16*dy*', '2016/MuMu16*comb_back*', '2016/MuMu16*photInd*', 
-                         '2016/ElEl16*dy*', '2016/ElEl16*comb_back*', '2016/ElEl16*photInd*', 
-                         '2017/MuMu17*dy*', '2017/MuMu17*comb_back*', '2017/MuMu17*photInd*', 
-                         '2017/ElEl17*dy*', '2017/ElEl17*comb_back*', '2017/ElEl17*photInd*', 
-                         '2018/MuMu18*dy*', '2018/MuMu18*comb_back*', '2018/MuMu18*photInd*', 
-                         '2018/ElEl18*dy*', '2018/ElEl18*comb_back*', '2018/ElEl18*photInd*']
+        include_files = ['2016/MuMu16*dy*', '2016/MuMu16*comb_back*', '2016/MuMu16*phot*', 
+                         '2016/ElEl16*dy*', '2016/ElEl16*comb_back*', '2016/ElEl16*phot*', 
+                         '2017/MuMu17*dy*', '2017/MuMu17*comb_back*', '2017/MuMu17*phot*', 
+                         '2017/ElEl17*dy*', '2017/ElEl17*comb_back*', '2017/ElEl17*phot*', 
+                         '2018/MuMu18*dy*', '2018/MuMu18*comb_back*', '2018/MuMu18*phot*', 
+                         '2018/ElEl18*dy*', '2018/ElEl18*comb_back*', '2018/ElEl18*phot*']
         tar_cmd = "tar -cf %s" % (options.tarname + ".tgz")
         for item in include_files:
             tar_cmd += " " + "output_files/"+item

@@ -1,5 +1,5 @@
 
-R_ee16_os_fakes param 0.4812 0.11310 
+R_ee16_os_fakes param 0.4812 0.11170 
 ee16_qcd_param_bin1 param 239.5446 31.7253 
 ee16_qcd_param_bin2 param 7.1476 0.7148 
 ee16_qcd_param_bin3 param 12.1510 3.6453 
@@ -7,7 +7,7 @@ ee16_qcd_param_bin4 param 4.8873 0.4887
 ee16_qcd_param_bin5 param 68.7147 18.1128 
 ee16_qcd_param_bin6 param 24.7814 7.4344 
 ee16_qcd_param_bin7 param 4.6259 0.4626 
-ee16_qcd_param_bin8 param 4.4432 0.4443 
+ee16_qcd_param_bin8 param 0.0010 0.0001 
 ee16_qcd_param_bin9 param 29.4907 8.8472 
 ee16_qcd_param_bin10 param 18.5349 5.5605 
 ee16_qcd_param_bin11 param 11.5419 3.4626 
@@ -26,12 +26,12 @@ mumu16_qcd_param_bin6 param 0.8508 0.0851
 mumu16_qcd_param_bin7 param 2.9916 0.8975 
 mumu16_qcd_param_bin8 param 3.1998 0.9599 
 mumu16_qcd_param_bin9 param 2.8103 1.0832 
-mumu16_qcd_param_bin10 param 0.6258 0.0626 
+mumu16_qcd_param_bin10 param 0.0020 0.0001 
 mumu16_qcd_param_bin11 param 0.4903 0.0490 
 mumu16_qcd_param_bin12 param 0.6254 0.0625 
-mumu16_qcd_param_bin13 param 0.3338 0.0334 
+mumu16_qcd_param_bin13 param 0.0020 0.0001 
 mumu16_qcd_param_bin14 param 0.7358 0.0736 
-mumu16_qcd_param_bin15 param 0.6801 0.0680 
+mumu16_qcd_param_bin15 param 0.0020 0.0001 
 mumu16_qcd_param_bin16 param 0.6743 0.0674 
 
  ee16_fake_shape group =  ee16_qcd_param_bin1 ee16_qcd_param_bin2 ee16_qcd_param_bin3 ee16_qcd_param_bin4 ee16_qcd_param_bin5 ee16_qcd_param_bin6 ee16_qcd_param_bin7 ee16_qcd_param_bin8 ee16_qcd_param_bin9 ee16_qcd_param_bin10 ee16_qcd_param_bin11 ee16_qcd_param_bin12 ee16_qcd_param_bin13 ee16_qcd_param_bin14 ee16_qcd_param_bin15 ee16_qcd_param_bin16

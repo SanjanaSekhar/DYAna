@@ -11,7 +11,7 @@ do
     for year in 16 17 18
     do
         card=cards/mumu_fit_y${year}_mbin${idx}.txt
-        cp mumu_fit_template.txt $card
+        cp card_templates/mumu_fit_template.txt $card
         sed -i "s/YR/${year}/g" $card
         cat cards/y20${year}_mbin${idx}_bins.txt >> $card
     done

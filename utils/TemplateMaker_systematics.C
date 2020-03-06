@@ -42,10 +42,29 @@ void cleanup_template(TH2F *h){
     for(int i=0; i<= h->GetNbinsX()+1; i++){
         for(int j=0; j<= h->GetNbinsY()+1; j++){
             //printf("%i %i \n", i,j);
+            double min_val = 1e-6;
+            double min_err = 1e-7;
             float val = h->GetBinContent(i,j);
-            if(val< 1e-8) h->SetBinContent(i,j,1e-8);
+            if(val< min_val){
+                h->SetBinContent(i,j,min_val);
+                h->SetBinError(i,j,min_err);
+            }
+
         }
     }
+}
+
+void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
+
+        h_pl->Add(h_sym, h_asym, 1., 1.);
+        h_mn->Add(h_sym, h_asym, 1., -1.);
+        h_pl->Scale(0.5);
+        h_mn->Scale(0.5);
+        for(int i=0; i<= h_sym->GetNbinsX() * h_sym->GetNbinsY(); i++){ //works for 1d an 2d histograms
+            double err_rate = h_sym->GetBinError(i) / h_sym->GetBinContent(i);
+            h_pl->SetBinError(i,err_rate * h_pl->GetBinContent(i));
+            h_mn->SetBinError(i,err_rate * h_mn->GetBinContent(i));
+        }
 }
 
 void print_hist(TH2 *h){
@@ -62,22 +81,33 @@ void print_hist(TH2 *h){
 //static type means functions scope is only this file, to avoid conflicts
 
 int gen_data_template(TTree *t1, TH2F* h,  
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool turn_on_RC = true, bool ss = false){
+        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false){
     h->Sumw2();
     int nEvents = 0;
     int n=0;
     TempMaker tm(t1, true, year);
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
-    tm.do_RC = turn_on_RC;
+    tm.do_RC = true;
     tm.setup();
+
+    TRandom *rand;
+    if(scramble_data) rand = new TRandom3();
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
 
         if(tm.m >= m_low && tm.m <= m_high && tm.met_pt < 50. && tm.has_no_bjets && tm.not_cosmic){
             tm.doCorrections();
+
             n++;
-            if(!ss) h->Fill(tm.xF, tm.cost, 1); 
+            if(!ss){
+                if(scramble_data){
+                    //randomly flip data events
+                    if(rand->Rndm() > 0.5) tm.cost = std::fabs(tm.cost);
+                    else tm.cost = -std::fabs(tm.cost);
+                }
+                h->Fill(tm.xF, tm.cost, 1); 
+            }
             else{
                 h->Fill(tm.xF, -abs(tm.cost), 1);
             }

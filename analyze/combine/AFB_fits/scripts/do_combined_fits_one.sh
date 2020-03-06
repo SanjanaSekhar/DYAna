@@ -7,7 +7,7 @@ do
     workspace=workspaces/combined_fit_y${year}_${idx}.root
     plotdir=postfit_plots/combined_y${year}_mbin${idx}
     card=cards/combined_fit_y${year}_mbin${idx}.txt
-    cp combined_fit_template_temp.txt $card
+    cp card_templates/combined_fit_template_temp.txt $card
     sed -i "s/YR/${year}/g" $card
     cat cards/y20${year}_mbin${idx}_bins.txt >> $card
     text2workspace.py $card --keyword-value M_BIN=${idx} -P Analysis.DYAna.my_model:dy_AFB -o $workspace --channel-masks

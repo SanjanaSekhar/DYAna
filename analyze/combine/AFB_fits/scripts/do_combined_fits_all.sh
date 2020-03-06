@@ -3,9 +3,9 @@ set -x
 do_plot=${1:-false}
 no_sys=${2:-false}
 
-temp_card=combined_fit_template.txt
+temp_card=card_templates/combined_fit_template.txt
 if $no_sys; then
-    temp_card=combined_fit_template_nosys.txt
+    temp_card=card_templates/combined_fit_template_nosys.txt
 fi
 
 #mask_params="mask_Y16_emu16=1,mask_Y17_emu17=1,mask_Y18_emu18=1" 

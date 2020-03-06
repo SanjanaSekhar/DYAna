@@ -1,5 +1,5 @@
 
-R_ee18_os_fakes param 0.5816 0.16476 
+R_ee18_os_fakes param 0.5765 0.16694 
 ee18_qcd_param_bin1 param 17.6455 4.3918 
 ee18_qcd_param_bin2 param 0.5635 0.0563 
 ee18_qcd_param_bin3 param 0.2784 0.0278 
@@ -9,11 +9,11 @@ ee18_qcd_param_bin6 param 0.4761 0.0476
 ee18_qcd_param_bin7 param 0.5877 0.0588 
 ee18_qcd_param_bin8 param 0.3207 0.0321 
 ee18_qcd_param_bin9 param 3.8633 1.1590 
-ee18_qcd_param_bin10 param 1.6190 0.4857 
+ee18_qcd_param_bin10 param 0.6657 0.0666 
 ee18_qcd_param_bin11 param 0.2770 0.0277 
 ee18_qcd_param_bin12 param 1.2536 0.3761 
 ee18_qcd_param_bin13 param 6.5888 2.5653 
-ee18_qcd_param_bin14 param 2.5656 0.7697 
+ee18_qcd_param_bin14 param 2.5655 0.7697 
 ee18_qcd_param_bin15 param 0.5567 0.0557 
 ee18_qcd_param_bin16 param 1.9679 0.5904 
 

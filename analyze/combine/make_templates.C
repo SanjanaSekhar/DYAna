@@ -24,33 +24,33 @@
 
 
 
-TH2F *h_elel_asym, *h_elel_sym, *h_elel_alpha, *h_elel_back,  *h_elel_dy_gg, *h_elel_data, *h_elel_mc, *h_elel_qcd, *h_elel_gam;
-TH2F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_back,  *h_mumu_dy_gg, *h_mumu_data, *h_mumu_mc, *h_mumu_qcd, *h_mumu_gam;
+TH1F *h1_elel_asym, *h1_elel_sym; 
+TH1F *h1_mumu_asym, *h1_mumu_sym; 
+TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_back,  *h1_elel_dy_gg, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
+TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_back,  *h1_mumu_dy_gg, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 
 
 
-
-void make_data_templates(int year){
+void make_data_templates(int year, bool scramble_data = true){
     char title[100];
     sprintf(title, "ee%i_data_obs", year %2000);
-    h_elel_data = new TH2F(title, "Data template of (x_f, cost_r)",
+    TH2F* h_elel_data = new TH2F(title, "Data template of (x_f, cost_r)",
             n_xf_bins, xf_bins, n_cost_bins, cost_bins);
     h_elel_data->SetDirectory(0);
     sprintf(title, "mumu%i_data_obs", year %2000);
-    h_mumu_data = new TH2F(title, "Data template of (x_f, cost_r)",
+    TH2F* h_mumu_data = new TH2F(title, "Data template of (x_f, cost_r)",
             n_xf_bins, xf_bins, n_cost_bins, cost_bins);
     h_mumu_data->SetDirectory(0);
 
-    int nElEl_DataEvents = gen_data_template(t_elel_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS,  do_RC);
-    int nMuMu_DataEvents = gen_data_template(t_mumu_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS, do_RC);
-    auto h1_elel_data = convert2d(h_elel_data);
-    auto h1_mumu_data = convert2d(h_mumu_data);
+    int nElEl_DataEvents = gen_data_template(t_elel_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS,  scramble_data);
+    int nMuMu_DataEvents = gen_data_template(t_mumu_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS, scramble_data);
+    h1_elel_data = convert2d(h_elel_data);
+    h1_mumu_data = convert2d(h_mumu_data);
     
 
     printf("Integral of data templates are %.2f %.2f \n", h1_elel_data->Integral(), h1_mumu_data->Integral()); 
-    write_roo_hist(h1_elel_data, var);
-    write_roo_hist(h1_mumu_data, var);
     printf("Made data templates \n");
+    delete h_elel_data, h_mumu_data;
 }
 
 void make_qcd_templates(int year, FILE* f_log){
@@ -58,11 +58,11 @@ void make_qcd_templates(int year, FILE* f_log){
     //titles taken care of in conversion
 
     sprintf(title, "ee%i", year %2000);
-    h_elel_qcd = new TH2F(title, "Combined background template",
+    TH2F* h_elel_qcd = new TH2F(title, "Combined background template",
             n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
     h_elel_qcd->SetDirectory(0);
     sprintf(title, "mumu%i", year %2000);
-    h_mumu_qcd = new TH2F(title, "Combined background template",
+    TH2F* h_mumu_qcd = new TH2F(title, "Combined background template",
             n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
     h_mumu_qcd->SetDirectory(0);
     bool ss = true;
@@ -85,22 +85,9 @@ void make_qcd_templates(int year, FILE* f_log){
     convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, mumu_err, FLAG_MUONS);
 
     printf("Made qcd templates \n");
+    delete h_elel_qcd, h_mumu_qcd;
 }
 
-void cleanup_mc_templates(){
-    delete h_elel_back; 
-    delete h_elel_dy_gg; 
-    delete h_elel_gam; 
-    delete h_elel_sym; 
-    delete h_elel_asym; 
-    delete h_elel_alpha;
-    delete h_mumu_back; 
-    delete h_mumu_dy_gg; 
-    delete h_mumu_gam; 
-    delete h_mumu_sym; 
-    delete h_mumu_asym; 
-    delete h_mumu_alpha;
-}
 
 void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
     bool do_mu, do_el;
@@ -124,27 +111,27 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
     if(do_mu){
         printf("making muon mc templates \n");
         sprintf(title, "mumu%i_sym%s", year %2000, sys_label.c_str());
-        h_mumu_sym = new TH2F(title, "Symmetric template of mc",
+        auto h_mumu_sym = new TH2F(title, "Symmetric template of mc",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_mumu_sym->SetDirectory(0);
         sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
-        h_mumu_alpha = new TH2F(title, "Gauge boson polarization template of mc",
+        auto h_mumu_alpha = new TH2F(title, "Gauge boson polarization template of mc",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_mumu_alpha->SetDirectory(0);
         sprintf(title, "mumu%i_asym%s", year %2000, sys_label.c_str());
-        h_mumu_asym = new TH2F(title, "Asymmetric template of mc",
+        auto h_mumu_asym = new TH2F(title, "Asymmetric template of mc",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_mumu_asym->SetDirectory(0);
         sprintf(title, "mumu%i_bk%s", year %2000, sys_label.c_str());
-        h_mumu_back = new TH2F(title, "Combined background template",
+        auto h_mumu_back = new TH2F(title, "Combined background template",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_mumu_back->SetDirectory(0);
         sprintf(title, "mumu%i_dy_gg%s", year %2000, sys_label.c_str());
-        h_mumu_dy_gg = new TH2F(title, "Combined background template",
+        auto h_mumu_dy_gg = new TH2F(title, "Combined background template",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_mumu_dy_gg->SetDirectory(0);
         sprintf(title, "mumu%i_gam%s", year %2000, sys_label.c_str());
-        h_mumu_gam = new TH2F(title, "Combined background template",
+        auto h_mumu_gam = new TH2F(title, "Combined background template",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_mumu_gam->SetDirectory(0);
 
@@ -160,31 +147,44 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
         mumu_ts[0] = t_mumu_gamgam;
         printf("Making mumu gamgam \n");
         gen_combined_background_template(1, mumu_ts, h_mumu_gam, year, m_low, m_high, FLAG_MUONS,  do_RC, ss, sys_label);
+
+
+        symmetrize2d(h_mumu_gam);
+        symmetrize2d(h_mumu_back);
+
+        h1_mumu_sym = convert2d(h_mumu_sym);
+        h1_mumu_asym = convert2d(h_mumu_asym);
+        h1_mumu_back = convert2d(h_mumu_back);
+        h1_mumu_dy_gg = convert2d(h_mumu_dy_gg);
+        h1_mumu_gam = convert2d(h_mumu_gam);
+        h1_mumu_alpha = convert2d(h_mumu_alpha);
+        delete h_mumu_alpha, h_mumu_back, h_mumu_dy_gg, h_mumu_gam;
+
     }
     if(do_el){
         printf("making electron mc templates \n");
         sprintf(title, "ee%i_sym%s", year %2000, sys_label.c_str());
-        h_elel_sym = new TH2F(title, "Symmetric template of mc",
+        auto h_elel_sym = new TH2F(title, "Symmetric template of mc",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_elel_sym->SetDirectory(0);
         sprintf(title, "ee%i_alpha%s", year %2000, sys_label.c_str());
-        h_elel_alpha = new TH2F(title, "Gauge boson polarization template of mc",
+        auto h_elel_alpha = new TH2F(title, "Gauge boson polarization template of mc",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_elel_alpha->SetDirectory(0);
         sprintf(title, "ee%i_asym%s", year %2000, sys_label.c_str());
-        h_elel_asym = new TH2F(title, "Asymmetric template of mc",
+        auto h_elel_asym = new TH2F(title, "Asymmetric template of mc",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_elel_asym->SetDirectory(0);
         sprintf(title, "ee%i_bk%s", year %2000, sys_label.c_str());
-        h_elel_back = new TH2F(title, "Combined background template",
+        auto h_elel_back = new TH2F(title, "Combined background template",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_elel_back->SetDirectory(0);
         sprintf(title, "ee%i_dy_gg%s", year %2000, sys_label.c_str());
-        h_elel_dy_gg = new TH2F(title, "Combined background template",
+        auto h_elel_dy_gg = new TH2F(title, "Combined background template",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_elel_dy_gg->SetDirectory(0);
         sprintf(title, "ee%i_gam%s", year %2000, sys_label.c_str());
-        h_elel_gam = new TH2F(title, "Combined background template",
+        auto h_elel_gam = new TH2F(title, "Combined background template",
                 n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         h_elel_gam->SetDirectory(0);
 
@@ -198,6 +198,17 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
         elel_ts[0] = t_elel_gamgam;
         printf("Making ee gamgam \n");
         gen_combined_background_template(1, elel_ts, h_elel_gam, year, m_low, m_high, FLAG_ELECTRONS, do_RC,ss, sys_label);
+
+
+        symmetrize2d(h_elel_gam);
+        symmetrize2d(h_elel_back);
+        h1_elel_sym = convert2d(h_elel_sym);
+        h1_elel_asym = convert2d(h_elel_asym);
+        h1_elel_back = convert2d(h_elel_back);
+        h1_elel_dy_gg = convert2d(h_elel_dy_gg);
+        h1_elel_gam = convert2d(h_elel_gam);
+        h1_elel_alpha = convert2d(h_elel_alpha);
+        delete h_elel_alpha, h_elel_back, h_elel_dy_gg, h_elel_gam;
     }
 
 }
@@ -219,61 +230,81 @@ void convert_mc_templates(int year, const string &sys_label){
         do_el = true;
     }
     if(do_mu){
-        symmetrize2d(h_mumu_gam);
-        auto h1_mumu_back = convert2d(h_mumu_back);
-        auto h1_mumu_dy_gg = convert2d(h_mumu_dy_gg);
-        auto h1_mumu_gam = convert2d(h_mumu_gam);
-        auto h1_mumu_alpha = convert2d(h_mumu_alpha);
 
-        auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
-        auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
-        h_mumu_pl.Scale(0.5);
-        h_mumu_mn.Scale(0.5);
-        auto h1_mumu_pl = convert2d(&h_mumu_pl);
-        auto h1_mumu_mn = convert2d(&h_mumu_mn);
         char title[100];
         sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
-        h1_mumu_pl->SetName(title);
+        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_xf_bins * n_cost_bins, 0, n_xf_bins * n_cost_bins);
+        h1_mumu_pl->SetDirectory(0);
         sprintf(title, "mumu%i_fmn%s", year%2000, sys_label.c_str());
-        h1_mumu_mn->SetName(title);
+        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_xf_bins * n_cost_bins, 0, n_xf_bins * n_cost_bins);
+        h1_mumu_mn->SetDirectory(0);
+        make_pl_mn_templates(h1_mumu_sym, h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
 
-        write_roo_hist(h1_mumu_back, var);
-        write_roo_hist(h1_mumu_dy_gg, var);
-        write_roo_hist(h1_mumu_gam, var);
-        write_roo_hist(h1_mumu_alpha, var);
-        write_roo_hist(h1_mumu_pl, var);
-        write_roo_hist(h1_mumu_mn, var);
+
+        h1_mumu_sym->Reset();
+        h1_mumu_asym->Reset();
+
+
     }
 
     if(do_el){
-        symmetrize2d(h_elel_gam);
-        auto h1_elel_back = convert2d(h_elel_back);
-        auto h1_elel_dy_gg = convert2d(h_elel_dy_gg);
-        auto h1_elel_gam = convert2d(h_elel_gam);
-        auto h1_elel_alpha = convert2d(h_elel_alpha);
-
-        auto h_elel_pl = *h_elel_sym + *h_elel_asym;
-        auto h_elel_mn = *h_elel_sym - *h_elel_asym;
-        h_elel_pl.Scale(0.5);
-        h_elel_mn.Scale(0.5);
-        auto h1_elel_pl = convert2d(&h_elel_pl);
-        auto h1_elel_mn = convert2d(&h_elel_mn);
 
         char title[100];
+        sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
+        h1_elel_pl = new TH1F(title, "Plus template of DY", n_xf_bins * n_cost_bins, 0, n_xf_bins * n_cost_bins);
+        h1_elel_pl->SetDirectory(0);
+        sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
+        h1_elel_mn = new TH1F(title, "Plus template of DY", n_xf_bins*n_cost_bins, 0, n_xf_bins * n_cost_bins);
+        h1_elel_mn->SetDirectory(0);
+        make_pl_mn_templates(h1_elel_sym, h1_elel_asym, h1_elel_pl, h1_elel_mn);
+
         sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
         h1_elel_pl->SetName(title);
         sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
         h1_elel_mn->SetName(title);
 
+        h1_elel_sym->Reset();
+        h1_elel_asym->Reset();
 
-        write_roo_hist(h1_elel_back, var);
-        write_roo_hist(h1_elel_dy_gg, var);
-        write_roo_hist(h1_elel_gam, var);
-        write_roo_hist(h1_elel_alpha, var);
-        write_roo_hist(h1_elel_pl, var);
-        write_roo_hist(h1_elel_mn, var);
     }
 }
+
+
+
+
+void write_out_templates(){
+
+
+    h1_mumu_back->Write();
+    h1_mumu_dy_gg->Write();
+    h1_mumu_gam->Write();
+    h1_mumu_alpha->Write();
+    h1_mumu_pl->Write();
+    h1_mumu_mn->Write();
+
+    h1_mumu_back->Reset();
+    h1_mumu_dy_gg->Reset();
+    h1_mumu_gam->Reset();
+    h1_mumu_alpha->Reset();
+    h1_mumu_pl->Reset();
+    h1_mumu_mn->Reset();
+
+    h1_elel_back->Write();
+    h1_elel_dy_gg->Write();
+    h1_elel_gam->Write();
+    h1_elel_alpha->Write();
+    h1_elel_pl->Write();
+    h1_elel_mn->Write();
+
+    h1_elel_back->Reset();
+    h1_elel_dy_gg->Reset();
+    h1_elel_gam->Reset();
+    h1_elel_alpha->Reset();
+    h1_elel_pl->Reset();
+    h1_elel_mn->Reset();
+
+}
+
 
 void write_groups(int year, FILE *f_log){
 
@@ -305,8 +336,9 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/feb17_2018.root");
-    year = 2018;
+    const TString fout_name("combine/templates/test_2016.root");
+    year = 2016;
+    bool scramble_data = true;
 
 
 
@@ -320,8 +352,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     vector<string> sys_labels {""};
         
 
-    TFile * fout;
-    fout = TFile::Open(fout_name, "RECREATE");
+    TFile * fout = TFile::Open(fout_name, "RECREATE");
     FILE *f_log;
     char f_log_name[80];
 
@@ -349,7 +380,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         m_high = m_bins[i+1];
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
 
-        make_data_templates(year);
+        make_data_templates(year, scramble_data);
         make_ss_data_templates(year);
         make_ss_mc_templates(year);
         //make_emu_data_templates(year);
@@ -365,10 +396,13 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         }
         fout->cd();
         gDirectory->cd(dirname);
+        h1_mumu_data->Write();
+        h1_elel_data->Write();
+        write_out_templates();
+        write_out_ss_templates();
         w->Write();
         write_groups(year, f_log);
         fclose(f_log);
-        cleanup_mc_templates();
     }
 
 

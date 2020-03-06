@@ -25,6 +25,8 @@ TH1F *h_dummy = new TH1F("h_dummy", "", n_cost_bins*n_xf_bins, 0, n_cost_bins*n_
 bool do_emu_scale = false;
 bool do_RC = true;
 
+
+
 void write_roo_hist(TH1F *h, RooRealVar *my_var){
     my_var->Print();
     //h->Print("all");

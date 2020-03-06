@@ -26,7 +26,7 @@ mumu16_qcd_param_bin6 param 16.3104 3.1286
 mumu16_qcd_param_bin7 param 7.4257 2.2277 
 mumu16_qcd_param_bin8 param 8.4694 3.3161 
 mumu16_qcd_param_bin9 param 0.3466 0.0347 
-mumu16_qcd_param_bin10 param 0.6872 0.0687 
+mumu16_qcd_param_bin10 param 0.0020 0.0001 
 mumu16_qcd_param_bin11 param 7.5968 2.1993 
 mumu16_qcd_param_bin12 param 5.8069 1.8889 
 mumu16_qcd_param_bin13 param 0.2974 0.0892 

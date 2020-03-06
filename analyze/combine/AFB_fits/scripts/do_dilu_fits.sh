@@ -9,7 +9,7 @@ do
     #dilu_bin=10
         card=cards/dilu_fit_mbin${idx}.txt
         workspace=workspaces/dilu_fit${idx}.root
-        cp dilus_fit_template.txt $card
+        cp card_templates/dilus_fit_template.txt $card
         cat cards/mbin${idx}_bins.txt >> $card
         sed -i "s/DLP/${dilu_bin}/" $card
         text2workspace.py $card --keyword-value M_BIN=${idx}  -P Analysis.B2GTTrees.my_model:dy_AFB -o $workspace

@@ -88,7 +88,6 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
         snprintf(dirname, 10, "w%i", i);
         gDirectory->mkdir(dirname);
         gDirectory->cd(dirname);
-        w = new RooWorkspace("w", "w");
 
         m_low = m_bins[i];
         m_high = m_bins[i+1];
@@ -97,19 +96,6 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
         printf("Cutting templates \n");
         sprintf(cut_str, "(m > %.0f) && (m < %0.f)", m_low - 15., m_high+15.);
 
-        /*
-        t_elel_mc = new TTree();
-        t_elel_back = new TTree();
-
-        t_mumu_mc = new TTree();
-        t_mumu_back = new TTree();
-
-        t_elel_mc = t_elel_mc_raw->CopyTree(cut_str);
-        t_elel_back = t_elel_back_raw->CopyTree(cut_str);
-
-        t_mumu_mc = t_mumu_mc_raw->CopyTree(cut_str);
-        t_mumu_back = t_mumu_back_raw->CopyTree(cut_str);
-        */
 
 
 
@@ -133,17 +119,10 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
             }
             i_sys++;
         }
-        /*
-        t_elel_mc->Delete();
-        t_elel_back->Delete();
-        t_mumu_mc->Delete();
-        t_mumu_back->Delete();
-        */
 
         pdf_fout->cd();
         gDirectory->cd(dirname);
-        w->Write();
-        cleanup_mc_templates();
+        write_out_templates();
     }
 
 
