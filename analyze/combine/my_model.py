@@ -13,8 +13,18 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.doSet("POI","Afb,A0")
 
         # ss templates
-        self.modelBuilder.doVar("Rdy_mumu_ss[1.0,0.0,10.0]");
-        self.modelBuilder.doVar("Rdy_ee_ss[1.0,0.0,10.0]");
+        self.modelBuilder.doVar("R_ee_os_fakes[0.6,0.0,1.0]");
+        self.modelBuilder.doVar("ee16_QCD_norm[1.0, 0.01, 10.]");
+        self.modelBuilder.doVar("ee17_QCD_norm[1.0, 0.01, 10.]");
+        self.modelBuilder.doVar("ee18_QCD_norm[1.0, 0.01, 10.]");
+        #Remember, cant use spaces in these formulas!
+        #self.modelBuilder.options.verbose = 10
+        self.modelBuilder.factory_('expr::R_ee16_qcd_os("@0*@1",ee16_QCD_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee17_qcd_os("@0*@1",ee17_QCD_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee18_qcd_os("@0*@1",ee18_QCD_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee16_qcd_ss("@0*(1.0-@1)",ee16_QCD_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee17_qcd_ss("@0*(1.0-@1)",ee17_QCD_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee18_qcd_ss("@0*(1.0-@1)",ee18_QCD_norm,R_ee_os_fakes)')
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
         self.modelBuilder.factory_('expr::Norm("3.0/4.0/(2.0+@0)",Alph)')
@@ -23,17 +33,24 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.factory_('expr::Rmn("(@0-@1)",Norm,Afb)')
 
 
+
  
  
  
  
     def getYieldScale(self,bin,process):
         if 'alpha' in process: return "RAlph"
-        if 'pl' in process: return "Rpl"
-        if 'mn' in process : return "Rmn"
-        if 'dy' in process and 'ee_ss' in bin: return "Rdy_ee_ss"
-        if 'dy' in process and 'mumu_ss' in bin: return "Rdy_mumu_ss"
+        elif 'pl' in process: return "Rpl"
+        elif 'mn' in process : return "Rmn"
+
+        elif 'qcd' in process and 'ee16_ss' in bin: return "R_ee16_qcd_ss"
+        elif 'qcd' in process and 'ee17_ss' in bin: return "R_ee17_qcd_ss"
+        elif 'qcd' in process and 'ee18_ss' in bin: return "R_ee18_qcd_ss"
+        elif 'qcd' in process and 'ee16' in bin: return "R_ee16_qcd_os"
+        elif 'qcd' in process and 'ee16' in bin: return "R_ee17_qcd_os"
+        elif 'qcd' in process and 'ee16' in bin: return "R_ee18_qcd_os"
         else:
+            #print("Didnt find process %s bin %s in specifications \n" % (process, bin))
             return 1
  
 ### This is class measures AFB only

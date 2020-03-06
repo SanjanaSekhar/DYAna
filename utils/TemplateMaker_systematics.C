@@ -269,7 +269,7 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
 
 
 std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
-        int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool ss = false){
+        int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false){
     h->Sumw2();
     TH2D *h_err;
     TLorentzVector *lep_p=0;
@@ -322,7 +322,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
 
-            if(!ss) pass = pass && opp_sign;
+            if(!incl_ss) pass = pass && opp_sign; 
             if(pass){
                 double evt_reweight = 0.;
 
@@ -386,7 +386,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                 }
 
 
-                if(!ss) h->Fill(tm.xF, tm.cost, tot_evt_weight);
+                if(!ss_binning) h->Fill(tm.xF, tm.cost, tot_evt_weight);
                 else{
                     h->Fill(tm.xF, -abs(tm.cost), tot_evt_weight);
                 }
@@ -399,21 +399,16 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
         printf("After iter %i current fakerate est is %.0f \n", l, h->Integral());
 
     }
-    printf("Performing fakes cleanup (removing neg. bins) \n");
+    //remove negative bins
     cleanup_template(h);
 
     set_fakerate_errors(h_err, FR.h, h);
-    //scale ss electrons by 0.5, muons get a more complicated norm
     printf("Total Fakerate weight Weight is %.2f \n", h->Integral());
-    if(h->Integral() < 0.){
-        h->Scale(0.);
-        printf("zeroing Fakes template \n");
-    }
-    float scaling = 1.;
     // remove outliers
     tot_weight_os = std::max(1e-4, tot_weight_os);
     tot_weight_ss = std::max(1e-4, tot_weight_ss);
-    if(ss) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
+    float scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
+    if(!incl_ss) scaling = 1.;
     
     Double_t err;
     Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);

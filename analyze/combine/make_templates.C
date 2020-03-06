@@ -53,36 +53,38 @@ void make_data_templates(int year, bool scramble_data = true){
     delete h_elel_data, h_mumu_data;
 }
 
-void make_qcd_templates(int year, FILE* f_log){
+void make_qcd_templates(int year){
     char title[100];
     //titles taken care of in conversion
 
-    sprintf(title, "ee%i", year %2000);
-    TH2F* h_elel_qcd = new TH2F(title, "Combined background template",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+    sprintf(title, "ee%i_qcd", year %2000);
+    TH2F* h_elel_qcd = new TH2F(title, "Fakes template",
+            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
     h_elel_qcd->SetDirectory(0);
-    sprintf(title, "mumu%i", year %2000);
-    TH2F* h_mumu_qcd = new TH2F(title, "Combined background template",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+    sprintf(title, "mumu%i_qcd", year %2000);
+    TH2F* h_mumu_qcd = new TH2F(title, "Fakes template",
+            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
     h_mumu_qcd->SetDirectory(0);
-    bool ss = true;
+    bool incl_ss = true;
+    bool ss_binning = false;
     float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
     printf("making ElEl fakes template \n");
-    std::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS, ss);
+    std::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS, incl_ss, ss_binning);
     printf("making MuMu fakes template \n");
-    ss = false; // muons use os only for their fakes
-    std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, ss);
+    incl_ss = false; // muons use os only for their fakes
+    std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, incl_ss, ss_binning);
    
 
-    //combined os and ss regions to estimate qcd, scale it to estimate amount
-    //in os region 
-    //float scaling = 1./(1. + R_mu_ss_os);
-    //h_mumu_qcd->Scale(scaling);
 
     printf("Integral of QCD templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral());
 
-    convert_qcd_to_param_hist(h_elel_qcd, f_log, elel_sign_scaling, elel_err, FLAG_ELECTRONS);
-    convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, mumu_err, FLAG_MUONS);
+    symmetrize2d(h_mumu_qcd);
+    symmetrize2d(h_elel_qcd);
+
+    h1_mumu_qcd = convert2d(h_mumu_qcd);
+    h1_elel_qcd = convert2d(h_elel_qcd);
+    //convert_qcd_to_param_hist(h_elel_qcd, f_log, elel_sign_scaling, elel_err, FLAG_ELECTRONS);
+    //convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, mumu_err, FLAG_MUONS);
 
     printf("Made qcd templates \n");
     delete h_elel_qcd, h_mumu_qcd;
@@ -269,7 +271,18 @@ void convert_mc_templates(int year, const string &sys_label){
     }
 }
 
+void write_out_non_sys_templates(){
 
+        h1_mumu_data->Write();
+        h1_elel_data->Write();
+        h1_mumu_qcd->Write();
+        h1_elel_qcd->Write();
+
+        h1_mumu_data->Reset();
+        h1_elel_data->Reset();
+        h1_mumu_qcd->Reset();
+        h1_elel_qcd->Reset();
+}
 
 
 void write_out_templates(){
@@ -282,6 +295,14 @@ void write_out_templates(){
     h1_mumu_pl->Write();
     h1_mumu_mn->Write();
 
+    h1_elel_back->Write();
+    h1_elel_dy_gg->Write();
+    h1_elel_gam->Write();
+    h1_elel_alpha->Write();
+    h1_elel_pl->Write();
+    h1_elel_mn->Write();
+
+
     h1_mumu_back->Reset();
     h1_mumu_dy_gg->Reset();
     h1_mumu_gam->Reset();
@@ -289,12 +310,6 @@ void write_out_templates(){
     h1_mumu_pl->Reset();
     h1_mumu_mn->Reset();
 
-    h1_elel_back->Write();
-    h1_elel_dy_gg->Write();
-    h1_elel_gam->Write();
-    h1_elel_alpha->Write();
-    h1_elel_pl->Write();
-    h1_elel_mn->Write();
 
     h1_elel_back->Reset();
     h1_elel_dy_gg->Reset();
@@ -336,8 +351,8 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/test_2016.root");
-    year = 2016;
+    const TString fout_name("combine/templates/test_2017.root");
+    year = 2017;
     bool scramble_data = true;
 
 
@@ -353,8 +368,6 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         
 
     TFile * fout = TFile::Open(fout_name, "RECREATE");
-    FILE *f_log;
-    char f_log_name[80];
 
     char dirname[40];
 
@@ -372,21 +385,16 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         snprintf(dirname, 10, "w%i", i);
         gDirectory->mkdir(dirname);
         gDirectory->cd(dirname);
-        w = new RooWorkspace("w", "w");
-        sprintf(f_log_name, "combine/AFB_fits/cards/y%i_mbin%i_bins.txt", year, i);
-        f_log = fopen(f_log_name, "w");
 
         m_low = m_bins[i];
         m_high = m_bins[i+1];
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
 
         make_data_templates(year, scramble_data);
+        make_qcd_templates(year);
         make_ss_data_templates(year);
         make_ss_mc_templates(year);
-        //make_emu_data_templates(year);
-        //make_emu_qcd_templates(year, f_log);
-        //make_emu_mc_templates(year);
-        make_qcd_templates(year,f_log);
+        make_ss_qcd_templates(year);
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
             printf("Making MC templates for sys %s \n", (*iter).c_str());
             Double_t alpha_denom = amc_alpha[i];
@@ -396,13 +404,16 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         }
         fout->cd();
         gDirectory->cd(dirname);
-        h1_mumu_data->Write();
-        h1_elel_data->Write();
-        write_out_templates();
+
+        //h1_elel_qcd->Print("all");
+        //h1_elel_ss_qcd->Print("all");
+
+        write_out_non_sys_templates();
+
         write_out_ss_templates();
-        w->Write();
-        write_groups(year, f_log);
-        fclose(f_log);
+
+        write_out_templates();
+        //write_groups(year, f_log);
     }
 
 

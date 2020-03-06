@@ -25,7 +25,7 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
         float scaling = pow(bin_num/n_events, 2);
         float num_err = pow(h->GetBinError(i),2);
         float weight_err = scaling * err_sum;
-        float new_err = sqrt(num_err + weight_err);
+        float new_err = min((float)h->GetBinContent(i), sqrt(num_err + weight_err));
         //printf("Err was %.1f, is now %.1f \n", sqrt(num_err), new_err);
 
         h->SetBinError(i, new_err);
@@ -48,7 +48,7 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH2F *h){
             float scaling = pow(bin_num/n_err_events, 2);
             float num_err = pow(h->GetBinError(i,j),2);
             float weight_err = scaling * err_sum;
-            float new_err = sqrt(num_err + weight_err);
+            float new_err = min((float) h->GetBinContent(i,j), sqrt(num_err + weight_err));
             //printf("Err was %.1f, is now %.1f \n", sqrt(num_err), new_err);
 
             h->SetBinError(i,j, new_err);

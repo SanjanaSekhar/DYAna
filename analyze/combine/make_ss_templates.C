@@ -95,7 +95,7 @@ void make_ss_data_templates(int year){
     printf("Made ss data templates \n");
 }
 
-void make_ss_qcd_templates(int year, FILE *f_log){
+void make_ss_qcd_templates(int year){
     char title[100];
     sprintf(title, "ee%i_ss_qcd", year %2000);
     auto h_elel_qcd = new TH2F(title, "Combined background template",
@@ -107,15 +107,14 @@ void make_ss_qcd_templates(int year, FILE *f_log){
     h_mumu_qcd->SetDirectory(0);
 
 
-    bool ss = true;
-    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS,  ss);
-    gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, ss);
-    printf("Integral of qcd templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral()); 
-    auto h1_elel_qcd = convert2d(h_elel_qcd);
-    auto h1_mumu_qcd = convert2d(h_mumu_qcd);
+    bool incl_ss = true;
+    bool ss_binning = true;
+    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS,  incl_ss, ss_binning);
+    gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, incl_ss, ss_binning);
+    printf("Integral of (ss) qcd templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral()); 
+    h1_elel_ss_qcd = convert2d(h_elel_qcd);
+    h1_mumu_ss_qcd = convert2d(h_mumu_qcd);
 
-    convert_ss_qcd_to_param_hist(h1_elel_qcd, f_log, FLAG_ELECTRONS);
-    convert_ss_qcd_to_param_hist(h1_mumu_qcd, f_log, FLAG_MUONS);
     printf("Made ss qcd templates \n");
 }
 
@@ -171,19 +170,22 @@ void make_ss_mc_templates(int year){
 
 void write_out_ss_templates(){
     h1_mumu_ss_data->Write();
+    h1_mumu_ss_qcd->Write();
     h1_mumu_ss_back->Write();
     h1_mumu_ss_dy->Write();
 
-    h1_mumu_ss_data->Reset();
-    h1_mumu_ss_back->Reset();
-    h1_mumu_ss_dy->Reset();
-
-
     h1_elel_ss_data->Write();
+    h1_elel_ss_qcd->Write();
     h1_elel_ss_back->Write();
     h1_elel_ss_dy->Write();
 
+    h1_mumu_ss_data->Reset();
+    h1_mumu_ss_qcd->Reset();
+    h1_mumu_ss_back->Reset();
+    h1_mumu_ss_dy->Reset();
+
     h1_elel_ss_data->Reset();
+    h1_elel_ss_qcd->Reset();
     h1_elel_ss_back->Reset();
     h1_elel_ss_dy->Reset();
 
@@ -218,7 +220,7 @@ void make_ss_templates(int year=2016){
 
 
         make_ss_data_templates(year);
-        make_ss_qcd_templates(year, f_log);
+        make_ss_qcd_templates(year);
         make_ss_mc_templates(year);
         ss_fout->cd();
         gDirectory->cd(dirname);
