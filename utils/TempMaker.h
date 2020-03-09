@@ -1,4 +1,5 @@
-
+#ifndef DYAFB_TEMPMAKERH
+#define DYAFB_TEMPMAKERH
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -168,4 +169,5 @@ void setup_all_SFs(int year){
     setup_pileup_systematic(&pu_sys, year); 
 }
 
+#endif
 

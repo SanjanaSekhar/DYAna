@@ -1,3 +1,5 @@
+#ifndef DYAFB_TEMPMAKERC
+#define DYAFB_TEMPMAKERC
 #include "TempMaker.h"
 
 TempMaker::TempMaker(TTree *t, bool isdata=false, int y  = 2016){
@@ -363,3 +365,5 @@ void TempMaker::finish(){
 }
 
 TempMaker::~TempMaker(){}
+
+#endif

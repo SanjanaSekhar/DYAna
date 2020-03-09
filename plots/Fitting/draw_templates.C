@@ -4,15 +4,13 @@
 #include "utils.C"
 #include "../../utils/TemplateMaker_systematics.C"
 #include "../../utils/root_files.h"
-
-TH2F *h_elel_asym, *h_elel_sym, *h_elel_alpha, *h_elel_back,  *h_elel_dy_gg, *h_elel_data, *h_elel_mc, *h_elel_qcd, *h_elel_gam;
-TH2F *h_elel_mc_count, *h_elel_sym_count;
-TH2F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_back,  *h_mumu_dy_gg, *h_mumu_data, *h_mumu_mc, *h_mumu_qcd, *h_mumu_gam;
+#include "../../analyze/combine/TemplateUtils.h"
 
 
 
 void draw_templates(){
         gStyle->SetOptStat(0);
+        gROOT->SetBatch(1);
     
         int year = 2018;
         init(year);
@@ -93,7 +91,7 @@ void draw_templates(){
             h1_mumu_sym->SetLineColor(kBlue);
             h1_mumu_asym->SetLineColor(kRed+1);
             h1_mumu_pl->SetLineColor(kOrange +7);
-            h1_mumu_mn->SetLineColor(kMagenta);
+            h1_mumu_mn->SetLineColor(kRed + 1);
 
             h1_mumu_alpha->SetLineWidth(2);
             h1_mumu_sym->SetLineWidth(2);
@@ -149,7 +147,7 @@ void draw_templates(){
             h1_elel_sym->SetLineColor(kBlue);
             h1_elel_asym->SetLineColor(kRed+1);
             h1_elel_pl->SetLineColor(kOrange +7);
-            h1_elel_mn->SetLineColor(kMagenta);
+            h1_elel_mn->SetLineColor(kRed + 1);
 
             h1_elel_alpha->SetLineWidth(2);
             h1_elel_sym->SetLineWidth(2);

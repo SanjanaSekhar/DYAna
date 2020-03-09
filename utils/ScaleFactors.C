@@ -1,3 +1,5 @@
+#ifndef DYAFB_SFS
+#define DYAFB_SFS
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -605,4 +607,5 @@ void setup_pileup_systematic_old(pileup_systematics *pu_sys, int year){
     f8->Close();
     f9->Close();
 }
+#endif
 

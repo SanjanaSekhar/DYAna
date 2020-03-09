@@ -7,7 +7,9 @@
 #include "../../utils/TemplateMaker_systematics.C"
 #include "../../utils/root_files.h"
 
+#ifndef STAND_ALONE
 #include "HiggsAnalysis/CombinedLimit/interface/RooParametricHist.h"
+#endif
 
 Double_t m_low;
 Double_t m_high;
@@ -106,6 +108,7 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
     return true;
 }
 
+#ifndef STAND_ALONE
 void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, float sign_scale_err, int flag){
     //convert a hist to a parametric hist 
     RooArgList *bin_list = new RooArgList();
@@ -230,7 +233,9 @@ void convert_qcd_to_param_hist(TH2F *h, FILE *f_log, float sign_scaling, float s
     w->import(*p, RooFit::RecycleConflictNodes());
     w->import(*norm,RooFit::RecycleConflictNodes());
     w->import(*norm_ss,RooFit::RecycleConflictNodes());
+
 }
+#endif
 
 
 
