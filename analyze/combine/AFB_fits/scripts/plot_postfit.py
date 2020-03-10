@@ -5,6 +5,7 @@ import os, pickle, subprocess, time,random
 import math
 from math import sqrt
 import array
+from optparse import OptionParser
 
 
 gStyle.SetOptStat(0)
@@ -347,16 +348,24 @@ def Make_up_down(hist):
 
     return hist_up,hist_down
 
-fin_ = "combined_fit_shapes_mbin1.root"
+
+parser = OptionParser()
+parser.add_option("--input", "-i", default = "", help="Input file")
+parser.add_option("--output", "-o", default = "", help="Input directory")
+parser.add_option("--mbin", "-m", type = 'int', default = 0, help="Mass bin (for plot label)")
+(options, args) = parser.parse_args()
+
+
+#fin_ = "combined_fit_shapes_mbin1.root"
+#odir = "postfit_plots/combined_fit_mbin1"
+#mbin = 1
 years = [2016, 2017, 2018]
 h_names = ["gam", "qcd", "bk", "dy_gg", "alpha", "fpl", "fmn"]
 h_ss_names = ["bk", "dy", "qcd"]
 
-odir = "postfit_plots/combined_fit_mbin1"
 
 m_bins = [150, 171, 200,  250, 320, 510, 700, 1000, 14000]
 
-mbin = 1
 
 label_color_map = dict()
 label_color_map['fpl'] = ("DY Plus Template", kOrange + 7)
@@ -369,7 +378,7 @@ label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
 label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
 
 dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
-f_in = TFile.Open(fin_)
+f_in = TFile.Open(options.input)
 for year in years:
     for idx, dir_name in enumerate(dirs):
         dir_ = dir_name % (year % 2000, year % 2000)
@@ -378,8 +387,8 @@ for year in years:
         h_data = f_in.Get(dir_ + "data_obs")
         h_data = h_data.Clone("h_data_c%i_y%i" %(idx, year))
 
-        mbin_low = m_bins[mbin]
-        mbin_high = m_bins[mbin+1]
+        mbin_low = m_bins[options.mbin]
+        mbin_high = m_bins[options.mbin+1]
 
         if(idx == 0): title = "Muons %i %i-%i GeV" % (year, mbin_low, mbin_high)
         if(idx == 1): title = "Electrons %i %i-%i GeV" % (year, mbin_low, mbin_high)
@@ -397,9 +406,7 @@ for year in years:
             hist_list.append(h)
             label_list.append(label_color_map[name][0])
             color_list.append(label_color_map[name][1])
-        print(hist_list[0])
 
-        makeCan(dir_[:-1], odir, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin" ) 
-
+        makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin" ) 
 
 
