@@ -130,12 +130,12 @@ Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic 
 
     int xbin(0),ybin(0);
     if(year == 2016){
-        //2016 hists are abs(eta) and pt
+        //2016 hists are eta and pt
         xbin = x_ax->FindBin(eta);
         ybin = y_ax->FindBin(pt);
     }
     else{
-        //2017 & 18 hists are pt and eta
+        //2017 & 18 hists are pt and abs(eta)
         xbin = x_ax->FindBin(pt);
         ybin = y_ax->FindBin(abs(eta));
     }
@@ -154,7 +154,7 @@ Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic 
     return result;
 }
 
-Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic = 0){
+Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
     float sys_unc_mult = 1.0;
     //get SF for eta's in overlap region (already vetoed superclusters in the
     //region)
@@ -171,11 +171,14 @@ Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic = 0){
     int xbin = x_ax->FindBin(eta);
     int ybin = y_ax->FindBin(pt);
     Double_t result = h->GetBinContent(xbin, ybin);
+    int systematic = systematic_barrel;
+    if(abs(eta) > 1.4) systematic = systematic_endcap;
     if(systematic != 0){
         Double_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
         err =abs(err);
         result += (systematic * err);
     }
+    //printf("eta %.2f sys_b %i sys_e %i, sys %i \n", eta, systematic_barrel, systematic_endcap, systematic);
 
     if(result < 0.01 || result > 10.){
         printf("%.2f el SF for Pt %.1f, Eta %1.2f \n", result, pt, eta);
@@ -229,23 +232,25 @@ Double_t get_HLT_SF_1el(Double_t el1_pt, Double_t el1_eta, TH2D *h_SF){
     return result;
 }
 
-Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Double_t lep2_eta, TH2D *h_SF, TH2D *h_MC_EFF, int systematic = 0){
-    float sys1_unc_leplt = 1.0;
-    float sys2_unc_leplt = 1.0;
+Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Double_t lep2_eta, TH2D *h_SF, TH2D *h_MC_EFF, 
+       int systematic_barrel = 0, int systematic_endcap = 0){
+    float sys1_unc_mult = 1.0;
+    float sys2_unc_mult = 1.0;
     //printf("Getting HLT for %.2f %.2f %.2f %.2f \n", lep1_pt, lep1_eta, lep2_pt, lep2_eta);
     //Get HLT SF for event with 2 leptons
     //stay in range of histogram
     TAxis *x_ax_SF =  h_SF->GetXaxis();
     TAxis *y_ax_SF =  h_SF->GetYaxis();
     int pt_max_bin = y_ax_SF->GetLast();
-    double pt_max = y_ax_SF->GetBinCenter(pt_max_bin);
+    double pt_max = y_ax_SF->GetBinUpEdge(pt_max_bin);
+    double pt_overflow = y_ax_SF->GetBinCenter(pt_max_bin);
     if (lep1_pt >= pt_max){
-        sys1_unc_leplt = 1.5;
-        lep1_pt = pt_max;
+        sys1_unc_mult = 1.5;
+        lep1_pt = pt_overflow;
     }
     if (lep2_pt >= pt_max){
-        sys2_unc_leplt = 1.5;
-        lep2_pt = pt_max;
+        sys2_unc_mult = 1.5;
+        lep2_pt = pt_overflow;
     }
     lep1_eta = abs(lep1_eta);
     lep2_eta = abs(lep2_eta);
@@ -257,15 +262,22 @@ Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Doubl
 
     Double_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
     Double_t SF2 = h_SF->GetBinContent(xbin2_SF, ybin2_SF);
-    if(systematic != 0){
-        Double_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
-        Double_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
 
-        //printf("SF is %.3f +/- %.3f \n", SF1, SF1_err);
-        //printf("SF is %.3f +/- %.3f \n", SF2, SF2_err);
-        SF1 += sys1_unc_leplt * SF1_err * systematic;
-        SF2 += sys2_unc_leplt * SF2_err * systematic;
+    int systematic1 = systematic_barrel;
+    int systematic2 = systematic_barrel;
+    if(abs(lep1_eta) > 1.4) systematic1 = systematic_endcap;
+    if(abs(lep2_eta) > 1.4) systematic2 = systematic_endcap;
+
+    if(systematic1 != 0){
+        Double_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
+        SF1 += sys1_unc_mult * SF1_err * systematic1;
     }
+    if(systematic2 != 0){
+        Double_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
+        SF2 += sys2_unc_mult * SF2_err * systematic2;
+    }
+    //printf("eta1 %.2f eta2 %.2f sys_b %i sys_e %i sys1 %i sys2 %i \n", lep1_eta, lep2_eta, systematic_barrel, systematic_endcap, systematic1, systematic2);
+
 
 
     TAxis *x_ax_MC_EFF =  h_MC_EFF->GetXaxis();
@@ -290,55 +302,6 @@ Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Doubl
     return result;
 }
 
-Double_t get_el_HLT_SF(Double_t el1_pt, Double_t el1_eta, Double_t el2_pt, Double_t el2_eta, 
-        TH2D *h_SF,  int systematic = 0){
-    float sys1_unc_mult = 1.0;
-    float sys2_unc_mult = 1.0;
-    //printf("Getting HLT for %.2f %.2f %.2f %.2f \n", mu1_pt, mu1_eta, mu2_pt, mu2_eta);
-    //Get HLT SF for event with 2 Muons
-    //stay in range of histogram
-    if (el1_pt >= 200.){
-        sys1_unc_mult = 1.5;
-        el1_pt = 150.;
-    }
-    if (el2_pt >= 200.){
-        sys2_unc_mult = 1.5;
-        el2_pt = 150.;
-    }
-    TAxis *x_ax_SF =  h_SF->GetXaxis();
-    TAxis *y_ax_SF =  h_SF->GetYaxis();
-    int xbin1_SF = x_ax_SF->FindBin(std::abs(el1_eta));
-    int ybin1_SF = y_ax_SF->FindBin(el1_pt);
-
-    int xbin2_SF = x_ax_SF->FindBin(std::abs(el2_eta));
-    int ybin2_SF = y_ax_SF->FindBin(el2_pt);
-
-    Double_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
-    Double_t SF2 = h_SF->GetBinContent(xbin2_SF, ybin2_SF);
-
-    if(systematic != 0){
-        Double_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
-        Double_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
-        //printf("%.3f %.3f \n", SF1_err, SF2_err);
-        //SF1_err = min(SF1_err, 0.001);
-        //SF2_err = min(SF2_err, 0.001);
-        //SF1_err = std::max(SF1_err, 0.01);
-        //SF2_err = std::max(SF2_err, 0.01);
-        SF1 += sys1_unc_mult * SF1_err * systematic;
-        SF2 += sys2_unc_mult * SF2_err * systematic;
-    }
-
-
-    Double_t result = SF1;
-    if(result < 0.01) printf("0 EL HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
-    
-    if(TMath::IsNaN(result)){ 
-        printf("Nan EL HLT SF for Pt %.1f, Eta %1.2f  %.2f %.2f  \n", el1_pt, el1_eta, SF1, SF2);
-        result = 1;
-    }
-    //if(abs(result -1.0) > 0.2) printf("Result, SF1 = (%0.3f, %0.3f) \n", result, SF1);
-    return result;
-}
 
 
 

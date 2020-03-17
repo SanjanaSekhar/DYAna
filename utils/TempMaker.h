@@ -140,9 +140,13 @@ class TempMaker{
         int do_muISO_sys = 0;
         int do_muRC_sys = 0;
 
-        int do_elID_sys = 0;
-        int do_elHLT_sys = 0;
-        int do_elRECO_sys = 0;
+        int do_elID_barrel_sys = 0;
+        int do_elHLT_barrel_sys = 0;
+        int do_elRECO_barrel_sys = 0;
+        int do_elID_endcap_sys = 0;
+        int do_elHLT_endcap_sys = 0;
+        int do_elRECO_endcap_sys = 0;
+
         int do_elScale_sys = 0;
         int do_elSmear_sys = 0;
         float elp_rescale, elm_rescale;

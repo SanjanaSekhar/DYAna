@@ -179,9 +179,13 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("muISO") != string::npos) do_muISO_sys = sys_shift;
         else if(sys_label.find("muRC") != string::npos) do_muRC_sys = sys_shift;
 
-        else if(sys_label.find("elID") != string::npos) do_elID_sys = sys_shift;
-        else if(sys_label.find("elHLT") != string::npos) do_elHLT_sys = sys_shift;
-        else if(sys_label.find("elRECO") != string::npos) do_elRECO_sys = sys_shift;
+        else if(sys_label.find("elIDBAR") != string::npos) do_elID_barrel_sys = sys_shift;
+        else if(sys_label.find("elHLTBAR") != string::npos) do_elHLT_barrel_sys = sys_shift;
+        else if(sys_label.find("elRECOBAR") != string::npos) do_elRECO_barrel_sys = sys_shift;
+        else if(sys_label.find("elIDEND") != string::npos) do_elID_endcap_sys = sys_shift;
+        else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
+        else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
+
         else if(sys_label.find("elScale") != string::npos) do_elScale_sys = sys_shift;
         else if(sys_label.find("elSmear") != string::npos) do_elSmear_sys = sys_shift;
 
@@ -327,8 +331,8 @@ Double_t TempMaker::getEvtWeight(){
 
 
     if(do_muons){
-        if(do_muHLT_sys)   era1_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era1_SFs.HLT_SF, era1_SFs.HLT_MC_EFF, do_muHLT_sys);
-        if(do_muHLT_sys)   era2_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era2_SFs.HLT_SF, era2_SFs.HLT_MC_EFF, do_muHLT_sys);
+        if(do_muHLT_sys)   era1_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era1_SFs.HLT_SF, era1_SFs.HLT_MC_EFF, do_muHLT_sys, do_muHLT_sys);
+        if(do_muHLT_sys)   era2_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era2_SFs.HLT_SF, era2_SFs.HLT_MC_EFF, do_muHLT_sys, do_muHLT_sys);
 
         if(do_muISO_sys)   era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF,  do_muISO_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_sys);
         if(do_muISO_sys)   era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_sys);
@@ -346,9 +350,12 @@ Double_t TempMaker::getEvtWeight(){
         if(year==2018) evt_weight = 1000*(era1_weight*mu_lumi18_era1 + era2_weight*mu_lumi18_era2);
     }
     else if(do_electrons){
-        if(do_elID_sys) el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF, do_elID_sys) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF, do_elID_sys);
-        if(do_elRECO_sys) el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_sys) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_sys);
-        if(do_elHLT_sys) el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_sys);
+        if(do_elID_barrel_sys || do_elID_endcap_sys) 
+            el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF, do_elID_barrel_sys, do_elID_endcap_sys) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF, do_elID_barrel_sys, do_elID_endcap_sys);
+        if(do_elRECO_barrel_sys || do_elRECO_endcap_sys) 
+            el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elID_endcap_sys) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elID_endcap_sys);
+        if(do_elHLT_barrel_sys || do_elHLT_endcap_sys) 
+            el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_barrel_sys, do_elHLT_endcap_sys);
         
 
 

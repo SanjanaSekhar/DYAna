@@ -1,7 +1,8 @@
 #!/bin/bash
 set -x 
-do_plot=${1:-false}
-no_sys=${2:-false}
+#do_plot=${1:-false}
+do_plot=true
+no_sys=${1:-false}
 
 temp_card=card_templates/combined_fit_template.txt
 if $no_sys; then
@@ -22,23 +23,24 @@ do
         cp $temp_card $card
         sed -i "s/YR/${year}/g" $card
         #if [ ! $no_sys ]; then 
-            cat cards/y20${year}_mbin${idx}_bins.txt >> $card
+            #cat cards/y20${year}_mbin${idx}_bins.txt >> $card
         #fi
     done
     comb_card=cards/combined_fit_mbin${idx}.txt
     combineCards.py Y16=cards/combined_fit_y16_mbin${idx}.txt Y17=cards/combined_fit_y17_mbin${idx}.txt Y18=cards/combined_fit_y18_mbin${idx}.txt > ${comb_card}
     text2workspace.py $comb_card --keyword-value M_BIN=${idx} -P Analysis.DYAna.my_model:dy_AFB -o $workspace --channel-masks
     if $do_plot; then
-        combine -M FitDiagnostics $workspace --plot --saveWorkspace --skipBOnlyFit  #--setParameters $mask_params #-v 10
-        python scripts/my_diffNuisances.py fitDiagnostics.root -p Afb --skipFitB -g impacts/comb_pulls_mbin${idx}.root
         rm -r $plotdir
         mkdir $plotdir
-        mv *.png $plotdir
+        combine -M FitDiagnostics $workspace --saveWorkspace --skipBOnlyFit #--plot --saveShapes  --saveWithUncertainties --numToysForShapes 100 #--setParameters $mask_params #-v 10
+        PostFitShapesFromWorkspace -w higgsCombineTest.FitDiagnostics.mH120.root -f fitDiagnostics.root:fit_s --skip-prefit --postfit -o combined_fit_shapes_mbin${idx}.root --sampling --samples 100
+        python scripts/plot_postfit.py -i combined_fit_shapes_mbin${idx}.root -o $plotdir -m ${idx}
+        python scripts/my_diffNuisances.py fitDiagnostics.root -p Afb --skipFitB -g $plotdir
+        mv combined_fit_shapes_mbin${idx}.root $plotdir
     else
         combine -M FitDiagnostics $workspace --saveWorkspace --skipBOnlyFit -v 1
     fi
     #combine -M MultiDimFit $workspace --saveWorkspace --saveFitResult --robustFit 1 #-v 10
-    #PostFitShapesFromWorkspace -w higgsCombineTest.FitDiagnostics.mH120.root -f fitDiagnostics.root:fit_s --postfit -o shapes/combined_fit_shapes_mbin${idx}.root
     echo "fit_s->Print();" > cmd.txt
     echo ".q" >> cmd.txt
     root -l -b fitDiagnostics.root < cmd.txt > fit_results/combined_fit_results_yall_mbin${idx}.txt

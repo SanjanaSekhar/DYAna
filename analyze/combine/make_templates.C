@@ -153,6 +153,7 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
 
         symmetrize2d(h_mumu_gam);
         symmetrize2d(h_mumu_back);
+        symmetrize2d(h_mumu_dy_gg);
 
         h1_mumu_sym = convert2d(h_mumu_sym);
         h1_mumu_asym = convert2d(h_mumu_asym);
@@ -204,6 +205,8 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
 
         symmetrize2d(h_elel_gam);
         symmetrize2d(h_elel_back);
+        symmetrize2d(h_elel_dy_gg);
+        
         h1_elel_sym = convert2d(h_elel_sym);
         h1_elel_asym = convert2d(h_elel_asym);
         h1_elel_back = convert2d(h_elel_back);
@@ -273,50 +276,70 @@ void convert_mc_templates(int year, const string &sys_label){
 
 void write_out_non_sys_templates(){
 
-        h1_mumu_data->Write();
-        h1_elel_data->Write();
-        h1_mumu_qcd->Write();
-        h1_elel_qcd->Write();
+    h1_mumu_data->Write();
+    h1_elel_data->Write();
+    h1_mumu_qcd->Write();
+    h1_elel_qcd->Write();
 
-        h1_mumu_data->Reset();
-        h1_elel_data->Reset();
-        h1_mumu_qcd->Reset();
-        h1_elel_qcd->Reset();
+    h1_mumu_data->Reset();
+    h1_elel_data->Reset();
+    h1_mumu_qcd->Reset();
+    h1_elel_qcd->Reset();
 }
 
 
-void write_out_templates(){
+void write_out_templates(const string &sys_label){
+
+    bool do_mu, do_el;
+
+    if(sys_label.find("mu") != string::npos){
+        do_mu = true;
+        do_el = false;
+    }
+    else if(sys_label.find("el") != string::npos){
+        do_mu = false;
+        do_el = true;
+    }
+    else{
+        do_mu = true;
+        do_el = true;
+    }
 
 
-    h1_mumu_back->Write();
-    h1_mumu_dy_gg->Write();
-    h1_mumu_gam->Write();
-    h1_mumu_alpha->Write();
-    h1_mumu_pl->Write();
-    h1_mumu_mn->Write();
-
-    h1_elel_back->Write();
-    h1_elel_dy_gg->Write();
-    h1_elel_gam->Write();
-    h1_elel_alpha->Write();
-    h1_elel_pl->Write();
-    h1_elel_mn->Write();
+    if(do_mu){
+        h1_mumu_back->Write();
+        h1_mumu_dy_gg->Write();
+        h1_mumu_gam->Write();
+        h1_mumu_alpha->Write();
+        h1_mumu_pl->Write();
+        h1_mumu_mn->Write();
 
 
-    h1_mumu_back->Reset();
-    h1_mumu_dy_gg->Reset();
-    h1_mumu_gam->Reset();
-    h1_mumu_alpha->Reset();
-    h1_mumu_pl->Reset();
-    h1_mumu_mn->Reset();
+        h1_mumu_back->Reset();
+        h1_mumu_dy_gg->Reset();
+        h1_mumu_gam->Reset();
+        h1_mumu_alpha->Reset();
+        h1_mumu_pl->Reset();
+        h1_mumu_mn->Reset();
+    }
+
+    if(do_el){
+        h1_elel_back->Write();
+        h1_elel_dy_gg->Write();
+        h1_elel_gam->Write();
+        h1_elel_alpha->Write();
+        h1_elel_pl->Write();
+        h1_elel_mn->Write();
 
 
-    h1_elel_back->Reset();
-    h1_elel_dy_gg->Reset();
-    h1_elel_gam->Reset();
-    h1_elel_alpha->Reset();
-    h1_elel_pl->Reset();
-    h1_elel_mn->Reset();
+        h1_elel_back->Reset();
+        h1_elel_dy_gg->Reset();
+        h1_elel_gam->Reset();
+        h1_elel_alpha->Reset();
+        h1_elel_pl->Reset();
+        h1_elel_mn->Reset();
+    }
+
 
 }
 
@@ -351,8 +374,8 @@ void write_groups(int year, FILE *f_log){
 
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/test_2017.root");
-    year = 2017;
+    const TString fout_name("combine/templates/mar9_2018.root");
+    year = 2018;
     bool scramble_data = true;
 
 
@@ -395,24 +418,17 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         make_ss_data_templates(year);
         make_ss_mc_templates(year);
         make_ss_qcd_templates(year);
-        for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
-            printf("Making MC templates for sys %s \n", (*iter).c_str());
-            Double_t alpha_denom = amc_alpha[i];
 
-            make_mc_templates(year, alpha_denom, *iter);
-            convert_mc_templates(year, *iter);
-        }
+        string sys_label = string("");
+        Double_t alpha_denom = amc_alpha[i];
+        make_mc_templates(year, alpha_denom, sys_label);
+        convert_mc_templates(year, sys_label);
+
         fout->cd();
         gDirectory->cd(dirname);
-
-        //h1_elel_qcd->Print("all");
-        //h1_elel_ss_qcd->Print("all");
-
         write_out_non_sys_templates();
-
         write_out_ss_templates();
-
-        write_out_templates();
+        write_out_templates(sys_label);
         //write_groups(year, f_log);
     }
 

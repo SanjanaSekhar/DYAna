@@ -19,9 +19,12 @@ for X in ("-h", "-?", "--help"):
 argv.append( '-b-' )
 import ROOT
 ROOT.gROOT.SetBatch(True)
+ROOT.gStyle.SetOptStat(0)
+ROOT.gStyle.SetLabelSize(.03, "XY")
 #ROOT.gSystem.Load("libHiggsAnalysisCombinedLimit")
 argv.remove( '-b-' )
 if hasHelp: argv.append("-h")
+
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--vtol", "--val-tolerance", dest="vtol", default=0.30, type="float", help="Report nuisances whose value changes by more than this amount of sigmas")
@@ -32,12 +35,15 @@ parser.add_option("-a", "--all",      dest="show_all_parameters",    default=Fal
 parser.add_option("-A", "--abs",      dest="absolute_values",    default=False,  action="store_true", help="Report also absolute values of nuisance values and errors, not only the ones normalized to the input sigma")
 parser.add_option("-p", "--poi",      dest="poi",    default="r",    type="string",  help="Name of signal strength parameter (default is 'r' as per text2workspace.py)")
 parser.add_option("-f", "--format",   dest="format", default="text", type="string",  help="Output format ('text', 'latex', 'twiki'")
-parser.add_option("-g", "--histogram", dest="plotfile", default=None, type="string", help="If true, plot the pulls of the nuisances to the given file.")
+parser.add_option("-g", "--histogram", dest="plotfile", default=None, type="string", help="If true, plot the pulls of the nuisances to the given location")
 parser.add_option("", "--pullDef",  dest="pullDef", default="", type="string", help="Choose the definition of the pull, see python/calculate_pulls.py for options")
 parser.add_option("", "--skipFitS", dest="skipFitS", default=False, action='store_true', help="skip the S+B fit, instead the B-only fit will be repeated")
 parser.add_option("", "--skipFitB", dest="skipFitB", default=False, action='store_true', help="skip the B-only fit, instead the S+B fit will be repeated")
 
 (options, args) = parser.parse_args()
+
+
+
 if len(args) == 0:
     parser.print_usage()
     exit(1)
@@ -63,10 +69,10 @@ if prefit == None or prefit.ClassName() != "RooArgSet":    raise RuntimeError, "
 
 
 #hardcoded list of nuissances we want to plot
-pars = ["alphaS","alphaDen","RENORM","FAC","dy_xsec","bk_xsec","gam_xsec",
-"Pu16","BTAG16","elScaleStat16","elScaleSyst16","elScaleGain16","elSmear16","elHLT16","elID16","elRECO16","muRC16","muID16","muHLT16","lumi16","ee16_qcd","mu16_qcd","R_ee16_os_fakes",
-"Pu17","BTAG17","elScaleStat17","elScaleSyst17","elScaleGain17","elSmear17","elHLT17","elID17","elRECO17","muRC17","muID17","muHLT17","lumi17","ee17_qcd","mu17_qcd","R_ee17_os_fakes",
-"Pu18","BTAG18","elScaleStat18","elScaleSyst18","elScaleGain18","elSmear18","elHLT18","elID18","elRECO18","muRC18","muID18","muHLT18","lumi18","ee18_qcd","mu18_qcd","R_ee18_os_fakes"]
+pars = ["alphaS","alphaDen","RENORM","FAC","REFAC", "dy_xsec","bk_xsec","gam_xsec",
+"Pu16","BTAG16","elScaleStat16","elScaleSyst16","elScaleGain16","elSmear16","elHLT16","elID16","elRECO16","muRC16","muID16","muHLT16","lumi16","ee16_fakes_norm","mu16_fakes_norm","R_ee16_os_fakes",
+"Pu17","BTAG17","elScaleStat17","elScaleSyst17","elScaleGain17","elSmear17","elHLT17","elID17","elRECO17","muRC17","muID17","muHLT17","lumi17","ee17_fakes_norm","mu17_fakes_norm","R_ee17_os_fakes",
+"Pu18","BTAG18","elScaleStat18","elScaleSyst18","elScaleGain18","elSmear18","elHLT18","elID18","elRECO18","muRC18","muID18","muHLT18","lumi18","ee18_fakes_norm","mu18_fakes_norm","R_ee18_os_fakes"]
 
 
 isFlagged = {}
@@ -362,30 +368,19 @@ elif options.format == "html":
 
 if options.plotfile:
     import ROOT
-    fout = ROOT.TFile(options.plotfile,"RECREATE")
     ROOT.gROOT.SetStyle("Plain")
     ROOT.gStyle.SetOptFit(1)
-    histogram = ROOT.TH1F("pulls", "Pulls", 60, -3, 3)
-    for pull in pulls:
-        histogram.Fill(pull)
-    canvas = ROOT.TCanvas("asdf", "asdf", 800, 800)
-    if options.pullDef : histogram.GetXaxis().SetTitle("pull")
-    else: histogram.GetXaxis().SetTitle("(#theta-#theta_{0})/#sigma_{pre-fit}")
-    histogram.SetTitle("Post-fit nuisance pull distribution")
-    histogram.SetMarkerStyle(20)
-    histogram.SetMarkerSize(2)
-    histogram.Draw("pe")
-    fout.WriteTObject(canvas)
 
-    canvas_nuis = ROOT.TCanvas("nuisances", "nuisances", 900, 600)
+    canvas_nuis = ROOT.TCanvas("nuisances", "nuisances", 1200, 900)
+    canvas_nuis.SetBottomMargin(0.18)
     hist_fit_e_s = hist_fit_s.Clone("errors_s")
     hist_fit_e_b = hist_fit_b.Clone("errors_b")
     #gr_fit_s = getGraph(hist_fit_s,-0.1)
     #gr_fit_b = getGraph(hist_fit_b, 0.1)
-    gr_fit_s.SetLineColor(ROOT.kRed)
-    gr_fit_s.SetMarkerColor(ROOT.kRed)
-    gr_fit_b.SetLineColor(ROOT.kBlue)
-    gr_fit_b.SetMarkerColor(ROOT.kBlue)
+    gr_fit_s.SetLineColor(ROOT.kBlue)
+    gr_fit_s.SetMarkerColor(ROOT.kBlue)
+    gr_fit_b.SetLineColor(ROOT.kRed)
+    gr_fit_b.SetMarkerColor(ROOT.kRed)
     gr_fit_b.SetMarkerStyle(20)
     gr_fit_s.SetMarkerStyle(20)
     gr_fit_b.SetMarkerSize(1.0)
@@ -405,22 +400,27 @@ if options.plotfile:
     canvas_nuis.SetGridx()
     canvas_nuis.RedrawAxis()
     canvas_nuis.RedrawAxis('g')
-    leg=ROOT.TLegend(0.6,0.7,0.89,0.89)
+    leg=ROOT.TLegend(0.7,0.8,0.89,0.89)
     leg.SetFillColor(0)
     leg.SetTextFont(42)
     leg.AddEntry(hist_prefit,"Prefit","FL")
     if not options.skipFitB:leg.AddEntry(gr_fit_b,"B-only fit","EPL")
     if not options.skipFitS:leg.AddEntry(gr_fit_s,"S+B fit"   ,"EPL")
     leg.Draw()
-    fout.WriteTObject(canvas_nuis)
-    canvas_pferrs = ROOT.TCanvas("post_fit_errs", "post_fit_errs", 900, 600)
+    canvas_nuis.Print(options.plotfile + "/" +  "postfit_pulls.png")
+
+
+
+    canvas_pferrs = ROOT.TCanvas("post_fit_errs", "post_fit_errs", 1200, 900)
+    canvas_pferrs.SetBottomMargin(0.18)
     for b in range(1,hist_fit_e_s.GetNbinsX()+1): 
-      hist_fit_e_s.SetBinContent(b,hist_fit_s.GetBinError(b)/hist_prefit.GetBinError(b))
-      hist_fit_e_b.SetBinContent(b,hist_fit_b.GetBinError(b)/hist_prefit.GetBinError(b))
+      e_prefit = max(1e-6, hist_prefit.GetBinError(b))
+      hist_fit_e_s.SetBinContent(b,hist_fit_s.GetBinError(b)/e_prefit)
+      hist_fit_e_b.SetBinContent(b,hist_fit_b.GetBinError(b)/e_prefit)
       hist_fit_e_s.SetBinError(b,0)
       hist_fit_e_b.SetBinError(b,0)
-    hist_fit_e_s.SetFillColor(ROOT.kRed)
-    hist_fit_e_b.SetFillColor(ROOT.kBlue)
+    hist_fit_e_s.SetFillColor(ROOT.kBlue)
+    hist_fit_e_b.SetFillColor(ROOT.kRed)
     hist_fit_e_s.SetBarWidth(0.4)
     hist_fit_e_b.SetBarWidth(0.4)
     hist_fit_e_b.SetBarOffset(0.45)
@@ -430,10 +430,10 @@ if options.plotfile:
     hist_fit_e_b.SetMinimum(0)
     if(not options.skipFitB): hist_fit_e_b.Draw("bar")
     hist_fit_e_s.Draw("barsame")
-    leg_rat=ROOT.TLegend(0.6,0.7,0.89,0.89)
+    leg_rat=ROOT.TLegend(0.7,0.8,0.89,0.89)
     leg_rat.SetFillColor(0)
     leg_rat.SetTextFont(42)
-    leg_rat.AddEntry(hist_fit_e_b,"B-only fit","F")
+    if(not options.skipFitB): leg_rat.AddEntry(hist_fit_e_b,"B-only fit","F")
     leg_rat.AddEntry(hist_fit_e_s,"S+B fit"   ,"F")
     leg_rat.Draw()
     line_one = ROOT.TLine(0,1,hist_fit_e_s.GetXaxis().GetXmax(),1)
@@ -441,7 +441,7 @@ if options.plotfile:
     line_one.Draw()
     canvas_pferrs.RedrawAxis()
 
-    fout.WriteTObject(canvas_pferrs)
+    canvas_pferrs.Print(options.plotfile + "/" + "postfit_errs.png")
 
    
 

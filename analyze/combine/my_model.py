@@ -14,17 +14,17 @@ class DY_AFB(PhysicsModel):
 
         # ss templates
         self.modelBuilder.doVar("R_ee_os_fakes[0.6,0.0,1.0]");
-        self.modelBuilder.doVar("ee16_QCD_norm[1.0, 0.01, 10.]");
-        self.modelBuilder.doVar("ee17_QCD_norm[1.0, 0.01, 10.]");
-        self.modelBuilder.doVar("ee18_QCD_norm[1.0, 0.01, 10.]");
+        self.modelBuilder.doVar("ee16_fakes_norm[1.0, 0.01, 10.]");
+        self.modelBuilder.doVar("ee17_fakes_norm[1.0, 0.01, 10.]");
+        self.modelBuilder.doVar("ee18_fakes_norm[1.0, 0.01, 10.]");
         #Remember, cant use spaces in these formulas!
         #self.modelBuilder.options.verbose = 10
-        self.modelBuilder.factory_('expr::R_ee16_qcd_os("@0*@1",ee16_QCD_norm,R_ee_os_fakes)')
-        self.modelBuilder.factory_('expr::R_ee17_qcd_os("@0*@1",ee17_QCD_norm,R_ee_os_fakes)')
-        self.modelBuilder.factory_('expr::R_ee18_qcd_os("@0*@1",ee18_QCD_norm,R_ee_os_fakes)')
-        self.modelBuilder.factory_('expr::R_ee16_qcd_ss("@0*(1.0-@1)",ee16_QCD_norm,R_ee_os_fakes)')
-        self.modelBuilder.factory_('expr::R_ee17_qcd_ss("@0*(1.0-@1)",ee17_QCD_norm,R_ee_os_fakes)')
-        self.modelBuilder.factory_('expr::R_ee18_qcd_ss("@0*(1.0-@1)",ee18_QCD_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee16_qcd_os("@0*@1",ee16_fakes_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee17_qcd_os("@0*@1",ee17_fakes_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee18_qcd_os("@0*@1",ee18_fakes_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee16_qcd_ss("@0*(1.0-@1)",ee16_fakes_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee17_qcd_ss("@0*(1.0-@1)",ee17_fakes_norm,R_ee_os_fakes)')
+        self.modelBuilder.factory_('expr::R_ee18_qcd_ss("@0*(1.0-@1)",ee18_fakes_norm,R_ee_os_fakes)')
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
         self.modelBuilder.factory_('expr::Norm("3.0/4.0/(2.0+@0)",Alph)')

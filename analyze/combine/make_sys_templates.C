@@ -4,6 +4,10 @@
 
 void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0){
     //type0 is pdfs, type1 other sys
+    if(nJobs == 0){
+        printf("Invalid setting of 0 total jobs! Going to change it to be 1 job (ie this process runs over all systematics) \n");
+        nJobs = 1;
+    }
 
     //const TString pdf_fout_name("combine/templates/sep19_2016_pdf.root");
     const TString pdf_fout_name("output_files/sys_test.root");
@@ -33,13 +37,15 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
         }
     }
     else{
+
       vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_REFAC", "_alphaDen", "_alphaS"  };
+      //vector<string> sys_labels_raw =  {};
       
       
       
       vector<string>  sys_labels_uncorr = 
         {"_METJER", "_METJEC", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_muHLT", 
-          "_muID", "_muISO",  "_elHLT", "_elID", "_elRECO", "_Pu", "_BTAG" };
+          "_muID", "_muISO",  "_elHLTBAR", "_elIDBAR", "_elRECOBAR", "_elHLTEND", "_elIDEND", "_elRECOEND", "_Pu", "_BTAG" };
 
       string yr_string; 
       if(year == 2016) yr_string = string("16");
@@ -57,28 +63,17 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
           sys_labels.push_back(cpy.append("Down"));
       }
     }
-    /*
       cout << "sys labels: ";
       for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
-          cout << *iter;
+          cout << *iter << " " ;
       }
       cout<< endl;
-      exit(1);
-      */
 
 
     char dirname[40];
 
     int i_start=0;
     int i_max = n_m_bins;
-
-    /*
-    t_elel_mc_raw = t_elel_mc->CloneTree();
-    t_mumu_mc_raw = t_mumu_mc->CloneTree();
-
-    t_elel_back_raw = t_elel_back->CloneTree();
-    t_mumu_back_raw = t_mumu_back->CloneTree();
-    */
 
 
     printf("loop start \n");
@@ -92,13 +87,6 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
         m_low = m_bins[i];
         m_high = m_bins[i+1];
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
-        char cut_str[100];
-        printf("Cutting templates \n");
-        sprintf(cut_str, "(m > %.0f) && (m < %0.f)", m_low - 15., m_high+15.);
-
-
-
-
        
 
         int i_sys =0;
@@ -116,13 +104,14 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
 
                 make_mc_templates(year, alpha_denom, *iter);
                 convert_mc_templates(year, *iter);
+
+                pdf_fout->cd();
+                gDirectory->cd(dirname);
+                write_out_templates(*iter);
             }
             i_sys++;
         }
 
-        pdf_fout->cd();
-        gDirectory->cd(dirname);
-        write_out_templates();
     }
 
 

@@ -2,12 +2,13 @@
 
 set -x 
 #idx=1
-nToys=100
+nToys=10
 chan=ee
 label=100_newpdf
 freezeParam=pdf,bk_xsec,lumi
-for idx in 0 1 2 3 4 5
-do
+#for idx in 0 1 2 3 4 5
+#do
+idx = 0
 
     workspace=workspaces/${chan}_fit${idx}.root
 
@@ -26,7 +27,7 @@ do
     mv fitDiagnostics.root bias_tests/fit_${chan}_${label}_mbin${idx}.root
 
 
-done
+#done
 
 
 
