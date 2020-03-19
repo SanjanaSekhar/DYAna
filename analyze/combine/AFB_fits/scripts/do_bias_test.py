@@ -32,7 +32,8 @@ os.system("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combi
 workspace = "workspaces/%s_fit_bias_tests_%i.root" % (chan, mbin)
 os.system("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))
 os.system("combine -M GenerateOnly --toysFrequentist -d %s -t %i --saveToys --setParameters Afb=%.2f,A0=%.2f" % (workspace, nToys, inject_AFB, inject_A0))
-os.system("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root  -t %i --robustFit 1" %(workspace, nToys))
+#os.system("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root  -t %i --robustFit 1" %(workspace, nToys))
+os.system("combine -M FitDiagnostics -d %s --saveWorkspace --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i --robustFit 1" % (workspace, nToys))
 
 #f_ws = TFile.Open("higgsCombineTest.FitDiagnostics.mH120.123456.root")
 #f_toys = TFile.Open("higgsCombineTest.GenerateOnly.mH120.123456.root")
@@ -43,17 +44,19 @@ os.system("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFi
 #os.system("PostFitShapesFromWorkspace -w toy_ws.root --dataset model_sData  -f fitDiagnostics.root:fit_s -o toy_shapes.root --sampling --samples 100")
 ##os.system("python scripts/plot_postfit.py -i toy_ws.root -o test/ -m %i" % (mbin))
 
-exit(1)
+#exit(1)
 
 
-f_fit = TFile.Open("multidimfit.root")
-tree_fit = f_fit.Get("fit_mdf")
+#f_fit = TFile.Open("multidimfit.root")
+#tree_fit = f_fit.Get("fit_mdf")
+f_fit = TFile.Open("fitDiagnostics.root")
+tree_fit = f_fit.Get("tree_fit_sb")
 
 h_pull_afb = TH1F("h_pull_afb", "", 20, -4, 4)
-h_pull_a0 = TH1F("h_pull_a0", "", 20, -4, 4)
+#h_pull_a0 = TH1F("h_pull_a0", "", 20, -4, 4)
 
 tree_fit.Draw("(Afb - %.2f)/AfbErr>>h_pull_afb" % inject_AFB)
-tree_fit.Draw("(A0 - %.2f)/A0Err>>h_pull_a0" % inject_A0)
+#tree_fit.Draw("(A0 - %.2f)/A0Err>>h_pull_a0" % inject_A0)
 
 h_pull_afb.Fit("gaus")
-h_pull_a0.Fit("gaus")
+#h_pull_a0.Fit("gaus")
