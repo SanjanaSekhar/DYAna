@@ -43,12 +43,22 @@ void cleanup_template(TH2F *h){
         for(int j=0; j<= h->GetNbinsY()+1; j++){
             //printf("%i %i \n", i,j);
             double min_val = 1e-6;
-            double min_err = 1e-7;
             float val = h->GetBinContent(i,j);
+            float err = h->GetBinError(i,j);
+            float max_err = 0.4;
             if(val< min_val){
                 h->SetBinContent(i,j,min_val);
-                h->SetBinError(i,j,min_err);
+                h->SetBinError(i,j,err);
             }
+            if(err > max_err * val){
+                //prevent val froming being close to fit boundary at 0
+                //By setting max stat error at 40%
+                if(val < 3) err = 0.;
+                else err = val * max_err;
+                h->SetBinError(i,j, err);
+            }
+
+
 
         }
     }

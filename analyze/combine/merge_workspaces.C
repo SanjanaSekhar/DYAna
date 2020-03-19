@@ -30,8 +30,8 @@ void CopyDir(TDirectory *source, TDirectory *savdir) {
 void merge_workspaces(){
 
 
-    const TString f1_s("combine/templates/mar9_2016.root");
-    const TString fout_s("combine/templates/mar12_merge_2016.root");
+    const TString f1_s("combine/templates/mar18_2016.root");
+    const TString fout_s("combine/templates/mar18_merge_2016.root");
     TFile *f1 = TFile::Open(f1_s, "READ");
     TFile *fout = TFile::Open(fout_s, "RECREATE");
     char dirname[40];
