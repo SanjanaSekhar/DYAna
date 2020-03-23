@@ -1,17 +1,6 @@
+from utils import *
 import ROOT
 from ROOT import *
-
-import subprocess
-import sys, commands, os, fnmatch
-from optparse import OptionParser
-from optparse import OptionGroup
-from numpy import arange
-from itertools import product
-
-
-def print_and_do(s):
-    print("Exec: " + s)
-    os.system(s)
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
@@ -39,23 +28,12 @@ cleanup = False
 #for mbin in range(8):
 for mbin in range(1):
 
-    template_card="card_templates/combined_fit_template.txt"
-    if(options.no_sys): template_card = "card_templates/combined_fit_template.txt"
-    comb_card = "cards/combined_fit_mbin%i.txt" % (mbin)
-    for year in (16,17,18):
-        card="cards/combined_fit_y%i_mbin%i.txt" % (year, mbin)
-        print_and_do("cp %s %s" % (template_card, card))
-        print_and_do("""sed -i "s/YR/%i/g" %s""" % (year, card))
-
-    print_and_do("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combined_fit_y17_mbin%i.txt Y18=cards/combined_fit_y18_mbin%i.txt > %s" % (mbin, mbin, mbin, comb_card))
-
-
-
     workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
+    make_workspace(workspace, mbin, no_sys = options.do_sys)
+
     plotdir="postfit_plots/%s_mbin%i" % (options.chan, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
     print_and_do("mkdir %s" % (plotdir))
-    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 
     if(not options.no_plot):
