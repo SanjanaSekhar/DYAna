@@ -1,8 +1,6 @@
 #define STAND_ALONE
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
-#include "utils.C"
-#include "../../utils/TemplateMaker_systematics.C"
 #include "../../utils/root_files.h"
 #include "../../analyze/combine/TemplateUtils.h"
 
@@ -14,38 +12,44 @@ void draw_templates(){
     
         int year = 2018;
         init(year);
-        char *plot_dir = "Paper_plots/template_plots";
+        //char *plot_dir = "Paper_plots/template_plots";
+        char *plot_dir = "Misc_plots/template_plots";
         //setup_all_SFs(year);
         string sys_label = "";
 
-        for(int i=0; i<n_m_bins; i++){
+        int num_bins = 1;
+        const int n_rap_bins = 4;
+        float rap_bins[] = {0., 1.0, 1.25, 1.5,  2.4};
+
+        for(int i=0; i<num_bins; i++){
+            i = 6;
             Double_t alpha_denom = amc_alpha[i];
             double m_low = m_bins[i];
             double m_high = m_bins[i+1];
 
             char title[100];
             auto h_mumu_sym = new TH2F(title, "Symmetric template of mc",
-                    n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+                    n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_sym->SetDirectory(0);
             sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
             auto h_mumu_alpha = new TH2F(title, "Gauge boson polarization template of mc",
-                    n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+                    n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_alpha->SetDirectory(0);
             sprintf(title, "mumu%i_asym%s", year %2000, sys_label.c_str());
             auto h_mumu_asym = new TH2F(title, "Asymmetric template of mc",
-                    n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+                    n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_asym->SetDirectory(0);
 
             auto h_elel_sym = new TH2F(title, "Symmetric template of mc",
-                    n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+                    n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_sym->SetDirectory(0);
             sprintf(title, "elel%i_alpha%s", year %2000, sys_label.c_str());
             auto h_elel_alpha = new TH2F(title, "Gauge boson polarization template of mc",
-                    n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+                    n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_alpha->SetDirectory(0);
             sprintf(title, "elel%i_asym%s", year %2000, sys_label.c_str());
             auto h_elel_asym = new TH2F(title, "Asymmetric template of mc",
-                    n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+                    n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_asym->SetDirectory(0);
 
 
@@ -106,7 +110,13 @@ void draw_templates(){
             h1_mumu_asym->Draw("hist");
             h1_mumu_sym->Draw("hist same ");
 
-            TLegend *leg1 = new TLegend(0.15, 0.15);
+            float x_start = 0.75;
+            float x_end = 0.9;
+
+            float y_start = 0.75;
+            float y_end = 0.9;
+
+            TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
             leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
             leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
             leg1->Draw();
@@ -120,7 +130,7 @@ void draw_templates(){
 
 
             c_mumu2->cd();
-            TLegend *leg2 = new TLegend(0.15, 0.15);
+            TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
             leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");

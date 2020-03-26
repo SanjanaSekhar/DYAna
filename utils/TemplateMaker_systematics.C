@@ -141,7 +141,7 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     tm.setup_systematic(sys_label);
     tm.setup();
 
-
+    double max_obs = 0.;
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -158,18 +158,22 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
             double reweight_s = (1 + gen_cost*gen_cost)/denom;
             double reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
+            double obs = std::abs(tm.cm.Rapidity());
+            max_obs = std::max(obs, max_obs);
+            //double obs = tm.xF;
 
-            h_sym->Fill(tm.xF, tm.cost, reweight_s * tm.evt_weight); 
-            h_sym->Fill(tm.xF, -tm.cost, reweight_s * tm.evt_weight); 
+            h_sym->Fill(obs, tm.cost, reweight_s * tm.evt_weight); 
+            h_sym->Fill(obs, -tm.cost, reweight_s * tm.evt_weight); 
 
-            h_asym->Fill(tm.xF, tm.cost, reweight_a * tm.evt_weight);
-            h_asym->Fill(tm.xF, -tm.cost, -reweight_a * tm.evt_weight);
+            h_asym->Fill(obs, tm.cost, reweight_a * tm.evt_weight);
+            h_asym->Fill(obs, -tm.cost, -reweight_a * tm.evt_weight);
 
-            h_alpha->Fill(tm.xF, tm.cost, reweight_alpha * tm.evt_weight); 
-            h_alpha->Fill(tm.xF, -tm.cost, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(obs, tm.cost, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(obs, -tm.cost, reweight_alpha * tm.evt_weight); 
 
         }
     }
+    printf("Max obs is %.3f \n", max_obs);
 
     tm.finish();
     int mbin = find_bin(m_bins, m_low + 0.1);
