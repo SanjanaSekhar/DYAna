@@ -39,6 +39,8 @@ parser.add_option("-g", "--histogram", dest="plotfile", default=None, type="stri
 parser.add_option("", "--pullDef",  dest="pullDef", default="", type="string", help="Choose the definition of the pull, see python/calculate_pulls.py for options")
 parser.add_option("", "--skipFitS", dest="skipFitS", default=False, action='store_true', help="skip the S+B fit, instead the B-only fit will be repeated")
 parser.add_option("", "--skipFitB", dest="skipFitB", default=False, action='store_true', help="skip the B-only fit, instead the S+B fit will be repeated")
+parser.add_option("", "--multidim", dest="multidim", default=False, action='store_true', help="Do procedure for MultDimFit")
+parser.add_option("", "--prefit", dest="prefit", default="", type="string", help="Look up prefit nuisances in this separate file")
 
 (options, args) = parser.parse_args()
 
@@ -58,21 +60,35 @@ if options.pullDef : options.show_all_parameters=True
 
 setUpString = "diffNuisances run on %s, at %s with the following options ... "%(args[0],datetime.datetime.utcnow())+str(options)
 
+file_prefit = None
 file = ROOT.TFile(args[0])
+if(options.prefit != ""): 
+    file_prefit = ROOT.TFile(options.prefit)
+    if(file_prefit == None): raise RuntimeError, "Cannot open prefit file %s" % args[0]
 if file == None: raise RuntimeError, "Cannot open file %s" % args[0]
-fit_s  = file.Get("fit_s") if not options.skipFitS  else file.Get("fit_b")
-fit_b  = file.Get("fit_b") if not options.skipFitB  else file.Get("fit_s")
-prefit = file.Get("nuisances_prefit")
+if(not options.multidim):
+    fit_s  = file.Get("fit_s") if not options.skipFitS  else file.Get("fit_b")
+    fit_b  = file.Get("fit_b") if not options.skipFitB  else file.Get("fit_s")
+else:
+    fit_s = fit_b = file.Get("fit_mdf")
+    options.skipFitB = True
+if(file_prefit == None):
+    prefit = file.Get("nuisances_prefit")
+else:
+    prefit = file_prefit.Get("nuisances_prefit")
+
 if fit_s == None or fit_s.ClassName()   != "RooFitResult": raise RuntimeError, "File %s does not contain the output of the signal fit 'fit_s'"     % args[0]
 if fit_b == None or fit_b.ClassName()   != "RooFitResult": raise RuntimeError, "File %s does not contain the output of the background fit 'fit_b'" % args[0]
 if prefit == None or prefit.ClassName() != "RooArgSet":    raise RuntimeError, "File %s does not contain the prefit nuisances 'nuisances_prefit'"  % args[0]
 
 
 #hardcoded list of nuissances we want to plot
-pars = ["alphaS","alphaDen","RENORM","FAC","REFAC", "dy_xsec","bk_xsec","gam_xsec",
-"Pu16","BTAG16","elScaleStat16","elScaleSyst16","elScaleGain16","elSmear16","elHLT16","elID16","elRECO16","muRC16","muID16","muHLT16","lumi16","ee16_fakes_norm","mu16_fakes_norm","R_ee16_os_fakes",
-"Pu17","BTAG17","elScaleStat17","elScaleSyst17","elScaleGain17","elSmear17","elHLT17","elID17","elRECO17","muRC17","muID17","muHLT17","lumi17","ee17_fakes_norm","mu17_fakes_norm","R_ee17_os_fakes",
-"Pu18","BTAG18","elScaleStat18","elScaleSyst18","elScaleGain18","elSmear18","elHLT18","elID18","elRECO18","muRC18","muID18","muHLT18","lumi18","ee18_fakes_norm","mu18_fakes_norm","R_ee18_os_fakes"]
+#pars = ["alphaS","alphaDen","RENORM","FAC","REFAC", "dy_xsec","bk_xsec","gam_xsec",
+#"Pu16","BTAG16","elScaleStat16","elScaleSyst16","elScaleGain16","elSmear16","elHLT16","elID16","elRECO16","muRC16","muID16","muHLT16","lumi16","ee16_fakes_norm","mu16_fakes_norm","R_ee16_os_fakes",
+#"Pu17","BTAG17","elScaleStat17","elScaleSyst17","elScaleGain17","elSmear17","elHLT17","elID17","elRECO17","muRC17","muID17","muHLT17","lumi17","ee17_fakes_norm","mu17_fakes_norm","R_ee17_os_fakes",
+#"Pu18","BTAG18","elScaleStat18","elScaleSyst18","elScaleGain18","elSmear18","elHLT18","elID18","elRECO18","muRC18","muID18","muHLT18","lumi18","ee18_fakes_norm","mu18_fakes_norm","R_ee18_os_fakes"]
+
+exclude_pars = ["prop", "pdf", "A0", "Afb"]
 
 
 isFlagged = {}
@@ -90,8 +106,7 @@ nuis_p_i=0
 title = "pull" if options.pullDef else "#theta"
 
 """
-def getGraph(hist,shift):
-
+def getGraph(hist,shift): 
    gr = ROOT.TGraphAsymErrors()
    gr.SetName(hist.GetName())
    for i in range(hist.GetNbinsX()):
@@ -103,12 +118,30 @@ def getGraph(hist,shift):
    return gr
 """
 
+a_nuis_s = []
+a_nuis_b = []
+a_nuis_p = []
+a_name = []
+
+for i in range(fpf_s.getSize()):
+    exclude = False
+    nuis_s = fpf_s.at(i)
+    name   = nuis_s.GetName();
+    for label in exclude_pars:
+        if(label in name): exclude = True
+    if(not exclude):
+        nuis_b = fpf_b.find(name)
+        nuis_p = prefit.find(name)
+        a_name.append(name)
+        a_nuis_s.append(nuis_s)
+        a_nuis_b.append(nuis_b)
+        a_nuis_p.append(nuis_p)
 
 
 
 
 # Also make histograms for pull distributions:
-n_bins = len(pars)
+n_bins = len(a_name)
 hist_fit_b  = ROOT.TH1F("fit_b"   ,"B-only fit Nuisances;;%s "%title,n_bins,0, n_bins)
 hist_fit_s  = ROOT.TH1F("fit_s"   ,"S+B fit Nuisances   ;;%s "%title,n_bins,0,n_bins)
 hist_prefit = ROOT.TH1F("prefit_nuisancs","Prefit Nuisances    ;;%s "%title,n_bins,0,n_bins)
@@ -118,13 +151,12 @@ gr_fit_s    = ROOT.TGraphAsymmErrors(); gr_fit_s.SetTitle("fit_b_s")
 
 
 # loop over all fitted parameters
-for i in range(fpf_s.getSize()):
+for i in range(len(a_name)):
 
-    nuis_s = fpf_s.at(i)
-    name   = nuis_s.GetName();
-    nuis_b = fpf_b.find(name)
-    nuis_p = prefit.find(name)
-    if(name not in pars): continue
+    name = a_name[i]
+    nuis_s = a_nuis_s[i]
+    nuis_b = a_nuis_b[i]
+    nuis_p = a_nuis_p[i]
     print(name)
 
     # keeps information to be printed about the nuisance parameter
