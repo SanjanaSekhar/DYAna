@@ -43,7 +43,7 @@ parser.add_option("--sub", default=False, action="store_true", help="Submit jobs
 parser.add_option("--status", default=False, action="store_true", help="Check on submitted jobs")
 
 parser.add_option("-e", "--haddEOS", dest='haddEOS', default = False, action='store_true',  help="Hadd EOS files together and save in output_files/YEAR directory")
-parser.add_option("-g", "--getEOS", dest='getEOSFiles', default = False, action='store_true',  help="Get EOS files and save to out directory")
+parser.add_option("-g", "--getEOS", default = False, action='store_true',  help="Get EOS files and save to out directory")
 parser.add_option("-y", "--year", dest='year', type='string', default = 2016,  help="Year for output file location")
 
 parser.add_option("--tar", dest='tar', default = False, action='store_true',  help="Create tarball of current directory")
@@ -51,7 +51,10 @@ parser.add_option("--tarname", dest='tarname', default = "Analysis", help="Name 
 parser.add_option("--tarexclude", dest='tarexclude', default = '', 
         help="Name of directories to exclude from the tar (relative to cmssw_base), format as comma separated string (eg 'dir1, dir2') ")
 parser.add_option("--dy", dest='DY', default = False, action="store_true",  help="Shortcut to create tarball for DY AFB analysis (DYAna directory)")
+parser.add_option("--cmssw", default = False, action="store_true",  help="Shortcut to create tarball for CMSSW environment for DY AFB analysis (with combine)")
 parser.add_option("--root_files", dest='root_files', default = False, action="store_true",  help="Shortcut to create tarball for root files of AFB analysis")
+parser.add_option("--no_rename", default = False, action="store_true",  help="Don't rename files for storing on EOS")
+
 
 
 cwd = os.getcwd()
@@ -67,7 +70,8 @@ EOS_base = xrd_base + EOS_home
 def write_job(out, name, nJobs, iJob, eosout=''):
     #print 'job_i %i nfiles %i subjobi %i'%(i,n,j)
     cwd = os.getcwd()
-    eos_tardir = EOS_base + 'Condor_inputs/' + options.tarname + '.tgz'
+    eos_an_file = EOS_base + 'Condor_inputs/' + options.tarname + '.tgz'
+    eos_cmssw_file = EOS_base + 'Condor_inputs/' + 'DY_CMSSW' + '.tgz'
 
     sub_file = open('%s/%s_job%d.sh' % (out, name, iJob), 'w')
     sub_file.write('#!/bin/bash\n')
@@ -76,18 +80,26 @@ def write_job(out, name, nJobs, iJob, eosout=''):
     sub_file.write('source /cvmfs/cms.cern.ch/cmsset_default.sh\n')
     sub_file.write('pwd\n')
     sub_file.write('export SCRAM_ARCH=slc6_amd64_gcc530\n')
-    sub_file.write('eval `scramv1 project CMSSW %s`\n'% (cmssw_ver))
-    sub_file.write('cat my_script.sh \n')
-    sub_file.write('mv my_script.sh %s/src/ \n'% (cmssw_ver))
-    sub_file.write('cd %s/src\n'%(cmssw_ver))
-    sub_file.write('eval `scramv1 runtime -sh`\n')
-    sub_file.write('xrdcp %s tarDir.tgz\n' %eos_tardir)
+    if(not options.with_combine):
+        sub_file.write('eval `scramv1 project CMSSW %s`\n'% (cmssw_ver))
+        sub_file.write('cat my_script.sh \n')
+        sub_file.write('mv my_script.sh %s/src/ \n'% (cmssw_ver))
+        sub_file.write('cd %s/src\n'%(cmssw_ver))
+        sub_file.write('eval `scramv1 runtime -sh`\n')
+    else:
+        sub_file.write('xrdcp %s CMSSW.tgz \n' % eos_cmssw_file) 
+        sub_file.write('cat my_script.sh \n')
+        sub_file.write('tar -xzf CMSSW.tgz \n')
+        sub_file.write('mv my_script.sh DY_analysis/src/ \n')
+        sub_file.write('cd DY_analysis/src \n')
+        sub_file.write('eval `scramv1 runtime -sh`\n')
+        sub_file.write('scram b ProjectRename \n')
+
+    sub_file.write('xrdcp %s tarDir.tgz\n' %eos_an_file)
     sub_file.write('tar -xvzf tarDir.tgz \n')
-    if(options.with_combine):
-        sub_file.write('git clone https://github.com/cms-analysis/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit \n')
-        sub_file.write('git clone https://github.com/cms-analysis/CombineHarvester.git CombineHarvester \n')
     #sub_file.write('rm -r tarDir.tgz \n')
     sub_file.write('scram b -j \n')
+    sub_file.write('eval `scramv1 runtime -sh`\n')
     sub_file.write('./my_script.sh %s %i %i \n' % (eosout, nJobs,iJob))
     sub_file.write('cd ${_CONDOR_SCRATCH_DIR} \n')
     sub_file.write('rm -rf %s\n' % cmssw_ver)
@@ -151,6 +163,15 @@ if options.tar:
         tar_cmd = "tar -cf %s" % (options.tarname + ".tgz")
         for item in include_files:
             tar_cmd += " " + "output_files/"+item
+    if options.cmssw:
+        print("tarring CMSSW")
+        tar_cmd += " --exclude='DY_analysis/src/Analysis/*' " 
+        tar_cmd += " --exclude='%s' " %'*.tgz' 
+        tar_cmd += " --exclude='%s' " %'*.git*' 
+        tar_cmd += " -zcf %s -C %s %s" % ("DY_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'DY_analysis')
+        options.tarname = "DY_CMSSW"
+
+
     print "Executing tar command %s \n" % tar_cmd
     os.system(tar_cmd)
     cp_cmd = "xrdcp -f %s %s" %(options.tarname + ".tgz", EOS_base + "Condor_inputs/")
@@ -169,8 +190,10 @@ elif (options.haddEOS):
     print "Going to execute cmd %s: " % hadd_cmd
     os.system(hadd_cmd)
 
-elif (options.getEOSFiles):
+elif (options.getEOS):
+    print("Getting files and outputting to %s" % options.outdir)
     result = subprocess.check_output(["./get_crab_file_list.sh", EOS_home + 'Condor_outputs/' + options.name])
+    print(result)
     for f in result.splitlines():
         cmd = "xrdcp  -f %s %s" % (f, options.outdir)
         #print "Going to execute cmd %s: " % cmd
@@ -190,6 +213,7 @@ elif options.nJobs > 0:
 
     for iJob in xrange(options.nJobs):
         eos_file_name = EOS_base + 'Condor_outputs/' + options.name + ('/file_%i.root' % iJob)
+        if(options.no_rename): eos_file_name = EOS_base + 'Condor_outputs/' + options.name + '/'
         write_job(options.outdir + options.name, options.name, options.nJobs, iJob, eos_file_name)
 
 # submit jobs by looping over job scripts in output dir

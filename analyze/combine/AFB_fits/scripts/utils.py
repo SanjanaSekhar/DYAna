@@ -38,6 +38,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     h_test = TH1D("h_toys", "Goodness of fit: Mass bin %i" % mbin, 30, my_min, my_max)
     for toy in toys:
         h_test.Fill(toy.limit)
+
     bin_low = h_test.GetXaxis().FindBin(t_obs)
     bin_high = h_test.GetXaxis().FindBin(my_max)
     integral  = h_test.Integral()
@@ -51,10 +52,9 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     print("Data gof is %.0f. p-value is %.3f based on %.0f toys" %(t_obs, p_val, integral))
 
     fout_name = "%sgof_%s_bin%i.png" % (odir, chan, mbin)
-
+    draw_max = h_test.GetMaximum()
     c = TCanvas("c", "", 800, 800)
     h_test.Draw("hist")
-    draw_max = h_test.GetMaximum()
     l = TLine(t_obs, 0., t_obs, draw_max)
     l.SetLineColor(kRed)
     l.SetLineWidth(2)
@@ -64,7 +64,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     latex.SetTextSize(0.025)
     latex.SetTextAlign(13)
     latex.SetNDC(True)
-    latex.DrawLatex(0.75, 0.6, "Data gof is %.0f, p-value is %.2f" % (t_obs, p_val))
+    latex.DrawLatex(0.5, 0.75, "Data gof is %.0f, p-value is %.2f" % (t_obs, p_val))
     c.Print(fout_name)
     f1.Close()
 
@@ -76,12 +76,14 @@ def print_and_do(s):
 def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fit_name = 'fit_s'
     workspace = d+'higgsCombineTest.FitDiagnostics.mH120.root'
+    fit_file = d+'fitDiagnostics.root'
     if(mdf):
         fit_name = 'fit_mdf'
         workspace = d+'higgsCombineTest.MultiDimFit.mH120.root'
+        fit_file = d+'multidimfit.root'
     w_f = TFile.Open(workspace)
     w = w_f.Get('w')
-    fr_f = TFile.Open(d+'fitDiagnostics.root')
+    fr_f = TFile.Open(fit_file)
     fr = fr_f.Get(fit_name)
     myargs = RooArgSet(fr.floatParsFinal())
     fitted_afb = myargs.find("Afb").getVal()

@@ -157,7 +157,7 @@ for i in range(len(a_name)):
     nuis_s = a_nuis_s[i]
     nuis_b = a_nuis_b[i]
     nuis_p = a_nuis_p[i]
-    print(name)
+    #print(name)
 
     # keeps information to be printed about the nuisance parameter
     row = []

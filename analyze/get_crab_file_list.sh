@@ -6,7 +6,7 @@ list_files()
     local files=`xrdfs root://cmseos.fnal.gov ls  $1`
     for file in $files
     do
-        if [[ $file == *.root ]];
+        if [[ $file == *.root ]] || [[ $file == *.png ]] || [[ $file == *.pdf ]];
         then
             echo root://cmseos.fnal.gov/$file
         elif [[ $file != *log* ]] && [[ $file != *fail* ]] ; 

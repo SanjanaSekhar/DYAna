@@ -45,16 +45,15 @@ void cleanup_template(TH2F *h){
             double min_val = 1e-6;
             float val = h->GetBinContent(i,j);
             float err = h->GetBinError(i,j);
-            float max_err = 0.4;
+            float max_err = 1.; //percent
             if(val< min_val){
                 h->SetBinContent(i,j,min_val);
                 h->SetBinError(i,j,err);
             }
             if(err > max_err * val){
                 //prevent val froming being close to fit boundary at 0
-                //By setting max stat error at 40%
-                if(val < 3) err = 0.;
-                else err = val * max_err;
+                //By setting max stat error
+                err = val * max_err;
                 h->SetBinError(i,j, err);
             }
 
@@ -113,7 +112,7 @@ int gen_data_template(TTree *t1, TH2F* h,
             if(!ss){
                 if(scramble_data){
                     //randomly flip data events
-                    if(rand->Rndm() > 0.5) tm.cost = std::fabs(tm.cost);
+                    if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
                     else tm.cost = -std::fabs(tm.cost);
                 }
                 h->Fill(tm.xF, tm.cost, 1); 

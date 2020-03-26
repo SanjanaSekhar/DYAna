@@ -27,8 +27,8 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
         float num_err = pow(h->GetBinError(i),2);
         float weight_err = scaling * err_sum;
         float new_err = 0.;
-        if(bin_num < 3) new_err = 0.;
-        else new_err = min((float) (0.4 * h->GetBinContent(i)), sqrt(num_err + weight_err));
+        float max_err = 1.0;
+        new_err = min((float) (max_err * h->GetBinContent(i)), sqrt(num_err + weight_err));
 
         h->SetBinError(i, new_err);
     }
@@ -52,9 +52,9 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH2F *h){
             float num_err = pow(h->GetBinError(i,j),2);
             float weight_err = scaling * err_sum;
             float new_err = 0.;
+            float max_err = 1.0;
 
-            if(bin_num < 3) new_err = 0.;
-            else new_err = min((float) (0.4 * h->GetBinContent(i,j)), sqrt(num_err + weight_err));
+            new_err = min((float) (max_err * h->GetBinContent(i,j)), sqrt(num_err + weight_err));
 
 
             h->SetBinError(i,j, new_err);

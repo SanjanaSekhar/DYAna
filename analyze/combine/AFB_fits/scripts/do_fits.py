@@ -7,6 +7,7 @@ parser.add_option("--chan",  default="combined", type="string", help="What chann
 parser.add_option("--no_plot",  default=False, action="store_true", help="Don't make postfit plots")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
 parser.add_option("--no_cleanup",  default=False, action="store_true", help="Don't remove root files created by fit")
+parser.add_option("--mbin", default = -1, type='int', help="Only do fits for this single mass bin, default is all bins")
 
 (options, args) = parser.parse_args()
 
@@ -24,12 +25,18 @@ elif(options.chan == "mumu"):
 
 cleanup = False
 
+bin_start = 0
+bin_stop = 8
+if(options.mbin >= 0):
+    print("Will only do fit for bin %i " % options.mbin)
+    bin_start = options.mbin
+    bin_stop = bin_start + 1
 
-#for mbin in range(8):
-for mbin in range(1):
+for mbin in range(bin_start, bin_stop):
+    print(" \n \n Starting fit for bin %i \n\n" % mbin)
 
     workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
-    make_workspace(workspace, mbin, no_sys = options.do_sys)
+    make_workspace(workspace, mbin, no_sys = options.no_sys)
 
     plotdir="postfit_plots/%s_mbin%i" % (options.chan, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
@@ -37,13 +44,13 @@ for mbin in range(1):
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 
     if(not options.no_plot):
-        print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --skip-prefit --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
+        print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
                 % (options.chan, mbin))
         print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i" % (options.chan, mbin, plotdir, mbin))
         print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
         print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (plotdir))
         print_and_do("mv %s_fit_shapes_mbin%i.root %s" %(options.chan, mbin, plotdir))
-        if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root")
+        if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
 
 
     print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")

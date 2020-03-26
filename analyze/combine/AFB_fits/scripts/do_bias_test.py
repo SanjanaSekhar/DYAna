@@ -41,8 +41,8 @@ for i in range(options.nToys):
     A0 = myargs.find("A0").getVal()
     A0_err = myargs.find("A0").getError()
     print("Afb %.3f err %.3f " % (Afb, Afb_err))
-    h_pull_afb.Fill((Afb- options.Afb)/ Afb_err)
-    h_pull_a0.Fill((A0- options.A0)/ A0_err)
+    if(Afb_err > 0.): h_pull_afb.Fill((Afb- options.Afb)/ Afb_err)
+    if(A0_err > 0.):  h_pull_a0.Fill((A0- options.A0)/ A0_err)
     f_fit.Close()
     print_and_do("rm higgsCombineTest.GenerateOnly.mH120.%i.root" % i)
 

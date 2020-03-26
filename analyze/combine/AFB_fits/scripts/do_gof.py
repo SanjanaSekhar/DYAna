@@ -6,8 +6,6 @@ from utils import *
 gROOT.SetBatch(True)
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
-parser.add_option("--Afb",  default=0.6, type='float', help="Afb value to inject")
-parser.add_option("--A0",  default=0.05, type='float', help="A0 value to inject")
 parser.add_option("--nToys",  default=100, type='int', help="How many toys to run")
 parser.add_option("--mbin",  default=0, type='int', help="Which mass bin to run on ")
 parser.add_option("--teststat", default="saturated", help="Which gof test to use (saturated,KS,AD)")
@@ -35,8 +33,8 @@ if(options.mask_mumu):
 workspace = "workspaces/%s_gof_tests_%i.root" % (chan, options.mbin)
 make_workspace(workspace, options.mbin)
 
-print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --robustFit 1" % (workspace))
-fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1.)
+print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1" % (workspace))
+fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1., mdf = True)
 print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
 print("Based on initial fit, injecting Afb = %.3f A0 = %.3f"  %(fitted_afb, fitted_a0))
 print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t %i  --setParameters Afb=%.2f,A0=%.2f" 
@@ -46,7 +44,7 @@ print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTe
 gof_helper(chan, mbin = options.mbin, odir = options.odir)
 
 
-print_and_do("mv higgsCombineTest.GoodnessOfFit.mH120.123456.root %s%s_bin%i_toys.root" % (options.odir, chan, mbin))
+print_and_do("mv higgsCombineTest.GoodnessOfFit.mH120.123456.root %s%s_bin%i_toys.root" % (options.odir, chan, options.mbin))
 print_and_do("rm higgsCombineTest.GoodnessOfFit.mH120.root")
 
 

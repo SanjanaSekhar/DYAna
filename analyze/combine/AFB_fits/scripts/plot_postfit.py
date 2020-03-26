@@ -124,8 +124,24 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     mains.append(TPad(hist.GetName()+'_main',hist.GetName()+'_main',0, 0.1, 1, 1))
                     subs.append(TPad(hist.GetName()+'_sub',hist.GetName()+'_sub',0, 0, 0, 0))
 
-                if not logy: legends.append(TLegend(0.60,0.75-0.02*(len(bkglist[0])+len(signals)),0.95,0.90))
-                else: legends.append(TLegend(0.2,0.11,0.45,0.2+0.02*(len(bkglist[0])+len(signals))))
+                leg_align_right = True
+                x_max = totlist[hist_index].GetMaximumBin()
+                nbins = totlist[hist_index].GetXaxis().GetNbins()
+                if(2 *x_max > nbins):
+                    print("Found max val in bin %i, aligning legend on the left" % x_max)
+                    leg_align_right = False
+                if not logy: 
+                    y_start  = 0.77
+                    y_end = 0.9
+                    x_size = 0.35
+                    if(leg_align_right):
+                        x_start = 0.58
+                    else:
+                        x_start = 0.18
+
+                    legends.append(TLegend(x_start,y_start-0.02*(len(bkglist[0])+len(signals)),x_start + x_size,y_end))
+                else: 
+                    legends.append(TLegend(0.2,0.11,0.45,0.2+0.02*(len(bkglist[0])+len(signals))))
                 stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 
 
@@ -163,7 +179,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 # Go to main pad, set logy if needed
                 mains[hist_index].cd()
 
+
                 # Set y max of all hists to be the same to accomodate the tallest
+                max_scaling = 1.5
                 histList = [stacks[hist_index],totlist[hist_index],hist]
 
                 yMax = histList[0].GetMaximum()
@@ -173,9 +191,11 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                         yMax = histList[h].GetMaximum()
                         maxHist = histList[h]
                 for h in histList:
-                    h.SetMaximum(yMax*1.25)
+                    h.SetMaximum(yMax*max_scaling)
                     if logy == True:
                         h.SetMaximum(yMax*10)
+                    else:
+                        h.SetMinimum(0.)
 
                 
                 mLS = 0.06
@@ -219,7 +239,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 subs[hist_index].cd()
                 # Build the pull
                 pulls.append(Make_Pull_plot(hist,totlist[hist_index]))
-                pulls[hist_index].SetFillColor(kBlue)
+                pulls[hist_index].SetFillColor(kGray)
                 pulls[hist_index].SetTitle(";"+hist.GetXaxis().GetTitle()+";(Data-Bkg)/Unc.")
                 pulls[hist_index].SetStats(0)
 
