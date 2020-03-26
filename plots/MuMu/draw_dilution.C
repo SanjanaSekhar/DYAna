@@ -1,4 +1,7 @@
 
+
+#define STAND_ALONE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -20,87 +23,81 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "Math/Functor.h"
-#include "../../analyze/HistMaker.C"
+#include "../../utils/HistMaker.C"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
-#include "root_files.h"
+#include "../../utils/root_files.h"
+
 
 
 
 
 
 void draw_dilution(){
-    setTDRStyle();
-    const int nBins = 10;
-    TH1F *h_xF = new TH1F("h_xf", "xF distribution, M>150", nBins, 0, 0.5);
-    TH1F *h_Nc = new TH1F("h_Nc", "Number Correct; |xF|", nBins, 0, 0.5);
-    TH1F *h_Ni = new TH1F("h_Ni", "Number Incorrect", nBins, 0, 0.5);
+    //setTDRStyle();
+    gStyle->SetOptStat(0);
+
+    const int nBins_xf = 10;
+    Float_t xf_bins[] = {0., 0.02, 0.04, 0.07, 1.0};
+
+    const int nBins_y = 10;
+    Float_t y_bins[] = {0., 1., 1.25, 1.5,  2.4};
+    TH1F *h_y = new TH1F("h_y", "Y distribution: Mass 150-171 GeV", nBins_y, 0., 2.4);
+    TH1F *h_xF = new TH1F("h_xf", "xF distribution: Mass 150-171 GeV", nBins_xf, 0., 0.5);
+    TH1F *h_Nc = new TH1F("h_Nc", "Number Correct; |xF|", nBins_y, 0., 2.4);
+    TH1F *h_Ni = new TH1F("h_Ni", "Number Incorrect", nBins_y, 0., 2.4);
+    h_Nc->Sumw2();
+    h_Ni->Sumw2();
 
 
     //read event data
-    mumu_init();
+    int year = 2018;
+    init_mc(year);
 
-    Long64_t size  =  t_mc->GetEntries();
+    float m_low = 700.;
+    float m_high = 1000.;
 
-    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_cmva, jet2_cmva, gen_weight, cost_st;
-    Double_t bcdef_HLT_SF, bcdef_iso_SF, bcdef_id_SF;
-    Double_t gh_HLT_SF, gh_iso_SF, gh_id_SF;
-    Double_t jet1_pt, jet2_pt, jet1_b_weight=1., jet2_b_weight=1.;
-    Float_t met_pt;
-    Int_t nJets;
-    nJets = 2;
 
-    t_mc->SetBranchAddress("m", &m);
-    t_mc->SetBranchAddress("xF", &xF);
-    t_mc->SetBranchAddress("cost", &cost);
-    t_mc->SetBranchAddress("cost_st", &cost_st);
-    t_mc->SetBranchAddress("met_pt", &met_pt);
-    t_mc->SetBranchAddress("jet2_CMVA", &jet2_cmva);
-    t_mc->SetBranchAddress("jet1_CMVA", &jet1_cmva);
-    t_mc->SetBranchAddress("jet1_pt", &jet1_pt);
-    t_mc->SetBranchAddress("jet2_pt", &jet2_pt);
-    t_mc->SetBranchAddress("nJets", &nJets);
-    t_mc->SetBranchAddress("gen_weight", &gen_weight);
-    t_mc->SetBranchAddress("bcdef_HLT_SF", &bcdef_HLT_SF);
-    t_mc->SetBranchAddress("bcdef_iso_SF", &bcdef_iso_SF);
-    t_mc->SetBranchAddress("bcdef_id_SF", &bcdef_id_SF);
-    t_mc->SetBranchAddress("gh_HLT_SF", &gh_HLT_SF);
-    t_mc->SetBranchAddress("gh_iso_SF", &gh_iso_SF);
-    t_mc->SetBranchAddress("gh_id_SF", &gh_id_SF);
-    t_mc->SetBranchAddress("jet1_b_weight", &jet1_b_weight);
-    t_mc->SetBranchAddress("jet2_b_weight", &jet2_b_weight);
+    TempMaker tm(t_mumu_mc, false, year);
 
-    for (int i=0; i<size; i++) {
-        t_mc->GetEntry(i);
-        bool no_bjets = has_no_bjets(nJets, jet1_pt, jet2_pt, jet1_cmva, jet2_cmva);
+    tm.do_muons = true;
+    tm.is_gen_level = true;
+    tm.setup();
 
-        if(m >= 150. && met_pt < 50. && no_bjets){
-            //printf("%0.2f \n", xF);
-            Double_t bcdef_weight = gen_weight * bcdef_HLT_SF * bcdef_iso_SF * bcdef_id_SF;
-            Double_t gh_weight = gen_weight * gh_HLT_SF * gh_iso_SF * gh_id_SF;
-            if (nJets >= 1){
-                bcdef_weight *= jet1_b_weight;
-                gh_weight *= jet1_b_weight;
-            }
-            if (nJets >= 2){
-                bcdef_weight *= jet2_b_weight;
-                gh_weight *= jet2_b_weight;
-            }
-            Double_t final_weight = (bcdef_lumi*bcdef_weight + gh_lumi * gh_weight)/(bcdef_weight + gh_weight);
+    for (int i=0; i<tm.nEntries; i++) {
+        tm.getEvent(i);
+        bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+        if(pass){
 
-            h_xF->Fill(xF, final_weight);
-            Double_t ratio = cost_st/cost;
-            if(ratio > 0) h_Nc->Fill(xF, final_weight);
-            if(ratio < 0) h_Ni->Fill(xF, final_weight);
+            tm.doCorrections();
+            tm.getEvtWeight();
+            Double_t ratio = tm.cost_st/tm.cost;
+            double rap = std::abs(tm.cm.Rapidity());
+            h_y->Fill(rap, tm.evt_weight);
+            h_xF->Fill(tm.xF, tm.evt_weight);
+            if(ratio > 0) h_Nc->Fill(rap, tm.evt_weight);
+            if(ratio < 0) h_Ni->Fill(rap, tm.evt_weight);
 
 
         }
     }
+    h_y->Scale(1./h_y->Integral());
+    h_xF->Scale(1./h_xF->Integral());
+
+    TCanvas *c0 = new TCanvas("c0", "canvas", 200,10, 900,700);
+    h_y->SetFillColor(kBlue);
+    h_y->SetMinimum(0);
+    h_y->GetXaxis()->SetTitle("|y|");
+    h_y->Draw("hist");
+    c0->Update();
 
     TCanvas *c1 = new TCanvas("c1", "canvas", 200,10, 900,700);
     h_xF->SetFillColor(kBlue);
-    h_xF->Draw();
+    h_xF->SetMinimum(0);
+    h_xF->GetXaxis()->SetTitle("|xF|");
+    h_xF->Draw("hist");
     c1->Update();
+
 
     TCanvas *c2 = new TCanvas("c2", "canva", 100,100, 700,700);
     h_Nc ->SetLineColor(kBlue);
@@ -109,6 +106,7 @@ void draw_dilution(){
     h_Nc ->SetLineWidth(2);
     h_Ni ->SetLineColor(kRed);
     h_Ni ->SetLineWidth(2);
+    h_Nc->SetMinimum(0);
     h_Nc ->Draw("hist");
     h_Ni ->Draw("hist same");
 
@@ -118,27 +116,31 @@ void draw_dilution(){
     leg1->Draw();
     c2->Update();
 
-    Double_t Nc, Ni, dilu[nBins], dilu_error[nBins], xF_center[nBins]; 
+    Double_t dilu[nBins_y], dilu_error[nBins_y], xF_center[nBins_y]; 
 
-    for (int i=1; i < nBins; i++){
-        Nc = h_Nc->GetBinContent(i);
-        Ni = h_Ni->GetBinContent(i);
+    for (int i=1; i <= nBins_y; i++){
+        double Nc = h_Nc->GetBinContent(i);
+        double Ni = h_Ni->GetBinContent(i);
+
+        double Nc_e = h_Nc->GetBinError(i);
+        double Ni_e = h_Ni->GetBinError(i);
         
         xF_center[i] = h_Nc->GetBinCenter(i);
-        dilu[i] = (Nc - Ni)/(Nc + Ni);
-        dilu_error[i] = sqrt(pow(1./(Nc+Ni) - Nc/(Nc+Ni)/(Nc+Ni), 2)*Nc + 
-                pow(1./(Nc+Ni) - Ni/(Nc+Ni)/(Nc+Ni), 2)*Ni);
-        printf("Num events %.1f, xf %.2f Dilu error %1.3e \n", Nc+Ni, xF_center[i],
-                dilu_error[i]);
+        dilu[i-1] = (Nc - Ni)/(Nc + Ni);
+
+        dilu_error[i-1] = sqrt(pow(2*Nc_e * Ni / pow(Nc + Ni,2),2) + pow(2*Ni_e * Nc / pow(Nc + Ni,2),2));
+        printf("Num events %.1f, xf %.2f Dilu %.2f error %1.3e \n", Nc+Ni, xF_center[i],
+                dilu[i-1], dilu_error[i-1]);
     }
 
-    TGraphErrors *g_dillu = new TGraphErrors(nBins, xF_center, dilu, 0, dilu_error);
+    TGraphErrors *g_dillu = new TGraphErrors(nBins_xf, xF_center, dilu, 0, dilu_error);
 
     TCanvas *c3 = new TCanvas("c3", "canvas", 200,10, 900,700);
     g_dillu->Draw("A C P");
     g_dillu->SetMarkerStyle(20);
-    g_dillu->SetTitle("Dilution Effect");
-    g_dillu->GetXaxis()->SetTitle("|xF|");
+    g_dillu->SetTitle("Dilution Effect: Mass 700-1000 GeV");
+    g_dillu->SetMinimum(0);
+    g_dillu->GetXaxis()->SetTitle("|y|");
     g_dillu->GetYaxis()->SetTitle("Dilution Factor");
 
     c3->Update();
@@ -149,13 +151,13 @@ void draw_dilution(){
     lumiTextOffset   = 0.2;
     cmsTextSize      = 0.35;
     cmsTextOffset    = 0.2;  // only used in outOfFrame version
-    */
     writeExtraText = true;
     extraText = "Simulation";
     lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
     int iPeriod = 0; 
     CMS_lumi( c3, iPeriod, 11 );
     CMS_lumi( c2, iPeriod, 33 );
+    */
 
 
 
