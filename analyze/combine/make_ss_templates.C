@@ -71,22 +71,28 @@ void convert_ss_qcd_to_param_hist(TH1F *h, FILE *f_log, int flag){
 
 
 void make_ss_data_templates(int year){
+    int n_var1_bins = n_y_bins;
+    float *var1_bins = y_bins;
+    if(use_xF){
+        n_var1_bins = n_xf_bins;
+        var1_bins = xf_bins;
+    }
 
     char title[100];
     sprintf(title, "ee%i_ss_data_obs", year %2000);
     auto h_elel_data = new TH2F(title, "Data template of (x_f, cost_r)",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
     h_elel_data->SetDirectory(0);
     sprintf(title, "mumu%i_ss_data_obs", year %2000);
     auto h_mumu_data = new TH2F("mumu_ss_data_obs", "Data template of (x_f, cost_r)",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
     h_mumu_data->SetDirectory(0);
     bool ss = true;
     bool scramble_data = false;
 
 
-    gen_data_template(t_elel_ss_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS, scramble_data, ss);
-    gen_data_template(t_mumu_ss_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS,  scramble_data, ss);
+    gen_data_template(t_elel_ss_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS, scramble_data, ss, use_xF);
+    gen_data_template(t_mumu_ss_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS,  scramble_data, ss, use_xF);
     h1_elel_ss_data = convert2d(h_elel_data);
     h1_mumu_ss_data = convert2d(h_mumu_data);
 
@@ -96,21 +102,27 @@ void make_ss_data_templates(int year){
 }
 
 void make_ss_qcd_templates(int year){
+    int n_var1_bins = n_y_bins;
+    float *var1_bins = y_bins;
+    if(use_xF){
+        n_var1_bins = n_xf_bins;
+        var1_bins = xf_bins;
+    }
     char title[100];
     sprintf(title, "ee%i_ss_qcd", year %2000);
     auto h_elel_qcd = new TH2F(title, "Combined background template",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
     h_elel_qcd->SetDirectory(0);
     sprintf(title, "mumu%i_ss_qcd", year %2000);
     auto h_mumu_qcd = new TH2F(title, "Combined background template",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
     h_mumu_qcd->SetDirectory(0);
 
 
     bool incl_ss = true;
     bool ss_binning = true;
-    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS,  incl_ss, ss_binning);
-    gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, incl_ss, ss_binning);
+    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, FLAG_ELECTRONS,  incl_ss, ss_binning, use_xF);
+    gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, incl_ss, ss_binning, use_xF);
     printf("Integral of (ss) qcd templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral()); 
     h1_elel_ss_qcd = convert2d(h_elel_qcd);
     h1_mumu_ss_qcd = convert2d(h_mumu_qcd);
@@ -119,35 +131,41 @@ void make_ss_qcd_templates(int year){
 }
 
 void make_ss_mc_templates(int year){
+    int n_var1_bins = n_y_bins;
+    float *var1_bins = y_bins;
+    if(use_xF){
+        n_var1_bins = n_xf_bins;
+        var1_bins = xf_bins;
+    }
     char title[100];
     sprintf(title, "ee%i_ss_dy", year %2000);
     auto h_elel_dy = new TH2F(title, "ss DY",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
     h_elel_dy->SetDirectory(0);
     sprintf(title, "mumu%i_ss_dy", year %2000);
     auto h_mumu_dy = new TH2F(title, "ss DY",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
 
     sprintf(title, "ee%i_ss_bk", year %2000);
     auto h_elel_bk = new TH2F(title, "Combined background template",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
     h_elel_bk->SetDirectory(0);
     sprintf(title, "mumu%i_ss_bk", year %2000);
     auto h_mumu_bk = new TH2F((string("mumu_ss_bk") ).c_str(), "Combined background template",
-            n_xf_bins, xf_bins, n_cost_ss_bins, cost_ss_bins);
+            n_var1_bins, var1_bins, n_cost_ss_bins, cost_ss_bins);
 
     bool ss = true;
 
 
-    TTree *mumu_ts[1] = {t_mumu_ss_back};
-    gen_combined_background_template(1, mumu_ts, h_mumu_bk, year, m_low, m_high, FLAG_MUONS,  do_RC, ss);
+    TTree *mumu_ts[3] = {t_mumu_ss_ttbar, t_mumu_ss_diboson, t_mumu_ss_wt};
+    gen_combined_background_template(3, mumu_ts, h_mumu_bk, year, m_low, m_high, FLAG_MUONS,  ss, use_xF);
     mumu_ts[0] = t_mumu_ss_dy;
-    gen_combined_background_template(1, mumu_ts, h_mumu_dy, year, m_low, m_high, FLAG_MUONS,  do_RC, ss);
+    gen_combined_background_template(1, mumu_ts, h_mumu_dy, year, m_low, m_high, FLAG_MUONS,  ss,use_xF);
 
-    TTree *elel_ts[1] = {t_elel_ss_back};
-    gen_combined_background_template(1, elel_ts, h_elel_bk, year, m_low, m_high, FLAG_ELECTRONS,  do_RC, ss);
+    TTree *elel_ts[3] = {t_elel_ss_ttbar, t_elel_ss_diboson, t_elel_ss_wt};
+    gen_combined_background_template(3, elel_ts, h_elel_bk, year, m_low, m_high, FLAG_ELECTRONS,   ss,use_xF);
     elel_ts[0] = t_elel_ss_dy;
-    gen_combined_background_template(1, elel_ts, h_elel_dy, year, m_low, m_high, FLAG_ELECTRONS,  do_RC, ss);
+    gen_combined_background_template(1, elel_ts, h_elel_dy, year, m_low, m_high, FLAG_ELECTRONS,   ss, use_xF);
 
     h1_elel_ss_back = convert2d(h_elel_bk);
     h1_mumu_ss_back = convert2d(h_mumu_bk);

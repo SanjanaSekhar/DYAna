@@ -81,6 +81,11 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("jet2_flavour", &jet2_flavour);
         t_in->SetBranchAddress("alpha_up", &alphaS_up);
         t_in->SetBranchAddress("alpha_down", &alphaS_down);
+        t_in->SetBranchAddress("met_hem_up", &met_hem_up);
+        t_in->SetBranchAddress("met_hem_down", &met_hem_down);
+        t_in->SetBranchAddress("prefire_SF", &prefire_SF);
+        t_in->SetBranchAddress("prefire_SF_up", &prefire_SF_up);
+        t_in->SetBranchAddress("prefire_SF_down", &prefire_SF_down);
 
         if(do_muons){
             if(is_gen_level){
@@ -174,10 +179,13 @@ void TempMaker::setup_systematic(const string &s_label){
     if(sys_shift !=0){
         if(sys_label.find("BTAG") != string::npos) do_btag_sys = sys_shift;
         else if(sys_label.find("Pu") != string::npos) do_pileup_sys = sys_shift;
-        else if(sys_label.find("muHLT") != string::npos) do_muHLT_sys = sys_shift;
-        else if(sys_label.find("muID") != string::npos) do_muID_sys = sys_shift;
-        else if(sys_label.find("muISO") != string::npos) do_muISO_sys = sys_shift;
         else if(sys_label.find("muRC") != string::npos) do_muRC_sys = sys_shift;
+        else if(sys_label.find("muHLTBAR") != string::npos) do_muHLT_barrel_sys = sys_shift;
+        else if(sys_label.find("muIDBAR") != string::npos) do_muID_barrel_sys = sys_shift;
+        else if(sys_label.find("muISOBAR") != string::npos) do_muISO_barrel_sys = sys_shift;
+        else if(sys_label.find("muHLTEND") != string::npos) do_muHLT_endcap_sys = sys_shift;
+        else if(sys_label.find("muIDEND") != string::npos) do_muID_endcap_sys = sys_shift;
+        else if(sys_label.find("muISOEND") != string::npos) do_muISO_endcap_sys = sys_shift;
 
         else if(sys_label.find("elIDBAR") != string::npos) do_elID_barrel_sys = sys_shift;
         else if(sys_label.find("elHLTBAR") != string::npos) do_elHLT_barrel_sys = sys_shift;
@@ -186,8 +194,10 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
 
-        else if(sys_label.find("elScale") != string::npos) do_elScale_sys = sys_shift;
-        else if(sys_label.find("elSmear") != string::npos) do_elSmear_sys = sys_shift;
+        else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
+        else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
+
+        else if(sys_label.find("prefire") != string::npos) do_prefire_sys = sys_shift;
 
 
         else if(sys_label.find("REFAC") != string::npos && sys_shift > 0) systematic = &mu_RF_up;
@@ -206,6 +216,8 @@ void TempMaker::setup_systematic(const string &s_label){
             else if(sys_label.find("METJEC") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_jec_down", &met_pt);
             else if(sys_label.find("METJER") != string::npos && sys_shift > 0) t_in->SetBranchAddress("met_jer_up", &met_pt);
             else if(sys_label.find("METJER") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_jer_down", &met_pt);
+            else if(sys_label.find("METHEM") != string::npos && sys_shift > 0) t_in->SetBranchAddress("met_hem_up", &met_pt);
+            else if(sys_label.find("METHEM") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_hem_down", &met_pt);
             else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
         }
                 
@@ -225,7 +237,7 @@ void TempMaker::setup_systematic(const string &s_label){
 
 void TempMaker::getEvent(int i){
     t_in->GetEntry(i);
-    not_cosmic = notCosmic(*lep_p, *lep_m);
+    if(do_muons) not_cosmic = notCosmic(*lep_p, *lep_m);
     cm = *lep_p + *lep_m;
 
 
@@ -329,16 +341,28 @@ Double_t TempMaker::getEvtWeight(){
         base_weight *= jet2_btag_SF;
     }
 
+    if(year < 2018){
+        if(do_prefire_sys == -1) base_weight *= prefire_SF_down;
+        else if(do_prefire_sys == 1) base_weight *= prefire_SF_up;
+        else base_weight *= prefire_SF;
+    }
+
 
     if(do_muons){
-        if(do_muHLT_sys)   era1_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era1_SFs.HLT_SF, era1_SFs.HLT_MC_EFF, do_muHLT_sys, do_muHLT_sys);
-        if(do_muHLT_sys)   era2_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era2_SFs.HLT_SF, era2_SFs.HLT_MC_EFF, do_muHLT_sys, do_muHLT_sys);
+        if(do_muHLT_barrel_sys || do_muHLT_endcap_sys){
+            era1_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era1_SFs.HLT_SF, era1_SFs.HLT_MC_EFF, do_muHLT_barrel_sys, do_muHLT_endcap_sys);
+            era2_HLT_SF = get_HLT_SF(mu1_pt, mu1_eta, mu2_pt, mu2_eta, era2_SFs.HLT_SF, era2_SFs.HLT_MC_EFF, do_muHLT_barrel_sys, do_muHLT_endcap_sys);
+        }
 
-        if(do_muISO_sys)   era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF,  do_muISO_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_sys);
-        if(do_muISO_sys)   era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_sys);
+        if(do_muISO_barrel_sys || do_muISO_endcap_sys){
+            era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys);
+            era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys);
+        }
 
-        if(do_muID_sys)    era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF,  do_muID_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_sys);
-        if(do_muID_sys)    era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF,  do_muID_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_sys);
+        if(do_muID_barrel_sys || do_muID_endcap_sys){
+            era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys);
+            era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys) * get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys);
+        }
 
 
         Double_t era1_weight = base_weight * era1_HLT_SF * era1_iso_SF * era1_id_SF ;

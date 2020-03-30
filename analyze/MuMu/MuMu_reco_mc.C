@@ -6,7 +6,7 @@
 void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 {
     if(fin == "") fin = string("EOS_files/2016/DY_files_test.txt");
-    NTupleReader nt(fin.c_str(),"output_files/MuMu_DY_test16.root", false);
+    NTupleReader nt(fin.c_str(),"output_files/MuMu_dy_test.root", false);
     if (year == -1) year = 2016;
     nt.year = year;
 
@@ -71,10 +71,10 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 
 
     }
-    printf("There were %i qqbar, %i qGlu (%i of them tautau) in %i kept events in %i files."
-            "There were also %i background events (%i qq and %i gg)"
+    printf("There were %i qqbar, %i qGlu  in %i kept events in %i files."
+            "There were also %i background events ( %i tautau %i qq and %i gg)"
             "There were %i Failed ID's \n" , 
-            nt.nQQb, nt.nQGlu, nt.nTauTau, nt.nSignal, nt.fileCount, nt.nQQ + nt.nGluGlu, nt.nQQ, nt.nGluGlu, nt.nFailedID);
+            nt.nQQb, nt.nQGlu, nt.nSignal, nt.fileCount, nt.nQQ + nt.nGluGlu + nt.nTauTau, nt.nTauTau, nt.nQQ, nt.nGluGlu, nt.nFailedID);
     //printf("Ran on MC data and produced templates with %i events\n", nEvents);
     nt.finish();
 

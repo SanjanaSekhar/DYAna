@@ -13,6 +13,7 @@
 
 Double_t m_low;
 Double_t m_high;
+bool use_xF = false;
 
 RooWorkspace *w;
 RooRealVar *var = new RooRealVar("var", "var", 0.,n_cost_bins * n_xf_bins);

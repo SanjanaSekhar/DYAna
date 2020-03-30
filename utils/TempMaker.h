@@ -105,6 +105,8 @@ class TempMaker{
                  mu_RF_up, mu_RF_down, pdf_up, pdf_down;
         Double_t mu_p_SF, mu_m_SF, mu_p_SF_up, mu_m_SF_up, mu_p_SF_down, mu_m_SF_down, alphaS_up, alphaS_down;
         Float_t cost_pt, met_pt, el1_charge, el2_charge, mu1_charge, mu2_charge;
+        Float_t met_hem_up, met_hem_down; 
+        Double_t prefire_SF, prefire_SF_up, prefire_SF_down;
         Float_t dummy;
         Double_t jet1_btag_SF = 1.0;
         Double_t jet2_btag_SF = 1.0;
@@ -135,9 +137,13 @@ class TempMaker{
         int do_btag_sys = 0;
         int do_pileup_sys = 0;
 
-        int do_muHLT_sys = 0;
-        int do_muID_sys = 0;
-        int do_muISO_sys = 0;
+        int do_muHLT_barrel_sys = 0;
+        int do_muID_barrel_sys = 0;
+        int do_muISO_barrel_sys = 0;
+
+        int do_muHLT_endcap_sys = 0;
+        int do_muID_endcap_sys = 0;
+        int do_muISO_endcap_sys = 0;
         int do_muRC_sys = 0;
 
         int do_elID_barrel_sys = 0;
@@ -146,6 +152,8 @@ class TempMaker{
         int do_elID_endcap_sys = 0;
         int do_elHLT_endcap_sys = 0;
         int do_elRECO_endcap_sys = 0;
+
+        int do_prefire_sys = 0;
 
         int do_elScale_sys = 0;
         int do_elSmear_sys = 0;

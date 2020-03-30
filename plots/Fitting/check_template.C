@@ -27,15 +27,15 @@ void check_template(){
 
         TTree *mumu_ts[1] = {t_mumu_mc};
         printf("Making mumu \n");
-        gen_combined_background_template(1, mumu_ts, h_mumu_plain, year, m_low, m_high, FLAG_MUONS,  do_RC, ss, "");
-        one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_mc, year, m_low, m_high, FLAG_MUONS, do_RC, ""); 
+        gen_combined_background_template(1, mumu_ts, h_mumu_plain, year, m_low, m_high, FLAG_MUONS,   ss,  use_xf, "");
+        one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_mc, year, m_low, m_high, FLAG_MUONS,  use_xf, ""); 
         auto h1_mumu_back = convert2d(h_mumu_plain);
         auto h1_mumu_templ = convert2d(h_mumu_dy);
 
         TTree *elel_ts[1] = {t_elel_mc};
         printf("Making elel back \n");
-        gen_combined_background_template(1, elel_ts, h_elel_plain, year, m_low, m_high, FLAG_ELECTRONS,  do_RC, ss, "");
-        one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_mc, year, m_low, m_high, FLAG_ELECTRONS, do_RC, ""); 
+        gen_combined_background_template(1, elel_ts, h_elel_plain, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf, "");
+        one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_mc, year, m_low, m_high, FLAG_ELECTRONS, use_xf, ""); 
         auto h1_elel_back = convert2d(h_elel_plain);
         auto h1_elel_templ = convert2d(h_elel_dy);
 

@@ -23,10 +23,13 @@ elif(options.chan == "mumu"):
 
 
 
-cleanup = False
 
 bin_start = 0
 bin_stop = 8
+
+fit_name = options.chan
+if(options.no_sys): fit_name +="_nosys"
+
 if(options.mbin >= 0):
     print("Will only do fit for bin %i " % options.mbin)
     bin_start = options.mbin
@@ -38,23 +41,23 @@ for mbin in range(bin_start, bin_stop):
     workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
     make_workspace(workspace, mbin, no_sys = options.no_sys)
 
-    plotdir="postfit_plots/%s_mbin%i" % (options.chan, mbin)
+    plotdir="postfit_plots/%s_mbin%i" % (fit_name, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
     print_and_do("mkdir %s" % (plotdir))
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 
     if(not options.no_plot):
         print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
-                % (options.chan, mbin))
-        print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i" % (options.chan, mbin, plotdir, mbin))
+                % (fit_name, mbin))
+        print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i" % (fit_name, mbin, plotdir, mbin))
         print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
         print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (plotdir))
-        print_and_do("mv %s_fit_shapes_mbin%i.root %s" %(options.chan, mbin, plotdir))
+        print_and_do("mv %s_fit_shapes_mbin%i.root %s" %(fit_name, mbin, plotdir))
         if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
 
 
     print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
     print_and_do("""echo ".q" >> cmd.txt """)
-    print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fit_results_mbin%i.txt" % (options.chan, mbin))
+    print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fit_results_mbin%i.txt" % (fit_name, mbin))
     if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 

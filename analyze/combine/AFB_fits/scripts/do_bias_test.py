@@ -32,19 +32,22 @@ for i in range(options.nToys):
 #print_and_do("combine -M FitDiagnostics -d %s --saveWorkspace --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i --robustFit 1   --forceRecreateNLL " % (workspace, options.nToys))
     print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root  -t 1 --robustFit 1 --forceRecreateNLL" 
             %(workspace, i))
-    f_fit = TFile.Open("multidimfit.root")
-    fr = f_fit.Get('fit_mdf')
-    myargs = RooArgSet(fr.floatParsFinal())
+        f_fit = TFile.Open("multidimfit.root")
+        if f_fit:
+            fr = f_fit.Get('fit_mdf')
+            myargs = RooArgSet(fr.floatParsFinal())
 
-    Afb = myargs.find("Afb").getVal()
-    Afb_err = myargs.find("Afb").getError()
-    A0 = myargs.find("A0").getVal()
-    A0_err = myargs.find("A0").getError()
-    print("Afb %.3f err %.3f " % (Afb, Afb_err))
-    if(Afb_err > 0.): h_pull_afb.Fill((Afb- options.Afb)/ Afb_err)
-    if(A0_err > 0.):  h_pull_a0.Fill((A0- options.A0)/ A0_err)
-    f_fit.Close()
-    print_and_do("rm higgsCombineTest.GenerateOnly.mH120.%i.root" % i)
+            Afb = myargs.find("Afb").getVal()
+            Afb_err = myargs.find("Afb").getError()
+            A0 = myargs.find("A0").getVal()
+            A0_err = myargs.find("A0").getError()
+            print("Afb %.3f err %.3f " % (Afb, Afb_err))
+            if(Afb_err > 0.): h_pull_afb.Fill((Afb- options.Afb)/ Afb_err)
+            if(A0_err > 0.):  h_pull_a0.Fill((A0- options.A0)/ A0_err)
+            f_fit.Close()
+            print_and_do("rm higgsCombineTest.GenerateOnly.mH120.%i.root" % i)
+        else:
+            print("Can't open multidimfit. Looks like the fit failed.")
 
 
 

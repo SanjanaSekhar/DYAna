@@ -45,6 +45,12 @@ typedef struct{
     TH2D *HLT_MC_EFF;
 } el_SFs;
 
+typedef struct{
+    TH2F *jet_rate;
+    TH2F *el_rate;
+} prefire_SFs;
+
+
 double get_var(Double_t vals[100]){
     float mean(0.), var(0.);
     int n_vars = 100;
@@ -110,6 +116,30 @@ void get_pdf_avg_std_dev(Float_t pdf_Weights[100], Float_t *pdf_avg, Float_t *pd
     }
     *pdf_std_dev = sqrt(var/99.);
     return;
+}
+
+Double_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
+    //based on
+    //https://github.com/cms-nanoAOD/nanoAOD-tools/blob/master/python/postprocessing/modules/common/PrefireCorr.py
+    float min_pt = 20.;
+    float max_pt = 499.;
+    float min_eta = 2.0;
+    float max_eta = 3.0;
+    if((pt < min_pt) || (std::abs(eta) < min_eta) || (std::abs(eta) > max_eta)) return 0.;
+
+    int bin = map->FindBin(eta, std::min(pt, max_pt));
+    float prefire_prob = map->GetBinContent(bin);
+
+    float stat_err = map->GetBinError(bin);
+    float syst_err = 0.2 * prefire_prob;
+    if(systematic == -1){
+        prefire_prob = std::max(0., prefire_prob - std::pow(stat_err*stat_err + syst_err*syst_err, 0.5));
+    }
+    else if(systematic == 1){
+        prefire_prob = std::min(1., prefire_prob + std::pow(stat_err*stat_err + syst_err*syst_err, 0.5) );
+    }
+    //printf("pt %.0f eta %.2f, prob %.3f \n", pt, eta, prefire_prob);
+    return prefire_prob;
 }
 
 
@@ -323,6 +353,40 @@ void setup_pu_SFs(pileup_SFs *pu_SF, int year){
 
     if(pu_SF->data_pileup == NULL) printf("Something wrong getting Pileup SF!\n\n\n");
 }
+
+void setup_prefire_SFs(prefire_SFs *pre_SF, int year){
+
+    if(year == 2016){
+
+        TFile *f_el = TFile::Open("../analyze/SFs/2016/L1prefiring_photonpt_2016BtoH.root");
+        TH2F *h1 = (TH2F *) f_el->Get("L1prefiring_photonpt_2016BtoH")->Clone();
+        h1->SetDirectory(0);
+        pre_SF->el_rate= h1;
+        f_el->Close();
+
+        TFile *f_jet = TFile::Open("../analyze/SFs/2016/L1prefiring_jetpt_2016BtoH.root");
+        TH2F *h2 = (TH2F *) f_jet->Get("L1prefiring_jetpt_2016BtoH")->Clone();
+        h2->SetDirectory(0);
+        pre_SF->jet_rate= h2;
+        f_jet->Close();
+    }
+    else if(year == 2017){
+
+        TFile * f_el = TFile::Open("../analyze/SFs/2017/L1prefiring_photonpt_2017BtoF.root");
+        TH2F *h1 = (TH2F *) f_el->Get("L1prefiring_photonpt_2017BtoF")->Clone();
+        h1->SetDirectory(0);
+        pre_SF->el_rate= h1;
+        f_el->Close();
+
+        TFile *f_jet = TFile::Open("../analyze/SFs/2017/L1prefiring_jetpt_2017BtoF.root");
+        TH2F *h2 = (TH2F *) f_jet->Get("L1prefiring_jetpt_2017BtoF")->Clone();
+        h2->SetDirectory(0);
+        pre_SF->jet_rate= h2;
+        f_jet->Close();
+    }
+
+}
+
 
 
 

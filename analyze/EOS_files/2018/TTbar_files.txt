@@ -80,3 +80,8 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Jan23/TT_DiLept_TuneCP5_1
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Jan23/TT_DiLept_TuneCP5_13TeV-amcatnlo-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/200123_190103/0000/B2GTTreeNtupleExtra_79.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Jan23/TT_DiLept_TuneCP5_13TeV-amcatnlo-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/200123_190103/0000/B2GTTreeNtupleExtra_8.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Jan23/TT_DiLept_TuneCP5_13TeV-amcatnlo-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v2/200123_190103/0000/B2GTTreeNtupleExtra_9.root
+
+
+################ TTbarSemiLep files
+#831.76  * 0.438
+#!idx = 17 xsec = 364.3

@@ -80,6 +80,8 @@ void NTupleReader::setupSFs(){
 
     setup_btag_SFs(&b_reader, &btag_effs, year);
 
+    if(year < 2018) setup_prefire_SFs(&prefire_rates, year);
+
     if(do_muons || do_emu){
         printf("getting muon SFs \n");
         setup_mu_SFs(&era1, &era2, year);
@@ -297,20 +299,20 @@ void NTupleReader::setupOutputTree(char treeName[100]){
     outTrees[idx] = new TTree(treeName, "");
 
     outTrees[idx]->Branch("year", &year, "year/I");
-    outTrees[idx]->Branch("m", &cm_m, "m/D");
-    outTrees[idx]->Branch("xF", &xF, "xF/D");
-    outTrees[idx]->Branch("cost", &cost_r, "cost/D");
-    outTrees[idx]->Branch("cost_st", &cost_st, "cost_st/D");
-    outTrees[idx]->Branch("jet1_pt", &jet1_pt, "jet1_pt/D");
-    outTrees[idx]->Branch("jet1_eta", &jet1_eta, "jet1_eta/D");
-    outTrees[idx]->Branch("jet2_pt", &jet2_pt, "jet2_pt/D");
-    outTrees[idx]->Branch("jet2_eta", &jet2_eta, "jet2_eta/D");
-    outTrees[idx]->Branch("nJets", &nJets, "nJets/I");
-    outTrees[idx]->Branch("met_pt", &met_pt, "met_Pt/F");
-    outTrees[idx]->Branch("met_phi", &met_phi, "met_Phi/F");
+    outTrees[idx]->Branch("m", &cm_m);
+    outTrees[idx]->Branch("xF", &xF);
+    outTrees[idx]->Branch("cost", &cost_r);
+    outTrees[idx]->Branch("cost_st", &cost_st);
+    outTrees[idx]->Branch("jet1_pt", &jet1_pt);
+    outTrees[idx]->Branch("jet1_eta", &jet1_eta);
+    outTrees[idx]->Branch("jet2_pt", &jet2_pt);
+    outTrees[idx]->Branch("jet2_eta", &jet2_eta);
+    outTrees[idx]->Branch("nJets", &nJets);
+    outTrees[idx]->Branch("met_pt", &met_pt);
+    outTrees[idx]->Branch("met_phi", &met_phi);
 
 
-    outTrees[idx]->Branch("has_nobjets", &has_nobjets, "has_nobjets/I");
+    outTrees[idx]->Branch("has_nobjets", &has_nobjets );
     outTrees[idx]->Branch("jet1_btag", &jet1_btag);
     outTrees[idx]->Branch("jet2_btag", &jet2_btag);
     /*
@@ -326,30 +328,30 @@ void NTupleReader::setupOutputTree(char treeName[100]){
 
 
     if(do_muons){
-        outTrees[idx]->Branch("mu1_eta", &mu1_eta, "mu1_eta/D");
-        outTrees[idx]->Branch("mu2_eta", &mu2_eta, "mu2_eta/D");
+        outTrees[idx]->Branch("mu1_eta", &mu1_eta);
+        outTrees[idx]->Branch("mu2_eta", &mu2_eta);
         outTrees[idx]->Branch("mu_m", "TLorentzVector", &mu_m);
         outTrees[idx]->Branch("mu_p", "TLorentzVector", &mu_p);
-        outTrees[idx]->Branch("mu1_pt", &mu1_pt, "mu1_pt/D");
-        outTrees[idx]->Branch("mu2_pt", &mu2_pt, "mu2_pt/D");
+        outTrees[idx]->Branch("mu1_pt", &mu1_pt);
+        outTrees[idx]->Branch("mu2_pt", &mu2_pt);
         outTrees[idx]->Branch("mu1_charge", &mu1_charge);
         outTrees[idx]->Branch("mu2_charge", &mu2_charge);
 
 
         if(do_RC){
-            outTrees[idx]->Branch("mu_p_SF", &mu_p_SF, "mu_p_SF/D");
-            outTrees[idx]->Branch("mu_m_SF", &mu_m_SF, "mu_m_SF/D");
-            outTrees[idx]->Branch("mu_p_SF_up", &mu_p_SF_up, "mu_p_SF_up/D");
-            outTrees[idx]->Branch("mu_m_SF_up", &mu_m_SF_up, "mu_m_SF_up/D");
-            outTrees[idx]->Branch("mu_p_SF_down", &mu_p_SF_down, "mu_p_SF_down/D");
-            outTrees[idx]->Branch("mu_m_SF_down", &mu_m_SF_down, "mu_m_SF_down/D");
+            outTrees[idx]->Branch("mu_p_SF", &mu_p_SF);
+            outTrees[idx]->Branch("mu_m_SF", &mu_m_SF);
+            outTrees[idx]->Branch("mu_p_SF_up", &mu_p_SF_up);
+            outTrees[idx]->Branch("mu_m_SF_up", &mu_m_SF_up);
+            outTrees[idx]->Branch("mu_p_SF_down", &mu_p_SF_down);
+            outTrees[idx]->Branch("mu_m_SF_down", &mu_m_SF_down);
         }
     }
     if(do_electrons){
-        outTrees[idx]->Branch("el1_pt", &el1_pt, "el1_pt/D");
-        outTrees[idx]->Branch("el2_pt", &el2_pt, "el2_pt/D");
-        outTrees[idx]->Branch("el1_eta", &el1_eta, "el1_eta/D");
-        outTrees[idx]->Branch("el2_eta", &el2_eta, "el2_eta/D");
+        outTrees[idx]->Branch("el1_pt", &el1_pt);
+        outTrees[idx]->Branch("el2_pt", &el2_pt);
+        outTrees[idx]->Branch("el1_eta", &el1_eta);
+        outTrees[idx]->Branch("el2_eta", &el2_eta);
         outTrees[idx]->Branch("el_m", "TLorentzVector", &el_m);
         outTrees[idx]->Branch("el_p", "TLorentzVector", &el_p);
         outTrees[idx]->Branch("el1_charge", &el1_charge);
@@ -360,11 +362,11 @@ void NTupleReader::setupOutputTree(char treeName[100]){
     if(do_emu){
         outTrees[idx]->Branch("el", "TLorentzVector", &el);
         outTrees[idx]->Branch("mu", "TLorentzVector", &mu);
-        outTrees[idx]->Branch("mu1_eta", &mu1_eta, "mu1_eta/D");
-        outTrees[idx]->Branch("mu1_pt", &mu1_pt, "mu1_pt/D");
+        outTrees[idx]->Branch("mu1_eta", &mu1_eta);
+        outTrees[idx]->Branch("mu1_pt", &mu1_pt);
         outTrees[idx]->Branch("mu1_charge", &mu1_charge);
-        outTrees[idx]->Branch("el1_pt", &el1_pt, "el1_pt/D");
-        outTrees[idx]->Branch("el1_eta", &el1_eta, "el1_eta/D");
+        outTrees[idx]->Branch("el1_pt", &el1_pt);
+        outTrees[idx]->Branch("el1_eta", &el1_eta);
         outTrees[idx]->Branch("el1_charge", &el1_charge);
     }
 
@@ -381,8 +383,10 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("met_jec_down", &met_jec_down);
         outTrees[idx]->Branch("met_jer_up", &met_jer_up);
         outTrees[idx]->Branch("met_jer_down", &met_jer_down);
-        outTrees[idx]->Branch("gen_weight", &gen_weight, "gen_weight/D");
-        outTrees[idx]->Branch("gen_m", &gen_m, "gen_m/D");
+        outTrees[idx]->Branch("met_hem_up", &met_hem_up);
+        outTrees[idx]->Branch("met_hem_down", &met_hem_down);
+        outTrees[idx]->Branch("gen_weight", &gen_weight);
+        outTrees[idx]->Branch("gen_m", &gen_m);
         outTrees[idx]->Branch("mu_R_up", &mu_R_up);
         outTrees[idx]->Branch("mu_R_down", &mu_R_down);
         outTrees[idx]->Branch("mu_F_up", &mu_F_up);
@@ -391,6 +395,9 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("mu_RF_down", &mu_RF_down);
         outTrees[idx]->Branch("alpha_down", &alpha_down);
         outTrees[idx]->Branch("alpha_up", &alpha_up);
+        outTrees[idx]->Branch("prefire_SF", &prefire_SF);
+        outTrees[idx]->Branch("prefire_SF_up", &prefire_SF_up);
+        outTrees[idx]->Branch("prefire_SF_down", &prefire_SF_down);
         outTrees[idx]->Branch("pdf_weights", &pdf_weights, "pdf_weights[60]/F");
         outTrees[idx]->Branch("jet1_flavour", &jet1_flavour, "jet1_flavour/I");
         outTrees[idx]->Branch("jet2_flavour", &jet2_flavour, "jet2_flavour/I");
@@ -688,6 +695,57 @@ void NTupleReader::fillEvent(){
 
 }
 
+void NTupleReader::prefireCorrs(){
+    prefire_SF = 1.0;
+    prefire_SF_up = 1.0;
+    prefire_SF_down = 1.0;
+    for(int i=0; i<jet_size; i++){
+        prefire_SF *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 0);
+        prefire_SF_up *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 1);
+        prefire_SF_down *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, -1);
+    }
+    for(int i=0; i<el_size; i++){
+        prefire_SF *= 1.- get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 0);
+        prefire_SF_up *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 1);
+        prefire_SF_down *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, -1);
+    }
+    //printf("Overall prefire rates (nom, up, down): %.3f, %.3f, %.3f \n", prefire_SF, prefire_SF_up, prefire_SF_down);
+}
+
+
+void NTupleReader::hemRescale(){
+    if(year == 2018){
+        TLorentzVector old_met, new_met, jet;
+        old_met.SetPtEtaPhiM(met_pt, 0., met_phi, 0.);
+        new_met.SetPtEtaPhiM(met_pt, 0., met_phi, 0.);
+
+        for(int i=0; i<jet_size; i++){
+            if(jet_Pt[i] > 15. && jet_Phi[i] > -1.57 && jet_Phi[i] < -0.87){
+                if(jet_Eta[i] > -2.5  && jet_Eta[i] < -1.3){
+                    
+                    jet.SetPtEtaPhiE(jet_Pt[i], jet_Eta[i], jet_Phi[i], jet_E[i]);
+                    //jet supposed to scaled down 20%, so met gets scaled up 20%
+                    new_met += 0.2 * jet;
+                }
+                else if(jet_Eta[i] > -3.0  && jet_Eta[i] < -2.5){
+                    
+                    jet.SetPtEtaPhiE(jet_Pt[i], jet_Eta[i], jet_Phi[i], jet_E[i]);
+                    //jet supposed to scaled down 35%, so met gets scaled up 
+                    new_met += 0.35 * jet;
+                }
+            }
+        }
+
+        TLorentzVector diff = new_met - old_met;
+        met_hem_up = new_met.Pt();
+        met_hem_down = (old_met - diff).Pt();
+        //printf("Diff %.1f \n", diff.Pt());
+    }
+
+}
+
+
+
 void NTupleReader::fillEventSFs(){
     pu_SF = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_nom);
     pu_SF_up = get_pileup_SF(pu_NtrueInt, pu_sys.ratio_pileup_up);
@@ -700,6 +758,7 @@ void NTupleReader::fillEventSFs(){
     jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, 0);
 
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
+    if(year < 2018) prefireCorrs(); 
 
     if(pdf_size <60){
         for(int i=0;i<60; i++){
@@ -721,6 +780,10 @@ void NTupleReader::fillEventSFs(){
     met_jer_down = met_syst_pt[1];
     met_jec_up = met_syst_pt[2];
     met_jec_down = met_syst_pt[3];
+
+    met_hem_up = met_pt;
+    met_hem_down = met_pt;
+    if(year == 2018) hemRescale();
 
     if(alphas_size >= 2){
         alpha_up = alpha_weights[0];
@@ -984,7 +1047,7 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
         //record tau's
         if(abs(gen_id[k]) == TAU && 
                 ( (gen_Mom0ID[k] == Z || gen_Mom0ID[k] == PHOTON || abs(gen_Mom0ID[k]) == TAU ||
-                   gen_status[k] == OUTGOING)) ){
+                   gen_status[k] == OUTGOING  )  && gen_Pt[k] > 10.) ){
             if(gen_id[k] == TAU){
                 if(gen_tau_m == -1) gen_tau_m = k;
                 else{
@@ -1051,8 +1114,29 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
                 );
 
     }
+    else if( gen_tau_p != -1 && gen_tau_m != -1){
+        //tau's but no gen muons or electrons
+        if(PRINT) sprintf(out_buff + strlen(out_buff),"tau_p: \n"
+                "   Mom1 ID: %i Mom1 Stat: Mom2 ID: %i Mom2 Stat \n"
+                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
+                gen_Mom0ID[gen_lep_p],  gen_Mom1ID[gen_lep_p], 
+                gen_Dau0ID[gen_lep_p], gen_Dau1ID[gen_lep_p]);
+
+        if(PRINT) sprintf(out_buff + strlen(out_buff),"tau_m: \n"
+                "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
+                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
+                gen_Mom0ID[gen_lep_m],  gen_Mom1ID[gen_lep_m], 
+                gen_Dau0ID[gen_lep_m],  gen_Dau1ID[gen_lep_m]
+                );
+            nTauTau++;
+            is_tau_event = true;
+            signal_event = false;
+            return false;
+
+    }
+
     else {
-        if(print_gen_warning) printf("WARNING: Unable to identify lepton pair in event %i, skipping \n", event_idx);
+        if(print_gen_warning) printf("WARNING: Unable to identify lepton pair in event %i \n", event_idx);
         nFailedID ++;
         print_out = true;
         if(PRINT && print_out){
@@ -1064,7 +1148,7 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
         return false;
     }
     if((inc_1 == -1) || (inc_2 == -1)){
-        if(print_gen_warning) printf("WARNING: Unable to identify initial state particles in event %i, skipping \n", event_idx);
+        if(print_gen_warning) printf("WARNING: Unable to identify initial state particles in event %i \n", event_idx);
         nFailedID ++;
         print_out = true;
         if(PRINT && print_out){
@@ -1091,7 +1175,7 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
             is_tau_event = true;
             signal_event = false;
         }
-        if((abs(inc_id1) <= 6 && abs(inc_id2) <= 6) && (inc_id1 * inc_id2 < 0)){ //a quark and anti quark
+        else if((abs(inc_id1) <= 6 && abs(inc_id2) <= 6) && (inc_id1 * inc_id2 < 0)){ //a quark and anti quark
             //qq-bar
             signal_event = true;
             nQQb++;

@@ -46,6 +46,8 @@ class NTupleReader{
         void getEvent(int i);
         void fillEvent();
         void fillEventSFs();
+        void prefireCorrs();
+        void hemRescale();
         void fillEventRC();
         bool getNextFile();
         void finish();
@@ -66,6 +68,7 @@ class NTupleReader{
         mu_SFs era1, era2;
         pileup_systematics pu_sys;
         el_SFs el_SF;
+        prefire_SFs prefire_rates;
 
         const float mu_iso_cut = 0.15; //tight PF based iso
 
@@ -102,30 +105,34 @@ class NTupleReader{
 
         float bjet_med_cut = 0.;
 
-        Double_t cm_m, xF, cost, cost_r, cost_st, mu1_pt, mu2_pt, mu1_eta, mu2_eta, jet1_pt, jet2_pt, jet1_eta, jet2_eta, 
+        Float_t cm_m, xF, cost, cost_r, cost_st, mu1_pt, mu2_pt, mu1_eta, mu2_eta, jet1_pt, jet2_pt, jet1_eta, jet2_eta, 
                  gen_weight, jet1_csv, jet1_btag, jet2_csv, jet2_btag, gen_m;
-        Double_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt, mu_p_SF_up, mu_p_SF_down, mu_m_SF_up, mu_m_SF_down;
-        Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF, era2_HLT_SF, era2_iso_SF, era2_id_SF,
+        Float_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt, mu_p_SF_up, mu_p_SF_down, mu_m_SF_up, mu_m_SF_down;
+        Float_t era1_HLT_SF, era1_iso_SF, era1_id_SF, era2_HLT_SF, era2_iso_SF, era2_id_SF,
                  era1_trk_SF, era2_trk_SF,
                  jet1_b_weight, jet2_b_weight, pu_SF, pu_SF_up, pu_SF_down;
-        Double_t jet1_btag_SF, jet1_btag_SF_up, jet1_btag_SF_down, jet2_btag_SF, jet2_btag_SF_up, jet2_btag_SF_down;
+        Float_t jet1_btag_SF, jet1_btag_SF_up, jet1_btag_SF_down, jet2_btag_SF, jet2_btag_SF_up, jet2_btag_SF_down;
+
+        float prefire_SF = 1.0;
+        float prefire_SF_up = 1.0;
+        float prefire_SF_down = 1.0;
 
         BTag_readers b_reader;
         BTag_effs btag_effs;
 
-        Double_t el1_pt, el2_pt, el1_eta, el2_eta;
-        Double_t el_id_SF, el_reco_SF, el_HLT_SF;
+        Float_t el1_pt, el2_pt, el1_eta, el2_eta;
+        Float_t el_id_SF, el_reco_SF, el_HLT_SF;
         Float_t elp_scale_stat_up, elp_scale_stat_down, elp_scale_gain_up, elp_scale_gain_down, elp_scale_syst_up, elp_scale_syst_down, 
                 elm_scale_stat_up, elm_scale_stat_down, elm_scale_gain_up, elm_scale_gain_down, elm_scale_syst_up, elm_scale_syst_down, 
              elp_smear_up, elp_smear_down, elm_smear_up, elm_smear_down;
 
 
-        Double_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down, alpha_up, alpha_down;
+        Float_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down, alpha_up, alpha_down;
         Int_t nJets, jet1_flavour, jet2_flavour, pu_NtrueInt, has_nobjets;
         Bool_t is_tau_event;
         Float_t met_pt, met_phi, mu1_charge, mu2_charge, el1_charge, el2_charge; 
         Float_t met_syst_pt[14], met_syst_phi[14];
-        Float_t met_jec_up, met_jec_down, met_jer_up, met_jer_down;
+        Float_t met_jec_up, met_jec_down, met_jer_up, met_jer_down, met_hem_down, met_hem_up;
         Int_t el1_gc, el2_gc;
         TLorentzVector cm, gen_cm;
         TLorentzVector mu_p, mu_m, gen_mu_p_vec, gen_mu_m_vec;

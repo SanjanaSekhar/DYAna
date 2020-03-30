@@ -90,35 +90,40 @@ void print_hist(TH2 *h){
 //static type means functions scope is only this file, to avoid conflicts
 
 int gen_data_template(TTree *t1, TH2F* h,  
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false){
+        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false, bool use_xF = false){
     h->Sumw2();
     int nEvents = 0;
     int n=0;
     TempMaker tm(t1, true, year);
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
-    tm.do_RC = true;
     tm.setup();
 
     TRandom *rand;
-    if(scramble_data) rand = new TRandom3();
+    float sign = 1.;
+    //if(scramble_data) rand = new TRandom3();
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
 
         if(tm.m >= m_low && tm.m <= m_high && tm.met_pt < 50. && tm.has_no_bjets && tm.not_cosmic){
             tm.doCorrections();
+            float var1 = abs(tm.cm.Rapidity());
+            if(use_xF)  var1 = tm.xF;
 
             n++;
             if(!ss){
                 if(scramble_data){
+                    //switch + and - back and forth
+                    tm.cost = sign * std::fabs(tm.cost); 
+                    sign *= -1.;
                     //randomly flip data events
-                    if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
-                    else tm.cost = -std::fabs(tm.cost);
+                    //if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
+                    //else tm.cost = -std::fabs(tm.cost);
                 }
-                h->Fill(tm.xF, tm.cost, 1); 
+                h->Fill(var1, tm.cost, 1); 
             }
             else{
-                h->Fill(tm.xF, -abs(tm.cost), 1);
+                h->Fill(var1, -abs(tm.cost), 1);
             }
             nEvents++;
         }
@@ -133,7 +138,7 @@ int gen_data_template(TTree *t1, TH2F* h,
 
 
 int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
+        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
     h_sym->Sumw2();
@@ -144,7 +149,6 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     TempMaker tm(t1, false, year);
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
-    tm.do_RC = turn_on_RC;
     tm.is_gen_level = true;
 
     tm.setup_systematic(sys_label);
@@ -167,22 +171,21 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
             double reweight_s = (1 + gen_cost*gen_cost)/denom;
             double reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
-            double obs = std::abs(tm.cm.Rapidity());
-            max_obs = std::max(obs, max_obs);
-            //double obs = tm.xF;
+            float var1 = abs(tm.cm.Rapidity());
+            if(use_xF)  var1 = tm.xF;
 
-            h_sym->Fill(obs, tm.cost, reweight_s * tm.evt_weight); 
-            h_sym->Fill(obs, -tm.cost, reweight_s * tm.evt_weight); 
+            h_sym->Fill(var1, tm.cost, reweight_s * tm.evt_weight); 
+            h_sym->Fill(var1, -tm.cost, reweight_s * tm.evt_weight); 
 
-            h_asym->Fill(obs, tm.cost, reweight_a * tm.evt_weight);
-            h_asym->Fill(obs, -tm.cost, -reweight_a * tm.evt_weight);
+            h_asym->Fill(var1, tm.cost, reweight_a * tm.evt_weight);
+            h_asym->Fill(var1, -tm.cost, -reweight_a * tm.evt_weight);
 
-            h_alpha->Fill(obs, tm.cost, reweight_alpha * tm.evt_weight); 
-            h_alpha->Fill(obs, -tm.cost, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(var1, tm.cost, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(var1, -tm.cost, reweight_alpha * tm.evt_weight); 
 
         }
     }
-    printf("Max obs is %.3f \n", max_obs);
+    //printf("Max obs is %.3f \n", max_obs);
 
     tm.finish();
     int mbin = find_bin(m_bins, m_low + 0.1);
@@ -202,18 +205,18 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
 
 int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,  
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, 
-        bool turn_on_RC = true, bool ss =false, const string &sys_label = ""){
+        bool ss =false, bool use_xF = false,  const string &sys_label = ""){
     h->Sumw2();
 
     int nEvents = 0;
 
     for(int i=0; i<nTrees; i++){
+        printf("Tree %i \n", i);
         TTree *t1 = ts[i];
 
         TempMaker tm(t1, false, year);
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
         else tm.do_electrons = true;
-        tm.do_RC = turn_on_RC;
         tm.is_gen_level = false;
 
         tm.setup_systematic(sys_label);
@@ -226,10 +229,13 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
             if(pass){
                 tm.doCorrections();
                 tm.getEvtWeight();
+
+                float var1 = abs(tm.cm.Rapidity());
+                if(use_xF)  var1 = tm.xF;
                 nEvents++;
-                if(!ss) h->Fill(tm.xF, tm.cost, tm.evt_weight);
+                if(!ss) h->Fill(var1, tm.cost, tm.evt_weight);
                 else{
-                    h->Fill(tm.xF, -abs(tm.cost), tm.evt_weight);
+                    h->Fill(var1, -abs(tm.cost), tm.evt_weight);
                 }
             }
         }
@@ -244,7 +250,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
 }
 
 int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy, 
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
+        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
     TH2F h_sym = TH2F("h_sym", "Symmetric template of mc",
@@ -257,7 +263,7 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
             n_xf_bins, xf_bins, n_cost_bins, cost_bins);
     h_asym.SetDirectory(0);
 
-    gen_mc_template(t1, alpha, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1, turn_on_RC, sys_label);
+    gen_mc_template(t1, alpha, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
 
 
     double norm = 3./4./(2.+alpha);
@@ -282,7 +288,7 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
 
 
 std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
-        int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false){
+        int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false){
     h->Sumw2();
     TH2D *h_err;
     TLorentzVector *lep_p=0;
@@ -323,7 +329,6 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
         tm.is_one_iso = is_one_iso;
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
         else tm.do_electrons = true;
-        tm.do_RC = true;
         tm.setup();
 
         for (int i=0; i<tm.nEntries; i++) {
@@ -398,10 +403,12 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                     tot_evt_weight = evt_reweight * tm.getEvtWeight();
                 }
 
+                float var1 = abs(tm.cm.Rapidity());
+                if(use_xF)  var1 = tm.xF;
 
-                if(!ss_binning) h->Fill(tm.xF, tm.cost, tot_evt_weight);
+                if(!ss_binning) h->Fill(var1, tm.cost, tot_evt_weight);
                 else{
-                    h->Fill(tm.xF, -abs(tm.cost), tot_evt_weight);
+                    h->Fill(var1, -abs(tm.cost), tot_evt_weight);
                 }
                 if(opp_sign) tot_weight_os += tot_evt_weight;
                 else tot_weight_ss += tot_evt_weight;

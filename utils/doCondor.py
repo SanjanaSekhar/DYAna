@@ -32,7 +32,7 @@ parser.add_option("-v", "--verbose", dest="verbose", default=False, action="stor
 # Make condor submission scripts options
 parser.add_option("--njobs", dest="nJobs", type='int', default=-1,
         help="Split into n jobs, will automatically produce submission scripts")
-parser.add_option("-s", "--script", dest="script", default="my_script.sh",
+parser.add_option("-s", "--script", dest="script", default="scripts/my_script.sh",
         help="sh script to be run by jobs (if splitting, should take eosoutput, nJobs and iJob as args)")
 parser.add_option("--dry-run", dest="dryRun", default=False, action="store_true", 
         help="Do nothing, just create jobs if requested")
@@ -192,7 +192,7 @@ elif (options.haddEOS):
 
 elif (options.getEOS):
     print("Getting files and outputting to %s" % options.outdir)
-    result = subprocess.check_output(["./get_crab_file_list.sh", EOS_home + 'Condor_outputs/' + options.name])
+    result = subprocess.check_output(["./scripts/get_crab_file_list.sh", EOS_home + 'Condor_outputs/' + options.name])
     print(result)
     for f in result.splitlines():
         cmd = "xrdcp  -f %s %s" % (f, options.outdir)
