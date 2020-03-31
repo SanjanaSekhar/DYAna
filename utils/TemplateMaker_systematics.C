@@ -140,6 +140,7 @@ int gen_data_template(TTree *t1, TH2F* h,
 int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
+    printf("Making mc template for sys %s \n", sys_label.c_str());
 
     h_sym->Sumw2();
     h_asym->Sumw2();

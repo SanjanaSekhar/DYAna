@@ -81,8 +81,6 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("jet2_flavour", &jet2_flavour);
         t_in->SetBranchAddress("alpha_up", &alphaS_up);
         t_in->SetBranchAddress("alpha_down", &alphaS_down);
-        t_in->SetBranchAddress("met_hem_up", &met_hem_up);
-        t_in->SetBranchAddress("met_hem_down", &met_hem_down);
         t_in->SetBranchAddress("prefire_SF", &prefire_SF);
         t_in->SetBranchAddress("prefire_SF_up", &prefire_SF_up);
         t_in->SetBranchAddress("prefire_SF_down", &prefire_SF_down);
