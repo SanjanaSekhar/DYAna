@@ -105,7 +105,7 @@ int gen_data_template(TTree *t1, TH2F* h,
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
 
-        if(tm.m >= m_low && tm.m <= m_high && tm.met_pt < 50. && tm.has_no_bjets && tm.not_cosmic){
+        if(tm.m >= m_low && tm.m <= m_high && tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
             tm.doCorrections();
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
@@ -158,7 +158,7 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
-        bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+        bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
         if(pass){
 
             tm.doCorrections();
@@ -224,7 +224,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
 
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
             if(pass){
                 tm.doCorrections();
@@ -334,7 +334,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
 
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
             bool opp_sign = false;
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
@@ -533,7 +533,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH2
             TLorentzVector cm = *el + *mu;
             bool opp_sign = ((abs(el_charge - mu_charge)) > 0.01);
             float m = cm.M();
-            bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && opp_sign;
+            bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign;
             if(pass){
                 float xF = compute_xF(cm); 
                 cost = get_cost(*el, *mu);
@@ -600,7 +600,7 @@ void gen_emu_template(TTree *t1, TH2F *h,
         double cost = get_cost(*el, *mu);
         xF  = compute_xF(cm); 
 
-        bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && opp_sign;
+        bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign;
 
         if(pass){
             if(is_data){

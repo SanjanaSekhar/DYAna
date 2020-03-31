@@ -373,13 +373,17 @@ parser = OptionParser()
 parser.add_option("--input", "-i", default = "", help="Input file")
 parser.add_option("--output", "-o", default = "", help="Input directory")
 parser.add_option("--mbin", "-m", type = 'int', default = 0, help="Mass bin (for plot label)")
+parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
 (options, args) = parser.parse_args()
 
 
 #fin_ = "combined_fit_shapes_mbin1.root"
 #odir = "postfit_plots/combined_fit_mbin1"
 #mbin = 1
-years = [2016, 2017, 2018]
+if(options.year < 0):
+    years = [2016, 2017, 2018]
+else:
+    years = [options.year]
 h_names = ["gam", "qcd", "bk", "dy_gg", "alpha", "fpl", "fmn"]
 h_ss_names = ["bk", "dy", "qcd"]
 

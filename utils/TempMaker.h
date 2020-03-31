@@ -53,6 +53,8 @@ Double_t mu_lumi18_era2 = 52.23;
 Double_t mu_lumi18 = mu_lumi18_era1 + mu_lumi18_era2;
 Double_t el_lumi18 = 59.74;
 
+float met_cut = 65.;
+
 
 //Average renorm and fac scale reweights for each mass bin (to remove
 //normalization component)

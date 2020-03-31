@@ -101,16 +101,25 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fout.Close()
     return fitted_afb, fitted_a0
 
-def make_workspace(workspace, mbin, no_sys = False):
+def make_workspace(workspace, mbin, no_sys = False, year = -1):
     print("Making workspace %s mbin %i" % (workspace, mbin))
     template_card="card_templates/combined_fit_template.txt"
     if(no_sys): template_card = "card_templates/combined_fit_template_nosys.txt"
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_mbin%i.txt" % (mbin)
-    for year in (16,17,18):
-        card="cards/combined_fit_y%i_mbin%i.txt" % (year, mbin)
-        print_and_do("cp %s %s" % (template_card, card))
-        print_and_do("""sed -i "s/YR/%i/g" %s""" % (year, card))
 
-    print_and_do("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combined_fit_y17_mbin%i.txt Y18=cards/combined_fit_y18_mbin%i.txt > %s" % (mbin, mbin, mbin, comb_card))
+    if(year < 0 ):
+        for yr in (16,17,18):
+            card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
+            print_and_do("cp %s %s" % (template_card, card))
+            print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+
+        print_and_do("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combined_fit_y17_mbin%i.txt Y18=cards/combined_fit_y18_mbin%i.txt > %s" % (mbin, mbin, mbin, comb_card))
+    else:
+        yr = year % 2000
+        card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
+        print_and_do("cp %s %s" % (template_card, card))
+        print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+        print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
+
     print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))

@@ -56,6 +56,7 @@ void make_data_templates(int year, bool scramble_data = true){
 
     int nElEl_DataEvents = gen_data_template(t_elel_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
     int nMuMu_DataEvents = gen_data_template(t_mumu_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS, scramble_data, ss, use_xF);
+
     h1_elel_data = convert2d(h_elel_data);
     h1_mumu_data = convert2d(h_mumu_data);
     
@@ -378,7 +379,7 @@ void write_out_templates(const string &sys_label){
 }
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/mar30_2016.root");
+    const TString fout_name("combine/templates/mar30_met65_2016.root");
     year = 2016;
     bool scramble_data = true;
     use_xF = false;
