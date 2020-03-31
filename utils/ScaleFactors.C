@@ -146,7 +146,7 @@ Double_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
 
 
 
-Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic = 0){
+Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
     if(year <2016 || year > 2018) printf("Year is not from 2016-2018. This is bad!! \n");
     //stay in range of histogram
     float sys_unc_mult = 1.0;
@@ -172,10 +172,12 @@ Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic 
 
 
     Double_t result = h->GetBinContent(xbin, ybin);
+    int systematic = systematic_barrel;
+    if(abs(eta) > 1.4) systematic = systematic_endcap;
     if(systematic != 0){
         Double_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
-        //printf("SF is %.3f +/- %.3f \n", result, err);
-        result += (systematic * err );
+        err =abs(err);
+        result += (systematic * err);
     }
     if(result < 0.001){ 
         printf("0 muon SF for Pt %.1f, Eta %1.2f \n", pt, eta);

@@ -14,10 +14,10 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2017;
+        int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots";
-        char *sys = "_METJEC17";
+        char *sys = "_METJEC18";
         bool do_bkg = true;
         bool do_electrons = true;
         bool do_muons = true;
@@ -38,40 +38,47 @@ void sys_check(){
         sprintf(mu_fname1, "%s/MuMu%i_M%.0f%s_chk.png", plot_dir, year, m_low, sys);
         sprintf(el_fname1, "%s/ElEl%i_M%.0f%s_chk.png", plot_dir, year, m_low, sys);
 
+        bool use_xf = false;
 
-        TH2F * h_elel_bkg = new TH2F("elel_bkg", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_elel_bkg_up = new TH2F("elel_bkg_up", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_elel_bkg_down = new TH2F("elel_bkg_down", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_elel_plain = new TH2F("elel_plain", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_elel_sys_up = new TH2F("elel_up", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_elel_sys_down = new TH2F("elel_down", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+        int n_var1_bins = n_y_bins;
+        float *var1_bins = y_bins;
+        if(use_xf){
+            n_var1_bins = n_xf_bins;
+            var1_bins = xf_bins;
+        }
 
-        TH2F * h_mumu_bkg = new TH2F("mumu_bkg", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_mumu_bkg_up = new TH2F("mumu_bkg_up", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_mumu_bkg_down = new TH2F("mumu_bkg_down", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_mumu_plain = new TH2F("mumu_plain", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_mumu_sys_up = new TH2F("mumu_up", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
-        TH2F * h_mumu_sys_down = new TH2F("mumu_down", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_bkg = new TH2F("elel_bkg", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_bkg_up = new TH2F("elel_bkg_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_bkg_down = new TH2F("elel_bkg_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_plain = new TH2F("elel_plain", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_sys_up = new TH2F("elel_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_sys_down = new TH2F("elel_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
+        TH2F * h_mumu_bkg = new TH2F("mumu_bkg", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_bkg_up = new TH2F("mumu_bkg_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_bkg_down = new TH2F("mumu_bkg_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_plain = new TH2F("mumu_plain", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_sys_up = new TH2F("mumu_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_sys_down = new TH2F("mumu_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 
 
 
         bool ss = false;
-        bool do_RC = true;
 
 
 
 
-        TTree *elel_ts[1] = {t_elel_back};
-        TTree *mumu_ts[1] = {t_mumu_back};
+        TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
+        TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
         char mu_title[100], el_title[100];
 
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
 
         if(do_muons){
             printf("Making mumu temps \n");
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_low, m_high, FLAG_MUONS, do_RC, "");
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_low, m_high, FLAG_MUONS, do_RC, sys_up);
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_low, m_high, FLAG_MUONS, do_RC, sys_down);
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_low, m_high, FLAG_MUONS, use_xf, "");
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_low, m_high, FLAG_MUONS, use_xf, sys_up);
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_low, m_high, FLAG_MUONS, use_xf, sys_down);
             TH1F *h1_mumu_plain = convert2d(h_mumu_plain);
             TH1F *h1_mumu_sys_up = convert2d(h_mumu_sys_up);
             TH1F *h1_mumu_sys_down = convert2d(h_mumu_sys_down);
@@ -88,9 +95,9 @@ void sys_check(){
 
             if(do_bkg){
 
-                gen_combined_background_template(1, mumu_ts, h_mumu_bkg, year, m_low, m_high, FLAG_MUONS,  do_RC, ss, "");
-                gen_combined_background_template(1, mumu_ts, h_mumu_bkg_up, year, m_low, m_high, FLAG_MUONS,  do_RC, ss, sys_up);
-                gen_combined_background_template(1, mumu_ts, h_mumu_bkg_down, year, m_low, m_high, FLAG_MUONS,  do_RC, ss, sys_down);
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg, year, m_low, m_high, FLAG_MUONS,  ss, use_xf,  "");
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_up, year, m_low, m_high, FLAG_MUONS,  ss, use_xf,  sys_up);
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_down, year, m_low, m_high, FLAG_MUONS,  ss, use_xf, sys_down);
                 h1_mumu_bkg = convert2d(h_mumu_bkg);
                 h1_mumu_bkg_up = convert2d(h_mumu_bkg_up);
                 h1_mumu_bkg_down = convert2d(h_mumu_bkg_down);
@@ -136,57 +143,68 @@ void sys_check(){
         if(do_electrons){
             printf("Making elel temps \n");
 
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_plain, year, m_low, m_high, FLAG_ELECTRONS, do_RC, "");
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_low, m_high, FLAG_ELECTRONS, do_RC, sys_up);
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_low, m_high, FLAG_ELECTRONS, do_RC, sys_down);
-
-            
-
-            printf("ElEl: nom %.0f, up %.0f, down %.0f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
-
-
-
-
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_plain, year, m_low, m_high, FLAG_ELECTRONS, use_xf, "");
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_low, m_high, FLAG_ELECTRONS, use_xf, sys_up);
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_low, m_high, FLAG_ELECTRONS, use_xf, sys_down);
             TH1F *h1_elel_plain = convert2d(h_elel_plain);
             TH1F *h1_elel_sys_up = convert2d(h_elel_sys_up);
             TH1F *h1_elel_sys_down = convert2d(h_elel_sys_down);
 
-            h1_elel_plain->Print();
-            h1_elel_sys_up->Print();
-            h1_elel_sys_down->Print();
-
-
-
             h1_elel_plain->SetLineColor(kBlack);
             h1_elel_plain->SetLineWidth(2);
+
 
             h1_elel_sys_up->SetLineColor(kBlue);
             h1_elel_sys_up->SetLineWidth(2);
             h1_elel_sys_down->SetLineColor(kGreen+3);
             h1_elel_sys_down->SetLineWidth(2);
-            
-            sprintf(el_title, "Electrons: %s", sys);
+            printf("elel: nom %.0f, up %.0f, down %.0f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
 
+            if(do_bkg){
+
+                gen_combined_background_template(3, elel_ts, h_elel_bkg, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf,  "");
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf,  sys_up);
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf, sys_down);
+                h1_elel_bkg = convert2d(h_elel_bkg);
+                h1_elel_bkg_up = convert2d(h_elel_bkg_up);
+                h1_elel_bkg_down = convert2d(h_elel_bkg_down);
+
+                h1_elel_bkg->SetLineColor(kRed);
+                h1_elel_bkg->SetLineWidth(2);
+                h1_elel_bkg_up->SetLineColor(kMagenta);
+                h1_elel_bkg_up->SetLineWidth(2);
+                h1_elel_bkg_down->SetLineColor(kRed-7);
+                h1_elel_bkg_down->SetLineWidth(2);
+                printf("elel Bkg: nom %.0f, up %.0f, down %.0f \n", h_elel_bkg->Integral(), h_elel_bkg_up->Integral(), h_elel_bkg_down->Integral());
+            }
+
+
+
+            sprintf(el_title, "Electrons: %s", sys);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
-            c_elel1->cd();
             h1_elel_plain->SetTitle(el_title);
             h1_elel_plain->Draw("hist");
             h1_elel_sys_up->Draw("hist same");
             h1_elel_sys_down->Draw("hist same");
-            //if(do_bkg) h1_elel_bkg->Draw("hist same");
+            if(do_bkg){
+                h1_elel_bkg->Draw("hist same");
+                h1_elel_bkg_up->Draw("hist same");
+                h1_elel_bkg_down->Draw("hist same");
+            }
 
-
-            TLegend *leg2 = new TLegend(0.15, 0.15);
-            leg2->AddEntry(h1_elel_plain, "Nominal Template", "l");
-            leg2->AddEntry(h1_elel_sys_up, "Sys Up Template", "l");
-            leg2->AddEntry(h1_elel_sys_down, "Sys Down Template", "l");
-            //if(do_bkg) leg2->AddEntry(h1_elel_bkg, "Raw Template", "l");
-            leg2->Draw();
-
-
-
+            TLegend *leg1 = new TLegend(0.15, 0.15);
+            leg1->AddEntry(h1_elel_plain, "Nominal Template", "l");
+            leg1->AddEntry(h1_elel_sys_up, "Sys Up Template", "l");
+            leg1->AddEntry(h1_elel_sys_down, "Sys Down Template", "l");
+            if(do_bkg){
+                leg1->AddEntry(h1_elel_bkg, "Nominal Bkg Template", "l");
+                leg1->AddEntry(h1_elel_bkg_up, "Sys Up Bkg Template", "l");
+                leg1->AddEntry(h1_elel_bkg_down, "Sys Down Bkg Template", "l");
+            }
+            leg1->Draw();
 
             c_elel1->Print(el_fname1);
+        
         }
 
 

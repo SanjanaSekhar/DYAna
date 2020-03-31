@@ -123,7 +123,7 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt,
         double xf = compute_xF(cm); 
         bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
 
-        if(m >= m_low && m <= m_high && met_pt < 50. && no_bjets && opp_sign){
+        if(m >= m_low && m <= m_high && met_pt < met_cut && no_bjets && opp_sign){
             if(is_data){
                 h_m->Fill(m);
                 if(ss) h_cost->Fill(abs(cost));
@@ -239,7 +239,8 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+            //bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.has_no_bjets && tm.not_cosmic;
             //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
             //pass = pass && good_eta;
 
@@ -320,7 +321,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
 
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets;
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets;
 
             //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
             //pass = pass && good_eta;
@@ -548,7 +549,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
             TLorentzVector cm = *el + *mu;
             float m = cm.M();
             bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
-            bool pass = m>= m_low && m <= m_high && met_pt < 50.  && no_bjets && opp_sign && 
+            bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign && 
                 ((flag1 == FLAG_MUONS && mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && el1_pt > 29.));
             if(pass){
                 //if(l==3) printf("Evt fr %.2e \n", evt_fakerate);
@@ -577,7 +578,7 @@ void make_pileup_hist(TTree *t1, TH1F *h_before, TH1F *h_after, bool is_data=fal
 
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < 50.  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
             if(pass){
                 nEvents++;

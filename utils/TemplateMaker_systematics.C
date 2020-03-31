@@ -253,14 +253,21 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
+    int n_var1_bins = n_y_bins;
+    float *var1_bins = y_bins;
+    if(use_xF){
+        n_var1_bins = n_xf_bins;
+        var1_bins = xf_bins;
+    }
+
     TH2F h_sym = TH2F("h_sym", "Symmetric template of mc",
-            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+            n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_sym.SetDirectory(0);
     TH2F h_alpha = TH2F("h_alpha", "Gauge boson polarization template of mc",
-            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+            n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_alpha.SetDirectory(0);
     TH2F h_asym = TH2F("h_asym", "Asymmetric template of mc",
-            n_xf_bins, xf_bins, n_cost_bins, cost_bins);
+            n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_asym.SetDirectory(0);
 
     gen_mc_template(t1, alpha, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);

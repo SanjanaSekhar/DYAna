@@ -19,10 +19,10 @@ void draw_templates(){
 
         int num_bins = 1;
         const int n_rap_bins = 4;
-        float rap_bins[] = {0., 1.0, 1.25, 1.5,  2.4};
+        float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
 
         for(int i=0; i<num_bins; i++){
-            i = 6;
+            //i = 6;
             Double_t alpha_denom = amc_alpha[i];
             double m_low = m_bins[i];
             double m_high = m_bins[i+1];
