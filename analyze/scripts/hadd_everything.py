@@ -6,9 +6,9 @@ from optparse import OptionParser
 from optparse import OptionGroup
 
 years = [2016,2017,2018]
-prefixes = ["MuMu", "ElEl"]
-labels = ["dy", "wt", "ttbar", "diboson"]
-ending = "_mar30"
+prefixes = ["ElEl", "MuMu"]
+labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
+ending = "_april2"
 
 for year in years:
     for prefix in prefixes:

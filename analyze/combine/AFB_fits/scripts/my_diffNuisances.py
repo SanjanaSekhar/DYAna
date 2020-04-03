@@ -403,7 +403,7 @@ if options.plotfile:
     ROOT.gROOT.SetStyle("Plain")
     ROOT.gStyle.SetOptFit(1)
 
-    canvas_nuis = ROOT.TCanvas("nuisances", "nuisances", 1200, 900)
+    canvas_nuis = ROOT.TCanvas("nuisances", "nuisances", 1600, 1000)
     canvas_nuis.SetBottomMargin(0.18)
     hist_fit_e_s = hist_fit_s.Clone("errors_s")
     hist_fit_e_b = hist_fit_b.Clone("errors_b")
@@ -443,7 +443,7 @@ if options.plotfile:
 
 
 
-    canvas_pferrs = ROOT.TCanvas("post_fit_errs", "post_fit_errs", 1200, 900)
+    canvas_pferrs = ROOT.TCanvas("post_fit_errs", "post_fit_errs", 1600, 1000)
     canvas_pferrs.SetBottomMargin(0.18)
     for b in range(1,hist_fit_e_s.GetNbinsX()+1): 
       e_prefit = max(1e-6, hist_prefit.GetBinError(b))

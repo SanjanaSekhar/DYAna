@@ -108,18 +108,20 @@ def make_workspace(workspace, mbin, no_sys = False, year = -1):
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_mbin%i.txt" % (mbin)
 
-    if(year < 0 ):
-        for yr in (16,17,18):
-            card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
-            print_and_do("cp %s %s" % (template_card, card))
-            print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+    if(year > 0): years = [year % 2000]
+    else: years = [16,17,18]
 
-        print_and_do("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combined_fit_y17_mbin%i.txt Y18=cards/combined_fit_y18_mbin%i.txt > %s" % (mbin, mbin, mbin, comb_card))
-    else:
-        yr = year % 2000
+    for yr in years:
         card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
         print_and_do("cp %s %s" % (template_card, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+        if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
+        if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
+
+
+    if(year < 0 ):
+        print_and_do("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combined_fit_y17_mbin%i.txt Y18=cards/combined_fit_y18_mbin%i.txt > %s" % (mbin, mbin, mbin, comb_card))
+    else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
 
     print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))

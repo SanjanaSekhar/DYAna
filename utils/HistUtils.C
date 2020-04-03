@@ -1,6 +1,6 @@
 #ifndef HIST_UTILS
 #define HIST_UTILS
-int find_bin(double * bins, double val){
+int find_bin(float * bins, float val){
     int bin =0;
     while(1){
         if( val >= bins[bin] && val <= bins[bin+1]) break;
@@ -27,7 +27,7 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
         float num_err = pow(h->GetBinError(i),2);
         float weight_err = scaling * err_sum;
         float new_err = 0.;
-        float max_err = 1.0;
+        float max_err = 0.7;
         new_err = min((float) (max_err * h->GetBinContent(i)), sqrt(num_err + weight_err));
 
         h->SetBinError(i, new_err);
@@ -52,7 +52,7 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH2F *h){
             float num_err = pow(h->GetBinError(i,j),2);
             float weight_err = scaling * err_sum;
             float new_err = 0.;
-            float max_err = 1.0;
+            float max_err = 0.7;
 
             new_err = min((float) (max_err * h->GetBinContent(i,j)), sqrt(num_err + weight_err));
 

@@ -42,10 +42,10 @@ void cleanup_template(TH2F *h){
     for(int i=0; i<= h->GetNbinsX()+1; i++){
         for(int j=0; j<= h->GetNbinsY()+1; j++){
             //printf("%i %i \n", i,j);
-            double min_val = 1e-6;
+            float min_val = 1e-6;
             float val = h->GetBinContent(i,j);
             float err = h->GetBinError(i,j);
-            float max_err = 1.; //percent
+            float max_err = 0.7; //percent
             if(val< min_val){
                 h->SetBinContent(i,j,min_val);
                 h->SetBinError(i,j,err);
@@ -375,8 +375,8 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
                     }
-                    if((l==0) && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3), min(tm.mu1_pt, 150.), tm.getEvtWeight());
-                    if((l==0) && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3), min(tm.mu2_pt, 150.), tm.getEvtWeight());
+                    if((l==0) && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), tm.getEvtWeight());
+                    if((l==0) && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), tm.getEvtWeight());
                 }
                 else{
                     Double_t el1_fakerate, el2_fakerate; 
@@ -402,8 +402,8 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
                     }
-                    if((l==0)  && tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3), min(tm.el1_pt, 150.), tm.getEvtWeight());
-                    if((l==0)  && tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3), min(tm.el2_pt, 150.), tm.getEvtWeight());
+                    if((l==0)  && tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), tm.getEvtWeight());
+                    if((l==0)  && tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), tm.getEvtWeight());
                 }
                 double tot_evt_weight = 0.;
                 if(is_data) tot_evt_weight = evt_reweight; 

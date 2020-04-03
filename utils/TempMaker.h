@@ -38,20 +38,20 @@
 #define FLAG_M_BINS 0
 #define FLAG_PT_BINS 1
 
-Double_t bcdef_lumi16 = 3.119 + 4.035 + 4.270 +  2.615 + 5.809;
-Double_t gh_lumi16 =  8.754 + 7.655;
-Double_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
-Double_t el_lumi16 = 35.9;
+Float_t bcdef_lumi16 = 3.119 + 4.035 + 4.270 +  2.615 + 5.809;
+Float_t gh_lumi16 =  8.754 + 7.655;
+Float_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
+Float_t el_lumi16 = 35.9;
 
-Double_t mu_lumi17 = 42.14;
-Double_t el_era1_lumi = 4.823 + 9.664;
-Double_t el_era2_lumi = 4.252 + 9.278 + 13.540;
-Double_t el_lumi17 = 41.52;
+Float_t mu_lumi17 = 42.14;
+Float_t el_era1_lumi = 4.823 + 9.664;
+Float_t el_era2_lumi = 4.252 + 9.278 + 13.540;
+Float_t el_lumi17 = 41.52;
 
-Double_t mu_lumi18_era1 = 9.08;
-Double_t mu_lumi18_era2 = 52.23;
-Double_t mu_lumi18 = mu_lumi18_era1 + mu_lumi18_era2;
-Double_t el_lumi18 = 59.74;
+Float_t mu_lumi18_era1 = 9.08;
+Float_t mu_lumi18_era2 = 52.23;
+Float_t mu_lumi18 = mu_lumi18_era1 + mu_lumi18_era2;
+Float_t el_lumi18 = 59.74;
 
 float met_cut = 100;
 
@@ -73,7 +73,7 @@ class TempMaker{
         void setup_systematic(const string &s_label);
         void getEvent(int i);
         void doCorrections();
-        Double_t getEvtWeight();
+        Float_t getEvtWeight();
         void fixRFNorm(TH2 *h, int mbin);
         void finish();
 
@@ -95,22 +95,22 @@ class TempMaker{
         string sys_label = string("");
         TTree *t_in;
 
-        Double_t m, xF, cost, gen_weight, reweight_a, reweight_s, reweight_alpha, jet1_btag, jet2_btag, cost_st, gen_cost;
-        Double_t evt_weight;
-        Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
-        Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF;
-        Double_t el_id_SF, el_reco_SF, el_HLT_SF, pu_SF, pu_SF_up, pu_SF_down;
-        Double_t jet1_pt, jet2_pt, jet1_eta, jet2_eta;
-        Double_t mu1_pt, mu1_eta, mu2_pt, mu2_eta;
-        Double_t el1_pt, el1_eta, el2_pt, el2_eta;
-        Double_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, 
+        Float_t m, xF, cost, gen_weight, reweight_a, reweight_s, reweight_alpha, jet1_btag, jet2_btag, cost_st, gen_cost;
+        Float_t evt_weight;
+        Float_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
+        Float_t era2_HLT_SF, era2_iso_SF, era2_id_SF;
+        Float_t el_id_SF, el_reco_SF, el_HLT_SF, pu_SF, pu_SF_up, pu_SF_down;
+        Float_t jet1_pt, jet2_pt, jet1_eta, jet2_eta;
+        Float_t mu1_pt, mu1_eta, mu2_pt, mu2_eta;
+        Float_t el1_pt, el1_eta, el2_pt, el2_eta;
+        Float_t mu_R_up, mu_R_down, mu_F_up, mu_F_down, 
                  mu_RF_up, mu_RF_down, pdf_up, pdf_down;
-        Double_t mu_p_SF, mu_m_SF, mu_p_SF_up, mu_m_SF_up, mu_p_SF_down, mu_m_SF_down, alphaS_up, alphaS_down;
+        Float_t mu_p_SF, mu_m_SF, mu_p_SF_up, mu_m_SF_up, mu_p_SF_down, mu_m_SF_down, alphaS_up, alphaS_down;
         Float_t cost_pt, met_pt, el1_charge, el2_charge, mu1_charge, mu2_charge;
-        Double_t prefire_SF, prefire_SF_up, prefire_SF_down;
+        Float_t prefire_SF, prefire_SF_up, prefire_SF_down;
         Float_t dummy;
-        Double_t jet1_btag_SF = 1.0;
-        Double_t jet2_btag_SF = 1.0;
+        Float_t jet1_btag_SF = 1.0;
+        Float_t jet2_btag_SF = 1.0;
 
         Float_t pdf_weights[60];
         TLorentzVector *lep_p=0;
@@ -118,7 +118,7 @@ class TempMaker{
         TLorentzVector *gen_lep_p=0;
         TLorentzVector *gen_lep_m=0;
         TLorentzVector cm;
-        Double_t pt;
+        Float_t pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
 
         Int_t has_no_bjets = 1;
@@ -129,8 +129,8 @@ class TempMaker{
 
         //systematics flags
 
-        Double_t one = 1.0;
-        Double_t *systematic = &one;
+        Float_t one = 1.0;
+        Float_t *systematic = &one;
         int sys_shift = 0;
 
         // do_sys: 0 = nominal, 1= var up, -1 = var down

@@ -1,8 +1,8 @@
 #include "NTupleReader.h"
 
-void compute_norms(FILE *root_files, Double_t *norms, unsigned int *nFiles){
-    Double_t sample_weight = 0;
-    Double_t sample_xsec = 0;
+void compute_norms(FILE *root_files, Float_t *norms, unsigned int *nFiles){
+    Float_t sample_weight = 0;
+    Float_t sample_xsec = 0;
     unsigned int sample_i=0;
 
     char lines[300];
@@ -726,12 +726,14 @@ void NTupleReader::hemRescale(){
                     jet.SetPtEtaPhiE(jet_Pt[i], jet_Eta[i], jet_Phi[i], jet_E[i]);
                     //jet supposed to scaled down 20%, so met gets scaled up 20%
                     new_met += 0.2 * jet;
+                    printf("20p corr \n");
                 }
                 else if(jet_Eta[i] > -3.0  && jet_Eta[i] < -2.5){
                     
                     jet.SetPtEtaPhiE(jet_Pt[i], jet_Eta[i], jet_Phi[i], jet_E[i]);
                     //jet supposed to scaled down 35%, so met gets scaled up 
                     new_met += 0.35 * jet;
+                    printf("30p corr \n");
                 }
             }
         }
@@ -739,7 +741,7 @@ void NTupleReader::hemRescale(){
         TLorentzVector diff = new_met - old_met;
         met_hem_up = new_met.Pt();
         met_hem_down = (old_met - diff).Pt();
-        //printf("Diff %.1f \n", diff.Pt());
+        printf("Diff %.1f \n", diff.Pt());
     }
 
 }
@@ -865,7 +867,7 @@ void NTupleReader::fillEventRC(){
         mu_p_n_TL = (int) mu_NumberTrackerLayers[0];
     }
 
-    Double_t mu_p_SF_vars[100], mu_m_SF_vars[100];
+    Float_t mu_p_SF_vars[100], mu_m_SF_vars[100];
     if(is_data){
         mu_p_SF = rc.kScaleDT(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(), 0, 0);
         mu_m_SF = rc.kScaleDT(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(), 0, 0);

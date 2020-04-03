@@ -44,8 +44,9 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
       
       
       vector<string>  sys_labels_uncorr = 
-        {"_METJER", "_METJEC", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_muHLT", 
-          "_muID", "_muISO",  "_elHLTBAR", "_elIDBAR", "_elRECOBAR", "_elHLTEND", "_elIDEND", "_elRECOEND", "_Pu", "_BTAG" };
+        {"_METJER", "_METJEC", "_METHEM", "_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", "_BTAG",
+            "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  
+            "_elHLTBAR", "_elIDBAR", "_elRECOBAR", "_elHLTEND", "_elIDEND", "_elRECOEND" };
 
       string yr_string; 
       if(year == 2016) yr_string = string("16");

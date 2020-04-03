@@ -247,7 +247,7 @@ void TempMaker::doCorrections(){
     if(do_muons){
         if(!do_RC || do_muRC_sys != 0){
 
-            Double_t mu_p_corr, mu_m_corr;
+            Float_t mu_p_corr, mu_m_corr;
             if(!do_RC){
                 //undo RC 
                 mu_p_corr = 1./mu_p_SF;
@@ -308,7 +308,7 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin){
     h->Scale(1./avg);
 }
 
-Double_t TempMaker::getEvtWeight(){
+Float_t TempMaker::getEvtWeight(){
     if(is_data){
         evt_weight = 1.;
         return 1.;
@@ -367,8 +367,8 @@ Double_t TempMaker::getEvtWeight(){
         }
 
 
-        Double_t era1_weight = base_weight * era1_HLT_SF * era1_iso_SF * era1_id_SF ;
-        Double_t era2_weight = base_weight * era2_HLT_SF * era2_iso_SF * era2_id_SF ;
+        Float_t era1_weight = base_weight * era1_HLT_SF * era1_iso_SF * era1_id_SF ;
+        Float_t era2_weight = base_weight * era2_HLT_SF * era2_iso_SF * era2_id_SF ;
 
 
         if(year==2016) evt_weight = 1000*(era1_weight*bcdef_lumi16 + era2_weight*gh_lumi16);

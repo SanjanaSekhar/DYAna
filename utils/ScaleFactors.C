@@ -51,7 +51,7 @@ typedef struct{
 } prefire_SFs;
 
 
-double get_var(Double_t vals[100]){
+double get_var(Float_t vals[100]){
     float mean(0.), var(0.);
     int n_vars = 100;
     int n_entries = n_vars;
@@ -76,25 +76,25 @@ double get_var(Double_t vals[100]){
     return var;
 }
 
-Double_t get_pileup_SF(Int_t n_int, TH1D *h){
+Float_t get_pileup_SF(Int_t n_int, TH1D *h){
     if(n_int > 99) n_int = 99;
 
     TAxis* x_ax =  h->GetXaxis();
     int xbin = x_ax->FindBin(n_int);
 
-    Double_t result = h->GetBinContent(xbin);
+    Float_t result = h->GetBinContent(xbin);
     //if(result < 0.0001) printf("0 pileup SF for %i vertices\n", n_int);
     return result;
 }
 
-Double_t get_Mu_trk_SF(Double_t eta, TGraphAsymmErrors *h, int systematic = 0){
+Float_t get_Mu_trk_SF(Float_t eta, TGraphAsymmErrors *h, int systematic = 0){
     eta = abs(eta);
-    Double_t result = h->Eval(eta);
+    Float_t result = h->Eval(eta);
     
     if(systematic !=0){
         TAxis* x_ax =  h->GetXaxis();
         int xbin = x_ax->FindBin(eta);
-        Double_t err;
+        Float_t err;
         if(systematic >0) err = h->GetErrorYhigh(xbin);
         else if(systematic <0) err = h->GetErrorYlow(xbin);
         result += err*systematic;
@@ -118,7 +118,7 @@ void get_pdf_avg_std_dev(Float_t pdf_Weights[100], Float_t *pdf_avg, Float_t *pd
     return;
 }
 
-Double_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
+Float_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
     //based on
     //https://github.com/cms-nanoAOD/nanoAOD-tools/blob/master/python/postprocessing/modules/common/PrefireCorr.py
     float min_pt = 20.;
@@ -146,7 +146,7 @@ Double_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
 
 
 
-Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
+Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
     if(year <2016 || year > 2018) printf("Year is not from 2016-2018. This is bad!! \n");
     //stay in range of histogram
     float sys_unc_mult = 1.0;
@@ -171,11 +171,11 @@ Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic_
     }
 
 
-    Double_t result = h->GetBinContent(xbin, ybin);
+    Float_t result = h->GetBinContent(xbin, ybin);
     int systematic = systematic_barrel;
     if(abs(eta) > 1.4) systematic = systematic_endcap;
     if(systematic != 0){
-        Double_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
+        Float_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
         err =abs(err);
         result += (systematic * err);
     }
@@ -186,7 +186,7 @@ Double_t get_mu_SF(Double_t pt, Double_t eta, int year, TH2D *h, int systematic_
     return result;
 }
 
-Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
+Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
     float sys_unc_mult = 1.0;
     //get SF for eta's in overlap region (already vetoed superclusters in the
     //region)
@@ -202,11 +202,11 @@ Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic_barrel = 0
     TAxis *y_ax =  h->GetYaxis();
     int xbin = x_ax->FindBin(eta);
     int ybin = y_ax->FindBin(pt);
-    Double_t result = h->GetBinContent(xbin, ybin);
+    Float_t result = h->GetBinContent(xbin, ybin);
     int systematic = systematic_barrel;
     if(abs(eta) > 1.4) systematic = systematic_endcap;
     if(systematic != 0){
-        Double_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
+        Float_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
         err =abs(err);
         result += (systematic * err);
     }
@@ -218,7 +218,7 @@ Double_t get_el_SF(Double_t pt, Double_t eta, TH2D *h, int systematic_barrel = 0
     }
     return result;
 }
-Double_t get_HLT_SF_1mu(Double_t mu1_pt, Double_t mu1_eta, TH2D *h_SF){
+Float_t get_HLT_SF_1mu(Float_t mu1_pt, Float_t mu1_eta, TH2D *h_SF){
     //get HLT SF for event with just 1 muon
     //stay in range of histogram
     if (mu1_pt >= 350.) mu1_pt = 350.;
@@ -229,9 +229,9 @@ Double_t get_HLT_SF_1mu(Double_t mu1_pt, Double_t mu1_eta, TH2D *h_SF){
     int ybin1_SF = y_ax_SF->FindBin(mu1_pt);
 
 
-    Double_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
+    Float_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
 
-    Double_t result = SF1;
+    Float_t result = SF1;
     if(result < 0.01) printf("0 HLT SF for Pt %.1f, Eta %1.2f \n", mu1_pt, mu1_eta);
     if(TMath::IsNaN(result)){ 
         printf("Nan HLT SF 1 mu for Pt %.1f, Eta %1.2f \n", mu1_pt, mu1_eta);
@@ -241,7 +241,7 @@ Double_t get_HLT_SF_1mu(Double_t mu1_pt, Double_t mu1_eta, TH2D *h_SF){
     return result;
 }
 
-Double_t get_HLT_SF_1el(Double_t el1_pt, Double_t el1_eta, TH2D *h_SF){
+Float_t get_HLT_SF_1el(Float_t el1_pt, Float_t el1_eta, TH2D *h_SF){
     //get HLT SF for event with just 1 elon
     //stay in range of histogram
     if (el1_pt >= 350.) el1_pt = 350.;
@@ -252,9 +252,9 @@ Double_t get_HLT_SF_1el(Double_t el1_pt, Double_t el1_eta, TH2D *h_SF){
     int ybin1_SF = y_ax_SF->FindBin(el1_pt);
 
 
-    Double_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
+    Float_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
 
-    Double_t result = SF1;
+    Float_t result = SF1;
     if(result < 0.01) printf("0 HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
     if(TMath::IsNaN(result)){ 
         printf("Nan HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
@@ -264,7 +264,7 @@ Double_t get_HLT_SF_1el(Double_t el1_pt, Double_t el1_eta, TH2D *h_SF){
     return result;
 }
 
-Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Double_t lep2_eta, TH2D *h_SF, TH2D *h_MC_EFF, 
+Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t lep2_eta, TH2D *h_SF, TH2D *h_MC_EFF, 
        int systematic_barrel = 0, int systematic_endcap = 0){
     float sys1_unc_mult = 1.0;
     float sys2_unc_mult = 1.0;
@@ -292,8 +292,8 @@ Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Doubl
     int xbin2_SF = x_ax_SF->FindBin(std::fabs(lep2_eta));
     int ybin2_SF = y_ax_SF->FindBin(lep2_pt);
 
-    Double_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
-    Double_t SF2 = h_SF->GetBinContent(xbin2_SF, ybin2_SF);
+    Float_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
+    Float_t SF2 = h_SF->GetBinContent(xbin2_SF, ybin2_SF);
 
     int systematic1 = systematic_barrel;
     int systematic2 = systematic_barrel;
@@ -301,11 +301,11 @@ Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Doubl
     if(abs(lep2_eta) > 1.4) systematic2 = systematic_endcap;
 
     if(systematic1 != 0){
-        Double_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
+        Float_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
         SF1 += sys1_unc_mult * SF1_err * systematic1;
     }
     if(systematic2 != 0){
-        Double_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
+        Float_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
         SF2 += sys2_unc_mult * SF2_err * systematic2;
     }
     //printf("eta1 %.2f eta2 %.2f sys_b %i sys_e %i sys1 %i sys2 %i \n", lep1_eta, lep2_eta, systematic_barrel, systematic_endcap, systematic1, systematic2);
@@ -320,9 +320,9 @@ Double_t get_HLT_SF(Double_t lep1_pt, Double_t lep1_eta, Double_t lep2_pt, Doubl
     int xbin2_MC_EFF = x_ax_MC_EFF->FindBin(std::fabs(lep2_eta));
     int ybin2_MC_EFF = y_ax_MC_EFF->FindBin(lep2_pt);
 
-    Double_t MC_EFF1 = h_MC_EFF->GetBinContent(xbin1_MC_EFF, ybin1_MC_EFF);
-    Double_t MC_EFF2 = h_MC_EFF->GetBinContent(xbin2_MC_EFF, ybin2_MC_EFF);
-    Double_t result = (1 - (1-MC_EFF1*SF1)*(1-MC_EFF2*SF2))/
+    Float_t MC_EFF1 = h_MC_EFF->GetBinContent(xbin1_MC_EFF, ybin1_MC_EFF);
+    Float_t MC_EFF2 = h_MC_EFF->GetBinContent(xbin2_MC_EFF, ybin2_MC_EFF);
+    Float_t result = (1 - (1-MC_EFF1*SF1)*(1-MC_EFF2*SF2))/
                       (1 - (1-MC_EFF1)*(1-MC_EFF2));
     //printf("%.1f %.1f SF: %.3f %.3f, MC EFF: %.3f %.3f  comb %.3f \n", lep1_pt, lep2_pt, SF1, SF2, MC_EFF1, MC_EFF2, result);
     if(result < 0.01) printf("0 HLT SF for Pt %.1f, Eta %1.2f \n", lep1_pt, lep1_eta);

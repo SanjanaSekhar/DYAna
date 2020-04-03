@@ -58,8 +58,8 @@ class NTupleReader{
 
 
         unsigned int nFiles;
-        Double_t normalization = 1.0;
-        Double_t norms[MAX_SAMPLES]; // computed normalizations to apply to each event in a sample (based on xsection and total weight)
+        Float_t normalization = 1.0;
+        Float_t norms[MAX_SAMPLES]; // computed normalizations to apply to each event in a sample (based on xsection and total weight)
         FILE *root_files;
         TFile *fout;
 
@@ -187,7 +187,7 @@ class NTupleReader{
 
         bool print_gen_warning = true;
 
-        Double_t quark_dir_eta;
+        Float_t quark_dir_eta;
  private:
         void applyRC();
 };
