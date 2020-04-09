@@ -726,14 +726,12 @@ void NTupleReader::hemRescale(){
                     jet.SetPtEtaPhiE(jet_Pt[i], jet_Eta[i], jet_Phi[i], jet_E[i]);
                     //jet supposed to scaled down 20%, so met gets scaled up 20%
                     new_met += 0.2 * jet;
-                    printf("20p corr \n");
                 }
                 else if(jet_Eta[i] > -3.0  && jet_Eta[i] < -2.5){
                     
                     jet.SetPtEtaPhiE(jet_Pt[i], jet_Eta[i], jet_Phi[i], jet_E[i]);
                     //jet supposed to scaled down 35%, so met gets scaled up 
                     new_met += 0.35 * jet;
-                    printf("30p corr \n");
                 }
             }
         }
@@ -741,7 +739,6 @@ void NTupleReader::hemRescale(){
         TLorentzVector diff = new_met - old_met;
         met_hem_up = new_met.Pt();
         met_hem_down = (old_met - diff).Pt();
-        printf("Diff %.1f \n", diff.Pt());
     }
 
 }

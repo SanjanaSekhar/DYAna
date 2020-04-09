@@ -23,6 +23,7 @@
 #include "TH2D.h"
 #include "Math/Functor.h"
 #include "../../utils/TemplateMaker_systematics.C"
+#include "../../utils/root_files.h"
 
 float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool ss = false){
@@ -105,8 +106,8 @@ float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_conta
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
                     }
-                    if(l==0 && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3), min(tm.mu1_pt, 150.));
-                    if(l==0 && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3), min(tm.mu2_pt, 150.));
+                    if(l==0 && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f));
+                    if(l==0 && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f));
                 }
                 else{
                     Double_t el1_fakerate, el2_fakerate; 
@@ -132,8 +133,8 @@ float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_conta
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
                     }
-                    if(l==0 && tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3), min(tm.el1_pt, 150.));
-                    if(l==0 && tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3), min(tm.el2_pt, 150.));
+                    if(l==0 && tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f));
+                    if(l==0 && tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f));
                 }
                 double tot_evt_weight = 0.;
                 if(is_data) tot_evt_weight = evt_reweight; 
@@ -170,14 +171,13 @@ float gen_ilya_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_conta
 
 void make_ilya_templates(){
 
-    TFile *f_elel_mc, *f_elel_back, *f_elel_data, *f_elel_QCD, *f_elel_WJets, *f_elel_WJets_contam, *f_elel_QCD_contam;
-    TTree *t_elel_mc, *t_elel_back, *t_elel_data, *t_elel_QCD, *t_elel_WJets, *t_elel_WJets_contam, *t_elel_QCD_contam, *t_elel_nosig;
-
-    TFile *f_mumu_mc, *f_mumu_back, *f_mumu_data, *f_mumu_QCD, *f_mumu_WJets, *f_mumu_WJets_contam, *f_mumu_QCD_contam;
-    TTree *t_mumu_mc, *t_mumu_back, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam, *t_mumu_nosig;
-
     int year = 2016;
 
+    printf("Initializing files \n");
+    init(year);
+    //init_emu(year);
+
+    /*
     if(year == 2016){
         f_mumu_data = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu16_data_oct30.root");
         f_mumu_WJets_contam = TFile::Open("root://cmseos.fnal.gov//store/user/oamram/Analysis_ntuples/MuMu16_fakes_contam_mlow_nov6.root");
@@ -216,19 +216,33 @@ void make_ilya_templates(){
 
     t_elel_WJets_contam = (TTree *)f_elel_WJets_contam->Get("T_WJets");
     t_elel_QCD_contam = (TTree *)f_elel_WJets_contam->Get("T_QCD");
+    */
 
 
     float eta_bins[] = {0., 1.0, 1.25, 1.5, 2.4};
-    float mass_bins[] = {50, 60, 76, 86, 96, 106, 120, 133, 150, 171, 200, 320, 510, 700, 1000, 14000}; 
-    int n_mbins = 14;
+    float mass_bins[] = {150, 171, 200, 250, 320, 510, 700, 1000, 14000}; 
+    int n_mbins = 8;
     int n_etabins = 4;
 
     TH2F *h_elel = new TH2F("h_fakes_elel", "Electron pairs fakes est", n_etabins, eta_bins, n_mbins, mass_bins);
     TH2F *h_mumu = new TH2F("h_fakes_mumu", "Muon pairs fakes est", n_etabins, eta_bins, n_mbins, mass_bins);
 
-    float m_low = 50.;
+    TH2F *h_dummy = new TH2F("h_dummy", "dummy", 100, -100., 100., 100, -100, 100);
+
+    float m_low = 150.;
     float m_high = 14000.;
     bool ss = true;
+
+    bool incl_ss = true;
+    bool ss_binning = false;
+    bool use_xF = false;
+    /*
+     gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_dummy, year, m_low, m_high, 
+            FLAG_ELECTRONS, incl_ss, ss_binning, use_xF);
+     h_dummy->Reset();
+    gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_dummy, year, m_low, m_high, FLAG_MUONS, 
+            incl_ss, ss_binning, use_xF);
+            */
     float elel_sign_scaling = gen_ilya_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel, year, m_low, m_high, FLAG_ELECTRONS, ss);
     float mumu_sign_scaling = gen_ilya_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu, year, m_low, m_high, FLAG_MUONS, ss);
 

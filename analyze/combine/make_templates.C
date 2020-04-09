@@ -379,8 +379,8 @@ void write_out_templates(const string &sys_label){
 }
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/april3_2018.root");
-    year = 2018;
+    const TString fout_name("combine/templates/test_2016.root");
+    year = 2016;
     bool scramble_data = true;
     use_xF = false;
 
