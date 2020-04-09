@@ -10,19 +10,18 @@ void draw_templates(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2018;
+        int year = 2017;
         init(year);
-        //char *plot_dir = "Paper_plots/template_plots";
-        char *plot_dir = "Misc_plots/template_plots";
+        char *plot_dir = "Paper_plots/template_plots";
+        //char *plot_dir = "Misc_plots/template_plots";
         //setup_all_SFs(year);
         string sys_label = "";
 
-        int num_bins = 1;
+        int num_bins = n_m_bins;
         const int n_rap_bins = 4;
         float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
 
         for(int i=0; i<num_bins; i++){
-            //i = 6;
             Double_t alpha_denom = amc_alpha[i];
             double m_low = m_bins[i];
             double m_high = m_bins[i+1];
@@ -55,13 +54,13 @@ void draw_templates(){
 
 
             bool ss = false;
-            bool do_RC = true;
+            bool use_xF = false;
 
 
 
-            gen_mc_template(t_mumu_mc, alpha_denom, h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, do_RC, "");
+            gen_mc_template(t_mumu_mc, alpha_denom, h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, "");
 
-            gen_mc_template(t_elel_mc, alpha_denom, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS, do_RC, "");
+            gen_mc_template(t_elel_mc, alpha_denom, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
 
 
             char mu_title[100], el_title[100];

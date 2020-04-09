@@ -52,6 +52,13 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("el1_charge", &el1_charge);
         t_in->SetBranchAddress("el2_charge", &el2_charge);
     }
+    if(do_emu){
+        t_in->SetBranchAddress("el", &el);
+        t_in->SetBranchAddress("mu", &mu);
+        t_in->SetBranchAddress("mu1_charge", &mu1_charge);
+        t_in->SetBranchAddress("met_pt", &met_pt);
+    }
+
     if(is_one_iso){
         if(do_muons) t_in->SetBranchAddress("iso_mu", &iso_lep);
         if(do_electrons) t_in->SetBranchAddress("iso_el", &iso_lep);
@@ -85,7 +92,7 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("prefire_SF_up", &prefire_SF_up);
         t_in->SetBranchAddress("prefire_SF_down", &prefire_SF_down);
 
-        if(do_muons){
+        if(do_muons || do_emu){
             if(is_gen_level){
                 t_in->SetBranchAddress("gen_mu_p", &gen_lep_p);
                 t_in->SetBranchAddress("gen_mu_m", &gen_lep_m);
@@ -96,13 +103,15 @@ void TempMaker::setup(){
             t_in->SetBranchAddress("era2_HLT_SF", &era2_HLT_SF);
             t_in->SetBranchAddress("era2_iso_SF", &era2_iso_SF);
             t_in->SetBranchAddress("era2_id_SF", &era2_id_SF);
-            t_in->SetBranchAddress("mu_p_SF_up", &mu_p_SF_up);
-            t_in->SetBranchAddress("mu_m_SF_up", &mu_m_SF_up);
-            t_in->SetBranchAddress("mu_p_SF_down", &mu_p_SF_down);
-            t_in->SetBranchAddress("mu_m_SF_down", &mu_m_SF_down);
+            if(do_muons){
+                t_in->SetBranchAddress("mu_p_SF_up", &mu_p_SF_up);
+                t_in->SetBranchAddress("mu_m_SF_up", &mu_m_SF_up);
+                t_in->SetBranchAddress("mu_p_SF_down", &mu_p_SF_down);
+                t_in->SetBranchAddress("mu_m_SF_down", &mu_m_SF_down);
+            }
         }
 
-        if(do_electrons){
+        if(do_electrons || do_emu){
 
             if(is_gen_level){
                 t_in->SetBranchAddress("gen_el_p", &gen_lep_p);
@@ -236,7 +245,10 @@ void TempMaker::setup_systematic(const string &s_label){
 void TempMaker::getEvent(int i){
     t_in->GetEntry(i);
     if(do_muons) not_cosmic = notCosmic(*lep_p, *lep_m);
-    cm = *lep_p + *lep_m;
+    if(do_emu){
+        cm = *el + *mu;
+    }
+    else cm = *lep_p + *lep_m;
 
 
 
@@ -387,6 +399,21 @@ Float_t TempMaker::getEvtWeight(){
 
 
         evt_weight = 1000. * el_lumi * base_weight * el_id_SF *el_reco_SF * el_HLT_SF;;
+
+    }
+
+    else if(do_emu){
+        //no systematics implemented for now
+        base_weight *=  el_id_SF *el_reco_SF;
+
+        Float_t era1_weight = base_weight * era1_HLT_SF * era1_iso_SF * era1_id_SF ;
+        Float_t era2_weight = base_weight * era2_HLT_SF * era2_iso_SF * era2_id_SF ;
+
+
+        if(year==2016) evt_weight = 1000*(era1_weight*bcdef_lumi16 + era2_weight*gh_lumi16);
+        if(year==2017) evt_weight = 1000*(era1_weight*mu_lumi17);
+        if(year==2018) evt_weight = 1000*(era1_weight*mu_lumi18_era1 + era2_weight*mu_lumi18_era2);
+
 
     }
     return evt_weight;

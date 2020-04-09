@@ -29,7 +29,9 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
-int year = 2018;
+int year = 2016;
+bool write_out = true;
+char *plot_dir = "Paper_plots/";
 
 
 
@@ -104,7 +106,9 @@ void draw_samesign_cmp(){
 
 
     make_m_cost_pt_xf_hist(t_mumu_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy, true, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_back, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_ttbar, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_wt, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
 
     //Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
@@ -135,18 +139,19 @@ void draw_samesign_cmp(){
 
 
     bool scale_error=true;
-    float qcd_err = 0.4;
+    float qcd_err = 0.5;
     float diboson_err = 0.05;
+    bool add_err = true;
     if(scale_error){
-        setHistError(QCD_m, qcd_err);
-        setHistError(QCD_cost, qcd_err);
-        setHistError(QCD_xf, qcd_err);
-        setHistError(QCD_phi, qcd_err);
+        setHistError(QCD_m, qcd_err, add_err);
+        setHistError(QCD_cost, qcd_err, add_err);
+        setHistError(QCD_xf, qcd_err, add_err);
+        setHistError(QCD_phi, qcd_err, add_err);
 
-        setHistError(diboson_m, diboson_err);
-        setHistError(diboson_cost, diboson_err);
-        setHistError(diboson_xf, diboson_err);
-        setHistError(diboson_phi, diboson_err);
+        setHistError(diboson_m, diboson_err, add_err);
+        setHistError(diboson_cost, diboson_err, add_err);
+        setHistError(diboson_xf, diboson_err, add_err);
+        setHistError(diboson_phi, diboson_err, add_err);
 
     }
     
@@ -209,14 +214,19 @@ void draw_samesign_cmp(){
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
     writeExtraText = false;
+    char plt_file[100];
 
 
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)", -1., true);
     CMS_lumi(p_m, year, 33 );
+    sprintf(plt_file, "%sMuMu%i_ss_m_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_m->Print(plt_file);
 
     
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", 500., false);
     CMS_lumi(p_cost, year, 33);
+    sprintf(plt_file, "%sMuMu%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_cost->Print(plt_file);
 
     std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)", -1., true);
     CMS_lumi(p_pt, year, 33);

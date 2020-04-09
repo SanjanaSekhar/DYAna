@@ -36,11 +36,14 @@ void cleanup_hist(TH1 *h){
     }
 }
 
-void setHistError(TH1 *h, float e){
+void setHistError(TH1 *h, float e, bool add_err = true){
     int nBins = h->GetNbinsX();
     for(int i=1; i<= nBins; i++){
         float val = h->GetBinContent(i);
-        h->SetBinError(i, val*e);
+        float err = h->GetBinError(i);
+        float new_err = val*e;
+        if(add_err) new_err = pow(err*err + new_err*new_err, 0.5);
+        h->SetBinError(i, new_err);
     }
 }
 
@@ -76,91 +79,31 @@ void symmetrize1d(TH1F *h){
 void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt, TH1F *h_xf, bool is_data = false, 
         int year=2016, float m_low = 150., float m_high = 999999., bool ss = false){
     Long64_t size  =  t1->GetEntries();
-    Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_btag, jet2_btag, gen_weight;
-    Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
-    Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
-    Double_t jet1_pt, jet2_pt, pu_SF, jet1_btag_SF, jet2_btag_SF;
-    Float_t met_pt, mu1_charge, el1_charge;
-    Int_t nJets, no_bjets;
-    nJets = 2;
-    pu_SF=1;
-    TLorentzVector *el=0;
-    TLorentzVector *mu=0;
-    int nEvents =0;
+    TempMaker tm(t1, is_data, year);
+    tm.do_emu = true;
 
-    t1->SetBranchAddress("el", &el);
-    t1->SetBranchAddress("mu", &mu);
-    t1->SetBranchAddress("mu1_charge", &mu1_charge);
-    t1->SetBranchAddress("el1_charge", &el1_charge);
-    t1->SetBranchAddress("met_pt", &met_pt);
-    t1->SetBranchAddress("jet2_btag", &jet2_btag);
-    t1->SetBranchAddress("jet1_btag", &jet1_btag);
-    t1->SetBranchAddress("jet1_pt", &jet1_pt);
-    t1->SetBranchAddress("jet2_pt", &jet2_pt);
-    t1->SetBranchAddress("nJets", &nJets);
-    t1->SetBranchAddress("has_nobjets", &no_bjets);
-    if(!is_data){
-        t1->SetBranchAddress("gen_weight", &gen_weight);
-        t1->SetBranchAddress("jet1_btag_SF", &jet1_btag_SF);
-        t1->SetBranchAddress("jet2_btag_SF", &jet2_btag_SF);
-        t1->SetBranchAddress("pu_SF", &pu_SF);
-        t1->SetBranchAddress("era1_HLT_SF", &era1_HLT_SF);
-        t1->SetBranchAddress("era1_iso_SF", &era1_iso_SF);
-        t1->SetBranchAddress("era1_id_SF", &era1_id_SF);
-        t1->SetBranchAddress("era2_HLT_SF", &era2_HLT_SF);
-        t1->SetBranchAddress("era2_iso_SF", &era2_iso_SF);
-        t1->SetBranchAddress("era2_id_SF", &era2_id_SF);
-        t1->SetBranchAddress("el_id_SF", &el_id_SF);
-        t1->SetBranchAddress("el_reco_SF", &el_reco_SF);     
-    }
+    tm.setup();
+    int nEvents=0;
 
-    for (int i=0; i<size; i++) {
-        t1->GetEntry(i);
-        TLorentzVector cm;
-        cm = *el + *mu;
-        m = cm.M();
-        double cost = get_cost(*el, *mu);
-        double xf = compute_xF(cm); 
-        bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
+    for (int i=0; i<tm.nEntries; i++) {
+        tm.getEvent(i);
+        bool pass  = tm.m >= m_low && tm.m <= m_high && tm.met_pt < met_cut && tm.has_no_bjets;
+        if(pass){
+            nEvents++;
+            tm.doCorrections();
+            tm.getEvtWeight();
 
-        if(m >= m_low && m <= m_high && met_pt < met_cut && no_bjets && opp_sign){
-            if(is_data){
-                h_m->Fill(m);
-                if(ss) h_cost->Fill(abs(cost));
-                else h_cost->Fill(cost);
-                h_xf->Fill(xf);
-                h_pt->Fill(cm.Pt());
-            }
-            else{
-                nEvents++;
-                Double_t evt_weight = gen_weight * pu_SF * el_id_SF * el_reco_SF;
-                Double_t era1_SF = era1_iso_SF * era1_id_SF * era1_HLT_SF;
-                Double_t era2_SF = era2_iso_SF * era2_id_SF * era2_HLT_SF;
-
-                if(nJets >= 1) evt_weight *= jet1_btag_SF;
-                if(nJets >= 2) evt_weight *= jet2_btag_SF;
-
-                //printf(" %.2e %.2e %.2e \n", tot_weight, tot_weight *era1_weight, tot_weight *era2_weight);
-                Double_t tot_weight;
-                if(year ==2016) tot_weight = 1000 * (evt_weight * era2_SF * gh_lumi16 + evt_weight * era1_SF * bcdef_lumi16);
-                if(year ==2017) tot_weight = 1000 * evt_weight * era1_SF * mu_lumi17;
-                if(year==2018) tot_weight = 1000*  evt_weight * (era1_SF*mu_lumi18_era1 + era2_SF*mu_lumi18_era2);
-
-                h_m->Fill(m, tot_weight);
-                if(ss) h_cost->Fill(abs(cost), tot_weight);
-                else h_cost->Fill(cost, tot_weight);
-                h_xf->Fill(xf, tot_weight);
-                h_pt->Fill(cm.Pt(), tot_weight);
-            }
-
+            h_m->Fill(tm.m, tm.evt_weight);
+            if(ss) h_cost->Fill(abs(tm.cost), tm.evt_weight);
+            else h_cost->Fill(tm.cost, tm.evt_weight);
+            h_xf->Fill(tm.xF, tm.evt_weight);
+            h_pt->Fill(tm.cm.Pt(), tm.evt_weight);
 
 
         }
     }
-    if(!is_data){
-        //Printf("%.1f %.1f", h_m_era1->Integral(), h_m_gh->Integral());
-        printf("%i MC events. Poission unc. is %.2f \n", nEvents, 1./(sqrt(nEvents)));
-    }
+    printf("Selected %i events \n", nEvents);
+    tm.finish();
 }
 void make_qcd_from_emu_m_cost_pt_xf_hist(TTree *t_data, TTree *t_ttbar, TTree *t_diboson, TTree *t_dy, 
         TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf,  float m_low = 150., float m_high = 99999.){
@@ -461,13 +404,13 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         if (l==0) t = t_WJets;
         if (l==1) t = t_QCD;
         if (l==2) t = t_WJets_MC;
-        Double_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
-        Double_t jet1_pt, jet2_pt, pu_SF;
+        Float_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
+        Float_t jet1_pt, jet2_pt, pu_SF;
 
-        Double_t el_id_SF, el_reco_SF;
-        Double_t era1_iso_SF, era1_id_SF;
-        Double_t era2_iso_SF, era2_id_SF;
-        Double_t evt_fakerate, lep1_fakerate, lep2_fakerate, el1_eta, el1_pt, mu1_eta, mu1_pt;
+        Float_t el_id_SF, el_reco_SF;
+        Float_t era1_iso_SF, era1_id_SF;
+        Float_t era2_iso_SF, era2_id_SF;
+        Float_t evt_fakerate, lep1_fakerate, lep2_fakerate, el1_eta, el1_pt, mu1_eta, mu1_pt;
         TLorentzVector *el = 0;
         TLorentzVector *mu = 0;
         Int_t iso_lep;

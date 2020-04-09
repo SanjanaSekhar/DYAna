@@ -77,9 +77,10 @@ double get_var(Float_t vals[100]){
 }
 
 Float_t get_pileup_SF(Int_t n_int, TH1D *h){
-    if(n_int > 99) n_int = 99;
-
     TAxis* x_ax =  h->GetXaxis();
+    Double_t max = x_ax->GetXmax();
+    if(n_int > max) return 1;
+
     int xbin = x_ax->FindBin(n_int);
 
     Float_t result = h->GetBinContent(xbin);

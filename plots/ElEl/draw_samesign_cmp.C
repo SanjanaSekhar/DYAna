@@ -29,7 +29,9 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-int year = 2016;
+int year = 2018;
+bool write_out = true;
+char *plot_dir = "Paper_plots/";
 
 
 void draw_samesign_cmp(){
@@ -108,13 +110,14 @@ void draw_samesign_cmp(){
     bool in_os_region = false;
 
     make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy,  true, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_back, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_ttbar, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_wt, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_diboson, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
 
 
 
 
-    //Fakerate_est_el(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
     make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type,  year, m_low, m_high, ss, in_os_region);
 
 
@@ -142,13 +145,20 @@ void draw_samesign_cmp(){
     }
 
 
-    bool scale_qcd_error=true;
-    float qcd_err = 0.4;
-    if(scale_qcd_error){
-        setHistError(QCD_m, qcd_err);
-        setHistError(QCD_cost, qcd_err);
-        setHistError(QCD_xf, qcd_err);
-        setHistError(QCD_phi, qcd_err);
+    bool scale_error=true;
+    float qcd_err = 0.5;
+    float back_err = 0.05;
+    bool add_err = true;
+    if(scale_error){
+        setHistError(QCD_m, qcd_err, add_err);
+        setHistError(QCD_cost, qcd_err, add_err);
+        setHistError(QCD_xf, qcd_err, add_err);
+        setHistError(QCD_phi, qcd_err, add_err);
+
+        setHistError(back_m, back_err, add_err);
+        setHistError(back_cost, back_err, add_err);
+        setHistError(back_xf, back_err, add_err);
+        setHistError(back_phi, back_err, add_err);
 
     }
 
@@ -205,14 +215,19 @@ void draw_samesign_cmp(){
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
     writeExtraText = false;
+    char plt_file[100];
 
 
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)", -1., true);
     CMS_lumi(p_m, year, 33 );
+    sprintf(plt_file, "%sElEl%i_ss_m_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_m->Print(plt_file);
 
     
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", -1., false);
     CMS_lumi(p_cost, year, 33);
+    sprintf(plt_file, "%sElEl%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_cost->Print(plt_file);
 
     std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dielectron pt (GeV)", -1., true);
     CMS_lumi(p_pt, year, 33);

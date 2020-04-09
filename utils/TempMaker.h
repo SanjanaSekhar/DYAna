@@ -118,6 +118,8 @@ class TempMaker{
         TLorentzVector *gen_lep_p=0;
         TLorentzVector *gen_lep_m=0;
         TLorentzVector cm;
+        TLorentzVector *mu = 0;
+        TLorentzVector *el = 0;
         Float_t pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
 

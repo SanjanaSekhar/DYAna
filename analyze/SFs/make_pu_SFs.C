@@ -2,29 +2,44 @@
 
 void make_pu_SFs(){
 
-    int year = 2018;
-    char *f_mc_ = "SFs/2018/DY18_pileup_jan21.root";
-    char *f_out_ = "SFs/2018/pu_SF.root";
+    //char *f_mc_ = "2016/pileup_profile_Summer16.root";
+    //char *f_data_ = "2016/PileupData_GoldenJSON_Full2016.root";
 
-    pileup_systematics pu_sys;
-    setup_pileup_systematic_old(&pu_sys, year);
+    char *f_mc_ = "2017/mcPileup2017.root";
+    char *f_data_ = "2017/PileupHistogram-goldenJSON-13tev-2017-99bins_withVar.root";
+    //
+    //char *f_mc_ = "2018/mcPileup2018.root";
+    //char *f_data_ = "2018/PileupHistogram-goldenJSON-13tev-2018-100bins_withVar.root";
+
+    char *f_out_ = "2017/pu_SF.root";
+
+    TFile *f_data = TFile::Open(f_data_, "r");
+    f_data->cd();
+    TH1D *h_nom = (TH1D *) f_data->Get("pileup");
+    TH1D *h_up = (TH1D *) f_data->Get("pileup_plus");
+    TH1D *h_down = (TH1D *) f_data->Get("pileup_minus");
+    
+    h_nom->Scale(1./h_nom->Integral());
+    h_up->Scale(1./h_up->Integral());
+    h_down->Scale(1./h_down->Integral());
+
 
     TFile *f_mc = TFile::Open(f_mc_, "r");
     f_mc->cd();
-    TH1D *h_mc = (TH1D *) gDirectory->Get("tot_pileup");
+    TH1D *h_mc = (TH1D *) gDirectory->Get("pu_mc");
     h_mc->Scale(1./h_mc->Integral());
 
     TFile *fout =  TFile::Open(f_out_, "RECREATE");
 
     fout->cd();
 
-    TH1D *h_ratio_nom = new TH1D("pu_ratio", "", 100, 0., 100.);
-    TH1D *h_ratio_up = new TH1D("pu_ratio_up", "", 100, 0., 100.);
-    TH1D *h_ratio_down = new TH1D("pu_ratio_down", "", 100, 0., 100.);
+    TH1D *h_ratio_nom = (TH1D *) h_nom->Clone("pu_ratio");
+    TH1D *h_ratio_up = (TH1D *) h_up->Clone("pu_ratio_up");
+    TH1D *h_ratio_down = (TH1D *) h_down->Clone("pu_ratio_down");
 
-    h_ratio_nom->Divide(pu_sys.data_pileup_nom, h_mc);
-    h_ratio_up->Divide(pu_sys.data_pileup_up, h_mc);
-    h_ratio_down->Divide(pu_sys.data_pileup_down, h_mc);
+    h_ratio_nom->Divide(h_mc);
+    h_ratio_up->Divide(h_mc);
+    h_ratio_down->Divide(h_mc);
 
     //h_ratio_nom->Print("all");
     //h_ratio_up->Print("all");

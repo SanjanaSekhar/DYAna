@@ -31,7 +31,7 @@
 
 const int type = FLAG_MUONS;
 const int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
 
