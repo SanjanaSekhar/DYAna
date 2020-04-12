@@ -8,15 +8,16 @@ def print_and_do(s):
     return os.system(s)
 
 years = [2016, 2017,2018]
-prefixes = ["MuMu", "ElEl"]
-scripts = ["MuMu_reco_background.C", "ElEl_reco_background.C"]
-njobs = 1
+prefixes = ["ElEl"]
+#scripts = ["MuMu_reco_background.C", "ElEl_reco_background.C"]
+scripts = ["ElEl_reco_mc.C"]
+njobs = 15
 
-labels = ["phot_ind"]
-eos_files = ["PhotInd_files.txt"]
-#labels = ["wt", "ttbar", "diboson"]
-#eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt"]
-ending = "april2"
+#labels = ["wt", "ttbar", "diboson", "phot_ind"]
+#eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "PhotInd_files.txt"]
+labels = ["dy"]
+eos_files = ["DY_files.txt"]
+ending = "april9"
 
 for i,script in enumerate(scripts):
     prefix = prefixes[i]
