@@ -19,13 +19,14 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
     nt.do_SFs = true;
     nt.setupSFs();
     nt.setupOutputTree("T_sig");
-    nt.setupOutputTree("T_DY_back");
     nt.setupOutputTree("T_WJets");
     nt.setupOutputTree("T_QCD");
     nt.setupOutputTree("T_ss");
+    nt.setupOutputTree("T_DY_back");
+    nt.setupOutputTree("T_tautau");
 
     int iso_el;
-    nt.outTrees[2]->Branch("iso_el", &iso_el); 
+    nt.outTrees[1]->Branch("iso_el", &iso_el); 
 
 
     while(nt.getNextFile()){
@@ -49,20 +50,23 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
                         nt.nSignal++;
                         nt.outTrees[0]->Fill();
                     }
-                    else{
-                        nt.outTrees[1]->Fill();
+                    else if(nt.is_tau_event){
+                        nt.outTrees[5]->Fill();
+                    }
+                    else{ //non-sig event
+                        nt.outTrees[4]->Fill();
                     }
                 }
                 else if(!nt.opp_sign && nt.el_iso0 && nt.el_iso1){ //samesign region
-                    nt.outTrees[4]->Fill();
+                    nt.outTrees[3]->Fill();
                 }
                 else if(one_iso){ //wjets control region
                     if(nt.el_iso0) iso_el = 0;
                     else           iso_el = 1;
-                    nt.outTrees[2]->Fill();
+                    nt.outTrees[1]->Fill();
                 }
                 else if(!nt.el_iso0 && !nt.el_iso1){ //qcd control region
-                    nt.outTrees[3]->Fill();
+                    nt.outTrees[2]->Fill();
                 }
 
 
