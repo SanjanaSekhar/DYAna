@@ -23,6 +23,7 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     nt.setupOutputTree("T_QCD");
     nt.setupOutputTree("T_ss");
     nt.setupOutputTree("T_DY_back");
+    nt.setupOutputTree("T_tautau");
 
 
     int iso_mu;
@@ -48,7 +49,10 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
                         nt.nSignal++;
                         nt.outTrees[0]->Fill();
                     }
-                    else{
+                    else if(nt.is_tau_event){
+                        nt.outTrees[5]->Fill();
+                    }
+                    else{ //non-sig event
                         nt.outTrees[4]->Fill();
                     }
                 }
