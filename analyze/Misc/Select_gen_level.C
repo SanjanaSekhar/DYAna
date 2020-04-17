@@ -5,7 +5,7 @@
 void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 {
     if(fin == "") fin = string("EOS_files/2017/DY_files_noskim.txt");
-    NTupleReader nt(fin.c_str(),"output_files/MuMu17_dy_gen_nov8.root", false);
+    NTupleReader nt(fin.c_str(),"output_files/MuMu17_dy_gen.root", false);
     if (year == -1) year = 2017;
     nt.year = year;
 
@@ -26,13 +26,15 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     TTree *t_tau = new TTree("T_gen_tau", "");
 
     TLorentzVector gen_p, gen_m, cm;
-    double cost_st,cost,m, gen_weight;
+    float cost_st,cost,m, gen_weight;
 
-    double mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
+    float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
    
 
-    t_el->Branch("gen_p", "TLorentzVector", &gen_p);
-    t_el->Branch("gen_m", "TLorentzVector", &gen_m);
+    t_el->Branch("gen_p", "TLorentzVector", &nt.gen_lep_p_vec);
+    t_el->Branch("gen_m", "TLorentzVector", &nt.gen_lep_m_vec);
+    t_el->Branch("hard_p", "TLorentzVector", &nt.hard_lep_p_vec);
+    t_el->Branch("hard_m", "TLorentzVector", &nt.hard_lep_m_vec);
     t_el->Branch("gen_weight", &gen_weight);
     t_el->Branch("m", &m);
     t_el->Branch("cost_st", &cost_st);
@@ -45,10 +47,13 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_el->Branch("mu_RF_down", &mu_RF_down);
     t_el->Branch("inc_id1", &nt.inc_id1);
     t_el->Branch("inc_id2", &nt.inc_id2);
+    t_el->Branch("sig_event", &nt.signal_event);
     
 
-    t_mu->Branch("gen_p", "TLorentzVector", &gen_p);
-    t_mu->Branch("gen_m", "TLorentzVector", &gen_m);
+    t_mu->Branch("gen_p", "TLorentzVector", &nt.gen_lep_p_vec);
+    t_mu->Branch("gen_m", "TLorentzVector", &nt.gen_lep_m_vec);
+    t_mu->Branch("hard_p", "TLorentzVector", &nt.hard_lep_p_vec);
+    t_mu->Branch("hard_m", "TLorentzVector", &nt.hard_lep_m_vec);
     t_mu->Branch("gen_weight", &gen_weight);
     t_mu->Branch("m", &m);
     t_mu->Branch("cost_st", &cost_st);
@@ -61,9 +66,12 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_mu->Branch("mu_RF_down", &mu_RF_down);
     t_mu->Branch("inc_id1", &nt.inc_id1);
     t_mu->Branch("inc_id2", &nt.inc_id2);
+    t_mu->Branch("sig_event", &nt.signal_event);
 
-    t_tau->Branch("gen_p", "TLorentzVector", &gen_p);
-    t_tau->Branch("gen_m", "TLorentzVector", &gen_m);
+    t_tau->Branch("gen_p", "TLorentzVector", &nt.gen_lep_p_vec);
+    t_tau->Branch("gen_m", "TLorentzVector", &nt.gen_lep_m_vec);
+    t_tau->Branch("hard_p", "TLorentzVector", &nt.hard_lep_p_vec);
+    t_tau->Branch("hard_m", "TLorentzVector", &nt.hard_lep_m_vec);
     t_tau->Branch("gen_weight", &gen_weight);
     t_tau->Branch("m", &m);
     t_tau->Branch("cost_st", &cost_st);
@@ -84,9 +92,9 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
             mu_RF_up = nt.scale_Weights[3];
             mu_RF_down = nt.scale_Weights[5];
 
-            int gen_id = nt.selectAnyGenParts(false);
-            gen_p = nt.gen_mu_p_vec;
-            gen_m = nt.gen_mu_m_vec;
+            int gen_id = nt.selectAnyGenParts(true);
+            gen_p = nt.gen_lep_p_vec;
+            gen_m = nt.gen_lep_m_vec;
             cm = gen_p + gen_m;
             m = cm.M();
             if(m > 150.){

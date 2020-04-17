@@ -5,7 +5,7 @@ import sys, commands, os, fnmatch
 from optparse import OptionParser
 from optparse import OptionGroup
 
-years = [2016,2017,2018]
+years = [2017,2018]
 prefixes = ["ElEl", "MuMu"]
 labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
 ending = "_april9"
