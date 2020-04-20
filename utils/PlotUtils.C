@@ -29,6 +29,55 @@ void unzero_bins(TH1 *h){
     }
 }
 
+TCanvas *draw_ratio_plot(string title, TH1F *h, TH1F *ratio, char axis_label[80], char ratio_label[80], float ratio_min = 0.01, float ratio_max = 2.){
+    TCanvas *c = new TCanvas(title.c_str(), "Histograms", 200, 10, 900, 700);
+    TPad *pad1 = new TPad((title+"p1").c_str(), "pad1", 0.,0.3,0.98,1.);
+    pad1->SetBottomMargin(0);
+    pad1->Draw();
+    pad1->cd();
+    h->SetMinimum(1e-5);
+    h->Draw();
+
+
+    c->cd();
+    TPad *pad2 = new TPad((title+"p2").c_str(), "pad2", 0.,0,.98,0.3);
+    //pad2->SetTopMargin(0);
+    pad2->SetBottomMargin(0.2);
+    pad2->SetGridy();
+    pad2->Draw();
+    pad2->cd();
+
+    ratio->SetMinimum(ratio_min);
+    ratio->SetMaximum(ratio_max);
+    ratio->Sumw2();
+    ratio->SetStats(0);
+    ratio->SetMarkerStyle(21);
+    ratio->SetLineColor(kBlack);
+    ratio->Draw("ep");
+    c->cd();
+
+    ratio->SetTitle("");
+    // Y axis ratio plot settings
+    ratio->GetYaxis()->SetTitle(ratio_label);
+    ratio->GetYaxis()->SetNdivisions(505);
+    ratio->GetYaxis()->SetTitleSize(20);
+    ratio->GetYaxis()->SetTitleFont(43);
+    ratio->GetYaxis()->SetTitleOffset(1.2);
+    ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    ratio->GetYaxis()->SetLabelSize(15);
+    // X axis ratio plot settings
+    ratio->GetXaxis()->SetTitle(axis_label);
+    ratio->GetXaxis()->SetTitleSize(20);
+    ratio->GetXaxis()->SetTitleFont(43);
+    ratio->GetXaxis()->SetTitleOffset(3.);
+    ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    ratio->GetXaxis()->SetLabelSize(20);
+
+    return c;
+}
+
+
+
 TCanvas* make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, char h2_label[80], char ratio_label[80], 
         char axis_label[80], bool logy=false, bool write_out = true){
     //ratio is done as h1/h2
@@ -116,7 +165,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(logy) pad1->SetLogy();
     if(logx) pad1->SetLogx();
     h_stack->Draw("hist");
-    if(max > 0. ) h_stack->SetMaximum(max);
+    if(max <= 0. ) max = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
+    h_stack->SetMaximum(max);
     h_stack->SetMinimum(0.1);
     gStyle->SetEndErrorSize(4);
     h_data->SetMarkerStyle(kFullCircle);

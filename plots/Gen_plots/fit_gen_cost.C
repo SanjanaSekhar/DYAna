@@ -22,7 +22,8 @@
 #include "TSystem.h"
 #include "../../utils/root_files.h"
 
-int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F *h_xf, float m_low = 150., float m_high = 100000., bool phot_ind=false){
+int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F *h_xf, float m_low = 150., float m_high = 100000., 
+        float pt_low = 0., float pt_high = 10000., bool phot_ind=false){
     //read event data
     h_cost_st->Sumw2();
     Long64_t size  =  t1->GetEntries();
@@ -51,10 +52,13 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
     for (int i=0; i<size; i++) {
         t1->GetEntry(i);
         cm = *lep_pls + *lep_mns;
+        float pt = cm.Pt();
         //printf("M= %.2f \n", cm.M());
         if(cm.M() >= m_low && cm.M() < m_high && (lep1_id < 14) && (lep2_id < 14)
             && (!phot_ind || q1_id == 22 || q2_id ==22)
            //&& ((abs(lep_pls->Eta()) < 2.5) && (abs(lep_mns->Eta()) < 2.5))
+            && pt >= pt_low && pt <= pt_high
+
                 ){
 
             if(gen_weight > 0.) nSelected++;
@@ -102,21 +106,24 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
 }
 void fit_gen_cost(){
     gStyle->SetOptStat(0);
-    //TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m500_evts.root");
-    TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m700_april30.root");
+    TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
     TTree *t_gen1 = (TTree *)f1->Get("T_lhe");
-    int m_idx=7;
+    int m_idx=0;
 
 
     TH1F *h_cost = new TH1F("h_mad_cost", "", 20, -1., 1.);
     TH1F *h_cost_r = new TH1F("h_mad_cost_r", "", 20, -1., 1.);
-    TH1F *h_pt = new TH1F("h_pt", "", 20, 0., 300.);
+    TH1F *h_pt = new TH1F("h_pt", "", 40, 0., 200.);
     TH1F *h_xf = new TH1F("h_xf", "", 20, 0., 1.);
 
     float m_low = m_bins[m_idx];
     float m_high = m_bins[m_idx+1];
 
-    int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high);
+    float pt_low = 0.;
+    float pt_high = 100000;
+
+    int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high, pt_low, pt_high);
 
 
     //TF1 *func = new TF1("func", "(1 + x*x + [1]*(1-x*x) + (4./3.)*(2. + [1])*[0]*x) /(8./3. + 4.*[1]/3.)", -1., 1.);
@@ -133,6 +140,8 @@ void fit_gen_cost(){
     //bin size is 0.1, so 1/bin_size = 10.
     h_cost->Scale(10./h_cost->Integral());
     h_cost->Fit(func);
+
+    h_pt->Draw("hist");
 
     Double_t AFB = ((nF - nB))/((nF+nB));
     //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));

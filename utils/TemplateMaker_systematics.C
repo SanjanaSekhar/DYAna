@@ -151,11 +151,12 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.is_gen_level = true;
+    tm.do_ptrw = true;
 
     tm.setup_systematic(sys_label);
     tm.setup();
 
-    double max_obs = 0.;
+    float max_obs = 0.;
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -165,12 +166,12 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
             tm.doCorrections();
             tm.getEvtWeight();
             n++;
-            double gen_cost = tm.cost_st;
-            double denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
-            //double denom = 3./4./(2.+alpha_denom)*(1.+gen_cost*gen_cost + alpha_denom * (1. - gen_cost*gen_cost));
-            double reweight_a = gen_cost/ denom;
-            double reweight_s = (1 + gen_cost*gen_cost)/denom;
-            double reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+            float gen_cost = tm.cost_st;
+            //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
+            float denom = tm.getReweightingDenom();
+            float reweight_a = gen_cost/ denom;
+            float reweight_s = (1 + gen_cost*gen_cost)/denom;
+            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;

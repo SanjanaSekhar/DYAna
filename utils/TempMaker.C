@@ -215,7 +215,7 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("FAC") != string::npos && sys_shift < 0) systematic = &mu_F_down;
         else if(sys_label.find("alphaS") != string::npos && sys_shift < 0) systematic = &alphaS_down;
         else if(sys_label.find("alphaS") != string::npos && sys_shift > 0) systematic = &alphaS_up;
-        else if(sys_label.find("alphaDen") != string::npos) systematic = &one;
+        else if(sys_label.find("A0Den") != string::npos) do_A0_sys = sys_shift;
 
         else if(sys_label.find("MET") != string::npos){
             t_in->SetBranchAddress("met_pt", &dummy);
@@ -235,6 +235,15 @@ void TempMaker::setup_systematic(const string &s_label){
             else sscanf(sys_label.c_str(), "_pdf%iDown", &do_pdf_sys);
             printf("Doing pdf sys %i \n", do_pdf_sys);
         }
+        else if(sys_label.find("ptrw") != string::npos){
+            int foo;
+            if(sys_shift > 0) sscanf(sys_label.c_str(), "_%iptrw%iUp", &do_ptrw_sys, &foo);
+            else{
+                sscanf(sys_label.c_str(), "_%iptrw%iDown", &do_ptrw_sys, &foo);
+                do_ptrw *= -1;
+            }
+            printf("Doing ptrw sys %i \n", do_ptrw_sys);
+        }
 
         else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
 
@@ -249,6 +258,7 @@ void TempMaker::getEvent(int i){
         cm = *el + *mu;
     }
     else cm = *lep_p + *lep_m;
+    pt = cm.Pt();
 
 
 
@@ -320,7 +330,7 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin){
     h->Scale(1./avg);
 }
 
-Float_t TempMaker::getEvtWeight(){
+float TempMaker::getEvtWeight(){
     if(is_data){
         evt_weight = 1.;
         return 1.;
@@ -351,7 +361,12 @@ Float_t TempMaker::getEvtWeight(){
         base_weight *= jet2_btag_SF;
     }
 
-    if(year < 2018){
+    if(do_ptrw){
+        if(do_muons) base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, FLAG_MUONS, do_ptrw_sys); 
+        if(do_electrons) base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, FLAG_ELECTRONS, do_ptrw_sys); 
+    }
+
+    if(year < 2018 && (do_electrons || do_emu)){
         if(do_prefire_sys == -1) base_weight *= prefire_SF_down;
         else if(do_prefire_sys == 1) base_weight *= prefire_SF_up;
         else base_weight *= prefire_SF;
@@ -419,6 +434,14 @@ Float_t TempMaker::getEvtWeight(){
     return evt_weight;
 
 }
+
+float TempMaker::getReweightingDenom(){
+    TLorentzVector gen_cm = *gen_lep_p + *gen_lep_m; 
+    //printf("%.2f %.2f %.2f \n", cost, gen_cm.M(), gen_cm.Pt());
+    return get_reweighting_denom(A0_helper, cost, gen_cm.M(), gen_cm.Pt(), do_A0_sys);
+}
+
+
 
 void TempMaker::finish(){
     t_in->ResetBranchAddresses();

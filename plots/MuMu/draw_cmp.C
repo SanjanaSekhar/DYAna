@@ -30,7 +30,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
+const int year = 2017;
 const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
@@ -44,16 +44,17 @@ void draw_cmp(){
     setTDRStyle();
     init(year);
     init_indv_bkgs(year);
+    setup_all_SFs(year);
 
-    int n_pt_bins = 40;
-    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *mc_nosig_pt = new TH1F("mc_nosig_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins, 0, 1000);
+    int n_pt_bins1 = 40;
+    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *mc_nosig_pt = new TH1F("mc_nosig_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, 0, 1000);
 
     int n_xf_bins1 = 5;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};
@@ -131,6 +132,7 @@ void draw_cmp(){
     ttbar_phi->SetFillColor(kBlue);
     ttbar_rap->SetFillColor(kBlue);
 
+
     wt_cost->SetFillColor(kOrange+7);
     wt_m->SetFillColor(kOrange+7);
     wt_pt->SetFillColor(kOrange+7);
@@ -164,17 +166,18 @@ void draw_cmp(){
 
 
 
-    bool do_RC = true;
     float m_low = 150.;
-    float m_high = 100000.;
+    float m_high = 171.;
+    bool ss = false;
 
-    make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap,              false, type,  do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,  do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap,              false, type,   year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_tautau, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,   year, m_low, m_high);
 
     symmetrize1d(gg_cost);
 
@@ -210,8 +213,6 @@ void draw_cmp(){
     setHistError(gg_phi, gam_err);
 
 
-
-
     THStack *m_stack = new THStack("m_stack", "MuMu Mass Distribution: Data vs MC ; m_{#mu^{+}#mu^{-}} (GeV)");
     m_stack->Add(diboson_m);
     m_stack->Add(QCD_m);
@@ -222,7 +223,7 @@ void draw_cmp(){
     m_stack->Add(mc_m);
 
 
-    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; MuMu Cos(#theta)_{r}");
+    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; Cos(#theta)_{r}");
     cost_stack->Add(diboson_cost);
     cost_stack->Add(QCD_cost);
     cost_stack->Add(wt_cost);
@@ -231,7 +232,7 @@ void draw_cmp(){
     cost_stack->Add(mc_nosig_cost);
     cost_stack->Add(mc_cost);
 
-    THStack *pt_stack = new THStack("pt_stack", "Dimuon Pt Distribution: Data vs MC; Dimuon Pt (GeV)");
+    THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs MC; DiElectron Pt (GeV)");
     pt_stack->Add(diboson_pt);
     pt_stack->Add(QCD_pt);
     pt_stack->Add(wt_pt);
@@ -240,7 +241,7 @@ void draw_cmp(){
     pt_stack->Add(mc_nosig_pt);
     pt_stack->Add(mc_pt);
 
-    THStack *xf_stack = new THStack("xf_stack", "Dimuon x_F Distribution: Data vs MC; x_F");
+    THStack *xf_stack = new THStack("xf_stack", "Di-electron x_F Distribution: Data vs MC; x_F");
     xf_stack->Add(diboson_xf);
     xf_stack->Add(QCD_xf);
     xf_stack->Add(wt_xf);
@@ -249,7 +250,7 @@ void draw_cmp(){
     xf_stack->Add(mc_nosig_xf);
     xf_stack->Add(mc_xf);
 
-    THStack *phi_stack = new THStack("phi_stack", "Dimuon Phi Distribution: Data vs MC; #phi");
+    THStack *phi_stack = new THStack("phi_stack", "DiElectron Phi Distribution: Data vs MC; #phi");
     phi_stack->Add(diboson_phi);
     phi_stack->Add(QCD_phi);
     phi_stack->Add(wt_phi);
@@ -258,7 +259,7 @@ void draw_cmp(){
     phi_stack->Add(mc_nosig_phi);
     phi_stack->Add(mc_phi);
 
-    THStack *rap_stack = new THStack("rap_stack", "Dimuon Rapidity Distribution: Data vs MC; y");
+    THStack *rap_stack = new THStack("rap_stack", "DiElectron Rapidity Distribution: Data vs MC; y");
     rap_stack->Add(diboson_rap);
     rap_stack->Add(QCD_rap);
     rap_stack->Add(wt_rap);
@@ -266,7 +267,6 @@ void draw_cmp(){
     rap_stack->Add(gg_rap);
     rap_stack->Add(mc_nosig_rap);
     rap_stack->Add(mc_rap);
-
 
     gStyle->SetLegendBorderSize(0);
     float x_size = 0.3;
@@ -313,7 +313,7 @@ void draw_cmp(){
 
     
     logy = false;
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", -1., logy,logx);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta)", -1., logy,logx);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sMuMu%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);

@@ -30,7 +30,7 @@
 
 const int type = FLAG_ELECTRONS;
 const int year = 2018;
-const bool write_out = false;
+const bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
 
@@ -39,15 +39,15 @@ void draw_cmp(){
     init(year);
     init_indv_bkgs(year);
 
-    int n_pt_bins = 40;
-    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *mc_nosig_pt = new TH1F("mc_nosig_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins, 0, 1000);
-    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins, 0, 1000);
+    int n_pt_bins1 = 40;
+    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *mc_nosig_pt = new TH1F("mc_nosig_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, 0, 1000);
 
     int n_xf_bins1 = 4;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.5};
@@ -167,14 +167,14 @@ void draw_cmp(){
     float m_low = 150.;
     float m_high = 14000.;
 
-    bool do_RC = false;
-    make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_elel_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap, false, type,  do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_elel_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_elel_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_elel_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_elel_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type, do_RC, year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_elel_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,  do_RC, year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap, false, type,   year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_tautau, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_elel_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,   year, m_low, m_high);
 
 
     symmetrize1d(gg_cost);
@@ -318,7 +318,7 @@ void draw_cmp(){
     leg2->SetY1(y_start);
     leg2->SetY2(y_start+y_size);
 
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", -1., false);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta)", -1., false);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sElEl%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);

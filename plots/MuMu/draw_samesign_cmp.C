@@ -98,18 +98,17 @@ void draw_samesign_cmp(){
     DY_cost->SetFillColor(kRed+1);
     DY_phi->SetFillColor(kRed+1);
 
-    bool do_RC = true;
     int m_low = 150.;
     int m_high = 10000.;
     bool ss = true;
     bool in_os_region = false;
 
 
-    make_m_cost_pt_xf_hist(t_mumu_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy, true, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_ttbar, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_wt, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy, true, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_ttbar, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_wt, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,   year, m_low, m_high, ss);
 
     //Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
     make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type, year, m_low, m_high, ss, in_os_region);
