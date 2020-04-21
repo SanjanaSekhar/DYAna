@@ -17,7 +17,7 @@ void sys_check(){
         int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots";
-        char *sys = "_A0Den18";
+        char *sys = "_6ptrw18";
         bool do_bkg = false;
         bool do_electrons = true;
         bool do_muons = true;

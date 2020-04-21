@@ -1,4 +1,4 @@
-#include "make_templates.C"
+#include "../../analyze/combine/make_templates.C"
 
 
 void check_template(){
@@ -16,9 +16,9 @@ void check_template(){
         TH2F * h_elel_plain = new TH2F("elel_plain", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_mc = new TH2F("elel_dy", "", n_xf_bins, xf_bins, n_cost_bins, cost_bins);
 
-        double m_low = 500.;
+        double m_low = 150.;
        
-        double m_high = 700.;
+        double m_high = 171.;
         Double_t alpha_denom = amc_alpha[4];
 
         bool ss = false;

@@ -237,10 +237,12 @@ void TempMaker::setup_systematic(const string &s_label){
         }
         else if(sys_label.find("ptrw") != string::npos){
             int foo;
-            if(sys_shift > 0) sscanf(sys_label.c_str(), "_%iptrw%iUp", &do_ptrw_sys, &foo);
+            if(sys_shift > 0){
+                sscanf(sys_label.c_str(), "_%iptrw%iUp", &do_ptrw_sys, &foo);
+            }
             else{
                 sscanf(sys_label.c_str(), "_%iptrw%iDown", &do_ptrw_sys, &foo);
-                do_ptrw *= -1;
+                do_ptrw_sys *= -1;
             }
             printf("Doing ptrw sys %i \n", do_ptrw_sys);
         }

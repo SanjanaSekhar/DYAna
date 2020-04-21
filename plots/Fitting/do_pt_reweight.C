@@ -29,9 +29,9 @@
 
 
 
-const int year = 2018;
-char *out_file = "../analyze/SFs/2018/pt_rw.root";
-const bool write_out = false;
+const int year = 2016;
+char *out_file = "../analyze/SFs/2016/pt_rw.root";
+const bool write_out = true;
 char *plot_dir = "Misc_plots/pt_reweights/";
 
 
@@ -59,7 +59,7 @@ void do_pt_reweight(){
     TFile *f_out;
     if(write_out) f_out = TFile::Open(out_file, "RECREATE");
 
-    for(int i=0; i< n_m_bins; i++){
+    for(int i=0; i< n_m_bins-1; i++){
 
         TH1F *data_mumu_pt = new TH1F("data_mumu_pt", "pt reweight", n_pt_bins, pt_bins);
         TH1F *mc_mumu_pt = new TH1F("mc_mumu_pt", "pt reweight", n_pt_bins, pt_bins);
@@ -74,10 +74,12 @@ void do_pt_reweight(){
         TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100);
 
 
-        setup_all_SFs(year);
+        //setup_all_SFs(year);
 
         float m_low = m_bins[i];
         float m_high = m_bins[i+1];
+        //merge last 2 mass bins b/c low stats
+        if(i == n_m_bins-2) m_high = m_bins[i+2];
         //m_low = 150.;
         //m_high = 13000.;
 
@@ -101,7 +103,8 @@ void do_pt_reweight(){
 
         //QCD_cost->Scale(0.);
 
-        TH1F *h_mumu_data_sub = (TH1F *) data_mumu_pt->Clone("h_mumu_data_sub");
+        sprintf(h_name, "mumu%i_m%i_pt_data_sub", year % 2000, i);
+        TH1F *h_mumu_data_sub = (TH1F *) data_mumu_pt->Clone(h_name);
         h_mumu_data_sub->Add(bkg_mumu_pt, -1);
 
 
@@ -145,7 +148,8 @@ void do_pt_reweight(){
 
         //QCD_cost->Scale(0.);
 
-        TH1F *h_elel_data_sub = (TH1F *) data_elel_pt->Clone("h_elel_data_sub");
+        sprintf(h_name, "elel%i_m%i_pt_data_sub", year % 2000, i);
+        TH1F *h_elel_data_sub = (TH1F *) data_elel_pt->Clone(h_name);
         h_elel_data_sub->Add(bkg_elel_pt, -1);
 
 
@@ -170,6 +174,8 @@ void do_pt_reweight(){
             f_out->cd();
             h_mumu_ratio->Write();
             h_elel_ratio->Write();
+            h_elel_data_sub->Write();
+            h_mumu_data_sub->Write();
         }
     }
 

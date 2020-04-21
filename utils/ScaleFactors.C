@@ -59,6 +59,8 @@ typedef struct{
 typedef struct{
     TH1F *el_rw[n_m_bins];
     TH1F *mu_rw[n_m_bins];
+    TH1F *el_data_sub[n_m_bins];
+    TH1F *mu_data_sub[n_m_bins];
 } ptrw_helper;
 
 
@@ -120,26 +122,46 @@ float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int sys
 
 
 float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0){
-    TH1F *h_rw;
+    TH1F *h_rw, *h_N;
+    if(m > m_bins[n_m_bins-2]) m = m_bins[n_m_bins-2] - 0.1;
     int m_bin = find_bin(m_bins, m);
-    if(flag == FLAG_MUONS)
+    if(flag == FLAG_MUONS){
         h_rw = h.mu_rw[m_bin];
-    else
+        h_N = h.mu_data_sub[m_bin];
+    }
+    else{
         h_rw = h.el_rw[m_bin];
+        h_N = h.el_data_sub[m_bin];
+    }
     TAxis* x_ax =  h_rw->GetXaxis();
     int bin = h_rw->FindBin(pt);
     float correction = h_rw->GetBinContent(bin);
     //one systematic for each pt bin
-    if(systematic != 0 && bin == abs(systematic) ){
-        printf("%i \n", systematic);
-        float stat_err = h_rw->GetBinError(bin);
+    if(systematic != 0){
+        int sys_bin = abs(systematic);
+        float stat_err = h_rw->GetBinError(sys_bin);
         //Low stat bins should not go crazy
         stat_err = max(stat_err, 0.1f);
-        float sys_err = 0.5 * std::fabs(correction - 1.);
+        float sys_correction = h_rw->GetBinContent(sys_bin);
+        float sys_err = 0.2 * std::fabs( sys_correction - 1.);
         float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
 
-        if(systematic >0) correction += error;
-        if(systematic <0) correction -= error;
+        if(bin == abs(systematic)){
+            //shift the reweighting in this bin by the error
+            if(systematic >0) correction += error;
+            if(systematic <0) correction -= error;
+        }
+        else{
+            //shift other bins to account for changing normalization
+            float delta_N;
+            if(systematic > 0) delta_N = error * h_N->GetBinContent(sys_bin);
+            if(systematic < 0) delta_N = -error * h_N->GetBinContent(sys_bin);
+            float integral = h_N->Integral();
+            float ratio = integral/(integral + delta_N);
+            correction *= ratio;
+        }
+
+
     }
 
 
@@ -422,7 +444,7 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
     if(year == 2016) f = TFile::Open("../analyze/SFs/2016/pt_rw.root");
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/pt_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/pt_rw.root");
-    for (int i=0; i< n_m_bins; i++){
+    for (int i=0; i< n_m_bins -1; i++){
         char h_name[100];
         sprintf(h_name, "elel%i_m%i_pt_ratio", year % 2000, i);
         h->el_rw[i] = (TH1F *) f->Get(h_name)->Clone();
@@ -430,6 +452,13 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
         sprintf(h_name, "mumu%i_m%i_pt_ratio", year % 2000, i);
         h->mu_rw[i] = (TH1F *) f->Get(h_name)->Clone();
         h->mu_rw[i]->SetDirectory(0);
+
+        sprintf(h_name, "elel%i_m%i_pt_data_sub", year % 2000, i);
+        h->el_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->el_data_sub[i]->SetDirectory(0);
+        sprintf(h_name, "mumu%i_m%i_pt_data_sub", year % 2000, i);
+        h->mu_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->mu_data_sub[i]->SetDirectory(0);
     }
 }
 
