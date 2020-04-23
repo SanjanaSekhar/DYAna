@@ -137,7 +137,7 @@ int gen_data_template(TTree *t1, TH2F* h,
 
 
 
-int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
+int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
     printf("Making mc template for sys %s \n", sys_label.c_str());
@@ -272,7 +272,7 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
             n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_asym.SetDirectory(0);
 
-    gen_mc_template(t1, alpha, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
+    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
 
 
     double norm = 3./4./(2.+alpha);
