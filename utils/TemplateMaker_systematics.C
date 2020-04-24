@@ -137,7 +137,7 @@ int gen_data_template(TTree *t1, TH2F* h,
 
 
 
-int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
+int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
     printf("Making mc template for sys %s \n", sys_label.c_str());
@@ -151,11 +151,12 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.is_gen_level = true;
+    tm.do_ptrw = true;
 
     tm.setup_systematic(sys_label);
     tm.setup();
 
-    double max_obs = 0.;
+    float max_obs = 0.;
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -165,12 +166,12 @@ int gen_mc_template(TTree *t1, Double_t alpha_denom, TH2F* h_sym, TH2F *h_asym, 
             tm.doCorrections();
             tm.getEvtWeight();
             n++;
-            double gen_cost = tm.cost_st;
-            double denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
-            //double denom = 3./4./(2.+alpha_denom)*(1.+gen_cost*gen_cost + alpha_denom * (1. - gen_cost*gen_cost));
-            double reweight_a = gen_cost/ denom;
-            double reweight_s = (1 + gen_cost*gen_cost)/denom;
-            double reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+            float gen_cost = tm.cost_st;
+            //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
+            float denom = tm.getReweightingDenom();
+            float reweight_a = gen_cost/ denom;
+            float reweight_s = (1 + gen_cost*gen_cost)/denom;
+            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
@@ -271,7 +272,7 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
             n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_asym.SetDirectory(0);
 
-    gen_mc_template(t1, alpha, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
+    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
 
 
     double norm = 3./4./(2.+alpha);

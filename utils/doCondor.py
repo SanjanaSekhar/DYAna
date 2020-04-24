@@ -208,6 +208,8 @@ elif options.nJobs > 0:
 # -- MAIN
     if(options.name == ""): sys.exit("ERROR: MUST PROVIDE JOB NAME \n")
     os.system('rm -r %s' % (options.outdir + options.name))
+    eos_dir_name = EOS_base + 'Condor_outputs/' + options.name
+    #os.system("eosrm -r %s" % eos_dir_name)
     os.system('mkdir -p %s' % (options.outdir + options.name))
     os.system('cp %s %s/my_script.sh' %(options.script, options.outdir + options.name))
 

@@ -1,11 +1,21 @@
 #ifndef HIST_UTILS
 #define HIST_UTILS
+
+#define FLAG_MUONS  0
+#define FLAG_ELECTRONS  1
+#define FLAG_EMU  2
+
+#define FLAG_M_BINS 0
+#define FLAG_PT_BINS 1
+
 int find_bin(float * bins, float val){
     int bin =0;
-    while(1){
+    int max_bin = 10000;
+    while(bin < max_bin){
         if( val >= bins[bin] && val <= bins[bin+1]) break;
         bin++;
     }
+    if(bin == max_bin) printf("Something went wrong find bin for val %.f \n", val);
     return bin;
 }
 

@@ -114,7 +114,7 @@ void make_qcd_templates(int year){
 }
 
 
-void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
+void make_mc_templates(int year, const string &sys_label){
     bool do_mu, do_el;
     if(sys_label.find("mu") != string::npos){
         printf("Doing mu only \n");
@@ -167,13 +167,14 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
         h_mumu_gam->SetDirectory(0);
 
         printf("Making mumu mc \n");
-        gen_mc_template(t_mumu_mc, alpha_denom, h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, sys_label );
+        gen_mc_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, sys_label );
         TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
         printf("Making mumu back \n");
         gen_combined_background_template(3, mumu_ts, h_mumu_back, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  sys_label);
         mumu_ts[0] = t_mumu_nosig;
+        mumu_ts[1] = t_mumu_tautau;
         printf("Making mumu nosig \n");
-        gen_combined_background_template(1, mumu_ts, h_mumu_dy_gg, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  sys_label);
+        gen_combined_background_template(2, mumu_ts, h_mumu_dy_gg, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  sys_label);
 
         mumu_ts[0] = t_mumu_gamgam;
         printf("Making mumu gamgam \n");
@@ -221,11 +222,12 @@ void make_mc_templates(int year, Double_t alpha_denom, const string &sys_label){
         h_elel_gam->SetDirectory(0);
 
         printf("starting elel dy \n");
-        gen_mc_template(t_elel_mc, alpha_denom, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS,  use_xF, sys_label);
+        gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS,  use_xF, sys_label);
         TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
         gen_combined_background_template(3, elel_ts, h_elel_back, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
         elel_ts[0] = t_elel_nosig;
-        gen_combined_background_template(1, elel_ts, h_elel_dy_gg, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
+        elel_ts[1] = t_elel_tautau;
+        gen_combined_background_template(2, elel_ts, h_elel_dy_gg, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
 
         elel_ts[0] = t_elel_gamgam;
         printf("Making ee gamgam \n");
@@ -379,8 +381,8 @@ void write_out_templates(const string &sys_label){
 }
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/test_2016.root");
-    year = 2016;
+    const TString fout_name("combine/templates/april21_2018.root");
+    year = 2018;
     bool scramble_data = true;
     use_xF = false;
 
@@ -426,8 +428,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         make_ss_qcd_templates(year);
 
         string sys_label = string("");
-        Double_t alpha_denom = amc_alpha[i];
-        make_mc_templates(year, alpha_denom, sys_label);
+        make_mc_templates(year, sys_label);
         convert_mc_templates(year, sys_label);
 
         fout->cd();

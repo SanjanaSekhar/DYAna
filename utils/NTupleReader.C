@@ -116,8 +116,11 @@ bool NTupleReader::getNextFile(){
         }
         else {//root file
             if(normalization <= 0. && !is_data) printf("WARNING NORM IS ZERO FOR THIS SAMPLE!! This is bad! \n");
+            if(fileCount % nJobs != iJob){
+                fileCount++;
+                continue;
+            }
             fileCount++;
-            if(fileCount % nJobs != iJob) continue;
 
 
 
@@ -407,8 +410,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("pu_NtrueInt", &pu_NtrueInt);
 
         if(do_muons || do_emu){
-            outTrees[idx]->Branch("gen_mu_m", "TLorentzVector", &gen_mu_m_vec);
-            outTrees[idx]->Branch("gen_mu_p", "TLorentzVector", &gen_mu_p_vec);
+            outTrees[idx]->Branch("gen_mu_m", "TLorentzVector", &gen_lep_m_vec);
+            outTrees[idx]->Branch("gen_mu_p", "TLorentzVector", &gen_lep_p_vec);
             outTrees[idx]->Branch("era1_HLT_SF", &era1_HLT_SF);
             outTrees[idx]->Branch("era1_iso_SF", &era1_iso_SF);
             outTrees[idx]->Branch("era1_id_SF", &era1_id_SF);
@@ -438,8 +441,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
             outTrees[idx]->Branch("elm_smear_up", &elm_smear_up);
             outTrees[idx]->Branch("elm_smear_down", &elm_smear_down);
 
-            outTrees[idx]->Branch("gen_el_m", "TLorentzVector", &gen_el_m_vec);
-            outTrees[idx]->Branch("gen_el_p", "TLorentzVector", &gen_el_p_vec);
+            outTrees[idx]->Branch("gen_el_m", "TLorentzVector", &gen_lep_m_vec);
+            outTrees[idx]->Branch("gen_el_p", "TLorentzVector", &gen_lep_p_vec);
             outTrees[idx]->Branch("el_id_SF", &el_id_SF);
             outTrees[idx]->Branch("el_reco_SF", &el_reco_SF);
             outTrees[idx]->Branch("el_HLT_SF", &el_HLT_SF);
@@ -472,8 +475,6 @@ void NTupleReader::setupRC(){
 
 void NTupleReader::getEvent(int i){
     tin->GetEntry(i);
-    //if(year == 2016) bjet_med_cut = 0.6321; //cmva (old)
-    //if(year == 2016) bjet_med_cut = 0.8484; //CSVv2 (old)
     if(year == 2016) bjet_med_cut = 0.6321; //DeepCSV
     if(year == 2017) bjet_med_cut = 0.4941;
     if(year == 2018) bjet_med_cut = 0.4184;
@@ -875,27 +876,25 @@ void NTupleReader::fillEventRC(){
     }
     else if(!is_data && RC_from_gen){
 
-        mu_p_SF = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(),  0, 0);
-        mu_m_SF = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(),  0, 0);
+        mu_p_SF = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_lep_p_vec.Pt(),  0, 0);
+        mu_m_SF = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_lep_m_vec.Pt(),  0, 0);
 
-        mu_p_SF_alt1 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(),  2, 0) - mu_p_SF;
-        mu_m_SF_alt1 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(),  2, 0) - mu_m_SF;
+        mu_p_SF_alt1 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_lep_p_vec.Pt(),  2, 0) - mu_p_SF;
+        mu_m_SF_alt1 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_lep_m_vec.Pt(),  2, 0) - mu_m_SF;
 
-        mu_p_SF_alt2 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(),  3, 0) - mu_p_SF;
-        mu_m_SF_alt2 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(),  3, 0) - mu_m_SF;;
+        mu_p_SF_alt2 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_lep_p_vec.Pt(),  3, 0) - mu_p_SF;
+        mu_m_SF_alt2 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_lep_m_vec.Pt(),  3, 0) - mu_m_SF;;
 
-        mu_p_SF_alt3 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(),  4, 0) - mu_p_SF;
-        mu_m_SF_alt3 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(),  4, 0) - mu_m_SF;
+        mu_p_SF_alt3 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_lep_p_vec.Pt(),  4, 0) - mu_p_SF;
+        mu_m_SF_alt3 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_lep_m_vec.Pt(),  4, 0) - mu_m_SF;
 
-        mu_p_SF_alt4 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(),  5, 0) - mu_p_SF;
-        mu_m_SF_alt4 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(),  5, 0) - mu_m_SF;
+        mu_p_SF_alt4 = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_lep_p_vec.Pt(),  5, 0) - mu_p_SF;
+        mu_m_SF_alt4 = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_lep_m_vec.Pt(),  5, 0) - mu_m_SF;
 
 
         for(int k=0; k<100; k++){
-            //printf("P %.1f %.1f %.1f %i %.1f %.3f %i %i \n" ,mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(), rand1, 1, k);
-            mu_p_SF_vars[k] = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_mu_p_vec.Pt(), 1, k);
-            //printf("M %.1f %.1f %.1f %i %.1f %.3f %i %i \n" ,mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(), rand2, 1, k);
-            mu_m_SF_vars[k] = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_mu_m_vec.Pt(), 1, k);
+            mu_p_SF_vars[k] = rc.kSpreadMC(1, mu_p.Pt(), mu_p.Eta(), mu_p.Phi(),  gen_lep_p_vec.Pt(), 1, k);
+            mu_m_SF_vars[k] = rc.kSpreadMC(-1, mu_m.Pt(), mu_m.Eta(), mu_m.Phi(),  gen_lep_m_vec.Pt(), 1, k);
         }
         //printf("7 \n");
     }
@@ -958,298 +957,25 @@ void NTupleReader::applyRC(){
 
 bool NTupleReader::parseGenParts(bool PRINT = false){
     //returns false if unable to match all gen parts
-
-    char out_buff[50000];
-    bool print_out = false;
-
-
-    if(PRINT) memset(out_buff, 0, 10000);
-    if(PRINT) sprintf(out_buff + strlen(out_buff),"Event %i \n", event_idx);
-
-    //GEN LEVEL
-    //
-    //Pythia 8 status numbering convention
-    //see:
-    //http://home.thep.lu.se/~torbjorn/pythia81html/EventRecord.html
-    int FINAL_STATE = 1;
-    int EVENT_PARTICLE = 11;
-    int BEAM_PARTICLE=4;
-    int INCIDENT_PARTICLE = 21;
-    int INTERMED_PARTICLE = 22;
-    int OUTGOING = 23;
-    //Particle ID's
     int ELECTRON = 11; 
     int MUON = 13;
     int TAU = 15;
-    int PHOTON = 22;
-    int Z=23;
-    int GLUON = 21;
-    int PROTON = 2212;
 
+    int my_lep;
+    if(do_muons) my_lep = MUON;
+    else my_lep = ELECTRON;
 
-    int MY_LEP;
-    if(do_muons) MY_LEP = MUON;
-    else MY_LEP = ELECTRON;
-
-    int inc_1 =-1;
-    int inc_2 =-1;
-    int gen_lep_p=-1;
-    int gen_lep_m=-1;
-    int gen_tau_p=-1;
-    int gen_tau_m=-1;
-    int gen_e_p=-1;
-    int gen_e_m=-1;
-    int intermed=-1;
-
-
-    signal_event = false;//whether it is an event with an asym or not
-    failed_match = false;
-
-    is_tau_event = false;
-
-    for(unsigned int k=0; k<gen_size; k++){
-        if(gen_status[k] == INCIDENT_PARTICLE && 
-                (abs(gen_id[k]) <=6  || gen_id[k] == GLUON) && 
-                (abs(gen_Dau0ID[k]) == MY_LEP || gen_Dau0ID[k] == Z || 
-                 gen_Dau0ID[k] == PHOTON || abs(gen_Dau0ID[k]) == TAU)
-          ){
-            //record index of 2 initial state particles
-            if(inc_1 == -1) inc_1 = k;
-            else if(inc_2 == -1) inc_2 = k;
-            else{
-                print_out = true;
-                printf("WARNING: More than 2 incident particles in event\n\n");
-            }
-
-        }
-        //record 2 final leptons
-        if(abs(gen_id[k]) == MY_LEP && 
-                (gen_Mom0ID[k] == Z || gen_Mom0ID[k] == PHOTON || (abs(gen_Mom0ID[k]) == TAU && gen_Pt[k] > 10.)
-                 || (gen_status[k] == OUTGOING && gen_Mom0ID[k] != PROTON))) {
-            if(gen_id[k] == MY_LEP){
-                if(gen_lep_m == -1) gen_lep_m = k;
-                else{
-                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one lep_m\n\n");
-                    if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra lep_m detected\n");
-                    print_out = true;
-                }
-            }
-            if(gen_id[k] == -MY_LEP){
-                if(gen_lep_p == -1) gen_lep_p = k;
-                else{
-                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one lep_p\n\n");
-                    if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra lep_p detected\n");
-                    print_out = true;
-                }
-            }
-        }
-        //record tau's
-        if(abs(gen_id[k]) == TAU && 
-                ( (gen_Mom0ID[k] == Z || gen_Mom0ID[k] == PHOTON || abs(gen_Mom0ID[k]) == TAU ||
-                   gen_status[k] == OUTGOING  )  && gen_Pt[k] > 10.) ){
-            if(gen_id[k] == TAU){
-                if(gen_tau_m == -1) gen_tau_m = k;
-                else{
-                    //printf("WARNING: More than one tau_m\n\n");
-                    if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra tau_m detected\n");
-                    //print_out = true;
-                }
-            }
-            if(gen_id[k] == -TAU){
-                if(gen_tau_p == -1) gen_tau_p = k;
-                else{
-                    //printf("WARNING: More than one tau_p\n\n");
-                    if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra tau_p detected\n");
-                    //print_out = true;
-                }
-            }
-        }
-        if(PRINT){
-            if( (abs(gen_id[k]) <=6 || gen_id[k] == GLUON)){
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"Parton (ID = %i stat = %i): \n"
-                        "    Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "    Dau1 ID: %i Dau1 Stat: Dau2 ID: %i Dau2 Stat  \n",
-                        gen_id[k], gen_status[k], 
-                        gen_Mom0ID[k],  gen_Mom1ID[k], 
-                        gen_Dau0ID[k],  gen_Dau1ID[k] );
-            }
-
-
-            if(abs(gen_id[k]) == MUON || abs(gen_id[k]) == ELECTRON || abs(gen_id[k]) == TAU){
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"lep (id %i stat = %i): \n"
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
-                        gen_id[k], gen_status[k], 
-                        gen_Mom0ID[k],  gen_Mom1ID[k], 
-                        gen_Dau0ID[k],  gen_Dau1ID[k] );
-
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
-                        gen_Pt[k], gen_Eta[k], gen_Phi[k], gen_E[k]);
-            }
-            if(gen_id[k] == Z){
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"Z (ID = %i, status = %i): \n"
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
-                        gen_id[k], gen_status[k],
-                        gen_Mom0ID[k],  gen_Mom1ID[k], 
-                        gen_Dau0ID[k],  gen_Dau1ID[k] );
-            }
-        }
+    int found_lep = selectAnyGenParts(PRINT); 
+    if(found_lep == TAU){
+        is_tau_event = true;
+        signal_event = false;
     }
-
-
-    if(gen_lep_p != -1 && gen_lep_m != -1) {
-        if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_p: \n"
-                "   Mom1 ID: %i Mom1 Stat: Mom2 ID: %i Mom2 Stat \n"
-                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
-                gen_Mom0ID[gen_lep_p],  gen_Mom1ID[gen_lep_p], 
-                gen_Dau0ID[gen_lep_p], gen_Dau1ID[gen_lep_p]);
-
-        if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_m: \n"
-                "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
-                gen_Mom0ID[gen_lep_m],  gen_Mom1ID[gen_lep_m], 
-                gen_Dau0ID[gen_lep_m],  gen_Dau1ID[gen_lep_m]
-                );
-
-    }
-    else if( gen_tau_p != -1 && gen_tau_m != -1){
-        //tau's but no gen muons or electrons
-        if(PRINT) sprintf(out_buff + strlen(out_buff),"tau_p: \n"
-                "   Mom1 ID: %i Mom1 Stat: Mom2 ID: %i Mom2 Stat \n"
-                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
-                gen_Mom0ID[gen_lep_p],  gen_Mom1ID[gen_lep_p], 
-                gen_Dau0ID[gen_lep_p], gen_Dau1ID[gen_lep_p]);
-
-        if(PRINT) sprintf(out_buff + strlen(out_buff),"tau_m: \n"
-                "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
-                gen_Mom0ID[gen_lep_m],  gen_Mom1ID[gen_lep_m], 
-                gen_Dau0ID[gen_lep_m],  gen_Dau1ID[gen_lep_m]
-                );
-            nTauTau++;
-            is_tau_event = true;
-            signal_event = false;
-            return false;
-
-    }
-
-    else {
-        if(print_gen_warning) printf("WARNING: Unable to identify lepton pair in event %i \n", event_idx);
-        nFailedID ++;
-        print_out = true;
-        if(PRINT && print_out){
-            sprintf(out_buff + strlen(out_buff), "\n\n");
-            fputs(out_buff, stdout);
-            print_out = false;
-        }
+    if(found_lep != my_lep){
+        signal_event = false;
         failed_match = true;
-        return false;
     }
-    if((inc_1 == -1) || (inc_2 == -1)){
-        if(print_gen_warning) printf("WARNING: Unable to identify initial state particles in event %i \n", event_idx);
-        nFailedID ++;
-        print_out = true;
-        if(PRINT && print_out){
-            sprintf(out_buff + strlen(out_buff), "\n\n");
-            fputs(out_buff, stdout);
-            print_out = false;
-        }
-        failed_match = true;
-        return false;
-    }
+     
 
-    else{ 
-        //printf("%i %i \n", inc_1, inc_2);
-        inc_id1 = gen_id[inc_1];
-        inc_id2 = gen_id[inc_2];
-        if(abs(gen_Dau0ID[inc_1]) == TAU){
-            if(gen_tau_p == -1 || gen_tau_m == -1){
-                printf("Didn't record tau's :( \n");
-                nFailedID ++;
-                failed_match = true;
-                return false;
-            }
-            nTauTau++;
-            is_tau_event = true;
-            signal_event = false;
-        }
-        else if((abs(inc_id1) <= 6 && abs(inc_id2) <= 6) && (inc_id1 * inc_id2 < 0)){ //a quark and anti quark
-            //qq-bar
-            signal_event = true;
-            nQQb++;
-            if(inc_id1>0) quark_dir_eta = gen_Eta[inc_1];
-            else if(inc_id2>0) quark_dir_eta = gen_Eta[inc_2];
-        }
-        else if(((abs(inc_id1) <= 6) && (inc_id2 == 21)) ||
-                ((abs(inc_id2) <= 6) && (inc_id1 == 21))){ //qglu
-            signal_event = true;
-            int q_dir;
-            if(inc_id1 == 21){
-                if(inc_id2 <0) quark_dir_eta = gen_Eta[inc_1];//qbar-glu, want glu dir
-                else quark_dir_eta= gen_Eta[inc_2];//q-glu ,want q dir
-            }
-            else if(inc_id2 == 21) {
-                if(inc_id1 <0) quark_dir_eta = gen_Eta[inc_2];//qbar-glu, want glu dir
-                else quark_dir_eta= gen_Eta[inc_1];//q-glu ,want q dir
-            }
-            nQGlu++;
-        }
-        else if((abs(inc_id1) <= 6) && (abs(inc_id2) <= 6) && (inc_id1 * inc_id2 >0)){ //2 quarks
-            if(PRINT) sprintf(out_buff + strlen(out_buff),"QQ Event \n");
-            signal_event = false;
-            nQQ++;
-        }
-        else if((inc_id1 == 21) && (inc_id2 == 21)){ //gluglu
-            signal_event = false;
-            nGluGlu++;
-            if(PRINT) sprintf(out_buff + strlen(out_buff), "Glu Glu event \n");
-        }
-        else {
-            if(print_gen_warning) printf("WARNING: not qqbar, qq, qg, or gg event");
-            if(print_gen_warning) printf("First particle was %i second particle was %i \n \n ", inc_id1, inc_id2);
-            failed_match = true;
-            nFailedID ++;
-        }
-    }
-
-    if(PRINT){
-        sprintf(out_buff + strlen(out_buff),  "1st Particle %i:(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
-                gen_id[inc_1], gen_Pt[inc_1], gen_Eta[inc_1], gen_Phi[inc_1], gen_E[inc_1]);
-        sprintf(out_buff + strlen(out_buff),"2nd Particle %i:(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
-                gen_id[inc_2], gen_Pt[inc_2], gen_Eta[inc_2], gen_Phi[inc_2], gen_E[inc_2]);
-    }
-    float gen_cost;
-    if(do_muons){
-        gen_mu_p_vec.SetPtEtaPhiE(gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]);
-        gen_mu_m_vec.SetPtEtaPhiE(gen_Pt[gen_lep_m], gen_Eta[gen_lep_m], gen_Phi[gen_lep_m], gen_E[gen_lep_m]);
-        gen_cm = gen_mu_p_vec + gen_mu_m_vec;
-        gen_cost = get_cost(gen_mu_p_vec, gen_mu_m_vec, false);
-        if(std::isnan(gen_cost)) gen_cost = get_cost_v2(gen_mu_p_vec, gen_mu_m_vec);
-        if(std::isnan(gen_cost)) gen_cost = cost;
-    }
-    else{
-        gen_el_p_vec.SetPtEtaPhiE(gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]);
-        gen_el_m_vec.SetPtEtaPhiE(gen_Pt[gen_lep_m], gen_Eta[gen_lep_m], gen_Phi[gen_lep_m], gen_E[gen_lep_m]);
-        gen_cm = gen_el_p_vec + gen_el_m_vec;
-        gen_cost = get_cost(gen_el_p_vec, gen_el_m_vec, false);
-        if(std::isnan(gen_cost)) gen_cost = get_cost_v2(gen_el_p_vec, gen_el_m_vec);
-        if(std::isnan(gen_cost)) gen_cost = cost;
-    }
-    if(quark_dir_eta < 0){
-        cost_st = -gen_cost;
-    }
-    else cost_st = gen_cost;
-
-    gen_m = gen_cm.M();
-
-    if(PRINT && print_out){
-        sprintf(out_buff + strlen(out_buff), "\n\n");
-        fputs(out_buff, stdout);
-        print_out = false;
-    }
-
-    if(PRINT) memset(out_buff, 0, 10000);
     return !failed_match;
 }
 
@@ -1284,10 +1010,10 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
     int PROTON = 2212;
 
 
-    int MY_LEP;
-
     int inc_1 =-1;
     int inc_2 =-1;
+    int hard_lep_p=-1;
+    int hard_lep_m=-1;
     int gen_lep_p=-1;
     int gen_lep_m=-1;
     int gen_tau_p=-1;
@@ -1295,6 +1021,8 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
     int gen_e_p=-1;
     int gen_e_m=-1;
     int intermed=-1;
+
+    std::vector<int> photon_idxs;
 
 
     signal_event = false;//whether it is an event with an asym or not
@@ -1316,32 +1044,90 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
             }
 
         }
-        //record 2 final leptons
-        if((abs(gen_id[k]) == ELECTRON || abs(gen_id[k]) == MUON || abs(gen_id[k]) == TAU ) && 
+        //record 2 hard-process leptons
+        if((abs(gen_id[k]) == ELECTRON || abs(gen_id[k]) == MUON || abs(gen_id[k]) == TAU ) &&
                 ((gen_Mom0ID[k] == Z || gen_Mom0ID[k] == PHOTON)
-                 || (gen_status[k] == OUTGOING && gen_Mom0ID[k] != PROTON))) {
+                || (gen_status[k] == OUTGOING && gen_Mom0ID[k] != PROTON))) {
+            /*
+              printf("lep (id %i stat = %i, pt %.1f ): \n"
+                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
+                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
+                        gen_id[k], gen_status[k], gen_Pt[k],
+                        gen_Mom0ID[k],  gen_Mom1ID[k], 
+                        gen_Dau0ID[k],  gen_Dau1ID[k] );
+                        */
+        
+
+            if(gen_id[k] > 0){
+                if(hard_lep_m == -1) hard_lep_m = k;
+                else{
+                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one hard lep_m\n\n");
+                    if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra lep_m detected\n");
+                    //print_out = true;
+                }
+            }
+            if(gen_id[k] < 0){
+                if(hard_lep_p == -1) hard_lep_p = k;
+                else{
+                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one hard lep_p\n\n");
+                    if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra lep_p detected\n");
+                    //print_out = true;
+                }
+            }
+        }
+        //record 2 final electrons or muons
+        if((abs(gen_id[k]) == ELECTRON || abs(gen_id[k]) == MUON) &&
+                gen_status[k] == FINAL_STATE && gen_Mom0ID[k] == gen_id[k]
+                //hard process leptons come before final state leptons, should be same kind
+                && (hard_lep_p > 0 && abs(gen_id[k]) == abs(gen_id[hard_lep_p]))) {
+            /*
+              printf("lep (id %i stat = %i, pt %.1f ): \n"
+                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
+                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
+                        gen_id[k], gen_status[k], gen_Pt[k],
+                        gen_Mom0ID[k],  gen_Mom1ID[k], 
+                        gen_Dau0ID[k],  gen_Dau1ID[k] );
+                        */
+        
+
             if(gen_id[k] > 0){
                 if(gen_lep_m == -1) gen_lep_m = k;
                 else{
-                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one lep_m\n\n");
+                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one gen lep_m\n\n");
                     if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra lep_m detected\n");
-                    print_out = true;
+                    //print_out = true;
+                    if(gen_Pt[k] > gen_Pt[gen_lep_m]) gen_lep_m = k;
                 }
             }
             if(gen_id[k] < 0){
                 if(gen_lep_p == -1) gen_lep_p = k;
                 else{
-                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one lep_p\n\n");
+                    if(print_gen_warning && abs(gen_Mom0ID[k]) != TAU) printf("WARNING: More than one gen lep_p\n\n");
                     if(PRINT) sprintf(out_buff + strlen(out_buff), "Extra lep_p detected\n");
-                    print_out = true;
+                    //print_out = true;
+                    if(gen_Pt[k] > gen_Pt[gen_lep_p]) gen_lep_p = k;
                 }
             }
         }
+
+
+
+        if(abs(gen_id[k]) == PHOTON && gen_status[k] == FINAL_STATE){
+            photon_idxs.push_back(k);
+            /*
+            printf("Photon, stat %i, pt %.1f "
+                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
+                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
+                        gen_status[k], gen_Pt[k],
+                        gen_Mom0ID[k],  gen_Mom1ID[k], 
+                        gen_Dau0ID[k],  gen_Dau1ID[k] );
+                        */
+        }
         if(PRINT){
             if( (abs(gen_id[k]) <=6 || gen_id[k] == GLUON)){
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"Parton (ID = %i stat = %i): \n"
-                        "    Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "    Dau1 ID: %i Dau1 Stat: Dau2 ID: %i Dau2 Stat  \n",
+                sprintf(out_buff + strlen(out_buff),"Parton (ID = %i stat = %i): \n"
+                        "    Mom1 ID: %i Mom2 ID: %i  \n"
+                        "    Dau1 ID: %i Dau2 ID: %i  \n",
                         gen_id[k], gen_status[k], 
                         gen_Mom0ID[k],  gen_Mom1ID[k], 
                         gen_Dau0ID[k],  gen_Dau1ID[k] );
@@ -1349,29 +1135,65 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
 
 
             if(abs(gen_id[k]) == MUON || abs(gen_id[k]) == ELECTRON || abs(gen_id[k]) == TAU){
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"lep (id %i stat = %i): \n"
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
+                sprintf(out_buff + strlen(out_buff),"lep (id %i stat = %i): \n"
+                        "   Mom1 ID: %i  Mom2 ID: %i  \n"
+                        "   Dau1 ID: %i  Dau2 ID: %i  \n",
                         gen_id[k], gen_status[k], 
                         gen_Mom0ID[k],  gen_Mom1ID[k], 
                         gen_Dau0ID[k],  gen_Dau1ID[k] );
 
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                sprintf(out_buff + strlen(out_buff),"(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
                         gen_Pt[k], gen_Eta[k], gen_Phi[k], gen_E[k]);
             }
             if(gen_id[k] == Z){
-                if(PRINT) sprintf(out_buff + strlen(out_buff),"Z (ID = %i, status = %i): \n"
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
+                sprintf(out_buff + strlen(out_buff),"Z (ID = %i, status = %i): \n"
+                        "   Mom1 ID: %i  Mom2 ID: %i  \n"
+                        "   Dau1 ID: %i  Dau2 ID: %i  \n",
                         gen_id[k], gen_status[k],
                         gen_Mom0ID[k],  gen_Mom1ID[k], 
                         gen_Dau0ID[k],  gen_Dau1ID[k] );
             }
         }
+    }//end loop over gen particles
+
+
+
+
+    if((gen_lep_p == -1 || gen_lep_m == -1) &&
+            hard_lep_p != -1 && hard_lep_m != -1 
+            &&( (abs(gen_id[hard_lep_p]) == TAU && abs(gen_id[hard_lep_m]) == TAU)  || //tau event
+                (gen_status[hard_lep_p] == FINAL_STATE && gen_status[hard_lep_m] == FINAL_STATE))){ //hard proces is final state
+               gen_lep_p = hard_lep_p;
+               gen_lep_m = hard_lep_m;
     }
+   if( gen_id[gen_lep_p] != gen_id[hard_lep_p] ||       
+       gen_id[gen_lep_m] != gen_id[hard_lep_m]){
+       printf("Lepton id mismatch! \n");
+       printf("gen ids are %i %i \n", gen_id[gen_lep_p], gen_id[gen_lep_m]);
+       printf("Hard ids are %i %i \n", gen_id[hard_lep_p], gen_id[hard_lep_m]);
+        print_out = true;
+   }
+   
 
-
-    if(gen_lep_p != -1 && gen_lep_m != -1) {
+    if( gen_lep_p == -1 || gen_lep_m == -1) {
+        if(print_gen_warning) printf("WARNING: Unable to identify lepton pair in event %i\n", event_idx);
+        nFailedID ++;
+        print_out = true;
+        /*
+        printf("gen idx are %i %i \n", gen_lep_p, gen_lep_m);
+        printf("gen ids are %i %i \n", gen_id[gen_lep_p], gen_id[gen_lep_m]);
+        printf("Hard idx are %i %i \n", hard_lep_p, hard_lep_m);
+        printf("Hard ids are %i %i \n", gen_id[hard_lep_p], gen_id[hard_lep_m]);
+        */
+        if(PRINT && print_out){
+            sprintf(out_buff + strlen(out_buff), "\n\n");
+            fputs(out_buff, stdout);
+            print_out = false;
+        }
+        failed_match = true;
+        return -1;
+    }
+    else{ 
         if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_p: \n"
                 "   Mom1 ID: %i Mom1 Stat: Mom2 ID: %i Mom2 Stat \n"
                 "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
@@ -1386,18 +1208,9 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
                 );
 
     }
-    else {
-        if(print_gen_warning) printf("WARNING: Unable to identify lepton pair in event %i, skipping \n", event_idx);
-        nFailedID ++;
-        print_out = true;
-        if(PRINT && print_out){
-            sprintf(out_buff + strlen(out_buff), "\n\n");
-            fputs(out_buff, stdout);
-            print_out = false;
-        }
-        failed_match = true;
-        return false;
-    }
+
+
+
     if((inc_1 == -1) || (inc_2 == -1)){
         if(print_gen_warning) printf("WARNING: Unable to identify initial state particles in event %i, skipping \n", event_idx);
         nFailedID ++;
@@ -1408,7 +1221,7 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
             print_out = false;
         }
         failed_match = true;
-        return false;
+        return -1;
     }
 
     else{ 
@@ -1425,7 +1238,6 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
         else if(((abs(inc_id1) <= 6) && (inc_id2 == 21)) ||
                 ((abs(inc_id2) <= 6) && (inc_id1 == 21))){ //qglu
             signal_event = true;
-            int q_dir;
             if(inc_id1 == 21){
                 if(inc_id2 <0) quark_dir_eta = gen_Eta[inc_1];//qbar-glu, want glu dir
                 else quark_dir_eta= gen_Eta[inc_2];//q-glu ,want q dir
@@ -1461,13 +1273,55 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
                 gen_id[inc_2], gen_Pt[inc_2], gen_Eta[inc_2], gen_Phi[inc_2], gen_E[inc_2]);
     }
     float gen_cost;
-    gen_mu_p_vec.SetPtEtaPhiE(gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]);
-    gen_mu_m_vec.SetPtEtaPhiE(gen_Pt[gen_lep_m], gen_Eta[gen_lep_m], gen_Phi[gen_lep_m], gen_E[gen_lep_m]);
-    gen_cm = gen_mu_p_vec + gen_mu_m_vec;
-    gen_cost = get_cost(gen_mu_p_vec, gen_mu_m_vec, false);
-    if(std::isnan(gen_cost)) gen_cost = get_cost_v2(gen_mu_p_vec, gen_mu_m_vec);
-    if(std::isnan(gen_cost)) gen_cost = cost;
+    gen_lep_p_vec.SetPtEtaPhiE(gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]);
+    gen_lep_m_vec.SetPtEtaPhiE(gen_Pt[gen_lep_m], gen_Eta[gen_lep_m], gen_Phi[gen_lep_m], gen_E[gen_lep_m]);
+    hard_lep_p_vec.SetPtEtaPhiE(gen_Pt[hard_lep_p], gen_Eta[hard_lep_p], gen_Phi[hard_lep_p], gen_E[hard_lep_p]);
+    hard_lep_m_vec.SetPtEtaPhiE(gen_Pt[hard_lep_m], gen_Eta[hard_lep_m], gen_Phi[hard_lep_m], gen_E[hard_lep_m]);
 
+    TLorentzVector phot, gen_lep_p_raw, gen_lep_m_raw;
+    gen_lep_p_raw = gen_lep_p_vec;
+    gen_lep_m_raw = gen_lep_m_vec;
+
+    float dR_cut = 0.1;
+
+    for(auto iter = photon_idxs.begin(); iter != photon_idxs.end(); iter++){
+        phot.SetPtEtaPhiE(gen_Pt[*iter], gen_Eta[*iter], gen_Phi[*iter], gen_E[*iter]);
+        float dR_p = phot.DeltaR(gen_lep_p_raw);
+        float dR_m = phot.DeltaR(gen_lep_m_raw);
+        
+        float dR = std::min(dR_p, dR_m);
+
+        if(dR < dR_cut){
+            if(dR_p < dR_m){
+                gen_lep_p_vec += phot;
+            }
+            else{
+                gen_lep_m_vec += phot;
+            }
+        }
+    }
+    /*
+    if(abs(gen_id[gen_lep_p]) == MUON || abs(gen_id[gen_lep_p]) == ELECTRON){
+        printf("Before \n");
+        gen_lep_p_raw.Print();
+        gen_lep_m_raw.Print();
+        printf("After \n");
+        gen_lep_p_vec.Print();
+        gen_lep_m_vec.Print();
+        printf("Hard \n");
+        TLorentzVector hard_lep_p_vec, hard_lep_m_vec;
+        hard_lep_p_vec.Print();
+        hard_lep_m_vec.Print();
+    }
+    */
+
+
+
+
+    gen_cm = gen_lep_p_vec + gen_lep_m_vec;
+    gen_cost = get_cost(gen_lep_p_vec, gen_lep_m_vec, false);
+    if(std::isnan(gen_cost)) gen_cost = get_cost_v2(gen_lep_p_vec, gen_lep_m_vec);
+    if(std::isnan(gen_cost)) gen_cost = cost;
     if(quark_dir_eta < 0){
         cost_st = -gen_cost;
     }

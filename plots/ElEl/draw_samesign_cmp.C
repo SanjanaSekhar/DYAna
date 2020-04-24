@@ -103,17 +103,16 @@ void draw_samesign_cmp(){
     DY_cost->SetFillColor(kRed+1);
     DY_phi->SetFillColor(kRed+1);
 
-    bool do_RC = false;
     float m_low = 150.;
     float m_high = 10000.;
     bool ss = true;
     bool in_os_region = false;
 
-    make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy,  true, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_ttbar, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_wt, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_diboson, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,  do_RC, year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy,  true, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_ttbar, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_wt, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_diboson, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,   year, m_low, m_high, ss);
 
 
 

@@ -69,5 +69,6 @@ for mbin in range(bin_start, bin_stop):
     print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
     print_and_do("""echo ".q" >> cmd.txt """)
     print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fit_results_mbin%i.txt" % (fit_name, mbin))
+    print_and_do("rm -f cards/sed*")
     if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 

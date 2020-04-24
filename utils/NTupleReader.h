@@ -135,8 +135,9 @@ class NTupleReader{
         Float_t met_jec_up, met_jec_down, met_jer_up, met_jer_down, met_hem_down, met_hem_up;
         Int_t el1_gc, el2_gc;
         TLorentzVector cm, gen_cm;
-        TLorentzVector mu_p, mu_m, gen_mu_p_vec, gen_mu_m_vec;
-        TLorentzVector el_p, el_m, gen_el_p_vec, gen_el_m_vec;
+        TLorentzVector mu_p, mu_m;
+        TLorentzVector el_p, el_m;
+        TLorentzVector gen_lep_p_vec, gen_lep_m_vec, hard_lep_p_vec, hard_lep_m_vec;
         int inc_id1, inc_id2;
         TLorentzVector el, mu;
         Float_t scale_Weights[10], pdf_weights[60], alpha_weights[2];
