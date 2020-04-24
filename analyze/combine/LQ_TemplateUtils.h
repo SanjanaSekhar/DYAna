@@ -1,5 +1,5 @@
-#ifndef TemplateUtils
-#define TemplateUtils
+#ifndef LQ_TemplateUtils
+#define LQ_TemplateUtils
 #include "RooWorkspace.h"
 #include "RooRealVar.h"
 #include "RooDataHist.h"
