@@ -76,7 +76,7 @@ void symmetrize1d(TH1F *h){
 
 
 
-void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost,  TH1F *h_pt, TH1F *h_xf, bool is_data = false, 
+void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_pt,  TH1F *h_cost, TH1F *h_xf, bool is_data = false, 
         int year=2016, float m_low = 150., float m_high = 999999., bool ss = false){
     Long64_t size  =  t1->GetEntries();
     TempMaker tm(t1, is_data, year);
@@ -169,13 +169,14 @@ void make_qcd_from_emu_m_cost_pt_xf_hist(TTree *t_data, TTree *t_ttbar, TTree *t
 
 
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
-        bool is_data=false, int flag1 = FLAG_MUONS, bool turn_on_RC = true,
+        bool is_data=false, int flag1 = FLAG_MUONS,
         int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
     //read event data
         TempMaker tm(t1, is_data, year);
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
         else tm.do_electrons = true;
-        tm.do_RC = turn_on_RC;
+        tm.do_RC = true;
+
 
         tm.setup();
         int nEvents=0;
@@ -392,7 +393,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
 }
 
 
-void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, int flag1 = FLAG_MUONS, 
+void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, TH1F *h_pt, TH1F *h_cost, int flag1 = FLAG_MUONS, 
         int year=2016, float m_low = 150., float m_high = 10000.){
     FakeRate el_FR, mu_FR;
     //TH2D *FR;
@@ -491,18 +492,23 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
 
             TLorentzVector cm = *el + *mu;
             float m = cm.M();
+            float cost = get_cost(*el, *mu);
             bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
             bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign && 
                 ((flag1 == FLAG_MUONS && mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && el1_pt > 29.));
             if(pass){
                 //if(l==3) printf("Evt fr %.2e \n", evt_fakerate);
                 h_m->Fill(m, evt_fakerate);
+                h_pt->Fill(cm.Pt(), evt_fakerate);
+                h_cost->Fill(cost, evt_fakerate);
             }
         }
 
         printf("After iter %i current fakerate est is %.0f \n", l, h_m->Integral());
     }
     cleanup_hist(h_m);
+    cleanup_hist(h_cost);
+    cleanup_hist(h_pt);
     printf("Total fakerate est is %.0f \n", h_m->Integral());
 }
 

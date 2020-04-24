@@ -5,10 +5,12 @@ import sys, commands, os, fnmatch
 from optparse import OptionParser
 from optparse import OptionGroup
 
-years = [2016,2017,2018]
+years = [2016, 2017,2018]
 prefixes = ["ElEl", "MuMu"]
-labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
-ending = "_april9"
+#labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
+labels = ["dy"]
+ending = "_april17"
+redo_fakes = False
 
 for year in years:
     for prefix in prefixes:
@@ -18,13 +20,14 @@ for year in years:
             os.system("python doCondor.py -e -o output_files/" + str(year) +"/ -n " + prefix + str(year % 2000) + "_" + label + ending) 
             f_names.append("output_files/" + str(year) +"/" + prefix + str(year % 2000) + "_" + label + ending + ".root") 
 
-        rm_name = "output_files/" + str(year)+"/" + prefix +str(year %2000) + "_fakes_contam" + "*.root"
-        os.system("rm %s" % rm_name)
-        fakes_name = "output_files/" + str(year)+"/" + prefix +str(year %2000) + "_fakes_contam" + ending + ".root"
-        cmd = "hadd " + fakes_name
-        for name in f_names:
-            cmd += " " + name
-        print(cmd)
-        os.system(cmd)
-        os.system("./scripts/prune_root_file.sh %s" % fakes_name)
+        if(redo_fakes):
+            rm_name = "output_files/" + str(year)+"/" + prefix +str(year %2000) + "_fakes_contam" + "*.root"
+            os.system("rm %s" % rm_name)
+            fakes_name = "output_files/" + str(year)+"/" + prefix +str(year %2000) + "_fakes_contam" + ending + ".root"
+            cmd = "hadd " + fakes_name
+            for name in f_names:
+                cmd += " " + name
+            print(cmd)
+            os.system(cmd)
+            os.system("./scripts/prune_root_file.sh %s" % fakes_name)
 

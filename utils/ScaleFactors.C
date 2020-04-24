@@ -10,6 +10,7 @@
 #include "TH2D.h"
 #include "TGraphAsymmErrors.h"
 #include "HistUtils.C"
+#include "bins.h"
 
 
 
@@ -50,6 +51,18 @@ typedef struct{
     TH2F *el_rate;
 } prefire_SFs;
 
+typedef struct{
+    TH1F *ratios[n_m_bins][n_pt_bins];
+    RooRealVar *A0_fits[n_m_bins][n_pt_bins];
+} A0_helpers;
+
+typedef struct{
+    TH1F *el_rw[n_m_bins];
+    TH1F *mu_rw[n_m_bins];
+    TH1F *el_data_sub[n_m_bins];
+    TH1F *mu_data_sub[n_m_bins];
+} ptrw_helper;
+
 
 double get_var(Float_t vals[100]){
     float mean(0.), var(0.);
@@ -86,6 +99,74 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
     Float_t result = h->GetBinContent(xbin);
     //if(result < 0.0001) printf("0 pileup SF for %i vertices\n", n_int);
     return result;
+}
+
+
+float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int systematic = 0){
+    if(m <= m_bins[0]) m = m_bins[0] + 0.1;
+    int m_bin = find_bin(m_bins, m);
+    int pt_bin = find_bin(pt_bins, pt);
+    float A0_ = h.A0_fits[m_bin][pt_bin]->getValV();
+    if(systematic !=0){
+        float err = h.A0_fits[m_bin][pt_bin]->getError();
+        A0_ += systematic * err;
+    }
+    TH1F *h_correction = h.ratios[m_bin][pt_bin];
+    TAxis* x_ax =  h_correction->GetXaxis();
+    int bin = x_ax->FindBin(cost);
+    float correction = h_correction->GetBinContent(bin);
+    
+    float denom = 3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost));
+    return denom * correction;
+}
+
+
+float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0){
+    TH1F *h_rw, *h_N;
+    if(m > m_bins[n_m_bins-2]) m = m_bins[n_m_bins-2] - 0.1;
+    int m_bin = find_bin(m_bins, m);
+    if(flag == FLAG_MUONS){
+        h_rw = h.mu_rw[m_bin];
+        h_N = h.mu_data_sub[m_bin];
+    }
+    else{
+        h_rw = h.el_rw[m_bin];
+        h_N = h.el_data_sub[m_bin];
+    }
+    TAxis* x_ax =  h_rw->GetXaxis();
+    int bin = h_rw->FindBin(pt);
+    float correction = h_rw->GetBinContent(bin);
+    //one systematic for each pt bin
+    if(systematic != 0){
+        int sys_bin = abs(systematic);
+        float stat_err = h_rw->GetBinError(sys_bin);
+        //Low stat bins should not go crazy
+        stat_err = max(stat_err, 0.1f);
+        float sys_correction = h_rw->GetBinContent(sys_bin);
+        float sys_err = 0.2 * std::fabs( sys_correction - 1.);
+        float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+
+        if(bin == abs(systematic)){
+            //shift the reweighting in this bin by the error
+            if(systematic >0) correction += error;
+            if(systematic <0) correction -= error;
+        }
+        else{
+            //shift other bins to account for changing normalization
+            float delta_N;
+            if(systematic > 0) delta_N = error * h_N->GetBinContent(sys_bin);
+            if(systematic < 0) delta_N = -error * h_N->GetBinContent(sys_bin);
+            float integral = h_N->Integral();
+            float ratio = integral/(integral + delta_N);
+            correction *= ratio;
+        }
+
+
+    }
+
+
+    
+    return correction;
 }
 
 Float_t get_Mu_trk_SF(Float_t eta, TGraphAsymmErrors *h, int systematic = 0){
@@ -142,6 +223,7 @@ Float_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
     //printf("pt %.0f eta %.2f, prob %.3f \n", pt, eta, prefire_prob);
     return prefire_prob;
 }
+
 
 
 
@@ -337,25 +419,50 @@ Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t l
 
 
 
+void setup_A0_helper(A0_helpers *h, int year){
+    TFile *f;
 
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/a0_fits.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/a0_fits.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/a0_fits.root");
+    for (int i=0; i< n_m_bins; i++){
+        for (int j=0; j< n_pt_bins; j++){
 
-void setup_pu_SFs(pileup_SFs *pu_SF, int year){
-    TFile *f7;
-
-    if(year == 2016) f7 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_69200.root");
-    else if(year == 2017) f7 = TFile::Open("../analyze/SFs/2017/Data17PileupHistogram_69200.root");
-    else if(year == 2018) f7 = TFile::Open("../analyze/SFs/2018/Data18PileupHistogram_69200.root");
-
-    TH1D *data_pileup = (TH1D *) f7->Get("pileup")->Clone();
-    data_pileup->Scale(1./data_pileup->Integral());
-    data_pileup->SetDirectory(0);
-    pu_SF->data_pileup = data_pileup;
-    pu_SF->pileup_ratio = (TH1D *) data_pileup->Clone("pileup_ratio");
-    pu_SF->pileup_ratio->SetDirectory(0);
-    f7->Close();
-
-    if(pu_SF->data_pileup == NULL) printf("Something wrong getting Pileup SF!\n\n\n");
+            char title[100];
+            sprintf(title, "amc_fit_ratio_y%i_m%i_pt%i", year -2000, i, j);
+            h->ratios[i][j] = (TH1F *) f->Get(title)->Clone();
+            h->ratios[i][j]->SetDirectory(0);
+            sprintf(title, "a0_y%i_m%i_pt%i", year -2000, i, j);
+            h->A0_fits[i][j] = (RooRealVar *) f->Get(title)->Clone();
+        }
+    }
 }
+
+void setup_ptrw_helper(ptrw_helper *h, int year){
+    TFile *f;
+
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/pt_rw.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/pt_rw.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/pt_rw.root");
+    for (int i=0; i< n_m_bins -1; i++){
+        char h_name[100];
+        sprintf(h_name, "elel%i_m%i_pt_ratio", year % 2000, i);
+        h->el_rw[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->el_rw[i]->SetDirectory(0);
+        sprintf(h_name, "mumu%i_m%i_pt_ratio", year % 2000, i);
+        h->mu_rw[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->mu_rw[i]->SetDirectory(0);
+
+        sprintf(h_name, "elel%i_m%i_pt_data_sub", year % 2000, i);
+        h->el_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->el_data_sub[i]->SetDirectory(0);
+        sprintf(h_name, "mumu%i_m%i_pt_data_sub", year % 2000, i);
+        h->mu_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->mu_data_sub[i]->SetDirectory(0);
+    }
+}
+
+
 
 void setup_prefire_SFs(prefire_SFs *pre_SF, int year){
 

@@ -64,19 +64,41 @@ void symmetrize2d(TH2F *h_2d){
     }
 }
 
+int one_idx(int i, int j, int n_binsx, int n_binsy){
+   //lose 2 bins for each row above mid-row
+   
+   if(i <= n_binsx/2) return (i-1) * n_binsy + j;
+   if(j == n_binsy) j-=1;
+   if(j>1) j-=1;
+
+   int base = (n_binsx/2) * n_binsy;
+   return base + std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
+
+}
+
+
+
 TH1F* convert2d(TH2F *h_2d){
     int n_xf_bins = h_2d->GetNbinsX();
     int n_cost_bins = h_2d->GetNbinsY();
 
+    float n_binsx = h_2d->GetNbinsX();
+    float n_binsy = h_2d->GetNbinsY();
+    //merge 2 highest cos bins in 2 larger eta bins
+    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+
     TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_xf_bins * n_cost_bins, 0, n_xf_bins*n_cost_bins);
-    for(int i=1; i<=n_xf_bins; i++){
-        for(int j=1; j<= n_cost_bins; j++){
+    for(int i=1; i<=n_binsx; i++){
+        for(int j=1; j<=n_binsy; j++){
             float content = h_2d->GetBinContent(i,j);
             float error = h_2d->GetBinError(i,j);
-            int gbin = (i-1)*n_cost_bins + j;
-            //printf("gbin %i: i j %i %i \n", gbin, i, j);
-            h_1d->SetBinContent(gbin, content);
-            h_1d->SetBinError(gbin, error);
+            int gbin = one_idx(i,j, n_binsx, n_binsy);
+            
+            //add in case previous bin filled
+            float content_1d = h_1d->GetBinContent(gbin); 
+            float error_1d = h_1d->GetBinError(gbin); 
+            h_1d->SetBinContent(gbin, content_1d + content);
+            h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
         }
     }
     return h_1d;

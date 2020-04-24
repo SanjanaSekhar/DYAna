@@ -132,9 +132,10 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
     // USE OLD FOR NOW, CHANGE WHEN REMAKE NTUPLES
     BTagCalibration calib;
     //if(year == 2016) sprintf(file, "%s", "SFs/2016/DeepCSV_2016LegacySF_V1.csv");
-    if(year == 2016) calib = BTagCalibration("DeepCSV", "SFs/2016/DeepCSV_2016LegacySF_V1.csv");
-    if(year == 2017) calib = BTagCalibration("DeepCSV", "SFs/2017/DeepCSV_94XSF_V4_B_F.csv");
-    if(year == 2018) calib = BTagCalibration("DeepCSV", "SFs/2018/DeepCSV_102XSF_V1.csv");
+    
+    if(year == 2016) calib = BTagCalibration("DeepCSV", "../analyze/SFs/2016/DeepCSV_2016LegacySF_V1.csv");
+    if(year == 2017) calib = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V4_B_F.csv");
+    if(year == 2018) calib = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V1.csv");
 
     btag_r->b_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
     btag_r->b_reader.load(calib, BTagEntry::FLAV_B, "comb");
@@ -145,9 +146,9 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
 
 
     TFile *f0;
-    if (year == 2016)  f0 = TFile::Open("SFs/2016/BTag_efficiency_may24.root");
-    if (year == 2017)  f0 = TFile::Open("SFs/2017/Btag_eff_MC_2017.root");
-    if (year == 2018)  f0 = TFile::Open("SFs/2018/Btag_eff_MC_2018.root");
+    if (year == 2016)  f0 = TFile::Open("../analyze/SFs/2016/BTag_efficiency_may24.root");
+    if (year == 2017)  f0 = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017.root");
+    if (year == 2018)  f0 = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018.root");
     TDirectory *subdir0 = gDirectory;
     TH2D *b_eff = (TH2D *) subdir0->Get("b_eff")->Clone();
     TH2D *c_eff = (TH2D *) subdir0->Get("c_eff")->Clone();

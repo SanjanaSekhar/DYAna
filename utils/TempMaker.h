@@ -31,12 +31,6 @@
 #include "HistUtils.C"
 #include "bins.h"
 
-#define FLAG_MUONS  0
-#define FLAG_ELECTRONS  1
-#define FLAG_EMU  2
-
-#define FLAG_M_BINS 0
-#define FLAG_PT_BINS 1
 
 Float_t bcdef_lumi16 = 3.119 + 4.035 + 4.270 +  2.615 + 5.809;
 Float_t gh_lumi16 =  8.754 + 7.655;
@@ -73,9 +67,10 @@ class TempMaker{
         void setup_systematic(const string &s_label);
         void getEvent(int i);
         void doCorrections();
-        Float_t getEvtWeight();
+        float getEvtWeight();
         void fixRFNorm(TH2 *h, int mbin);
         void finish();
+        float getReweightingDenom();
 
 
 
@@ -126,6 +121,9 @@ class TempMaker{
         Int_t has_no_bjets = 1;
         bool not_cosmic = true;
 
+        //reweight MC to match data dilepton pt distribution
+        bool do_ptrw = false;
+
         Long64_t nEntries;
 
 
@@ -139,6 +137,8 @@ class TempMaker{
         int do_pdf_sys = 0;
         int do_btag_sys = 0;
         int do_pileup_sys = 0;
+        int do_A0_sys = 0;
+        int do_ptrw_sys = 0;
 
         int do_muHLT_barrel_sys = 0;
         int do_muID_barrel_sys = 0;
@@ -160,6 +160,7 @@ class TempMaker{
 
         int do_elScale_sys = 0;
         int do_elSmear_sys = 0;
+        
         float elp_rescale, elm_rescale;
 };
 
@@ -168,6 +169,8 @@ class TempMaker{
 el_SFs el_SF;
 mu_SFs era1_SFs, era2_SFs;
 pileup_systematics pu_sys;
+ptrw_helper ptrw_SFs; 
+A0_helpers A0_helper; 
 
 #ifndef STAND_ALONE
 BTag_readers b_reader;
@@ -182,6 +185,8 @@ void setup_all_SFs(int year){
     setup_el_SF(&el_SF, year);
     setup_mu_SFs(&era1_SFs, &era2_SFs,  year);
     setup_pileup_systematic(&pu_sys, year); 
+    setup_A0_helper(&A0_helper, year);
+    setup_ptrw_helper(&ptrw_SFs, year);
 }
 
 #endif

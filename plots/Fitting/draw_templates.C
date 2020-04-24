@@ -12,8 +12,8 @@ void draw_templates(){
     
         int year = 2017;
         init(year);
-        char *plot_dir = "Paper_plots/template_plots";
-        //char *plot_dir = "Misc_plots/template_plots";
+        //char *plot_dir = "Paper_plots/template_plots";
+        char *plot_dir = "Misc_plots/template_plots";
         //setup_all_SFs(year);
         string sys_label = "";
 
@@ -82,7 +82,9 @@ void draw_templates(){
             double norm = 3./4./(2.+alpha_denom);
             h_mumu_alpha->Scale(norm);
 
+            h_mumu_pl.Print("range");
             auto h1_mumu_pl = convert2d(&h_mumu_pl);
+            h1_mumu_pl->Print("range");
             auto h1_mumu_mn = convert2d(&h_mumu_mn);
             auto h1_mumu_alpha = convert2d(h_mumu_alpha);
             auto h1_mumu_sym = convert2d(h_mumu_sym);
