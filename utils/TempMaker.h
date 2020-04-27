@@ -121,6 +121,8 @@ class TempMaker{
         Int_t has_no_bjets = 1;
         bool not_cosmic = true;
 
+        int count = 0;
+
         //reweight MC to match data dilepton pt distribution
         bool do_ptrw = false;
 
