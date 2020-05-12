@@ -7,62 +7,66 @@
 
 using namespace std;
 
+//get this checked
 
 void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
     //avoid negative pdfs by fixing up template edges
-    int n_xf_bins = h_sym->GetNbinsX();
-    int n_cost_bins = h_sym->GetNbinsY();
+    int n_m_bins = h_sym->GetNbinsX();
+    int n_xf_bins = h_sym->GetNbinsY();
+    int n_cost_bins = h_sym->GetNbinsZ();
+    for(int k=1; k<=n_m_bins; k++){
+        for(int i=1; i<=n_xf_bins; i++){
+            for(int j=1; j<= n_cost_bins/2; j++){
+                //printf("%i %i \n", i,j);
+                float val_sym = h_sym->GetBinContent(k,i,j);
+                float val_asym = h_asym->GetBinContent(k,i,j);
+                int opp_j = (n_cost_bins + 1) -j; //get this checked
+                if(val_sym - 2*abs(val_asym) <= 0.){
+                    //at LO needs to sym/2, give some cushion b/c of alpha term
+                    float val_asym_new = -val_sym/2.8;
+                    h_asym->SetBinContent(k, i, j, val_asym_new);
+                    h_asym->SetBinContent(k, i, opp_j, -val_asym_new);
+                    printf("Fixed up bin %i %i %i. Old asym val was %.2f, new is %.2f \n\n", k, i, j, val_asym, val_asym_new);
+                }
+                if(val_sym < 1e-5){
+                    val_sym = 1e-5;
+                    h_sym->SetBinContent(k, i, j, val_sym);
+                    h_sym->SetBinContent(k, i, opp_j, val_sym);
+                }
+            }
 
-    for(int i=1; i<=n_xf_bins; i++){
-        for(int j=1; j<= n_cost_bins/2; j++){
-            //printf("%i %i \n", i,j);
-            float val_sym = h_sym->GetBinContent(i,j);
-            float val_asym = h_asym->GetBinContent(i,j);
-            int opp_j = (n_cost_bins + 1) -j;
-            if(val_sym - 2*abs(val_asym) <= 0.){
-                //at LO needs to sym/2, give some cushion b/c of alpha term
-                float val_asym_new = -val_sym/2.8;
-                h_asym->SetBinContent(i, j, val_asym_new);
-                h_asym->SetBinContent(i, opp_j, -val_asym_new);
-                printf("Fixed up bin %i %i. Old asym val was %.2f, new is %.2f \n\n", i, j, val_asym, val_asym_new);
-            }
-            if(val_sym < 1e-5){
-                val_sym = 1e-5;
-                h_sym->SetBinContent(i, j, val_sym);
-                h_sym->SetBinContent(i, opp_j, val_sym);
-            }
         }
-
     }
 }
 
-
+//get this checked
 void cleanup_template(TH3F *h){
     //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
-    for(int i=0; i<= h->GetNbinsX()+1; i++){
-        for(int j=0; j<= h->GetNbinsY()+1; j++){
-            //printf("%i %i \n", i,j);
-            float min_val = 1e-6;
-            float val = h->GetBinContent(i,j);
-            float err = h->GetBinError(i,j);
-            float max_err = 0.7; //percent
-            if(val< min_val){
-                h->SetBinContent(i,j,min_val);
-                h->SetBinError(i,j,err);
+    for(int k=1; k<= h->GetNbinsX()+1; k++)
+        for(int i=0; i<= h->GetNbinsY()+1; i++){
+            for(int j=0; j<= h->GetNbinsZ()+1; j++){
+                //printf("%i %i \n", i,j);
+                float min_val = 1e-6;
+                float val = h->GetBinContent(k,i,j);
+                float err = h->GetBinError(k,i,j);
+                float max_err = 0.7; //percent
+                if(val< min_val){
+                    h->SetBinContent(k,i,j,min_val);
+                    h->SetBinError(k,i,j,err);
+                }
+                if(err > max_err * val){
+                    //prevent val froming being close to fit boundary at 0
+                    //By setting max stat error
+                    err = val * max_err;
+                    h->SetBinError(k,i,j, err);
+                }
+
+
+
             }
-            if(err > max_err * val){
-                //prevent val froming being close to fit boundary at 0
-                //By setting max stat error
-                err = val * max_err;
-                h->SetBinError(i,j, err);
-            }
-
-
-
         }
-    }
 }
-
+//make the f+ and f- templates
 void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
 
         h_pl->Add(h_sym, h_asym, 1., 1.);
@@ -75,20 +79,22 @@ void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
             h_mn->SetBinError(i,err_rate * h_mn->GetBinContent(i));
         }
 }
-
+//changed
 void print_hist(TH3 *h){
     printf("\n");
-    for(int i=1; i<= h->GetNbinsX(); i++){
-        for(int j=1; j<= h->GetNbinsY(); j++){
-            printf("%.2e ",   (float) h->GetBinContent(i,j));
-        }
-        printf("\n");
-    }
 
+    for(int k=1; k<= h->GetNbinsX();k++){
+        for(int i=1; i<= h->GetNbinsY(); i++){
+            for(int j=1; j<= h->GetNbinsZ(); j++){
+                printf("%.2e ",   (float) h->GetBinContent(k,i,j));
+            }
+            printf("\n");
+        }
+    }
 }
 //
 //static type means functions scope is only this file, to avoid conflicts
-
+//changed
 int gen_data_template(TTree *t1, TH3F* h,  
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false, bool use_xF = false){
     h->Sumw2();
@@ -120,10 +126,10 @@ int gen_data_template(TTree *t1, TH3F* h,
                     //if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
                     //else tm.cost = -std::fabs(tm.cost);
                 }
-                h->Fill(var1, tm.cost, 1); 
+                h->Fill(tm.m, var1, tm.cost, 1); //is tm.m ok here
             }
             else{
-                h->Fill(var1, -abs(tm.cost), 1);
+                h->Fill(tm.m, var1, -abs(tm.cost), 1);
             }
             nEvents++;
         }
@@ -135,15 +141,17 @@ int gen_data_template(TTree *t1, TH3F* h,
     return nEvents;
 }
 
-//only modified gen_mc_template
-//function def should include TH3F* h_LQpure, TH3F* h_LQint
-int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
+//input m_LQ in make_templates.C
+int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
+        int year, Double_t m_LQ, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
     printf("Making mc template for sys %s \n", sys_label.c_str());
 
-    h_sym->Sumw2(); //what is sumw2
+    h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
     h_asym->Sumw2();
+    h_alpha->Sumw2();
+    h_LQpure->Sumw2();
+    h_LQint->Sumw2();
 
     int n = 0;
 
@@ -174,7 +182,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
             //for LQ, 2 terms-> pure and interference
             float reweight_LQpure_num1 = (1 - gen_cost)*(1 - gen_cost);
-            float reweight_LQint_denom1 = (2*m_LQ*m_LQ/s)+(1-gen_cost);
+            float reweight_LQint_denom1 = 2*m_LQ*m_LQ/(tm.m*tm.m)+(1-gen_cost);
             float reweight_LQpure_num = reweight_LQpure_num1/(reweight_LQint_denom1*reweight_LQint_denom1);
             float reweight_LQpure = reweight_LQpure_num/denom;
             float reweight_LQint_num = reweight_LQpure_num1/reweight_LQint_denom1;
@@ -183,20 +191,20 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
             //modified these
-            h_sym->Fill(var1, tm.cost, tm.m, reweight_s * tm.evt_weight); 
-            h_sym->Fill(var1, -tm.cost, tm.m, reweight_s * tm.evt_weight); 
+            h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
+            h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight); 
 
-            h_asym->Fill(var1, tm.cost, tm.m, reweight_a * tm.evt_weight);
-            h_asym->Fill(var1, -tm.cost, tm.m, -reweight_a * tm.evt_weight);
+            h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight);
+            h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight);
 
-            h_alpha->Fill(var1, tm.cost, tm.m, reweight_alpha * tm.evt_weight); 
-            h_alpha->Fill(var1, -tm.cost, tm.m, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight); 
             //LQ terms
-            //h_LQpure->Fill(var1, tm.cost, tm.m, reweight_LQpure * tm.evt_weight); 
-            //h_LQpure->Fill(var1, -tm.cost, tm.m, reweight_LQpure * tm.evt_weight);
+            h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
+            h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
 
-            //h_LQint->Fill(var1, tm.cost, tm.m, reweight_LQint * tm.evt_weight); 
-            //h_LQint->Fill(var1, -tm.cost, tm.m, reweight_LQint * tm.evt_weight);
+            h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint * tm.evt_weight); 
+            h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint * tm.evt_weight);
 
         }
     }
@@ -204,16 +212,16 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
 
     tm.finish();
     int mbin = find_bin(m_bins, m_low + 0.1);
-    tm.fixRFNorm(h_sym, mbin); //what is this step and is it required for LQ ? what is mbin
-    tm.fixRFNorm(h_asym, mbin);
-    tm.fixRFNorm(h_alpha, mbin);
+   // tm.fixRFNorm(h_sym, mbin); //not done for LQ
+    //tm.fixRFNorm(h_asym, mbin);
+    //tm.fixRFNorm(h_alpha, mbin);
 
 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
-    //h_LQpure->Scale(0.5)
-    //h_LQint->Scale(0.5)
+    h_LQpure->Scale(0.5);
+    h_LQint->Scale(0.5);
 
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
@@ -221,7 +229,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
     return 0;
 }
-
+//changed, get checked?
 int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, 
         bool ss =false, bool use_xF = false,  const string &sys_label = ""){
@@ -252,9 +260,9 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
                 float var1 = abs(tm.cm.Rapidity());
                 if(use_xF)  var1 = tm.xF;
                 nEvents++;
-                if(!ss) h->Fill(var1, tm.cost, tm.evt_weight);
+                if(!ss) h->Fill(tm.m, var1, tm.cost, tm.evt_weight);
                 else{
-                    h->Fill(var1, -abs(tm.cost), tm.evt_weight);
+                    h->Fill(tm.m, var1, -abs(tm.cost), tm.evt_weight);
                 }
             }
         }
@@ -267,9 +275,9 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
     printf("Tot Weight is %.2f from %i events \n", h->Integral(), nEvents);
     return 0;
 }
-
+//get checked
 int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy, 
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
+        int year, Double_t m_LQ, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
     int n_var1_bins = n_y_bins;
@@ -280,16 +288,16 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy,
     }
 
     TH3F h_sym = TH3F("h_sym", "Symmetric template of mc",
-            n_var1_bins, var1_bins, n_cost_bins, cost_bins, n_m_bins, m_bins);
+            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_sym.SetDirectory(0);
     TH3F h_alpha = TH3F("h_alpha", "Gauge boson polarization template of mc",
-            n_var1_bins, var1_bins, n_cost_bins, cost_bins, n_m_bins, m_bins);
+            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_alpha.SetDirectory(0);
     TH3F h_asym = TH3F("h_asym", "Asymmetric template of mc",
-            n_var1_bins, var1_bins, n_cost_bins, cost_bins, n_m_bins, m_bins);
+            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_asym.SetDirectory(0);
-
-    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
+    //includes m_LQ
+    //gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, m_LQ, m_low, m_high, flag1,  use_xF, sys_label);
 
 
     double norm = 3./4./(2.+alpha);
@@ -311,8 +319,8 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy,
 
 
 
-
-
+/*
+//what to change in this
 std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH3F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false){
     h->Sumw2();
@@ -432,9 +440,9 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                 float var1 = abs(tm.cm.Rapidity());
                 if(use_xF)  var1 = tm.xF;
 
-                if(!ss_binning) h->Fill(var1, tm.cost, tot_evt_weight);
+                if(!ss_binning) h->Fill(tm.m, var1, tm.cost, tot_evt_weight);
                 else{
-                    h->Fill(var1, -abs(tm.cost), tot_evt_weight);
+                    h->Fill(tm.m, var1, -abs(tm.cost), tot_evt_weight);
                 }
                 if(opp_sign) tot_weight_os += tot_evt_weight;
                 else tot_weight_ss += tot_evt_weight;
@@ -662,4 +670,4 @@ void gen_emu_template(TTree *t1, TH3F *h,
         }
     }
     cleanup_template(h);
-}
+} */

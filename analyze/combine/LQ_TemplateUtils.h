@@ -39,48 +39,52 @@ void write_roo_hist(TH1F *h, RooRealVar *my_var){
     w->import(r);
     delete h;
 } 
-//rename 2d to 3d
-void symmetrize2d(TH3F *h_2d){ //this function is called in make_templates.C on 8 2D hists that we create
-    int n_xf_bins = h_2d->GetNbinsX();
-    int n_cost_bins = h_2d->GetNbinsY();
+//changed
+void symmetrize3d(TH3F *h_3d){ //this function is called in make_templates.C on 8 2D hists that we create
+    int n_m_bins = h_3d->GetNbinsX();
+    int n_xf_bins = h_3d->GetNbinsY();
+    int n_cost_bins = h_3d->GetNbinsZ();
 
-    for(int i=1; i<=n_xf_bins; i++){
-        for(int j=1; j<= n_cost_bins/2; j++){
-            float content = h_2d->GetBinContent(i,j);
-            float error = h_2d->GetBinError(i,j);
+    for(int k=1; k<=n_m_bins; k++){	
+	    for(int i=1; i<=n_xf_bins; i++){
+	        for(int j=1; j<= n_cost_bins/2; j++){
+	            float content = h_3d->GetBinContent(k,i,j);
+	            float error = h_3d->GetBinError(k,i,j);
 
-            int opp_j = (n_cost_bins + 1) -j;
-            float content2 = h_2d->GetBinContent(i,opp_j);
-            float error2 = h_2d->GetBinError(i,opp_j);
+	            int opp_j = (n_cost_bins + 1) -j;
+	            float content2 = h_3d->GetBinContent(k,i,opp_j);
+	            float error2 = h_3d->GetBinError(k,i,opp_j);
 
-            float new_content = (content + content2)/2.0;
-            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
-            h_2d->SetBinContent(i,j, new_content);
-            h_2d->SetBinContent(i,opp_j, new_content);
+	            float new_content = (content + content2)/2.0;
+	            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
+	            h_3d->SetBinContent(k,i,j, new_content);
+	            h_3d->SetBinContent(k,i,opp_j, new_content);
 
-            h_2d->SetBinError(i,j, new_error);
-            h_2d->SetBinError(i,opp_j, new_error);
-
-
-        }
-    }
+	            h_3d->SetBinError(k,i,j, new_error);
+	            h_3d->SetBinError(k,i,opp_j, new_error);
+	        }
+	    }
+	}    
 }
+//changed but doubt
+TH1F* convert3d(TH3F *h_3d){
+    int n_m_bins = h_3d->GetNbinsX();
+    int n_xf_bins = h_3d->GetNbinsY();
+    int n_cost_bins = h_3d->GetNbinsZ();
 
-TH1F* convert2d(TH3F *h_2d){
-    int n_xf_bins = h_2d->GetNbinsX();
-    int n_cost_bins = h_2d->GetNbinsY();
-
-    TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_xf_bins * n_cost_bins, 0, n_xf_bins*n_cost_bins);
-    for(int i=1; i<=n_xf_bins; i++){
-        for(int j=1; j<= n_cost_bins; j++){
-            float content = h_2d->GetBinContent(i,j);
-            float error = h_2d->GetBinError(i,j);
-            int gbin = (i-1)*n_cost_bins + j;
-            //printf("gbin %i: i j %i %i \n", gbin, i, j);
-            h_1d->SetBinContent(gbin, content);
-            h_1d->SetBinError(gbin, error);
-        }
-    }
+    TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_xf_bins * n_cost_bins * n_m_bins, 0, n_xf_bins*n_cost_bins*n_m_bins);// 0 is the 1st numbering of the bin
+	for(int k=1; k<=n_m_bins; k++){    
+	    for(int i=1; i<=n_xf_bins; i++){
+	        for(int j=1; j<= n_cost_bins; j++){
+	            float content = h_3d->GetBinContent(k,i,j);
+	            float error = h_3d->GetBinError(k,i,j);
+	            int gbin = (k-1) * n_xf_bins*n_cost_bins + (j-1) * n_cost_bins + i; //trying to convert 3 indices to 1
+	            //printf("gbin %i: i j %i %i \n", gbin, i, j);
+	            h_1d->SetBinContent(gbin, content);
+	            h_1d->SetBinError(gbin, error);
+	        }
+	    }
+	}
     return h_1d;
 }
 
@@ -110,7 +114,7 @@ bool replace(std::string& str, const std::string& from, const std::string& to) {
     str.replace(start_pos, from.length(), to);
     return true;
 }
-
+/*
 #ifndef STAND_ALONE
 void convert_qcd_to_param_hist(TH3F *h, FILE *f_log, float sign_scaling, float sign_scale_err, int flag){
     //convert a hist to a parametric hist 
@@ -119,7 +123,7 @@ void convert_qcd_to_param_hist(TH3F *h, FILE *f_log, float sign_scaling, float s
     RooArgList *bin_list_ss = new RooArgList();
     //h->Print("all");
 
-    TH1F *h1 = convert2d(h);
+    TH1F *h1 = convert3d(h);
 
     char h_name[40];
     char h_ss_name[40];
@@ -238,7 +242,7 @@ void convert_qcd_to_param_hist(TH3F *h, FILE *f_log, float sign_scaling, float s
     w->import(*norm_ss,RooFit::RecycleConflictNodes());
 
 }
-#endif
+#endif*/
 
 
 
