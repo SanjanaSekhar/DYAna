@@ -63,17 +63,23 @@ void cleanup_template(TH2F *h){
     }
 }
 
+//set error on dest histogram to match fractional error on source histogram
+void set_frac_error(TH1 *h_source, TH1 *h_dest){
+    for(int i=0; i<= h_source->GetNbinsX() * h_source->GetNbinsY(); i++){ //works for 1d and 2d histograms
+        double err_rate = h_source->GetBinError(i) / h_source->GetBinContent(i);
+        h_dest->SetBinError(i,err_rate * h_dest->GetBinContent(i));
+    }
+}
+
+
 void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
 
         h_pl->Add(h_sym, h_asym, 1., 1.);
         h_mn->Add(h_sym, h_asym, 1., -1.);
         h_pl->Scale(0.5);
         h_mn->Scale(0.5);
-        for(int i=0; i<= h_sym->GetNbinsX() * h_sym->GetNbinsY(); i++){ //works for 1d an 2d histograms
-            double err_rate = h_sym->GetBinError(i) / h_sym->GetBinContent(i);
-            h_pl->SetBinError(i,err_rate * h_pl->GetBinContent(i));
-            h_mn->SetBinError(i,err_rate * h_mn->GetBinContent(i));
-        }
+        set_frac_error(h_sym, h_pl);
+        set_frac_error(h_sym, h_mn);
 }
 
 void print_hist(TH2 *h){
@@ -277,15 +283,17 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
 
     double norm = 3./4./(2.+alpha);
 
-    auto h_pl = h_sym + h_asym;
-    auto h_mn = h_sym - h_asym;
-    h_pl.Scale(0.5);
-    h_mn.Scale(0.5);
+    TH2F *h_pl = (TH2F *) h_sym.Clone("h_pl");
+    TH2F *h_mn = (TH2F *) h_sym.Clone("h_pl");
+    h_pl->Reset();
+    h_mn->Reset();
+    make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
 
-    h_alpha.Scale(norm * alpha);
+
     
 
-    h_dy->Add(&h_pl, &h_mn, (norm + afb), (norm - afb));
+    h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
+    h_alpha.Scale(norm * alpha);
     h_dy->Add(&h_alpha);
 
     return 1;

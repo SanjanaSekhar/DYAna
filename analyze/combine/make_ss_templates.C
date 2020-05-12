@@ -29,6 +29,7 @@ TH1F *h1_mumu_ss_dy, *h1_mumu_ss_back,  *h1_mumu_ss_data, *h1_mumu_ss_qcd;
 
 
 
+/*
 void convert_ss_qcd_to_param_hist(TH1F *h, FILE *f_log, int flag){
     //convert a hist to a parametric hist 
     RooArgList *bin_list = new RooArgList();
@@ -68,6 +69,7 @@ void convert_ss_qcd_to_param_hist(TH1F *h, FILE *f_log, int flag){
     w->import(*p);
     w->import(*n,RooFit::RecycleConflictNodes());
 }
+*/
 
 
 void make_ss_data_templates(int year){
