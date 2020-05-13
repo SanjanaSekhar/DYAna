@@ -433,6 +433,11 @@ float TempMaker::getEvtWeight(){
 
 
     }
+    /*
+    if(count < 100)
+        printf("%.4f \n", evt_weight);
+    count++;
+    */
     return evt_weight;
 
 }
