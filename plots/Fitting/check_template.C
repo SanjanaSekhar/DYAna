@@ -5,7 +5,7 @@
 
 void check_template(){
     
-        int year = 2017;
+        int year = 2016;
         double m_low = 150.;
         double m_high = 171.;
         bool use_xf = false;
@@ -32,8 +32,8 @@ void check_template(){
 
         bool ss = false;
 
-        float afb = 0.616;
-        float A0 = 0.062;
+        float afb = 0.62;
+        float A0 = 0.042;
 
 
 

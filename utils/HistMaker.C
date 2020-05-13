@@ -76,7 +76,7 @@ void symmetrize1d(TH1F *h){
 
 
 
-void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_pt,  TH1F *h_cost, TH1F *h_xf, bool is_data = false, 
+void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_pt,  TH1F *h_cost, TH1F *h_rap, bool is_data = false, 
         int year=2016, float m_low = 150., float m_high = 999999., bool ss = false){
     Long64_t size  =  t1->GetEntries();
     TempMaker tm(t1, is_data, year);
@@ -96,75 +96,14 @@ void make_emu_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_pt,  TH1F *h_cost,
             h_m->Fill(tm.m, tm.evt_weight);
             if(ss) h_cost->Fill(abs(tm.cost), tm.evt_weight);
             else h_cost->Fill(tm.cost, tm.evt_weight);
-            h_xf->Fill(tm.xF, tm.evt_weight);
             h_pt->Fill(tm.cm.Pt(), tm.evt_weight);
+            h_rap->Fill(tm.cm.Rapidity(), tm.evt_weight);
 
 
         }
     }
     printf("Selected %i events \n", nEvents);
     tm.finish();
-}
-void make_qcd_from_emu_m_cost_pt_xf_hist(TTree *t_data, TTree *t_ttbar, TTree *t_diboson, TTree *t_dy, 
-        TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf,  float m_low = 150., float m_high = 99999.){
-    TH1F *data_m = (TH1F*)h_m->Clone("data_m");
-    TH1F *ttbar_m = (TH1F*)h_m->Clone("ttbar_m");
-    TH1F *diboson_m = (TH1F*)h_m->Clone("diboson_m");
-    TH1F *dy_m = (TH1F*)h_m->Clone("dy_m");
-    TH1F *data_cost = (TH1F*)h_cost->Clone("data_cost");
-    TH1F *ttbar_cost = (TH1F*)h_cost->Clone("ttbar_cost");
-    TH1F *diboson_cost = (TH1F*)h_cost->Clone("diboson_cost");
-    TH1F *dy_cost = (TH1F*)h_cost->Clone("dy_cost");
-    TH1F *data_xf = (TH1F*)h_xf->Clone("data_xf");
-    TH1F *ttbar_xf = (TH1F*)h_xf->Clone("ttbar_xf");
-    TH1F *diboson_xf = (TH1F*)h_xf->Clone("diboson_xf");
-    TH1F *dy_xf = (TH1F*)h_xf->Clone("dy_xf");
-    TH1F *data_pt = (TH1F*)h_pt->Clone("data_pt");
-    TH1F *ttbar_pt = (TH1F*)h_pt->Clone("ttbar_pt");
-    TH1F *diboson_pt = (TH1F*)h_pt->Clone("diboson_pt");
-    TH1F *dy_pt = (TH1F*)h_pt->Clone("dy_pt");
-
-    bool ss = true;
-    make_emu_m_cost_pt_xf_hist(t_data, data_m, data_cost, data_pt, data_xf,  true, m_low, m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_ttbar, ttbar_m, ttbar_cost,  ttbar_pt,ttbar_xf, false, m_low,  m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, false,  m_low, m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_dy, dy_m, dy_cost, dy_pt, dy_xf,  false,  m_low, m_high, ss);
-
-
-    //h_m = data_m - ttbar_m  - dy_m - diboson_m;
-    //h_xf = data_xf - ttbar_xf  - dy_xf - diboson_xf;
-    //h_cost = data_cost - ttbar_cost  - dy_cost - diboson_cost;
-    //
-    TH1F *temp1, *temp2;
-
-    temp1 = (TH1F*) data_m->Clone("temp1");
-    temp2 = (TH1F*) data_m->Clone("temp2");
-    temp1->Add(data_m, ttbar_m ,1, -1);
-    temp2->Add(dy_m, diboson_m ,-1, -1);
-    h_m->Add(temp1, temp2);
-
-    temp1 = (TH1F*) data_cost->Clone("temp1");
-    temp2 = (TH1F*) data_cost->Clone("temp2");
-    temp1->Add(data_cost, ttbar_cost ,1, -1);
-    temp2->Add(dy_cost, diboson_cost ,-1, -1);
-    h_cost->Add(temp1, temp2);
-
-    temp1 = (TH1F*) data_xf->Clone("temp1");
-    temp2 = (TH1F*) data_xf->Clone("temp2");
-    temp1->Add(data_xf, ttbar_xf ,1, -1);
-    temp2->Add(dy_xf, diboson_xf ,-1, -1);
-    h_xf->Add(temp1, temp2);
-
-    temp1 = (TH1F*) data_pt->Clone("temp1");
-    temp2 = (TH1F*) data_pt->Clone("temp2");
-    temp1->Add(data_pt, ttbar_pt ,1, -1);
-    temp2->Add(dy_pt, diboson_pt ,-1, -1);
-    h_pt->Add(temp1, temp2);
-    cleanup_hist(h_m);
-    cleanup_hist(h_cost);
-    cleanup_hist(h_xf);
-    cleanup_hist(h_pt);
-
 }
 
 
@@ -393,7 +332,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
 }
 
 
-void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, TH1F *h_pt, TH1F *h_cost, int flag1 = FLAG_MUONS, 
+void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, TH1F *h_pt, TH1F *h_cost, TH1F *h_rap, int flag1 = FLAG_MUONS, 
         int year=2016, float m_low = 150., float m_high = 10000.){
     FakeRate el_FR, mu_FR;
     //TH2D *FR;
@@ -419,6 +358,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
         Int_t nJets, no_bjets;
         nJets = 2;
         pu_SF=1;
+        t->SetBranchAddress("cost", &cost);
         t->SetBranchAddress("mu1_charge", &mu1_charge);
         t->SetBranchAddress("el1_charge", &el1_charge);
         t->SetBranchAddress("met_pt", &met_pt);
@@ -492,7 +432,6 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
 
             TLorentzVector cm = *el + *mu;
             float m = cm.M();
-            float cost = get_cost(*el, *mu);
             bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
             bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign && 
                 ((flag1 == FLAG_MUONS && mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && el1_pt > 29.));
@@ -501,6 +440,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
                 h_m->Fill(m, evt_fakerate);
                 h_pt->Fill(cm.Pt(), evt_fakerate);
                 h_cost->Fill(cost, evt_fakerate);
+                h_rap->Fill(cm.Rapidity(), evt_fakerate);
             }
         }
 

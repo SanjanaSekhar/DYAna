@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
-int year = 2016;
+int year = 2018;
 bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
