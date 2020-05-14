@@ -143,7 +143,7 @@ int gen_data_template(TTree *t1, TH3F* h,
 
 //input m_LQ in make_templates.C
 int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
-        int year, Double_t m_LQ, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
+        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
     printf("Making mc template for sys %s \n", sys_label.c_str());
 
@@ -168,7 +168,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
-        bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+        bool pass = tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
         if(pass){
 
             tm.doCorrections();
@@ -211,7 +211,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     //printf("Max obs is %.3f \n", max_obs);
 
     tm.finish();
-    int mbin = find_bin(m_bins, m_low + 0.1);
+    //int mbin = find_bin(m_bins, m_low + 0.1);
    // tm.fixRFNorm(h_sym, mbin); //not done for LQ
     //tm.fixRFNorm(h_asym, mbin);
     //tm.fixRFNorm(h_alpha, mbin);

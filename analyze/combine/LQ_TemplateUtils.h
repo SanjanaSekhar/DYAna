@@ -17,12 +17,12 @@ Double_t m_high;
 bool use_xF = false;
 
 RooWorkspace *w;
-RooRealVar *var = new RooRealVar("var", "var", 0.,n_cost_bins * n_xf_bins);
-RooRealVar *var_ss = new RooRealVar("var_ss", "var_ss", 0.,(n_cost_bins/2) * n_xf_bins);
+RooRealVar *var = new RooRealVar("var", "var", 0.,n_cost_bins * n_xf_bins * n_m_bins);
+RooRealVar *var_ss = new RooRealVar("var_ss", "var_ss", 0.,(n_cost_bins/2) * n_xf_bins *n_m_bins);
 RooRealVar *Rqcd_ee_ss = new RooRealVar("Rqcd_ee_ss", "ee QCD normalization", 1, 0., 10.);
 RooRealVar *Rqcd_mumu_ss = new RooRealVar("Rqcd_mumu_ss", "mumu QCD normalization", 1, 0., 10.);
 
-TH1F *h_dummy = new TH1F("h_dummy", "", n_cost_bins*n_xf_bins, 0, n_cost_bins*n_xf_bins);
+TH1F *h_dummy = new TH1F("h_dummy", "", n_cost_bins*n_xf_bins*n_m_bins, 0, n_cost_bins*n_xf_bins*n_m_bins);
 
 
 
