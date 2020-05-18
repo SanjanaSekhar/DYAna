@@ -47,6 +47,7 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
+        //bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 30.;
         if(m >= m_low && m <= m_high && sig_event){
             cm = *gen_lep_p + *gen_lep_m;
             float pt = cm.Pt();
@@ -84,11 +85,14 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 
 void fit_amc_gen_cost(){
 
-    int year = 2018;
-    char *out_file = "../analyze/SFs/2018/a0_fits.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_april17.root");
+    bool write_out = false;
+    int year = 2016;
+    char *out_file = "../analyze/SFs/2016/a0_fits.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_april17.root");
 
-    TFile *f_out = TFile::Open(out_file, "RECREATE");
+    TFile * f_out;
+    if(write_out)
+        f_out = TFile::Open(out_file, "RECREATE");
     
 
     //TFile *f_gen = TFile::Open("../MuMu17_dy_gen.root");
@@ -113,7 +117,7 @@ void fit_amc_gen_cost(){
     float bin_size = 2./n_bins;
 
     int nEvents = 0;
-    gROOT->SetBatch(1);
+    gROOT->SetBatch(0);
     gStyle->SetOptFit(1);
     gStyle->SetStatX(0.47);
     gStyle->SetStatY(0.9);
@@ -148,7 +152,7 @@ void fit_amc_gen_cost(){
         h_pt->Draw();
         c1->SetLogy();
         sprintf(title, "%sy%i_m%.0f_pt.png", plot_dir, year -2000, m_low);
-        c1->Print(title);
+        if(write_out) c1->Print(title);
 
         c1->SetLogy(false);
         h_cost1->Scale(1./h_cost1->Integral() / bin_size);
@@ -160,7 +164,7 @@ void fit_amc_gen_cost(){
         sprintf(title, "%sy%i_m%.0f_cost.png", plot_dir, year-2000,  m_low);
         c1->Print(title);
         //continue;
-        //exit(1);
+        exit(1);
 
         for(int pt_idx = 0; pt_idx < n_pt_bins; pt_idx++){
             pt_low = pt_bins[pt_idx];
@@ -233,9 +237,11 @@ void fit_amc_gen_cost(){
             printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
 
 
-            f_out->cd();
-            h_ratio->Write();
-            A0_fit->Write();
+            if(write_out){
+                f_out->cd();
+                h_ratio->Write();
+                A0_fit->Write();
+            }
 
 
         }
