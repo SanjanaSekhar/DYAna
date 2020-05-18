@@ -156,6 +156,7 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
 
     h_sym->Sumw2();
     h_asym->Sumw2();
+    h_alpha->Sumw2();
 
     int n = 0;
 
@@ -163,7 +164,7 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.is_gen_level = true;
-    tm.do_ptrw = true;
+    //tm.do_ptrw = true;
 
     tm.setup_systematic(sys_label);
     tm.setup();
