@@ -32,7 +32,7 @@ TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_back,  *h1_mumu_dy_gg, *
 
 
 
-void make_data_templates(int year, bool scramble_data = true){
+void make_data_templates(int year, bool scramble_data = true, bool fake_data = false){
 
     int n_var1_bins = n_y_bins;
     float *var1_bins = y_bins;
@@ -54,8 +54,23 @@ void make_data_templates(int year, bool scramble_data = true){
     h_mumu_data->SetDirectory(0);
     bool ss = false;
 
-    int nElEl_DataEvents = gen_data_template(t_elel_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
-    int nMuMu_DataEvents = gen_data_template(t_mumu_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS, scramble_data, ss, use_xF);
+    if(!fake_data){
+        gen_data_template(t_elel_data, h_elel_data,  year, m_low, m_high, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
+        gen_data_template(t_mumu_data, h_mumu_data,  year, m_low, m_high, FLAG_MUONS, scramble_data, ss, use_xF);
+    }
+    else{
+        float Afb = 0.61;
+        float A0 = 0.06;
+        printf("Making fake data \n");
+        //one_mc_template(t_mumu_mc, A0, Afb, h_mumu_data, year, m_low, m_high, FLAG_MUONS, use_xF, "");
+        //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
+        TTree *mu_ts[7] = {t_mumu_mc, t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
+        TTree *el_ts[7] = {t_elel_mc, t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
+        //TTree *mu_ts[6] = {t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
+        //TTree *el_ts[6] = {t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
+        gen_combined_background_template(7, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  "");
+        gen_combined_background_template(7, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  "");
+    }
 
     h1_elel_data = convert2d(h_elel_data);
     h1_mumu_data = convert2d(h_mumu_data);
@@ -181,9 +196,9 @@ void make_mc_templates(int year, const string &sys_label){
         gen_combined_background_template(1, mumu_ts, h_mumu_gam, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, sys_label);
 
 
-        symmetrize2d(h_mumu_gam);
-        symmetrize2d(h_mumu_back);
-        symmetrize2d(h_mumu_dy_gg);
+        //symmetrize2d(h_mumu_gam);
+        //symmetrize2d(h_mumu_back);
+        //symmetrize2d(h_mumu_dy_gg);
 
         h1_mumu_sym = convert2d(h_mumu_sym);
         h1_mumu_asym = convert2d(h_mumu_asym);
@@ -234,9 +249,9 @@ void make_mc_templates(int year, const string &sys_label){
         gen_combined_background_template(1, elel_ts, h_elel_gam, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
 
 
-        symmetrize2d(h_elel_gam);
-        symmetrize2d(h_elel_back);
-        symmetrize2d(h_elel_dy_gg);
+        //symmetrize2d(h_elel_gam);
+        //symmetrize2d(h_elel_back);
+        //symmetrize2d(h_elel_dy_gg);
         
         h1_elel_sym = convert2d(h_elel_sym);
         h1_elel_asym = convert2d(h_elel_asym);
@@ -271,14 +286,15 @@ void convert_mc_templates(int year, const string &sys_label){
         n_var1_bins = n_xf_bins;
         var1_bins = xf_bins;
     }
+    int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
     if(do_mu){
 
         char title[100];
         sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
-        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins, 0, n_var1_bins * n_cost_bins);
+        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mumu_pl->SetDirectory(0);
         sprintf(title, "mumu%i_fmn%s", year%2000, sys_label.c_str());
-        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins, 0, n_var1_bins * n_cost_bins);
+        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mumu_mn->SetDirectory(0);
         make_pl_mn_templates(h1_mumu_sym, h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
 
@@ -293,10 +309,10 @@ void convert_mc_templates(int year, const string &sys_label){
 
         char title[100];
         sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
-        h1_elel_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins, 0, n_var1_bins * n_cost_bins);
+        h1_elel_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_elel_pl->SetDirectory(0);
         sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
-        h1_elel_mn = new TH1F(title, "Plus template of DY", n_var1_bins*n_cost_bins, 0, n_var1_bins * n_cost_bins);
+        h1_elel_mn = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_elel_mn->SetDirectory(0);
         make_pl_mn_templates(h1_elel_sym, h1_elel_asym, h1_elel_pl, h1_elel_mn);
 
@@ -381,9 +397,11 @@ void write_out_templates(const string &sys_label){
 }
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/april21_2018.root");
-    year = 2018;
-    bool scramble_data = true;
+    const TString fout_name("combine/templates/april24_fakedata_2016.root");
+    year = 2016;
+    
+    bool scramble_data = false; //randomly flip sign of cos(theta)
+    bool fake_data = true; //use mc instead of data
     use_xF = false;
 
 
@@ -403,7 +421,8 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     char dirname[40];
 
     int i_start=0;
-    int i_max = n_m_bins;
+    //int i_max = n_m_bins;
+    int i_max = 3;
     if(iJob >0){
         i_start =iJob;
         i_max = iJob +1;
@@ -421,7 +440,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         m_high = m_bins[i+1];
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
 
-        make_data_templates(year, scramble_data);
+        make_data_templates(year, scramble_data, fake_data);
         make_qcd_templates(year);
         make_ss_data_templates(year);
         make_ss_mc_templates(year);

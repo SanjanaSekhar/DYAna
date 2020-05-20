@@ -19,7 +19,7 @@ int find_bin(float * bins, float val){
     return bin;
 }
 
-void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
+void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
     //1d output
     float err_sum = 0.;
     for(int i=1; i<= h_errs->GetNbinsX(); i++){
@@ -44,7 +44,7 @@ void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH1F *h){
     }
 }
 
-void set_fakerate_errors(TH2D *h_errs, TH2D *h_fr, TH2F *h){
+void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH2F *h){
     //2d output
     float err_sum = 0.;
     for(int i=1; i<= h_errs->GetNbinsX(); i++){

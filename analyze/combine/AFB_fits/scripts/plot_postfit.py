@@ -334,6 +334,7 @@ def Make_Pull_plot( DATA,BKG):
     for ibin in range(1,pull.GetNbinsX()+1):
         FScont = DATA.GetBinContent(ibin)
         BKGcont = BKG.GetBinContent(ibin)
+        
         if FScont>=BKGcont:
             FSerr = DATA.GetBinErrorLow(ibin)
             BKGerr = abs(BKGUP.GetBinContent(ibin)-BKG.GetBinContent(ibin))
@@ -374,6 +375,7 @@ parser.add_option("--input", "-i", default = "", help="Input file")
 parser.add_option("--output", "-o", default = "", help="Input directory")
 parser.add_option("--mbin", "-m", type = 'int', default = 0, help="Mass bin (for plot label)")
 parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
+parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 (options, args) = parser.parse_args()
 
 
@@ -384,7 +386,7 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-h_names = ["gam", "qcd", "bk", "dy_gg", "alpha", "fpl", "fmn"]
+h_names = ["gam", "qcd", "bk", "dy_gg", "alpha", "fpl_fmn"]
 h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -392,8 +394,7 @@ m_bins = [150, 171, 200,  250, 320, 510, 700, 1000, 14000]
 
 
 label_color_map = dict()
-label_color_map['fpl'] = ("DY Plus Template", kOrange + 7)
-label_color_map['fmn'] = ("DY Minus Template", kRed + 1)
+label_color_map['fpl_fmn'] = ("DY Plus + Minus Template", kRed + 1)
 label_color_map['alpha'] = ("DY #alpha Template", kGreen + 3)
 label_color_map['bk'] = ("t#bar{t} + tW + WW + WZ + ZZ",  kBlue)
 label_color_map['dy'] = ("DY (miss-sign)", kRed + 1)
@@ -401,7 +402,8 @@ label_color_map['dy_gg'] = ("DY No Signal (qq, #bar{q}#bar{q}, gluglu)", kMagent
 label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
 label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
 
-dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
+dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/"]
+if(options.ss): dirs = dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
 f_in = TFile.Open(options.input)
 for year in years:
     for idx, dir_name in enumerate(dirs):
@@ -425,11 +427,22 @@ for year in years:
         label_list = []
 
         for name in name_list:
-            h = f_in.Get(dir_ + name)
-            h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
-            hist_list.append(h)
-            label_list.append(label_color_map[name][0])
-            color_list.append(label_color_map[name][1])
+            if(name == "fpl_fmn"):
+                h_pl = f_in.Get(dir_ + "fpl")
+                h_mn = f_in.Get(dir_ + "fmn")
+                h = h_pl.Clone("h_%s_c%i_y%i" %(name, idx, year))
+                h_mn = h_mn.Clone("h_mn")
+                h.Add(h_mn)
+
+            else:
+                h = f_in.Get(dir_ + name)
+                if(h != None):
+                    h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
+            if(h != None):
+                h.Print()
+                hist_list.append(h)
+                label_list.append(label_color_map[name][0])
+                color_list.append(label_color_map[name][1])
 
         makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin" ) 
 
