@@ -86,15 +86,17 @@ void LQ_draw_templates(){
             sprintf(mu_title, "Muons");
             sprintf(el_title, "Electrons");
 
-            char mu_fname1[100], mu_fname2[100], el_fname1[100], el_fname2[100];
+            char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_fname1, "%s/MuMu%i_M_sym_temps.png", plot_dir, year);
+            sprintf(mu_fname1, "%s/MuMu%i_LQ%0.1f_sym_temps.png", plot_dir, year, m_LQ);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/MuMu%i_M_LQ_temps.png", plot_dir, year);
+            sprintf(mu_fname2, "%s/MuMu%i_LQ%0.1f_all_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname3, "%s/MuMu%i_LQ%0.1f_LQ_temps.png", plot_dir, year,m_LQ);
             
-            sprintf(el_fname1, "%s/ElEl%i_M_sym_temps.png", plot_dir, year);
+            sprintf(el_fname1, "%s/ElEl%i_LQ%0.1f_sym_temps.png", plot_dir, year,m_LQ);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/ElEl%i_M_LQ_temps.png", plot_dir, year);
+            sprintf(el_fname2, "%s/ElEl%i_LQ%0.1f_all_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname3, "%s/ElEl%i_LQ%0.1f_LQ_temps.png", plot_dir, year,m_LQ);
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
@@ -135,6 +137,7 @@ void LQ_draw_templates(){
 
 
             h1_mumu_asym->SetMaximum(h1_mumu_sym->GetMaximum()*1.2);
+            h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
 
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_asym->SetTitle(mu_title); 
@@ -154,25 +157,38 @@ void LQ_draw_templates(){
             c_mumu1->Print(mu_fname1);
 
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
-            //h1_mumu_pl->SetTitle(mu_title);
-            //h1_mumu_pl->Draw("hist");
-            //h1_mumu_mn->Draw("hist same");
-            //h1_mumu_alpha->Draw("hist same");
-            h1_mumu_LQpure->SetTitle(mu_title);
-            h1_mumu_LQpure->Draw("hist");
+            h1_mumu_pl->SetTitle(mu_title);
+            h1_mumu_pl->Draw("hist");
+            h1_mumu_mn->Draw("hist same");
+            h1_mumu_alpha->Draw("hist same");
+            //h1_mumu_LQpure->SetTitle(mu_title);
+            h1_mumu_LQpure->Draw("hist same");
             h1_mumu_LQint->Draw("hist same");
 
 
             c_mumu2->cd();
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-            //leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
-            //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
-            //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
+            leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
+            leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
+            leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
             leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
             leg2->AddEntry(h1_mumu_LQint,"LQint Template","l");
             leg2->Draw();
 
             c_mumu2->Print(mu_fname2);
+
+            TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
+            h1_mumu_LQint->SetTitle(mu_title);
+            h1_mumu_LQint->Draw("hist");
+            h1_mumu_LQpure->Draw("hist same ");
+
+            TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
+            leg3->AddEntry(h1_mumu_LQint, "LQint Template", "l");
+            leg3->AddEntry(h1_mumu_LQpure, "LQpure Template", "l");
+            leg3->Draw();
+            
+
+            c_mumu3->Print(mu_fname3);
 
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
@@ -212,6 +228,7 @@ void LQ_draw_templates(){
             h1_elel_LQint->SetLineWidth(2);
 
             h1_elel_asym->SetMaximum(h1_elel_sym->GetMaximum()*1.2);
+            h1_elel_LQpure->SetMaximum(h1_elel_LQint->GetMaximum()*2);
 
 
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
@@ -224,18 +241,27 @@ void LQ_draw_templates(){
             c_elel1->Print(el_fname1);
 
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            //h1_elel_pl->SetTitle(el_title);
-            //h1_elel_pl->Draw("hist");
-            //h1_elel_mn->Draw("hist same");
-            //h1_elel_alpha->Draw("hist same");
-            h1_elel_LQpure->SetTitle(el_title);
-            h1_elel_LQpure->Draw("hist ");
+            h1_elel_pl->SetTitle(el_title);
+            h1_elel_pl->Draw("hist");
+            h1_elel_mn->Draw("hist same");
+            h1_elel_alpha->Draw("hist same");
+            //h1_elel_LQpure->SetTitle(el_title);
+            h1_elel_LQpure->Draw("hist same");
             h1_elel_LQint->Draw("hist same");
 
 
             leg2->Draw();
 
             c_elel2->Print(el_fname2);
+
+            TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
+            h1_elel_LQint->SetTitle(el_title);
+            h1_elel_LQint->Draw("hist");
+            h1_elel_LQpure->Draw("hist same ");
+
+            leg3->Draw();
+
+            c_elel3->Print(el_fname3);
         }
 //}
 

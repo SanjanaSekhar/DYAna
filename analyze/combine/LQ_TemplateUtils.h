@@ -78,7 +78,7 @@ TH1F* convert3d(TH3F *h_3d){
 	        for(int j=1; j<= n_cost_bins; j++){
 	            float content = h_3d->GetBinContent(k,i,j);
 	            float error = h_3d->GetBinError(k,i,j);
-	            int gbin = (k-1) * n_xf_bins*n_cost_bins + (j-1) * n_cost_bins + i; //trying to convert 3 indices to 1
+	            int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j; //trying to convert 3 indices to 1
 	            //printf("gbin %i: i j %i %i \n", gbin, i, j);
 	            h_1d->SetBinContent(gbin, content);
 	            h_1d->SetBinError(gbin, error);
