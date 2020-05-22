@@ -67,6 +67,15 @@ void draw_cmp(){
     TH1F *dy_cost = new TH1F("dy_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *qcd_cost = new TH1F("qcd_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
 
+
+    int n_rap_bins = 20;
+    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
+    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.5,2.5);
+    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
+    TH1F *wt_rap = new TH1F("wt_rap", "QCD", n_rap_bins, -2.5,2.5);
+    TH1F *dy_rap = new TH1F("dy_rap", "QCD", n_rap_bins, -2.5,2.5);
+    TH1F *qcd_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
+
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
     Double_t m_low = 150;
@@ -74,13 +83,13 @@ void draw_cmp(){
 
     bool ss = false;
 
-    make_emu_m_cost_pt_xf_hist(t_emu_data, data_m, data_pt, data_cost, h_dummy, true,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_emu_ttbar, ttbar_m, ttbar_pt, ttbar_cost, h_dummy, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_emu_diboson, diboson_m, diboson_pt, diboson_cost, h_dummy, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_emu_wt, wt_m, wt_pt, wt_cost, h_dummy, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_xf_hist(t_emu_dy, dy_m, dy_pt, dy_cost, h_dummy, false,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_pt, data_cost, data_rap, true,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_pt, ttbar_cost, ttbar_rap, false,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_pt, diboson_cost, diboson_rap, false,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_pt, wt_cost, wt_rap, false,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_pt, dy_cost, dy_rap, false,  year, m_low, m_high, ss);
 
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  qcd_pt, qcd_cost, FLAG_MUONS, year, m_low, m_high);
+    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  qcd_pt, qcd_cost, qcd_rap, FLAG_MUONS, year, m_low, m_high);
 
     float qcd_err = 0.5;
     setHistError(qcd_m, qcd_err);
@@ -123,6 +132,12 @@ void draw_cmp(){
     diboson_cost->SetFillColor(kGreen+3);
     qcd_cost->SetFillColor(kRed -7);
 
+    dy_rap->SetFillColor(kRed+1);
+    ttbar_rap->SetFillColor(kBlue);
+    wt_rap->SetFillColor(kOrange+7); 
+    diboson_rap->SetFillColor(kGreen+3);
+    qcd_rap->SetFillColor(kRed -7);
+
     THStack *m_stack = new THStack("m_stack", "EMu Mass Distribution: Data vs MC ; m_{e#mu} (GeV)");
     m_stack->Add(diboson_m);
     m_stack->Add(qcd_m);
@@ -137,12 +152,25 @@ void draw_cmp(){
     pt_stack->Add(wt_pt);
     pt_stack->Add(ttbar_pt);
 
+    symmetrize1d(diboson_cost);
+    symmetrize1d(qcd_cost);
+    symmetrize1d(wt_cost);
+    symmetrize1d(dy_cost);
+    symmetrize1d(ttbar_cost);
+
     THStack *cost_stack = new THStack("cost_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     cost_stack->Add(diboson_cost);
     cost_stack->Add(qcd_cost);
     cost_stack->Add(dy_cost);
     cost_stack->Add(wt_cost);
     cost_stack->Add(ttbar_cost);
+
+    THStack *rap_stack = new THStack("rap_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
+    rap_stack->Add(diboson_rap);
+    rap_stack->Add(qcd_rap);
+    rap_stack->Add(dy_rap);
+    rap_stack->Add(wt_rap);
+    rap_stack->Add(ttbar_rap);
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.5, 0.65, 0.75, 0.8);
@@ -178,10 +206,16 @@ void draw_cmp(){
     if(write_out) c_cost->Print(plt_file);
 
     logy = true;
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)", -1., logy, logx);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", -1., logy, logx);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sEMu%i_pt_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_pt->Print(plt_file);
+
+    logy = true;
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", -1., logy, logx);
+    CMS_lumi(p_rap, year, 33);
+    sprintf(plt_file, "%sEMu%i_rap_cmp.pdf", plot_dir, year % 2000);
+    if(write_out) c_rap->Print(plt_file);
 
 
 }

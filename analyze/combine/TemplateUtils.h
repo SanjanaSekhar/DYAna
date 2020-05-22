@@ -79,15 +79,11 @@ int one_idx(int i, int j, int n_binsx, int n_binsy){
 
 
 TH1F* convert2d(TH2F *h_2d){
-    int n_xf_bins = h_2d->GetNbinsX();
-    int n_cost_bins = h_2d->GetNbinsY();
-
     float n_binsx = h_2d->GetNbinsX();
     float n_binsy = h_2d->GetNbinsY();
-    //merge 2 highest cos bins in 2 larger eta bins
-    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+    int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
 
-    TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_xf_bins * n_cost_bins, 0, n_xf_bins*n_cost_bins);
+    TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_1d_bins, 0, n_1d_bins);
     for(int i=1; i<=n_binsx; i++){
         for(int j=1; j<=n_binsy; j++){
             float content = h_2d->GetBinContent(i,j);
