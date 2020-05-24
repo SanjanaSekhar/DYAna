@@ -96,7 +96,7 @@ void print_hist(TH3 *h){
 //static type means functions scope is only this file, to avoid conflicts
 //changed
 int gen_data_template(TTree *t1, TH3F* h,  
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false, bool use_xF = false){
+        int year, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false, bool use_xF = false){
     h->Sumw2();
     int nEvents = 0;
     int n=0;
@@ -111,7 +111,7 @@ int gen_data_template(TTree *t1, TH3F* h,
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
 
-        if(tm.m >= m_low && tm.m <= m_high && tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
+        if( tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
             tm.doCorrections();
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
@@ -159,7 +159,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.is_gen_level = true;
-//    tm.do_ptrw = true;
+    //tm.do_ptrw = true;
 
     tm.setup_systematic(sys_label);
     tm.setup();
@@ -231,7 +231,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 }
 //changed, get checked?
 int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
-        int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, 
+        int year,  int flag1 = FLAG_MUONS, 
         bool ss =false, bool use_xF = false,  const string &sys_label = ""){
     h->Sumw2();
 
@@ -251,7 +251,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass =  tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
             if(pass){
                 tm.doCorrections();
@@ -277,7 +277,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 }
 //get checked
 int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy, 
-        int year, Double_t m_LQ, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
+        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
     int n_var1_bins = n_y_bins;

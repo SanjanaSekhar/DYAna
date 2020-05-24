@@ -1,0 +1,26 @@
+Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
+imax 3 number of bins
+jmax 8 number of processes minus 1
+kmax 9 number of nuisance parameters
+----------------------------------------------------------------------------------------------------------------------------------
+shapes *    Y16  cards/LQ_templates16.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQ_templates17.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQ_templates18.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+----------------------------------------------------------------------------------------------------------------------------------
+bin          Y16    Y17    Y18  
+observation  -1     -1     -1   
+----------------------------------------------------------------------------------------------------------------------------------
+bin                             Y16     Y16     Y16     Y16     Y16     Y16     Y16     Y16     Y16     Y17     Y17     Y17     Y17     Y17     Y17     Y17     Y17     Y17     Y18     Y18     Y18     Y18     Y18     Y18     Y18     Y18     Y18   
+process                         fpl     LQpure  fmn     LQint   alpha   dy_gg   bk      gam     qcd     fpl     LQpure  fmn     LQint   alpha   dy_gg   bk      gam     qcd     fpl     LQpure  fmn     LQint   alpha   dy_gg   bk      gam     qcd   
+process                         -4      -3      -2      -1      0       1       2       3       4       -4      -3      -2      -1      0       1       2       3       4       -4      -3      -2      -1      0       1       2       3       4     
+rate                            -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1    
+----------------------------------------------------------------------------------------------------------------------------------
+bk_xsec                 lnN     -       -       -       -       -       -       1.05    -       -       -       -       -       -       -       -       1.05    -       -       -       -       -       -       -       -       1.05    -       -     
+dy_xsec                 lnN     1.03    -       1.03    -       1.03    1.03    -       -       -       1.03    -       1.03    -       1.03    1.03    -       -       -       1.03    -       1.03    -       1.03    1.03    -       -       -     
+elFakes16               lnN     -       -       -       -       -       -       -       -       1.5     -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -     
+elFakes17               lnN     -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       1.5     -       -       -       -       -       -       -       -       -     
+elFakes18               lnN     -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       1.5   
+gam_xsec                lnN     -       -       -       -       -       -       -       1.4     -       -       -       -       -       -       -       -       1.4     -       -       -       -       -       -       -       -       1.4     -     
+lumi16                  lnN     1.025   -       1.025   -       1.025   1.025   1.025   1.025   -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -     
+lumi17                  lnN     -       -       -       -       -       -       -       -       -       1.025   -       1.025   -       1.025   1.025   1.025   1.025   -       -       -       -       -       -       -       -       -       -     
+lumi18                  lnN     -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       1.025   -       1.025   -       1.025   1.025   1.025   1.025   -     
