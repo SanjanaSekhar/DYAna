@@ -82,6 +82,12 @@ void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
         set_frac_error(h_sym, h_mn);
 }
 
+int get_n_1d_bins(int n_binsx, int n_binsy){
+    //merge 2 highest cos bins in 2 larger eta bins
+    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+    return n_1d_bins;
+}
+
 void print_hist(TH2 *h){
     printf("\n");
     for(int i=1; i<= h->GetNbinsX(); i++){
@@ -150,6 +156,7 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
 
     h_sym->Sumw2();
     h_asym->Sumw2();
+    h_alpha->Sumw2();
 
     int n = 0;
 
@@ -157,7 +164,7 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.is_gen_level = true;
-    tm.do_ptrw = true;
+    //tm.do_ptrw = true;
 
     tm.setup_systematic(sys_label);
     tm.setup();
@@ -257,7 +264,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
     return 0;
 }
 
-int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy, 
+int one_mc_template(TTree *t1, Double_t a0, Double_t afb, TH2F* h_dy, 
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
@@ -281,6 +288,7 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH2F* h_dy,
     gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, m_low, m_high, flag1,  use_xF, sys_label);
 
 
+    float alpha = 2.* a0/ (2. - a0);
     double norm = 3./4./(2.+alpha);
 
     TH2F *h_pl = (TH2F *) h_sym.Clone("h_pl");

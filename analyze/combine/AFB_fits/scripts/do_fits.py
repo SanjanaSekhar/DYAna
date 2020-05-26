@@ -6,6 +6,7 @@ parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help t
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
 parser.add_option("--no_plot",  default=False, action="store_true", help="Don't make postfit plots")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
+parser.add_option("--fake_data",  default=False, action="store_true", help="Use fit template without any shape systematics and no fakes")
 parser.add_option("--no_cleanup",  default=False, action="store_true", help="Don't remove root files created by fit")
 parser.add_option("--mbin", default = -1, type='int', help="Only do fits for this single mass bin, default is all bins")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
@@ -36,6 +37,7 @@ bin_stop = 8
 
 fit_name = options.chan
 if(options.no_sys): fit_name +="_nosys"
+if(options.fake_data): fit_name +="_fake_data"
 if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
 
 if(options.mbin >= 0):
@@ -47,7 +49,7 @@ for mbin in range(bin_start, bin_stop):
     print(" \n \n Starting fit for bin %i \n\n" % mbin)
 
     workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
-    make_workspace(workspace, mbin, no_sys = options.no_sys, year = options.year)
+    make_workspace(workspace, mbin, no_sys = options.no_sys, fake_data = options.fake_data, year = options.year)
 
     plotdir="postfit_plots/%s_mbin%i" % (fit_name, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))

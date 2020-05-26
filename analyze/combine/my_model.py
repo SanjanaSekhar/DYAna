@@ -12,6 +12,40 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
         self.modelBuilder.doSet("POI","Afb,A0")
 
+      
+        self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
+        self.modelBuilder.factory_('expr::Norm("3.0/4.0/(2.0+@0)",Alph)')
+        self.modelBuilder.factory_('expr::RAlph("@0*@1",Alph,Norm)')
+        self.modelBuilder.factory_('expr::Rpl("(@0+@1)",Norm,Afb)')
+        self.modelBuilder.factory_('expr::Rmn("(@0-@1)",Norm,Afb)')
+
+
+
+ 
+ 
+ 
+ 
+    def getYieldScale(self,bin,process):
+        if 'alpha' in process: return "RAlph"
+        elif 'pl' in process: return "Rpl"
+        elif 'mn' in process : return "Rmn"
+
+        else:
+            #print("Didnt find process %s bin %s in specifications \n" % (process, bin))
+            return 1
+
+#This version includes constraining fakes between ss and os regions
+class DY_AFB_ss(PhysicsModel):
+    def __init__(self):
+        return
+
+    def doParametersOfInterest(self):
+        """Create POI and other parameters, and define the POI set."""
+
+        self.modelBuilder.doVar("Afb[0.6,-0.7,0.7]");
+        self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
+        self.modelBuilder.doSet("POI","Afb,A0")
+
         # ss templates
         self.modelBuilder.doVar("R_ee_os_fakes[0.6,0.0,1.0]");
         self.modelBuilder.doVar("ee16_fakes_norm[1.0, 0.01, 10.]");
