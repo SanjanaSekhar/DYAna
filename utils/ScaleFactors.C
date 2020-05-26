@@ -63,6 +63,11 @@ typedef struct{
     TH1F *mu_data_sub[n_m_bins];
 } ptrw_helper;
 
+typedef struct{
+    TH1F *el_rw;
+    TH1F *mu_rw;
+} fakes_costrw_helper;
+
 
 double get_var(Float_t vals[100]){
     float mean(0.), var(0.);
@@ -462,6 +467,22 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
     }
 }
 
+
+void setup_fakes_costrw_helper(fakes_costrw_helper *h, int year){
+    TFile *f;
+
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/fakes_cost_rw.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/fakes_cost_rw.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/fakes_cost_rw.root");
+    char el_name[100], mu_name[100];
+    sprintf(el_name, "elel%i_ss_cost_ratio", year % 2000);
+    sprintf(mu_name, "mumu%i_ss_cost_ratio", year % 2000);
+    h->el_rw = (TH1F *) f->Get(el_name)->Clone();
+    h->el_rw->SetDirectory(0);
+
+    h->mu_rw = (TH1F *) f->Get(mu_name)->Clone();
+    h->mu_rw->SetDirectory(0);
+}
 
 
 void setup_prefire_SFs(prefire_SFs *pre_SF, int year){

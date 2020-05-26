@@ -158,7 +158,7 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 }
 
 void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
-        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool in_os_region=true){
+        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool in_os_region=true, bool reweight = false){
     TLorentzVector *lep_p=0;
     TLorentzVector *lep_m=0;
     Double_t pt;
@@ -213,7 +213,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
-            //else if(ss && flag1 == FLAG_MUONS)  pass = pass && !opp_sign;
+            //pass = pass && !opp_sign;
             if(pass){
                 double evt_reweight = 0.;
 
@@ -313,6 +313,16 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
     set_fakerate_errors(h_err, FR.h, h_cost);
+    if(reweight){
+        fakes_costrw_helper h_rw;
+        setup_fakes_costrw_helper(&h_rw, year);
+        h_cost->Print("range");
+        if(flag1 == FLAG_MUONS) fakes_cost_reweight(h_cost, h_rw.mu_rw);
+        else fakes_cost_reweight(h_cost, h_rw.el_rw);
+        h_cost->Print("range");
+    }
+
+
     //if(ss && flag1 != FLAG_MUONS){
     if(ss){
         float scaling = 1.0;
