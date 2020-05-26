@@ -456,16 +456,10 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     if(!incl_ss) scaling = 1.;
 
 
-    if(reweight){
-        fakes_costrw_helper h_rw;
-        setup_fakes_costrw_helper(&h_rw, year);
-        printf("DOING fakes cos(theta) reweighting. Before : \n");
-        h->Print("range");
-        if(flag1 == FLAG_MUONS) fakes_cost_reweight(h, h_rw.mu_rw);
-        else fakes_cost_reweight(h, h_rw.el_rw);
-        printf("After : \n");
-        h->Print("range");
-    }
+    fakes_costrw_helper h_rw;
+    setup_fakes_costrw_helper(&h_rw, year);
+    if(flag1 == FLAG_MUONS) fakes_cost_reweight(h, h_rw.mu_rw);
+    else fakes_cost_reweight(h, h_rw.el_rw);
     
     Double_t err;
     Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);

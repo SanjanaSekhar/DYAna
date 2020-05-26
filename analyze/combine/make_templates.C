@@ -397,11 +397,11 @@ void write_out_templates(const string &sys_label){
 }
 
 void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/april24_fakedata_2016.root");
+    const TString fout_name("combine/templates/may26_test_2016.root");
     year = 2016;
     
-    bool scramble_data = false; //randomly flip sign of cos(theta)
-    bool fake_data = true; //use mc instead of data
+    bool scramble_data = true; //randomly flip sign of cos(theta)
+    bool fake_data = false; //use mc instead of data
     use_xF = false;
 
 
@@ -430,7 +430,6 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
 
     for(int i=i_start; i<i_max; i++){
-    //for(int i=0; i<1; i++){
         fout->cd();
         snprintf(dirname, 10, "w%i", i);
         gDirectory->mkdir(dirname);
@@ -442,9 +441,6 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
         make_data_templates(year, scramble_data, fake_data);
         make_qcd_templates(year);
-        make_ss_data_templates(year);
-        make_ss_mc_templates(year);
-        make_ss_qcd_templates(year);
 
         string sys_label = string("");
         make_mc_templates(year, sys_label);
@@ -453,9 +449,7 @@ void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         fout->cd();
         gDirectory->cd(dirname);
         write_out_non_sys_templates();
-        write_out_ss_templates();
         write_out_templates(sys_label);
-        //write_groups(year, f_log);
     }
 
 
