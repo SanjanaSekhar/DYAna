@@ -121,8 +121,6 @@ void make_qcd_templates(int year){
 
     h1_mumu_qcd = convert2d(h_mumu_qcd);
     h1_elel_qcd = convert2d(h_elel_qcd);
-    //convert_qcd_to_param_hist(h_elel_qcd, f_log, elel_sign_scaling, elel_err, FLAG_ELECTRONS);
-    //convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, mumu_err, FLAG_MUONS);
 
     printf("Made qcd templates \n");
     delete h_elel_qcd, h_mumu_qcd;
@@ -185,15 +183,18 @@ void make_mc_templates(int year, const string &sys_label){
         gen_mc_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, sys_label );
         TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
         printf("Making mumu back \n");
-        gen_combined_background_template(3, mumu_ts, h_mumu_back, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  sys_label);
+        bool emu_costrw = true;
+        gen_combined_background_template(3, mumu_ts, h_mumu_back, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
+
         mumu_ts[0] = t_mumu_nosig;
         mumu_ts[1] = t_mumu_tautau;
         printf("Making mumu nosig \n");
-        gen_combined_background_template(2, mumu_ts, h_mumu_dy_gg, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  sys_label);
+        emu_costrw = false;
+        gen_combined_background_template(2, mumu_ts, h_mumu_dy_gg, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
 
         mumu_ts[0] = t_mumu_gamgam;
         printf("Making mumu gamgam \n");
-        gen_combined_background_template(1, mumu_ts, h_mumu_gam, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, sys_label);
+        gen_combined_background_template(1, mumu_ts, h_mumu_gam, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw, sys_label);
 
 
         //symmetrize2d(h_mumu_gam);
@@ -239,14 +240,17 @@ void make_mc_templates(int year, const string &sys_label){
         printf("starting elel dy \n");
         gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS,  use_xF, sys_label);
         TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
-        gen_combined_background_template(3, elel_ts, h_elel_back, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
+        bool emu_costrw = true;
+        gen_combined_background_template(3, elel_ts, h_elel_back, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
+
         elel_ts[0] = t_elel_nosig;
         elel_ts[1] = t_elel_tautau;
-        gen_combined_background_template(2, elel_ts, h_elel_dy_gg, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
+        gen_combined_background_template(2, elel_ts, h_elel_dy_gg, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
         elel_ts[0] = t_elel_gamgam;
         printf("Making ee gamgam \n");
-        gen_combined_background_template(1, elel_ts, h_elel_gam, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, sys_label);
+        emu_costrw = false;
+        gen_combined_background_template(1, elel_ts, h_elel_gam, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
 
         //symmetrize2d(h_elel_gam);

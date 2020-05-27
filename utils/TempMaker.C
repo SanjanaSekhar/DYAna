@@ -248,14 +248,16 @@ void TempMaker::setup_systematic(const string &s_label){
         }
         else if(sys_label.find("emucostrw") != string::npos){
             int foo;
-            if(sys_shift > 0){
-                sscanf(sys_label.c_str(), "_emucostrw%ib%iUp", &do_ptrw_sys, &foo);
+            if(do_emu_costrw){
+                if(sys_shift > 0){
+                    sscanf(sys_label.c_str(), "_emucostrw%ib%iUp", &do_emu_costrw_sys, &foo);
+                }
+                else{
+                    sscanf(sys_label.c_str(), "_emucostrw%ib%iDown", &do_emu_costrw_sys, &foo);
+                    do_emu_costrw_sys *= -1;
+                }
+                printf("Doing emu costrw sys %i \n", do_emu_costrw_sys);
             }
-            else{
-                sscanf(sys_label.c_str(), "_emucostrw%ib%iDown", &do_ptrw_sys, &foo);
-                do_emu_costrw_sys *= -1;
-            }
-            printf("Doing emu costrw sys %i \n", do_emu_costrw_sys);
         }
 
         else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
