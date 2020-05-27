@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
 
@@ -40,8 +40,10 @@ void draw_cmp(){
 
     printf("Year is %i \n", year);
     setTDRStyle();
+
     init_emu(year);
     init_emu_indv_bkgs(year);
+    setup_all_SFs(year);
 
                                 
 
@@ -59,7 +61,7 @@ void draw_cmp(){
     TH1F *dy_pt = new TH1F("dy_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *qcd_pt = new TH1F("qcd_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
 
-    int n_cost_bins = 10;
+    int n_cost_bins = 8;
     TH1F *data_cost = new TH1F("data_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *ttbar_cost = new TH1F("ttbar_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *diboson_cost = new TH1F("diboson_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
@@ -83,13 +85,14 @@ void draw_cmp(){
 
     bool ss = false;
 
-    make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_pt, data_cost, data_rap, true,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_pt, ttbar_cost, ttbar_rap, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_pt, diboson_cost, diboson_rap, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_pt, wt_cost, wt_rap, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_pt, dy_cost, dy_rap, false,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, true,  year, m_low, m_high, ss);
+    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high, ss, true);
+    make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high, ss, true);
+    make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, false,  year, m_low, m_high, ss, true);
+    make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, ss);
 
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  qcd_pt, qcd_cost, qcd_rap, FLAG_MUONS, year, m_low, m_high);
+    bool fakes_reweight = true;
+    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
 
     float qcd_err = 0.5;
     setHistError(qcd_m, qcd_err);

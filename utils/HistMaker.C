@@ -76,11 +76,12 @@ void symmetrize1d(TH1F *h){
 
 
 
-void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_pt,  TH1F *h_cost, TH1F *h_rap, bool is_data = false, 
-        int year=2016, float m_low = 150., float m_high = 999999., bool ss = false){
+void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,   TH1F *h_rap, bool is_data = false, 
+        int year=2016, float m_low = 150., float m_high = 999999., bool ss = false, bool costrw = false){
     Long64_t size  =  t1->GetEntries();
     TempMaker tm(t1, is_data, year);
     tm.do_emu = true;
+    if(!is_data) tm.do_emu_costrw = costrw;
 
     tm.setup();
     int nEvents=0;
@@ -316,10 +317,10 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     if(reweight){
         fakes_costrw_helper h_rw;
         setup_fakes_costrw_helper(&h_rw, year);
-        h_cost->Print("range");
+        //h_cost->Print("range");
         if(flag1 == FLAG_MUONS) fakes_cost_reweight(h_cost, h_rw.mu_rw);
         else fakes_cost_reweight(h_cost, h_rw.el_rw);
-        h_cost->Print("range");
+        //h_cost->Print("range");
     }
 
 
@@ -342,8 +343,8 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
 }
 
 
-void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, TH1F *h_pt, TH1F *h_cost, TH1F *h_rap, int flag1 = FLAG_MUONS, 
-        int year=2016, float m_low = 150., float m_high = 10000.){
+void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int flag1 = FLAG_MUONS, 
+        int year=2016, float m_low = 150., float m_high = 10000., bool reweight = true){
     FakeRate el_FR, mu_FR;
     //TH2D *FR;
     setup_new_el_fakerate(&el_FR, year);
@@ -459,7 +460,18 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m
     cleanup_hist(h_m);
     cleanup_hist(h_cost);
     cleanup_hist(h_pt);
+
+    if(reweight){
+        fakes_costrw_helper h_rw;
+        setup_fakes_costrw_helper(&h_rw, year);
+        //h_cost->Print("range");
+        fakes_cost_reweight(h_cost, h_rw.el_rw);
+        //h_cost->Print("range");
+    }
+
+
     printf("Total fakerate est is %.0f \n", h_m->Integral());
+
 }
 
 
