@@ -97,6 +97,8 @@ TCanvas* make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, ch
     pad1->Draw();
     pad1->cd();
     if(logy) pad1->SetLogy();
+    float hmax = 1.2 * std::max(h1->GetMaximum(), h2->GetMaximum());
+    h1->SetMaximum(hmax);
     h1->SetMinimum(1e-5);
     h1->Draw("hist E");
     gStyle->SetEndErrorSize(4);
@@ -155,7 +157,7 @@ TCanvas* make_ratio_plot(string title, TH1F* h1, char h1_label[80], TH1F* h2, ch
 
 
 std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel, 
-        float max =-1., bool logy = true, bool logx= false){
+        float hmax =-1., bool logy = true, bool logx= false){
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
@@ -165,8 +167,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(logy) pad1->SetLogy();
     if(logx) pad1->SetLogx();
     h_stack->Draw("hist");
-    if(max <= 0. ) max = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
-    h_stack->SetMaximum(max);
+    if(hmax <= 0. ) hmax = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
+    h_stack->SetMaximum(hmax);
     h_stack->SetMinimum(0.1);
     gStyle->SetEndErrorSize(4);
     h_data->SetMarkerStyle(kFullCircle);

@@ -68,7 +68,7 @@ void draw_samesign_cmp(){
 
     TH1F *WJets_m = new TH1F("WJets_m", "WJets", 30, 150, 2000);
 
-    int n_cost_bins = 10;
+    int n_cost_bins = 8;
     TH1F *data_cost = new TH1F("data_cost", "Data", n_cost_bins, -1.,1.);
     TH1F *back_cost = new TH1F("back_cost", "back (WW, WZ,ZZ)", n_cost_bins, -1.,1);
     TH1F *DY_cost = new TH1F("DY_cost", "DY (WW, WZ,ZZ)", n_cost_bins, -1.,1);
@@ -116,8 +116,8 @@ void draw_samesign_cmp(){
 
 
 
-
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type,  year, m_low, m_high, ss, in_os_region);
+    bool cost_reweight = true;
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type,  year, m_low, m_high, ss, in_os_region, cost_reweight);
 
 
     printf("Integrals of data, QCD, back, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), back_m->Integral(), DY_m->Integral());

@@ -63,6 +63,15 @@ typedef struct{
     TH1F *mu_data_sub[n_m_bins];
 } ptrw_helper;
 
+typedef struct{
+    TH1F *el_rw;
+    TH1F *mu_rw;
+} fakes_costrw_helper;
+
+typedef struct{
+    TH1F *rw;
+} emu_costrw_helper;
+
 
 double get_var(Float_t vals[100]){
     float mean(0.), var(0.);
@@ -119,6 +128,35 @@ float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int sys
     float denom = 3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost));
     return denom * correction;
 }
+
+
+float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
+    int bin = h_rw->FindBin(cost);
+    float correction = h_rw->GetBinContent(bin);
+    //one systematic for every |cos(theta)| bin (nbins / 2)
+    if(systematic != 0){
+        float stat_err = h_rw->GetBinError(bin);
+        //Low stat bins should not go crazy
+        stat_err = max(stat_err, 0.1f);
+        float sys_correction = h_rw->GetBinContent(bin);
+        float sys_err = 0.5 * std::fabs( sys_correction - 1.);
+        float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+
+        int sys_bin = abs(systematic);
+        int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;
+        if(bin == sys_bin || bin == opp_bin){
+            //shift the reweighting in this bin by the error
+            if(systematic >0) correction += error;
+            if(systematic <0) correction -= error;
+        }
+
+    }
+
+
+    
+    return correction;
+}
+
 
 
 float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0){
@@ -462,6 +500,35 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
     }
 }
 
+void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
+    TFile *f;
+
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/emu_cost_rw.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/emu_cost_rw.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/emu_cost_rw.root");
+    char name[100];
+    sprintf(name, "emu%i_cost_ratio", year % 2000);
+    h->rw = (TH1F *) f->Get(name)->Clone();
+    h->rw->SetDirectory(0);
+    h->rw->Print();
+}
+
+
+void setup_fakes_costrw_helper(fakes_costrw_helper *h, int year){
+    TFile *f;
+
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/fakes_cost_rw.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/fakes_cost_rw.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/fakes_cost_rw.root");
+    char el_name[100], mu_name[100];
+    sprintf(el_name, "elel%i_ss_cost_ratio", year % 2000);
+    sprintf(mu_name, "mumu%i_ss_cost_ratio", year % 2000);
+    h->el_rw = (TH1F *) f->Get(el_name)->Clone();
+    h->el_rw->SetDirectory(0);
+
+    h->mu_rw = (TH1F *) f->Get(mu_name)->Clone();
+    h->mu_rw->SetDirectory(0);
+}
 
 
 void setup_prefire_SFs(prefire_SFs *pre_SF, int year){

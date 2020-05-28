@@ -99,8 +99,6 @@ void fit_amc_gen_cost(){
     TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
     TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
 
-    float A0_fit[n_m_bins][n_pt_bins];
-    float A0_fit_unc[n_m_bins][n_pt_bins];
 
     char plot_dir[] = "Misc_plots/A0_fits/";
 
@@ -145,6 +143,7 @@ void fit_amc_gen_cost(){
         char title[100];
         TCanvas *c1 = new TCanvas("c1", "", 1000, 800);
         nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high);
+        float norm = h_cost1->Integral();
         nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high);
         sprintf(title, "M %.0f-%.0f GeV, dilepton pT; pT", m_low, m_high);
         h_pt->SetTitle(title);
@@ -164,7 +163,10 @@ void fit_amc_gen_cost(){
         sprintf(title, "%sy%i_m%.0f_cost.png", plot_dir, year-2000,  m_low);
         c1->Print(title);
         //continue;
-        exit(1);
+        //exit(1);
+        sprintf(title, "norm_y%i_m%i", year -2000, m_idx);
+        RooRealVar *R_norm = new RooRealVar(title, "", norm);
+        A0_fit->setError(0.);
 
         for(int pt_idx = 0; pt_idx < n_pt_bins; pt_idx++){
             pt_low = pt_bins[pt_idx];

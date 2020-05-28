@@ -38,7 +38,7 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
         float weight_err = scaling * err_sum;
         float new_err = 0.;
         float max_err = 0.7;
-        new_err = min((float) (max_err * h->GetBinContent(i)), sqrt(num_err + weight_err));
+        new_err = std::min((float) (max_err * h->GetBinContent(i)), sqrt(num_err + weight_err));
 
         h->SetBinError(i, new_err);
     }
@@ -64,13 +64,57 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH2F *h){
             float new_err = 0.;
             float max_err = 0.7;
 
-            new_err = min((float) (max_err * h->GetBinContent(i,j)), sqrt(num_err + weight_err));
+            new_err = std::min((float) (max_err * h->GetBinContent(i,j)), sqrt(num_err + weight_err));
 
 
             h->SetBinError(i,j, new_err);
         }
     }
 }
+
+void fakes_cost_reweight(TH2 *h_fakes, TH1 *h_rw){
+    int n_var1_bins = h_fakes->GetNbinsX();
+    int n_cost_bins = h_fakes->GetNbinsY();
+    int n_rw_bins = h_rw->GetNbinsX();
+
+    if(n_cost_bins != n_rw_bins){
+        printf("Fakes reweighting binning doesn't match! hist %i bins and rw_hist %i bins\n", n_cost_bins, n_rw_bins);
+        exit(1);
+    }
+    for(int i=1; i<= h_fakes->GetNbinsX(); i++){
+        for(int j=1; j<= h_fakes->GetNbinsY(); j++){
+            float old_val = h_fakes->GetBinContent(i, j);
+            float old_err = h_fakes->GetBinError(i, j);
+
+            float new_val = old_val * h_rw->GetBinContent(j);
+            float new_err = std::min(0.7 * new_val, sqrt(old_err*old_err + pow(old_val - new_val, 2)));
+
+            h_fakes->SetBinContent(i,j, new_val);
+            h_fakes->SetBinError(i,j, new_err);
+        }
+    }
+}
+
+void fakes_cost_reweight(TH1 *h_fakes, TH1 *h_rw){
+    int n_cost_bins = h_fakes->GetNbinsX();
+    int n_rw_bins = h_rw->GetNbinsX();
+
+    if(n_cost_bins != n_rw_bins){
+        printf("Fakes reweighting binning doesn't match! hist %i bins and rw_hist %i bins\n", n_cost_bins, n_rw_bins);
+        exit(1);
+    }
+    for(int i=1; i<= n_cost_bins; i++){
+        float old_val = h_fakes->GetBinContent(i);
+        float old_err = h_fakes->GetBinError(i);
+
+        float new_val = old_val * h_rw->GetBinContent(i);
+        float new_err = std::min(0.7 * new_val, sqrt(old_err*old_err + pow(old_val - new_val, 2)));
+
+        h_fakes->SetBinContent(i, new_val);
+        h_fakes->SetBinError(i, new_err);
+    }
+}
+
     
 
 
@@ -213,8 +257,8 @@ Double_t get_new_fakerate_prob(Double_t pt, Double_t eta, TH2D *h){
         if(prob < 0.001) printf("Tried 1 lower pt bin and still 0 fakerate \n");
     }
 
-    prob = min(prob, 0.98);
-    prob = max(prob, 0.02);
+    prob = std::min(prob, 0.98);
+    prob = std::max(prob, 0.02);
     //printf("Efficiency is %f \n", eff);
     return prob;
 }
