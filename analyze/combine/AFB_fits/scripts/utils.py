@@ -125,4 +125,4 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
 
-    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))
+    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P LQ_Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))

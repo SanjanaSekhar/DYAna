@@ -12,18 +12,16 @@ bin             ee16  mumu16
 observation     -1      -1     
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee16    ee16    ee16    ee16    ee16   ee16   mumu16  mumu16  mumu16  mumu16  mumu16  mumu16  ee16  mumu16   
-process                  alpha   fpl     fmn     bk      gam    qcd    alpha   fpl     fmn     bk      gam     qcd    dy_gg   dy_gg 
-process                  -2      0       -1      1       5      2      -2      0       -1      1       5       2       4        4   
-rate                     -1      -1      -1      -1      -1    -1      -1      -1      -1      -1      -1     -1      -1       -1   
----------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -       -      -      1.03   1.03   1.03     -       -        -     1.03    1.03   
-bk_xsec         lnN      -       -        -     1.05     -      -       -       -       -     1.05     -       -       -       -    
-gam_xsec        lnN      -       -        -      -      1.4     -       -       -       -      -      1.4      -       -       -    
+bin                      ee16    ee16    ee16    ee16    ee16   mumu16  mumu16  mumu16  mumu16  mumu16  ee16  mumu16   
+process                  alpha   fpl     fmn     bk      gam    alpha   fpl     fmn     bk      gam     dy_gg   dy_gg 
+process                  -2      0       -1      1       5      -2      0       -1      1       5        4        4   
+rate                     -1      -1      -1      -1      -1     -1      -1      -1      -1      -1      -1       -1   
+-------------------------------------------------------------------------------------------------------------------------
+dy_xsec         lnN     1.03   1.03    1.03      -       -      1.03   1.03   1.03     -       -       1.03    1.03   
+bk_xsec         lnN      -       -        -     1.05     -       -       -       -     1.05     -        -       -    
+gam_xsec        lnN      -       -        -      -      1.4      -       -       -      -      1.4       -       -    
 
-lumi16          lnN     1.025  1.025   1.025   1.025   1.025    -      1.025  1.025  1.025   1.025   1.025     -     1.025   1.025  
-elFakes16       lnN      -       -        -      -       -     1.5      -       -       -      -       -       -       -       -    
-muFakes16       lnN      -       -        -      -       -      -       -       -       -      -       -      1.5      -       -    
+lumi16          lnN     1.025  1.025   1.025   1.025   1.025    1.025  1.025  1.025   1.025   1.025    1.025   1.025  
 
 #* autoMCStats 10 1
 

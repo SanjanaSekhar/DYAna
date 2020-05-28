@@ -34,11 +34,12 @@ elif(options.chan == "mumu"):
 
 bin_start = 0
 bin_stop = 8
-
+options.chan="ee"
 fit_name = options.chan
 if(options.no_sys): fit_name +="_nosys"
 if(options.fake_data): fit_name +="_fake_data"
 if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
+print("\n fit_name = ", fit_name)
 
 if(options.mbin >= 0):
     print("Will only do fit for bin %i " % options.mbin)
@@ -53,6 +54,7 @@ workspace="workspaces/%s_LQ.root" % (options.chan)
 make_workspace(workspace, True, False, year = -1)
 
 plotdir="postfit_plots/%s_LQ" % (fit_name)
+print("\n plotdir = ", plotdir)
 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
 print_and_do("mkdir %s" % (plotdir))
 print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
@@ -62,7 +64,7 @@ if(not options.no_plot):
         % (fit_name))
     extra_args = ""
     if(options.year > 0): extra_args = " -y %i " % options.year
-    print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s" % (fit_name, plotdir, extra_args))
+    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s" % (fit_name, plotdir, extra_args))
     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
     print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (plotdir))
     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))

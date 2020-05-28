@@ -32,8 +32,7 @@ TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure, *h1_mumu_LQint, 
 Double_t m_LQ;
 //take m_LQ from command line
 
-//changed
-void make_data_templates(int year, bool scramble_data = true){
+void make_data_templates(int year, bool scramble_data = true, bool fake_data = true){
 
     int n_var1_bins = n_y_bins;
     float *var1_bins = y_bins;
@@ -46,17 +45,32 @@ void make_data_templates(int year, bool scramble_data = true){
     char title[100];
     sprintf(title, "ee%i_data_obs", year %2000);
 
-    TH3F* h_elel_data = new TH3F(title, "Data template of (m, x_f, cost_r)",
-             n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+    TH3F* h_elel_data = new TH3F(title, "Data template of (m,x_f, cost_r)",
+            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_elel_data->SetDirectory(0);
     sprintf(title, "mumu%i_data_obs", year %2000);
-    TH3F* h_mumu_data = new TH3F(title, "Data template of (m, x_f, cost_r)",
-             n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+    TH3F* h_mumu_data = new TH3F(title, "Data template of (m,x_f, cost_r)",
+            n_m_bins, m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_mumu_data->SetDirectory(0);
     bool ss = false;
 
-    int nElEl_DataEvents = gen_data_template(t_elel_data, h_elel_data,  year,  FLAG_ELECTRONS,  scramble_data, ss, use_xF);
-    int nMuMu_DataEvents = gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
+    if(!fake_data){
+        gen_data_template(t_elel_data, h_elel_data,  year, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
+        gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
+    }
+    else{
+        float Afb = 0.61;
+        float A0 = 0.06;
+        printf("Making fake data \n");
+        //one_mc_template(t_mumu_mc, A0, Afb, h_mumu_data, year, m_low, m_high, FLAG_MUONS, use_xF, "");
+        //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
+        TTree *mu_ts[7] = {t_mumu_mc, t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
+        TTree *el_ts[7] = {t_elel_mc, t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
+        //TTree *mu_ts[6] = {t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
+        //TTree *el_ts[6] = {t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
+        gen_combined_background_template(7, mu_ts, h_mumu_data, year, FLAG_MUONS,  ss, use_xF,  "");
+        gen_combined_background_template(7, el_ts, h_elel_data, year, FLAG_ELECTRONS,  ss, use_xF,  "");
+    }
 
     h1_elel_data = convert3d(h_elel_data);
     h1_mumu_data = convert3d(h_mumu_data);
@@ -66,6 +80,8 @@ void make_data_templates(int year, bool scramble_data = true){
     printf("Made data templates \n");
     delete h_elel_data, h_mumu_data;
 }
+
+
 //changed
 void make_qcd_templates(int year){
 
@@ -427,6 +443,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     const TString fout_name("combine/templates/LQ_templates16.root");
     year = 2016;
     bool scramble_data = true;
+    bool fake_data = false; //use mc instead of data
     use_xF = false;
 
     std::cout << "enter m_LQ:";        
@@ -465,7 +482,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         //m_high = m_bins[i+1];
         printf("\n \n Start making templates ");
 
-        make_data_templates(year, scramble_data);
+        make_data_templates(year, scramble_data, fake_data);
         make_qcd_templates(year);
         //make_ss_data_templates(year);
         //make_ss_mc_templates(year);
