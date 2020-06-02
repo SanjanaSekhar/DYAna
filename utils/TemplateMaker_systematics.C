@@ -220,7 +220,7 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
 
 int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,  
         int year, Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, 
-        bool ss =false, bool use_xF = false,  const string &sys_label = ""){
+        bool ss =false, bool use_xF = false, bool emu_reweight = false,  const string &sys_label = ""){
     h->Sumw2();
 
     int nEvents = 0;
@@ -233,6 +233,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
         else tm.do_electrons = true;
         tm.is_gen_level = false;
+        tm.do_emu_costrw = emu_reweight;
 
         tm.setup_systematic(sys_label);
         tm.setup();
@@ -454,6 +455,12 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     tot_weight_ss = std::max(1e-4, tot_weight_ss);
     float scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     if(!incl_ss) scaling = 1.;
+
+
+    fakes_costrw_helper h_rw;
+    setup_fakes_costrw_helper(&h_rw, year);
+    if(flag1 == FLAG_MUONS) fakes_cost_reweight(h, h_rw.mu_rw);
+    else fakes_cost_reweight(h, h_rw.el_rw);
     
     Double_t err;
     Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);

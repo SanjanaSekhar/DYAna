@@ -52,10 +52,12 @@ void draw_samesign_cmp(){
 
 
 
-    TH1F *data_cost = new TH1F("data_cost", "Data", 10, -1.,1.);
-    TH1F *diboson_cost = new TH1F("diboson_cost", "DiBoson (WW, WZ,ZZ)", 10, -1.,1);
-    TH1F *QCD_cost = new TH1F("QCD_cost", "QCD", 10, -1.,1);
-    TH1F *WJets_cost = new TH1F("WJets_cost", "WJets", 10, -1.,1);
+    int n_cost_bins = 8;
+    TH1F *data_cost = new TH1F("data_cost", "Data", n_cost_bins, -1.,1.);
+    TH1F *DY_cost = new TH1F("DY_cost", "DY (WW, WZ,ZZ)", n_cost_bins, -1.,1);
+    TH1F *diboson_cost = new TH1F("diboson_cost", "DiBoson (WW, WZ,ZZ)", n_cost_bins, -1.,1);
+    TH1F *QCD_cost = new TH1F("QCD_cost", "QCD", n_cost_bins, -1.,1);
+    TH1F *WJets_cost = new TH1F("WJets_cost", "WJets", n_cost_bins, -1.,1);
 
 
 
@@ -67,7 +69,6 @@ void draw_samesign_cmp(){
     TH1F *WJets_m = new TH1F("WJets_m", "WJets", 30, 150, 2000);
 
     TH1F *DY_m = new TH1F("DY_m", "DY (WW, WZ, ZZ)", 30, 150, 2000);
-    TH1F *DY_cost = new TH1F("DY_cost", "DY (WW, WZ,ZZ)", 10, -1.,1);
     TH1F *DY_xf = new TH1F("DY_xf", "MC signal", xf_nbins, 0, 0.8);
     TH1F *DY_pt = new TH1F("DY_pt", "MC signal", 40, 0, 1000);
 
@@ -111,7 +112,8 @@ void draw_samesign_cmp(){
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,   year, m_low, m_high, ss);
 
     //Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type, year, m_low, m_high, ss, in_os_region);
+    bool cost_reweight = false;
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type, year, m_low, m_high, ss, in_os_region, reweight);
 
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), diboson_m->Integral(), DY_m->Integral());
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_cost->Integral(), QCD_cost->Integral(), diboson_cost->Integral(), DY_cost->Integral());

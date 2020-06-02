@@ -126,6 +126,9 @@ class TempMaker{
         //reweight MC to match data dilepton pt distribution
         bool do_ptrw = false;
 
+        //reweight MC backgrounds based on correction derived from data emu
+        bool do_emu_costrw = false;
+
         Long64_t nEntries;
 
 
@@ -141,6 +144,7 @@ class TempMaker{
         int do_pileup_sys = 0;
         int do_A0_sys = 0;
         int do_ptrw_sys = 0;
+        int do_emu_costrw_sys = 0;
 
         int do_muHLT_barrel_sys = 0;
         int do_muID_barrel_sys = 0;
@@ -172,6 +176,7 @@ el_SFs el_SF;
 mu_SFs era1_SFs, era2_SFs;
 pileup_systematics pu_sys;
 ptrw_helper ptrw_SFs; 
+emu_costrw_helper emu_costrw;
 A0_helpers A0_helper; 
 
 #ifndef STAND_ALONE
@@ -189,6 +194,7 @@ void setup_all_SFs(int year){
     setup_pileup_systematic(&pu_sys, year); 
     setup_A0_helper(&A0_helper, year);
     setup_ptrw_helper(&ptrw_SFs, year);
+    setup_emu_costrw_helper(&emu_costrw, year);
 }
 
 #endif
