@@ -42,7 +42,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 //get this checked
 void cleanup_template(TH3F *h){
     //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
-    for(int k=1; k<= h->GetNbinsX()+1; k++)
+    for(int k=0; k<= h->GetNbinsX()+1; k++)
         for(int i=0; i<= h->GetNbinsY()+1; i++){
             for(int j=0; j<= h->GetNbinsZ()+1; j++){
                 //printf("%i %i \n", i,j);

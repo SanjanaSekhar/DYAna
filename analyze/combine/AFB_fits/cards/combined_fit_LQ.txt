@@ -3,9 +3,9 @@ imax 3 number of bins
 jmax 7 number of processes minus 1
 kmax 6 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQ_templates16.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQ_templates17.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQ_templates18.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQ_fake_templates16.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQ_fake_templates17.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQ_fake_templates18.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   

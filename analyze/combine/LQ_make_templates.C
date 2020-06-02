@@ -46,11 +46,11 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = t
     sprintf(title, "ee%i_data_obs", year %2000);
 
     TH3F* h_elel_data = new TH3F(title, "Data template of (m,x_f, cost_r)",
-            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+            n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_elel_data->SetDirectory(0);
     sprintf(title, "mumu%i_data_obs", year %2000);
     TH3F* h_mumu_data = new TH3F(title, "Data template of (m,x_f, cost_r)",
-            n_m_bins, m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+            n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_mumu_data->SetDirectory(0);
     bool ss = false;
 
@@ -97,11 +97,11 @@ void make_qcd_templates(int year){
 
     sprintf(title, "ee%i_qcd", year %2000);
     TH3F* h_elel_qcd = new TH3F(title, "Fakes template",
-             n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+             n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_elel_qcd->SetDirectory(0);
     sprintf(title, "mumu%i_qcd", year %2000);
     TH3F* h_mumu_qcd = new TH3F(title, "Fakes template",
-             n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+             n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_mumu_qcd->SetDirectory(0);
     bool incl_ss = true;
     bool ss_binning = false;
@@ -162,38 +162,38 @@ void make_mc_templates(int year, const string &sys_label){
         printf("making muon mc templates \n");
         sprintf(title, "mumu%i_sym%s", year %2000, sys_label.c_str());
         auto h_mumu_sym = new TH3F(title, "Symmetric template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_sym->SetDirectory(0);
         sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
         auto h_mumu_alpha = new TH3F(title, "Gauge boson polarization template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_alpha->SetDirectory(0);
         sprintf(title, "mumu%i_asym%s", year %2000, sys_label.c_str());
         auto h_mumu_asym = new TH3F(title, "Asymmetric template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_asym->SetDirectory(0);
         //LQ pure
 		sprintf(title, "mumu%i_LQpure%s", year %2000, sys_label.c_str());
         auto h_mumu_LQpure = new TH3F(title, "LQpure template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_LQpure->SetDirectory(0);
         //LQ interference
         sprintf(title, "mumu%i_LQint%s", year %2000, sys_label.c_str());
         auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_LQint->SetDirectory(0);
 
         sprintf(title, "mumu%i_bk%s", year %2000, sys_label.c_str());
         auto h_mumu_back = new TH3F(title, "Combined background template",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_back->SetDirectory(0);
         sprintf(title, "mumu%i_dy_gg%s", year %2000, sys_label.c_str());
         auto h_mumu_dy_gg = new TH3F(title, "Combined background template",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_dy_gg->SetDirectory(0);
         sprintf(title, "mumu%i_gam%s", year %2000, sys_label.c_str());
         auto h_mumu_gam = new TH3F(title, "Combined background template",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_gam->SetDirectory(0);
 
         printf("Making mumu mc \n");
@@ -231,38 +231,38 @@ void make_mc_templates(int year, const string &sys_label){
         printf("making electron mc templates \n");
         sprintf(title, "ee%i_sym%s", year %2000, sys_label.c_str());
         auto h_elel_sym = new TH3F(title, "Symmetric template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_sym->SetDirectory(0);
         sprintf(title, "ee%i_alpha%s", year %2000, sys_label.c_str());
         auto h_elel_alpha = new TH3F(title, "Gauge boson polarization template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_alpha->SetDirectory(0);
         sprintf(title, "ee%i_asym%s", year %2000, sys_label.c_str());
         auto h_elel_asym = new TH3F(title, "Asymmetric template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_asym->SetDirectory(0);
 
         sprintf(title, "ee%i_LQpure%s", year %2000, sys_label.c_str());
         auto h_elel_LQpure = new TH3F(title, "LQpure template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_LQpure->SetDirectory(0);
 
         sprintf(title, "ee%i_LQint%s", year %2000, sys_label.c_str());
         auto h_elel_LQint = new TH3F(title, "LQint template of mc",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_LQint->SetDirectory(0);
 
         sprintf(title, "ee%i_bk%s", year %2000, sys_label.c_str());
         auto h_elel_back = new TH3F(title, "Combined background template",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_back->SetDirectory(0);
         sprintf(title, "ee%i_dy_gg%s", year %2000, sys_label.c_str());
         auto h_elel_dy_gg = new TH3F(title, "Combined background template",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_dy_gg->SetDirectory(0);
         sprintf(title, "ee%i_gam%s", year %2000, sys_label.c_str());
         auto h_elel_gam = new TH3F(title, "Combined background template",
-                 n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_gam->SetDirectory(0);
 
         printf("starting elel dy \n");
@@ -325,10 +325,10 @@ void convert_mc_templates(int year, const string &sys_label){
 
         char title[100];
         sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
-        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_m_bins, 0, n_var1_bins * n_cost_bins * n_m_bins);
+        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
         h1_mumu_pl->SetDirectory(0);
         sprintf(title, "mumu%i_fmn%s", year%2000, sys_label.c_str());
-        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_m_bins, 0, n_var1_bins * n_cost_bins * n_m_bins);
+        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
         h1_mumu_mn->SetDirectory(0);
         make_pl_mn_templates(h1_mumu_sym, h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
 
@@ -343,10 +343,10 @@ void convert_mc_templates(int year, const string &sys_label){
 
         char title[100];
         sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
-        h1_elel_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins *n_m_bins, 0, n_var1_bins * n_cost_bins * n_m_bins);
+        h1_elel_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins *n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
         h1_elel_pl->SetDirectory(0);
         sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
-        h1_elel_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_m_bins, 0, n_var1_bins * n_cost_bins * n_m_bins);
+        h1_elel_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
         h1_elel_mn->SetDirectory(0);
         make_pl_mn_templates(h1_elel_sym, h1_elel_asym, h1_elel_pl, h1_elel_mn);
 
@@ -440,10 +440,10 @@ void write_out_templates(const string &sys_label){
 }
 
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/LQ_templates16.root");
+    const TString fout_name("combine/templates/LQ_fake_templates16.root");
     year = 2016;
-    bool scramble_data = true;
-    bool fake_data = false; //use mc instead of data
+    bool scramble_data =false ;
+    bool fake_data =true; //use mc instead of data
     use_xF = false;
 
     std::cout << "enter m_LQ:";        
@@ -464,7 +464,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     char dirname[40];
 /*
     int i_start=0;
-    int i_max = n_m_bins;
+    int i_max = n_lq_m_bins;
     if(iJob >0){
         i_start =iJob;
         i_max = iJob +1;
@@ -478,8 +478,8 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         gDirectory->mkdir(dirname);
         gDirectory->cd(dirname);
 
-       // m_low = m_bins[i];
-        //m_high = m_bins[i+1];
+       // m_low = lq_m_bins[i];
+        //m_high = lq_m_bins[i+1];
         printf("\n \n Start making templates ");
 
         make_data_templates(year, scramble_data, fake_data);
