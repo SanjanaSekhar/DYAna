@@ -97,9 +97,9 @@ void LQ_sys_check(){
 
             if(do_bkg){
 
-                gen_combined_background_template(3, mumu_ts, h_mumu_bkg, year, m_LQ, FLAG_MUONS,  ss, use_xf,  "");
-                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_up, year, m_LQ, FLAG_MUONS,  ss, use_xf,  sys_up);
-                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_down, year, m_LQ, FLAG_MUONS,  ss, use_xf, sys_down);
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg, year, FLAG_MUONS,  ss, use_xf,  "");
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_up, year, FLAG_MUONS,  ss, use_xf,  sys_up);
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_down, year, FLAG_MUONS,  ss, use_xf, sys_down);
                 h1_mumu_bkg = convert3d(h_mumu_bkg);
                 h1_mumu_bkg_up = convert3d(h_mumu_bkg_up);
                 h1_mumu_bkg_down = convert3d(h_mumu_bkg_down);
@@ -164,9 +164,9 @@ void LQ_sys_check(){
 
             if(do_bkg){
 
-                gen_combined_background_template(3, elel_ts, h_elel_bkg, year, m_LQ, FLAG_ELECTRONS,  ss, use_xf,  "");
-                gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, m_LQ, FLAG_ELECTRONS,  ss, use_xf,  sys_up);
-                gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, m_LQ, FLAG_ELECTRONS,  ss, use_xf, sys_down);
+                gen_combined_background_template(3, elel_ts, h_elel_bkg, year, FLAG_ELECTRONS,  ss, use_xf,  "");
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, FLAG_ELECTRONS,  ss, use_xf,  sys_up);
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, FLAG_ELECTRONS,  ss, use_xf, sys_down);
                 h1_elel_bkg = convert3d(h_elel_bkg);
                 h1_elel_bkg_up = convert3d(h_elel_bkg_up);
                 h1_elel_bkg_down = convert3d(h_elel_bkg_down);
