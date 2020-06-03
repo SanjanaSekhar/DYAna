@@ -306,16 +306,16 @@ int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy,
     gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure, &h_LQint, year, m_LQ, flag1,  use_xF, sys_label);
 
 
-    double norm = 3./4./(2.+alpha);
+   // double norm = 3./4./(2.+alpha);
 
     auto h_pl = h_sym + h_asym;
     auto h_mn = h_sym - h_asym;
     h_pl.Scale(0.5);
     h_mn.Scale(0.5);
 
-    h_alpha.Scale(norm * alpha);
-    h_LQpure.Scale(norm * alpha);
-    h_LQint.Scale(norm * alpha);
+    //h_alpha.Scale(norm * alpha);
+    //h_LQpure.Scale(norm * alpha);
+    //h_LQint.Scale(norm * alpha);
     
 
     h_dy->Add(&h_pl, &h_mn, (norm + afb), (norm - afb));

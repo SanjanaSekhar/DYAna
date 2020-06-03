@@ -78,9 +78,9 @@ void LQ_sys_check(){
 
         if(do_muons){
             printf("Making mumu temps \n");
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, FLAG_MUONS, use_xf, "");
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, FLAG_MUONS, use_xf, sys_up);
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, FLAG_MUONS, use_xf, sys_down);
+            one_mc_template(t_mumu_mc, afb, h_mumu_plain, year, m_LQ, FLAG_MUONS, use_xf, "");
+            one_mc_template(t_mumu_mc, afb, h_mumu_sys_up, year, m_LQ, FLAG_MUONS, use_xf, sys_up);
+            one_mc_template(t_mumu_mc,  afb, h_mumu_sys_down, year, m_LQ, FLAG_MUONS, use_xf, sys_down);
             TH1F *h1_mumu_plain = convert3d(h_mumu_plain);
             TH1F *h1_mumu_sys_up = convert3d(h_mumu_sys_up);
             TH1F *h1_mumu_sys_down = convert3d(h_mumu_sys_down);
@@ -145,9 +145,9 @@ void LQ_sys_check(){
         if(do_electrons){
             printf("Making elel temps \n");
 
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_plain, year, m_LQ, FLAG_ELECTRONS, use_xf, "");
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_LQ, FLAG_ELECTRONS, use_xf, sys_up);
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, FLAG_ELECTRONS, use_xf, sys_down);
+            one_mc_template(t_elel_mc,  afb, h_elel_plain, year, m_LQ, FLAG_ELECTRONS, use_xf, "");
+            one_mc_template(t_elel_mc, afb, h_elel_sys_up, year, m_LQ, FLAG_ELECTRONS, use_xf, sys_up);
+            one_mc_template(t_elel_mc, afb, h_elel_sys_down, year, m_LQ, FLAG_ELECTRONS, use_xf, sys_down);
             TH1F *h1_elel_plain = convert3d(h_elel_plain);
             TH1F *h1_elel_sys_up = convert3d(h_elel_sys_up);
             TH1F *h1_elel_sys_down = convert3d(h_elel_sys_down);
