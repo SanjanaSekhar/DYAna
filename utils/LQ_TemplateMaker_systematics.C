@@ -276,7 +276,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
     return 0;
 }
 //get checked
-int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy, 
+int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy, 
         int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
@@ -288,16 +288,22 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy,
     }
 
     TH3F h_sym = TH3F("h_sym", "Symmetric template of mc",
-            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+            n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_sym.SetDirectory(0);
     TH3F h_alpha = TH3F("h_alpha", "Gauge boson polarization template of mc",
-            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+            n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_alpha.SetDirectory(0);
     TH3F h_asym = TH3F("h_asym", "Asymmetric template of mc",
-            n_m_bins, m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+            n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_asym.SetDirectory(0);
+    TH3F h_LQpure = TH3F("h_LQpure", "LQpure template of mc",
+            n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+    h_LQpure.SetDirectory(0);
+    TH3F h_LQint = TH3F("h_LQint", "LQint template of mc",
+            n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+    h_LQint.SetDirectory(0);
     //includes m_LQ
-    //gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, m_LQ, m_low, m_high, flag1,  use_xF, sys_label);
+    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure, &h_LQint, year, m_LQ, flag1,  use_xF, sys_label);
 
 
     double norm = 3./4./(2.+alpha);
@@ -308,10 +314,14 @@ int one_mc_template(TTree *t1, Double_t alpha, Double_t afb, TH3F* h_dy,
     h_mn.Scale(0.5);
 
     h_alpha.Scale(norm * alpha);
+    h_LQpure.Scale(norm * alpha);
+    h_LQint.Scale(norm * alpha);
     
 
     h_dy->Add(&h_pl, &h_mn, (norm + afb), (norm - afb));
     h_dy->Add(&h_alpha);
+    h_dy->Add(&h_LQpure);
+    h_dy->Add(&h_LQint);
 
     return 1;
 }
