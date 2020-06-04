@@ -318,7 +318,7 @@ int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy,
     //h_LQint.Scale(norm * alpha);
     
 
-    h_dy->Add(&h_pl, &h_mn, (norm + afb), (norm - afb));
+    h_dy->Add(&h_pl, &h_mn);
     h_dy->Add(&h_alpha);
     h_dy->Add(&h_LQpure);
     h_dy->Add(&h_LQint);

@@ -19,8 +19,8 @@ void LQ_sys_check(){
         int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots";
-        char *sys = "_pdf10";
-        bool do_bkg = false;
+        char *sys = "_elIDBAR";
+        bool do_bkg = true;
         bool do_electrons = true;
         bool do_muons = true;
         int i = 5;
