@@ -51,7 +51,7 @@ if(options.mbin >= 0):
 print(" \n \n Starting fit for LQ \n\n")
 
 workspace="workspaces/%s_LQ.root" % (options.chan)
-make_workspace(workspace, True, False, year = -1)
+make_workspace(workspace, False, False, year = options.year)
 
 plotdir="postfit_plots/%s_LQ" % (fit_name)
 print("\n plotdir = ", plotdir)
