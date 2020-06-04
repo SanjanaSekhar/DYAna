@@ -11,12 +11,12 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
     std::cout << "enter m_LQ:";        
     std::cin >> m_LQ; 
     
-    const TString pdf_fout_name("combine/templates/LQ_sys1_template18.root");
+    const TString pdf_fout_name("combine/templates/LQ_sys0_template17.root");
     //const TString pdf_fout_name("output_files/sys_test.root");
     TFile *pdf_fout = TFile::Open(pdf_fout_name, "RECREATE");
-    year =2018;
+    year =2017;
     init_mc(year);
-
+    type =0;
 
 
 
