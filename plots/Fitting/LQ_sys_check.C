@@ -19,10 +19,10 @@ void LQ_sys_check(){
         int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots";
-        char *sys = "_elIDBAR";
+        char *sys = "_REFAC";
         bool do_bkg = true;
         bool do_electrons = true;
-        bool do_muons = true;
+        bool do_muons = false;
         int i = 5;
         setup_all_SFs(year);
 

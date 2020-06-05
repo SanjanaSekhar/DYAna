@@ -267,7 +267,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
     else:
-        myCan.Print(tag+'/'+name+'nofacrefac.png','png')
+        myCan.Print(tag+'/'+name+'_noidbarfacrefac.png','png')
 
 
 def reducedCorrMatrixHist(fit_result,varsOfInterest=[]):

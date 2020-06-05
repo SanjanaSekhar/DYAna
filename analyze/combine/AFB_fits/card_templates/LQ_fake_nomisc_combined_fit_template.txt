@@ -40,15 +40,15 @@ elScaleGainYR   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0    
 elSmearYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
 
 elHLTBARYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
-elIDBARYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
+#elIDBARYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
 elRECOBARYR     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
 elHLTENDYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
 elIDENDYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
 elRECOENDYR     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    
                                                                                                             
-#alphaS          shape    1.0     1.0     1.0      -       -     1.0      1.0     1.0   
-#A0Den           shape    1.0     1.0     1.0      -       -      -       1.0     1.0    
-#RENORM          shape    1.0     1.0     1.0      -       -     1.0      1.0     1.0   
+alphaS          shape    1.0     1.0     1.0      -       -     1.0      1.0     1.0   
+A0Den           shape    1.0     1.0     1.0      -       -      -       1.0     1.0    
+RENORM          shape    1.0     1.0     1.0      -       -     1.0      1.0     1.0   
 #FAC             shape    1.0     1.0     1.0      -       -     1.0      1.0     1.0   
 #REFAC           shape    1.0     1.0     1.0      -       -     1.0      1.0     1.0   
                                                                                                               
