@@ -267,7 +267,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
     else:
-        myCan.Print(tag+'/'+name+'.png','png')
+        myCan.Print(tag+'/'+name+'nofacrefac.png','png')
 
 
 def reducedCorrMatrixHist(fit_result,varsOfInterest=[]):
@@ -386,7 +386,7 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-h_names = ["gam", "LQint", "LQpure", "bk", "dy_gg", "alpha", "fpl_fmn"]
+h_names = ["gam", "LQint", "LQpure" ,"bk", "dy_gg", "alpha", "fpl_fmn"]
 #h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -402,7 +402,7 @@ label_color_map['dy_gg'] = ("DY No Signal (qq, #bar{q}#bar{q}, gluglu)", kMagent
 label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
 #label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
 label_color_map['LQint'] = ("LQint", kRed - 7)
-label_color_map['LQpure'] = ("LQpure", kBlue - 7)
+label_color_map['LQpure'] = ("LQpure", kBlue + 7)
 
 
 dirs = ["Y%i_postfit/"]
