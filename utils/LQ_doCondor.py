@@ -71,7 +71,7 @@ def write_job(out, name, nJobs, iJob, eosout=''):
     #print 'job_i %i nfiles %i subjobi %i'%(i,n,j)
     cwd = os.getcwd()
     eos_an_file = EOS_base + 'Condor_inputs/' + options.tarname + '.tgz'
-    eos_cmssw_file = EOS_base + 'Condor_inputs/' + 'DY_CMSSW' + '.tgz'
+    eos_cmssw_file = EOS_base + 'Condor_inputs/' + 'LQ_CMSSW' + '.tgz'
 
     sub_file = open('%s/%s_job%d.sh' % (out, name, iJob), 'w')
     sub_file.write('#!/bin/bash\n')
@@ -90,8 +90,8 @@ def write_job(out, name, nJobs, iJob, eosout=''):
         sub_file.write('xrdcp %s CMSSW.tgz \n' % eos_cmssw_file) 
         sub_file.write('cat LQ_my_script.sh \n')
         sub_file.write('tar -xzf CMSSW.tgz \n')
-        sub_file.write('mv LQ_my_script.sh DY_analysis/src/ \n')
-        sub_file.write('cd DY_analysis/src \n')
+        sub_file.write('mv LQ_my_script.sh CMSSW_10_5_0/src/ \n')
+        sub_file.write('cd CMSSW_10_5_0/src \n')
         sub_file.write('eval `scramv1 runtime -sh`\n')
         sub_file.write('scram b ProjectRename \n')
 
@@ -169,7 +169,7 @@ if options.tar:
         tar_cmd += " --exclude='/uscms/home/ssekhar/nobackup/CMSSW_10_5_0/src/LQ_Analysis/*' " 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
         tar_cmd += " --exclude='%s' " %'*.git*' 
-        tar_cmd += " -zcf %s -C %s %s" % ("DY_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'CMSSW_10_5_0')#where to run this from 
+        tar_cmd += " -zcf %s -C %s %s" % ("LQ_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'CMSSW_10_5_0')#where to run this from 
         options.tarname = "LQ_CMSSW"
 
 

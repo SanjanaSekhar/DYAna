@@ -23,6 +23,6 @@ for year in years:
             print_and_do("sed -i  s/YEAR/%i/g %s" % (year, script_name))
             print_and_do("sed -i  s/TYPE/%i/g %s" % (ttype, script_name))
             print_and_do("chmod +x %s" % script_name)
-            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub  -s %s -n templ%i_%s_%s"  % (njobs, script_name,  year % 2000, labels[j], ending))
+            print_and_do("python LQ_doCondor.py --cmssw --njobs %i --combine --sub  -s %s -n templ%i_%s_%s"  % (njobs, script_name,  year % 2000, labels[j], ending))
             print_and_do("rm scripts/script2.sh")
 
