@@ -13,7 +13,7 @@ labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
 njobs = 15
-ending = "may28"
+ending = "june11"
 
 for year in years:
         f_names = []
