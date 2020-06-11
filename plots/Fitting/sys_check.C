@@ -17,11 +17,11 @@ void sys_check(){
         int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots";
-        char *sys = "_pdf10";
-        bool do_bkg = false;
+        char *sys = "_elIDBAR";
+        bool do_bkg = true;
         bool do_electrons = true;
         bool do_muons = true;
-        int i = 0;
+        int i = 5;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
@@ -95,9 +95,17 @@ void sys_check(){
 
             if(do_bkg){
 
-                gen_combined_background_template(3, mumu_ts, h_mumu_bkg, year, m_low, m_high, FLAG_MUONS,  ss, use_xf,  "");
-                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_up, year, m_low, m_high, FLAG_MUONS,  ss, use_xf,  sys_up);
-                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_down, year, m_low, m_high, FLAG_MUONS,  ss, use_xf, sys_down);
+                bool emu_reweight = true;
+
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg, year, m_low, m_high, FLAG_MUONS,  ss, use_xf,  emu_reweight, "");
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_up, year, m_low, m_high, FLAG_MUONS,  ss, use_xf,  emu_reweight, sys_up);
+                gen_combined_background_template(3, mumu_ts, h_mumu_bkg_down, year, m_low, m_high, FLAG_MUONS,  ss, use_xf, emu_reweight, sys_down);
+                
+                symmetrize2d(h_mumu_bkg);
+                symmetrize2d(h_mumu_bkg_up);
+                symmetrize2d(h_mumu_bkg_down);
+
+
                 h1_mumu_bkg = convert2d(h_mumu_bkg);
                 h1_mumu_bkg_up = convert2d(h_mumu_bkg_up);
                 h1_mumu_bkg_down = convert2d(h_mumu_bkg_down);
@@ -116,6 +124,7 @@ void sys_check(){
             sprintf(mu_title, "Muons: %s", sys);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             h1_mumu_plain->SetTitle(mu_title);
+            h1_mumu_plain->SetMinimum(0.);
             h1_mumu_plain->Draw("hist");
             h1_mumu_sys_up->Draw("hist same");
             h1_mumu_sys_down->Draw("hist same");
@@ -162,9 +171,16 @@ void sys_check(){
 
             if(do_bkg){
 
-                gen_combined_background_template(3, elel_ts, h_elel_bkg, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf,  "");
-                gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf,  sys_up);
-                gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf, sys_down);
+                bool emu_reweight = true;
+                gen_combined_background_template(3, elel_ts, h_elel_bkg, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf,  emu_reweight, "");
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf,  emu_reweight, sys_up);
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xf, emu_reweight, sys_down);
+
+                symmetrize2d(h_elel_bkg);
+                symmetrize2d(h_elel_bkg_up);
+                symmetrize2d(h_elel_bkg_down);
+
+
                 h1_elel_bkg = convert2d(h_elel_bkg);
                 h1_elel_bkg_up = convert2d(h_elel_bkg_up);
                 h1_elel_bkg_down = convert2d(h_elel_bkg_down);
@@ -182,6 +198,7 @@ void sys_check(){
 
             sprintf(el_title, "Electrons: %s", sys);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
+            h1_elel_plain->SetMinimum(0.);
             h1_elel_plain->SetTitle(el_title);
             h1_elel_plain->Draw("hist");
             h1_elel_sys_up->Draw("hist same");
