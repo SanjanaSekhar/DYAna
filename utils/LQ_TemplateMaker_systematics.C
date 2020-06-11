@@ -220,7 +220,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float denom = tm.getReweightingDenom();
             float LQ_denom = get_LQ_reweighting_denom(h_LQ,flag1,tm.m,gen_cost);
             //if(LQ_denom==0.)LQ_denom = 1e-8;
-            if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
+            //if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
@@ -244,7 +244,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
              //printf("\n LQint N1+N2 = %0.12f",reweight_LQint_norm);
             float reweight_LQint_num = (reweight_LQpure_num1)/reweight_LQint_denom1;
             float reweight_LQint = reweight_LQint_norm*reweight_LQint_num/LQ_denom;
-
+            printf("\n reweight_LQint = %f",reweight_LQint);
+            
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
             //modified these
