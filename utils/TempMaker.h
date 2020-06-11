@@ -112,11 +112,13 @@ class TempMaker{
         TLorentzVector *lep_m=0;
         TLorentzVector *gen_lep_p=0;
         TLorentzVector *gen_lep_m=0;
-        TLorentzVector cm;
+        TLorentzVector cm, gen_cm;
         TLorentzVector *mu = 0;
         TLorentzVector *el = 0;
-        Float_t pt;
+        Float_t pt, gen_m, gen_pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
+
+
 
         Int_t has_no_bjets = 1;
         bool not_cosmic = true;

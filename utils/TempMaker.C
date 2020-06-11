@@ -331,6 +331,13 @@ void TempMaker::doCorrections(){
         xF = compute_xF(cm);
         cost = get_cost(*lep_p, *lep_m);
     }
+    if(is_gen_level){
+        gen_cm = *gen_lep_p + *gen_lep_m; 
+        gen_m = gen_cm.M();
+        gen_pt = gen_cm.pt();
+        gen_cost = cost_st;
+    }
+
 
     if(std::isnan(cost_st)){
         printf("Gen level cost is Nan, using reco level \n");
@@ -467,11 +474,15 @@ float TempMaker::getEvtWeight(){
     return evt_weight;
 
 }
+float TempMaker::getLQReweightingDenom(){
+    int flag = FLAG_MUONS;
+    if(do_electrons) flag = FLAG_ELECTRONS;
+    return get_reweighting_denom(LQ_helper, flag, gen_m, cost_st);
+}
 
 float TempMaker::getReweightingDenom(){
-    TLorentzVector gen_cm = *gen_lep_p + *gen_lep_m; 
     //printf("%.2f %.2f %.2f \n", cost, gen_cm.M(), gen_cm.Pt());
-    return get_reweighting_denom(A0_helper, cost, gen_cm.M(), gen_cm.Pt(), do_A0_sys);
+    return get_reweighting_denom(A0_helper, cost_st, gen_m, gen_pt, do_A0_sys);
 }
 
 
