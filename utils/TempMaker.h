@@ -71,6 +71,7 @@ class TempMaker{
         void fixRFNorm(TH2 *h, int mbin);
         void finish();
         float getReweightingDenom();
+        float getLQReweightingDenom();
 
 
 
