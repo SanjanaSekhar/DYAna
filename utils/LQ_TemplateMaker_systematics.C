@@ -218,7 +218,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float gen_cost = tm.cost_st;
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
-            float LQ_denom = tm.get_LQ_reweighting_denom(&h_LQ,flag1,tm.m,gen_cost);
+            float LQ_denom = get_LQ_reweighting_denom(&h_LQ,flag1,tm.m,gen_cost);
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
