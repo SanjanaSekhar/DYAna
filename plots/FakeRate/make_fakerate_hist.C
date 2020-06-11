@@ -146,9 +146,9 @@ void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag
 
 void make_fakerate_hist(){
 
-    bool write_out = true;
-    int year = 2016;
-    int FLAG = FLAG_ELECTRONS;
+    bool write_out = false;
+    int year = 2018;
+    int FLAG = FLAG_MUONS;
     int n_pt_bins = 4;
     TFile *f, *f_mc, *f_new; 
     Float_t *pt_bins;
@@ -162,7 +162,7 @@ void make_fakerate_hist(){
         n_pt_bins = 4;
         if(year == 2018){
             f = TFile::Open("../analyze/output_files/2018/El18_data_fake_rate_nov1.root");
-            f_mc = TFile::Open("../analyze/output_files/2018/El18_mc_contam_fake_rate_nov1.root");
+            f_mc = TFile::Open("../analyze/output_files/2018/SingleElectron18_fakerate_contam_june11.root");
             if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_nov1.root", "RECREATE");
         }
         else if(year == 2017){
@@ -187,6 +187,7 @@ void make_fakerate_hist(){
         n_pt_bins = 4;
         if(year == 2018){
             f = TFile::Open("../analyze/output_files/2018/Mu18_data_fake_rate_oct18.root");
+            //f_mc = TFile::Open("../analyze/output_files/2018/SingleMuon18_fakerate_contam_june11.root");
             f_mc = TFile::Open("../analyze/output_files/2018/Mu18_mc_contam_fake_rate_oct18.root");
             if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_oct18.root", "RECREATE");
         }

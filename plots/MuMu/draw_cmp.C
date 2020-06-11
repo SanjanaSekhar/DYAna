@@ -167,7 +167,7 @@ void draw_cmp(){
 
 
     float m_low = 150.;
-    float m_high = 171.;
+    float m_high = 13000;
     bool ss = false;
 
     make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);

@@ -126,9 +126,11 @@ void LQ_rw_denom(){
 
 
     int nEvents = 0;
+    float m_low = m_LQ_bins[0];
+    float m_high = 14000.;
 
-    make_amc_gen_cost(t_gen_mu,  h_mu, m_LQ_bins[0], m_LQ_bins[n_LQ_m_bins-1]);
-    make_amc_gen_cost(t_gen_el, h_el,m_LQ_bins[0], m_LQ_bins[n_LQ_m_bins-1]);
+    make_amc_gen_cost(t_gen_mu,  h_mu, m_low,m_high);
+    make_amc_gen_cost(t_gen_el, h_el, m_low, m_high);
     
     h_el->Print();
 
