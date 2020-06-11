@@ -200,9 +200,17 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("elIDEND") != string::npos) do_elID_endcap_sys = sys_shift;
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
-
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
+
+        else if(sys_label.find("elScaleStat") != string::npos) do_elScale_sys = sys_shift;
+        else if(sys_label.find("elScaleSyst") != string::npos) do_elScale_sys = sys_shift;
+        else if(sys_label.find("elScaleGain") != string::npos) do_elScale_sys = sys_shift;
+        else if(sys_label.find("elSmear") != string::npos) do_elSmear_sys = sys_shift;
+
+
+
+
 
         else if(sys_label.find("prefire") != string::npos) do_prefire_sys = sys_shift;
 
@@ -227,7 +235,7 @@ void TempMaker::setup_systematic(const string &s_label){
             else if(sys_label.find("METHEM") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_hem_down", &met_pt);
             else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
         }
-                
+
 
 
         else if(sys_label.find("pdf") != string::npos){
@@ -261,6 +269,7 @@ void TempMaker::setup_systematic(const string &s_label){
         }
 
         else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
+
 
     }
 }
@@ -400,16 +409,16 @@ float TempMaker::getEvtWeight(){
 
         if(do_muISO_barrel_sys || do_muISO_endcap_sys){
             era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys) * 
-                          get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
             era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys) * 
-                          get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
         }
 
         if(do_muID_barrel_sys || do_muID_endcap_sys){
             era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
-                         get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
             era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
-                         get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
         }
 
 
@@ -428,7 +437,7 @@ float TempMaker::getEvtWeight(){
             el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys);
         if(do_elHLT_barrel_sys || do_elHLT_endcap_sys) 
             el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_barrel_sys, do_elHLT_endcap_sys);
-        
+
 
 
 
@@ -451,10 +460,10 @@ float TempMaker::getEvtWeight(){
 
     }
     /*
-    if(count < 100)
-        printf("%.4f \n", evt_weight);
-    count++;
-    */
+       if(count < 100)
+       printf("%.4f \n", evt_weight);
+       count++;
+       */
     return evt_weight;
 
 }
