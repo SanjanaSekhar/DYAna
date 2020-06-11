@@ -244,8 +244,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
              //printf("\n LQint N1+N2 = %0.12f",reweight_LQint_norm);
             float reweight_LQint_num = (reweight_LQpure_num1)/reweight_LQint_denom1;
             float reweight_LQint = reweight_LQint_norm*reweight_LQint_num/LQ_denom;
-            printf("\n reweight_LQint = %f",reweight_LQint);
-            
+            if(reweight_LQint == 0.) printf("\n reweight_LQint = %f",reweight_LQint);
+
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
             //modified these
