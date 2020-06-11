@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2018;
+        for (int year = 2016; year<=2018; year++){
         init(year);
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
@@ -88,15 +88,15 @@ void LQ_draw_templates(){
 
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_fname1, "%s/MuMu%i_LQ%0.1f_SMfake_temps.png", plot_dir, year, m_LQ);
+            sprintf(mu_fname1, "%s/MuMu%i_LQ%d_SMfake_temps.png", plot_dir, year, m_LQ);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/MuMu%i_LQ%0.1f_allfake_temps.png", plot_dir, year,m_LQ);
-            sprintf(mu_fname3, "%s/MuMu%i_LQ%0.1f_LQfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname2, "%s/MuMu%i_LQ%d_LQintfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname3, "%s/MuMu%i_LQ%d_LQpurefake_temps.png", plot_dir, year,m_LQ);
             
-            sprintf(el_fname1, "%s/ElEl%i_LQ%0.1f_SMfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname1, "%s/ElEl%i_LQ%d_SMfake_temps.png", plot_dir, year,m_LQ);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/ElEl%i_LQ%0.1f_allfake_temps.png", plot_dir, year,m_LQ);
-            sprintf(el_fname3, "%s/ElEl%i_LQ%0.1f_LQfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname2, "%s/ElEl%i_LQ%d_LQintfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname3, "%s/ElEl%i_LQ%d_LQpurefake_temps.png", plot_dir, year,m_LQ);
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
@@ -157,21 +157,21 @@ void LQ_draw_templates(){
             c_mumu1->Print(mu_fname1);
 
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
-            h1_mumu_pl->SetTitle(mu_title);
-            h1_mumu_pl->Draw("hist");
-            h1_mumu_mn->Draw("hist same");
-            h1_mumu_alpha->Draw("hist same");
+            h1_mumu_LQint->SetTitle(mu_title);
+            //h1_mumu_pl->Draw("hist");
+            //h1_mumu_mn->Draw("hist same");
+            //h1_mumu_alpha->Draw("hist same");
             //h1_mumu_LQpure->SetTitle(mu_title);
-            h1_mumu_LQpure->Draw("hist same");
-            h1_mumu_LQint->Draw("hist same");
+            //h1_mumu_LQpure->Draw("hist same");
+            h1_mumu_LQint->Draw("hist");
 
 
             c_mumu2->cd();
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-            leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
-            leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
-            leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
-            leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
+           // leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
+            //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
+            //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
+            //leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
             leg2->AddEntry(h1_mumu_LQint,"LQint Template","l");
             leg2->Draw();
 
@@ -241,13 +241,13 @@ void LQ_draw_templates(){
             c_elel1->Print(el_fname1);
 
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h1_elel_pl->SetTitle(el_title);
-            h1_elel_pl->Draw("hist");
-            h1_elel_mn->Draw("hist same");
-            h1_elel_alpha->Draw("hist same");
+            h1_elel_LQint->SetTitle(el_title);
+            //h1_elel_pl->Draw("hist");
+            //h1_elel_mn->Draw("hist same");
+            //h1_elel_alpha->Draw("hist same");
             //h1_elel_LQpure->SetTitle(el_title);
-            h1_elel_LQpure->Draw("hist same");
-            h1_elel_LQint->Draw("hist same");
+            //h1_elel_LQpure->Draw("hist same");
+            h1_elel_LQint->Draw("hist ");
 
 
             leg2->Draw();
@@ -263,7 +263,7 @@ void LQ_draw_templates(){
 
             c_elel3->Print(el_fname3);
         }
-//}
+}
 
 
 
