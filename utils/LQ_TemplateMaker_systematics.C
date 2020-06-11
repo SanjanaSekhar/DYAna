@@ -2,10 +2,45 @@
 //
 //
 //
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "TempMaker.C"
 
 
 using namespace std;
+
+//define constants
+
+Double_t alpha = 1/127.9;
+Double_t m_Z0 = 91.1875;
+Double_t sin2_thetaw = 0.231; //sin^2(theta_W) (weak mixing angle)
+Double_t G_F = 1.166e-5;
+Double_t g_z = 2.4952; //width of Z0
+
+//use coupling definitions from Quigg edition 1
+
+//up quark
+Double_t Q_q = 2./3. ;
+Double_t I_3 = 1./2. ;
+
+//down quark
+//Q_q = -1./3.
+//I_3 = -1./2.
+
+Double_t crq = -2 *Q_q * sin2_thetaw;
+Double_t clq = 2*I_3- 2. *Q_q * sin2_thetaw;
+
+Double_t crl = 2 * sin2_thetaw;
+Double_t cll = 2 * sin2_thetaw - 1;
+
+Double_t cvq = crq + clq;
+Double_t caq = -(clq - crq);
+
+Double_t cvl = crl + cll;
+Double_t cal = cll - crl;
+
+
+
 
 //get this checked
 
@@ -145,6 +180,10 @@ int gen_data_template(TTree *t1, TH3F* h,
 int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
         int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
+
+
+
+
     printf("Making mc template for sys %s \n", sys_label.c_str());
 
     h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
@@ -177,16 +216,24 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float gen_cost = tm.cost_st;
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
+            float LQ_denom = tm.get_LQ_reweighting_denom();
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
             //for LQ, 2 terms-> pure and interference
-            float reweight_LQpure_num1 = (1 - gen_cost)*(1 - gen_cost);
+            float reweight_LQpure_norm = 1/(128*M_PI);
+            float reweight_LQpure_num1 = reweight_LQpure_norm*(1 - gen_cost)*(1 - gen_cost);
             float reweight_LQint_denom1 = 2*m_LQ*m_LQ/(tm.m*tm.m)+(1-gen_cost);
             float reweight_LQpure_num = reweight_LQpure_num1/(reweight_LQint_denom1*reweight_LQint_denom1);
-            float reweight_LQpure = reweight_LQpure_num/denom;
-            float reweight_LQint_num = reweight_LQpure_num1/reweight_LQint_denom1;
-            float reweight_LQint = reweight_LQint_num/denom;
+            float reweight_LQpure = reweight_LQpure_num/LQ_denom;
+
+            float reweight_LQint_norm1 = (alpha*Q_q)/(16*tm.m*tm.m);
+            float reweight_LQint_norm2_num = (m_Z0*m_Z0-tm.m*tm.m)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0;
+            float reweight_LQint_norm2_denom = 128*sqrt(2)*M_PI*((m_Z0*m_Z0-tm.m*tm.m)*(m_Z0*m_Z0-tm.m*tm.m)+(g_z*g_z*m_Z0*m_Z0));
+            float reweight_LQpure_norm2 = reweight_LQint_norm2_num/reweight_LQint_norm2_denom;
+            float reweight_LQint_norm = reweight_LQint_norm1 + reweight_LQint_norm2;
+            float reweight_LQint_num = (reweight_LQint_norm*reweight_LQpure_num1)/reweight_LQint_denom1;
+            float reweight_LQint = reweight_LQint_num/LQ_denom;
 
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
