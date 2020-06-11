@@ -29,8 +29,8 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2018;
-const bool write_out = true;
+const int year = 2017;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
 
