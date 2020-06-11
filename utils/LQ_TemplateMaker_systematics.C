@@ -181,7 +181,9 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
         int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,
         const string &sys_label = "" ){
 
-
+    printf("Setting up LQ rw helper... ");
+    LQ_rw_helper h_LQ;
+    setup_LQ_rw_helper(&h_LQ, year);
 
 
     printf("Making mc template for sys %s \n", sys_label.c_str());
