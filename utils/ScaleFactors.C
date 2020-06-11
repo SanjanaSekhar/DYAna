@@ -124,7 +124,7 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost)
     int ybin = h_rw->GetYaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin);
     if(weight==0.){
-       //printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
+       printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
        weight = 1e-6;
     }
 
