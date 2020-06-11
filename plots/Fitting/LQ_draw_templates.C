@@ -179,7 +179,7 @@ void LQ_draw_templates(){
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure->SetTitle(mu_title);
-            h1_mumu_LQpure->Draw("hist");
+           // h1_mumu_LQpure->Draw("hist");
             h1_mumu_LQint->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
@@ -256,7 +256,7 @@ void LQ_draw_templates(){
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure->SetTitle(el_title);
-            h1_elel_LQpure->Draw("hist");
+           // h1_elel_LQpure->Draw("hist");
             h1_elel_LQint->Draw("hist same ");
 
             leg3->Draw();
