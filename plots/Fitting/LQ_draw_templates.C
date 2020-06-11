@@ -137,7 +137,7 @@ void LQ_draw_templates(){
 
 
             h1_mumu_asym->SetMaximum(h1_mumu_sym->GetMaximum()*1.2);
-            h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
+           // h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
 
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_asym->SetTitle(mu_title); 
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             h1_elel_LQint->SetLineWidth(2);
 
             h1_elel_asym->SetMaximum(h1_elel_sym->GetMaximum()*1.2);
-            h1_elel_LQpure->SetMaximum(h1_elel_LQint->GetMaximum()*2);
+            //h1_elel_LQpure->SetMaximum(h1_elel_LQint->GetMaximum()*2);
 
 
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
