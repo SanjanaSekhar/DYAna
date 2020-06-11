@@ -7,9 +7,9 @@
 
 
 void LQ_draw_templates(){
-        Double_t m_LQ;
-        std::cout << "enter m_LQ:";        
-        std::cin >> m_LQ; 
+        Double_t m_LQ=1000.;
+       // std::cout << "enter m_LQ:";        
+       // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     

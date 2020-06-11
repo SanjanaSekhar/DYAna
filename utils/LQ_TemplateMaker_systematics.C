@@ -218,7 +218,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float gen_cost = tm.cost_st;
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
-            float LQ_denom = get_LQ_reweighting_denom(&h_LQ,flag1,tm.m,gen_cost);
+            float LQ_denom = get_LQ_reweighting_denom(h_LQ,flag1,tm.m,gen_cost);
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
@@ -228,7 +228,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQint_denom1 = 2*m_LQ*m_LQ/(tm.m*tm.m)+(1-gen_cost);
             float reweight_LQpure_num = reweight_LQpure_num1/(reweight_LQint_denom1*reweight_LQint_denom1);
             float reweight_LQpure = reweight_LQpure_num/LQ_denom;
-
+            printf("\n LQ_denom = %0.12f",LQ_denom);
             float reweight_LQint_norm1 = (alpha*Q_q)/(16*tm.m*tm.m);
             float reweight_LQint_norm2_num = (m_Z0*m_Z0-tm.m*tm.m)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0;
             float reweight_LQint_norm2_denom = 128*sqrt(2)*M_PI*((m_Z0*m_Z0-tm.m*tm.m)*(m_Z0*m_Z0-tm.m*tm.m)+(g_z*g_z*m_Z0*m_Z0));
