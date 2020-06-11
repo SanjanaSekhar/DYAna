@@ -88,15 +88,15 @@ void LQ_draw_templates(){
 
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_fname1, "%s/MuMu%i_LQ%d_SMfake_temps.png", plot_dir, year, m_LQ);
+            sprintf(mu_fname1, "%s/MuMu%i_LQ%.1f_SMfake_temps.png", plot_dir, year, m_LQ);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/MuMu%i_LQ%d_LQintfake_temps.png", plot_dir, year,m_LQ);
-            sprintf(mu_fname3, "%s/MuMu%i_LQ%d_LQpurefake_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname2, "%s/MuMu%i_LQ%.1f_LQintfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname3, "%s/MuMu%i_LQ%.1f_LQpurefake_temps.png", plot_dir, year,m_LQ);
             
-            sprintf(el_fname1, "%s/ElEl%i_LQ%d_SMfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname1, "%s/ElEl%i_LQ%.1f_SMfake_temps.png", plot_dir, year,m_LQ);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/ElEl%i_LQ%d_LQintfake_temps.png", plot_dir, year,m_LQ);
-            sprintf(el_fname3, "%s/ElEl%i_LQ%d_LQpurefake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname2, "%s/ElEl%i_LQ%.1f_LQintfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname3, "%s/ElEl%i_LQ%.1f_LQpurefake_temps.png", plot_dir, year,m_LQ);
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
