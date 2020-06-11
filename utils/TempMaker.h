@@ -180,6 +180,7 @@ pileup_systematics pu_sys;
 ptrw_helper ptrw_SFs; 
 emu_costrw_helper emu_costrw;
 A0_helpers A0_helper; 
+LQ_rw_helper LQ_helper;
 
 #ifndef STAND_ALONE
 BTag_readers b_reader;
@@ -195,6 +196,7 @@ void setup_all_SFs(int year){
     setup_mu_SFs(&era1_SFs, &era2_SFs,  year);
     setup_pileup_systematic(&pu_sys, year); 
     setup_A0_helper(&A0_helper, year);
+    setup_LQ_rw_helper(&LQ_helper, year);
     setup_ptrw_helper(&ptrw_SFs, year);
     setup_emu_costrw_helper(&emu_costrw, year);
 }
