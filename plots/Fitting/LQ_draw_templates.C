@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2017;
+        int year = 2018;
         init(year);
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
@@ -88,15 +88,15 @@ void LQ_draw_templates(){
 
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_fname1, "%s/MuMu%i_LQ%0.1f_sym_temps.png", plot_dir, year, m_LQ);
+            sprintf(mu_fname1, "%s/MuMu%i_LQ%0.1f_SMfake_temps.png", plot_dir, year, m_LQ);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/MuMu%i_LQ%0.1f_all_temps.png", plot_dir, year,m_LQ);
-            sprintf(mu_fname3, "%s/MuMu%i_LQ%0.1f_LQ_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname2, "%s/MuMu%i_LQ%0.1f_allfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(mu_fname3, "%s/MuMu%i_LQ%0.1f_LQfake_temps.png", plot_dir, year,m_LQ);
             
-            sprintf(el_fname1, "%s/ElEl%i_LQ%0.1f_sym_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname1, "%s/ElEl%i_LQ%0.1f_SMfake_temps.png", plot_dir, year,m_LQ);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/ElEl%i_LQ%0.1f_all_temps.png", plot_dir, year,m_LQ);
-            sprintf(el_fname3, "%s/ElEl%i_LQ%0.1f_LQ_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname2, "%s/ElEl%i_LQ%0.1f_allfake_temps.png", plot_dir, year,m_LQ);
+            sprintf(el_fname3, "%s/ElEl%i_LQ%0.1f_LQfake_temps.png", plot_dir, year,m_LQ);
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
