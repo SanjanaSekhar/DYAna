@@ -71,6 +71,7 @@ class TempMaker{
         void fixRFNorm(TH2 *h, int mbin);
         void finish();
         float getReweightingDenom();
+        float getLQReweightingDenom();
 
 
 
@@ -112,11 +113,13 @@ class TempMaker{
         TLorentzVector *lep_m=0;
         TLorentzVector *gen_lep_p=0;
         TLorentzVector *gen_lep_m=0;
-        TLorentzVector cm;
+        TLorentzVector cm, gen_cm;
         TLorentzVector *mu = 0;
         TLorentzVector *el = 0;
-        Float_t pt;
+        Float_t pt, gen_m, gen_pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
+
+
 
         Int_t has_no_bjets = 1;
         bool not_cosmic = true;
@@ -178,6 +181,7 @@ pileup_systematics pu_sys;
 ptrw_helper ptrw_SFs; 
 emu_costrw_helper emu_costrw;
 A0_helpers A0_helper; 
+LQ_rw_helper LQ_helper;
 
 #ifndef STAND_ALONE
 BTag_readers b_reader;
@@ -193,6 +197,7 @@ void setup_all_SFs(int year){
     setup_mu_SFs(&era1_SFs, &era2_SFs,  year);
     setup_pileup_systematic(&pu_sys, year); 
     setup_A0_helper(&A0_helper, year);
+    setup_LQ_rw_helper(&LQ_helper, year);
     setup_ptrw_helper(&ptrw_SFs, year);
     setup_emu_costrw_helper(&emu_costrw, year);
 }

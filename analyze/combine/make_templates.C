@@ -401,9 +401,9 @@ void write_out_templates(const string &sys_label){
 
 }
 
-void make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/may28_2018.root");
-    year = 2018;
+void make_templates(int year = -1, int nJobs = 6, int iJob =-1){
+    const TString fout_name("combine/templates/temp18_june11.root");
+    if(year == -1) year = 2018;
     
     bool scramble_data = true; //randomly flip sign of cos(theta)
     bool fake_data = false; //use mc instead of data

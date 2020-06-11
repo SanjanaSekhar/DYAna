@@ -78,8 +78,8 @@ int make_amc_gen_cost(TTree *t_gen, int FLAG, TH2D *h_2d, float m_low, float m_h
 
 void test_rw(){
 
-    int year = 2016;
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_april17.root");
+    int year = 2018;
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_april17.root");
 
     
 
@@ -111,7 +111,7 @@ void test_rw(){
 
 
     //float m_low = m_LQ_bins[0];
-    float m_low = 610;
+    float m_low = 350;
     float m_high = 1225;
     make_amc_gen_cost(t_gen_mu, FLAG_MUONS,  h_mu, m_low, m_high, year);
     make_amc_gen_cost(t_gen_el,  FLAG_ELECTRONS, h_el, m_low, m_high, year);
