@@ -30,6 +30,7 @@ TH1F *h1_mumu_asym, *h1_mumu_sym;
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure, *h1_elel_LQint, *h1_elel_back,  *h1_elel_dy_gg, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure, *h1_mumu_LQint, *h1_mumu_back,  *h1_mumu_dy_gg, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 Double_t m_LQ;
+LQ_rw_helper h_LQ;
 //take m_LQ from command line
 
 void make_data_templates(int year, bool scramble_data = true, bool fake_data = true){
@@ -440,8 +441,8 @@ void write_out_templates(const string &sys_label){
 }
 
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/LQ_fake_templates16.root");
-    year = 2016;
+    const TString fout_name("combine/templates/LQ_fake_templates18.root");
+    year = 2018;
     bool scramble_data =false ;
     bool fake_data =true; //use mc instead of data
     use_xF = false;
@@ -454,6 +455,8 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     //init_emu(year);
     printf("Setting up SFs... ");
     setup_all_SFs(year);
+    printf("Setting up LQ rw helper... ");
+    setup_LQ_rw_helper(&h_LQ, year);
     printf("   done \n");
 
     vector<string> sys_labels {""};
