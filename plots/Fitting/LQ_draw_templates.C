@@ -12,8 +12,8 @@ void LQ_draw_templates(){
        // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
-    
-        for (int year = 2016; year<=2018; year++){
+        int year = 2016;
+        //for (int year = 2016; year<=2018; year++){
         init(year);
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
@@ -263,7 +263,7 @@ void LQ_draw_templates(){
 
             c_elel3->Print(el_fname3);
         }
-}
+//}
 
 
 
