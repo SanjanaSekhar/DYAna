@@ -155,6 +155,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
             leg1->Draw();
             c_mumu1->Print(mu_fname1);
+            delete c_mumu1;
 
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQint->SetTitle(mu_title);
@@ -176,6 +177,7 @@ void LQ_draw_templates(){
             leg2->Draw();
 
             c_mumu2->Print(mu_fname2);
+            delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure->SetTitle(mu_title);
@@ -189,7 +191,7 @@ void LQ_draw_templates(){
             
 
             c_mumu3->Print(mu_fname3);
-
+            delete c_mumu3;
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -239,6 +241,7 @@ void LQ_draw_templates(){
             leg1->Draw();
 
             c_elel1->Print(el_fname1);
+            delete c_elel1;
 
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
             h1_elel_LQint->SetTitle(el_title);
@@ -253,6 +256,7 @@ void LQ_draw_templates(){
             leg2->Draw();
 
             c_elel2->Print(el_fname2);
+            delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure->SetTitle(el_title);
@@ -262,6 +266,7 @@ void LQ_draw_templates(){
             leg3->Draw();
 
             c_elel3->Print(el_fname3);
+            delete c_elel3;
         }
 //}
 

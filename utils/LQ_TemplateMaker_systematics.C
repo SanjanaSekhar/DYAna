@@ -12,10 +12,10 @@ using namespace std;
 //define constants
 
 Double_t alpha = 1/127.9;
-Double_t m_Z0 = 91187.5;
+Double_t m_Z0 = 91.1875;
 Double_t sin2_thetaw = 0.231; //sin^2(theta_W) (weak mixing angle)
-Double_t G_F = 1.166e-11;
-Double_t g_z = 2495.2; //width of Z0
+Double_t G_F = 1.166e-5;
+Double_t g_z = 2.4952; //width of Z0
 
 //use coupling definitions from Quigg edition 1
 
@@ -200,7 +200,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.is_gen_level = true;
-    //tm.do_ptrw = true;
+    tm.do_ptrw = true;
 
     tm.setup_systematic(sys_label);
     tm.setup();
@@ -237,7 +237,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
              //printf("\n LQint N1 = %0.12f",reweight_LQint_norm1);
             float reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
             //printf("\n LQint N2 num = %0.12f",reweight_LQint_norm2_num);
-            float reweight_LQint_norm2_denom = (128*abs(sqrt(2))*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+            float reweight_LQint_norm2_denom = (128*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             //printf("\n LQint N2 denom = %0.12f",reweight_LQint_norm2_denom);
             float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
            // printf("\n LQint N2 = %0.12f",reweight_LQint_norm2);
