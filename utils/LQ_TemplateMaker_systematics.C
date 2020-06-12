@@ -12,10 +12,10 @@ using namespace std;
 //define constants
 
 Double_t alpha = 1/127.9;
-Double_t m_Z0 = 91.1875;
+Double_t m_Z0 = 91187.5;
 Double_t sin2_thetaw = 0.231; //sin^2(theta_W) (weak mixing angle)
-Double_t G_F = 1.166e-5;
-Double_t g_z = 2.4952; //width of Z0
+Double_t G_F = 1.166e-11;
+Double_t g_z = 2495.2; //width of Z0
 
 //use coupling definitions from Quigg edition 1
 
@@ -219,31 +219,34 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
             float LQ_denom = tm.getLQReweightingDenom();
-            if(LQ_denom==0.){printf("\n LQ denom is zero for m = %f",tm.m); LQ_denom = 1e-8;}
+            //if(LQ_denom==0.){printf("\n LQ denom is zero for m = %f",tm.m); LQ_denom = 1e-8;}
             //if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
             //for LQ, 2 terms-> pure and interference
-            float reweight_LQpure_norm = 1/(128*M_PI*tm.m*tm.m);
-            float reweight_LQpure_num1 = (1 - gen_cost)*(1 - gen_cost);
-            float reweight_LQint_denom1 = (2*m_LQ*m_LQ/(tm.m*tm.m))+1-gen_cost;
-            float reweight_LQpure_num = reweight_LQpure_num1/(reweight_LQint_denom1*reweight_LQint_denom1);
-            float reweight_LQpure = reweight_LQpure_norm*reweight_LQpure_num/LQ_denom;
+            Double_t s = tm.m*tm.m;
+            float reweight_LQpure_norm = (1/(128*M_PI*s));
+            float reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
+            float reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
+            float reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+            float reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
            // if(reweight_LQpure == 0.)printf("\n for m = %f reweight_LQpure = %f",tm.m, reweight_LQpure );
            // printf("\n LQ_denom = %0.12f",LQ_denom);
-            float reweight_LQint_norm1 = (alpha*Q_q)/(16*tm.m*tm.m);
+            float reweight_LQint_norm1 = ((alpha*Q_q)/(16*s));
              //printf("\n LQint N1 = %0.12f",reweight_LQint_norm1);
-            float reweight_LQint_norm2_num = (m_Z0*m_Z0-tm.m*tm.m)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0;
+            float reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
             //printf("\n LQint N2 num = %0.12f",reweight_LQint_norm2_num);
-            float reweight_LQint_norm2_denom = 128*abs(sqrt(2))*M_PI*((m_Z0*m_Z0-tm.m*tm.m)*(m_Z0*m_Z0-tm.m*tm.m)+(g_z*g_z*m_Z0*m_Z0));
+            float reweight_LQint_norm2_denom = (128*abs(sqrt(2))*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             //printf("\n LQint N2 denom = %0.12f",reweight_LQint_norm2_denom);
-            float reweight_LQint_norm2 = reweight_LQint_norm2_num/reweight_LQint_norm2_denom;
+            float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
            // printf("\n LQint N2 = %0.12f",reweight_LQint_norm2);
-            float reweight_LQint_norm = reweight_LQint_norm1 + reweight_LQint_norm2;
+            float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2);
              //printf("\n LQint N1+N2 = %0.12f",reweight_LQint_norm);
-            float reweight_LQint_num = (reweight_LQpure_num1)/reweight_LQint_denom1;
-            float reweight_LQint = reweight_LQint_norm*reweight_LQint_num/LQ_denom;
+            float reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
+            float reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
+            float reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+            float reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
            //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
 
             float var1 = abs(tm.cm.Rapidity());
