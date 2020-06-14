@@ -203,6 +203,8 @@ void LQ_draw_templates(){
             h_elel_LQint->Scale(norm);
             
 */
+            auto h_elel_pl = *h_elel_sym + *h_elel_asym;
+            auto h_elel_mn = *h_elel_sym - *h_elel_asym;
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
             auto h1_elel_alpha = convert3d(h_elel_alpha);
@@ -245,8 +247,8 @@ void LQ_draw_templates(){
             h1_elel_sym->Draw("hist same ");
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
-            leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
+            leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
+            leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
 
             leg1->Draw();
 
