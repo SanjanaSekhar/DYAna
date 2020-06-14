@@ -21,8 +21,8 @@ void LQ_draw_templates(){
         string sys_label = "";
 
         int num_bins = n_lq_m_bins;
-        const int n_rap_bins = 4;
-        float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
+    //    const int n_rap_bins = 4;
+     //   float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
 
         //for(int i=0; i<num_bins; i++){
             //Double_t alpha_denom = amc_alpha[i];
@@ -31,43 +31,43 @@ void LQ_draw_templates(){
 
             char title[100];
             auto h_mumu_sym = new TH3F(title, "Symmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_mumu_sym->SetDirectory(0);
             sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
             auto h_mumu_alpha = new TH3F(title, "Gauge boson polarization template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_mumu_alpha->SetDirectory(0);
             sprintf(title, "mumu%i_asym%s", year %2000, sys_label.c_str());
             auto h_mumu_asym = new TH3F(title, "Asymmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_mumu_asym->SetDirectory(0);
             sprintf(title, "mumu%i_LQpure%s", year %2000, sys_label.c_str());
             auto h_mumu_LQpure = new TH3F(title, "Asymmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_mumu_LQpure->SetDirectory(0);
             sprintf(title, "mumu%i_LQint%s", year %2000, sys_label.c_str());
             auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_mumu_LQint->SetDirectory(0);
 
             auto h_elel_sym = new TH3F(title, "Symmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_elel_sym->SetDirectory(0);
             sprintf(title, "elel%i_alpha%s", year %2000, sys_label.c_str());
             auto h_elel_alpha = new TH3F(title, "Gauge boson polarization template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_elel_alpha->SetDirectory(0);
             sprintf(title, "elel%i_asym%s", year %2000, sys_label.c_str());
             auto h_elel_asym = new TH3F(title, "Asymmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_elel_asym->SetDirectory(0);
             sprintf(title, "elel%i_LQpure%s", year %2000, sys_label.c_str());
             auto h_elel_LQpure = new TH3F(title, "Asymmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_elel_LQpure->SetDirectory(0);
             sprintf(title, "elel%i_LQint%s", year %2000, sys_label.c_str());
             auto h_elel_LQint = new TH3F(title, "LQint template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_xf_bins, xf_bins, n_cost_bins, cost_bins);
             h_elel_LQint->SetDirectory(0);
 
 
@@ -77,7 +77,7 @@ void LQ_draw_templates(){
 
 
 
-            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF, "");
+           // gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF, "");
 
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
@@ -192,7 +192,7 @@ void LQ_draw_templates(){
 
             c_mumu3->Print(mu_fname3);
             delete c_mumu3;
-
+/*
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
             /*
@@ -201,7 +201,7 @@ void LQ_draw_templates(){
             h_elel_alpha->Scale(norm);
             h_elel_LQpure->Scale(norm);
             h_elel_LQint->Scale(norm);
-            */
+            
 
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
@@ -267,6 +267,7 @@ void LQ_draw_templates(){
 
             c_elel3->Print(el_fname3);
             delete c_elel3;
+            */
         }
 //}
 
