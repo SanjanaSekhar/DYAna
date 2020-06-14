@@ -73,7 +73,7 @@ void LQ_draw_templates(){
 
 
             bool ss = false;
-            bool use_xF = false;
+            bool use_xF =true;
 
 
 
