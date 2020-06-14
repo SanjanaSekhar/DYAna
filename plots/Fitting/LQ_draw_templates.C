@@ -242,13 +242,13 @@ void LQ_draw_templates(){
 
 
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
-            h1_elel_pl->SetTitle(el_title);
-            h1_elel_pl->Draw("hist");
-            h1_elel_mn->Draw("hist same ");
+            h1_elel_asym->SetTitle(el_title);
+            h1_elel_asym->Draw("hist");
+            h1_elel_sym->Draw("hist same ");
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            leg1->AddEntry(h1_elel_asym, "Plus Template", "l");
-            leg1->AddEntry(h1_elel_sym, "Minus Template", "l");
+            leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
+            leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
 
             leg1->Draw();
 
