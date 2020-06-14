@@ -72,7 +72,7 @@ TH1F* convert3d(TH3F *h_3d){
     int n_xf_bins = h_3d->GetNbinsY();
     int n_cost_bins = h_3d->GetNbinsZ();
 
-    TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_xf_bins * n_cost_bins * n_m_bins, 0, n_xf_bins*n_cost_bins*n_m_bins);// 0 is the 1st numbering of the bin
+    TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_xf_bins * n_cost_bins * n_m_bins, 1, n_xf_bins*n_cost_bins*n_m_bins);// 0 is the 1st numbering of the bin
 	for(int k=1; k<=n_m_bins; k++){    
 	    for(int i=1; i<=n_xf_bins; i++){
 	        for(int j=1; j<= n_cost_bins; j++){
