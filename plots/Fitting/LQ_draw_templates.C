@@ -97,7 +97,7 @@ void LQ_draw_templates(){
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
             sprintf(el_fname2, "%s/ElEl%i_LQ%.1f_LQintfake_temps.png", plot_dir, year,m_LQ);
             sprintf(el_fname3, "%s/ElEl%i_LQ%.1f_LQpurefake_temps.png", plot_dir, year,m_LQ);
-
+/*
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
             /*
@@ -107,7 +107,7 @@ void LQ_draw_templates(){
             h_mumu_alpha->Scale(norm);
             h_mumu_LQpure->Scale(norm);
             h_mumu_LQint->Scale(norm);
-            */
+           
             h_mumu_pl.Print("range");
             auto h1_mumu_pl = convert3d(&h_mumu_pl);
             h1_mumu_pl->Print("range");
@@ -192,7 +192,7 @@ void LQ_draw_templates(){
 
             c_mumu3->Print(mu_fname3);
             delete c_mumu3;
-/*
+
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
             /*
@@ -202,7 +202,7 @@ void LQ_draw_templates(){
             h_elel_LQpure->Scale(norm);
             h_elel_LQint->Scale(norm);
             
-
+*/
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
             auto h1_elel_alpha = convert3d(h_elel_alpha);
@@ -232,11 +232,21 @@ void LQ_draw_templates(){
             h1_elel_asym->SetMaximum(h1_elel_sym->GetMaximum()*1.2);
             //h1_elel_LQpure->SetMaximum(h1_elel_LQint->GetMaximum()*2);
 
+            float x_start = 0.75;
+            float x_end = 0.9;
+
+            float y_start = 0.75;
+            float y_end = 0.9;
+
 
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
             h1_elel_asym->SetTitle(el_title);
             h1_elel_asym->Draw("hist");
             h1_elel_sym->Draw("hist same ");
+
+            TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
+            leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
+            leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
 
             leg1->Draw();
 
@@ -252,6 +262,13 @@ void LQ_draw_templates(){
             //h1_elel_LQpure->Draw("hist same");
             h1_elel_LQint->Draw("hist ");
 
+             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
+           // leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
+            //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
+            //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
+            //leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
+            leg2->AddEntry(h1_elel_LQint,"LQint Template","l");
+           
 
             leg2->Draw();
 
@@ -263,11 +280,17 @@ void LQ_draw_templates(){
             h1_elel_LQpure->Draw("hist");
            // h1_elel_LQint->Draw("hist same ");
 
+            TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
+           // leg3->AddEntry(h1_mumu_LQint, "LQint Template", "l");
+            leg3->AddEntry(h1_elel_LQpure, "LQpure Template", "l");
+
+            
+
             leg3->Draw();
 
             c_elel3->Print(el_fname3);
             delete c_elel3;
-            */
+            
         }
 //}
 
