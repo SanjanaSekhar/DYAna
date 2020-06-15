@@ -206,8 +206,7 @@ void LQ_draw_templates(){
             h_elel_LQint->Scale(norm);
             
 */
-            auto h_elel_pl = *h_elel_sym + *h_elel_asym;
-            auto h_elel_mn = *h_elel_sym - *h_elel_asym;
+           
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
             auto h1_elel_alpha = convert3d(h_elel_alpha);
