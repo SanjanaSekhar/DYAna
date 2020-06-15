@@ -256,6 +256,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQint;
           if(use_LQ_denom)  reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
           else reweight_LQint = (reweight_LQint_norm*reweight_LQint_num);
+          printf("pure_content negative:\n");
+          if((reweight_LQpure * tm.evt_weight)<0)
+          {
+            printf("reweight_LQpure = \n", reweight_LQpure);
+            printf("tm.evt_weight = \n", tm.evt_weight);
+          }
 
            // float reweight_LQint = (reweight_LQint_num/LQ_denom);
             // float reweight_LQint = (reweight_LQint_num/denom);
@@ -302,7 +308,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
-
+/*
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
             for(int j=1; j<= n_cost_bins; j++){
@@ -313,7 +319,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             }
         }
     }
-
+*/
    
     return 0;
 }
