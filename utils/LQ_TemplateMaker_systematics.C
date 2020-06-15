@@ -178,8 +178,7 @@ int gen_data_template(TTree *t1, TH3F* h,
 
 //input m_LQ in make_templates.C
 int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
-        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, bool use_LQ_denom = false,
-        const string &sys_label = "" ){
+        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, bool use_LQ_denom = false, const string &sys_label = "" ){
 
     //printf("Setting up LQ rw helper... ");
     //LQ_rw_helper h_LQ;
