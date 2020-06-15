@@ -65,7 +65,7 @@ void LQ_draw_templates(){
 
             use_LQ_denom=true;
 
-            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF, use_LQ_denom, "");
+            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF,use_LQ_denom, "");
 
             sprintf(mu_fname1, "%s/Mu%i_MC_SM.png", plot_dir, year%2000);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
@@ -191,7 +191,7 @@ void LQ_draw_templates(){
             h_elel_LQint->SetDirectory(0);
 
 
-            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, year, m_LQ, FLAG_ELECTRONS, use_xF, use_LQ_denom, "");
+            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, year, m_LQ, FLAG_ELECTRONS, use_xF,use_LQ_denom, "");
 
             sprintf(el_fname1, "%s/El%i_MC_SM.png", plot_dir, year%2000);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
