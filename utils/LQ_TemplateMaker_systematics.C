@@ -257,7 +257,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
           if(use_LQ_denom)  reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
           else reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/denom);
 
-          if(tm.evt_weight=-0.) tm.evt_weight=0.;
+          if(tm.evt_weight==-0.) tm.evt_weight=0.;
           if((reweight_LQpure * tm.evt_weight)==-0.000000040370)
           {
             printf("pure_content negative: \n");
