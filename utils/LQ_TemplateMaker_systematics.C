@@ -278,7 +278,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
             h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
-         
+         /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
             Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
             Int_t binz = h_LQpure->GetZaxis()->FindBin(tm.cost);
@@ -290,7 +290,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             printf("LQ_denom = %.12f\n", LQ_denom);
 
           }
-
+        */
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint * tm.evt_weight); 
             h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint * tm.evt_weight);
 
@@ -316,18 +316,29 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
-/*
+    printf("================LQpure template negative for following entries================\n");
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
             for(int j=1; j<= n_cost_bins; j++){
                 float pure_content = h_LQpure->GetBinContent(k,i,j);
                // float int_content = h_LQint->GetBinContent(k,i,j);
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
-                printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
+               if(pure_content<=0.) printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
             }
         }
     }
-*/
+    printf("================LQint template negative for following entries================\n");
+    for(int k=1; k<=n_lq_m_bins; k++){    
+        for(int i=1; i<=n_xf_bins; i++){
+            for(int j=1; j<= n_cost_bins; j++){
+                //float pure_content = h_LQpure->GetBinContent(k,i,j);
+                float int_content = h_LQint->GetBinContent(k,i,j);
+                int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
+               if(int_content<=0.) printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, int_content= %0.12f\n",k,i,j,gbin,int_content );
+            }
+        }
+    }
+
    
     return 0;
 }
