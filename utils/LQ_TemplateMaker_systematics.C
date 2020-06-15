@@ -278,12 +278,17 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
             h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
-         //   printf("pure_content = %0.12f\n",reweight_LQpure * tm.evt_weight);
-            if((h_LQpure->GetBinContent(tm.m, var1, tm.cost))==-0.000000040370)
+         
+            Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
+            Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
+            Int_t binz = h_LQpure->GetZaxis()->FindBin(tm.cost);
+            if((h_LQpure->GetBinContent(binx,biny,binz))<0)
           {
-            printf("pure_content negative: -0.000000040370\n");
+            printf("LQpure_content negative for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
             printf("reweight_LQpure = %.12f\n", reweight_LQpure);
-            printf("tm.evt_weight = %.2f\n", tm.evt_weight);
+            printf("tm.evt_weight = %.12f\n", tm.evt_weight);
+            printf("LQ_denom = %.12f\n", LQ_denom);
+
           }
 
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint * tm.evt_weight); 
