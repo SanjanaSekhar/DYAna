@@ -217,6 +217,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             tm.getEvtWeight();
             n++;
             float gen_cost = tm.cost_st;
+            float var1 = abs(tm.cm.Rapidity());
+            if(use_xF)  var1 = tm.xF;
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
             float LQ_denom = tm.getLQReweightingDenom();
@@ -267,8 +269,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             // float reweight_LQint = (reweight_LQint_num/denom);
            //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
            //
-            float var1 = abs(tm.cm.Rapidity());
-            if(use_xF)  var1 = tm.xF;
+            
             //modified these
             h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
             h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight); 
