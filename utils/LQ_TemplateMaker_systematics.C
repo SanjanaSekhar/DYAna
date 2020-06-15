@@ -234,7 +234,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
             float reweight_LQpure;
            if(use_LQ_denom) reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
-           else reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num);
+           else reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/denom);
             //float reweight_LQpure = (reweight_LQpure_num/LQ_denom);
             // float reweight_LQpure = (reweight_LQpure_num/denom);
             // 
@@ -255,10 +255,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
             float reweight_LQint;
           if(use_LQ_denom)  reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
-          else reweight_LQint = (reweight_LQint_norm*reweight_LQint_num);
-          printf("pure_content negative:\n");
-          if((reweight_LQpure * tm.evt_weight)<0)
+          else reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/denom);
+
+          if(tm.evt_weight=-0.) tm.evt_weight=0.;
+          if((reweight_LQpure * tm.evt_weight)==-0.000000040370)
           {
+            printf("pure_content negative: \n");
             printf("reweight_LQpure = %.12f\n", reweight_LQpure);
             printf("tm.evt_weight = %.2f\n", tm.evt_weight);
           }
