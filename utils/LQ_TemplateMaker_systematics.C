@@ -206,7 +206,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     tm.setup();
 
     float max_obs = 0.;
-     printf("\n================denom/LQ_denom>=1000. for following entries================\n");
+    // printf("\n================denom/LQ_denom>=1000. for following entries================\n");
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
         //printf("%f", tm.getEvent(i));
@@ -222,10 +222,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
             float LQ_denom = tm.getLQReweightingDenom();
+            /*
             if(denom/LQ_denom>=1000.)
             {
                 printf("tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
             }
+            */
             //if(LQ_denom==0.){printf("\n LQ denom is zero for m = %f",tm.m); LQ_denom = 1e-8;}
             //if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
             float reweight_a = gen_cost/ denom;
@@ -315,11 +317,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     h_alpha->Scale(0.5);
     h_LQpure->Scale(0.5);
     h_LQint->Scale(0.5);
-/*
+
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
+
     printf("================LQpure template negative for following entries================\n");
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
@@ -342,7 +345,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             }
         }
     }
-*/
+
    
     return 0;
 }
