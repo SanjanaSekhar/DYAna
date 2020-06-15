@@ -7,12 +7,12 @@
 
 
 void LQ_draw_templates(){
-        Double_t m_LQ=1000.;
+        Double_t m_LQ=1500.;
        // std::cout << "enter m_LQ:";        
        // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
-        int year = 2018;
+        int year = 2017;
         //for (int year = 2016; year<=2018; year++){
         init(year);
         //char *plot_dir = "Paper_plots/template_plots";
