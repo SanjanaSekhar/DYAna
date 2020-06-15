@@ -275,6 +275,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
             h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
+            printf("pure_content = %0.12f\n",reweight_LQpure * tm.evt_weight);
 
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint * tm.evt_weight); 
             h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint * tm.evt_weight);
@@ -308,7 +309,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 float pure_content = h_LQpure->GetBinContent(k,i,j);
                // float int_content = h_LQint->GetBinContent(k,i,j);
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
-                printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %f\n",k,i,j,gbin,pure_content );
+                printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
             }
         }
     }
