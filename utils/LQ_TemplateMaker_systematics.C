@@ -209,6 +209,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
+        printf("%f", tm.getEvent(i));
         bool pass = (tm.m>=lq_m_bins[0]) && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
         if(pass){
 
@@ -218,7 +219,9 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float gen_cost = tm.cost_st;
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
+            printf("SM denom = %f\n", denom);
             float LQ_denom = tm.getLQReweightingDenom();
+            printf("LQ denom = %f\n", LQ_denom);
             //if(LQ_denom==0.){printf("\n LQ denom is zero for m = %f",tm.m); LQ_denom = 1e-8;}
             //if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
             float reweight_a = gen_cost/ denom;
