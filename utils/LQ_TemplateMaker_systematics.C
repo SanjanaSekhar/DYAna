@@ -275,7 +275,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
             h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
-            printf("pure_content = %0.12f\n",reweight_LQpure * tm.evt_weight);
+         //   printf("pure_content = %0.12f\n",reweight_LQpure * tm.evt_weight);
 
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint * tm.evt_weight); 
             h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint * tm.evt_weight);
