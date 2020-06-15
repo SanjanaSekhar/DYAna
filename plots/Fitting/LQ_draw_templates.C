@@ -10,7 +10,7 @@ void LQ_draw_templates(){
         Double_t m_LQ=1000.;
         bool ss = false;
         bool use_xF =false;
-        bool use_LQ_denom=true;
+        bool use_LQ_denom=false;
         bool draw_muons = false;
         bool draw_electrons = true;
        const string sys_label = "";
