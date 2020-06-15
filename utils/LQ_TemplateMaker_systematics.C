@@ -178,7 +178,7 @@ int gen_data_template(TTree *t1, TH3F* h,
 
 //input m_LQ in make_templates.C
 int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
-        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,
+        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, bool use_LQ_denom,
         const string &sys_label = "" ){
 
     //printf("Setting up LQ rw helper... ");
@@ -209,7 +209,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
-        printf("%f", tm.getEvent(i));
+        //printf("%f", tm.getEvent(i));
         bool pass = (tm.m>=lq_m_bins[0]) && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
         if(pass){
 
@@ -219,9 +219,9 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float gen_cost = tm.cost_st;
             //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             float denom = tm.getReweightingDenom();
-            printf("SM denom = %f\n", denom);
+           
             float LQ_denom = tm.getLQReweightingDenom();
-            printf("LQ denom = %f\n", LQ_denom);
+           // printf("LQ denom = %f\n", LQ_denom);
             //if(LQ_denom==0.){printf("\n LQ denom is zero for m = %f",tm.m); LQ_denom = 1e-8;}
             //if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
             float reweight_a = gen_cost/ denom;
@@ -233,10 +233,11 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
             float reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-          //  float reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
+           if(use_LQ_denom) float reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
+           else float reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/denom);
             //float reweight_LQpure = (reweight_LQpure_num/LQ_denom);
-             float reweight_LQpure = (reweight_LQpure_num/denom);
-            // float reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+            // float reweight_LQpure = (reweight_LQpure_num/denom);
+            // 
            // if(reweight_LQpure == 0.)printf("\n for m = %f reweight_LQpure = %f",tm.m, reweight_LQpure );
            // printf("\n LQ_denom = %0.12f",LQ_denom);
             float reweight_LQint_norm1 = ((alpha*Q_q)/(16*s));
@@ -252,12 +253,13 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
             float reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-           // float reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
-           // float reweight_LQint = (reweight_LQint_num/LQ_denom);
-             float reweight_LQint = (reweight_LQint_num/denom);
-           //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
-           //float reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/denom);
+          if(use_LQ_denom)  float reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+          else float reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/denom);
 
+           // float reweight_LQint = (reweight_LQint_num/LQ_denom);
+            // float reweight_LQint = (reweight_LQint_num/denom);
+           //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
+           //
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
             //modified these
@@ -278,6 +280,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
         }
     }
+
     //printf("Max obs is %.3f \n", max_obs);
 
     tm.finish();
@@ -297,6 +300,19 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
+/*
+    for(int k=1; k<=n_lq_m_bins; k++){    
+        for(int i=1; i<=n_xf_bins; i++){
+            for(int j=1; j<= n_cost_bins; j++){
+                float pure_content = h_LQpure->GetBinContent(k,i,j);
+               // float int_content = h_LQint->GetBinContent(k,i,j);
+                int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
+                printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %f\n",k,i,j,gbin,pure_content );
+            }
+        }
+    }
+*/
+   
     return 0;
 }
 //changed, get checked?
