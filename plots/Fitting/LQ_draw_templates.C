@@ -14,7 +14,7 @@ void LQ_draw_templates(){
         bool draw_muons = false;
         bool draw_electrons = true;
         string sys_label = "";
-
+        printf("=========================\n m_LQ = %f, use_LQ_denom = %d, draw_muons = %d, draw_electrons = %d \n=========================",m_LQ,use_LQ_denom,draw_muons,draw_electrons );
         int num_bins = n_lq_m_bins;
         const int n_rap_bins = 4;
         float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
