@@ -235,7 +235,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
             //for LQ, 2 terms-> pure and interference
             Double_t s = tm.m*tm.m;
-            float reweight_LQpure_norm = (1/(128*M_PI*s));
+            float reweight_LQpure_norm = ((1./2.56)*1e9/(128*M_PI*s));
             float reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
             float reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
@@ -255,7 +255,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //printf("\n LQint N2 denom = %0.12f",reweight_LQint_norm2_denom);
             float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
            // printf("\n LQint N2 = %0.12f",reweight_LQint_norm2);
-            float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2);
+            float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*(1./2.56)*1e9;
              //printf("\n LQint N1+N2 = %0.12f",reweight_LQint_norm);
             float reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
@@ -283,7 +283,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight); 
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
-            h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
+           // h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
          /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
             Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
