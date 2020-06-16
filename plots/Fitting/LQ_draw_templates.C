@@ -82,9 +82,9 @@ void LQ_draw_templates(){
             h_mumu_LQpure->Scale(norm);
             h_mumu_LQint->Scale(norm);
            */
-            h_mumu_pl.Print("range");
+           // h_mumu_pl.Print("range");
             auto h1_mumu_pl = convert3d(&h_mumu_pl);
-            h1_mumu_pl->Print("range");
+           // h1_mumu_pl->Print("range");
             auto h1_mumu_mn = convert3d(&h_mumu_mn);
             auto h1_mumu_alpha = convert3d(h_mumu_alpha);
             auto h1_mumu_sym = convert3d(h_mumu_sym);
