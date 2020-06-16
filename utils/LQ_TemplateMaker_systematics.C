@@ -322,7 +322,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
-/*
+
     printf("================LQpure template negative for following entries================\n");
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
@@ -330,7 +330,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 float pure_content = h_LQpure->GetBinContent(k,i,j);
                // float int_content = h_LQint->GetBinContent(k,i,j);
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
-               if(pure_content<=0.) printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
+               if(pure_content<0.){ 
+                printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
+                h_LQpure->SetBinContent(k,i,j,0.);
+                }
             }
         }
     }
@@ -341,11 +344,14 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 //float pure_content = h_LQpure->GetBinContent(k,i,j);
                 float int_content = h_LQint->GetBinContent(k,i,j);
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
-               if(int_content<=0.) printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, int_content= %0.12f\n",k,i,j,gbin,int_content );
+               if(int_content<=0.){
+                printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, int_content= %0.12f\n",k,i,j,gbin,int_content );
+                h_LQint->SetBinContent(k,i,j,0.);
+                }
             }
         }
     }
-*/
+
    
     return 0;
 }
