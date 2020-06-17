@@ -138,7 +138,7 @@ void LQ_draw_templates(){
             //h1_mumu_alpha->Draw("hist same");
             //h1_mumu_LQpure->SetTitle(mu_title);
             //h1_mumu_LQpure->Draw("hist same");
-            h_mumu_LQint->Draw("BOX2 Z");
+            h_mumu_LQint->Draw("FBBB");
 
 
             c_mumu2->cd();
@@ -155,7 +155,7 @@ void LQ_draw_templates(){
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
             h_mumu_LQpure->SetTitle(mu_title);
-            h_mumu_LQpure->Draw("BOX2 Z");
+            h_mumu_LQpure->Draw("FBBB");
            // h1_mumu_LQint->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
@@ -264,7 +264,7 @@ void LQ_draw_templates(){
             //h1_elel_alpha->Draw("hist same");
             //h1_elel_LQpure->SetTitle(el_title);
             //h1_elel_LQpure->Draw("hist same");
-            h_elel_LQint->Draw("BOX2 Z");
+            h_elel_LQint->Draw("FBBB");
 
              TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
            // leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
@@ -281,7 +281,7 @@ void LQ_draw_templates(){
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
             h_elel_LQpure->SetTitle(el_title);
-            h_elel_LQpure->Draw("BOX2 Z");
+            h_elel_LQpure->Draw("FBBB");
            // h1_elel_LQint->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
