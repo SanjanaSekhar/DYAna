@@ -191,8 +191,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
     h_asym->Sumw2();
     h_alpha->Sumw2();
-  //  h_LQpure->Sumw2();
-   // h_LQint->Sumw2();
+    h_LQpure->Sumw2();
+    h_LQint->Sumw2();
 
     int n = 0;
 
