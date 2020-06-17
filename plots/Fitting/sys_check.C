@@ -14,14 +14,15 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2018;
+        int year = 2016;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_Pu18";
+        char *sys = "_fakesrw2b16";
         bool do_bkg = true;
+        bool do_qcd = true;
         bool do_electrons = true;
         bool do_muons = true;
-        int i = 1;
+        int i = 0;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
@@ -50,6 +51,11 @@ void sys_check(){
         TH2F * h_elel_bkg = new TH2F("elel_bkg", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_bkg_up = new TH2F("elel_bkg_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_bkg_down = new TH2F("elel_bkg_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
+        TH2F * h_elel_qcd = new TH2F("elel_qcd", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_qcd_up = new TH2F("elel_qcd_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_elel_qcd_down = new TH2F("elel_qcd_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
         TH2F * h_elel_plain = new TH2F("elel_plain", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_sys_up = new TH2F("elel_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_sys_down = new TH2F("elel_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -57,6 +63,11 @@ void sys_check(){
         TH2F * h_mumu_bkg = new TH2F("mumu_bkg", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_mumu_bkg_up = new TH2F("mumu_bkg_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_mumu_bkg_down = new TH2F("mumu_bkg_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        
+        TH2F * h_mumu_qcd = new TH2F("mumu_qcd", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_qcd_up = new TH2F("mumu_qcd_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH2F * h_mumu_qcd_down = new TH2F("mumu_qcd_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
         TH2F * h_mumu_plain = new TH2F("mumu_plain", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_mumu_sys_up = new TH2F("mumu_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_mumu_sys_down = new TH2F("mumu_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -73,6 +84,7 @@ void sys_check(){
         char mu_title[100], el_title[100];
 
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
+        TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
 
         if(do_muons){
             printf("Making mumu temps \n");
@@ -118,6 +130,34 @@ void sys_check(){
                 h1_mumu_bkg_down->SetLineWidth(2);
                 printf("MuMu Bkg: nom %.0f, up %.0f, down %.0f \n", h_mumu_bkg->Integral(), h_mumu_bkg_up->Integral(), h_mumu_bkg_down->Integral());
             }
+            if(do_qcd){
+                bool incl_ss = true;
+                bool ss_binning = false;
+                gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, 
+                        FLAG_MUONS, incl_ss, ss_binning, use_xF, "");
+                gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd_up, year, m_low, m_high, 
+                        FLAG_MUONS, incl_ss, ss_binning, use_xF, sys_up);
+                gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd_down, year, m_low, m_high, 
+                        FLAG_MUONS, incl_ss, ss_binning, use_xF, sys_down);
+
+                symmetrize2d(h_mumu_qcd);
+                symmetrize2d(h_mumu_qcd_up);
+                symmetrize2d(h_mumu_qcd_down);
+
+
+                h1_mumu_qcd = convert2d(h_mumu_qcd);
+                h1_mumu_qcd_up = convert2d(h_mumu_qcd_up);
+                h1_mumu_qcd_down = convert2d(h_mumu_qcd_down);
+
+                h1_mumu_qcd->SetLineColor(kGray);
+                h1_mumu_qcd->SetLineWidth(2);
+                h1_mumu_qcd_up->SetLineColor(kOrange + 3);
+                h1_mumu_qcd_up->SetLineWidth(2);
+                h1_mumu_qcd_down->SetLineColor(kOrange +1);
+                h1_mumu_qcd_down->SetLineWidth(2);
+                printf("mumu fakes: nom %.0f, up %.0f, down %.0f \n", h_mumu_qcd->Integral(), h_mumu_qcd_up->Integral(), h_mumu_qcd_down->Integral());
+            }
+
 
 
 
@@ -133,6 +173,11 @@ void sys_check(){
                 h1_mumu_bkg_up->Draw("hist same");
                 h1_mumu_bkg_down->Draw("hist same");
             }
+            if(do_qcd){
+                h1_mumu_qcd->Draw("hist same");
+                h1_mumu_qcd_up->Draw("hist same");
+                h1_mumu_qcd_down->Draw("hist same");
+            }
 
             TLegend *leg1 = new TLegend(0.15, 0.15);
             leg1->AddEntry(h1_mumu_plain, "Nominal Template", "l");
@@ -142,6 +187,11 @@ void sys_check(){
                 leg1->AddEntry(h1_mumu_bkg, "Nominal Bkg Template", "l");
                 leg1->AddEntry(h1_mumu_bkg_up, "Sys Up Bkg Template", "l");
                 leg1->AddEntry(h1_mumu_bkg_down, "Sys Down Bkg Template", "l");
+            }
+            if(do_qcd){
+                leg1->AddEntry(h1_mumu_qcd, "Nominal qcd Template", "l");
+                leg1->AddEntry(h1_mumu_qcd_up, "Sys Up qcd Template", "l");
+                leg1->AddEntry(h1_mumu_qcd_down, "Sys Down qcd Template", "l");
             }
             leg1->Draw();
 
@@ -193,6 +243,33 @@ void sys_check(){
                 h1_elel_bkg_down->SetLineWidth(2);
                 printf("elel Bkg: nom %.0f, up %.0f, down %.0f \n", h_elel_bkg->Integral(), h_elel_bkg_up->Integral(), h_elel_bkg_down->Integral());
             }
+            if(do_qcd){
+                bool incl_ss = true;
+                bool ss_binning = false;
+                gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
+                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
+                gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_up, year, m_low, m_high, 
+                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_up);
+                gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_down, year, m_low, m_high, 
+                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_down);
+
+                symmetrize2d(h_elel_qcd);
+                symmetrize2d(h_elel_qcd_up);
+                symmetrize2d(h_elel_qcd_down);
+
+
+                h1_elel_qcd = convert2d(h_elel_qcd);
+                h1_elel_qcd_up = convert2d(h_elel_qcd_up);
+                h1_elel_qcd_down = convert2d(h_elel_qcd_down);
+
+                h1_elel_qcd->SetLineColor(kGray);
+                h1_elel_qcd->SetLineWidth(2);
+                h1_elel_qcd_up->SetLineColor(kOrange + 3);
+                h1_elel_qcd_up->SetLineWidth(2);
+                h1_elel_qcd_down->SetLineColor(kOrange +1);
+                h1_elel_qcd_down->SetLineWidth(2);
+                printf("elel fakes: nom %.0f, up %.0f, down %.0f \n", h_elel_qcd->Integral(), h_elel_qcd_up->Integral(), h_elel_qcd_down->Integral());
+            }
 
 
 
@@ -204,9 +281,15 @@ void sys_check(){
             h1_elel_sys_up->Draw("hist same");
             h1_elel_sys_down->Draw("hist same");
             if(do_bkg){
+                
                 h1_elel_bkg->Draw("hist same");
                 h1_elel_bkg_up->Draw("hist same");
                 h1_elel_bkg_down->Draw("hist same");
+            }
+            if(do_qcd){
+                h1_elel_qcd->Draw("hist same");
+                h1_elel_qcd_up->Draw("hist same");
+                h1_elel_qcd_down->Draw("hist same");
             }
 
             TLegend *leg1 = new TLegend(0.15, 0.15);
@@ -217,6 +300,11 @@ void sys_check(){
                 leg1->AddEntry(h1_elel_bkg, "Nominal Bkg Template", "l");
                 leg1->AddEntry(h1_elel_bkg_up, "Sys Up Bkg Template", "l");
                 leg1->AddEntry(h1_elel_bkg_down, "Sys Down Bkg Template", "l");
+            }
+            if(do_qcd){
+                leg1->AddEntry(h1_elel_qcd, "Nominal qcd Template", "l");
+                leg1->AddEntry(h1_elel_qcd_up, "Sys Up qcd Template", "l");
+                leg1->AddEntry(h1_elel_qcd_down, "Sys Down qcd Template", "l");
             }
             leg1->Draw();
 

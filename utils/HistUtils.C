@@ -72,50 +72,6 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH2F *h){
     }
 }
 
-void fakes_cost_reweight(TH2 *h_fakes, TH1 *h_rw, int systematic = 0){
-    int n_var1_bins = h_fakes->GetNbinsX();
-    int n_cost_bins = h_fakes->GetNbinsY();
-    int n_rw_bins = h_rw->GetNbinsX();
-
-    if(n_cost_bins != n_rw_bins){
-        printf("Fakes reweighting binning doesn't match! hist %i bins and rw_hist %i bins\n", n_cost_bins, n_rw_bins);
-        exit(1);
-    }
-    for(int i=1; i<= h_fakes->GetNbinsX(); i++){
-        for(int j=1; j<= h_fakes->GetNbinsY(); j++){
-            float old_val = h_fakes->GetBinContent(i, j);
-            float old_err = h_fakes->GetBinError(i, j);
-
-            float correction = h_rw->GetBinContent(j);
-
-            //one systematic for every |cos(theta)| bin (nbins / 2)
-            if(systematic != 0){
-                float stat_err = h_rw->GetBinError(j);
-                float sys_err = 0.5 * std::fabs( correction - 1.);
-                float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
-
-                int sys_bin = abs(systematic);
-                int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;
-                if(bin == sys_bin || bin == opp_bin){
-                    //shift the reweighting in this bin by the error
-                    if(systematic >0) correction += error;
-                    if(systematic <0) correction -= error;
-                }
-
-            }
-            float new_val = old_val * correction;
-            new_val = min(new_val, 1e-6);
-
-            float new_err = (old_err/old_val) * new_val; // stat error
-
-
-            printf("Old %.1f +/- %.1f New %.1f +/- %.1f \n", old_val, old_err, new_val, new_err);
-
-            h_fakes->SetBinContent(i,j, new_val);
-            h_fakes->SetBinError(i,j, new_err);
-        }
-    }
-}
 
 void fakes_cost_reweight(TH1 *h_fakes, TH1 *h_rw){
     int n_cost_bins = h_fakes->GetNbinsX();
