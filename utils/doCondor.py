@@ -191,6 +191,9 @@ elif (options.haddEOS):
     os.system(hadd_cmd)
 
 elif (options.getEOS):
+    if(options.name == ''):
+        print("Error, empty job name")
+        sys.exit(1)
     print("Getting files and outputting to %s" % options.outdir)
     result = subprocess.check_output(["./scripts/get_crab_file_list.sh", EOS_home + 'Condor_outputs/' + options.name])
     print(result)

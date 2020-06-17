@@ -77,8 +77,8 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
     char dirname[40];
 
     int i_start=0;
-    //int i_max = n_m_bins;
-    int i_max = 1;
+    int i_max = n_m_bins;
+    //int i_max = 1;
 
 
     printf("loop start \n");

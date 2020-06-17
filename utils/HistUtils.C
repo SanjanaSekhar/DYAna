@@ -88,6 +88,7 @@ void fakes_cost_reweight(TH2 *h_fakes, TH1 *h_rw){
 
             float new_val = old_val * h_rw->GetBinContent(j);
             float new_err = std::min(0.7 * new_val, sqrt(old_err*old_err + pow(old_val - new_val, 2)));
+            //printf("Old %.1f +/- %.1f New %.1f +/- %.1f \n", old_val, old_err, new_val, new_err);
 
             h_fakes->SetBinContent(i,j, new_val);
             h_fakes->SetBinError(i,j, new_err);
