@@ -11,7 +11,7 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         bool use_LQ_denom=true;
-        bool draw_muons = false;
+        bool draw_muons = true;
         bool draw_electrons = true;
        const string sys_label = "";
         printf("=========================\n m_LQ = %f, use_LQ_denom = %d, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,use_LQ_denom,draw_muons,draw_electrons );
@@ -98,16 +98,16 @@ void LQ_draw_templates(){
             h1_mumu_asym->SetLineColor(kRed+1);
             h1_mumu_pl->SetLineColor(kOrange +7);
             h1_mumu_mn->SetLineColor(kRed + 1);
-            h_mumu_LQpure->SetLineColor(kOrange +9);
-            h_mumu_LQint->SetLineColor(kRed + 3);
+            h1_mumu_LQpure->SetLineColor(kOrange +9);
+            h1_mumu_LQint->SetLineColor(kRed + 3);
 
             h1_mumu_alpha->SetLineWidth(2);
             h1_mumu_sym->SetLineWidth(2);
             h1_mumu_asym->SetLineWidth(2);
             h1_mumu_pl->SetLineWidth(2);
             h1_mumu_mn->SetLineWidth(2);
-            h_mumu_LQpure->SetLineWidth(2);
-            h_mumu_LQint->SetLineWidth(2);
+            h1_mumu_LQpure->SetLineWidth(2);
+            h1_mumu_LQint->SetLineWidth(2);
 
 
             h1_mumu_asym->SetMaximum(h1_mumu_sym->GetMaximum()*1.2);
@@ -132,13 +132,13 @@ void LQ_draw_templates(){
             delete c_mumu1;
 
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
-            h_mumu_LQint->SetTitle(mu_title);
+            h1_mumu_LQint->SetTitle(mu_title);
             //h1_mumu_pl->Draw("hist");
             //h1_mumu_mn->Draw("hist same");
             //h1_mumu_alpha->Draw("hist same");
             //h1_mumu_LQpure->SetTitle(mu_title);
             //h1_mumu_LQpure->Draw("hist same");
-            h_mumu_LQint->Draw("FBBB");
+            h1_mumu_LQint->Draw("hist");
 
 
             c_mumu2->cd();
@@ -147,20 +147,20 @@ void LQ_draw_templates(){
             //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
             //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
             //leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
-            leg2->AddEntry(h_mumu_LQint,"LQint Template","l");
+            leg2->AddEntry(h1_mumu_LQint,"LQint Template","l");
             leg2->Draw();
 
             c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
-            h_mumu_LQpure->SetTitle(mu_title);
-            h_mumu_LQpure->Draw("FBBB");
+            h1_mumu_LQpure->SetTitle(mu_title);
+            h1_mumu_LQpure->Draw("hist");
            // h1_mumu_LQint->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
            // leg3->AddEntry(h1_mumu_LQint, "LQint Template", "l");
-            leg3->AddEntry(h_mumu_LQpure, "LQpure Template", "l");
+            leg3->AddEntry(h1_mumu_LQpure, "LQpure Template", "l");
             leg3->Draw();
             
 
@@ -195,8 +195,8 @@ void LQ_draw_templates(){
 
             sprintf(el_fname1, "%s/El%i_MC%d_SM_chk.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/El%i_MC%d_LQint_3d.png", plot_dir, year%2000,use_LQ_denom);
-            sprintf(el_fname3, "%s/El%i_MC%d_LQpure_3d.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname2, "%s/El%i_MC%d_LQint_chk.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname3, "%s/El%i_MC%d_LQpure_chk.png", plot_dir, year%2000,use_LQ_denom);
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -222,16 +222,16 @@ void LQ_draw_templates(){
             h1_elel_asym->SetLineColor(kRed+1);
             h1_elel_pl->SetLineColor(kOrange +7);
             h1_elel_mn->SetLineColor(kRed + 1);
-            h_elel_LQpure->SetLineColor(kOrange +9);
-            h_elel_LQint->SetLineColor(kRed + 3);
+            h1_elel_LQpure->SetLineColor(kOrange +9);
+            h1_elel_LQint->SetLineColor(kRed + 3);
 
             h1_elel_alpha->SetLineWidth(2);
             h1_elel_sym->SetLineWidth(2);
             h1_elel_asym->SetLineWidth(2);
             h1_elel_pl->SetLineWidth(2);
             h1_elel_mn->SetLineWidth(2);
-            h_elel_LQpure->SetLineWidth(2);
-            h_elel_LQint->SetLineWidth(2);
+            h1_elel_LQpure->SetLineWidth(2);
+            h1_elel_LQint->SetLineWidth(2);
 
             h1_elel_asym->SetMaximum(h1_elel_sym->GetMaximum()*1.2);
             //h1_elel_LQpure->SetMaximum(h1_elel_LQint->GetMaximum()*2);
@@ -258,20 +258,20 @@ void LQ_draw_templates(){
             delete c_elel1;
 
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h_elel_LQint->SetTitle(el_title);
+            h1_elel_LQint->SetTitle(el_title);
             //h1_elel_pl->Draw("hist");
             //h1_elel_mn->Draw("hist same");
             //h1_elel_alpha->Draw("hist same");
             //h1_elel_LQpure->SetTitle(el_title);
             //h1_elel_LQpure->Draw("hist same");
-            h_elel_LQint->Draw("FBBB");
+            h1_elel_LQint->Draw("hist ");
 
              TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
            // leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
             //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
             //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
             //leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
-            leg2->AddEntry(h_elel_LQint,"LQint Template","l");
+            leg2->AddEntry(h1_elel_LQint,"LQint Template","l");
            
 
             leg2->Draw();
@@ -280,13 +280,13 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h_elel_LQpure->SetTitle(el_title);
-            h_elel_LQpure->Draw("FBBB");
+            h1_elel_LQpure->SetTitle(el_title);
+            h1_elel_LQpure->Draw("hist");
            // h1_elel_LQint->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
            // leg3->AddEntry(h1_mumu_LQint, "LQint Template", "l");
-            leg3->AddEntry(h_elel_LQpure, "LQpure Template", "l");
+            leg3->AddEntry(h1_elel_LQpure, "LQpure Template", "l");
 
             
 
