@@ -239,9 +239,15 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
             float reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-            float reweight_LQpure;
-           if(use_LQ_denom) reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
-           else reweight_LQpure = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+            float reweight_LQpure_pos;
+           if(use_LQ_denom) reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
+           else reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+           reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
+            reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
+            reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+            float reweight_LQpure_neg;
+           if(use_LQ_denom) reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
+           else reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/denom);
             //float reweight_LQpure = (reweight_LQpure_num/LQ_denom);
             // float reweight_LQpure = (reweight_LQpure_num/denom);
             // 
@@ -260,9 +266,16 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
             float reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-            float reweight_LQint;
-          if(use_LQ_denom)  reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
-          else reweight_LQint = (reweight_LQint_norm*reweight_LQint_num/denom);
+            float reweight_LQint_pos;
+            if(use_LQ_denom)  reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+          else reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/denom);
+            reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
+            reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
+            reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+            float reweight_LQint_neg;
+          if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+          else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
+
 
          
           
@@ -282,8 +295,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight); 
             h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight); 
             //LQ terms
-            h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure * tm.evt_weight); 
-           // h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure * tm.evt_weight);
+            h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
+            h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
          /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
             Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
@@ -297,8 +310,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
           }
         */
-            h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint * tm.evt_weight); 
-           // h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint * tm.evt_weight);
+            h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
+           h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
 
         }
     }
@@ -332,7 +345,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
                if(pure_content<0.){ 
                 printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
-                h_LQpure->SetBinContent(k,i,j,0.);
+                h_LQpure->SetBinContent(k,i,j,abs(pure_content));
                 }
             }
         }
@@ -346,7 +359,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
                if(int_content<=0.){
                 printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, int_content= %0.12f\n",k,i,j,gbin,int_content );
-                h_LQint->SetBinContent(k,i,j,0.);
+                h_LQint->SetBinContent(k,i,j,abs(int_content));
                 }
             }
         }
