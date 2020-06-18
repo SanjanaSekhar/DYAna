@@ -5,7 +5,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "TempMaker.C"
-#include "ScaleFactors.C"
+//#include "ScaleFactors.C"
 
 using namespace std;
 
@@ -181,7 +181,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
         int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,  bool use_LQ_denom=true, const string &sys_label = "" ){
 
     //printf("Setting up LQ rw helper... ");
-    //LQ_rw_helper h_LQ;
+    LQ_rw_helper h_LQ;
     //setup_LQ_rw_helper(&h_LQ, year);
 
     
@@ -206,6 +206,18 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     tm.setup();
 
     float max_obs = 0.;
+
+        printf("\n======h_LQ.h_mu======\n");
+    for(int i=1;i<=h_LQ.h_mu->GetNbinsX();i++){
+        for(int j=1;j<=h_LQ.h_mu->GetNbinsY();j++)
+            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_LQ.h_mu->GetBinContent(i,j));
+    }
+    
+    printf("\n======h_LQ.h_el======\n");
+    for(int i=1;i<=h_LQ.h_el->GetNbinsX();i++){
+        for(int j=1;j<=h_LQ.h_el->GetNbinsY();j++)
+            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_LQ.h_el->GetBinContent(i,j));
+    }
     //printf("\n================denom/LQ_denom>=1000. for following entries================\n");
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -388,17 +400,6 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
         tm.setup_systematic(sys_label);
         tm.setup();
 
-        printf("\n======h_LQ.h_mu======\n");
-    for(int i=1;i<=h_LQ.h_mu->GetNbinsX();i++){
-        for(int j=1;j<=h_LQ.h_mu->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_LQ.h_mu->GetBinContent(i,j));
-    }
-    
-    printf("\n======h_LQ.h_el======\n");
-    for(int i=1;i<=h_LQ.h_el->GetNbinsX();i++){
-        for(int j=1;j<=h_LQ.h_el->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_LQ.h_el->GetBinContent(i,j));
-    }
 
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
