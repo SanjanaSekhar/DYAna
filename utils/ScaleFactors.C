@@ -512,6 +512,17 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
 
     h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
+     printf("\n======h_LQ.h_mu======\n");
+    for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
+        for(int j=1;j<=h_lq->h_mu->GetNbinsY();j++)
+            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_mu->GetBinContent(i,j));
+    }
+    
+    printf("\n======h_LQ.h_el======\n");
+    for(int i=1;i<=h_lq->h_el->GetNbinsX();i++){
+        for(int j=1;j<=h_lq->h_el->GetNbinsY();j++)
+            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_el->GetBinContent(i,j));
+    }
     f->Close();
 }
 
