@@ -388,6 +388,18 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
         tm.setup_systematic(sys_label);
         tm.setup();
 
+        printf("\n======h_LQ.h_mu======\n");
+    for(int i=1;i<=tm.h_LQ.h_mu->GetNbinsX();i++){
+        for(int j=1;j<=tm.h_LQ.h_mu->GetNbinsY();j++)
+            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,tm.h_LQ.h_mu->GetBinContent(i,j));
+    }
+    
+    printf("\n======h_LQ.h_el======\n");
+    for(int i=1;i<=tm.h_LQ.h_el->GetNbinsX();i++){
+        for(int j=1;j<=tm.h_LQ.h_el->GetNbinsY();j++)
+            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,tm.h_LQ.h_el->GetBinContent(i,j));
+    }
+
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
             bool pass =  tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;

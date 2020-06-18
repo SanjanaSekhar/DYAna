@@ -121,18 +121,6 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost)
     if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
     else h_rw = h_LQ.h_el;
     
-    printf("\n======h_LQ.h_mu======\n");
-    for(int i=1;i<=h_LQ.h_mu->GetNbinsX();i++){
-        for(int j=1;j<=h_LQ.h_mu->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_LQ.h_mu->GetBinContent(i,j));
-    }
-    
-    printf("\n======h_LQ.h_el======\n");
-    for(int i=1;i<=h_LQ.h_el->GetNbinsX();i++){
-        for(int j=1;j<=h_LQ.h_el->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_LQ.h_el->GetBinContent(i,j));
-    }
-    
     int xbin = h_rw->GetXaxis()->FindBin(m);
     int ybin = h_rw->GetYaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin);
