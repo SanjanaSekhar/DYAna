@@ -119,7 +119,11 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost){
     TH2D *h_rw;
     if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
-    else h_rw = h_LQ.h_mu;
+    else h_rw = h_LQ.h_el;
+    printf("\n======Muon norm th2======\n");
+    h_LQ.h_mu->Print("range");
+    printf("\n======Elec norm th2======\n");
+    h_LQ.h_el->Print("range");
     int xbin = h_rw->GetXaxis()->FindBin(m);
     int ybin = h_rw->GetYaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin);
