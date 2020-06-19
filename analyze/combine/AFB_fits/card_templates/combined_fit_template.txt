@@ -18,7 +18,8 @@ process                  -2      0       -1      1        2      5      3      -
 rate                     -1      -1      -1      -1       -1     -1    -1      -1      -1      -1      -1       -1     -1     -1      -1       -1   
 --------------------------------------------------------------------------------------------------------------------- ---------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -      -      -      1.03   1.03    1.03     -        -      -       -     1.03    1.03   
-bk_xsec         lnN      -       -        -     1.05     1.09    -      -       -       -       -     1.05     1.09    -       -       -       -    
+db_xsec         lnN      -       -        -      -       1.09    -      -       -       -       -      -       1.09    -       -       -       -    
+top_xsec        lnN      -       -        -     1.05      -      -      -       -       -       -     1.05      -      -       -       -       -    
 gam_xsec        lnN      -       -        -      -        -     1.4     -       -       -       -      -        -     1.4      -       -       -    
                                                                                                                       
 lumiYR          lnN     1.025  1.025   1.025   1.025    1.025  1.025    -      1.025  1.025  1.025   1.025   1.025   1.025     -     1.025   1.025  
@@ -65,6 +66,17 @@ emucostrw1bYR   shape    -       -        -     1.0      1.0     -      -       
 emucostrw2bYR   shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 emucostrw3bYR   shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 emucostrw4bYR   shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+
+##fakes cost reweighting                                                                                                 
+elfakesrw1bYR   shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
+elfakesrw2bYR   shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
+elfakesrw3bYR   shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
+elfakesrw4bYR   shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
+
+mufakesrw1bYR   shape    -       -        -      -        -      -      -       -       -       -      -        -      -      1.0      -       -    
+mufakesrw2bYR   shape    -       -        -      -        -      -      -       -       -       -      -        -      -      1.0      -       -    
+mufakesrw3bYR   shape    -       -        -      -        -      -      -       -       -       -      -        -      -      1.0      -       -    
+mufakesrw4bYR   shape    -       -        -      -        -      -      -       -       -       -      -        -      -      1.0      -       -    
                                                                                                                       
                                                                                                                               
 #pt reweighting                                                                                                       

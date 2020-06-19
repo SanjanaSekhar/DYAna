@@ -81,50 +81,53 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = f
     delete h_elel_data, h_mumu_data;
 }
 
-void make_qcd_templates(int year){
+void make_qcd_templates(int year, const string &sys_label){
 
-    int n_var1_bins = n_y_bins;
-    float *var1_bins = y_bins;
-    if(use_xF){
-        n_var1_bins = n_xf_bins;
-        var1_bins = xf_bins;
+    if(sys_label.empty() || sys_label.find("fakes")){
+
+        int n_var1_bins = n_y_bins;
+        float *var1_bins = y_bins;
+        if(use_xF){
+            n_var1_bins = n_xf_bins;
+            var1_bins = xf_bins;
+        }
+        
+        char title[100];
+        //titles taken care of in conversion
+
+        sprintf(title, "ee%i_qcd%s", year %2000, sys_label.c_str());
+        TH2F* h_elel_qcd = new TH2F(title, "Fakes template",
+                n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_qcd->SetDirectory(0);
+        sprintf(title, "mumu%i_qcd%s", year %2000, sys_label.c_str());
+        TH2F* h_mumu_qcd = new TH2F(title, "Fakes template",
+                n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_qcd->SetDirectory(0);
+        bool incl_ss = true;
+        bool ss_binning = false;
+        float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
+        printf("making ElEl fakes template \n");
+        std::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
+                FLAG_ELECTRONS, incl_ss, ss_binning, use_xF);
+        printf("making MuMu fakes template \n");
+        incl_ss = false; // muons use os only for their fakes
+        std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, 
+                incl_ss, ss_binning, use_xF);
+       
+
+
+        printf("Integral of QCD templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral());
+
+        symmetrize2d(h_mumu_qcd);
+        symmetrize2d(h_elel_qcd);
+
+        h1_mumu_qcd = convert2d(h_mumu_qcd);
+        h1_elel_qcd = convert2d(h_elel_qcd);
+        
+
+        printf("Made qcd templates \n");
+        delete h_elel_qcd, h_mumu_qcd;
     }
-    
-    char title[100];
-    //titles taken care of in conversion
-
-    sprintf(title, "ee%i_qcd", year %2000);
-    TH2F* h_elel_qcd = new TH2F(title, "Fakes template",
-            n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-    h_elel_qcd->SetDirectory(0);
-    sprintf(title, "mumu%i_qcd", year %2000);
-    TH2F* h_mumu_qcd = new TH2F(title, "Fakes template",
-            n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-    h_mumu_qcd->SetDirectory(0);
-    bool incl_ss = true;
-    bool ss_binning = false;
-    float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
-    printf("making ElEl fakes template \n");
-    std::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
-            FLAG_ELECTRONS, incl_ss, ss_binning, use_xF);
-    printf("making MuMu fakes template \n");
-    incl_ss = false; // muons use os only for their fakes
-    std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, 
-            incl_ss, ss_binning, use_xF);
-   
-
-
-    printf("Integral of QCD templates are %.2f %.2f \n", h_elel_qcd->Integral(), h_mumu_qcd->Integral());
-
-    symmetrize2d(h_mumu_qcd);
-    symmetrize2d(h_elel_qcd);
-
-    h1_mumu_qcd = convert2d(h_mumu_qcd);
-    h1_elel_qcd = convert2d(h_elel_qcd);
-    
-
-    printf("Made qcd templates \n");
-    delete h_elel_qcd, h_mumu_qcd;
 }
 
 
@@ -135,14 +138,20 @@ void make_mc_templates(int year, const string &sys_label){
         do_mu = true;
         do_el = false;
     }
-    if(sys_label.find("el") != string::npos){
+    else if(sys_label.find("el") != string::npos){
         printf("Doing el only \n");
         do_mu = false;
         do_el = true;
     }
+
     else{
         do_mu = true;
         do_el = true;
+
+    }
+    if(sys_label.find("fakes") != string::npos){
+        do_el = false;
+        do_mu = false;
     }
     bool ss= false;
     int n_var1_bins = n_y_bins;
@@ -294,16 +303,23 @@ void make_mc_templates(int year, const string &sys_label){
 void convert_mc_templates(int year, const string &sys_label){
     bool do_mu, do_el;
     if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
+        printf("Doing mu only \n");
         do_mu = true;
         do_el = false;
     }
     else if(sys_label.find("el") != string::npos){
+        printf("Doing el only \n");
         do_mu = false;
         do_el = true;
     }
-    else{
+    else {
         do_mu = true;
         do_el = true;
+
+    }
+    if(sys_label.find("fakes") != string::npos){
+        do_el = false;
+        do_mu = false;
     }
     int n_var1_bins = n_y_bins;
     float *var1_bins = y_bins;
@@ -352,35 +368,41 @@ void convert_mc_templates(int year, const string &sys_label){
     }
 }
 
-void write_out_non_sys_templates(){
+void write_out_data_templates(){
 
     h1_mumu_data->Write();
     h1_elel_data->Write();
-    h1_mumu_qcd->Write();
-    h1_elel_qcd->Write();
 
     h1_mumu_data->Reset();
     h1_elel_data->Reset();
-    h1_mumu_qcd->Reset();
-    h1_elel_qcd->Reset();
 }
 
 
 void write_out_templates(const string &sys_label){
 
     bool do_mu, do_el;
+    bool do_fakes = false;
+    if(sys_label.empty()) do_fakes = true;
 
     if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
+        printf("Doing mu only \n");
         do_mu = true;
         do_el = false;
     }
     else if(sys_label.find("el") != string::npos){
+        printf("Doing el only \n");
         do_mu = false;
         do_el = true;
     }
-    else{
+    else {
         do_mu = true;
         do_el = true;
+
+    }
+    if(sys_label.find("fakes") != string::npos){
+        do_el = false;
+        do_mu = false;
+        do_fakes = true;
     }
 
 
@@ -421,6 +443,15 @@ void write_out_templates(const string &sys_label){
         h1_elel_pl->Reset();
         h1_elel_mn->Reset();
     }
+    if(do_fakes){
+
+        h1_mumu_qcd->Write();
+        h1_elel_qcd->Write();
+        h1_mumu_qcd->Reset();
+        h1_elel_qcd->Reset();
+    }
+
+
 
 
 }
@@ -469,15 +500,15 @@ void make_templates(int year = -1, string fout_name = "", int iJob =-1){
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
 
         make_data_templates(year, scramble_data, fake_data);
-        make_qcd_templates(year);
 
         string sys_label = string("");
+        make_qcd_templates(year, sys_label);
         make_mc_templates(year, sys_label);
         convert_mc_templates(year, sys_label);
 
         fout->cd();
         gDirectory->cd(dirname);
-        write_out_non_sys_templates();
+        write_out_data_templates();
         write_out_templates(sys_label);
     }
 

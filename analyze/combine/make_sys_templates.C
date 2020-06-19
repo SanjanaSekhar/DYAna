@@ -13,7 +13,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
     const TString pdf_fout_name("output_files/sys_test.root");
     TFile *pdf_fout = TFile::Open(pdf_fout_name, "RECREATE");
 
-    init_mc(year);
+    init(year);
 
 
 
@@ -48,7 +48,9 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
             "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  
             "_elHLTBAR", "_elIDBAR", "_elRECOBAR", "_elHLTEND", "_elIDEND", "_elRECOEND",
             "_ptrw1b", "_ptrw2b", "_ptrw3b", "_ptrw4b", "_ptrw5b", "_ptrw6b", "_ptrw7b",
-            "_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b"
+            "_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b",
+            "_elfakesrw1b", "_elfakesrw2b", "_elfakesrw3b", "_elfakesrw4b",
+            "_mufakesrw1b", "_mufakesrw2b", "_mufakesrw3b", "_mufakesrw4b",
         };
 
       string yr_string; 
@@ -101,6 +103,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
 
 
                 make_mc_templates(year,  *iter);
+                make_qcd_templates(year,  *iter);
                 convert_mc_templates(year, *iter);
 
                 pdf_fout->cd();
