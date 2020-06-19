@@ -17,8 +17,8 @@ void sys_check(){
         int year = 2016;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_fakesrw2b16";
-        bool do_bkg = true;
+        char *sys = "_mufakesrw2b16";
+        bool do_bkg = false;
         bool do_qcd = true;
         bool do_electrons = true;
         bool do_muons = true;

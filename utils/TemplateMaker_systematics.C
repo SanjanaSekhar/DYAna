@@ -330,12 +330,15 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
         }
         if(sys_label.find("fakesrw") != string::npos){
             int foo;
+            
             if(sys_shift > 0){
-                sscanf(sys_label.c_str(), "_fakesrw%ib%iUp", &shape_sys, &foo);
+                if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iUp", &shape_sys, &foo);
+                else sscanf(sys_label.c_str(), "_elfakesrw%ib%iUp", &shape_sys, &foo);
 
             }
             else{
-                sscanf(sys_label.c_str(), "_fakesrw%ib%iDown", &shape_sys, &foo);
+                if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iDown", &shape_sys, &foo);
+                else sscanf(sys_label.c_str(), "_elfakesrw%ib%iDown", &shape_sys, &foo);
                 shape_sys *= -1;
             }
             printf("Doing fakes costrw sys %i \n", shape_sys);
@@ -477,7 +480,6 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     cleanup_template(h);
 
     set_fakerate_errors(h_err, FR.h, h);
-    printf("Total Fakerate weight Weight is %.2f \n", h->Integral());
     // remove outliers
     tot_weight_os = std::max(1e-4, tot_weight_os);
     tot_weight_ss = std::max(1e-4, tot_weight_ss);
