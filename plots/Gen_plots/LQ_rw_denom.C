@@ -21,6 +21,7 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "../../utils/root_files.h"
+#include "../../utils/bins.h"
 #include "../../utils/HistUtils.C"
 #include "../../utils/PlotUtils.C"
 
@@ -89,7 +90,7 @@ void normalize(TH2D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-    char *out_file = "../analyze/SFs/2016/LQ_rw.root";
+    char *out_file = "../analyze/SFs/2016/LQ_rw_test.root";
     TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_april17.root");
 
     TFile * f_out;
@@ -106,27 +107,27 @@ void LQ_rw_denom(){
 
 
 
-    int n_cost_bins = 20;
+  //  int n_cost_bins = 20;
     //float cost_bins[] = {-1.,-.8,-.6,-.4,-.2,0.,.2,.4,.6,.8,1.0};
-    float cost_bins[] = {-1.,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0.,.1,.2,.3,.4,.5,.6,.7,.8,.9,1.0};
+    //float cost_bins[] = {-1.,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0.,.1,.2,.3,.4,.5,.6,.7,.8,.9,1.0};
     //float cost_bins[] = {0.,.1,.2,.3,.4,.5,.6,.7,.8,.9,1.0};
 
     int n_LQ_pt_bins = 1;
     //float LQ_pt_bins[] = {0., 20., 60., 100., 10000};
     float LQ_pt_bins[] = {0., 10000};
 
-    int n_LQ_m_bins = 37;
-    float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 675., 700., 750., 800., 850., 900., 950., 1000., 1050., 1100., 1150., 
-        1200., 1250., 1300., 1350., 1400., 1450., 1500., 1600., 1700., 1800., 1900.,  2000.,  2500.,   3000., };
+   // int n_LQ_m_bins = 37;
+   // float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 675., 700., 750., 800., 850., 900., 950., 1000., 1050., 1100., 1150., 
+   //     1200., 1250., 1300., 1350., 1400., 1450., 1500., 1600., 1700., 1800., 1900.,  2000.,  2500.,   3000., };
 
-    TH2D *h_mu = new TH2D("h_mu", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
-    TH2D *h_el = new TH2D("h_el", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH2D *h_mu = new TH2D("h_mu", "", n_lq_m_bins, lq_m_bins,   n_cost_bins, cost_bins);
+    TH2D *h_el = new TH2D("h_el", "", n_lq_m_bins, lq_m_bins,   n_cost_bins, cost_bins);
 
     TH1D *h_1d = new TH1D("h1", "", n_cost_bins, cost_bins);
 
 
     int nEvents = 0;
-    float m_low = m_LQ_bins[0];
+    float m_low = lq_m_bins[0];
     float m_high = 14000.;
 
     make_amc_gen_cost(t_gen_mu,  h_mu, m_low,m_high);
