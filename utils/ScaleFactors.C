@@ -73,8 +73,8 @@ typedef struct{
 } emu_costrw_helper;
 
 typedef struct{
-    TH3D *h_mu;
-    TH3D *h_el;
+    TH2D *h_mu;
+    TH2D *h_el;
 } LQ_rw_helper;
 
 
@@ -116,15 +116,15 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 }
 
 
-float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost, float rap){
-    TH3D *h_rw;
+float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost){
+    TH2D *h_rw;
     if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
     else h_rw = h_LQ.h_el;
     
     int xbin = h_rw->GetXaxis()->FindBin(m);
-    int ybin = h_rw->GetYaxis()->FindBin(rap);
-    int zbin = h_rw->GetZaxis()->FindBin(cost);
-    float weight = h_rw->GetBinContent(xbin, ybin, zbin);
+    int ybin = h_rw->GetYaxis()->FindBin(cost);
+   // int zbin = h_rw->GetZaxis()->FindBin(cost);
+    float weight = h_rw->GetBinContent(xbin, ybin);
     if(weight==0.){
     //   printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
        weight = 1e-6;
@@ -525,10 +525,10 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
             printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_el->GetBinContent(i,j));
     }
     */
-    h_lq->h_el = (TH3D *) f->Get("h_el")->Clone();
+    h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
     h_lq->h_el->SetDirectory(0);
 
-    h_lq->h_mu = (TH3D *) f->Get("h_mu")->Clone();
+    h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
 /*
     printf("\n======h_LQ.h_mu======\n");
