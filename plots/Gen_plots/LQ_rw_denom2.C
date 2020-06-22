@@ -51,7 +51,7 @@ int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, float m_low, float m_high){
             nEvents++;
             cm = *gen_lep_p + *gen_lep_m;
             float pt = cm.Pt();
-            float rap = cm.Rapidity();
+            float rap = abs(cm.Rapidity());
             /*
             float my_cost = get_cost(*gen_lep_p, *gen_lep_m);
             if(cost_st > 0) my_cost = abs(my_cost);
@@ -89,7 +89,7 @@ void normalize(TH3D *h){
 
 
 
-void LQ_rw_denom(){
+void LQ_rw_denom2(){
 
     bool write_out = true;
     char *out_file = "../analyze/SFs/2016/LQ_rw_test.root";
