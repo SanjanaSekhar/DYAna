@@ -31,7 +31,7 @@
 
 const int year = 2018;
 char *out_file = "../analyze/SFs/2018/pt_rw.root";
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Misc_plots/pt_reweights/";
 
 
@@ -159,6 +159,10 @@ void do_pt_reweight(){
 
         h_elel_data_sub->Scale(1./h_elel_data_sub->Integral());
         mc_elel_pt->Scale(1./mc_elel_pt->Integral());
+
+        mc_elel_pt->GetXaxis()->SetLimits(0., 150.);
+        h_elel_data_sub->GetXaxis()->SetLimits(0., 150.);
+
 
 
         TCanvas *c_elel_plot = make_ratio_plot(string("pt_comparison"), h_elel_data_sub, "Data - Backgrounds", mc_elel_pt, "DY MC", "ratio", "electron pT", logy, false);

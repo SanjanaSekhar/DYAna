@@ -12,6 +12,7 @@ void draw_templates(){
     
         int year = 2017;
         init(year);
+        setup_all_SFs(year);
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
         //setup_all_SFs(year);
@@ -22,7 +23,6 @@ void draw_templates(){
         float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
 
         for(int i=0; i<num_bins; i++){
-            Double_t alpha_denom = amc_alpha[i];
             double m_low = m_bins[i];
             double m_high = m_bins[i+1];
 
@@ -58,9 +58,9 @@ void draw_templates(){
 
 
 
-            gen_mc_template(t_mumu_mc, alpha_denom, h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, "");
+            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, "");
 
-            gen_mc_template(t_elel_mc, alpha_denom, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
+            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
 
 
             char mu_title[100], el_title[100];
@@ -79,7 +79,8 @@ void draw_templates(){
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
             h_mumu_pl.Scale(0.5);
             h_mumu_mn.Scale(0.5);
-            double norm = 3./4./(2.+alpha_denom);
+            Double_t alpha= 0.05;
+            double norm = 3./4./(2.+alpha);
             h_mumu_alpha->Scale(norm);
 
             h_mumu_pl.Print("range");
