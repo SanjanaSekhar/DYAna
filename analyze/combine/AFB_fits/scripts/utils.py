@@ -10,7 +10,7 @@ from itertools import product
 import numpy as np
 
 
-def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
+def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
     ROOT.ROOT.EnableImplicitMT()
     f2 = TFile.Open("higgsCombineTest.GoodnessOfFit.mH120.root")
 
@@ -29,14 +29,16 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     toy_max = toys.GetMaximum("limit")
     toy_min = toys.GetMinimum("limit")
 
-    my_max = max(toy_max, t_obs) + 10.
+    my_max = max(toy_max, t_obs)*1.2
     #if is an error in fit can get very large values in toys
-    my_max =  min(my_max, 2.*t_obs)
+    my_max =  min(my_max, 4.*t_obs)
 
-    my_min = min(toy_min, t_obs) - 5.
+    my_min = min(toy_min, t_obs)*0.8
 
-    h_test = TH1D("h_toys", "Goodness of fit: Mass bin %i" % mbin, 30, my_min, my_max)
+    h_test = TH1D("h_toys", "Goodness of fit (%s): Mass bin %i" % (teststat, mbin), 30, my_min, my_max)
+    np_toys = np.array([])
     for toy in toys:
+        np_toys = np.append(np_toys, toy.limit)
         h_test.Fill(toy.limit)
 
     bin_low = h_test.GetXaxis().FindBin(t_obs)
@@ -49,7 +51,16 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
 
     p_val = h_test.Integral(bin_low, bin_high) / integral
 
-    print("Data gof is %.0f. p-value is %.3f based on %.0f toys" %(t_obs, p_val, integral))
+    np_above = np_toys > t_obs
+    tot = np_toys.shape[0]
+    n_above = np_toys[np_above].shape[0]
+    np_p_val = float(n_above) / tot
+
+    print("Data gof is %f p-value (integral) is %.3f based on %.0f toys" %(t_obs, p_val, integral))
+    print("Numpy version: %i out of %i above t_obs (p-val %.3f) " % (n_above, tot, float(n_above) / tot))
+
+    p_val = np_p_val
+
 
     fout_name = "%sgof_%s_bin%i.png" % (odir, chan, mbin)
     draw_max = h_test.GetMaximum()
@@ -64,7 +75,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     latex.SetTextSize(0.025)
     latex.SetTextAlign(13)
     latex.SetNDC(True)
-    latex.DrawLatex(0.5, 0.75, "Data gof is %.0f, p-value is %.2f" % (t_obs, p_val))
+    latex.DrawLatex(0.5, 0.75, "Data gof is %.3f, p-value is %.2f" % (t_obs, p_val))
     c.Print(fout_name)
     f1.Close()
 

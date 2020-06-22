@@ -1,6 +1,6 @@
 
 ################ ZZ files
-!idx = 11 xsec = 10.16
+!idx = 11 xsec = 15.4
 #########################
 
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/ZZ_TuneCP5_13TeV-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200122_194537/0000/B2GTTreeNtupleExtra_1.root
@@ -38,7 +38,7 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/ZZ_TuneCP5_13TeV-py
 
 
 ################ WW files
-!idx = 12 xsec = 64.3
+!idx = 12 xsec = 118.7
 #########################
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/WW_TuneCP5_13TeV-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200122_194250/0000/B2GTTreeNtupleExtra_1.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/WW_TuneCP5_13TeV-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/200122_194250/0000/B2GTTreeNtupleExtra_10.root
@@ -201,7 +201,7 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/WW_TuneCP5_13TeV-py
 
 
 ################ WZ files
-!idx = 13 xsec = 47.13
+!idx = 13 xsec = 23.5
 #########################
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/WZ_TuneCP5_13TeV-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200122_194415/0000/B2GTTreeNtupleExtra_1.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/WZ_TuneCP5_13TeV-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200122_194415/0000/B2GTTreeNtupleExtra_10.root
