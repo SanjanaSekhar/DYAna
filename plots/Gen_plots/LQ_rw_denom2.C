@@ -24,7 +24,7 @@
 #include "../../utils/HistUtils.C"
 #include "../../utils/PlotUtils.C"
 
-int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, float m_low, float m_high){
+int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, float m_low, float m_high){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     Bool_t sig_event(1);
@@ -51,13 +51,14 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, float m_low, float m_high){
             nEvents++;
             cm = *gen_lep_p + *gen_lep_m;
             float pt = cm.Pt();
+            float rap = cm.Rapidity();
             /*
             float my_cost = get_cost(*gen_lep_p, *gen_lep_m);
             if(cost_st > 0) my_cost = abs(my_cost);
             else my_cost = -abs(my_cost);
             */
             float my_cost = cost_st;
-            h_2d->Fill(m, my_cost, gen_weight * 1000.);
+            h_2d->Fill(m, rap, my_cost, gen_weight * 1000.);
 
         }
     }
@@ -67,18 +68,20 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, float m_low, float m_high){
 
 }
 
-void normalize(TH2D *h){
+void normalize(TH3D *h){
     for(int i=1; i<=h->GetNbinsX(); i++){
         for(int j=1; j<=h->GetNbinsY(); j++){
+            for(int k=1; k<=h->GetNbinsZ(); k++){
             float xw = h->GetXaxis()->GetBinWidth(i);
             float yw = h->GetYaxis()->GetBinWidth(j);
-            float content = h->GetBinContent(i,j);
-            float err = h->GetBinError(i,j);
+            float zw = h->GetZaxis()->GetBinWidth(k);
+            float content = h->GetBinContent(i,j,k);
+            float err = h->GetBinError(i,j,k);
             //printf("i,j xw, yw %i %i %.2f %.2f \n", i,j, xw,yw);
 
-            h->SetBinContent(i,j,content/(xw*yw));
-            h->SetBinError(i,j,err/(xw*yw));
-
+            h->SetBinContent(i,j,k,content/(xw*yw*zw));
+            h->SetBinError(i,j,k,err/(xw*yw*zw));
+        }
         }
     }
 }
@@ -89,7 +92,7 @@ void normalize(TH2D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-    char *out_file = "../analyze/SFs/2016/LQ_rw.root";
+    char *out_file = "../analyze/SFs/2016/LQ_rw_test.root";
     TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_april17.root");
 
     TFile * f_out;
@@ -105,7 +108,8 @@ void LQ_rw_denom(){
     char plot_dir[] = "Misc_plots/A0_fits/";
 
     
-
+    int n_rap_bins = 4;
+    float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
 
 
     int n_cost_bins = 20;
@@ -115,14 +119,14 @@ void LQ_rw_denom(){
 
     int n_LQ_pt_bins = 1;
     //float LQ_pt_bins[] = {0., 20., 60., 100., 10000};
-    float LQ_pt_bins[] = {0., 10000};
+    float LQ_pt_bins[] = {0., 10000.};
 
     int n_LQ_m_bins = 37;
     float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 675., 700., 750., 800., 850., 900., 950., 1000., 1050., 1100., 1150., 
         1200., 1250., 1300., 1350., 1400., 1450., 1500., 1600., 1700., 1800., 1900.,  2000.,  2500.,   3000., };
 
-    TH2D *h_mu = new TH2D("h_mu", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
-    TH2D *h_el = new TH2D("h_el", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH3D *h_mu = new TH3D("h_mu", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,  n_cost_bins, cost_bins);
+    TH3D *h_el = new TH3D("h_el", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,  n_cost_bins, cost_bins);
 
     TH1D *h_1d = new TH1D("h1", "", n_cost_bins, cost_bins);
 
@@ -131,7 +135,7 @@ void LQ_rw_denom(){
     float m_low = m_LQ_bins[0];
     float m_high = 14000.;
 
-    make_amc_gen_cost(t_gen_mu,  h_mu, m_low,m_high);
+    make_amc_gen_cost(t_gen_mu, h_mu, m_low,m_high);
     make_amc_gen_cost(t_gen_el, h_el, m_low, m_high);
     
     /*
