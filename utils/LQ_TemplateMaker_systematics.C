@@ -53,12 +53,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         for(int i=1; i<=n_xf_bins; i++){
             for(int j=1; j<= n_cost_bins/2; j++){
                 //printf("%i %i \n", i,j);
-                float val_sym = h_sym->GetBinContent(k,i,j);
-                float val_asym = h_asym->GetBinContent(k,i,j);
+                Double_t val_sym = h_sym->GetBinContent(k,i,j);
+                Double_t val_asym = h_asym->GetBinContent(k,i,j);
                 int opp_j = (n_cost_bins + 1) -j; //get this checked
                 if(val_sym - 2*abs(val_asym) <= 0.){
                     //at LO needs to sym/2, give some cushion b/c of alpha term
-                    float val_asym_new = -val_sym/2.8;
+                    Double_t val_asym_new = -val_sym/2.8;
                     h_asym->SetBinContent(k, i, j, val_asym_new);
                     h_asym->SetBinContent(k, i, opp_j, -val_asym_new);
                     printf("Fixed up bin %i %i %i. Old asym val was %.2f, new is %.2f \n\n", k, i, j, val_asym, val_asym_new);
@@ -81,10 +81,10 @@ void cleanup_template(TH3F *h){
         for(int i=0; i<= h->GetNbinsY()+1; i++){
             for(int j=0; j<= h->GetNbinsZ()+1; j++){
                 //printf("%i %i \n", i,j);
-                float min_val = 1e-6;
-                float val = h->GetBinContent(k,i,j);
-                float err = h->GetBinError(k,i,j);
-                float max_err = 0.7; //percent
+                Double_t min_val = 1e-6;
+                Double_t val = h->GetBinContent(k,i,j);
+                Double_t err = h->GetBinError(k,i,j);
+                Double_t max_err = 0.7; //percent
                 if(val< min_val){
                     h->SetBinContent(k,i,j,min_val);
                     h->SetBinError(k,i,j,err);
@@ -121,7 +121,7 @@ void print_hist(TH3 *h){
     for(int k=1; k<= h->GetNbinsX();k++){
         for(int i=1; i<= h->GetNbinsY(); i++){
             for(int j=1; j<= h->GetNbinsZ(); j++){
-                printf("%.2e ",   (float) h->GetBinContent(k,i,j));
+                printf("%.2e ",   (Double_t) h->GetBinContent(k,i,j));
             }
             printf("\n");
         }
@@ -141,14 +141,14 @@ int gen_data_template(TTree *t1, TH3F* h,
     tm.setup();
 
     TRandom *rand;
-    float sign = 1.;
+    Double_t sign = 1.;
     //if(scramble_data) rand = new TRandom3();
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
 
         if( tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
             tm.doCorrections();
-            float var1 = abs(tm.cm.Rapidity());
+            Double_t var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
 
             n++;
@@ -206,7 +206,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     tm.setup_systematic(sys_label);
     tm.setup();
 
-    float max_obs = 0.;
+    Double_t max_obs = 0.;
 
        
     //printf("\n================denom/LQ_denom>=1000. for following entries================\n");
@@ -219,12 +219,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             tm.doCorrections();
             tm.getEvtWeight();
             n++;
-            float gen_cost = tm.cost_st;
-            float var1 = abs(tm.cm.Rapidity());
+            Double_t gen_cost = tm.cost_st;
+            Double_t var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
-            //float denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
-            float denom = tm.getReweightingDenom();
-            float LQ_denom = tm.getLQReweightingDenom();
+            //Double_t denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
+            Double_t denom = tm.getReweightingDenom();
+            Double_t LQ_denom = tm.getLQReweightingDenom();
             /*
             if(denom/LQ_denom>=1000.)
             {
@@ -233,50 +233,50 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             */
             //if(LQ_denom==0.){printf("\n LQ denom is zero for m = %f",tm.m); LQ_denom = 1e-8;}
             //if(LQ_denom<0) printf("\n LQ_denom is negative : %f", LQ_denom);
-            float reweight_a = gen_cost/ denom;
-            float reweight_s = (1 + gen_cost*gen_cost)/denom;
-            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+            Double_t reweight_a = gen_cost/ denom;
+            Double_t reweight_s = (1 + gen_cost*gen_cost)/denom;
+            Double_t reweight_alpha = (1 - gen_cost*gen_cost)/denom;
             //for LQ, 2 terms-> pure and interference
             Double_t s = tm.m*tm.m;
             //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
-            float reweight_LQpure_norm = ((1./2.56819)*1e9/(128*M_PI*s));
-            float reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
-            float reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
-            float reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-            float reweight_LQpure_pos;
+            Double_t reweight_LQpure_norm = ((1./2.56819)*1e9/(128*M_PI*s));
+            Double_t reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
+            Double_t reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
+            Double_t reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+            Double_t reweight_LQpure_pos;
            if(use_LQ_denom) reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
            else reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
            reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
             reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
             reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-            float reweight_LQpure_neg;
+            Double_t reweight_LQpure_neg;
            if(use_LQ_denom) reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
            else reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/denom);
-            //float reweight_LQpure = (reweight_LQpure_num/LQ_denom);
-            // float reweight_LQpure = (reweight_LQpure_num/denom);
+            //Double_t reweight_LQpure = (reweight_LQpure_num/LQ_denom);
+            // Double_t reweight_LQpure = (reweight_LQpure_num/denom);
             // 
            // if(reweight_LQpure == 0.)printf("\n for m = %f reweight_LQpure = %f",tm.m, reweight_LQpure );
            // printf("\n LQ_denom = %0.12f",LQ_denom);
-            float reweight_LQint_norm1 = ((alpha*Q_q)/(16*s));
+            Double_t reweight_LQint_norm1 = ((alpha*Q_q)/(16*s));
              //printf("\n LQint N1 = %0.12f",reweight_LQint_norm1);
-            float reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
+            Double_t reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
             //printf("\n LQint N2 num = %0.12f",reweight_LQint_norm2_num);
-            float reweight_LQint_norm2_denom = (128*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+            Double_t reweight_LQint_norm2_denom = (128*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             //printf("\n LQint N2 denom = %0.12f",reweight_LQint_norm2_denom);
-            float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
+            Double_t reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
            // printf("\n LQint N2 = %0.12f",reweight_LQint_norm2);
-            float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*(1./2.56819)*1e9;
+            Double_t reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*(1./2.56819)*1e9;
              //printf("\n LQint N1+N2 = %0.12f",reweight_LQint_norm);
-            float reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
-            float reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
-            float reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-            float reweight_LQint_pos;
+            Double_t reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
+            Double_t reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
+            Double_t reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+            Double_t reweight_LQint_pos;
             if(use_LQ_denom)  reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
           else reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/denom);
             reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
             reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
             reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-            float reweight_LQint_neg;
+            Double_t reweight_LQint_neg;
           if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
           else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
 
@@ -284,8 +284,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
          
           
 
-           // float reweight_LQint = (reweight_LQint_num/LQ_denom);
-            // float reweight_LQint = (reweight_LQint_num/denom);
+           // Double_t reweight_LQint = (reweight_LQint_num/LQ_denom);
+            // Double_t reweight_LQint = (reweight_LQint_num/denom);
            //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
            //
             
@@ -344,8 +344,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
             for(int j=1; j<= n_cost_bins; j++){
-                float pure_content = h_LQpure->GetBinContent(k,i,j);
-               // float int_content = h_LQint->GetBinContent(k,i,j);
+                Double_t pure_content = h_LQpure->GetBinContent(k,i,j);
+               // Double_t int_content = h_LQint->GetBinContent(k,i,j);
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
                if(pure_content<0.){ 
                 printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
@@ -358,8 +358,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
             for(int j=1; j<= n_cost_bins; j++){
-                //float pure_content = h_LQpure->GetBinContent(k,i,j);
-                float int_content = h_LQint->GetBinContent(k,i,j);
+                //Double_t pure_content = h_LQpure->GetBinContent(k,i,j);
+                Double_t int_content = h_LQint->GetBinContent(k,i,j);
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
                if(int_content<=0.){
                 printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, int_content= %0.12f\n",k,i,j,gbin,int_content );
@@ -401,7 +401,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
                 tm.doCorrections();
                 tm.getEvtWeight();
 
-                float var1 = abs(tm.cm.Rapidity());
+                Double_t var1 = abs(tm.cm.Rapidity());
                 if(use_xF)  var1 = tm.xF;
                 nEvents++;
                 if(!ss) h->Fill(tm.m, var1, tm.cost, tm.evt_weight);
@@ -425,7 +425,7 @@ int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy,
         const string &sys_label = "" ){
 
     int n_var1_bins = n_y_bins;
-    float *var1_bins = y_bins;
+    Double_t *var1_bins = y_bins;
     if(use_xF){
         n_var1_bins = n_xf_bins;
         var1_bins = xf_bins;
@@ -475,7 +475,7 @@ int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy,
 
 /*
 //what to change in this
-std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH3F *h, 
+std::pair<Double_t, Double_t> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH3F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false){
     h->Sumw2();
     TH3D *h_err;
@@ -591,7 +591,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                     tot_evt_weight = evt_reweight * tm.getEvtWeight();
                 }
 
-                float var1 = abs(tm.cm.Rapidity());
+                Double_t var1 = abs(tm.cm.Rapidity());
                 if(use_xF)  var1 = tm.xF;
 
                 if(!ss_binning) h->Fill(tm.m, var1, tm.cost, tot_evt_weight);
@@ -615,7 +615,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     // remove outliers
     tot_weight_os = std::max(1e-4, tot_weight_os);
     tot_weight_ss = std::max(1e-4, tot_weight_ss);
-    float scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
+    Double_t scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     if(!incl_ss) scaling = 1.;
     
     Double_t err;
@@ -625,7 +625,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
 }
 
 void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH3F *h, 
-        int year, float m_low = 150., float m_high = 10000., bool ss = false){
+        int year, Double_t m_low = 150., Double_t m_high = 10000., bool ss = false){
     //need to change this to TempMaker class at some point...
     FakeRate el_FR, mu_FR;
     //TH3D *FR;
@@ -647,7 +647,7 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH3
         TLorentzVector *el = 0;
         TLorentzVector *mu = 0;
         Int_t iso_lep, no_bjets;
-        Float_t met_pt, el_charge, mu_charge;
+        Double_t_t met_pt, el_charge, mu_charge;
         Int_t nJets;
         nJets = 2;
         pu_SF=1;
@@ -720,10 +720,10 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH3
 
             TLorentzVector cm = *el + *mu;
             bool opp_sign = ((abs(el_charge - mu_charge)) > 0.01);
-            float m = cm.M();
+            Double_t m = cm.M();
             bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign;
             if(pass){
-                float xF = compute_xF(cm); 
+                Double_t xF = compute_xF(cm); 
                 cost = get_cost(*el, *mu);
                 if(ss) h->Fill(xF, -abs(cost), evt_fakerate);
                 else{
@@ -740,14 +740,14 @@ void gen_emu_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH3
 
 
 void gen_emu_template(TTree *t1, TH3F *h, 
-        bool is_data = false, int year=2016, float m_low = 150., float m_high = 999999., bool ss= true){
+        bool is_data = false, int year=2016, Double_t m_low = 150., Double_t m_high = 999999., bool ss= true){
     Long64_t size  =  t1->GetEntries();
     Double_t m, xF, cost, mu1_pt, mu2_pt, jet1_btag, jet2_btag, gen_weight;
     Double_t era1_HLT_SF, era1_iso_SF, era1_id_SF;
     Double_t era2_HLT_SF, era2_iso_SF, era2_id_SF, el_id_SF, el_reco_SF, el_HLT_SF;
     Double_t jet1_pt, jet2_pt, jet1_b_weight, jet2_b_weight, pu_SF;
     jet1_b_weight = jet2_b_weight =1.;
-    Float_t met_pt, el_charge, mu_charge;
+    Double_t_t met_pt, el_charge, mu_charge;
     Int_t nJets, no_bjets;
     nJets = 2;
     pu_SF=1;
