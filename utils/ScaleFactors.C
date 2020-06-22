@@ -502,9 +502,9 @@ void setup_A0_helper(A0_helpers *h, int year){
 void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     TFile *f;
 
-    if(year == 2016)      f = TFile::Open("../analyze/SFs/2016/LQ_rw.root");
-    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/LQ_rw.root");
-    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
+    if(year == 2016)      f = TFile::Open("../analyze/SFs/2016/LQ_rw_test.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/LQ_rw_test.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw_test.root");
 
 
     h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
