@@ -58,7 +58,7 @@ int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, float m_low, float m_high){
             else my_cost = -abs(my_cost);
             */
             float my_cost = cost_st;
-            h_2d->Fill(m, rap, my_cost, gen_weight);
+            h_2d->Fill(m, rap, my_cost, gen_weight*1000);
 
         }
     }

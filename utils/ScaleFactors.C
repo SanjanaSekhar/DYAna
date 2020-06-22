@@ -122,8 +122,8 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost,
     else h_rw = h_LQ.h_el;
     
     int xbin = h_rw->GetXaxis()->FindBin(m);
-    int ybin = h_rw->GetYaxis()->FindBin(cost);
-    int zbin = h_rw->GetZaxis()->FindBin(rap);
+    int ybin = h_rw->GetYaxis()->FindBin(rap);
+    int zbin = h_rw->GetZaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin, zbin);
     if(weight==0.){
     //   printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
@@ -530,7 +530,7 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
 
     h_lq->h_mu = (TH3D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
-
+/*
     printf("\n======h_LQ.h_mu======\n");
     for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
         for(int j=1;j<=h_lq->h_mu->GetNbinsY();j++){
@@ -546,7 +546,7 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
             printf("i_m = %i, i_rap = %i, i_cost = %i, content = %.12f\n",i,j,k,h_lq->h_el->GetBinContent(i,j,k));
         }
     }
-
+*/
     f->Close();
 }
 
