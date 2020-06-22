@@ -425,7 +425,7 @@ int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy,
         const string &sys_label = "" ){
 
     int n_var1_bins = n_y_bins;
-    Double_t *var1_bins = y_bins;
+    Float_t *var1_bins = y_bins;
     if(use_xF){
         n_var1_bins = n_xf_bins;
         var1_bins = xf_bins;
