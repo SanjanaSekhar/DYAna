@@ -72,6 +72,11 @@ typedef struct{
     TH1F *rw;
 } emu_costrw_helper;
 
+typedef struct{
+    TH2D *h_mu;
+    TH2D *h_el;
+} LQ_rw_helper;
+
 
 double get_var(Float_t vals[100]){
     float mean(0.), var(0.);
@@ -108,6 +113,22 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
     Float_t result = h->GetBinContent(xbin);
     //if(result < 0.0001) printf("0 pileup SF for %i vertices\n", n_int);
     return result;
+}
+
+
+float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost){
+    TH2D *h_rw;
+    if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
+    else h_rw = h_LQ.h_el;
+    int xbin = h_rw->GetXaxis()->FindBin(m);
+    int ybin = h_rw->GetYaxis()->FindBin(cost);
+    float weight = h_rw->GetBinContent(xbin, ybin);
+    if(weight < 1e-8){
+        printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
+        //weight = 1e-6;
+    }
+    return weight;
+
 }
 
 
@@ -474,6 +495,22 @@ void setup_A0_helper(A0_helpers *h, int year){
             h->A0_fits[i][j] = (RooRealVar *) f->Get(title)->Clone();
         }
     }
+}
+
+void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
+    TFile *f;
+
+    if(year == 2016)      f = TFile::Open("../analyze/SFs/2016/LQ_rw.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/LQ_rw.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
+
+
+    h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
+    h_lq->h_el->SetDirectory(0);
+
+    h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
+    h_lq->h_mu->SetDirectory(0);
+    f->Close();
 }
 
 void setup_ptrw_helper(ptrw_helper *h, int year){

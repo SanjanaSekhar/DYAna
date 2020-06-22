@@ -154,12 +154,13 @@ if options.tar:
     if options.root_files:
         print "Tarring root files"
         options.tarname = "output_files"
-        include_files = ['2016/MuMu16*dy*','2016/MuMu16*ttbar*', '2016/MuMu16*wt*','2016/MuMu16*diboson*', '2016/MuMu16*phot*', 
-                         '2016/ElEl16*dy*','2016/ElEl16*ttbar*', '2016/ElEl16*wt*','2016/ElEl16*diboson*', '2016/ElEl16*phot*', 
-                         '2017/MuMu17*dy*','2017/MuMu17*ttbar*', '2017/MuMu17*wt*','2017/MuMu17*diboson*', '2017/MuMu17*phot*', 
-                         '2017/ElEl17*dy*','2017/ElEl17*ttbar*', '2017/ElEl17*wt*','2017/ElEl17*diboson*', '2017/ElEl17*phot*', 
-                         '2018/MuMu18*dy*','2018/MuMu18*ttbar*', '2018/MuMu18*wt*','2018/MuMu18*diboson*', '2018/MuMu18*phot*', 
-                         '2018/ElEl18*dy*','2018/ElEl18*ttbar*', '2018/ElEl18*wt*','2018/ElEl18*diboson*', '2018/ElEl18*phot*']
+        include_files = ['2016/MuMu16*dy*','2016/MuMu16*ttbar*', '2016/MuMu16*wt*','2016/MuMu16*diboson*', '2016/MuMu16*phot*', '2016/MuMu16*data*', '2016/MuMu16*fakes*',
+                         '2016/ElEl16*dy*','2016/ElEl16*ttbar*', '2016/ElEl16*wt*','2016/ElEl16*diboson*', '2016/ElEl16*phot*', '2016/ElEl16*data*', '2016/ElEl16*fakes*',
+                         '2017/MuMu17*dy*','2017/MuMu17*ttbar*', '2017/MuMu17*wt*','2017/MuMu17*diboson*', '2017/MuMu17*phot*', '2017/MuMu17*data*', '2017/MuMu17*fakes*',
+                         '2017/ElEl17*dy*','2017/ElEl17*ttbar*', '2017/ElEl17*wt*','2017/ElEl17*diboson*', '2017/ElEl17*phot*', '2017/ElEl17*data*', '2017/ElEl17*fakes*',
+                         '2018/MuMu18*dy*','2018/MuMu18*ttbar*', '2018/MuMu18*wt*','2018/MuMu18*diboson*', '2018/MuMu18*phot*', '2018/MuMu18*data*', '2018/MuMu18*fakes*',
+                         '2018/ElEl18*dy*','2018/ElEl18*ttbar*', '2018/ElEl18*wt*','2018/ElEl18*diboson*', '2018/ElEl18*phot*', '2018/ElEl18*data*', '2018/ElEl18*fakes*'
+                         ]
         tar_cmd = "tar -cf %s" % (options.tarname + ".tgz")
         for item in include_files:
             tar_cmd += " " + "output_files/"+item
@@ -191,6 +192,9 @@ elif (options.haddEOS):
     os.system(hadd_cmd)
 
 elif (options.getEOS):
+    if(options.name == ''):
+        print("Error, empty job name")
+        sys.exit(1)
     print("Getting files and outputting to %s" % options.outdir)
     result = subprocess.check_output(["./scripts/get_crab_file_list.sh", EOS_home + 'Condor_outputs/' + options.name])
     print(result)

@@ -56,6 +56,12 @@ void draw_samesign_cmp(){
     TH1F *QCD_xf = new TH1F("QCD_xf", "MC signal", xf_nbins, 0, 0.8);
 
 
+    int n_rap_bins = 20;
+    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
+    TH1F *DY_rap = new TH1F("mc_rap", "MC Signal (qqbar, qglu, qbarglu)", n_rap_bins, -2.5,2.5);
+    TH1F *back_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
+    TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
+    TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
 
     TH1F *back_m = new TH1F("back_m", "back (WW, WZ, ZZ)", 30, 150, 2000);
@@ -88,12 +94,14 @@ void draw_samesign_cmp(){
     back_xf->SetFillColor(kGreen+3);
     back_pt->SetFillColor(kGreen+3);
     back_phi->SetFillColor(kGreen+3);
+    back_rap->SetFillColor(kGreen+3);
 
     QCD_xf->SetFillColor(kRed -7);
     QCD_m->SetFillColor(kRed -7);
     QCD_cost->SetFillColor(kRed -7);
     QCD_pt->SetFillColor(kRed -7);
     QCD_phi->SetFillColor(kRed -7);
+    QCD_rap->SetFillColor(kRed -7);
 
 
 
@@ -102,22 +110,23 @@ void draw_samesign_cmp(){
     DY_m->SetFillColor(kRed+1);
     DY_cost->SetFillColor(kRed+1);
     DY_phi->SetFillColor(kRed+1);
+    DY_rap->SetFillColor(kRed+1);
 
     float m_low = 150.;
     float m_high = 10000.;
     bool ss = true;
     bool in_os_region = false;
 
-    make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, dummy,  true, type,   year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_ttbar, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,   year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_wt, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,   year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_diboson, back_m, back_cost, back_pt, back_xf, back_phi, dummy, false, type,   year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, dummy, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap,  true, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_ttbar, back_m, back_cost, back_pt, back_xf, back_phi, back_rap, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_wt, back_m, back_cost, back_pt, back_xf, back_phi, back_rap, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_diboson, back_m, back_cost, back_pt, back_xf, back_phi, back_rap, false, type,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, DY_rap, false, type,   year, m_low, m_high, ss);
 
 
 
     bool cost_reweight = true;
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, dummy, type,  year, m_low, m_high, ss, in_os_region, cost_reweight);
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type,  year, m_low, m_high, ss, in_os_region, cost_reweight);
 
 
     printf("Integrals of data, QCD, back, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), back_m->Integral(), DY_m->Integral());
@@ -195,6 +204,11 @@ void draw_samesign_cmp(){
     phi_stack->Add(QCD_phi);
     phi_stack->Add(DY_phi);
 
+    THStack *rap_stack = new THStack("rap_stack", "Dimuon rap Distribution: Data vs MC; y");
+    rap_stack->Add(back_rap);
+    rap_stack->Add(QCD_rap);
+    rap_stack->Add(DY_rap);
+
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.25, 0.25);
@@ -237,6 +251,8 @@ void draw_samesign_cmp(){
     std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dielectron #phi", -1., true);
     CMS_lumi(p_phi, year, 33);
 
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y", -1., true);
+    CMS_lumi(p_rap, year, 33);
 }
 
     

@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 int year = 2018;
-const bool write_out = false;
+const bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
 
@@ -85,36 +85,56 @@ void draw_cmp(){
 
     bool ss = false;
 
+    bool do_emu_cost_rw = false;
     make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, true,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high, ss, true);
-    make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high, ss, true);
-    make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, false,  year, m_low, m_high, ss, true);
+    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
+    make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
+    make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
     make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, ss);
 
     bool fakes_reweight = true;
     Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
 
-    float qcd_err = 0.5;
-    setHistError(qcd_m, qcd_err);
-    setHistError(qcd_cost, qcd_err);
-    setHistError(qcd_pt, qcd_err);
 
     Double_t data_count = data_m->Integral();
     Double_t fake_count = qcd_m->Integral();
     Double_t mc_count = ttbar_m->Integral() + diboson_m->Integral() + wt_m->Integral() + dy_m->Integral();
 
-    Double_t fake_unc = 0.40 * fake_count;
-    double bkg_scale_unc = pow(0.05*0.05 + 0.025*0.025, 0.5);
-    Double_t mc_unc = bkg_scale_unc* mc_count;
+    //includes lumi unc
+    float fake_err = 0.5;
+    double top_unc = pow(0.05*0.05 + 0.025*0.025, 0.5);
+    double diboson_unc = pow(0.09*0.09 + 0.025*0.025, 0.5);
+    double dy_unc = pow(0.03*0.03 + 0.025*0.025, 0.5);
+    Double_t fake_unc = fake_err * fake_count;
+    Double_t mc_unc = (ttbar_m->Integral() + wt_m->Integral()) * top_unc + diboson_m->Integral() * diboson_unc + dy_m->Integral()*dy_unc;
 
-    printf("Data count %.0f \n", data_count);
-    printf("MC count %.0f \n", mc_count);
-    printf("Fake count %.0f \n", fake_count);
+    printf("Data count %.0f +/- %.0f \n", data_count, sqrt(data_count));
+    printf("MC count %.0f +/- %0.f \n", mc_count, mc_unc);
+    printf("Fake count %.0f +/- %.0f \n", fake_count, fake_unc);
     Double_t ratio = data_count / (mc_count + fake_count);
     Double_t unc = sqrt( (data_count/(mc_count + fake_count)/(mc_count + fake_count)) +  
                           pow(data_count/(mc_count + fake_count)/(mc_count + fake_count), 2) * (fake_unc*fake_unc + mc_unc*mc_unc));
     printf("Ratio is %1.3f +/- %1.3f \n", ratio, unc);
 
+    setHistError(qcd_m, fake_err);
+    setHistError(qcd_cost, fake_err);
+    setHistError(qcd_pt, fake_err);
+
+    setHistError(diboson_m, diboson_unc);
+    setHistError(diboson_cost, diboson_unc);
+    setHistError(diboson_pt, diboson_unc);
+
+    setHistError(dy_m, dy_unc);
+    setHistError(dy_cost, dy_unc);
+    setHistError(dy_pt, dy_unc);
+
+    setHistError(ttbar_m, top_unc);
+    setHistError(ttbar_cost, top_unc);
+    setHistError(ttbar_pt, top_unc);
+
+    setHistError(wt_m, top_unc);
+    setHistError(wt_cost, top_unc);
+    setHistError(wt_pt, top_unc);
 
 
     dy_m->SetFillColor(kRed+1);

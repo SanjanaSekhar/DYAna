@@ -26,6 +26,8 @@ fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1., mdf = True)
 h_pull_afb = TH1F("h_pull_Afb", "", 20, -3, 3)
 h_pull_a0 = TH1F("h_pull_A0", "", 20, -3, 3)
 
+print("Will inject AFB %.2f A0 %.2f for all toys " %(options.Afb, options.A0))
+
 for i in range(options.nToys):
     print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit --toysFrequentist --bypassFrequentistFit -s %i --saveToys -t 1 --setParameters Afb=%.2f,A0=%.2f" 
             % (i, options.Afb, options.A0))

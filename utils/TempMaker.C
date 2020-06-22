@@ -200,9 +200,17 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("elIDEND") != string::npos) do_elID_endcap_sys = sys_shift;
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
-
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
+
+        else if(sys_label.find("elScaleStat") != string::npos) do_elScale_sys = sys_shift;
+        else if(sys_label.find("elScaleSyst") != string::npos) do_elScale_sys = sys_shift;
+        else if(sys_label.find("elScaleGain") != string::npos) do_elScale_sys = sys_shift;
+        else if(sys_label.find("elSmear") != string::npos) do_elSmear_sys = sys_shift;
+
+
+
+
 
         else if(sys_label.find("prefire") != string::npos) do_prefire_sys = sys_shift;
 
@@ -227,7 +235,7 @@ void TempMaker::setup_systematic(const string &s_label){
             else if(sys_label.find("METHEM") != string::npos && sys_shift < 0) t_in->SetBranchAddress("met_hem_down", &met_pt);
             else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
         }
-                
+
 
 
         else if(sys_label.find("pdf") != string::npos){
@@ -261,6 +269,7 @@ void TempMaker::setup_systematic(const string &s_label){
         }
 
         else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
+
 
     }
 }
@@ -322,6 +331,13 @@ void TempMaker::doCorrections(){
         xF = compute_xF(cm);
         cost = get_cost(*lep_p, *lep_m);
     }
+    if(is_gen_level){
+        gen_cm = *gen_lep_p + *gen_lep_m; 
+        gen_m = gen_cm.M();
+        gen_pt = gen_cm.Pt();
+        gen_cost = cost_st;
+    }
+
 
     if(std::isnan(cost_st)){
         printf("Gen level cost is Nan, using reco level \n");
@@ -400,16 +416,16 @@ float TempMaker::getEvtWeight(){
 
         if(do_muISO_barrel_sys || do_muISO_endcap_sys){
             era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys) * 
-                          get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
             era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys) * 
-                          get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
         }
 
         if(do_muID_barrel_sys || do_muID_endcap_sys){
             era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
-                         get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
             era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
-                         get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
         }
 
 
@@ -428,7 +444,7 @@ float TempMaker::getEvtWeight(){
             el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys);
         if(do_elHLT_barrel_sys || do_elHLT_endcap_sys) 
             el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_barrel_sys, do_elHLT_endcap_sys);
-        
+
 
 
 
@@ -451,18 +467,22 @@ float TempMaker::getEvtWeight(){
 
     }
     /*
-    if(count < 100)
-        printf("%.4f \n", evt_weight);
-    count++;
-    */
+       if(count < 100)
+       printf("%.4f \n", evt_weight);
+       count++;
+       */
     return evt_weight;
 
 }
+float TempMaker::getLQReweightingDenom(){
+    int flag = FLAG_MUONS;
+    if(do_electrons) flag = FLAG_ELECTRONS;
+    return get_LQ_reweighting_denom(LQ_helper, flag, gen_m, cost_st);
+}
 
 float TempMaker::getReweightingDenom(){
-    TLorentzVector gen_cm = *gen_lep_p + *gen_lep_m; 
     //printf("%.2f %.2f %.2f \n", cost, gen_cm.M(), gen_cm.Pt());
-    return get_reweighting_denom(A0_helper, cost, gen_cm.M(), gen_cm.Pt(), do_A0_sys);
+    return get_reweighting_denom(A0_helper, cost_st, gen_m, gen_pt, do_A0_sys);
 }
 
 
@@ -472,5 +492,53 @@ void TempMaker::finish(){
 }
 
 TempMaker::~TempMaker(){}
+
+
+void fakes_cost_reweight(TH2 *h_fakes, TH1 *h_rw, int systematic = 0){
+    int n_var1_bins = h_fakes->GetNbinsX();
+    int n_cost_bins = h_fakes->GetNbinsY();
+    int n_rw_bins = h_rw->GetNbinsX();
+
+    //printf("Systemtic is %i \n", systematic);
+
+    if(n_cost_bins != n_rw_bins){
+        printf("Fakes reweighting binning doesn't match! hist %i bins and rw_hist %i bins\n", n_cost_bins, n_rw_bins);
+        exit(1);
+    }
+    for(int i=1; i<= h_fakes->GetNbinsX(); i++){
+        for(int j=1; j<= h_fakes->GetNbinsY(); j++){
+            float old_val = h_fakes->GetBinContent(i, j);
+            float old_err = h_fakes->GetBinError(i, j);
+
+            float correction = h_rw->GetBinContent(j);
+
+            //one systematic for every |cos(theta)| bin (nbins / 2)
+            if(systematic != 0){
+                float stat_err = h_rw->GetBinError(j);
+                float sys_err = 0.5 * std::fabs( correction - 1.);
+                float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+
+                int sys_bin = abs(systematic);
+                int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;
+                if(j == sys_bin || j == opp_bin){
+                    //shift the reweighting in this bin by the error
+                    if(systematic >0) correction += error;
+                    if(systematic <0) correction -= error;
+                }
+
+            }
+            float new_val = old_val * correction;
+            new_val = std::max(new_val, 1e-6f);
+
+            float new_err = (old_err/old_val) * new_val; // stat error
+
+
+            //printf("Old %.1f +/- %.1f, correction %.2f New %.1f +/- %.1f \n", old_val, old_err, correction, new_val, new_err);
+
+            h_fakes->SetBinContent(i,j, new_val);
+            h_fakes->SetBinError(i,j, new_err);
+        }
+    }
+}
 
 #endif

@@ -12,6 +12,7 @@ parser.add_option("--teststat", default="saturated", help="Which gof test to use
 parser.add_option("--mask_ee_ss", default=False, action="store_true", help="Mask ee_ss channels from gof calculation (not from fit)")
 parser.add_option("--mask_ee", default=False, action="store_true", help="Mask ee_ss channels from gof calculation (not from fit)")
 parser.add_option("--mask_mumu", default=False, action="store_true", help="Mask ee_ss channels from gof calculation (not from fit)")
+parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("-o", "--odir", default="", help = "output directory")
 
 (options, args) = parser.parse_args()
@@ -31,9 +32,10 @@ if(options.mask_mumu):
 
 
 workspace = "workspaces/%s_gof_tests_%i.root" % (chan, options.mbin)
-make_workspace(workspace, options.mbin)
+if(not options.reuse_fit):
+    make_workspace(workspace, options.mbin)
+    print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1" % (workspace))
 
-print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1" % (workspace))
 fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1., mdf = True)
 print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
 print("Based on initial fit, injecting Afb = %.3f A0 = %.3f"  %(fitted_afb, fitted_a0))
@@ -41,11 +43,11 @@ print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName
         % (options.nToys, fitted_afb, fitted_a0))
 print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i %s" %(workspace, options.teststat, options.nToys, extra_params))
 
-gof_helper(chan, mbin = options.mbin, odir = options.odir)
+gof_helper(chan, mbin = options.mbin, odir = options.odir, teststat = options.teststat)
 
 
-print_and_do("mv higgsCombineTest.GoodnessOfFit.mH120.123456.root %s%s_bin%i_toys.root" % (options.odir, chan, options.mbin))
-print_and_do("rm higgsCombineTest.GoodnessOfFit.mH120.root")
+#print_and_do("mv higgsCombineTest.GoodnessOfFit.mH120.123456.root %s%s_bin%i_toys.root" % (options.odir, chan, options.mbin))
+#print_and_do("rm higgsCombineTest.GoodnessOfFit.mH120.root")
 
 
 

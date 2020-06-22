@@ -13,17 +13,27 @@ labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
 njobs = 15
-ending = "may28"
+ending = "june18"
 
 for year in years:
-        f_names = []
-        for j,ttype in enumerate(types):
-            script_name = "scripts/script2.sh"
-            print_and_do("cp scripts/templ_template.sh %s" % script_name)
-            print_and_do("sed -i  s/YEAR/%i/g %s" % (year, script_name))
-            print_and_do("sed -i  s/TYPE/%i/g %s" % (ttype, script_name))
-            print_and_do("chmod +x %s" % script_name)
-            print_and_do("python doCondor.py --njobs %i --combine --sub  -s %s -n templ%i_%s_%s"  % (njobs, script_name,  year % 2000, labels[j], ending))
-            print_and_do("rm scripts/script2.sh")
+
+    #regular templates
+    script_name = "scripts/script2.sh"
+    print_and_do("cp scripts/templ_template.sh %s" % script_name)
+    print_and_do("sed -i  s/YEAR/%i/g %s" % (year, script_name))
+    print_and_do("chmod +x %s" % script_name)
+    print_and_do("python doCondor.py --njobs %i --combine --sub  -s %s -n templ%i_%s"  % (1, script_name,  year % 2000, ending))
+    print_and_do("rm scripts/script2.sh")
+
+
+    #systematics
+    for j,ttype in enumerate(types):
+        script_name = "scripts/script2.sh"
+        print_and_do("cp scripts/templ_sys_template.sh %s" % script_name)
+        print_and_do("sed -i  s/YEAR/%i/g %s" % (year, script_name))
+        print_and_do("sed -i  s/TYPE/%i/g %s" % (ttype, script_name))
+        print_and_do("chmod +x %s" % script_name)
+        print_and_do("python doCondor.py --njobs %i --combine --sub  -s %s -n templ%i_%s_%s"  % (njobs, script_name,  year % 2000, labels[j], ending))
+        print_and_do("rm scripts/script2.sh")
 
 
