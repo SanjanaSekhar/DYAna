@@ -183,7 +183,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     //printf("Setting up LQ rw helper... ");
     //LQ_rw_helper h_LQ;
     //setup_LQ_rw_helper(&h_LQ, year);
-
+ //   TH1F h_LQpure_weight = TH1F("h_sym", "Symmetric template of mc",
+   //         n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     
 
     printf("Making mc template for sys %s \n", sys_label.c_str());
@@ -237,6 +238,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
             //for LQ, 2 terms-> pure and interference
             Double_t s = tm.m*tm.m;
+            //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
             float reweight_LQpure_norm = ((1./2.56819)*1e9/(128*M_PI*s));
             float reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
             float reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));

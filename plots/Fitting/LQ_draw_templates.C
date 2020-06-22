@@ -7,7 +7,7 @@
 
 
 void LQ_draw_templates(){
-        Double_t m_LQ=1000.;
+        Double_t m_LQ=10000.;
         bool ss = false;
         bool use_xF =false;
         bool use_LQ_denom=true;
