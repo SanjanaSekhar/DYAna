@@ -11,7 +11,7 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         bool use_LQ_denom=true;
-        bool draw_muons = false;
+        bool draw_muons = true;
         bool draw_electrons = true;
        const string sys_label = "";
         printf("=========================\n m_LQ = %f, use_LQ_denom = %d, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,use_LQ_denom,draw_muons,draw_electrons );
@@ -67,10 +67,10 @@ void LQ_draw_templates(){
 
             gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF,use_LQ_denom, "");
 
-            sprintf(mu_fname1, "%s/Mu%i_MC%d_SM_chk.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(mu_fname1, "%s/Mu%i_MC%d_SM_th3f.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/Mu%i_MC%d_LQint_chk.png", plot_dir, year%2000, use_LQ_denom);
-            sprintf(mu_fname3, "%s/Mu%i_MC%d_LQpure_chk.png", plot_dir, year%2000, use_LQ_denom);
+            sprintf(mu_fname2, "%s/Mu%i_MC%d_LQint_th3f.png", plot_dir, year%2000, use_LQ_denom);
+            sprintf(mu_fname3, "%s/Mu%i_MC%d_LQpure_th3f.png", plot_dir, year%2000, use_LQ_denom);
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
