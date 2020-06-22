@@ -208,7 +208,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
     Double_t max_obs = 0.;
 
-       
+    Double_t reweight_LQpure_pos_min=10000.;
+    Double_t reweight_LQpure_pos_max=0.;
+    Double_t reweight_LQint_pos_min=10000.;
+    Double_t reweight_LQint_pos_max=0.;
     //printf("\n================denom/LQ_denom>=1000. for following entries================\n");
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -280,7 +283,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
           if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
           else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
 
-
+          if(reweight_LQpure_pos<reweight_LQpure_pos_min)reweight_LQpure_pos_min = reweight_LQpure_pos;
+          if(reweight_LQpure_pos>reweight_LQpure_pos_max)reweight_LQpure_pos_max = reweight_LQpure_pos;
+          if(reweight_LQint_pos<reweight_LQint_pos_min)reweight_LQint_pos_min = reweight_LQint_pos;
+          if(reweight_LQint_pos>reweight_LQint_pos_max)reweight_LQint_pos_max = reweight_LQint_pos;
          
           
 
@@ -368,7 +374,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             }
         }
     }
-*/
+*/  printf("year = %i, reweight_LQpure_pos_min = % 0.12f\n", year, reweight_LQpure_pos_min );
+    printf("year = %i, reweight_LQpure_pos_max = % 0.12f\n", year, reweight_LQpure_pos_max );
+    printf("year = %i, reweight_LQint_pos_min = % 0.12f\n", year, reweight_LQint_pos_min );
+    printf("year = %i, reweight_LQint_pos_max = % 0.12f\n", year, reweight_LQint_pos_max );
    
     return 0;
 }
