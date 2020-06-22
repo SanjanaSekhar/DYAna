@@ -193,10 +193,10 @@ void LQ_draw_templates(){
 
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, year, m_LQ, FLAG_ELECTRONS, use_xF,use_LQ_denom, "");
 
-            sprintf(el_fname1, "%s/El%i_MC%d_SM_chk.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname1, "%s/El%i_MC%d_SM_th3f.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/El%i_MC%d_LQint_chk.png", plot_dir, year%2000,use_LQ_denom);
-            sprintf(el_fname3, "%s/El%i_MC%d_LQpure_chk.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname2, "%s/El%i_MC%d_LQint_th3f.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname3, "%s/El%i_MC%d_LQpure_th3f.png", plot_dir, year%2000,use_LQ_denom);
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;

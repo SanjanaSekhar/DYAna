@@ -477,7 +477,7 @@ float TempMaker::getEvtWeight(){
 float TempMaker::getLQReweightingDenom(){
     int flag = FLAG_MUONS;
     if(do_electrons) flag = FLAG_ELECTRONS;
-    return get_LQ_reweighting_denom(LQ_helper, flag, gen_m, cost_st);
+    return get_LQ_reweighting_denom(LQ_helper, flag, gen_m, cost_st, abs(cm.Rapidity()));
 }
 
 float TempMaker::getReweightingDenom(){
