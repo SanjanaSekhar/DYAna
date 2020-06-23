@@ -298,6 +298,11 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             // Double_t reweight_LQint = (reweight_LQint_num/denom);
            //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
            //
+           if(abs(reweight_LQpure_pos*tm.evt_weight)>=1)
+           {
+            printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
+           }
+          
             
             //modified these
             h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
@@ -328,15 +333,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
           // h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
            h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
-           if((reweight_LQpure_pos*tm.evt_weight)>=12)
-           {
-            printf("LQpure_wt 12.758579249881 for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
-           }
-           if(abs(reweight_LQpure_pos*tm.evt_weight)>=18)
-           {
-            printf("LQpure_wt 12.758579249881 for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
-           }
-
+          
         }
     }
 
