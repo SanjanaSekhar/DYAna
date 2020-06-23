@@ -62,15 +62,18 @@ void LQ_draw_templates(){
             auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_LQint->SetDirectory(0);
-
+            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., 450.);
+            h_mu_LQpure_wt->SetDirectory(0);
+            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 450.);
+            h_mu_LQint_wt->SetDirectory(0);
             
 
-            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF,use_LQ_denom, "");
+            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint,h_mu_LQpure_wt,h_mu_LQint_wt year, m_LQ, FLAG_MUONS, use_xF,use_LQ_denom, "");
 
-            sprintf(mu_fname1, "%s/Mu%i_MC%d_SM_th3f.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(mu_fname1, "%s/Mu%i_MC%d_SM.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/Mu%i_MC%d_LQint_th3f.png", plot_dir, year%2000, use_LQ_denom);
-            sprintf(mu_fname3, "%s/Mu%i_MC%d_LQpure_th3f.png", plot_dir, year%2000, use_LQ_denom);
+            sprintf(mu_fname2, "%s/Mu%i_MC%d_LQ.png", plot_dir, year%2000, use_LQ_denom);
+            sprintf(mu_fname3, "%s/Mu%i_MC%d_LQwts.png", plot_dir, year%2000, use_LQ_denom);
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
@@ -100,6 +103,8 @@ void LQ_draw_templates(){
             h1_mumu_mn->SetLineColor(kRed + 1);
             h1_mumu_LQpure->SetLineColor(kOrange +9);
             h1_mumu_LQint->SetLineColor(kRed + 3);
+            h_mu_LQpure_wt->SetLineColor(kRed);
+            h_mu_LQint_wt->SetLineColor(kGreen);
 
             h1_mumu_alpha->SetLineWidth(2);
             h1_mumu_sym->SetLineWidth(2);
@@ -108,6 +113,8 @@ void LQ_draw_templates(){
             h1_mumu_mn->SetLineWidth(2);
             h1_mumu_LQpure->SetLineWidth(2);
             h1_mumu_LQint->SetLineWidth(2);
+            h_mu_LQpure_wt->SetLineWidth(2);
+            h_mu_LQint_wt->SetLineWidth(2);
 
 
             h1_mumu_asym->SetMaximum(h1_mumu_sym->GetMaximum()*1.2);
@@ -132,13 +139,13 @@ void LQ_draw_templates(){
             delete c_mumu1;
 
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
-            h1_mumu_LQint->SetTitle(mu_title);
+            h1_mumu_LQpure->SetTitle(mu_title);
             //h1_mumu_pl->Draw("hist");
             //h1_mumu_mn->Draw("hist same");
             //h1_mumu_alpha->Draw("hist same");
             //h1_mumu_LQpure->SetTitle(mu_title);
-            //h1_mumu_LQpure->Draw("hist same");
-            h1_mumu_LQint->Draw("hist");
+            h1_mumu_LQpure->Draw("hist ");
+            h1_mumu_LQint->Draw("hist same");
 
 
             c_mumu2->cd();
@@ -146,7 +153,7 @@ void LQ_draw_templates(){
            // leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
             //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
             //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
-            //leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
+            leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
             leg2->AddEntry(h1_mumu_LQint,"LQint Template","l");
             leg2->Draw();
 
@@ -154,13 +161,13 @@ void LQ_draw_templates(){
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
-            h1_mumu_LQpure->SetTitle(mu_title);
-            h1_mumu_LQpure->Draw("hist");
-           // h1_mumu_LQint->Draw("hist same ");
+            h_mu_LQpure_wt->SetTitle(mu_title);
+            h_mu_LQpure_wt->Draw("hist");
+            h_mu_LQint_wt->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-           // leg3->AddEntry(h1_mumu_LQint, "LQint Template", "l");
-            leg3->AddEntry(h1_mumu_LQpure, "LQpure Template", "l");
+            leg3->AddEntry(h_mu_LQint_wt, "LQint weights", "l");
+            leg3->AddEntry(h_mu_LQpure_wt, "LQpure weights", "l");
             leg3->Draw();
             
 
@@ -189,14 +196,17 @@ void LQ_draw_templates(){
             auto h_elel_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_LQint->SetDirectory(0);
+            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., 450.);
+            h_el_LQpure_wt->SetDirectory(0);
+            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 450.);
+            h_el_LQint_wt->SetDirectory(0);
 
+            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, h_el_LQpure_wt, h_el_LQint_wt,year, m_LQ, FLAG_ELECTRONS, use_xF,use_LQ_denom, "");
 
-            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, year, m_LQ, FLAG_ELECTRONS, use_xF,use_LQ_denom, "");
-
-            sprintf(el_fname1, "%s/El%i_MC%d_SM_th3f.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname1, "%s/El%i_MC%d_SM.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/El%i_MC%d_LQint_th3f.png", plot_dir, year%2000,use_LQ_denom);
-            sprintf(el_fname3, "%s/El%i_MC%d_LQpure_th3f.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname2, "%s/El%i_MC%d_LQ.png", plot_dir, year%2000,use_LQ_denom);
+            sprintf(el_fname3, "%s/El%i_MC%d_LQwts.png", plot_dir, year%2000,use_LQ_denom);
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -224,6 +234,8 @@ void LQ_draw_templates(){
             h1_elel_mn->SetLineColor(kRed + 1);
             h1_elel_LQpure->SetLineColor(kOrange +9);
             h1_elel_LQint->SetLineColor(kRed + 3);
+            h_el_LQpure_wt->SetLineColor(kRed);
+            h_el_LQint_wt->SetLineColor(kGreen);
 
             h1_elel_alpha->SetLineWidth(2);
             h1_elel_sym->SetLineWidth(2);
@@ -232,6 +244,9 @@ void LQ_draw_templates(){
             h1_elel_mn->SetLineWidth(2);
             h1_elel_LQpure->SetLineWidth(2);
             h1_elel_LQint->SetLineWidth(2);
+            h_el_LQpure_wt->SetLineWidth(2);
+            h_el_LQint_wt->SetLineWidth(2);
+
 
             h1_elel_asym->SetMaximum(h1_elel_sym->GetMaximum()*1.2);
             //h1_elel_LQpure->SetMaximum(h1_elel_LQint->GetMaximum()*2);
@@ -258,19 +273,19 @@ void LQ_draw_templates(){
             delete c_elel1;
 
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQint->SetTitle(el_title);
+            h1_elel_LQpure->SetTitle(el_title);
             //h1_elel_pl->Draw("hist");
             //h1_elel_mn->Draw("hist same");
             //h1_elel_alpha->Draw("hist same");
             //h1_elel_LQpure->SetTitle(el_title);
-            //h1_elel_LQpure->Draw("hist same");
-            h1_elel_LQint->Draw("hist ");
+            h1_elel_LQpure->Draw("hist ");
+            h1_elel_LQint->Draw("hist same");
 
              TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
            // leg2->AddEntry(h1_mumu_pl, "Plus Template", "l");
             //leg2->AddEntry(h1_mumu_mn, "Minus Template", "l");
             //leg2->AddEntry(h1_mumu_alpha, "#alpha Template", "l");
-            //leg2->AddEntry(h1_mumu_LQpure,"LQpure Template","l");
+            leg2->AddEntry(h1_elel_LQpure,"LQpure Template","l");
             leg2->AddEntry(h1_elel_LQint,"LQint Template","l");
            
 
@@ -280,16 +295,13 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQpure->SetTitle(el_title);
-            h1_elel_LQpure->Draw("hist");
-           // h1_elel_LQint->Draw("hist same ");
+            h_el_LQpure_wt->SetTitle(el_title);
+            h_el_LQpure_wt->Draw("hist");
+           h_el_LQint_wt->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-           // leg3->AddEntry(h1_mumu_LQint, "LQint Template", "l");
-            leg3->AddEntry(h1_elel_LQpure, "LQpure Template", "l");
-
-            
-
+           leg3->AddEntry(h_el_LQint_wt, "LQint weights", "l");
+            leg3->AddEntry(h_el_LQpure_wt, "LQpure weights", "l");
             leg3->Draw();
 
             c_elel3->Print(el_fname3);
