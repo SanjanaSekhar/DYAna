@@ -254,7 +254,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(use_LQ_denom) reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
             else reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
             //if(abs(reweight_LQpure_pos*tm.evt_weight)>10.)
-            if(LQ_denom==1e-6)
+            if(LQ_denom==0.000001)
            {
            // printf("for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
             printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
