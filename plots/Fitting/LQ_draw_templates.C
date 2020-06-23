@@ -294,8 +294,8 @@ void LQ_draw_templates(){
                 h16_elel_mn = h1_elel_mn;
                 h16_elel_LQpure = h1_elel_LQpure;
                 h16_elel_LQint = h1_elel_LQint;
-                h16_elel_LQpure_wt = h_mu_LQpure_wt;
-                h16_elel_LQint_wt = h_mu_LQint_wt;
+                h16_elel_LQpure_wt = h_el_LQpure_wt;
+                h16_elel_LQint_wt = h_el_LQint_wt;
             }
             if(year==2017)
             {
@@ -303,8 +303,8 @@ void LQ_draw_templates(){
                 h17_elel_mn = h1_elel_mn;
                 h17_elel_LQpure = h1_elel_LQpure;
                 h17_elel_LQint = h1_elel_LQint;
-                h17_elel_LQpure_wt = h_mu_LQpure_wt;
-                h17_elel_LQint_wt = h_mu_LQint_wt;
+                h17_elel_LQpure_wt = h_el_LQpure_wt;
+                h17_elel_LQint_wt = h_el_LQint_wt;
             }
             if(year==2018)
             {
@@ -312,8 +312,8 @@ void LQ_draw_templates(){
                 h18_elel_mn = h1_elel_mn;
                 h18_elel_LQpure = h1_elel_LQpure;
                 h18_elel_LQint = h1_elel_LQint;
-                h18_elel_LQpure_wt = h_mu_LQpure_wt;
-                h18_elel_LQint_wt = h_mu_LQint_wt;
+                h18_elel_LQpure_wt = h_el_LQpure_wt;
+                h18_elel_LQint_wt = h_el_LQint_wt;
             }
 
 
