@@ -388,7 +388,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_mumu_LQpure_wt, "LQpure18 weights*evtwt", "l");
     leg0->Draw();
             
-    c_mu_pwt->Print("Muons_LQpure_weights.png");
+    c_mu_pwt->Print("Misc_plots/template_plots2/Muons_LQpure_weights.png");
     delete c_mu_pwt;
     //print lq int weights for all years
     h17_mumu_LQint_wt->SetLineColor(kRed);
@@ -407,7 +407,7 @@ void LQ_draw_templates(){
     leg->AddEntry(h18_mumu_LQint_wt, "LQint18 weights*evtwt", "l");
     leg->Draw();
             
-    c_mu_iwt->Print("Muons_LQint_weights.png");
+    c_mu_iwt->Print("Misc_plots/template_plots2/Muons_LQint_weights.png");
     delete c_mu_iwt;
     //print plus minus temps for all years
     /*

@@ -232,6 +232,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //Double_t denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             Double_t denom = tm.getReweightingDenom();
             Double_t LQ_denom = tm.getLQReweightingDenom();
+            if(LQ_denom == 0.000001) print("+++++ YAS +++++")
             /*
             if(denom/LQ_denom>=1000.)
             {
