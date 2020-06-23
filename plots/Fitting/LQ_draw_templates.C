@@ -76,9 +76,9 @@ void LQ_draw_templates(){
             auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_LQint->SetDirectory(0);
-            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .1);
+            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .2);
             h_mu_LQpure_wt->SetDirectory(0);
-            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 100, 0., .1);
+            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 100, 0., .2);
             h_mu_LQint_wt->SetDirectory(0);
             
 
@@ -236,9 +236,9 @@ void LQ_draw_templates(){
             auto h_elel_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_LQint->SetDirectory(0);
-            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .1);
+            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .2);
             h_el_LQpure_wt->SetDirectory(0);
-            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 100, 0., .1);
+            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 100, 0., .2);
             h_el_LQint_wt->SetDirectory(0);
 
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, h_el_LQpure_wt, h_el_LQint_wt,
@@ -376,10 +376,10 @@ void LQ_draw_templates(){
     h18_mumu_LQpure_wt->SetLineColor(kGreen);
 
     TCanvas *c_mu_pwt = new TCanvas("c_mu_pwt", "Histograms", 200, 10, 900, 700);
-    h16_mumu_LQpure_wt->SetTitle("Muons: LQpure weights");
-    h16_mumu_LQpure_wt->Draw("hist");
+    h18_mumu_LQpure_wt->SetTitle("Muons: LQpure weights");
+    h18_mumu_LQpure_wt->Draw("hist");
     h17_mumu_LQpure_wt->Draw("hist same");
-    h18_mumu_LQpure_wt->Draw("hist same");
+    h16_mumu_LQpure_wt->Draw("hist same");
             
 
     TLegend *leg0 = new TLegend(x_start, y_start, x_end, y_end);
@@ -395,10 +395,10 @@ void LQ_draw_templates(){
     h18_mumu_LQint_wt->SetLineColor(kGreen);
 
     TCanvas *c_mu_iwt = new TCanvas("c_mu_iwt", "Histograms", 200, 10, 900, 700);
-    h16_mumu_LQint_wt->SetTitle("Muons: LQint weights");
-    h16_mumu_LQint_wt->Draw("hist");
+    h18_mumu_LQint_wt->SetTitle("Muons: LQint weights");
+    h18_mumu_LQint_wt->Draw("hist");
     h17_mumu_LQint_wt->Draw("hist same");
-    h18_mumu_LQint_wt->Draw("hist same");
+    h16_mumu_LQint_wt->Draw("hist same");
             
 
     TLegend *leg = new TLegend(x_start, y_start, x_end, y_end);
@@ -483,10 +483,10 @@ void LQ_draw_templates(){
     h18_elel_LQpure_wt->SetLineColor(kGreen);
 
     TCanvas *c_el_pwt = new TCanvas("c_el_pwt", "Histograms", 200, 10, 900, 700);
-    h16_elel_LQpure_wt->SetTitle("elecs: LQpure weights");
-    h16_elel_LQpure_wt->Draw("hist");
+    h18_elel_LQpure_wt->SetTitle("elecs: LQpure weights");
+    h18_elel_LQpure_wt->Draw("hist");
     h17_elel_LQpure_wt->Draw("hist same");
-    h18_elel_LQpure_wt->Draw("hist same");
+    h16_elel_LQpure_wt->Draw("hist same");
             
     leg0->Draw();
             
@@ -497,10 +497,10 @@ void LQ_draw_templates(){
     h18_elel_LQint_wt->SetLineColor(kGreen);
 
     TCanvas *c_el_iwt = new TCanvas("c_el_iwt", "Histograms", 200, 10, 900, 700);
-    h16_elel_LQint_wt->SetTitle("elecs: LQint weights");
-    h16_elel_LQint_wt->Draw("hist");
+    h18_elel_LQint_wt->SetTitle("elecs: LQint weights");
+    h18_elel_LQint_wt->Draw("hist");
     h17_elel_LQint_wt->Draw("hist same");
-    h18_elel_LQint_wt->Draw("hist same");
+    h16_elel_LQint_wt->Draw("hist same");
 
     leg->Draw();
             
