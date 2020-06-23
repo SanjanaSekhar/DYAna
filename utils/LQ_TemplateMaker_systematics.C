@@ -233,7 +233,9 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //Double_t denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             Double_t denom = tm.getReweightingDenom();
             Double_t LQ_denom = tm.getLQReweightingDenom();
-            if(LQ_denom < 0.000005) {printf("+++++ YAS +++++"); n_rogue++;}
+            if(LQ_denom < 0.000005) {
+                //printf("+++++ YAS +++++\n"); n_rogue+=2;
+                continue;}
             /*
             if(denom/LQ_denom>=1000.)
             {
@@ -263,7 +265,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            // printf("reweight_LQpure_norm = %0.12f, reweight_LQpure_num = %0.12f, LQ_denom = %0.12f, reweight_LQpure_pos = %0.12f\n",reweight_LQpure_norm, reweight_LQpure_num, LQ_denom, reweight_LQpure_pos);
             //printf("==============\n");
             n_rogue_pos++;
-            reweight_LQpure_pos=0.;
+          //  reweight_LQpure_pos=0.;
            }
            // if(reweight_LQpure_pos>50.)reweight_LQpure_pos = 0.;
             reweight_LQpure_num1 = ((1 + gen_cost)*(1 + gen_cost));
@@ -280,7 +282,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            // printf("reweight_LQpure_norm = %0.12f, reweight_LQpure_num = %0.12f, LQ_denom = %0.12f, reweight_LQpure_neg = %0.12f\n",reweight_LQpure_norm, reweight_LQpure_num, LQ_denom, reweight_LQpure_neg);
            // printf("==============\n");
             n_rogue_neg++;
-            reweight_LQpure_neg=0.;
+          //  reweight_LQpure_neg=0.;
            }
             //Double_t reweight_LQpure = (reweight_LQpure_num/LQ_denom);
             // Double_t reweight_LQpure = (reweight_LQpure_num/denom);
@@ -311,7 +313,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            // printf("reweight_LQint_norm = %0.12f, reweight_LQint_num = %0.12f, LQ_denom = %0.12f, reweight_LQint_pos = %0.12f\n",reweight_LQint_norm, reweight_LQint_num, LQ_denom, reweight_LQint_pos);
            // printf("==============\n");
             n_rogue_pos++;
-            reweight_LQint_pos=0.;
+           // reweight_LQint_pos=0.;
            }
            
           //  if(reweight_LQint_pos>50.)reweight_LQint_pos = 0.;
@@ -329,7 +331,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            // printf("reweight_LQint_norm = %0.12f, reweight_LQint_num = %0.12f, LQ_denom = %0.12f, reweight_LQint_neg = %0.12f\n",reweight_LQint_norm, reweight_LQint_num, LQ_denom, reweight_LQint_neg);
            // printf("==============\n");
             n_rogue_neg++;
-            reweight_LQint_neg=0.;
+          //  reweight_LQint_neg=0.;
            }
                
            // Double_t reweight_LQint = (reweight_LQint_num/LQ_denom);
