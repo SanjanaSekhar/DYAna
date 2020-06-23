@@ -167,8 +167,8 @@ void LQ_draw_templates(){
             h_mu_LQpure_wt->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-            leg3->AddEntry(h_mu_LQint_wt, "LQint weights", "l");
-            leg3->AddEntry(h_mu_LQpure_wt, "LQpure weights", "l");
+            leg3->AddEntry(h_mu_LQint_wt, "LQint weights*evtwt", "l");
+            leg3->AddEntry(h_mu_LQpure_wt, "LQpure weights*evtwt", "l");
             leg3->Draw();
             
 
@@ -302,8 +302,8 @@ void LQ_draw_templates(){
            h_el_LQpure_wt->Draw("hist same ");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-           leg3->AddEntry(h_el_LQint_wt, "LQint weights", "l");
-            leg3->AddEntry(h_el_LQpure_wt, "LQpure weights", "l");
+           leg3->AddEntry(h_el_LQint_wt, "LQint weights*evtwt", "l");
+            leg3->AddEntry(h_el_LQpure_wt, "LQpure weights*evtwt", "l");
             leg3->Draw();
 
             c_elel3->Print(el_fname3);

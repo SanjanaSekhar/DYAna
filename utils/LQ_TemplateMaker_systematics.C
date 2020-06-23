@@ -286,12 +286,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             Double_t reweight_LQint_neg;
           if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
           else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
-/*
-          if(reweight_LQpure_pos<reweight_LQpure_pos_min)reweight_LQpure_pos_min = reweight_LQpure_pos;
-          if(reweight_LQpure_pos>reweight_LQpure_pos_max)reweight_LQpure_pos_max = reweight_LQpure_pos;
-          if(reweight_LQint_pos<reweight_LQint_pos_min)reweight_LQint_pos_min = reweight_LQint_pos;
-          if(reweight_LQint_pos>reweight_LQint_pos_max)reweight_LQint_pos_max = reweight_LQint_pos;
-*/       
+
+          if((reweight_LQpure_pos*tm.evt_weight)<reweight_LQpure_pos_min)reweight_LQpure_pos_min = reweight_LQpure_pos*tm.evt_weight;
+          if((reweight_LQpure_pos*tm.evt_weight)>reweight_LQpure_pos_max)reweight_LQpure_pos_max = reweight_LQpure_pos*tm.evt_weight;
+          if((reweight_LQint_pos*tm.evt_weight)<reweight_LQint_pos_min)reweight_LQint_pos_min = reweight_LQint_pos*tm.evt_weight;
+          if((reweight_LQint_pos*tm.evt_weight)>reweight_LQint_pos_max)reweight_LQint_pos_max = reweight_LQint_pos*tm.evt_weight;
+       
           
 
            // Double_t reweight_LQint = (reweight_LQint_num/LQ_denom);
@@ -311,7 +311,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
          //   h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-            h_LQpure_wt->Fill(reweight_LQpure_pos);
+            h_LQpure_wt->Fill(reweight_LQpure_pos*tm.evt_weight);
          /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
             Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
@@ -327,7 +327,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
         */
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
           // h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
-           h_LQint_wt->Fill(reweight_LQint_pos);
+           h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
 
         }
     }
