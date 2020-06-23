@@ -244,7 +244,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //for LQ, 2 terms-> pure and interference
             Double_t s = tm.m*tm.m;
             //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
-            Double_t reweight_LQpure_norm = ((1./2.56819)*1e6/(128*M_PI*s));
+            Double_t reweight_LQpure_norm = ((1./2.56819)*1e9/(128*M_PI*s));
             Double_t reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
             Double_t reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
             Double_t reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
@@ -270,7 +270,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //printf("\n LQint N2 denom = %0.12f",reweight_LQint_norm2_denom);
             Double_t reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
            // printf("\n LQint N2 = %0.12f",reweight_LQint_norm2);
-            Double_t reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*(1./2.56819)*1e6;
+            Double_t reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*(1./2.56819)*1e9;
              //printf("\n LQint N1+N2 = %0.12f",reweight_LQint_norm);
             Double_t reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
             Double_t reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
