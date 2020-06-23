@@ -214,7 +214,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     Double_t reweight_LQpure_pos_max=0.;
     Double_t reweight_LQint_pos_min=10000.;
     Double_t reweight_LQint_pos_max=0.;
-    int n_rogue=0.;
+    int n_rogue_pos=0.;
+    int n_rogue_neg=0.;
     //printf("\n================denom/LQ_denom>=1000. for following entries================\n");
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -302,28 +303,28 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            {
             printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
             printf("==============\n");
-            n_rogue++;
+            n_rogue_pos++;
             reweight_LQpure_pos=0.;
            }
             if(abs(reweight_LQint_pos*tm.evt_weight)>5.)
            {
             printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_pos*tm.evt_weight),tm.m, var1, tm.cost);
             printf("==============\n");
-            n_rogue++;
+            n_rogue_pos++;
             reweight_LQint_pos=0.;
            }
            if(abs(reweight_LQpure_neg*tm.evt_weight)>5.)
            {
             printf("LQpure_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_neg*tm.evt_weight),tm.m, var1, tm.cost);
             printf("==============\n");
-            n_rogue++;
+            n_rogue_neg++;
             reweight_LQpure_neg=0.;
            }
             if(abs(reweight_LQint_neg*tm.evt_weight)>5.)
            {
             printf("LQint_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_neg*tm.evt_weight),tm.m, var1, tm.cost);
             printf("==============\n");
-            n_rogue++;
+            n_rogue_neg++;
             reweight_LQint_neg=0.;
            }
           
@@ -364,7 +365,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
         }
     }
 
-    printf("No. of rogue events in %i = %i \n", year,n_rogue);
+    printf("No. of +cost rogue events in %i = %i \n", year,n_rogue_pos);
+    printf("No. of -cost rogue events in %i = %i \n", year,n_rogue_neg);
 
     tm.finish();
     //int mbin = find_bin(m_bins, m_low + 0.1);
