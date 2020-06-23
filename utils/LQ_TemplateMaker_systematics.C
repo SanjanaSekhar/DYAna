@@ -285,23 +285,29 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
             Double_t reweight_LQint_neg;
           if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
-          else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
-
-          if((reweight_LQpure_pos*tm.evt_weight)<reweight_LQpure_pos_min)reweight_LQpure_pos_min = reweight_LQpure_pos*tm.evt_weight;
-          if((reweight_LQpure_pos*tm.evt_weight)>reweight_LQpure_pos_max)reweight_LQpure_pos_max = reweight_LQpure_pos*tm.evt_weight;
-          if((reweight_LQint_pos*tm.evt_weight)<reweight_LQint_pos_min)reweight_LQint_pos_min = reweight_LQint_pos*tm.evt_weight;
-          if((reweight_LQint_pos*tm.evt_weight)>reweight_LQint_pos_max)reweight_LQint_pos_max = reweight_LQint_pos*tm.evt_weight;
-       
-          
-
+          else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);     
            // Double_t reweight_LQint = (reweight_LQint_num/LQ_denom);
             // Double_t reweight_LQint = (reweight_LQint_num/denom);
            //if(reweight_LQint == 0.) printf("\n for m = %f reweight_LQint = %f",tm.m, reweight_LQint);
-           //
-           if(abs(reweight_LQpure_pos*tm.evt_weight)>=1)
+           
+
+       //   if((reweight_LQpure_pos*tm.evt_weight)<reweight_LQpure_pos_min)reweight_LQpure_pos_min = reweight_LQpure_pos*tm.evt_weight;
+       //   if((reweight_LQpure_pos*tm.evt_weight)>reweight_LQpure_pos_max)reweight_LQpure_pos_max = reweight_LQpure_pos*tm.evt_weight;
+       //   if((reweight_LQint_pos*tm.evt_weight)<reweight_LQint_pos_min)reweight_LQint_pos_min = reweight_LQint_pos*tm.evt_weight;
+       //   if((reweight_LQint_pos*tm.evt_weight)>reweight_LQint_pos_max)reweight_LQint_pos_max = reweight_LQint_pos*tm.evt_weight;
+       
+     
+           if(abs(reweight_LQpure_pos*tm.evt_weight)>1.)
            {
             printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
+            reweight_LQpure_pos=0.;
            }
+            if(abs(reweight_LQint_pos*tm.evt_weight)>1.)
+           {
+            printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_pos*tm.evt_weight),tm.m, var1, tm.cost);
+            reweight_LQint_pos=0.;
+           }
+          
           
             
             //modified these
@@ -385,10 +391,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             }
         }
     }
-*/  printf("year = %i, reweight_LQpure_pos_min = % 0.12f\n", year, reweight_LQpure_pos_min );
-    printf("year = %i, reweight_LQpure_pos_max = % 0.12f\n", year, reweight_LQpure_pos_max );
-    printf("year = %i, reweight_LQint_pos_min = % 0.12f\n", year, reweight_LQint_pos_min );
-    printf("year = %i, reweight_LQint_pos_max = % 0.12f\n", year, reweight_LQint_pos_max );
+*///  printf("year = %i, reweight_LQpure_pos_min = % 0.12f\n", year, reweight_LQpure_pos_min );
+   // printf("year = %i, reweight_LQpure_pos_max = % 0.12f\n", year, reweight_LQpure_pos_max );
+    //printf("year = %i, reweight_LQint_pos_min = % 0.12f\n", year, reweight_LQint_pos_min );
+    //printf("year = %i, reweight_LQint_pos_max = % 0.12f\n", year, reweight_LQint_pos_max );
    
     return 0;
 }
