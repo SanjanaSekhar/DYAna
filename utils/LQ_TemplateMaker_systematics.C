@@ -332,7 +332,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            {
             printf("LQpure_wt 12.758579249881 for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
            }
-           if((reweight_LQpure_pos*tm.evt_weight)<=-18)
+           if(abs(reweight_LQpure_pos*tm.evt_weight)>=18)
            {
             printf("LQpure_wt 12.758579249881 for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
            }
