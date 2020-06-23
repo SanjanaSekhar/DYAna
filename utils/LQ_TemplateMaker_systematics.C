@@ -177,13 +177,15 @@ int gen_data_template(TTree *t1, TH3F* h,
 }
 
 //input m_LQ in make_templates.C
-int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
+int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint, TH1D *h_LQpure_wt, TH1D *h_LQint_wt,
         int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,  bool use_LQ_denom=true, const string &sys_label = "" ){
 
     //printf("Setting up LQ rw helper... ");
     //LQ_rw_helper h_LQ;
     //setup_LQ_rw_helper(&h_LQ, year);
- //   TH1F h_LQpure_weight = TH1F("h_sym", "Symmetric template of mc",
+    
+   // TH1F h_LQpure_weight = TH1F("h_LQpure_wt", "Weights distribution of LQpure", 200, 0., 450.)
+    //TH1F h_LQpure_weight = TH1F("h_LQpure_wt", "Weights distribution of LQpure", 200, 0., 450.)
    //         n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     
 
@@ -307,6 +309,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
             h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+            h_LQpure_wt->Fill(reweight_LQpure_pos);
          /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
             Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
@@ -322,6 +325,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
         */
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
            h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+           h_LQint_wt->Fill(reweight_LQint_pos);
 
         }
     }
@@ -456,7 +460,7 @@ int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy,
             n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_LQint.SetDirectory(0);
     //includes m_LQ
-    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure, &h_LQint, year, m_LQ, flag1,  use_xF, use_LQ_denom,sys_label);
+  //  gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure, &h_LQint, year, m_LQ, flag1,  use_xF, use_LQ_denom,sys_label);
 
 
    // double norm = 3./4./(2.+alpha);
