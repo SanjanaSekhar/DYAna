@@ -68,7 +68,8 @@ void LQ_draw_templates(){
             h_mu_LQint_wt->SetDirectory(0);
             
 
-            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint,h_mu_LQpure_wt,h_mu_LQint_wt year, m_LQ, FLAG_MUONS, use_xF,use_LQ_denom, "");
+            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure, h_mumu_LQint, h_mu_LQpure_wt, h_mu_LQint_wt, 
+                year, m_LQ, FLAG_MUONS, use_xF,use_LQ_denom, "");
 
             sprintf(mu_fname1, "%s/Mu%i_MC%d_SM.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
@@ -201,7 +202,8 @@ void LQ_draw_templates(){
             auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 450.);
             h_el_LQint_wt->SetDirectory(0);
 
-            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, h_el_LQpure_wt, h_el_LQint_wt,year, m_LQ, FLAG_ELECTRONS, use_xF,use_LQ_denom, "");
+            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, h_el_LQpure_wt, h_el_LQint_wt,
+                year, m_LQ, FLAG_ELECTRONS, use_xF,use_LQ_denom, "");
 
             sprintf(el_fname1, "%s/El%i_MC%d_SM.png", plot_dir, year%2000,use_LQ_denom);
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
