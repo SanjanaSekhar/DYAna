@@ -254,7 +254,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(use_LQ_denom) reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
             else reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
             //if(abs(reweight_LQpure_pos*tm.evt_weight)>10.)
-            if(LQ_denom==1e6)
+            if(LQ_denom==1e-6)
            {
            // printf("for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
             printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
@@ -271,7 +271,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(use_LQ_denom) reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
             else reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/denom);
            // if(abs(reweight_LQpure_neg*tm.evt_weight)>10.)
-            if(LQ_denom==1e6)
+            if(LQ_denom==1e-6)
            {
             printf("LQpure_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_neg*tm.evt_weight),tm.m, var1, tm.cost);
             //printf("reweight_LQpure_neg = %0.12f, tm.evt_weight = %.12f, LQpure_wt (-cost)= %.12f \n",reweight_LQpure_neg, tm.evt_weight, (reweight_LQpure_neg*tm.evt_weight));
@@ -302,7 +302,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(use_LQ_denom)  reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
             else reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/denom);
            // if(abs(reweight_LQint_pos*tm.evt_weight)>10.)
-            if(LQ_denom==1e6)
+            if(LQ_denom==1e-6)
            {
             printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_pos*tm.evt_weight),tm.m, var1, tm.cost);
             //printf("reweight_LQint_pos = %0.12f, tm.evt_weight = %.12f, LQint_wt = %.12f \n",reweight_LQint_pos, tm.evt_weight, (reweight_LQint_pos*tm.evt_weight));
@@ -320,7 +320,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
             else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
            // if(abs(reweight_LQint_neg*tm.evt_weight)>10.)
-            if(LQ_denom==1e6)
+            if(LQ_denom==1e-6)
            {
             printf("LQint_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_neg*tm.evt_weight),tm.m, var1, tm.cost);
            // printf("reweight_LQint_neg = %0.12f, tm.evt_weight = %.12f, LQint_wt (-cost)= %.12f \n",reweight_LQint_neg, tm.evt_weight, (reweight_LQint_neg*tm.evt_weight));
