@@ -415,7 +415,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
                if(pure_content<0.){ 
                 printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
-               // h_LQpure->SetBinContent(k,i,j,abs(pure_content));
+                h_LQpure->SetBinContent(k,i,j,abs(pure_content));
                 }
             }
         }
@@ -429,7 +429,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
                 int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
                if(int_content<=0.){
                 printf("i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, int_content= %0.12f\n",k,i,j,gbin,int_content );
-             //   h_LQint->SetBinContent(k,i,j,abs(int_content));
+               h_LQint->SetBinContent(k,i,j,abs(int_content));
                 }
             }
         }
