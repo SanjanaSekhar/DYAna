@@ -214,8 +214,9 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     Double_t reweight_LQpure_pos_max=0.;
     Double_t reweight_LQint_pos_min=10000.;
     Double_t reweight_LQint_pos_max=0.;
-    int n_rogue_pos=0.;
-    int n_rogue_neg=0.;
+    int n_rogue=0;
+    int n_rogue_pos=0;
+    int n_rogue_neg=0;
     //printf("\n================denom/LQ_denom>=1000. for following entries================\n");
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -232,7 +233,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //Double_t denom = 3./8.*(1.+gen_cost*gen_cost + 0.5 * alpha_denom * (1. - 3. *gen_cost*gen_cost));
             Double_t denom = tm.getReweightingDenom();
             Double_t LQ_denom = tm.getLQReweightingDenom();
-            if(LQ_denom < 0.000005) printf("+++++ YAS +++++");
+            if(LQ_denom < 0.000005) {printf("+++++ YAS +++++"); n_rogue++;}
             /*
             if(denom/LQ_denom>=1000.)
             {
@@ -258,9 +259,9 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //if(LQ_denom==0.000001)
            {
            // printf("for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
-            printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
-            printf("reweight_LQpure_norm = %0.12f, reweight_LQpure_num = %0.12f, LQ_denom = %0.12f, reweight_LQpure_pos = %0.12f\n",reweight_LQpure_norm, reweight_LQpure_num, LQ_denom, reweight_LQpure_pos);
-            printf("==============\n");
+           // printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_pos*tm.evt_weight),tm.m, var1, tm.cost);
+           // printf("reweight_LQpure_norm = %0.12f, reweight_LQpure_num = %0.12f, LQ_denom = %0.12f, reweight_LQpure_pos = %0.12f\n",reweight_LQpure_norm, reweight_LQpure_num, LQ_denom, reweight_LQpure_pos);
+            //printf("==============\n");
             n_rogue_pos++;
             reweight_LQpure_pos=0.;
            }
@@ -274,10 +275,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            if(abs(reweight_LQpure_neg*tm.evt_weight)>30.)
             //if(LQ_denom==1e-6)
            {
-            printf("LQpure_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_neg*tm.evt_weight),tm.m, var1, tm.cost);
+           // printf("LQpure_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_neg*tm.evt_weight),tm.m, var1, tm.cost);
             //printf("reweight_LQpure_neg = %0.12f, tm.evt_weight = %.12f, LQpure_wt (-cost)= %.12f \n",reweight_LQpure_neg, tm.evt_weight, (reweight_LQpure_neg*tm.evt_weight));
-            printf("reweight_LQpure_norm = %0.12f, reweight_LQpure_num = %0.12f, LQ_denom = %0.12f, reweight_LQpure_neg = %0.12f\n",reweight_LQpure_norm, reweight_LQpure_num, LQ_denom, reweight_LQpure_neg);
-            printf("==============\n");
+           // printf("reweight_LQpure_norm = %0.12f, reweight_LQpure_num = %0.12f, LQ_denom = %0.12f, reweight_LQpure_neg = %0.12f\n",reweight_LQpure_norm, reweight_LQpure_num, LQ_denom, reweight_LQpure_neg);
+           // printf("==============\n");
             n_rogue_neg++;
             reweight_LQpure_neg=0.;
            }
@@ -305,10 +306,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(abs(reweight_LQint_pos*tm.evt_weight)>30.)
            // if(LQ_denom==1e-6)
            {
-            printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_pos*tm.evt_weight),tm.m, var1, tm.cost);
+            //printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_pos*tm.evt_weight),tm.m, var1, tm.cost);
             //printf("reweight_LQint_pos = %0.12f, tm.evt_weight = %.12f, LQint_wt = %.12f \n",reweight_LQint_pos, tm.evt_weight, (reweight_LQint_pos*tm.evt_weight));
-            printf("reweight_LQint_norm = %0.12f, reweight_LQint_num = %0.12f, LQ_denom = %0.12f, reweight_LQint_pos = %0.12f\n",reweight_LQint_norm, reweight_LQint_num, LQ_denom, reweight_LQint_pos);
-            printf("==============\n");
+           // printf("reweight_LQint_norm = %0.12f, reweight_LQint_num = %0.12f, LQ_denom = %0.12f, reweight_LQint_pos = %0.12f\n",reweight_LQint_norm, reweight_LQint_num, LQ_denom, reweight_LQint_pos);
+           // printf("==============\n");
             n_rogue_pos++;
             reweight_LQint_pos=0.;
            }
@@ -323,10 +324,10 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
            if(abs(reweight_LQint_neg*tm.evt_weight)>30.)
            // if(LQ_denom==1e-6)
            {
-            printf("LQint_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_neg*tm.evt_weight),tm.m, var1, tm.cost);
+           // printf("LQint_wt (-cost)= %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_neg*tm.evt_weight),tm.m, var1, tm.cost);
            // printf("reweight_LQint_neg = %0.12f, tm.evt_weight = %.12f, LQint_wt (-cost)= %.12f \n",reweight_LQint_neg, tm.evt_weight, (reweight_LQint_neg*tm.evt_weight));
-            printf("reweight_LQint_norm = %0.12f, reweight_LQint_num = %0.12f, LQ_denom = %0.12f, reweight_LQint_neg = %0.12f\n",reweight_LQint_norm, reweight_LQint_num, LQ_denom, reweight_LQint_neg);
-            printf("==============\n");
+           // printf("reweight_LQint_norm = %0.12f, reweight_LQint_num = %0.12f, LQ_denom = %0.12f, reweight_LQint_neg = %0.12f\n",reweight_LQint_norm, reweight_LQint_num, LQ_denom, reweight_LQint_neg);
+           // printf("==============\n");
             n_rogue_neg++;
             reweight_LQint_neg=0.;
            }
@@ -383,6 +384,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
     printf("No. of +cost rogue events in %i = %i \n", year,n_rogue_pos);
     printf("No. of -cost rogue events in %i = %i \n", year,n_rogue_neg);
+    printf("No. of +- cost rogue events = %i, n_rogue = %i\n",(n_rogue_pos+n_rogue_neg),n_rogue );
 
     tm.finish();
     //int mbin = find_bin(m_bins, m_low + 0.1);
