@@ -328,11 +328,11 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
           // h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
            h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
-           if((reweight_LQpure_pos*tm.evt_weight)==12.758579249881)
+           if((reweight_LQpure_pos*tm.evt_weight)>=12)
            {
             printf("LQpure_wt 12.758579249881 for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
            }
-           if((reweight_LQpure_pos*tm.evt_weight)==-18.241686776607)
+           if((reweight_LQpure_pos*tm.evt_weight)<=-18)
            {
             printf("LQpure_wt 12.758579249881 for tm.m = %f, var1 = %f, tm.cost = %f \n",tm.m, var1, tm.cost);
            }
