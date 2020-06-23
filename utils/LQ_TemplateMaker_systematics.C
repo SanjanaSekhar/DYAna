@@ -307,6 +307,16 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_pos*tm.evt_weight),tm.m, var1, tm.cost);
             reweight_LQint_pos=0.;
            }
+           if(abs(reweight_LQpure_neg*tm.evt_weight)>1.)
+           {
+            printf("LQpure_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQpure_neg*tm.evt_weight),tm.m, var1, tm.cost);
+            reweight_LQpure_neg=0.;
+           }
+            if(abs(reweight_LQint_neg*tm.evt_weight)>1.)
+           {
+            printf("LQint_wt = %f for tm.m = %f, var1 = %f, tm.cost = %f \n",(reweight_LQint_neg*tm.evt_weight),tm.m, var1, tm.cost);
+            reweight_LQint_neg=0.;
+           }
           
           
             
@@ -321,7 +331,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight); 
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
-         //   h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+            h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
             h_LQpure_wt->Fill(reweight_LQpure_pos*tm.evt_weight);
          /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
@@ -337,8 +347,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
           }
         */
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-          // h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
-           h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
+            h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
           
         }
     }
