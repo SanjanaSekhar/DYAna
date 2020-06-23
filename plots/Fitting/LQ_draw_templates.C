@@ -62,9 +62,9 @@ void LQ_draw_templates(){
             auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_LQint->SetDirectory(0);
-            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., 10.);
+            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., 1.);
             h_mu_LQpure_wt->SetDirectory(0);
-            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 10.);
+            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 1.);
             h_mu_LQint_wt->SetDirectory(0);
             
 
@@ -197,9 +197,9 @@ void LQ_draw_templates(){
             auto h_elel_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_LQint->SetDirectory(0);
-            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., 10.);
+            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., 1.);
             h_el_LQpure_wt->SetDirectory(0);
-            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 10.);
+            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., 1.);
             h_el_LQint_wt->SetDirectory(0);
 
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, h_el_LQpure_wt, h_el_LQint_wt,
