@@ -22,13 +22,13 @@ void LQ_draw_templates(){
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots2";
 
-        TH1F *h16_mumu_pl, *h16_mumu_mn, *h16_mumu_LQpure, *h16_mumu_LQint, *h16_mumu_LQpure_wt, *h16_mumu_LQint_wt;
-        TH1F *h17_mumu_pl, *h17_mumu_mn, *h17_mumu_LQpure, *h17_mumu_LQint, *h17_mumu_LQpure_wt, *h17_mumu_LQint_wt;
-        TH1F *h18_mumu_pl, *h18_mumu_mn, *h18_mumu_LQpure, *h18_mumu_LQint, *h18_mumu_LQpure_wt, *h18_mumu_LQint_wt;
+        TH1F *h16_mumu_pl, *h16_mumu_mn, *h16_mumu_LQpure, *h16_mumu_LQint; TH1D *h16_mumu_LQpure_wt, *h16_mumu_LQint_wt;
+        TH1F *h17_mumu_pl, *h17_mumu_mn, *h17_mumu_LQpure, *h17_mumu_LQint; TH1D *h17_mumu_LQpure_wt, *h17_mumu_LQint_wt;
+        TH1F *h18_mumu_pl, *h18_mumu_mn, *h18_mumu_LQpure, *h18_mumu_LQint; TH1D *h18_mumu_LQpure_wt, *h18_mumu_LQint_wt;
 
-        TH1F *h16_elel_pl, *h16_elel_mn, *h16_elel_LQpure, *h16_elel_LQint, *h16_elel_LQpure_wt, *h16_elel_LQint_wt;
-        TH1F *h17_elel_pl, *h17_elel_mn, *h17_elel_LQpure, *h17_elel_LQint, *h17_elel_LQpure_wt, *h17_elel_LQint_wt;
-        TH1F *h18_elel_pl, *h18_elel_mn, *h18_elel_LQpure, *h18_elel_LQint, *h18_elel_LQpure_wt, *h18_elel_LQint_wt;
+        TH1F *h16_elel_pl, *h16_elel_mn, *h16_elel_LQpure, *h16_elel_LQint; TH1D *h16_elel_LQpure_wt, *h16_elel_LQint_wt;
+        TH1F *h17_elel_pl, *h17_elel_mn, *h17_elel_LQpure, *h17_elel_LQint; TH1D *h17_elel_LQpure_wt, *h17_elel_LQint_wt;
+        TH1F *h18_elel_pl, *h18_elel_mn, *h18_elel_LQpure, *h18_elel_LQint; TH1D *h18_elel_LQpure_wt, *h18_elel_LQint_wt;
 
         float x_start = 0.75;
         float x_end = 0.9;
