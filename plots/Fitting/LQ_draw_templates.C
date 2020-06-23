@@ -76,9 +76,9 @@ void LQ_draw_templates(){
             auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_mumu_LQint->SetDirectory(0);
-            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., .3);
+            auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .1);
             h_mu_LQpure_wt->SetDirectory(0);
-            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., .3);
+            auto h_mu_LQint_wt = new TH1D(title, "Weights distribution of LQint", 100, 0., .1);
             h_mu_LQint_wt->SetDirectory(0);
             
 
@@ -180,11 +180,11 @@ void LQ_draw_templates(){
 
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure->SetTitle(mu_title);
-            h1_mumu_pl->Draw("hist");
+            h1_mumu_LQpure->Draw("hist");
             h1_mumu_mn->Draw("hist same");
             h1_mumu_alpha->Draw("hist same");
             //h1_mumu_LQpure->SetTitle(mu_title);
-            h1_mumu_LQpure->Draw("hist same ");
+            h1_mumu_pl->Draw("hist same ");
             h1_mumu_LQint->Draw("hist same");
 
 
@@ -236,9 +236,9 @@ void LQ_draw_templates(){
             auto h_elel_LQint = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
             h_elel_LQint->SetDirectory(0);
-            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 200, 0., .3);
+            auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .1);
             h_el_LQpure_wt->SetDirectory(0);
-            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 200, 0., .3);
+            auto h_el_LQint_wt = new TH1D(title, "Weights distribution of LQint", 100, 0., .1);
             h_el_LQint_wt->SetDirectory(0);
 
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure, h_elel_LQint, h_el_LQpure_wt, h_el_LQint_wt,
@@ -336,11 +336,11 @@ void LQ_draw_templates(){
 
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure->SetTitle(el_title);
-            h1_elel_pl->Draw("hist");
+            h1_elel_LQpure->Draw("hist");
             h1_elel_mn->Draw("hist same");
             h1_elel_alpha->Draw("hist same");
             //h1_elel_LQpure->SetTitle(el_title);
-            h1_elel_LQpure->Draw("hist same ");
+            h1_elel_pl->Draw("hist same ");
             h1_elel_LQint->Draw("hist same");
 
              TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
@@ -410,6 +410,7 @@ void LQ_draw_templates(){
     c_mu_iwt->Print("Muons_LQint_weights.png");
     delete c_mu_iwt;
     //print plus minus temps for all years
+    /*
     h17_mumu_pl->SetLineColor(kBlue);
     h18_mumu_pl->SetLineColor(kGreen);
     h17_mumu_mn->SetLineColor(kBlue+5);
@@ -435,15 +436,16 @@ void LQ_draw_templates(){
             
     c_mu_plmn->Print("Muons_PlMn.png");
     delete c_mu_plmn;
+    */
     //print lq int for all years
     h17_mumu_LQint->SetLineColor(kBlue);
     h18_mumu_LQint->SetLineColor(kGreen+3);
 
     TCanvas *c_mu_lqi = new TCanvas("c_mu_lqi", "Histograms", 200, 10, 900, 700);
-    h16_mumu_LQint->SetTitle("Muons: LQint templates");
-    h16_mumu_LQint->Draw("hist");
+    h18_mumu_LQint->SetTitle("Muons: LQint templates");
+    h18_mumu_LQint->Draw("hist");
     h17_mumu_LQint->Draw("hist same");
-    h18_mumu_LQint->Draw("hist same");
+    h16_mumu_LQint->Draw("hist same");
             
 
     TLegend *leg_1 = new TLegend(x_start, y_start, x_end, y_end);
@@ -460,10 +462,10 @@ void LQ_draw_templates(){
     h18_mumu_LQpure->SetLineColor(kGreen+3);
 
     TCanvas *c_mu_lqp = new TCanvas("c_mu_lqp", "Histograms", 200, 10, 900, 700);
-    h16_mumu_LQpure->SetTitle("Muons: LQpure templates");
-    h16_mumu_LQpure->Draw("hist");
+    h18_mumu_LQpure->SetTitle("Muons: LQpure templates");
+    h18_mumu_LQpure->Draw("hist");
     h17_mumu_LQpure->Draw("hist same");
-    h18_mumu_LQpure->Draw("hist same");
+    h16_mumu_LQpure->Draw("hist same");
             
 
     TLegend *leg_2 = new TLegend(x_start, y_start, x_end, y_end);
@@ -504,6 +506,7 @@ void LQ_draw_templates(){
             
     c_el_iwt->Print("elecs_LQint_weights.png");
     delete c_el_iwt;
+    /*
     //print plus minus temps for all years
     h17_elel_pl->SetLineColor(kBlue);
     h18_elel_pl->SetLineColor(kGreen);
@@ -523,15 +526,16 @@ void LQ_draw_templates(){
             
     c_el_plmn->Print("elecs_PlMn.png");
     delete c_el_plmn;
+    */
     //print lq int for all years
     h17_elel_LQint->SetLineColor(kBlue);
     h18_elel_LQint->SetLineColor(kGreen+3);
 
     TCanvas *c_el_lqi = new TCanvas("c_el_lqi", "Histograms", 200, 10, 900, 700);
-    h16_elel_LQint->SetTitle("elecs: LQint templates");
-    h16_elel_LQint->Draw("hist");
+    h18_elel_LQint->SetTitle("elecs: LQint templates");
+    h18_elel_LQint->Draw("hist");
     h17_elel_LQint->Draw("hist same");
-    h18_elel_LQint->Draw("hist same");
+    h16_elel_LQint->Draw("hist same");
             
     leg_1->Draw();
             
@@ -543,10 +547,10 @@ void LQ_draw_templates(){
     h18_elel_LQpure->SetLineColor(kGreen+3);
 
     TCanvas *c_el_lqp = new TCanvas("c_el_lqp", "Histograms", 200, 10, 900, 700);
-    h16_elel_LQpure->SetTitle("elecs: LQpure templates");
-    h16_elel_LQpure->Draw("hist");
+    h18_elel_LQpure->SetTitle("elecs: LQpure templates");
+    h18_elel_LQpure->Draw("hist");
     h17_elel_LQpure->Draw("hist same");
-    h18_elel_LQpure->Draw("hist same");
+    h16_elel_LQpure->Draw("hist same");
     
     leg_2->Draw();
             
