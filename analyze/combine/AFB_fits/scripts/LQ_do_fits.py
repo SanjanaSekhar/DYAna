@@ -54,7 +54,7 @@ for mLQ in [1000,2000]:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, True, False, mLQ, year = options.year)
 
-    plotdir="postfit_plots/%s_LQ" % (fit_name)
+    plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
     print("\n plotdir = ", plotdir)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
     print_and_do("mkdir %s" % (plotdir))
@@ -74,6 +74,6 @@ for mLQ in [1000,2000]:
 
     print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
     print_and_do("""echo ".q" >> cmd.txt """)
-    print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fake_sys_noidbarfacrefac_fit_results_LQ.txt" % (fit_name))
+    print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fake_nosys_LQ_m%i.txt" % (fit_name,mLQ))
     print_and_do("rm -f cards/sed*")
     if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")

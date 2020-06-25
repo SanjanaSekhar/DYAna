@@ -439,7 +439,7 @@ if options.plotfile:
     if not options.skipFitB:leg.AddEntry(gr_fit_b,"B-only fit","EPL")
     if not options.skipFitS:leg.AddEntry(gr_fit_s,"S+B fit"   ,"EPL")
     leg.Draw()
-    canvas_nuis.Print(options.plotfile + "/" +  "postfit_pulls_m"+mLQ+".png")
+    canvas_nuis.Print(options.plotfile + "/" +  "postfit_pulls_m"+str(mLQ)+".png")
 
 
 
@@ -473,7 +473,7 @@ if options.plotfile:
     line_one.Draw()
     canvas_pferrs.RedrawAxis()
 
-    canvas_pferrs.Print(options.plotfile + "/" + "postfit_errs_m"+mLQ+".png")
+    canvas_pferrs.Print(options.plotfile + "/" + "postfit_errs_m"+str(mLQ)+".png")
 
    
 
