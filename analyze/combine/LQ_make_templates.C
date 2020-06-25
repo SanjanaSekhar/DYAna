@@ -443,7 +443,7 @@ void write_out_templates(const string &sys_label){
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     
-    for(int year=2016; year<=2018; year++){
+    for(int year=2016; year<=2016; year++){
     
 
     bool scramble_data =false ;
@@ -462,7 +462,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     vector<string> sys_labels {""};
 
-    for(int i=1;i<=5;i++){
+    for(int i=1;i<=1;i++){
     
     Double_t m_LQ = 1000.*i;   
     char templates_name[100];
