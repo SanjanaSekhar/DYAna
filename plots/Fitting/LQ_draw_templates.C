@@ -374,6 +374,11 @@ void LQ_draw_templates(){
  */           
         }
     }
+    char mu_1[100], mu_2[100], el_1[100], el_2[100];
+    sprintf(mu_1, "Muons_LQpure_m%i.png",int(m_LQ));
+    sprintf(mu_2, "Muons_LQint_m%i.png",int(m_LQ));
+    sprintf(el_1, "Elecs_LQpure_m%i.png",int(m_LQ));
+    sprintf(el_2, "Elecs_LQ_m%iint.png",int(m_LQ));
     //print lq pure weights for all years
   /*  h17_mumu_LQpure_wt->SetLineColor(kBlue);
     h18_mumu_LQpure_wt->SetLineColor(kGreen);
@@ -457,7 +462,7 @@ void LQ_draw_templates(){
     leg_1->AddEntry(h18_mumu_LQint, "LQint18", "l");
     leg_1->Draw();
             
-    c_mu_lqi->Print("Misc_plots/template_plots2/Muons_LQint_m%i.png",int(m_LQ));
+    c_mu_lqi->Print(mu_2);
     delete c_mu_lqi;
 
     //print lq pure for all years
@@ -477,7 +482,7 @@ void LQ_draw_templates(){
     leg_2->AddEntry(h18_mumu_LQpure, "LQpure18", "l");
     leg_2->Draw();
             
-    c_mu_lqp->Print("Misc_plots/template_plots2/Muons_LQpure_m%i.png",int(m_LQ));
+    c_mu_lqp->Print(mu_1);
     delete c_mu_lqp;
 
     //=============================================================================================
@@ -543,7 +548,7 @@ void LQ_draw_templates(){
             
     leg_1->Draw();
             
-    c_el_lqi->Print("Misc_plots/template_plots2/Elecs_LQint_m%i.png",int(m_LQ));
+    c_el_lqi->Print(el_2);
     delete c_el_lqi;
 
     //print lq pure for all years
@@ -558,9 +563,10 @@ void LQ_draw_templates(){
     
     leg_2->Draw();
             
-    c_el_lqp->Print("Misc_plots/template_plots2/elecs_LQpure_m%i.png",int(m_LQ));
+    c_el_lqp->Print(el_1);
     delete c_el_lqp;
 
+    }
 }
 
 
