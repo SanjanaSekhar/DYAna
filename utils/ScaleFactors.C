@@ -584,7 +584,7 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
     sprintf(name, "emu%i_cost_ratio", year % 2000);
     h->rw = (TH1F *) f->Get(name)->Clone();
     h->rw->SetDirectory(0);
-    h->rw->Print();
+   // h->rw->Print();
 }
 
 
