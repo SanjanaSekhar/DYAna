@@ -19,8 +19,8 @@ void LQ_draw_templates(){
         float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots2";
-        int i_start = 3; 
-        int i_end = 1;
+        int i_start = 1; 
+        int i_end = 5;
         float x_start = 0.75;
         float x_end = 0.9;
         float y_start = 0.75;
@@ -54,7 +54,7 @@ void LQ_draw_templates(){
         sprintf(mu_title_all_1, "Muons: LQpure");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-       for(int i=i_start;i>=i_end;i--)
+       for(int i=i_start;i<=i_end;i++)
        {
         Double_t m_LQ=1000.*i;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
@@ -609,7 +609,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_elel_LQpure->SetLineColor(kRed+((i_end-i)*3));
+        h16_elel_LQpure->SetLineColor(kRed+((i)*10));
         h16_elel_LQpure->Draw("hist same");
         leg_lqpall->AddEntry(h16_elel_LQpure,leg_entry);
     }
@@ -625,7 +625,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_elel_LQint->SetLineColor(kBlue+((i_end-i)*3));
+        h16_elel_LQint->SetLineColor(kBlue+((i)*10));
         h16_elel_LQint->Draw("hist same");
         leg_lqiall->AddEntry(h16_elel_LQint,leg_entry);
     }
@@ -641,7 +641,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_mumu_LQpure->SetLineColor(kRed+((i_end-i)*3));
+        h16_mumu_LQpure->SetLineColor(kRed+((i)*10));
         h16_mumu_LQpure->Draw("hist same");
        // leg_lqpall->AddEntry(h16_mumu_LQpure,"m = %i"+int(m_LQ));
     }
@@ -657,7 +657,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_mumu_LQint->SetLineColor(kBlue+((i_end-i)*3));
+        h16_mumu_LQint->SetLineColor(kBlue+((i)*10));
         h16_mumu_LQint->Draw("hist same");
       //  leg_lqiall->AddEntry(h16_mumu_LQint,"m = %i"+int(m_LQ));
     }
