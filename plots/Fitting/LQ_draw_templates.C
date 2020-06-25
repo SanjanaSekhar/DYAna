@@ -374,11 +374,15 @@ void LQ_draw_templates(){
  */           
         }
     }
+
+    char mu_title_1[100], el_title_1[100];
+    sprintf(mu_title_1, "Muons: m_LQ = %i",int(m_LQ));
+    sprintf(el_title_1, "Electrons: m_LQ = %i",int(m_LQ));
     char mu_1[100], mu_2[100], el_1[100], el_2[100];
-    sprintf(mu_1, "Muons_LQpure_m%i.png",int(m_LQ));
-    sprintf(mu_2, "Muons_LQint_m%i.png",int(m_LQ));
-    sprintf(el_1, "Elecs_LQpure_m%i.png",int(m_LQ));
-    sprintf(el_2, "Elecs_LQ_m%iint.png",int(m_LQ));
+    sprintf(mu_1, "%s/Muons_LQpure_m%i.png",plotdir, int(m_LQ));
+    sprintf(mu_2, "%s/Muons_LQint_m%i.png",plotdir,int(m_LQ));
+    sprintf(el_1, "%s/Elecs_LQpure_m%i.png",plotdir,int(m_LQ));
+    sprintf(el_2, "%s/Elecs_LQ_m%iint.png",plotdir,int(m_LQ));
     //print lq pure weights for all years
   /*  h17_mumu_LQpure_wt->SetLineColor(kBlue);
     h18_mumu_LQpure_wt->SetLineColor(kGreen);
@@ -450,7 +454,7 @@ void LQ_draw_templates(){
     h18_mumu_LQint->SetLineColor(kGreen+3);
 
     TCanvas *c_mu_lqi = new TCanvas("c_mu_lqi", "Histograms", 200, 10, 900, 700);
-    h18_mumu_LQint->SetTitle("Muons: LQint templates, m_LQ = %i",int(m_LQ));
+    h18_mumu_LQint->SetTitle(mu_title_1);
     h18_mumu_LQint->Draw("hist");
     h17_mumu_LQint->Draw("hist same");
     h16_mumu_LQint->Draw("hist same");
@@ -470,7 +474,7 @@ void LQ_draw_templates(){
     h18_mumu_LQpure->SetLineColor(kGreen+3);
 
     TCanvas *c_mu_lqp = new TCanvas("c_mu_lqp", "Histograms", 200, 10, 900, 700);
-    h18_mumu_LQpure->SetTitle("Muons: LQpure templates, m_LQ = %i",int(m_LQ));
+    h18_mumu_LQpure->SetTitle(mu_title_1);
     h18_mumu_LQpure->Draw("hist");
     h17_mumu_LQpure->Draw("hist same");
     h16_mumu_LQpure->Draw("hist same");
@@ -541,7 +545,7 @@ void LQ_draw_templates(){
     h18_elel_LQint->SetLineColor(kGreen+3);
 
     TCanvas *c_el_lqi = new TCanvas("c_el_lqi", "Histograms", 200, 10, 900, 700);
-    h18_elel_LQint->SetTitle("Elecs: LQint templates, m_LQ = %i",int(m_LQ));
+    h18_elel_LQint->SetTitle(el_title_1);
     h18_elel_LQint->Draw("hist");
     h17_elel_LQint->Draw("hist same");
     h16_elel_LQint->Draw("hist same");
@@ -556,7 +560,7 @@ void LQ_draw_templates(){
     h18_elel_LQpure->SetLineColor(kGreen+3);
 
     TCanvas *c_el_lqp = new TCanvas("c_el_lqp", "Histograms", 200, 10, 900, 700);
-    h18_elel_LQpure->SetTitle("Elecs: LQpure templates, m_LQ = %i",int(m_LQ));
+    h18_elel_LQpure->SetTitle(el_title_1);
     h18_elel_LQpure->Draw("hist");
     h17_elel_LQpure->Draw("hist same");
     h16_elel_LQpure->Draw("hist same");
