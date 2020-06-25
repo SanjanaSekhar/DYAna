@@ -37,7 +37,7 @@ void LQ_draw_templates(){
         TLegend *leg_lqiall = new TLegend(x_start, y_start, x_end, y_end);
         TCanvas *c16_mu_lqpall = new TCanvas("c_mu_lqpall", "Histograms", 200, 10, 900, 700);
         //TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
-        TCanvas *c16_mu_lqpall = new TCanvas("c_mu_lqiall", "Histograms", 200, 10, 900, 700);
+        TCanvas *c16_mu_lqiall = new TCanvas("c_mu_lqiall", "Histograms", 200, 10, 900, 700);
         //TLegend *leg_lqiall = new TLegend(x_start, y_start, x_end, y_end);
 
         char el_all_lqp16[100], el_all_lqi16[100];
@@ -597,19 +597,21 @@ void LQ_draw_templates(){
     delete c_el_lqp;
 
 //print el lqp for all masses in 2016
+    char leg_entry[50];
+    sprintf(leg_entry,"m = %i",(m_LQ));
     c16_el_lqpall->cd();
     if(i==i_start)
     {
         h16_elel_LQpure->SetLineColor(kRed);
         h16_elel_LQpure->SetTitle(el_title_all_1);
         h16_elel_LQpure->Draw("hist");
-        leg_lqpall->AddEntry(h16_elel_LQpure,"m = %i"+int(m_LQ));
+        leg_lqpall->AddEntry(h16_elel_LQpure,leg_entry);
     }
     else 
     {
         h16_elel_LQpure->SetLineColor(kRed+((i_end-i)*3));
         h16_elel_LQpure->Draw("hist same");
-        leg_lqpall->AddEntry(h16_elel_LQpure,"m = %i"+int(m_LQ));
+        leg_lqpall->AddEntry(h16_elel_LQpure,leg_entry);
     }
 //print el lqp for all masses in 2016
 
@@ -619,13 +621,13 @@ void LQ_draw_templates(){
         h16_elel_LQint->SetLineColor(kBlue);
         h16_elel_LQint->SetTitle(el_title_all_2);
         h16_elel_LQint->Draw("hist");
-        leg_lqiall->AddEntry(h16_elel_LQint,"m = %i"+int(m_LQ));
+        leg_lqiall->AddEntry(h16_elel_LQint,leg_entry);
     }
     else 
     {
         h16_elel_LQint->SetLineColor(kBlue+((i_end-i)*3));
         h16_elel_LQint->Draw("hist same");
-        leg_lqiall->AddEntry(h16_elel_LQint,"m = %i"+int(m_LQ));
+        leg_lqiall->AddEntry(h16_elel_LQint,leg_entry);
     }
 
 //print mu lqp for all masses in 2016
