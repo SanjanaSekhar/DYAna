@@ -598,7 +598,7 @@ void LQ_draw_templates(){
 
 //print el lqp for all masses in 2016
     char leg_entry[50];
-    sprintf(leg_entry,"m = %i",(m_LQ));
+    sprintf(leg_entry,"m = %i",int(m_LQ));
     c16_el_lqpall->cd();
     if(i==i_start)
     {
