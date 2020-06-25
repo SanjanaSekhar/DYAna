@@ -441,14 +441,14 @@ void write_out_templates(const string &sys_label){
 }
 
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/LQ_normed_templates18.root");
+
+    
     year = 2018;
     bool scramble_data =false ;
     bool fake_data =true; //use mc instead of data
     use_xF = false;
 
-    std::cout << "enter m_LQ:";        
-    std::cin >> m_LQ; 
+    
 
     printf("Initializing files \n");
     init(year);
@@ -459,11 +459,17 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     printf("   done \n");
 
     vector<string> sys_labels {""};
-        
 
+    for(int i=1;i<=5;i++){
+    
+    Double_t m_LQ = 1000.*i;   
+    char templates_name[100];
+    sprintf(templates_name,"combine/templates/LQm%i_normed_templates%i.root",int(m_LQ),year%2000);
+    const TString fout_name(templates_name);
     TFile * fout = TFile::Open(fout_name, "RECREATE");
 
     char dirname[40];
+    
 /*
     int i_start=0;
     int i_max = n_lq_m_bins;
@@ -505,6 +511,6 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     fout->Close();
     printf("Templates written to %s \n", fout_name.Data());
-
+    }
 }
 
