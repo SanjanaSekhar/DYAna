@@ -20,7 +20,7 @@ void LQ_draw_templates(){
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
         int i_start = 1; 
-        int i_end = 5;
+        int i_end = 1;
         float x_start = 0.75;
         float x_end = 0.9;
         float y_start = 0.75;
@@ -69,7 +69,7 @@ void LQ_draw_templates(){
 
         
         //int year = 2017;
-        for (int year = 2016; year<=2018; year++)
+        for (int year = 2016; year<=2016; year++)
         {
 
         init(year);
