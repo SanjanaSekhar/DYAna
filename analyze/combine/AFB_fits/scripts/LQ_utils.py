@@ -100,7 +100,7 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fout.Close()
     return fitted_afb, fitted_a0
 
-def make_workspace(workspace, no_sys = False, fake_data = False, year = -1):
+def make_workspace(workspace, no_sys = False, fake_data = False, year = -1, mLQ = 1000):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
@@ -119,6 +119,7 @@ def make_workspace(workspace, no_sys = False, fake_data = False, year = -1):
         card="cards/combined_fit_y%i_LQ.txt" % (yr)
         print_and_do("cp %s %s" % (template_card, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+        print_and_do("""sed -i "s/mLQ/%i/g" %s""" % (mLQ, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
         if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 

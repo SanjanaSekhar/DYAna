@@ -267,7 +267,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
     else:
-        myCan.Print(tag+'/'+name+'_noidbarfacrefac.png','png')
+        myCan.Print(tag+'/'+name+'_m'+mLQ+'.png','png')
 
 
 def reducedCorrMatrixHist(fit_result,varsOfInterest=[]):
@@ -373,12 +373,12 @@ def Make_up_down(hist):
 parser = OptionParser()
 parser.add_option("--input", "-i", default = "", help="Input file")
 parser.add_option("--output", "-o", default = "", help="Input directory")
-#parser.add_option("--mbin", "-m", type = 'int', default = 0, help="Mass bin (for plot label)")
+parser.add_option("--mLQ", "-m", type = 'int', default = 0, help="mLQ (for plot label)")
 parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
 #parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 (options, args) = parser.parse_args()
 
-
+mLQ = options.mLQ
 #fin_ = "combined_fit_shapes_mbin1.root"
 #odir = "postfit_plots/combined_fit_mbin1"
 #mbin = 1
@@ -422,7 +422,7 @@ for year in years:
         #mbin_high = m_bins[options.mbin+1]
 
         #if(idx == 0): title = "Muons %i GeV" % (year)
-        if(idx == 0): title = "Electrons %i  GeV" % (year)
+        if(idx == 0): title = "Electrons %i  GeV mLQ = %i" % (year,mLQ)
         #if(idx == 2): title = "Electrons Samesign %i  GeV" % (year)
         
         #if(idx == 2): name_list = h_ss_names

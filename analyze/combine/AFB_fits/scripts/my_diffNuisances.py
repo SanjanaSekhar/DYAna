@@ -41,10 +41,10 @@ parser.add_option("", "--skipFitS", dest="skipFitS", default=False, action='stor
 parser.add_option("", "--skipFitB", dest="skipFitB", default=False, action='store_true', help="skip the B-only fit, instead the S+B fit will be repeated")
 parser.add_option("", "--multidim", dest="multidim", default=False, action='store_true', help="Do procedure for MultDimFit")
 parser.add_option("", "--prefit", dest="prefit", default="", type="string", help="Look up prefit nuisances in this separate file")
-
+parser.add_option("--mLQ", "-m", type = 'int', default = 0, help="Mass bin (for plot label)")
 (options, args) = parser.parse_args()
 
-
+mLQ = options.mLQ
 
 if len(args) == 0:
     parser.print_usage()
@@ -439,7 +439,7 @@ if options.plotfile:
     if not options.skipFitB:leg.AddEntry(gr_fit_b,"B-only fit","EPL")
     if not options.skipFitS:leg.AddEntry(gr_fit_s,"S+B fit"   ,"EPL")
     leg.Draw()
-    canvas_nuis.Print(options.plotfile + "/" +  "postfit_pulls.png")
+    canvas_nuis.Print(options.plotfile + "/" +  "postfit_pulls_m"+mLQ+".png")
 
 
 
@@ -473,7 +473,7 @@ if options.plotfile:
     line_one.Draw()
     canvas_pferrs.RedrawAxis()
 
-    canvas_pferrs.Print(options.plotfile + "/" + "postfit_errs.png")
+    canvas_pferrs.Print(options.plotfile + "/" + "postfit_errs_m"+mLQ+".png")
 
    
 
