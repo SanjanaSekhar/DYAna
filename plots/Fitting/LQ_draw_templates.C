@@ -379,10 +379,10 @@ void LQ_draw_templates(){
     sprintf(mu_title_1, "Muons: m_LQ = %i",int(m_LQ));
     sprintf(el_title_1, "Electrons: m_LQ = %i",int(m_LQ));
     char mu_1[100], mu_2[100], el_1[100], el_2[100];
-    sprintf(mu_1, "%s/Muons_LQpure_m%i.png",plotdir, int(m_LQ));
-    sprintf(mu_2, "%s/Muons_LQint_m%i.png",plotdir,int(m_LQ));
-    sprintf(el_1, "%s/Elecs_LQpure_m%i.png",plotdir,int(m_LQ));
-    sprintf(el_2, "%s/Elecs_LQ_m%iint.png",plotdir,int(m_LQ));
+    sprintf(mu_1, "%s/Muons_LQpure_m%i.png",plot_dir, int(m_LQ));
+    sprintf(mu_2, "%s/Muons_LQint_m%i.png",plot_dir,int(m_LQ));
+    sprintf(el_1, "%s/Elecs_LQpure_m%i.png",plot_dir,int(m_LQ));
+    sprintf(el_2, "%s/Elecs_LQ_m%iint.png",plot_dir,int(m_LQ));
     //print lq pure weights for all years
   /*  h17_mumu_LQpure_wt->SetLineColor(kBlue);
     h18_mumu_LQpure_wt->SetLineColor(kGreen);
