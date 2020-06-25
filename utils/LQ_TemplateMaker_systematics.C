@@ -177,8 +177,8 @@ int gen_data_template(TTree *t1, TH3F* h,
 }
 
 //input m_LQ in make_templates.C
-int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint, TH1D *h_LQpure_wt, TH1D *h_LQint_wt,
-        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false,  bool use_LQ_denom=true, const string &sys_label = "" ){
+int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure, TH3F *h_LQint,
+        int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, const string &sys_label = "" ){
 
     //printf("Setting up LQ rw helper... ");
     //LQ_rw_helper h_LQ;
@@ -210,13 +210,13 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
     Double_t max_obs = 0.;
 
-    Double_t reweight_LQpure_pos_min=10000.;
-    Double_t reweight_LQpure_pos_max=0.;
-    Double_t reweight_LQint_pos_min=10000.;
-    Double_t reweight_LQint_pos_max=0.;
-    int n_rogue=0;
-    int n_rogue_pos=0;
-    int n_rogue_neg=0;
+   // Double_t reweight_LQpure_pos_min=10000.;
+   // Double_t reweight_LQpure_pos_max=0.;
+   // Double_t reweight_LQint_pos_min=10000.;
+   // Double_t reweight_LQint_pos_max=0.;
+   // int n_rogue=0;
+   // int n_rogue_pos=0;
+   // int n_rogue_neg=0;
     //printf("\n================denom/LQ_denom>=1000. for following entries================\n");
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -234,7 +234,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             Double_t denom = tm.getReweightingDenom();
             Double_t LQ_denom = tm.getLQReweightingDenom();
             if(LQ_denom ==0.) {
-                printf("+++++ YAS +++++\n"); n_rogue+=2;
+                printf("+++++ YAS +++++\n"); 
                 continue;}
             /*
             if(denom/LQ_denom>=1000.)
@@ -255,8 +255,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             Double_t reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
             Double_t reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
             Double_t reweight_LQpure_pos;
-            if(use_LQ_denom) reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
-            else reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+            reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
+          //  else reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
           //  if(abs(reweight_LQpure_pos*tm.evt_weight)>30.)
             //if(LQ_denom==0.000001)
            //{
@@ -272,8 +272,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1+gen_cost)* ((2*m_LQ*m_LQ/s)+1+gen_cost));
             reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
             Double_t reweight_LQpure_neg;
-            if(use_LQ_denom) reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
-            else reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+            reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
+          //  else reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/denom);
           // if(abs(reweight_LQpure_neg*tm.evt_weight)>30.)
             //if(LQ_denom==1e-6)
            //{
@@ -303,8 +303,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             Double_t reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
             Double_t reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
             Double_t reweight_LQint_pos;
-            if(use_LQ_denom)  reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
-            else reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/denom);
+            reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+            //else reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/denom);
           //  if(abs(reweight_LQint_pos*tm.evt_weight)>30.)
            // if(LQ_denom==1e-6)
           // {
@@ -321,8 +321,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
             reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
             Double_t reweight_LQint_neg;
-            if(use_LQ_denom)  reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
-            else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
+            reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+           // else reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
           // if(abs(reweight_LQint_neg*tm.evt_weight)>30.)
            // if(LQ_denom==1e-6)
            //{
@@ -361,8 +361,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             //LQ terms
             h_LQpure->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
             h_LQpure->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-            h_LQpure_wt->Fill(reweight_LQpure_pos*tm.evt_weight);
-            h_LQpure_wt->Fill(reweight_LQpure_neg*tm.evt_weight);
+           // h_LQpure_wt->Fill(reweight_LQpure_pos*tm.evt_weight);
+           // h_LQpure_wt->Fill(reweight_LQpure_neg*tm.evt_weight);
          /*
             Int_t binx = h_LQpure->GetXaxis()->FindBin(tm.m);
             Int_t biny = h_LQpure->GetYaxis()->FindBin(var1);
@@ -378,8 +378,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
         */
             h_LQint->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
             h_LQint->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
-            h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
-            h_LQint_wt->Fill(reweight_LQint_neg*tm.evt_weight);
+          //  h_LQint_wt->Fill(reweight_LQint_pos*tm.evt_weight);
+          //  h_LQint_wt->Fill(reweight_LQint_neg*tm.evt_weight);
           
         }
     }
@@ -405,7 +405,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); // what is this
-
+/*
     printf("================LQpure template negative for following entries================\n");
     for(int k=1; k<=n_lq_m_bins; k++){    
         for(int i=1; i<=n_xf_bins; i++){
@@ -438,7 +438,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
    // printf("year = %i, reweight_LQpure_pos_max = % 0.12f\n", year, reweight_LQpure_pos_max );
     //printf("year = %i, reweight_LQint_pos_min = % 0.12f\n", year, reweight_LQint_pos_min );
     //printf("year = %i, reweight_LQint_pos_max = % 0.12f\n", year, reweight_LQint_pos_max );
-   
+*/   
     return 0;
 }
 //changed, get checked?

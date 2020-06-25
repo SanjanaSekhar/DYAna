@@ -441,7 +441,7 @@ void write_out_templates(const string &sys_label){
 }
 
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
-    const TString fout_name("combine/templates/LQ_fake_templates18.root");
+    const TString fout_name("combine/templates/LQ_normed_templates18.root");
     year = 2018;
     bool scramble_data =false ;
     bool fake_data =true; //use mc instead of data
