@@ -443,7 +443,9 @@ void write_out_templates(const string &sys_label){
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     
-    year = 2018;
+    for(int year=2016; year<=2018; year++){
+    
+
     bool scramble_data =false ;
     bool fake_data =true; //use mc instead of data
     use_xF = false;
@@ -469,6 +471,8 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     TFile * fout = TFile::Open(fout_name, "RECREATE");
 
     char dirname[40];
+    printf("=========================\n m_LQ = %f, year = %d, fake_data = %d \n=========================\n",m_LQ,year,fake_data );
+
     
 /*
     int i_start=0;
@@ -513,4 +517,4 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     printf("Templates written to %s \n", fout_name.Data());
     }
 }
-
+}
