@@ -52,7 +52,7 @@ for mLQ in [1000,2000]:
     print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
     workspace="workspaces/%s_LQ.root" % (options.chan)
-    make_workspace(workspace, True, False, year = options.year, mLQ)
+    make_workspace(workspace, True, False, mLQ, year = options.year)
 
     plotdir="postfit_plots/%s_LQ" % (fit_name)
     print("\n plotdir = ", plotdir)

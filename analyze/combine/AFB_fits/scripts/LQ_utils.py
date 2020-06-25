@@ -100,7 +100,7 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fout.Close()
     return fitted_afb, fitted_a0
 
-def make_workspace(workspace, no_sys = False, fake_data = False, year = -1, mLQ = 1000):
+def make_workspace(workspace, no_sys = False, fake_data = False, mLQ = 1000, year = -1):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
