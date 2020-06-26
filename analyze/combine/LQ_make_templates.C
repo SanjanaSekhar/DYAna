@@ -443,8 +443,8 @@ void write_out_templates(const string &sys_label){
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     
-    for(int year=2016; year<=2016; year++){
-    
+   // for(int year=2016; year<=2016; year++){
+    year =2016;
 
     bool scramble_data =false ;
     bool fake_data =true; //use mc instead of data
@@ -462,9 +462,9 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     vector<string> sys_labels {""};
 
-    for(int i=1;i<=1;i++){
+   // for(int i=1;i<=1;i++){
     
-    Double_t m_LQ = 1000.*i;   
+    Double_t m_LQ = 1000.;   
     char templates_name[100];
     sprintf(templates_name,"combine/templates/LQm%i_normed_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
@@ -517,4 +517,4 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     printf("Templates written to %s \n", fout_name.Data());
     }
 }
-}
+
