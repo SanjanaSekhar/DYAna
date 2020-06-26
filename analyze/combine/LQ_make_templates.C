@@ -464,7 +464,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
    // for(int i=1;i<=1;i++){
     
-    Double_t m_LQ = 1000.;   
+    m_LQ = 1000.;   
     char templates_name[100];
     sprintf(templates_name,"combine/templates/LQm%i_normed_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
