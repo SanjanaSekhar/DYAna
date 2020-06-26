@@ -516,5 +516,5 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     fout->Close();
     printf("Templates written to %s \n", fout_name.Data());
     }
-}
+
 
