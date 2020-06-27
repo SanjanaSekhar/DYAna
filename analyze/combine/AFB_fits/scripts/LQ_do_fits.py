@@ -46,7 +46,7 @@ if(options.mbin >= 0):
     bin_start = options.mbin
     bin_stop = bin_start + 1
 
-for mLQ in range(6000,11000,1000):
+for mLQ in range(1000,6000,1000):
 #for mbin in range(bin_start, bin_stop):
 #print(" \n \n Starting fit for bin %i \n\n" % mbin)
     print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
