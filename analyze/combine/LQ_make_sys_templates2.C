@@ -4,28 +4,28 @@
 
 void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int type=1){
     //type0 is pdfs, type1 other sys
+
+  type =1;
     if(nJobs == 0){
         printf("Invalid setting of 0 total jobs! Going to change it to be 1 job (ie this process runs over all systematics) \n");
         nJobs = 1;
     }
-    std::cout << "enter m_LQ:";        
-    std::cin >> m_LQ; 
+    for(year=2016;year<=2018;year++){
+    for(int i=1;i<=3;i+=2){
+    m_LQ = 1000.*i;
+
+    char templates_name[100];
+    sprintf(templates_name,"combine/templates/LQm%i_normed_sys%i_templates%i.root",int(m_LQ),type,year%2000);
     
-    const TString pdf_fout_name("combine/templates/LQ_sys0_template16.root");
+    const TString pdf_fout_name(templates_name);
     //const TString pdf_fout_name("output_files/sys_test.root");
     TFile *pdf_fout = TFile::Open(pdf_fout_name, "RECREATE");
-    year =2016;
+    //year =2017;
     init_mc(year);
-    type =0;
-
-
-
 
     printf("Setting up SFs... ");
     setup_all_SFs(year);
     printf("   done \n");
-
-
     
     vector<string> sys_labels;
     if (type ==0){
@@ -123,3 +123,4 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
     printf("Templates written to %s \n", pdf_fout_name.Data());
 
 }
+}}
