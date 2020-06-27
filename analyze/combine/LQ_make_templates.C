@@ -462,7 +462,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     vector<string> sys_labels {""};
 
-    for(int i=1;i<=5;i++){
+    for(int i=6;i<=10;i++){
     
     m_LQ = 1000.*i;   
     char templates_name[100];
