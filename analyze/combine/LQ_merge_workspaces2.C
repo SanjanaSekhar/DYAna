@@ -28,8 +28,8 @@ void CopyDir(TDirectory *source, TDirectory *savdir) {
 void LQ_merge_workspaces2(){
 
 
-    const TString f1_s("combine/templates/LQ_fake_templates16.root");
-    const TString fout_s("combine/templates/LQ_merge_templates16.root");
+    const TString f1_s("combine/templates/LQm1000_normed_templates16.root");
+    const TString fout_s("combine/templates/LQm1000_normed_merge_templates16.root");
     TFile *f1 = TFile::Open(f1_s, "READ");
     TFile *fout = TFile::Open(fout_s, "RECREATE");
     char dirname[40];
@@ -43,12 +43,12 @@ void LQ_merge_workspaces2(){
     std::vector<string> fs;
    
         char fname[180];
-        sprintf(fname, "combine/templates/LQ_sys1_template16.root");
+        sprintf(fname, "combine/templates/LQm1000_normed_sys0_templates16.root");
         fs.push_back(string(fname));
     
     
         char fname2[180];
-        sprintf(fname2, "combine/templates/LQ_sys0_template16.root");
+        sprintf(fname2, "combine/templates/LQm1000_normed_sys1_templates16.root");
         fs.push_back(string(fname2));
     
    
