@@ -46,13 +46,14 @@ if(options.mbin >= 0):
     bin_start = options.mbin
     bin_stop = bin_start + 1
 
-for mLQ in range(1000,6000,1000):
+#for mLQ in range(1000,6000,1000):
+mLQ = 1000.
 #for mbin in range(bin_start, bin_stop):
 #print(" \n \n Starting fit for bin %i \n\n" % mbin)
     print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
     workspace="workspaces/%s_LQ.root" % (options.chan)
-    make_workspace(workspace, True, False, mLQ, year = options.year)
+    make_workspace(workspace, False, False, mLQ, year = options.year)
 
     plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
     print("\n plotdir = ", plotdir)
