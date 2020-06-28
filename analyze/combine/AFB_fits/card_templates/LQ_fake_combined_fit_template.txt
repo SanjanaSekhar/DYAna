@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQ_merge_templatesYR.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm1000_normed_merge_templatesYR.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             eeYR  
 observation     -1         
@@ -21,7 +21,7 @@ dy_xsec         lnN     1.03   1.03    1.03      -       -      1.03     -      
 bk_xsec         lnN      -       -        -     1.05     -        -      -       -
 gam_xsec        lnN      -       -        -      -      1.4       -      -       -
 
-lumiYR          lnN     1.025  1.025   1.025   1.025   1.025    1.025    -       -
+lumiYR          lnN     1.025  1.025   1.025   1.025   1.025    1.025    1.025   1.025
 #elFakesYR       lnN      -       -        -      -       -       -      -       -
 #muFakesYR       lnN      -       -        -      -       -       -      -       -
 
