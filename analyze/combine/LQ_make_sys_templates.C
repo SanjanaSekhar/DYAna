@@ -10,10 +10,10 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
         printf("Invalid setting of 0 total jobs! Going to change it to be 1 job (ie this process runs over all systematics) \n");
         nJobs = 1;
     }
-   // for(year=2016;year<=2018;year++){
+   for(year=2016;year<=2018;year++){
    // for(int i=1;i<=3;i+=2){
     m_LQ = 1000.;
-    year=2018;
+    //year=2018;
     char templates_name[100];
     sprintf(templates_name,"combine/templates/LQm%i_normed_sys%i_templates%i.root",int(m_LQ),type,year%2000);
     
@@ -121,6 +121,6 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
 
     pdf_fout->Close();
     printf("Templates written to %s \n", pdf_fout_name.Data());
-
+  }
 }
 
