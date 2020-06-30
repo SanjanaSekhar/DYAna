@@ -15,11 +15,10 @@ parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits f
 (options, args) = parser.parse_args()
 
 
-extra_params = ""
-
 
 for y in [2016,2017,2018]:
 
+    extra_params=""
     bin_start = 0
     bin_stop = 8
     options.chan="ee"
