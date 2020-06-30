@@ -21,8 +21,8 @@ dy_xsec         lnN     1.03   1.03    1.03      -       -      1.03    -      -
 bk_xsec         lnN      -       -        -     1.05     -      -       -      -
 gam_xsec        lnN      -       -        -      -      1.4     -       -      -
 
-lumiYR          lnN     1.025  1.025   1.025   1.025   1.025    1.025   1.025   1.025
-#elFakesYR       lnN      -       -        -      -       -      -       -      -
+lumiYR          lnN     1.025  1.025   1.025   1.025   1.025    1.025   -      -
+#elFakesYR       lnN      -       -        -      -       -     -       -      -
 #muFakesYR       lnN      -       -        -      -       -     -       -      -
 
 #* autoMCStats 10 1
