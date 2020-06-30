@@ -29,9 +29,9 @@
 
 
 
-const int year = 2018;
-char *out_file = "../analyze/SFs/2018/pt_rw.root";
-const bool write_out = false;
+const int year = 2017;
+char *out_file = "../analyze/SFs/2017/pt_rw.root";
+const bool write_out = true;
 char *plot_dir = "Misc_plots/pt_reweights/";
 
 
@@ -87,7 +87,6 @@ void do_pt_reweight(){
 
         //combine all samples coming from DY MC
         make_m_cost_pt_xf_hist(t_mumu_mc, h_dummy, h_dummy, mc_mumu_pt, h_dummy, h_dummy, h_dummy,  false, FLAG_MUONS,   year, m_low, m_high);
-        make_m_cost_pt_xf_hist(t_mumu_nosig, h_dummy, h_dummy, mc_mumu_pt, h_dummy, h_dummy, h_dummy,  false, FLAG_MUONS,   year, m_low, m_high);
         make_m_cost_pt_xf_hist(t_mumu_tautau, h_dummy, h_dummy, mc_mumu_pt, h_dummy, h_dummy, h_dummy,  false, FLAG_MUONS,   year, m_low, m_high);
 
         //all backgrounds
@@ -132,7 +131,6 @@ void do_pt_reweight(){
 
         //combine all samples coming from DY MC
         make_m_cost_pt_xf_hist(t_elel_mc, h_dummy, h_dummy, mc_elel_pt, h_dummy, h_dummy, h_dummy,  false, FLAG_ELECTRONS,   year, m_low, m_high);
-        make_m_cost_pt_xf_hist(t_elel_nosig, h_dummy, h_dummy, mc_elel_pt, h_dummy, h_dummy, h_dummy,  false, FLAG_ELECTRONS,   year, m_low, m_high);
         make_m_cost_pt_xf_hist(t_elel_tautau, h_dummy, h_dummy, mc_elel_pt, h_dummy, h_dummy, h_dummy,  false, FLAG_ELECTRONS,   year, m_low, m_high);
 
         //all backgrounds
