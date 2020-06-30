@@ -35,7 +35,7 @@ elif(options.chan == "mumu"):
 bin_start = 0
 bin_stop = 8
 options.chan="ee"
-options.no_sys=True
+options.no_sys=False
 fit_name = options.chan
 if(options.no_sys): fit_name +="_nosys"
 if(options.fake_data): fit_name +="_fake_data"
@@ -48,7 +48,7 @@ if(options.mbin >= 0):
     bin_stop = bin_start + 1
 
 
-for mLQ in [1000,3000]:
+for mLQ in [1000]:
 #mLQ = 1000.
 #for mbin in range(bin_start, bin_stop):
 #print(" \n \n Starting fit for bin %i \n\n" % mbin)
