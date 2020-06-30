@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm5000_normed_templates18.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm1000_normed_templates18.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             ee18   
 observation     -1          
@@ -22,7 +22,7 @@ bk_xsec         lnN      -       -        -     1.05     -      -       -      -
 gam_xsec        lnN      -       -        -      -      1.4     -       -      -
 
 lumi18          lnN     1.025  1.025   1.025   1.025   1.025    1.025   -      -
-#elFakes18       lnN      -       -        -      -       -      -       -      -
+#elFakes18       lnN      -       -        -      -       -     -       -      -
 #muFakes18       lnN      -       -        -      -       -     -       -      -
 
 #* autoMCStats 10 1
