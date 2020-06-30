@@ -1,11 +1,16 @@
 ##DY M100-200 v1
 !idx=1 xsec=226.6
 #################
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_1.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_10.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_100.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_101.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_102.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_103.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_104.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Oct25/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_v3_ext2-v1/191029_144212/0000/B2GTTreeNtupleExtra_105.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar26/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_V0_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/200326_162221/0000/B2GTTreeNtupleExtra_1.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar26/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_V0_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/200326_162221/0000/B2GTTreeNtupleExtra_10.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar26/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_V0_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/200326_162221/0000/B2GTTreeNtupleExtra_100.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar26/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_V0_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/200326_162221/0000/B2GTTreeNtupleExtra_101.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar26/DYJetsToLL_M-100to200_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_V0_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/200326_162221/0000/B2GTTreeNtupleExtra_102.root
+
+##DY M1500-2000
+!idx = 8 xsec = 0.00218
+#################
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Jan22/DYJetsToLL_M-1500to2000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200122_214350/0000/B2GTTreeNtupleExtra_1.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Jan22/DYJetsToLL_M-1500to2000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200122_214350/0000/B2GTTreeNtupleExtra_2.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Jan22/DYJetsToLL_M-1500to2000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200122_214350/0000/B2GTTreeNtupleExtra_3.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Jan22/DYJetsToLL_M-1500to2000_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_9_4_X_RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/200122_214350/0000/B2GTTreeNtupleExtra_4.root

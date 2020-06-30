@@ -138,9 +138,10 @@ class NTupleReader{
         TLorentzVector mu_p, mu_m;
         TLorentzVector el_p, el_m;
         TLorentzVector gen_lep_p_vec, gen_lep_m_vec, hard_lep_p_vec, hard_lep_m_vec;
-        int inc_id1, inc_id2;
         TLorentzVector el, mu;
         Float_t scale_Weights[10], pdf_weights[60], alpha_weights[2];
+        int inc_id1 = 0;
+        int inc_id2 = 0;
 
 
         UInt_t evt_RunNumber, evt_LumiBlock;
@@ -184,7 +185,8 @@ class NTupleReader{
         bool good_sign, opp_sign, good_trigger, dimuon_accep, loose_dimuon_id, tight_dimuon_id, emu_ids,
              mu_iso0, mu_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
 
-        bool signal_event, failed_match;
+        bool signal_event = false;
+        bool failed_match = false;
 
         bool print_gen_warning = true;
 
