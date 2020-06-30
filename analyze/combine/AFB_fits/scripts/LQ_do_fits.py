@@ -35,6 +35,7 @@ elif(options.chan == "mumu"):
 bin_start = 0
 bin_stop = 8
 options.chan="ee"
+options.no_sys=True
 fit_name = options.chan
 if(options.no_sys): fit_name +="_nosys"
 if(options.fake_data): fit_name +="_fake_data"
@@ -46,15 +47,15 @@ if(options.mbin >= 0):
     bin_start = options.mbin
     bin_stop = bin_start + 1
 
-#for mLQ in range(1000,6000,1000):
-mLQ = 1000.
 
+for mLQ in [1000,3000]:
+#mLQ = 1000.
 #for mbin in range(bin_start, bin_stop):
 #print(" \n \n Starting fit for bin %i \n\n" % mbin)
 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
 workspace="workspaces/%s_LQ.root" % (options.chan)
-make_workspace(workspace, False, False, mLQ, year = options.year)
+make_workspace(workspace, options.no_sys, False, mLQ, year = options.year)
 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
 print("\n plotdir = ", plotdir)
 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
