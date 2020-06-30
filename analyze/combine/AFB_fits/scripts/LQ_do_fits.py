@@ -1,3 +1,4 @@
+
 from LQ_utils import *
 import ROOT
 from ROOT import *
@@ -38,24 +39,12 @@ for y in [2016,2017,2018]:
         else:
             extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
 
-<<<<<<< HEAD
-bin_start = 0
-bin_stop = 8
-options.chan="ee"
-options.no_sys=True
-fit_name = options.chan
-if(options.no_sys): fit_name +="_nosys"
-if(options.fake_data): fit_name +="_fake_data"
-if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-print("\n fit_name = ", fit_name)
-=======
     
     fit_name = options.chan
     if(options.no_sys): fit_name +="_nosys"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
     print("\n fit_name = ", fit_name)
->>>>>>> 632fcea040d725027df5c04949ceb96e083c9215
 
     if(options.mbin >= 0):
         print("Will only do fit for bin %i " % options.mbin)
@@ -93,3 +82,4 @@ print("\n fit_name = ", fit_name)
         print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fake_nosys_LQ_m%i.txt" % (fit_name,mLQ))
         print_and_do("rm -f cards/sed*")
         if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
+
