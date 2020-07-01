@@ -48,7 +48,7 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
         //bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 30.;
-        if(m >= m_low && m <= m_high && sig_event){
+        if(m >= m_low && m <= m_high){
             cm = *gen_lep_p + *gen_lep_m;
             float pt = cm.Pt();
             /*
@@ -86,9 +86,10 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 void fit_amc_gen_cost(){
 
     bool write_out = false;
-    int year = 2016;
-    char *out_file = "../analyze/SFs/2016/a0_fits.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_april17.root");
+    int year = 2018;
+    char *out_file = "../analyze/SFs/2018/a0_fits.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_june29.root");
+    gROOT->SetBatch(1);
 
     TFile * f_out;
     if(write_out)
@@ -115,7 +116,6 @@ void fit_amc_gen_cost(){
     float bin_size = 2./n_bins;
 
     int nEvents = 0;
-    gROOT->SetBatch(0);
     gStyle->SetOptFit(1);
     gStyle->SetStatX(0.47);
     gStyle->SetStatY(0.9);
@@ -164,9 +164,6 @@ void fit_amc_gen_cost(){
         c1->Print(title);
         //continue;
         //exit(1);
-        sprintf(title, "norm_y%i_m%i", year -2000, m_idx);
-        RooRealVar *R_norm = new RooRealVar(title, "", norm);
-        A0_fit->setError(0.);
 
         for(int pt_idx = 0; pt_idx < n_pt_bins; pt_idx++){
             pt_low = pt_bins[pt_idx];

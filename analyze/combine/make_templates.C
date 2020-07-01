@@ -26,8 +26,8 @@
 
 TH1F *h1_elel_asym, *h1_elel_sym; 
 TH1F *h1_mumu_asym, *h1_mumu_sym; 
-TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_top, *h1_elel_db,  *h1_elel_dy_gg, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
-TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_top, *h1_mumu_db,  *h1_mumu_dy_gg, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
+TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_top, *h1_elel_db,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
+TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_top, *h1_mumu_db,  *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 
 
 
@@ -64,10 +64,8 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = f
         printf("Making fake data \n");
         //one_mc_template(t_mumu_mc, A0, Afb, h_mumu_data, year, m_low, m_high, FLAG_MUONS, use_xF, "");
         //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
-        TTree *mu_ts[7] = {t_mumu_mc, t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
-        TTree *el_ts[7] = {t_elel_mc, t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
-        //TTree *mu_ts[6] = {t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
-        //TTree *el_ts[6] = {t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
+        TTree *mu_ts[6] = {t_mumu_mc, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
+        TTree *el_ts[6] = {t_elel_mc, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
         gen_combined_background_template(7, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  "");
         gen_combined_background_template(7, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  "");
     }
@@ -184,10 +182,10 @@ void make_mc_templates(int year, const string &sys_label){
         auto h_mumu_db = new TH2F(title, "Combined background template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_db->SetDirectory(0);
-        sprintf(title, "mumu%i_dy_gg%s", year %2000, sys_label.c_str());
-        auto h_mumu_dy_gg = new TH2F(title, "Combined background template",
+        sprintf(title, "mumu%i_tautau%s", year %2000, sys_label.c_str());
+        auto h_mumu_tautau = new TH2F(title, "Combined background template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        h_mumu_dy_gg->SetDirectory(0);
+        h_mumu_tautau->SetDirectory(0);
         sprintf(title, "mumu%i_gam%s", year %2000, sys_label.c_str());
         auto h_mumu_gam = new TH2F(title, "Combined background template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -205,10 +203,9 @@ void make_mc_templates(int year, const string &sys_label){
         gen_combined_background_template(1, mumu_ts, h_mumu_db, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
         emu_costrw = false;
 
-        mumu_ts[0] = t_mumu_nosig;
-        mumu_ts[1] = t_mumu_tautau;
-        printf("Making mumu nosig \n");
-        gen_combined_background_template(2, mumu_ts, h_mumu_dy_gg, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
+        mumu_ts[0] = t_mumu_tautau;
+        printf("Making mumu tautau \n");
+        gen_combined_background_template(1, mumu_ts, h_mumu_tautau, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
 
         mumu_ts[0] = t_mumu_gamgam;
         printf("Making mumu gamgam \n");
@@ -218,16 +215,15 @@ void make_mc_templates(int year, const string &sys_label){
         symmetrize2d(h_mumu_gam);
         symmetrize2d(h_mumu_top);
         symmetrize2d(h_mumu_db);
-        symmetrize2d(h_mumu_dy_gg);
 
         h1_mumu_sym = convert2d(h_mumu_sym);
         h1_mumu_asym = convert2d(h_mumu_asym);
         h1_mumu_top = convert2d(h_mumu_top);
         h1_mumu_db = convert2d(h_mumu_db);
-        h1_mumu_dy_gg = convert2d(h_mumu_dy_gg);
+        h1_mumu_tautau = convert2d(h_mumu_tautau);
         h1_mumu_gam = convert2d(h_mumu_gam);
         h1_mumu_alpha = convert2d(h_mumu_alpha);
-        delete h_mumu_alpha, h_mumu_top, h_mumu_db, h_mumu_dy_gg, h_mumu_gam;
+        delete h_mumu_alpha, h_mumu_top, h_mumu_db, h_mumu_tautau, h_mumu_gam;
 
     }
     if(do_el){
@@ -252,10 +248,10 @@ void make_mc_templates(int year, const string &sys_label){
         auto h_elel_db = new TH2F(title, "Combined background template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_db->SetDirectory(0);
-        sprintf(title, "ee%i_dy_gg%s", year %2000, sys_label.c_str());
-        auto h_elel_dy_gg = new TH2F(title, "Combined background template",
+        sprintf(title, "ee%i_tautau%s", year %2000, sys_label.c_str());
+        auto h_elel_tautau = new TH2F(title, "Combined background template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        h_elel_dy_gg->SetDirectory(0);
+        h_elel_tautau->SetDirectory(0);
         sprintf(title, "ee%i_gam%s", year %2000, sys_label.c_str());
         auto h_elel_gam = new TH2F(title, "Combined background template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -264,7 +260,7 @@ void make_mc_templates(int year, const string &sys_label){
         printf("starting elel dy \n");
         gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS,  use_xF, sys_label);
 
-        TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt};
+        TTree *elel_ts[2] = {t_elel_ttbar, t_elel_wt};
         bool emu_costrw = true;
         gen_combined_background_template(2, elel_ts, h_elel_top, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
@@ -272,9 +268,8 @@ void make_mc_templates(int year, const string &sys_label){
         gen_combined_background_template(1, elel_ts, h_elel_db, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
         emu_costrw = false;
 
-        elel_ts[0] = t_elel_nosig;
-        elel_ts[1] = t_elel_tautau;
-        gen_combined_background_template(2, elel_ts, h_elel_dy_gg, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
+        elel_ts[0] = t_elel_tautau;
+        gen_combined_background_template(1, elel_ts, h_elel_tautau, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
         elel_ts[0] = t_elel_gamgam;
         printf("Making ee gamgam \n");
@@ -284,16 +279,15 @@ void make_mc_templates(int year, const string &sys_label){
         symmetrize2d(h_elel_gam);
         symmetrize2d(h_elel_top);
         symmetrize2d(h_elel_db);
-        symmetrize2d(h_elel_dy_gg);
         
         h1_elel_sym = convert2d(h_elel_sym);
         h1_elel_asym = convert2d(h_elel_asym);
         h1_elel_top = convert2d(h_elel_top);
         h1_elel_db = convert2d(h_elel_db);
-        h1_elel_dy_gg = convert2d(h_elel_dy_gg);
+        h1_elel_tautau = convert2d(h_elel_tautau);
         h1_elel_gam = convert2d(h_elel_gam);
         h1_elel_alpha = convert2d(h_elel_alpha);
-        delete h_elel_alpha, h_elel_top, h_elel_db, h_elel_dy_gg, h_elel_gam;
+        delete h_elel_alpha, h_elel_top, h_elel_db, h_elel_tautau, h_elel_gam;
     }
 
 }
@@ -409,7 +403,7 @@ void write_out_templates(const string &sys_label){
     if(do_mu){
         h1_mumu_top->Write();
         h1_mumu_db->Write();
-        h1_mumu_dy_gg->Write();
+        h1_mumu_tautau->Write();
         h1_mumu_gam->Write();
         h1_mumu_alpha->Write();
         h1_mumu_pl->Write();
@@ -418,7 +412,7 @@ void write_out_templates(const string &sys_label){
 
         h1_mumu_top->Reset();
         h1_mumu_db->Reset();
-        h1_mumu_dy_gg->Reset();
+        h1_mumu_tautau->Reset();
         h1_mumu_gam->Reset();
         h1_mumu_alpha->Reset();
         h1_mumu_pl->Reset();
@@ -428,7 +422,7 @@ void write_out_templates(const string &sys_label){
     if(do_el){
         h1_elel_top->Write();
         h1_elel_db->Write();
-        h1_elel_dy_gg->Write();
+        h1_elel_tautau->Write();
         h1_elel_gam->Write();
         h1_elel_alpha->Write();
         h1_elel_pl->Write();
@@ -437,7 +431,7 @@ void write_out_templates(const string &sys_label){
 
         h1_elel_top->Reset();
         h1_elel_db->Reset();
-        h1_elel_dy_gg->Reset();
+        h1_elel_tautau->Reset();
         h1_elel_gam->Reset();
         h1_elel_alpha->Reset();
         h1_elel_pl->Reset();

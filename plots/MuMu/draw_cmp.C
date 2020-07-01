@@ -30,8 +30,8 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2017;
-const bool write_out = false;
+const int year = 2018;
+const bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
 
@@ -48,7 +48,7 @@ void draw_cmp(){
 
     int n_pt_bins1 = 40;
     TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *mc_nosig_pt = new TH1F("mc_nosig_pt", "MC signal", n_pt_bins1, 0, 1000);
+    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, 0, 1000);
     TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, 0, 1000);
     TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, 0, 1000);
     TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, 0, 1000);
@@ -59,7 +59,7 @@ void draw_cmp(){
     int n_xf_bins1 = 5;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};
     TH1F *mc_xf = new TH1F("mc_xf", "MC signal", n_xf_bins1,  xf_bins1);
-    TH1F *mc_nosig_xf = new TH1F("mc_nosig_xf", "MC signal", n_xf_bins1,  xf_bins1);
+    TH1F *mc_tautau_xf = new TH1F("mc_tautau_xf", "MC signal", n_xf_bins1,  xf_bins1);
     TH1F *data_xf = new TH1F("data_xf", "MC signal", n_xf_bins1,  xf_bins1);
     TH1F *ttbar_xf = new TH1F("ttbar_xf", "MC signal", n_xf_bins1,  xf_bins1);
     TH1F *diboson_xf = new TH1F("diboson_xf", "MC signal", n_xf_bins1,  xf_bins1);
@@ -70,7 +70,7 @@ void draw_cmp(){
     int n_m_bins = 30;
     TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 150, 2000);
     TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 150, 2000);
-    TH1F *mc_nosig_m = new TH1F("mc_nosig_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 150, 2000);
+    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 150, 2000);
     TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 150, 2000);
     TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 150, 2000);
     TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 150, 2000);
@@ -81,7 +81,7 @@ void draw_cmp(){
     int num_cost_bins = 10;
     TH1F *data_cost = new TH1F("data_cost", "Data", n_cost_bins, -1.,1.);
     TH1F *mc_cost = new TH1F("mc_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1,1);
-    TH1F *mc_nosig_cost = new TH1F("mc_nosig_cost", "MC no signal (qq, gluglu qbarqbar)", n_cost_bins, -1.,1.);
+    TH1F *mc_tautau_cost = new TH1F("mc_tautau_cost", "MC no signal (qq, gluglu qbarqbar)", n_cost_bins, -1.,1.);
     TH1F *ttbar_cost = new TH1F("ttbar_cost", "TTbar Background", n_cost_bins, -1.,1.);
     TH1F *diboson_cost = new TH1F("diboson_cost", "DiBoson (WW, WZ,ZZ)", n_cost_bins, -1,1);
     TH1F *QCD_cost = new TH1F("QCD_cost", "QCD", n_cost_bins, -1,1);
@@ -92,7 +92,7 @@ void draw_cmp(){
     int n_phi_bins = 20;
     TH1F *data_phi = new TH1F("data_phi", "Data", n_phi_bins, -4.,4.);
     TH1F *mc_phi = new TH1F("mc_phi", "MC Signal (qqbar, qglu, qbarglu)", n_phi_bins, -4,4);
-    TH1F *mc_nosig_phi = new TH1F("mc_nosig_phi", "MC no signal (qq, gluglu qbarqbar)", n_phi_bins, -4.,4.);
+    TH1F *mc_tautau_phi = new TH1F("mc_tautau_phi", "MC no signal (qq, gluglu qbarqbar)", n_phi_bins, -4.,4.);
     TH1F *ttbar_phi = new TH1F("ttbar_phi", "TTbar Background", n_phi_bins, -4.,4.);
     TH1F *diboson_phi = new TH1F("diboson_phi", "DiBoson (WW, WZ,ZZ)", n_phi_bins, -4,4);
     TH1F *QCD_phi = new TH1F("QCD_phi", "QCD", n_phi_bins, -4,4);
@@ -103,7 +103,7 @@ void draw_cmp(){
     int n_rap_bins = 20;
     TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
     TH1F *mc_rap = new TH1F("mc_rap", "MC Signal (qqbar, qglu, qbarglu)", n_rap_bins, -2.5,2.5);
-    TH1F *mc_nosig_rap = new TH1F("mc_nosig_rap", "MC no signal (qq, gluglu qbarqbar)", n_rap_bins, -2.5,2.5);
+    TH1F *mc_tautau_rap = new TH1F("mc_tautau_rap", "MC no signal (qq, gluglu qbarqbar)", n_rap_bins, -2.5,2.5);
     TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.5,2.5);
     TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
     TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
@@ -111,12 +111,12 @@ void draw_cmp(){
     TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
     TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
-    mc_nosig_cost->SetFillColor(kMagenta);
-    mc_nosig_m->SetFillColor(kMagenta);
-    mc_nosig_pt->SetFillColor(kMagenta);
-    mc_nosig_xf->SetFillColor(kMagenta);
-    mc_nosig_phi->SetFillColor(kMagenta);
-    mc_nosig_rap->SetFillColor(kMagenta);
+    mc_tautau_cost->SetFillColor(kMagenta);
+    mc_tautau_m->SetFillColor(kMagenta);
+    mc_tautau_pt->SetFillColor(kMagenta);
+    mc_tautau_xf->SetFillColor(kMagenta);
+    mc_tautau_phi->SetFillColor(kMagenta);
+    mc_tautau_rap->SetFillColor(kMagenta);
 
     mc_cost->SetFillColor(kRed+1);
     mc_m->SetFillColor(kRed+1);
@@ -172,8 +172,7 @@ void draw_cmp(){
 
     make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
     make_m_cost_pt_xf_hist(t_mumu_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap,              false, type,   year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_nosig, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type,  year, m_low, m_high);
-    make_m_cost_pt_xf_hist(t_mumu_tautau, mc_nosig_m, mc_nosig_cost, mc_nosig_pt, mc_nosig_xf, mc_nosig_phi, mc_nosig_rap, false, type,  year, m_low, m_high);
+    make_m_cost_pt_xf_hist(t_mumu_tautau, mc_tautau_m, mc_tautau_cost, mc_tautau_pt, mc_tautau_xf, mc_tautau_phi, mc_tautau_rap, false, type,  year, m_low, m_high);
     make_m_cost_pt_xf_hist(t_mumu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type,  year, m_low, m_high);
     make_m_cost_pt_xf_hist(t_mumu_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type,  year, m_low, m_high);
     make_m_cost_pt_xf_hist(t_mumu_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type,  year, m_low, m_high);
@@ -219,7 +218,7 @@ void draw_cmp(){
     m_stack->Add(wt_m);
     m_stack->Add(ttbar_m);
     m_stack->Add(gg_m);
-    m_stack->Add(mc_nosig_m);
+    m_stack->Add(mc_tautau_m);
     m_stack->Add(mc_m);
 
 
@@ -229,7 +228,7 @@ void draw_cmp(){
     cost_stack->Add(wt_cost);
     cost_stack->Add(ttbar_cost);
     cost_stack->Add(gg_cost);
-    cost_stack->Add(mc_nosig_cost);
+    cost_stack->Add(mc_tautau_cost);
     cost_stack->Add(mc_cost);
 
     THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs MC; DiElectron Pt (GeV)");
@@ -238,7 +237,7 @@ void draw_cmp(){
     pt_stack->Add(wt_pt);
     pt_stack->Add(ttbar_pt);
     pt_stack->Add(gg_pt);
-    pt_stack->Add(mc_nosig_pt);
+    pt_stack->Add(mc_tautau_pt);
     pt_stack->Add(mc_pt);
 
     THStack *xf_stack = new THStack("xf_stack", "Di-electron x_F Distribution: Data vs MC; x_F");
@@ -247,7 +246,7 @@ void draw_cmp(){
     xf_stack->Add(wt_xf);
     xf_stack->Add(ttbar_xf);
     xf_stack->Add(gg_xf);
-    xf_stack->Add(mc_nosig_xf);
+    xf_stack->Add(mc_tautau_xf);
     xf_stack->Add(mc_xf);
 
     THStack *phi_stack = new THStack("phi_stack", "DiElectron Phi Distribution: Data vs MC; #phi");
@@ -256,7 +255,7 @@ void draw_cmp(){
     phi_stack->Add(wt_phi);
     phi_stack->Add(ttbar_phi);
     phi_stack->Add(gg_phi);
-    phi_stack->Add(mc_nosig_phi);
+    phi_stack->Add(mc_tautau_phi);
     phi_stack->Add(mc_phi);
 
     THStack *rap_stack = new THStack("rap_stack", "DiElectron Rapidity Distribution: Data vs MC; y");
@@ -265,7 +264,7 @@ void draw_cmp(){
     rap_stack->Add(wt_rap);
     rap_stack->Add(ttbar_rap);
     rap_stack->Add(gg_rap);
-    rap_stack->Add(mc_nosig_rap);
+    rap_stack->Add(mc_tautau_rap);
     rap_stack->Add(mc_rap);
 
     gStyle->SetLegendBorderSize(0);
@@ -273,8 +272,8 @@ void draw_cmp(){
     float y_size = 0.3;
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->AddEntry(data_m, "data", "p");
-    leg1->AddEntry(mc_m, "DY (q#bar{q}, qg #bar{q}g)", "f");
-    leg1->AddEntry(mc_nosig_m, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");
+    leg1->AddEntry(mc_m, "DY Signal", "f");
+    leg1->AddEntry(mc_tautau_m, "DY to #tau#tau", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma to #mu#mu", "f");
     leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
     leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");

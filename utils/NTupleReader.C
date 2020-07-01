@@ -409,6 +409,10 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("is_tau_event", &is_tau_event);
         outTrees[idx]->Branch("pu_NtrueInt", &pu_NtrueInt);
 
+        outTrees[idx]->Branch("inc_id1", &inc_id1);
+        outTrees[idx]->Branch("inc_id2", &inc_id2);
+        outTrees[idx]->Branch("signal_event", &signal_event);
+
         if(do_muons || do_emu){
             outTrees[idx]->Branch("gen_mu_m", "TLorentzVector", &gen_lep_m_vec);
             outTrees[idx]->Branch("gen_mu_p", "TLorentzVector", &gen_lep_p_vec);
@@ -966,11 +970,16 @@ bool NTupleReader::parseGenParts(bool PRINT = false){
     else my_lep = ELECTRON;
 
     int found_lep = selectAnyGenParts(PRINT); 
+    is_tau_event = false;
+    signal_event = true;
+    failed_match = false; 
+
     if(found_lep == TAU){
         is_tau_event = true;
+        nTauTau++;
         signal_event = false;
     }
-    if(found_lep != my_lep){
+    else if(found_lep != my_lep){
         signal_event = false;
         failed_match = true;
     }
@@ -1048,14 +1057,6 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
         if((abs(gen_id[k]) == ELECTRON || abs(gen_id[k]) == MUON || abs(gen_id[k]) == TAU ) &&
                 ((gen_Mom0ID[k] == Z || gen_Mom0ID[k] == PHOTON)
                 || (gen_status[k] == OUTGOING && gen_Mom0ID[k] != PROTON))) {
-            /*
-              printf("lep (id %i stat = %i, pt %.1f ): \n"
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
-                        gen_id[k], gen_status[k], gen_Pt[k],
-                        gen_Mom0ID[k],  gen_Mom1ID[k], 
-                        gen_Dau0ID[k],  gen_Dau1ID[k] );
-                        */
         
 
             if(gen_id[k] > 0){
@@ -1080,14 +1081,6 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
                 gen_status[k] == FINAL_STATE && gen_Mom0ID[k] == gen_id[k]
                 //hard process leptons come before final state leptons, should be same kind
                 && (hard_lep_p > 0 && abs(gen_id[k]) == abs(gen_id[hard_lep_p]))) {
-            /*
-              printf("lep (id %i stat = %i, pt %.1f ): \n"
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
-                        gen_id[k], gen_status[k], gen_Pt[k],
-                        gen_Mom0ID[k],  gen_Mom1ID[k], 
-                        gen_Dau0ID[k],  gen_Dau1ID[k] );
-                        */
         
 
             if(gen_id[k] > 0){
@@ -1116,8 +1109,8 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
             photon_idxs.push_back(k);
             /*
             printf("Photon, stat %i, pt %.1f "
-                        "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                        "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat  \n",
+                        "   Mom1 ID: %i  Mom2 ID: %i  \n"
+                        "   Dau1 ID: %i  Dau2 ID: %i  \n",
                         gen_status[k], gen_Pt[k],
                         gen_Mom0ID[k],  gen_Mom1ID[k], 
                         gen_Dau0ID[k],  gen_Dau1ID[k] );
@@ -1131,6 +1124,9 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
                         gen_id[k], gen_status[k], 
                         gen_Mom0ID[k],  gen_Mom1ID[k], 
                         gen_Dau0ID[k],  gen_Dau1ID[k] );
+
+                sprintf(out_buff + strlen(out_buff),"(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                        gen_Pt[k], gen_Eta[k], gen_Phi[k], gen_E[k]);
             }
 
 
@@ -1194,17 +1190,20 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
         return -1;
     }
     else{ 
-        if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_p: \n"
-                "   Mom1 ID: %i Mom1 Stat: Mom2 ID: %i Mom2 Stat \n"
-                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
+        if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_p (id = %i): \n"
+                "   Mom1 ID: %i Mom2 ID: %i \n"
+                "  (pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                gen_id[gen_lep_p],
                 gen_Mom0ID[gen_lep_p],  gen_Mom1ID[gen_lep_p], 
-                gen_Dau0ID[gen_lep_p], gen_Dau1ID[gen_lep_p]);
+                gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]
+                );
 
-        if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_m: \n"
-                "   Mom1 ID: %i Mom1 Stat:  Mom2 ID: %i Mom2 Stat  \n"
-                "   Dau1 ID: %i Dau1 Stat:  Dau2 ID: %i Dau2 Stat \n",
+        if(PRINT) sprintf(out_buff + strlen(out_buff),"lep_m (id = %i): \n"
+                "   Mom1 ID: %i Mom2 ID: %i  \n"
+                "  (pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                gen_id[gen_lep_p],
                 gen_Mom0ID[gen_lep_m],  gen_Mom1ID[gen_lep_m], 
-                gen_Dau0ID[gen_lep_m],  gen_Dau1ID[gen_lep_m]
+                gen_Pt[gen_lep_m], gen_Eta[gen_lep_m], gen_Phi[gen_lep_m], gen_E[gen_lep_m]
                 );
 
     }
@@ -1250,12 +1249,15 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
         }
         else if((abs(inc_id1) <= 6) && (abs(inc_id2) <= 6) && (inc_id1 * inc_id2 >0)){ //2 quarks
             if(PRINT) sprintf(out_buff + strlen(out_buff),"QQ Event \n");
+            print_out = true;
             signal_event = false;
             nQQ++;
+            if(PRINT) sprintf(out_buff + strlen(out_buff), "QQ event \n");
         }
         else if((inc_id1 == 21) && (inc_id2 == 21)){ //gluglu
             signal_event = false;
             nGluGlu++;
+            print_out = true;
             if(PRINT) sprintf(out_buff + strlen(out_buff), "Glu Glu event \n");
         }
         else {
@@ -1267,10 +1269,10 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
     }
 
     if(PRINT){
-        sprintf(out_buff + strlen(out_buff),  "1st Particle %i:(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
-                gen_id[inc_1], gen_Pt[inc_1], gen_Eta[inc_1], gen_Phi[inc_1], gen_E[inc_1]);
-        sprintf(out_buff + strlen(out_buff),"2nd Particle %i:(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
-                gen_id[inc_2], gen_Pt[inc_2], gen_Eta[inc_2], gen_Phi[inc_2], gen_E[inc_2]);
+        sprintf(out_buff + strlen(out_buff),  "1st Particle (index %i, stat %i):(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                inc_1, gen_id[inc_1], gen_Pt[inc_1], gen_Eta[inc_1], gen_Phi[inc_1], gen_E[inc_1]);
+        sprintf(out_buff + strlen(out_buff),"2nd Particle (index %i, stat %i):(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                inc_2, gen_id[inc_2], gen_Pt[inc_2], gen_Eta[inc_2], gen_Phi[inc_2], gen_E[inc_2]);
     }
     float gen_cost;
     gen_lep_p_vec.SetPtEtaPhiE(gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]);
@@ -1318,14 +1320,18 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
 
 
 
-    gen_cm = gen_lep_p_vec + gen_lep_m_vec;
-    gen_cost = get_cost(gen_lep_p_vec, gen_lep_m_vec, false);
-    if(std::isnan(gen_cost)) gen_cost = get_cost_v2(gen_lep_p_vec, gen_lep_m_vec);
-    if(std::isnan(gen_cost)) gen_cost = cost;
-    if(quark_dir_eta < 0){
-        cost_st = -gen_cost;
+    if(signal_event){
+        gen_cm = gen_lep_p_vec + gen_lep_m_vec;
+        gen_cost = get_cost(gen_lep_p_vec, gen_lep_m_vec, false);
+        if(std::isnan(gen_cost)) gen_cost = get_cost_v2(gen_lep_p_vec, gen_lep_m_vec);
+        if(std::isnan(gen_cost)) gen_cost = cost;
+        if(quark_dir_eta < 0){
+            cost_st = -gen_cost;
+        }
+        else cost_st = gen_cost;
     }
-    else cost_st = gen_cost;
+    else cost_st = gen_cost = get_cost(gen_lep_p_vec, gen_lep_m_vec);
+
 
     gen_m = gen_cm.M();
 
