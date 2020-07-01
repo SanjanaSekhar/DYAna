@@ -346,8 +346,28 @@ void TempMaker::doCorrections(){
 
 }
 
-void TempMaker::fixRFNorm(TH2 *h, int mbin){
+void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     double avg = 1.;
+
+    double *h_RF_up, *h_RF_down, *h_R_up, *h_R_down, *h_F_up, *h_F_down;
+    if(year == 2016){
+        h_RF_up = h_RF_up16;
+        h_RF_down = h_RF_down16;
+        h_F_up = h_F_up16;
+        h_F_down = h_F_down16;
+        h_R_up = h_R_up16;
+        h_R_down = h_R_down16;
+    }
+    else{
+        h_RF_up = h_RF_up17;
+        h_RF_down = h_RF_down17;
+        h_F_up = h_F_up17;
+        h_F_down = h_F_down17;
+        h_R_up = h_R_up17;
+        h_R_down = h_R_down17;
+    }
+
+
     if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = h_RF_up[mbin];
     else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = h_RF_down[mbin];
     else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = h_R_up[mbin];

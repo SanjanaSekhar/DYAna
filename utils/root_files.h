@@ -7,10 +7,10 @@
 #include "bins.h"
 
 TFile *f_elel_mc, *f_elel_data, *f_elel_QCD, *f_elel_WJets, *f_elel_WJets_contam, *f_elel_QCD_contam;
-TTree *t_elel_mc, *t_elel_data, *t_elel_QCD, *t_elel_WJets, *t_elel_WJets_contam, *t_elel_QCD_contam, *t_elel_nosig, *t_elel_tautau;
+TTree *t_elel_mc, *t_elel_data, *t_elel_QCD, *t_elel_WJets, *t_elel_WJets_contam, *t_elel_QCD_contam,  *t_elel_tautau;
 
 TFile *f_mumu_mc, *f_mumu_data, *f_mumu_QCD, *f_mumu_WJets, *f_mumu_WJets_contam, *f_mumu_QCD_contam;
-TTree *t_mumu_mc, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam, *t_mumu_nosig, *t_mumu_tautau;
+TTree *t_mumu_mc, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam,  *t_mumu_tautau;
 
 TFile *f_emu_dy, *f_emu_data, *f_emu_QCD, *f_emu_WJets, *f_emu_WJets_contam;
 TTree *t_emu_dy, *t_emu_data, *t_emu_QCD, *t_emu_WJets, *t_emu_WJets_contam;
@@ -127,9 +127,8 @@ void init_mc(int year){
     init_indv_bkgs(year);
 
     if(year == 2016){
-        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_dy_april17.root");
+        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_dy_june29.root");
         t_elel_mc = (TTree *)f_elel_mc->Get("T_sig");
-        t_elel_nosig = (TTree *) f_elel_mc->Get("T_DY_back");
         t_elel_tautau= (TTree *) f_elel_mc->Get("T_tautau");
         t_elel_ss_dy = (TTree *)f_elel_mc->Get("T_ss");
 
@@ -138,9 +137,8 @@ void init_mc(int year){
         t_elel_gamgam = (TTree *)f_elel_gamgam->Get("T_sig");
 
 //--------------------------------------------------
-        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2016/MuMu16_dy_april17.root");
+        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2016/MuMu16_dy_june29.root");
         t_mumu_mc = (TTree *)f_mumu_mc->Get("T_sig");
-        t_mumu_nosig = (TTree *) f_mumu_mc->Get("T_DY_back");
         t_mumu_tautau = (TTree *) f_mumu_mc->Get("T_tautau");
         t_mumu_ss_dy = (TTree *)f_mumu_mc->Get("T_ss");
 
@@ -149,9 +147,8 @@ void init_mc(int year){
     }
     else if(year == 2017){
 
-        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_dy_april17.root");
+        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_dy_june29.root");
         t_elel_mc = (TTree *)f_elel_mc->Get("T_sig");
-        t_elel_nosig = (TTree *) f_elel_mc->Get("T_DY_back");
         t_elel_tautau= (TTree *) f_elel_mc->Get("T_tautau");
         t_elel_ss_dy = (TTree *)f_elel_mc->Get("T_ss");
 
@@ -160,9 +157,8 @@ void init_mc(int year){
 
     //------------------------------------------------------------------------------
     
-        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_dy_april17.root");
+        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_dy_june29.root");
         t_mumu_mc = (TTree *)f_mumu_mc->Get("T_sig");
-        t_mumu_nosig = (TTree *) f_mumu_mc->Get("T_DY_back");
         t_mumu_tautau = (TTree *) f_mumu_mc->Get("T_tautau");
         t_mumu_ss_dy = (TTree *)f_mumu_mc->Get("T_ss");
 
@@ -173,9 +169,8 @@ void init_mc(int year){
     }
     else if(year == 2018){
 
-        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_dy_april17.root");
+        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_dy_june29.root");
         t_elel_mc = (TTree *)f_elel_mc->Get("T_sig");
-        t_elel_nosig = (TTree *) f_elel_mc->Get("T_DY_back");
         t_elel_tautau= (TTree *) f_elel_mc->Get("T_tautau");
         t_elel_ss_dy = (TTree *)f_elel_mc->Get("T_ss");
 
@@ -184,9 +179,8 @@ void init_mc(int year){
 
         //-----------------------------------------------------------------------------------------------
 
-        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2018/MuMu18_dy_april17.root");
+        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2018/MuMu18_dy_june29.root");
         t_mumu_mc = (TTree *)f_mumu_mc->Get("T_sig");
-        t_mumu_nosig = (TTree *) f_mumu_mc->Get("T_DY_back");
         t_mumu_tautau = (TTree *) f_mumu_mc->Get("T_tautau");
         t_mumu_ss_dy = (TTree *)f_mumu_mc->Get("T_ss");
 

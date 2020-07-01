@@ -92,7 +92,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
             mu_RF_up = nt.scale_Weights[3];
             mu_RF_down = nt.scale_Weights[5];
 
-            int gen_id = nt.selectAnyGenParts(true);
+            int gen_id = nt.selectAnyGenParts();
             gen_p = nt.gen_lep_p_vec;
             gen_m = nt.gen_lep_m_vec;
             cm = gen_p + gen_m;
