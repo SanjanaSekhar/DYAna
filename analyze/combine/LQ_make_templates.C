@@ -462,11 +462,11 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     vector<string> sys_labels {""};
 
-    for(int i=6;i<=10;i++){
+   // for(int i=6;i<=10;i++){
     
-    m_LQ = 1000.*i;   
+    m_LQ = 1000.;   
     char templates_name[100];
-    sprintf(templates_name,"combine/templates/LQm%i_normed_templates%i.root",int(m_LQ),year%2000);
+    sprintf(templates_name,"combine/templates/LQm%i_3rap_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
     TFile * fout = TFile::Open(fout_name, "RECREATE");
 
@@ -516,5 +516,5 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
     fout->Close();
     printf("Templates written to %s \n", fout_name.Data());
     }
-}}
+}
 

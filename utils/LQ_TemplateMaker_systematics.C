@@ -406,7 +406,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
    // printf("================LQpure template negative for following entries================\n");
     for(int k=1; k<=n_lq_m_bins; k++){    
-        for(int i=1; i<=n_xf_bins; i++){
+        for(int i=1; i<=n_y_bins; i++){
             for(int j=1; j<= n_cost_bins; j++){
                 Double_t pure_content = h_LQpure->GetBinContent(k,i,j);
                // Double_t int_content = h_LQint->GetBinContent(k,i,j);
