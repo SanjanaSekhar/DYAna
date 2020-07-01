@@ -35,8 +35,8 @@ void print_profile(TProfile *h, int n_bins){
 void fill_RF_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfile *h_F_up, TProfile *h_F_down, 
                     TProfile *h_RF_up, TProfile *h_RF_down){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
-    double gen_weight, m, cost, cost_st;
-    double mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_down, mu_RF_up;
+    float gen_weight, m, cost, cost_st;
+    float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_down, mu_RF_up;
 
     t_dy->SetBranchAddress("gen_p", &gen_lep_p);
     t_dy->SetBranchAddress("gen_m", &gen_lep_m);
@@ -51,7 +51,7 @@ void fill_RF_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfile *
     t_dy->SetBranchAddress("mu_RF_down", &mu_RF_down);
     t_dy->SetBranchAddress("gen_weight", &gen_weight);
 
-    double m_low = 150.;
+    float m_low = 150.;
 
 
 
@@ -80,14 +80,11 @@ void fill_RF_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfile *
 
 void get_RF_avg(){
     setTDRStyle();
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY_gen_level_jan20.root");
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_june29.root");
 
     TTree *t_mu = (TTree *) f_gen->Get("T_gen_mu");
     TTree *t_el = (TTree *) f_gen->Get("T_gen_el");
 
-
-    const int n_eta_bins = 4;
-    double eta_bins[] = {0., 1.0, 1.25, 1.5, 2.4};
 
     int n_m_bins = 8;
     double m_bins[] = {150, 171, 200,  250, 320, 510, 700, 1000, 14000};
@@ -110,14 +107,5 @@ void get_RF_avg(){
     print_profile(h_RF_up, n_m_bins);
     print_profile(h_RF_down, n_m_bins);
 
-    /*
-    for(int i=0; i<n_eta_bins; i++){
-        char label[10], title[40];
-        sprintf(label, "eta%i", i);
-        sprintf(title, " %.1f < |y| < %.1f", eta_bins[i], eta_bins[i+1]);
-
-        draw_graph_ratio(g_fitted[i], g_mc[i], g_ratio[i], label, title);
-    }
-    */
 
 }

@@ -186,8 +186,11 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
+
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
+
+            
 
             h_sym->Fill(var1, tm.cost, reweight_s * tm.evt_weight); 
             h_sym->Fill(var1, -tm.cost, reweight_s * tm.evt_weight); 
@@ -204,9 +207,9 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
 
     tm.finish();
     int mbin = find_bin(m_bins, m_low + 0.1);
-    tm.fixRFNorm(h_sym, mbin);
-    tm.fixRFNorm(h_asym, mbin);
-    tm.fixRFNorm(h_alpha, mbin);
+    tm.fixRFNorm(h_sym, mbin, year);
+    tm.fixRFNorm(h_asym, mbin, year);
+    tm.fixRFNorm(h_alpha, mbin, year);
 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);

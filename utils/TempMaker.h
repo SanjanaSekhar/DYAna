@@ -52,12 +52,28 @@ float met_cut = 100;
 
 //Average renorm and fac scale reweights for each mass bin (to remove
 //normalization component)
-double h_R_up[8] = { 1.044, 1.039, 1.033, 1.026, 1.019, 1.009, 0.998, 0.985, }; 
-double h_R_down[8] = { 0.947, 0.953, 0.960, 0.969, 0.979, 0.992, 1.004, 1.020, }; 
-double h_F_up[8] = { 0.976, 0.975, 0.975, 0.973, 0.968, 0.961, 0.957, 0.950, }; 
-double h_F_down[8] = { 1.020, 1.020, 1.018, 1.018, 1.021, 1.025, 1.028, 1.033, }; 
-double h_RF_up[8] = { 1.023, 1.018, 1.012, 1.003, 0.990, 0.973, 0.965, 0.956, }; 
-double h_RF_down[8] = { 0.972, 0.979, 0.983, 0.991, 0.999, 1.008, 1.016, 1.025, };
+
+//2016
+//
+double *h_R_up, *h_R_down, *h_F_up, *h_F_down, *h_RF_up, *h_RF_down;
+
+double h_R_up16[8] = { 0.966, 0.964, 0.963, 0.959, 0.955, 0.951, 0.946, 0.939, }; 
+double h_R_down16[8] = { 1.023, 1.025, 1.024, 1.026, 1.029, 1.030, 1.034, 1.040, }; 
+double h_F_up16[8] = { 1.049, 1.044, 1.037, 1.029, 1.018, 1.001, 0.987, 0.964, }; 
+double h_F_down16[8] = { 0.942, 0.947, 0.955, 0.965, 0.977, 0.998, 1.014, 1.041, }; 
+double h_RF_up16[8] = { 1.027, 1.020, 1.011, 0.999, 0.982, 0.963, 0.953, 0.943, }; 
+double h_RF_down16[8] = { 0.965, 0.973, 0.982, 0.994, 1.006, 1.016, 1.025, 1.033, };
+
+
+//2017/8
+double h_R_up17[8] = { 1.044, 1.039, 1.033, 1.026, 1.019, 1.009, 0.998, 0.984, }; 
+double h_R_down17[8] = { 0.947, 0.954, 0.960, 0.969, 0.979, 0.992, 1.004, 1.020, }; 
+double h_F_up17[8] = { 0.976, 0.975, 0.975, 0.973, 0.968, 0.961, 0.956, 0.950, }; 
+double h_F_down17[8] = { 1.020, 1.020, 1.018, 1.018, 1.021, 1.025, 1.028, 1.033, }; 
+double h_RF_up17[8] = { 1.023, 1.018, 1.012, 1.003, 0.990, 0.973, 0.965, 0.955, }; 
+double h_RF_down17[8] = { 0.972, 0.979, 0.983, 0.991, 0.999, 1.008, 1.016, 1.025, }; 
+
+
 
 class TempMaker{
     public:
@@ -68,7 +84,7 @@ class TempMaker{
         void getEvent(int i);
         void doCorrections();
         float getEvtWeight();
-        void fixRFNorm(TH2 *h, int mbin);
+        void fixRFNorm(TH2 *h, int mbin, int year);
         void finish();
         float getReweightingDenom();
         float getLQReweightingDenom();

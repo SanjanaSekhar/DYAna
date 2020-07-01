@@ -14,12 +14,12 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2016;
+        int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_mufakesrw2b16";
+        char *sys = "_RENORM18";
         bool do_bkg = false;
-        bool do_qcd = true;
+        bool do_qcd = false;
         bool do_electrons = true;
         bool do_muons = true;
         int i = 0;

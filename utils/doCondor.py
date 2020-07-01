@@ -149,6 +149,7 @@ if options.tar:
             tar_cmd += " --exclude='%s' " % (item)
         tar_cmd += " --exclude='%s' " %'.git' 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
+        tar_cmd += " --exclude='%s' " %'*.png' 
         tar_cmd += " --exclude='%s' " %'Analysis/DYAna/analyze/my_script.sh'
         tar_cmd += " -zcf %s -C %s %s" % (options.tarname + ".tgz", "$CMSSW_BASE/src/", options.tarname)
     if options.root_files:
