@@ -22,7 +22,8 @@ for y in [2016,2017,2018]:
     bin_start = 0
     bin_stop = 8
     options.chan="ee"
-    options.no_sys=True
+    options.no_sys=False
+    options.fake_data=True
     options.year = y
 
     if(options.chan == "ee"):
@@ -57,7 +58,7 @@ for y in [2016,2017,2018]:
         print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
         workspace="workspaces/%s_LQ.root" % (options.chan)
-        make_workspace(workspace, options.no_sys, False, mLQ, year = options.year)
+        make_workspace(workspace, options.no_sys, options.fake_data, mLQ, year = options.year)
         plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
         print("\n plotdir = ", plotdir)
         print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
