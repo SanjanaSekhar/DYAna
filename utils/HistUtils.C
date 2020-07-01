@@ -1,6 +1,5 @@
 #ifndef HIST_UTILS
 #define HIST_UTILS
-
 #define FLAG_MUONS  0
 #define FLAG_ELECTRONS  1
 #define FLAG_EMU  2

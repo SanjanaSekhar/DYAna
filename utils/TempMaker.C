@@ -468,7 +468,7 @@ float TempMaker::getEvtWeight(){
 
 
 
-        evt_weight = 1000. * el_lumi * base_weight * el_id_SF *el_reco_SF * el_HLT_SF;;
+        evt_weight = 1000. * el_lumi * base_weight * el_id_SF *el_reco_SF * el_HLT_SF;
 
     }
 

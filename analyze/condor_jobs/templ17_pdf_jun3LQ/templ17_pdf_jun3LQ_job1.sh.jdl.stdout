@@ -1,0 +1,169 @@
+[FERMIHTC-SINGULARITY]: INFO -- No Singulariy image specified
+[FERMIHTC-SINGULARITY]: INFO -- Running job on the host machine
+
+[FERMIHTC-SINGULARITY]: INFO -- Running ./condor_exec.exe
++ source /cvmfs/cms.cern.ch/cmsset_default.sh
+++ cms_basedir=/cvmfs/cms.cern.ch
+++ here=/cvmfs/cms.cern.ch
+++ export PATH=/cvmfs/cms.cern.ch/common:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/cvmfs/cms.cern.ch/common:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ '[' '' '!=' '' ']'
+++ '[' '!' X = X ']'
+++ '[' '!' ']'
++++ /cvmfs/cms.cern.ch/common/cmsarch
+++ SCRAM_ARCH=slc6_amd64_gcc700
+++ '[' '!' -d /cvmfs/cms.cern.ch/slc6_amd64_gcc700/etc/profile.d ']'
+++ export SCRAM_ARCH
+++ for arch in share '${SCRAM_ARCH}'
+++ '[' -d /cvmfs/cms.cern.ch/share/etc/profile.d ']'
++++ /bin/ls /cvmfs/cms.cern.ch/share/etc/profile.d/
++++ grep 'S.*[.]sh'
+++ for pkg in '$(/bin/ls $here/${arch}/etc/profile.d/ | grep '\''S.*[.]sh'\'')'
+++ source /cvmfs/cms.cern.ch/share/etc/profile.d/S99crab-env.sh
++++ cms_basedir=/cvmfs/cms.cern.ch/share/cms
++++ crab_shared_dir=/cvmfs/cms.cern.ch/share/cms/crab/1.0
+++++ ls /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-dev.latest /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-pre.latest /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-prod.latest
++++ for crab_latest in '$(ls ${crab_shared_dir}/etc/crab-*.latest 2>/dev/null)'
+++++ basename /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-dev.latest
+++++ sed 's|.latest$||;s|^crab-||'
++++ crab_type=dev
+++++ cat /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-dev.latest
++++ crab_version=3.3.2005
++++ '[' -e /cvmfs/cms.cern.ch/share/cms/crab-dev/3.3.2005/etc/crab-bash-completion.sh ']'
+++++ ps -p6 -ocmd=
++++ '[' '/bin/bash ./condor_exec.exe' = zsh ']'
++++ source /cvmfs/cms.cern.ch/share/cms/crab-dev/3.3.2005/etc/crab-bash-completion.sh
++++ unset crab_version crab_type
++++ for crab_latest in '$(ls ${crab_shared_dir}/etc/crab-*.latest 2>/dev/null)'
+++++ basename /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-pre.latest
+++++ sed 's|.latest$||;s|^crab-||'
++++ crab_type=pre
+++++ cat /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-pre.latest
++++ crab_version=3.3.2004
++++ '[' -e /cvmfs/cms.cern.ch/share/cms/crab-pre/3.3.2004/etc/crab-bash-completion.sh ']'
+++++ ps -p6 -ocmd=
++++ '[' '/bin/bash ./condor_exec.exe' = zsh ']'
++++ source /cvmfs/cms.cern.ch/share/cms/crab-pre/3.3.2004/etc/crab-bash-completion.sh
++++ unset crab_version crab_type
++++ for crab_latest in '$(ls ${crab_shared_dir}/etc/crab-*.latest 2>/dev/null)'
+++++ basename /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-prod.latest
+++++ sed 's|.latest$||;s|^crab-||'
++++ crab_type=prod
+++++ cat /cvmfs/cms.cern.ch/share/cms/crab/1.0/etc/crab-prod.latest
++++ crab_version=3.3.2005
++++ '[' -e /cvmfs/cms.cern.ch/share/cms/crab-prod/3.3.2005/etc/crab-bash-completion.sh ']'
+++++ ps -p6 -ocmd=
++++ '[' '/bin/bash ./condor_exec.exe' = zsh ']'
++++ source /cvmfs/cms.cern.ch/share/cms/crab-prod/3.3.2005/etc/crab-bash-completion.sh
++++ unset crab_version crab_type
++++ unset cms_basedir crab_shared_dir crab_latest
+++ unset pkg
+++ for arch in share '${SCRAM_ARCH}'
+++ '[' -d /cvmfs/cms.cern.ch/slc6_amd64_gcc700/etc/profile.d ']'
++++ /bin/ls /cvmfs/cms.cern.ch/slc6_amd64_gcc700/etc/profile.d/
++++ grep 'S.*[.]sh'
+++ unset pkg
+++ '[' '!' ']'
+++ export CMS_PATH=/cvmfs/cms.cern.ch
+++ CMS_PATH=/cvmfs/cms.cern.ch
+++ alias 'cmsenv=eval `scramv1 runtime -sh`'
+++ alias 'cmsrel=scramv1 project CMSSW'
+++ '[' -f /cvmfs/cms.cern.ch/SITECONF/local/JobConfig/cmsset_local.sh ']'
+++ '[' '!' ']'
+++ CVSROOT=:gserver:cmssw.cvs.cern.ch:/local/reps/CMSSW
+++ export CVSROOT
+++ MANPATH=/cvmfs/cms.cern.ch/share/man:
+++ export MANPATH
+++ unset here cms_basedir arch
++ pwd
++ export SCRAM_ARCH=slc6_amd64_gcc530
++ SCRAM_ARCH=slc6_amd64_gcc530
+/storage/local/data1/condor/execute/dir_18761
++ xrdcp root://cmseos.fnal.gov//store/user/sasekhar/Condor_inputs/DY_CMSSW.tgz CMSSW.tgz
+[0B/0B][100%][==================================================][0B/s]  
+Run: [ERROR] Server responded with an error: [3011] Unable to open file /eos/uscms/store/user/ssekhar/Condor_inputs/DY_CMSSW.tgz; No such file or directory
+
++ cat LQ_my_script.sh
+#!/bin/bash
+
+
+set -x
+
+ls -la
+pwd
+cd LQ_Analysis/DYAna/analyze
+mkdir output_files
+
+#0 is pdfs, 1 is other sys
+xrdcp root://cmseos.fnal.gov//store/user/sasekhar/Condor_inputs/output_files.tgz .
+tar -xvf output_files.tgz
+echo ".x combine/LQ_make_sys_templates.C($2,$3, 2017, 0);" > cmd.txt
+
+
+echo ".q" >> cmd.txt
+root -l -b < cmd.txt
+xrdcp -f output_files/*.root $1+ tar -xzf CMSSW.tgz
+tar (child): CMSSW.tgz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
++ mv LQ_my_script.sh DY_analysis/src/
+mv: cannot move `LQ_my_script.sh' to `DY_analysis/src/': No such file or directory
++ cd DY_analysis/src
+./condor_exec.exe: line 11: cd: DY_analysis/src: No such file or directory
+++ scramv1 runtime -sh
+SCRAM fatal: Unable to locate the top of local release. Please run this command from a SCRAM-based area.
++ eval
++ scram b ProjectRename
+SCRAM fatal: Unable to locate the top of local release. Please run this command from a SCRAM-based area.
++ xrdcp root://cmseos.fnal.gov//store/user/sasekhar/Condor_inputs/Analysis.tgz tarDir.tgz
+[0B/0B][100%][==================================================][0B/s]  
+Run: [ERROR] Server responded with an error: [3011] Unable to open file /eos/uscms/store/user/ssekhar/Condor_inputs/Analysis.tgz; No such file or directory
+
++ tar -xvzf tarDir.tgz
+tar (child): tarDir.tgz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
++ scram b -j
+SCRAM fatal: Unable to locate the top of local release. Please run this command from a SCRAM-based area.
+++ scramv1 runtime -sh
+SCRAM fatal: Unable to locate the top of local release. Please run this command from a SCRAM-based area.
++ eval
++ ./LQ_my_script.sh root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ17_pdf_jun3LQ/file_1.root 15 1
++ ls -la
+total 88
+drwx------ 4 ssekhar fnalgrid  4096 Jun  4 01:01 .
+drwxr-xr-x 3 root    root      4096 Jun  4 01:01 ..
+-rwx------ 1 ssekhar fnalgrid    49 Jun  4 01:01 .chirp.config
+srwxr-xr-x 1 ssekhar fnalgrid     0 Jun  4 01:01 .docker_sock
+-rw-r--r-- 1 ssekhar fnalgrid  5601 Jun  4 01:01 .job.ad
+-rw-r--r-- 1 ssekhar fnalgrid 13389 Jun  4 01:01 .machine.ad
+-rw-r--r-- 1 ssekhar fnalgrid 13587 Jun  4 01:01 .update.ad
+-rwxr-xr-x 1 ssekhar fnalgrid   362 Jun  4 01:01 LQ_my_script.sh
+-rw-r--r-- 1 ssekhar fnalgrid  6133 Jun  4 01:01 _condor_stdout
+-rwxr-xr-x 1 ssekhar fnalgrid   673 Jun  4 01:01 condor_exec.exe
+-rwxr-xr-x 1 ssekhar fnalgrid     0 Jun  4 01:01 docker_stderror
+drwx------ 2 ssekhar fnalgrid  4096 Jun  4 01:01 tmp
+drwx------ 3 ssekhar fnalgrid  4096 Jun  4 01:01 var
+-rw------- 1 ssekhar fnalgrid  9872 Jun  4 01:01 x509up_u56414
+/storage/local/data1/condor/execute/dir_18761
++ pwd
++ cd LQ_Analysis/DYAna/analyze
+./LQ_my_script.sh: line 8: cd: LQ_Analysis/DYAna/analyze: No such file or directory
++ mkdir output_files
++ xrdcp root://cmseos.fnal.gov//store/user/sasekhar/Condor_inputs/output_files.tgz .
+[0B/0B][100%][==================================================][0B/s]  
+Run: [ERROR] Server responded with an error: [3011] Unable to open file /eos/uscms/store/user/ssekhar/Condor_inputs/output_files.tgz; No such file or directory
+
++ tar -xvf output_files.tgz
+tar: output_files.tgz: Cannot open: No such file or directory
+tar: Error is not recoverable: exiting now
++ echo '.x combine/LQ_make_sys_templates.C(15,1, 2017, 0);'
++ echo .q
++ root -l -b
+./LQ_my_script.sh: line 18: root: command not found
++ xrdcp -f 'output_files/*.root' root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ17_pdf_jun3LQ/file_1.root
+xrdcp: No such file or directory processing output_files/*.root
++ cd /storage/local/data1/condor/execute/dir_18761
++ rm -rf CMSSW_10_5_0

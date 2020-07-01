@@ -1,4 +1,4 @@
-
+analyze/condor_jobs/
 *.pyc
 *.swo
 *.root

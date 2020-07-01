@@ -1,0 +1,68 @@
+
+Processing Fitting/LQ_draw_templates.C...
+=========================
+ m_LQ = 1000.000000, use_LQ_denom = 1, draw_muons = 0, draw_electrons = 1 
+=========================
+init year 2016  
+Setting up SF's 
+TH1.Print Name  = emu16_cost_ratio, Entries= 22022, Total sum= 7.5015
+Making mc template for sys  
+Fixed up bin 1 4 1. Old asym val was -0.36, new is -0.23 
+
+MC templates generated from 244464 events. Sym integral is 3651.6 
+ 
+================LQpure template negative for following entries================
+i_lqm_bin = 1, i_rap_bin = 2, i_cost_bin = 1, converted_index = 9, pure_content= -0.000000040370
+i_lqm_bin = 1, i_rap_bin = 2, i_cost_bin = 8, converted_index = 16, pure_content= -0.000000040370
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 3, converted_index = 19, pure_content= -0.000000324071
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 6, converted_index = 22, pure_content= -0.000000324071
+i_lqm_bin = 2, i_rap_bin = 2, i_cost_bin = 4, converted_index = 44, pure_content= -0.000000923298
+i_lqm_bin = 2, i_rap_bin = 2, i_cost_bin = 5, converted_index = 45, pure_content= -0.000000923298
+i_lqm_bin = 2, i_rap_bin = 4, i_cost_bin = 1, converted_index = 57, pure_content= -0.000000000536
+i_lqm_bin = 2, i_rap_bin = 4, i_cost_bin = 8, converted_index = 64, pure_content= -0.000000000536
+================LQint template negative for following entries================
+i_lqm_bin = 1, i_rap_bin = 2, i_cost_bin = 1, converted_index = 9, int_content= -0.000000007764
+i_lqm_bin = 1, i_rap_bin = 2, i_cost_bin = 8, converted_index = 16, int_content= -0.000000007764
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 3, converted_index = 19, int_content= -0.000000043597
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 6, converted_index = 22, int_content= -0.000000043597
+i_lqm_bin = 2, i_rap_bin = 2, i_cost_bin = 4, converted_index = 44, int_content= -0.000000085014
+i_lqm_bin = 2, i_rap_bin = 2, i_cost_bin = 5, converted_index = 45, int_content= -0.000000085014
+i_lqm_bin = 2, i_rap_bin = 4, i_cost_bin = 1, converted_index = 57, int_content= -0.000000000062
+i_lqm_bin = 2, i_rap_bin = 4, i_cost_bin = 8, converted_index = 64, int_content= -0.000000000062
+init year 2017  
+Setting up SF's 
+hlt
+id
+iso
+TH1.Print Name  = emu17_cost_ratio, Entries= 14501, Total sum= 7.52282
+Making mc template for sys  
+Fixed up bin 1 4 1. Old asym val was -0.46, new is -0.31 
+
+MC templates generated from 489568 events. Sym integral is 4295.9 
+ 
+================LQpure template negative for following entries================
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 3, converted_index = 19, pure_content= -0.000159599833
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 6, converted_index = 22, pure_content= -0.000159599833
+i_lqm_bin = 2, i_rap_bin = 3, i_cost_bin = 4, converted_index = 52, pure_content= -0.000000313915
+i_lqm_bin = 2, i_rap_bin = 3, i_cost_bin = 5, converted_index = 53, pure_content= -0.000000313915
+i_lqm_bin = 3, i_rap_bin = 4, i_cost_bin = 1, converted_index = 89, pure_content= -0.000000000310
+i_lqm_bin = 3, i_rap_bin = 4, i_cost_bin = 8, converted_index = 96, pure_content= -0.000000000310
+================LQint template negative for following entries================
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 3, converted_index = 19, int_content= -0.000035362333
+i_lqm_bin = 1, i_rap_bin = 3, i_cost_bin = 6, converted_index = 22, int_content= -0.000035362333
+i_lqm_bin = 2, i_rap_bin = 3, i_cost_bin = 4, converted_index = 52, int_content= -0.000000041262
+i_lqm_bin = 2, i_rap_bin = 3, i_cost_bin = 5, converted_index = 53, int_content= -0.000000041262
+i_lqm_bin = 3, i_rap_bin = 4, i_cost_bin = 1, converted_index = 89, int_content= -0.000000000029
+i_lqm_bin = 3, i_rap_bin = 4, i_cost_bin = 8, converted_index = 96, int_content= -0.000000000029
+init year 2018  
+Setting up SF's 
+TH1.Print Name  = emu18_cost_ratio, Entries= 18927, Total sum= 7.31791
+Making mc template for sys  
+MC templates generated from 459502 events. Sym integral is 6640.5 
+ 
+================LQpure template negative for following entries================
+i_lqm_bin = 1, i_rap_bin = 4, i_cost_bin = 2, converted_index = 26, pure_content= -0.000000088313
+i_lqm_bin = 1, i_rap_bin = 4, i_cost_bin = 7, converted_index = 31, pure_content= -0.000000088313
+================LQint template negative for following entries================
+i_lqm_bin = 1, i_rap_bin = 4, i_cost_bin = 2, converted_index = 26, int_content= -0.000000009454
+i_lqm_bin = 1, i_rap_bin = 4, i_cost_bin = 7, converted_index = 31, int_content= -0.000000009454

@@ -1,0 +1,11 @@
+universe = vanilla
+Executable = /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/condor_jobs/templ18_pdf_jun3LQ/templ18_pdf_jun3LQ_job12.sh
+Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )
+request_memory = 6000
+Should_Transfer_Files = YES
+Transfer_Input_Files = /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/condor_jobs/templ18_pdf_jun3LQ/LQ_my_script.sh, /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/condor_jobs/templ18_pdf_jun3LQ/templ18_pdf_jun3LQ_job12.sh 
+WhenToTransferOutput = ON_EXIT 
+Output = /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/condor_jobs/templ18_pdf_jun3LQ/templ18_pdf_jun3LQ_job12.sh.jdl.stdout
+Error = /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/condor_jobs/templ18_pdf_jun3LQ/templ18_pdf_jun3LQ_job12.sh.jdl.stdout
+Log = /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/condor_jobs/templ18_pdf_jun3LQ/templ18_pdf_jun3LQ_job12.sh.jdl.log
+Queue 1
