@@ -1,23 +1,19 @@
-Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
-imax 3 number of bins
+Combination of Y18=cards/combined_fit_y18_LQ.txt
+imax 1 number of bins
 jmax 7 number of processes minus 1
-kmax 6 number of nuisance parameters
+kmax 4 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm1000_normed_templates16.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm1000_normed_templates17.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
 shapes *    Y18  cards/LQm1000_normed_templates18.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          Y16    Y17    Y18  
-observation  -1     -1     -1   
+bin          Y18  
+observation  -1   
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                             Y16     Y16     Y16     Y16     Y16     Y16     Y16     Y16     Y17     Y17     Y17     Y17     Y17     Y17     Y17     Y17     Y18     Y18     Y18     Y18     Y18     Y18     Y18     Y18   
-process                         fpl     LQpure  fmn     LQint   alpha   bk      gam     dy_gg   fpl     LQpure  fmn     LQint   alpha   bk      gam     dy_gg   fpl     LQpure  fmn     LQint   alpha   bk      gam     dy_gg 
-process                         -4      -3      -2      -1      0       1       2       3       -4      -3      -2      -1      0       1       2       3       -4      -3      -2      -1      0       1       2       3     
-rate                            -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1      -1    
+bin                             Y18     Y18     Y18     Y18     Y18     Y18     Y18     Y18   
+process                         fpl     LQpure  fmn     LQint   alpha   bk      gam     dy_gg 
+process                         -4      -3      -2      -1      0       1       2       3     
+rate                            -1      -1      -1      -1      -1      -1      -1      -1    
 ----------------------------------------------------------------------------------------------------------------------------------
-bk_xsec                 lnN     -       -       -       -       -       1.05    -       -       -       -       -       -       -       1.05    -       -       -       -       -       -       -       1.05    -       -     
-dy_xsec                 lnN     1.03    -       1.03    -       1.03    -       -       1.03    1.03    -       1.03    -       1.03    -       -       1.03    1.03    -       1.03    -       1.03    -       -       1.03  
-gam_xsec                lnN     -       -       -       -       -       -       1.4     -       -       -       -       -       -       -       1.4     -       -       -       -       -       -       -       1.4     -     
-lumi16                  lnN     1.025   -       1.025   -       1.025   1.025   1.025   1.025   -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -     
-lumi17                  lnN     -       -       -       -       -       -       -       -       1.025   -       1.025   -       1.025   1.025   1.025   1.025   -       -       -       -       -       -       -       -     
-lumi18                  lnN     -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       -       1.025   -       1.025   -       1.025   1.025   1.025   1.025 
+bk_xsec                 lnN     -       -       -       -       -       1.05    -       -     
+dy_xsec                 lnN     1.03    -       1.03    -       1.03    -       -       1.03  
+gam_xsec                lnN     -       -       -       -       -       -       1.4     -     
+lumi18                  lnN     1.025   -       1.025   -       1.025   1.025   1.025   1.025 
