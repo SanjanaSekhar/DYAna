@@ -200,7 +200,7 @@ void make_mc_templates(int year, const string &sys_label){
         printf("Making mumu mc \n");
         //gen_mc_template includes m_LQ
         gen_mc_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, h_mumu_LQpure, h_mumu_LQint, year, m_LQ, FLAG_MUONS, use_xF, sys_label );
-        TTree *mumu_ts[2] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
+        TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
         printf("Making mumu back \n");
         gen_combined_background_template(3, mumu_ts, h_mumu_back, year, FLAG_MUONS,  ss, use_xF,  sys_label);
         //mumu_ts[0] = t_mumu_nosig;
@@ -215,7 +215,7 @@ void make_mc_templates(int year, const string &sys_label){
 
         symmetrize3d(h_mumu_gam);
         symmetrize3d(h_mumu_back);
-        symmetrize3d(h_mumu_dy_gg);
+        symmetrize3d(h_mumu_tautau);
 
         h1_mumu_sym = convert3d(h_mumu_sym);
         h1_mumu_asym = convert3d(h_mumu_asym);
@@ -269,11 +269,11 @@ void make_mc_templates(int year, const string &sys_label){
         printf("starting elel dy \n");
         //gen_mc_template includes m_LQ
         gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, h_elel_LQpure, h_elel_LQint, year, m_LQ, FLAG_ELECTRONS,  use_xF, sys_label);
-        TTree *elel_ts[2] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
+        TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
         gen_combined_background_template(3, elel_ts, h_elel_back, year, FLAG_ELECTRONS, ss, use_xF, sys_label);
        // elel_ts[0] = t_elel_nosig;
         elel_ts[0] = t_elel_tautau;
-        gen_combined_background_template(1, elel_ts, h_elel_dy_gg, year, FLAG_ELECTRONS, ss, use_xF, sys_label);
+        gen_combined_background_template(1, elel_ts, h_elel_tautau, year, FLAG_ELECTRONS, ss, use_xF, sys_label);
 
         elel_ts[0] = t_elel_gamgam;
         printf("Making ee gamgam \n");
@@ -282,7 +282,7 @@ void make_mc_templates(int year, const string &sys_label){
 
         symmetrize3d(h_elel_gam);
         symmetrize3d(h_elel_back);
-        symmetrize3d(h_elel_dy_gg);
+        symmetrize3d(h_elel_tautau);
         
         h1_elel_sym = convert3d(h_elel_sym);
         h1_elel_asym = convert3d(h_elel_asym);
