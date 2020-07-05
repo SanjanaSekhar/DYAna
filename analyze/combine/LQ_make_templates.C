@@ -238,7 +238,7 @@ void make_mc_templates(int year, const string &sys_label){
         h1_mumu_alpha = convert3d(h_mumu_alpha);
         h1_mumu_LQpure = convert3d(h_mumu_LQpure);
         h1_mumu_LQint = convert3d(h_mumu_LQint);
-        delete h_mumu_alpha, h_mumu_top,h_mumu_db h_mumu_tautau, h_mumu_gam;
+        delete h_mumu_alpha, h_mumu_top, h_mumu_db, h_mumu_tautau, h_mumu_gam;
 
     }
     if(do_el){
