@@ -22,8 +22,8 @@ for y in [2016,2017,2018]:
     bin_start = 0
     bin_stop = 8
     options.chan="ee"
-    options.no_sys=False
-    options.fake_data=True
+    options.no_sys=True
+    options.fake_data=False
     options.year = y
 
     if(options.chan == "ee"):
@@ -79,7 +79,7 @@ for y in [2016,2017,2018]:
 
         print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
         print_and_do("""echo ".q" >> cmd.txt """)
-        print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fake_nosys_LQ_m%i.txt" % (fit_name,mLQ))
+        print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fake_nosys_3rap_m%i.txt" % (fit_name,mLQ))
         print_and_do("rm -f cards/sed*")
         if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 

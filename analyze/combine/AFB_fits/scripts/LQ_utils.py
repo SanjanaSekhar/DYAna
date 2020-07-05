@@ -105,10 +105,10 @@ def make_workspace(workspace, no_sys = False, fake_data = False, mLQ = 1000, yea
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
 
-    template_card="card_templates/LQ_fake_combined_fit_template.txt"
+    #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
 
-    if(no_sys): template_card = "card_templates/LQee_combined_fit_template_nosys.txt"
-    if(fake_data): template_card = "card_templates/LQ_fake_combined_fit_template.txt"
+    if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake.txt"
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_LQ.txt" 
 
