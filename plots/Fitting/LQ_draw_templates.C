@@ -15,7 +15,7 @@ void LQ_draw_templates(){
         bool draw_muons = true;
         bool draw_electrons = true;
         const string sys_label = "";
-        const int n_rap_bins = 4;
+        const int n_rap_bins = 3;
         float rap_bins[] = {0., 0.6, 1., 2.4};
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
