@@ -28,7 +28,7 @@
 TH1F *h1_elel_asym, *h1_elel_sym; 
 TH1F *h1_mumu_asym, *h1_mumu_sym; 
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure, *h1_elel_LQint, *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
-TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure, *h1_mumu_LQint, *h1_mumu_db, *h1_elel_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
+TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure, *h1_mumu_LQint, *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 Double_t m_LQ;
 
 //take m_LQ from command line
@@ -315,7 +315,7 @@ void make_mc_templates(int year, const string &sys_label){
         h1_elel_alpha = convert3d(h_elel_alpha);
         h1_elel_LQpure = convert3d(h_elel_LQpure);
         h1_elel_LQint = convert3d(h_elel_LQint);
-        delete h_elel_alpha, h_elel_back, h_elel_tautau, h_elel_gam;
+        delete h_elel_alpha, h_elel_top, h_elel_db, h_elel_tautau, h_elel_gam;
     }
 
 }
