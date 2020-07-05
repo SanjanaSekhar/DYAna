@@ -435,7 +435,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 //changed, get checked?
 int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
         int year,  int flag1 = FLAG_MUONS, 
-        bool ss =false, bool use_xF = false,  const string &sys_label = ""){
+        bool ss =false, bool use_xF = false,  bool emu_reweight = false, const string &sys_label = ""){
     h->Sumw2();
 
     int nEvents = 0;
@@ -448,6 +448,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
         else tm.do_electrons = true;
         tm.is_gen_level = false;
+        tm.do_emu_costrw = emu_reweight;
 
         tm.setup_systematic(sys_label);
         tm.setup();
