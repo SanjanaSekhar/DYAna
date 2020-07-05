@@ -16,7 +16,7 @@ void LQ_draw_templates(){
         bool draw_electrons = true;
         const string sys_label = "";
         const int n_rap_bins = 4;
-        float rap_bins[] = {0., 0.6, 1., 1.5,  2.4};
+        float rap_bins[] = {0., 0.6, 1., 2.4};
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
         int i_start = 1; 
@@ -115,7 +115,7 @@ void LQ_draw_templates(){
 
             sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/Mu%i_MC_LQ_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname2, "%s/Mu%i_MC3rap_LQ_m%i.png", plot_dir, year%2000, int(m_LQ));
             sprintf(mu_fname3, "%s/Mu%i_MC_LQwts_m%i.png", plot_dir, year%2000, int(m_LQ));
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
@@ -275,7 +275,7 @@ void LQ_draw_templates(){
 
             sprintf(el_fname1, "%s/El%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/El%i_MC_LQ_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname2, "%s/El%i_MC3rap_LQ_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname3, "%s/El%i_MC_LQwts_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
@@ -595,8 +595,7 @@ void LQ_draw_templates(){
             
     c_el_lqp->Print(el_1);
     delete c_el_lqp;
-
-//print el lqp for all masses in 2016
+/*//print el lqp for all masses in 2016
     char leg_entry[50];
     sprintf(leg_entry,"m = %i",int(m_LQ));
     c16_el_lqpall->cd();
@@ -662,7 +661,7 @@ void LQ_draw_templates(){
       //  leg_lqiall->AddEntry(h16_mumu_LQint,"m = %i"+int(m_LQ));
     }
 
-    }
+}    
     
 
     
@@ -689,6 +688,8 @@ void LQ_draw_templates(){
             
     c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
+    */
+    }
 }
 
 
