@@ -69,8 +69,8 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = t
         TTree *el_ts[6] = {t_elel_mc, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
         //TTree *mu_ts[6] = {t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
         //TTree *el_ts[6] = {t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
-        gen_combined_background_template(7, mu_ts, h_mumu_data, year, FLAG_MUONS,  ss, use_xF,  "");
-        gen_combined_background_template(7, el_ts, h_elel_data, year, FLAG_ELECTRONS,  ss, use_xF,  "");
+        gen_combined_background_template(6, mu_ts, h_mumu_data, year, FLAG_MUONS,  ss, use_xF,  "");
+        gen_combined_background_template(6, el_ts, h_elel_data, year, FLAG_ELECTRONS,  ss, use_xF,  "");
     }
 
     h1_elel_data = convert3d(h_elel_data);
