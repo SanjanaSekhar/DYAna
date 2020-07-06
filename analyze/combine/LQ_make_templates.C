@@ -30,8 +30,8 @@ TH1F *h1_mumu_asym, *h1_mumu_sym;
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure, *h1_elel_LQint, *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure, *h1_mumu_LQint, *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 Double_t m_LQ;
-const int n_cost_bins = 7;
-Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 1.0};
+n_cost_bins = 7;
+cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 1.0};
 
 
 //take m_LQ from command line
