@@ -22,8 +22,8 @@ for y in [-1]:
     bin_start = 0
     bin_stop = 8
     options.chan="ee"
-    options.no_sys=False
-    options.fake_data=True
+    options.no_sys=True
+    options.fake_data=False
     options.year = y
 
     if(options.chan == "ee"):
