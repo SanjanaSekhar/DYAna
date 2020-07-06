@@ -15,8 +15,7 @@ void LQ_draw_templates(){
         bool draw_muons = true;
         bool draw_electrons = true;
         const string sys_label = "";
-        const int n_rap_bins = 3;
-        float rap_bins[] = {0., 0.6, 1., 2.4};
+        
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
         int i_start = 1; 
@@ -86,23 +85,23 @@ void LQ_draw_templates(){
             if(draw_muons){
 
             auto h_mumu_sym = new TH3F(title, "Symmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_sym->SetDirectory(0);
             sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
             auto h_mumu_alpha = new TH3F(title, "Gauge boson polarization template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_alpha->SetDirectory(0);
             sprintf(title, "mumu%i_asym%s", year %2000, sys_label.c_str());
             auto h_mumu_asym = new TH3F(title, "Asymmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_asym->SetDirectory(0);
             sprintf(title, "mumu%i_LQpure%s", year %2000, sys_label.c_str());
             auto h_mumu_LQpure = new TH3F(title, "LQpure template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_LQpure->SetDirectory(0);
             sprintf(title, "mumu%i_LQint%s", year %2000, sys_label.c_str());
             auto h_mumu_LQint = new TH3F(title, "LQint template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_LQint->SetDirectory(0);
             auto h_mu_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .2);
             h_mu_LQpure_wt->SetDirectory(0);
@@ -128,9 +127,18 @@ void LQ_draw_templates(){
             h_mumu_LQpure->Scale(norm);
             h_mumu_LQint->Scale(norm);
            */
-           // h_mumu_pl.Print("range");
+           
+            for(int k=1; k<=n_lq_m_bins; k++){    
+                for(int i=1; i<=n_y_bins; i++){
+                    for(int j=1; j<= n_cost_bins; j++){
+                        Double_t pure_content = h_mumu_LQpure->GetBinContent(k,i,j);
+                        Double_t int_content = h_mumu_LQint->GetBinContent(k,i,j);
+                        int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
+                        //if(pure_content<0.){ 
+                        printf("elLQpure i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
+                        printf("elLQint i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,int_content );
+            }}}
             auto h1_mumu_pl = convert3d(&h_mumu_pl);
-           // h1_mumu_pl->Print("range");
             auto h1_mumu_mn = convert3d(&h_mumu_mn);
             auto h1_mumu_alpha = convert3d(h_mumu_alpha);
             auto h1_mumu_sym = convert3d(h_mumu_sym);
@@ -247,23 +255,23 @@ void LQ_draw_templates(){
         if(draw_electrons){
 
             auto h_elel_sym = new TH3F(title, "Symmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_sym->SetDirectory(0);
             sprintf(title, "elel%i_alpha%s", year %2000, sys_label.c_str());
             auto h_elel_alpha = new TH3F(title, "Gauge boson polarization template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_alpha->SetDirectory(0);
             sprintf(title, "elel%i_asym%s", year %2000, sys_label.c_str());
             auto h_elel_asym = new TH3F(title, "Asymmetric template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_asym->SetDirectory(0);
             sprintf(title, "elel%i_LQpure%s", year %2000, sys_label.c_str());
             auto h_elel_LQpure = new TH3F(title, "LQpure template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_LQpure->SetDirectory(0);
             sprintf(title, "elel%i_LQint%s", year %2000, sys_label.c_str());
             auto h_elel_LQint = new TH3F(title, "LQint template of mc",
-                    n_lq_m_bins, lq_m_bins, n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_LQint->SetDirectory(0);
             auto h_el_LQpure_wt = new TH1D(title, "Weights distribution of LQpure", 100, 0., .2);
             h_el_LQpure_wt->SetDirectory(0);
@@ -288,6 +296,16 @@ void LQ_draw_templates(){
             h_elel_LQint->Scale(norm);
             
 */
+            for(int k=1; k<=n_lq_m_bins; k++){    
+                for(int i=1; i<=n_y_bins; i++){
+                    for(int j=1; j<= n_cost_bins; j++){
+                        Double_t pure_content = h_elel_LQpure->GetBinContent(k,i,j);
+                        Double_t int_content = h_elel_LQint->GetBinContent(k,i,j);
+                        int gbin = (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_cost_bins + j;
+                        //if(pure_content<0.){ 
+                        printf("elLQpure i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,pure_content );
+                        printf("elLQint i_lqm_bin = %i, i_rap_bin = %i, i_cost_bin = %i, converted_index = %i, pure_content= %0.12f\n",k,i,j,gbin,int_content );
+            }}}   
            
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
