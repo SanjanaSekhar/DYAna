@@ -22,8 +22,8 @@ for y in [-1]:
     bin_start = 0
     bin_stop = 8
     options.chan="ee"
-    options.no_sys=True
-    options.fake_data=False
+    options.no_sys=False
+    options.fake_data=True
     options.year = y
 
     if(options.chan == "ee"):
@@ -44,7 +44,7 @@ for y in [-1]:
     if(options.no_sys): fit_name +="_nosys"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_7cost"
+    fit_name+="_3rap"
     print("\n fit_name = ", fit_name)
 
     if(options.mbin >= 0):
