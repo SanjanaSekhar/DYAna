@@ -50,7 +50,13 @@ alphaS          shape    1.0     1.0     1.0      -       -      -     1.0      
 A0Den           shape    1.0     1.0     1.0      -       -      -      -       1.0     1.0    
 RENORM          shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
 FAC             shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
-REFAC           shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
+REFAC           shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0  
+
+#emu cost reweighting
+emucostrw1bYR   shape    -       -        -     1.0      1.0      -       -       -       -    
+emucostrw2bYR   shape    -       -        -     1.0      1.0      -       -       -       -    
+emucostrw3bYR   shape    -       -        -     1.0      1.0      -       -       -       -    
+emucostrw4bYR   shape    -       -        -     1.0      1.0      -       -       -       -  
                                                                                                               
 #pt reweighting
 ptrw1bYR        shape    1.0     1.0     1.0     -       -      -      1.0      1.0     1.0  
