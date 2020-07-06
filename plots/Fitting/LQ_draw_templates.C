@@ -24,6 +24,8 @@ void LQ_draw_templates(){
         float x_end = 0.9;
         float y_start = 0.75;
         float y_end = 0.9;
+        const int n_cost_bins = 7;
+        Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 1.0};
 
        // std::cout << "enter m_LQ:";        
        // std::cin >> m_LQ; 
@@ -114,7 +116,7 @@ void LQ_draw_templates(){
 
             sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
             //sprintf(mu_fname2, "%s/MuMu%i_M_fit_temps.png", plot_dir, year);
-            sprintf(mu_fname2, "%s/Mu%i_MC3rap_LQ_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname2, "%s/Mu%i_MC7cost_LQ_m%i.png", plot_dir, year%2000, int(m_LQ));
             sprintf(mu_fname3, "%s/Mu%i_MC_LQwts_m%i.png", plot_dir, year%2000, int(m_LQ));
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
@@ -283,7 +285,7 @@ void LQ_draw_templates(){
 
             sprintf(el_fname1, "%s/El%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
             //sprintf(el_fname2, "%s/ElEl%i_M_fit_temps.png", plot_dir, year);
-            sprintf(el_fname2, "%s/El%i_MC3rap_LQ_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname2, "%s/El%i_MC7cost_LQ_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname3, "%s/El%i_MC_LQwts_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;

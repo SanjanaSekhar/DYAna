@@ -44,6 +44,7 @@ for y in [-1]:
     if(options.no_sys): fit_name +="_nosys"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
+    fit_name+="_7cost"
     print("\n fit_name = ", fit_name)
 
     if(options.mbin >= 0):
@@ -79,7 +80,7 @@ for y in [-1]:
 
         print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
         print_and_do("""echo ".q" >> cmd.txt """)
-        print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fake_nosys_3rap_m%i.txt" % (fit_name,mLQ))
+        print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
         print_and_do("rm -f cards/sed*")
         if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 

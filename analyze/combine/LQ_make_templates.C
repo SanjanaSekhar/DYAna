@@ -467,8 +467,8 @@ void write_out_templates(const string &sys_label){
 
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
-    const int n_cost_bins = 8;
-    Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.0};
+    const int n_cost_bins = 7;
+    Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 1.0};
 
 
     
