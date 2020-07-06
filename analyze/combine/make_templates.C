@@ -66,8 +66,8 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = f
         //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
         TTree *mu_ts[6] = {t_mumu_mc, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
         TTree *el_ts[6] = {t_elel_mc, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
-        gen_combined_background_template(7, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  "");
-        gen_combined_background_template(7, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  "");
+        gen_combined_background_template(6, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  "");
+        gen_combined_background_template(6, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  "");
     }
 
     h1_elel_data = convert2d(h_elel_data);
@@ -105,12 +105,12 @@ void make_qcd_templates(int year, const string &sys_label){
         bool ss_binning = false;
         float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
         printf("making ElEl fakes template \n");
-        std::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
-                FLAG_ELECTRONS, incl_ss, ss_binning, use_xF);
+        gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
+                FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_label);
         printf("making MuMu fakes template \n");
         incl_ss = false; // muons use os only for their fakes
-        std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, 
-                incl_ss, ss_binning, use_xF);
+        gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, 
+                incl_ss, ss_binning, use_xF, sys_label);
        
 
 
