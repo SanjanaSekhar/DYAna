@@ -386,7 +386,7 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-h_names = ["gam", "LQint", "LQpure" ,"bk", "tautau", "alpha", "fpl_fmn"]
+h_names = ["gam", "LQint", "LQpure" ,"top", "db", "tautau", "alpha", "fpl_fmn"]
 #h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -396,7 +396,8 @@ h_names = ["gam", "LQint", "LQpure" ,"bk", "tautau", "alpha", "fpl_fmn"]
 label_color_map = dict()
 label_color_map['fpl_fmn'] = ("DY Plus + Minus Template", kRed + 1)
 label_color_map['alpha'] = ("DY #alpha Template", kGreen + 3)
-label_color_map['bk'] = ("t#bar{t} + tW + WW + WZ + ZZ",  kBlue)
+label_color_map['top'] = ("t#bar{t} + tW",  kBlue)
+label_color_map['db'] = ("WW + WZ + ZZ",  kYellow)
 label_color_map['dy'] = ("DY (miss-sign)", kRed + 1)
 label_color_map['tautau'] = ("DY #tau#tau", kMagenta)
 label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
