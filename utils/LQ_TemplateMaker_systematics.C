@@ -234,8 +234,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
             //flag_q=1 for u-ubar, 2 for d-dbar, 0 for everything
             int flag_q=0;
-            if((tm.inc_id1 == 1 && tm.inc_id12 == -1)||(tm.inc_id1 == -1 && tm.inc_id12 == 1)) flag_q=1;
-            else if((tm.inc_id1 == 2 && tm.inc_id12 == -2)||(tm.inc_id1 == -2 && tm.inc_id12 == 2)) flag_q=2;
+            if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
+            else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
             if(flag_q!=0){
               Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
               //for LQ, 2 terms-> pure and interference
