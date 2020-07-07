@@ -513,7 +513,7 @@ void LQ_draw_templates(){
 
       //print lq pure for all years
     h17_elel_LQpure_d->SetLineColor(kBlue);
-    h18_elel_LQpure_d->SetLineColor(kRed);
+    h18_elel_LQpure_d->SetLineColor(kGreen);
 
     TCanvas *c_el_lqp = new TCanvas("c_el_lqp", "Histograms", 200, 10, 900, 700);
     h18_elel_LQpure_d->SetTitle("Elecs: d-LQpure");
@@ -532,7 +532,7 @@ void LQ_draw_templates(){
    
     //print lq int for all years
     h17_elel_LQint_d->SetLineColor(kBlue);
-    h18_elel_LQint_d->SetLineColor(kRed);
+    h18_elel_LQint_d->SetLineColor(kGreen);
 
     TCanvas *c_el_lqi = new TCanvas("c_el_lqi", "Histograms", 200, 10, 900, 700);
     h18_elel_LQint_d->SetTitle("Elecs: d-LQint");
