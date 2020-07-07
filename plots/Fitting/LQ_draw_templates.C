@@ -476,6 +476,10 @@ void LQ_draw_templates(){
     h17_elel_LQpure_u->Draw("hist same");
     h16_elel_LQpure_u->Draw("hist same");
     
+    TLegend *leg0 = new TLegend(x_start, y_start, x_end, y_end);
+    leg0->AddEntry(h16_mumu_LQpure_u, "u-LQpure16", "l");
+    leg0->AddEntry(h17_mumu_LQpure_u, "u-LQpure17", "l");
+    leg0->AddEntry(h18_mumu_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
     c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
@@ -490,6 +494,10 @@ void LQ_draw_templates(){
     h17_elel_LQint_u->Draw("hist same");
     h16_elel_LQint_u->Draw("hist same");
 
+    TLegend *leg = new TLegend(x_start, y_start, x_end, y_end);
+    leg->AddEntry(h16_mumu_LQint_u, "u-LQint16", "l");
+    leg->AddEntry(h17_mumu_LQint_u, "u-LQint17", "l");
+    leg->AddEntry(h18_mumu_LQint_u, "u-LQint18", "l");
     leg->Draw();
             
     c_el_iwt->Print("Misc_plots/template_plots/Elecs_LQint_u.png");
@@ -505,6 +513,10 @@ void LQ_draw_templates(){
     h17_elel_LQpure_d->Draw("hist same");
     h16_elel_LQpure_d->Draw("hist same");
 
+    TLegend *leg_2 = new TLegend(x_start, y_start, x_end, y_end);
+    leg_2->AddEntry(h16_mumu_LQpure_d, "LQpure16", "l");
+    leg_2->AddEntry(h17_mumu_LQpure_d, "LQpure17", "l");
+    leg_2->AddEntry(h18_mumu_LQpure_d, "LQpure18", "l");
     leg_2->Draw();
             
     c_el_lqp->Print("Misc_plots/template_plots/Elecs_LQpure_d.png");
@@ -520,6 +532,10 @@ void LQ_draw_templates(){
     h17_elel_LQint_d->Draw("hist same");
     h16_elel_LQint_d->Draw("hist same");
 
+    TLegend *leg_1 = new TLegend(x_start, y_start, x_end, y_end);
+    leg_1->AddEntry(h16_mumu_LQint_d, "d-LQint16", "l");
+    leg_1->AddEntry(h17_mumu_LQint_d, "d-LQint17", "l");
+    leg_1->AddEntry(h18_mumu_LQint_d, "d-LQint18", "l");
     leg_1->Draw();
             
     c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
