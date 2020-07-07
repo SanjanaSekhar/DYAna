@@ -373,7 +373,7 @@ void LQ_draw_templates(){
          
         }
     
-
+    }
     char mu_title_1[100], el_title_1[100];
     sprintf(mu_title_1, "Muons: m_LQ = %i",int(m_LQ));
     sprintf(el_title_1, "Electrons: m_LQ = %i",int(m_LQ));
@@ -636,7 +636,7 @@ void LQ_draw_templates(){
     delete c16_mu_lqiall;
     */
   }
-}
+
 
 
 
