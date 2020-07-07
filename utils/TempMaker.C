@@ -67,6 +67,8 @@ void TempMaker::setup(){
 
     if(!is_data){
         if(is_gen_level){ 
+            t_in->SetBranchAddress("inc_id1", &inc_id1);
+            t_in->SetBranchAddress("inc_id2", &inc_id2);
             t_in->SetBranchAddress("cost_st", &cost_st);
             t_in->SetBranchAddress("pdf_weights", &pdf_weights);
         }
@@ -494,10 +496,10 @@ float TempMaker::getEvtWeight(){
     return evt_weight;
 
 }
-float TempMaker::getLQReweightingDenom(){
-    int flag = FLAG_MUONS;
-    if(do_electrons) flag = FLAG_ELECTRONS;
-    return get_LQ_reweighting_denom(LQ_helper, flag, gen_m, cost_st);
+float TempMaker::getLQReweightingDenom(int flag2 = 0){
+    int flag1 = FLAG_MUONS;
+    if(do_electrons) flag1 = FLAG_ELECTRONS;
+    return get_LQ_reweighting_denom(LQ_helper, flag1, flag2, gen_m, cost_st);
 }
 
 float TempMaker::getReweightingDenom(){

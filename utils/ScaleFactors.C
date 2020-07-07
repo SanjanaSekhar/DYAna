@@ -75,6 +75,10 @@ typedef struct{
 typedef struct{
     TH2D *h_mu;
     TH2D *h_el;
+    TH2D *h_mu_up;
+    TH2D *h_el_up;
+    TH2D *h_mu_down;
+    TH2D *h_el_down;
 } LQ_rw_helper;
 
 
@@ -116,11 +120,26 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 }
 
 
-float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost){
+float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m, float cost){
     TH2D *h_rw;
-    if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
-    else h_rw = h_LQ.h_el;
     
+    if(FLAG2 == 0){ // everything
+        if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
+        else h_rw = h_LQ.h_el;
+    }
+    else if(FLAG2 == 1){ // up quarks
+        if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
+        else h_rw = h_LQ.h_el_up;
+    }
+    else if(FLAG2 == 2){ // down quarks
+        if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
+        else h_rw = h_LQ.h_el_down;
+    }
+    else{
+        printf("Invalid LQ reweighting flag %i! Options are 0, 1 or 2 \n", FLAG2);
+        exit(1);
+    }
+
     int xbin = h_rw->GetXaxis()->FindBin(m);
     int ybin = h_rw->GetYaxis()->FindBin(cost);
    // int zbin = h_rw->GetZaxis()->FindBin(cost);
@@ -530,6 +549,7 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
 
     h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
+<<<<<<< HEAD
 /*
     printf("\n======h_LQ.h_mu======\n");
     for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
@@ -547,6 +567,20 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
         }
     }
 */
+=======
+
+    h_lq->h_el_up = (TH2D *) f->Get("h_el_up")->Clone();
+    h_lq->h_el_up->SetDirectory(0);
+
+    h_lq->h_mu_up = (TH2D *) f->Get("h_mu_up")->Clone();
+    h_lq->h_mu_up->SetDirectory(0);
+
+    h_lq->h_el_down = (TH2D *) f->Get("h_el_down")->Clone();
+    h_lq->h_el_down->SetDirectory(0);
+
+    h_lq->h_mu_down = (TH2D *) f->Get("h_mu_down")->Clone();
+    h_lq->h_mu_down->SetDirectory(0);
+>>>>>>> ed96aa28a228a984ca524f63bb7eeaf77a3be110
     f->Close();
 }
 

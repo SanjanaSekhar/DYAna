@@ -17,12 +17,12 @@ void sys_check(){
         int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_RENORM18";
-        bool do_bkg = false;
+        char *sys = "_METJER18";
+        bool do_bkg = true;
         bool do_qcd = false;
         bool do_electrons = true;
         bool do_muons = true;
-        int i = 0;
+        int i = 7;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
