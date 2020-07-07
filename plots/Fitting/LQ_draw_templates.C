@@ -12,7 +12,7 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = false;
+        bool draw_muons = true;
         bool draw_electrons = true;
         const string sys_label = "";
         
