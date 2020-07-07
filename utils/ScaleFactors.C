@@ -144,11 +144,6 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     int ybin = h_rw->GetYaxis()->FindBin(cost);
    // int zbin = h_rw->GetZaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin);
-    if(weight==0.){
-      printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
-    //   weight = 1e-6;
-    }
-
     return weight;
 
 }
@@ -526,24 +521,6 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/LQ_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
 
-    /*
-    h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
-    h_lq->h_el->SetDirectory(0);
-
-    h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
-    h_lq->h_mu->SetDirectory(0);
-     printf("\n======h_LQ.h_mu======\n");
-    for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_mu->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_mu->GetBinContent(i,j));
-    }
-    
-    printf("\n======h_LQ.h_el======\n");
-    for(int i=1;i<=h_lq->h_el->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_el->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_el->GetBinContent(i,j));
-    }
-    */
     h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
     h_lq->h_el->SetDirectory(0);
 
