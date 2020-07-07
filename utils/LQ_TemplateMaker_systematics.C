@@ -239,7 +239,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(flag_q!=0){
               Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
               if(LQ_denom==0.) {
-              printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
+              //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
               continue;}
               //Double_t LQ_denom = tm.getReweightingDenom();
               //for LQ, 2 terms-> pure and interference
