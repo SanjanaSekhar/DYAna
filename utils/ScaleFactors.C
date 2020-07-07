@@ -124,15 +124,15 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     TH2D *h_rw;
     
     if(FLAG2 == 0){ // everything
-        if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
         else h_rw = h_LQ.h_el;
     }
     else if(FLAG2 == 1){ // up quarks
-        if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
         else h_rw = h_LQ.h_el_up;
     }
     else if(FLAG2 == 2){ // down quarks
-        if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
         else h_rw = h_LQ.h_el_down;
     }
     else{
@@ -145,7 +145,7 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
    // int zbin = h_rw->GetZaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin);
     if(weight==0.){
-    //   printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
+      printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
     //   weight = 1e-6;
     }
 
