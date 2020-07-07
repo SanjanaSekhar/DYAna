@@ -237,7 +237,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
             else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
             if(flag_q!=0){
-              Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
+              //Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
+              Double_t LQ_denom = tm.getReweightingDenom();
               //for LQ, 2 terms-> pure and interference
               Double_t s = tm.m*tm.m;
               //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb

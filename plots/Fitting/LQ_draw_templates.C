@@ -12,8 +12,8 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = true;
-        bool draw_electrons = false;
+        bool draw_muons = false;
+        bool draw_electrons = true;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -145,7 +145,7 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_u->SetLineColor(kOrange +9);
             h1_mumu_LQint_u->SetLineColor(kYellow + 3);
             h1_mumu_LQpure_d->SetLineColor(kOrange );
-            h1_mumu_LQint_d->SetLineColor(kYellow );
+            h1_mumu_LQint_d->SetLineColor(kRed );
 
             h1_mumu_alpha->SetLineWidth(2);
             h1_mumu_sym->SetLineWidth(2);
@@ -215,9 +215,9 @@ void LQ_draw_templates(){
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
-            h1_mumu_LQint_u->SetTitle(mu_title);
-            h1_mumu_LQint_u->Draw("hist");
-            h1_mumu_LQint_d->Draw("hist same");
+            h1_mumu_LQint_d->SetTitle(mu_title);
+            h1_mumu_LQint_d->Draw("hist");
+            h1_mumu_LQint_u->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_mumu_LQint_u,"u-LQint Template","l");
@@ -291,7 +291,7 @@ void LQ_draw_templates(){
             h1_elel_LQpure_u->SetLineColor(kOrange +9);
             h1_elel_LQint_u->SetLineColor(kYellow + 3);
             h1_elel_LQpure_d->SetLineColor(kOrange );
-            h1_elel_LQint_d->SetLineColor(kYellow );
+            h1_elel_LQint_d->SetLineColor(kRed);
 
             h1_elel_alpha->SetLineWidth(2);
             h1_elel_sym->SetLineWidth(2);
@@ -359,9 +359,9 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQint_u->SetTitle(el_title);
-            h1_elel_LQint_u->Draw("hist");
-            h1_elel_LQint_d->Draw("hist same");
+            h1_elel_LQint_d->SetTitle(el_title);
+            h1_elel_LQint_d->Draw("hist");
+            h1_elel_LQint_u->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQint_u,"u-LQint Template","l");
