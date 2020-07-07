@@ -117,7 +117,7 @@ void LQ_draw_templates(){
             gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
                 year, m_LQ, FLAG_MUONS, use_xF,"");
 
-            sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(mu_fname1, "%s/Mu%i_MC_SMudm_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(mu_fname2, "%s/Mu%i_MCudm_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
             sprintf(mu_fname3, "%s/Mu%i_MCudm_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
 
@@ -203,9 +203,9 @@ void LQ_draw_templates(){
             delete c_mumu1;
         
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
-            h1_mumu_LQpure_u->SetTitle(mu_title);
-            h1_mumu_LQpure_u->Draw("hist");
-            h1_mumu_LQpure_d->Draw("hist same");
+            h1_mumu_LQpure_d->SetTitle(mu_title);
+            h1_mumu_LQpure_d->Draw("hist");
+            h1_mumu_LQpure_u->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_mumu_LQpure_u,"u-LQpure Template","l");
@@ -264,7 +264,7 @@ void LQ_draw_templates(){
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure_u, h_elel_LQint_u,h_elel_LQpure_d, h_elel_LQint_d, 
                 year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
-            sprintf(el_fname1, "%s/El%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname1, "%s/El%i_MC_SMudm_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname2, "%s/El%i_MCudm_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname3, "%s/El%i_MCudm_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
 
@@ -348,9 +348,9 @@ void LQ_draw_templates(){
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQpure_u->SetTitle(el_title);
-            h1_elel_LQpure_u->Draw("hist");
-            h1_elel_LQpure_d->Draw("hist same");
+            h1_elel_LQpure_d->SetTitle(el_title);
+            h1_elel_LQpure_d->Draw("hist");
+            h1_elel_LQpure_u->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_u,"u-LQpure Template","l");
