@@ -53,9 +53,9 @@ void LQ_draw_templates(){
         sprintf(mu_title_all_1, "Muons: LQpure");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-       for(int i=i_start;i<=i_end;i++)
-       {
-        Double_t m_LQ=1000.*i;
+      // for(int i=i_start;i<=i_end;i++)
+      // {
+        Double_t m_LQ=1000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -616,7 +616,7 @@ void LQ_draw_templates(){
     c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
     */
-    }
+  //  }
 }
 
 

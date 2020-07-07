@@ -143,7 +143,7 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     int xbin = h_rw->GetXaxis()->FindBin(m);
     int ybin = h_rw->GetYaxis()->FindBin(cost);
    // int zbin = h_rw->GetZaxis()->FindBin(cost);
-    float weight = h_rw->GetBinContent(xbin, ybin);
+    float weight = h_rw->GetBinContent(xbin, ybin); 
     return weight;
 
 }
