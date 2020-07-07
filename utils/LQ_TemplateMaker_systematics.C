@@ -247,13 +247,13 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               Double_t reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
               Double_t reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
               Double_t reweight_LQpure_pos;
-              reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+              reweight_LQpure_pos = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
               //weight(-cost)
               reweight_LQpure_num1 = ((1 + gen_cost)*(1 + gen_cost));
               reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1+gen_cost)* ((2*m_LQ*m_LQ/s)+1+gen_cost));
               reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
               Double_t reweight_LQpure_neg;
-              reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/denom);
+              reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
             
               if(flag_q==1){
                 Q_q=Q_u;
@@ -276,13 +276,13 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               Double_t reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
               Double_t reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
               Double_t reweight_LQint_pos;
-              reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/denom);
+              reweight_LQint_pos = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
               //weight(-cost)
               reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
               reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
               reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
               Double_t reweight_LQint_neg;
-              reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/denom);
+              reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
               
               //uLQ temps
               if(flag_q==1){
