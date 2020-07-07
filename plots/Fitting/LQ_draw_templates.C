@@ -302,7 +302,7 @@ void LQ_draw_templates(){
             h1_elel_LQint_u->SetLineWidth(2);
             h1_elel_LQpure_d->SetLineWidth(2);
             h1_elel_LQint_d->SetLineWidth(2);
-
+/*
             printf("\nyear = %i\n",year );
             for(int i=1;i<=h_elel_LQpure_u->GetNbinsX();i++)
             {for(int j=1;j<=h_elel_LQpure_u->GetNbinsY();j++)
@@ -310,7 +310,7 @@ void LQ_draw_templates(){
                     printf("m_bin = %i, rap_bin = %i, cost_bin = %i, el_content = %f\n",i,j,k,h_elel_LQpure_u->GetBinContent(i,j,k) );
                 }
             }
-
+*/
             if(year==2016)
             {
                 h16_elel_LQpure_u = h1_elel_LQpure_u;
