@@ -382,6 +382,8 @@ void LQ_draw_templates(){
     sprintf(mu_2, "%s/Muons_LQint_m%i.png",plot_dir,int(m_LQ));
     sprintf(el_1, "%s/Elecs_LQpure_m%i.png",plot_dir,int(m_LQ));
     sprintf(el_2, "%s/Elecs_LQint_m%i.png",plot_dir,int(m_LQ));
+
+    if(draw_muons){
     //print lq pure weights for all years
     h17_mumu_LQpure_u->SetLineColor(kBlue);
     h18_mumu_LQpure_u->SetLineColor(kGreen);
@@ -460,8 +462,9 @@ void LQ_draw_templates(){
             
     c_mu_lqi->Print("Misc_plots/template_plots/Muons_LQint_d.png");
     delete c_mu_lqi;
+    }
 
-  
+    if(draw_electrons){
     //=============================================================================================
     //print lq pure weights for all years
     h17_elel_LQpure_u->SetLineColor(kBlue);
@@ -521,7 +524,7 @@ void LQ_draw_templates(){
             
     c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
-
+    }
 /*//print el lqp for all masses in 2016
     char leg_entry[50];
     sprintf(leg_entry,"m = %i",int(m_LQ));
