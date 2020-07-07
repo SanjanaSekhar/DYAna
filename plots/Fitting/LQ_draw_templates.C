@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = true;
+        bool draw_electrons = false;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -372,7 +372,7 @@ void LQ_draw_templates(){
             delete c_elel3;
          
         }
-    }
+    
 
     char mu_title_1[100], el_title_1[100];
     sprintf(mu_title_1, "Muons: m_LQ = %i",int(m_LQ));
@@ -616,7 +616,7 @@ void LQ_draw_templates(){
     c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
     */
-  //  }
+  }
 }
 
 
