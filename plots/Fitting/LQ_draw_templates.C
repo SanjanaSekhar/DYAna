@@ -307,8 +307,6 @@ void LQ_draw_templates(){
 
             if(year==2016)
             {
-                h16_elel_pl = h1_elel_pl;
-                h16_elel_mn = h1_elel_mn;
                 h16_elel_LQpure_u = h1_elel_LQpure_u;
                 h16_elel_LQint_u = h1_elel_LQint_u;
                h16_elel_LQpure_d = h_el_LQpure_d;
@@ -316,8 +314,6 @@ void LQ_draw_templates(){
             }
             if(year==2017)
             {
-                h17_elel_pl = h1_elel_pl;
-                h17_elel_mn = h1_elel_mn;
                 h17_elel_LQpure_u = h1_elel_LQpure_u;
                 h17_elel_LQint_u = h1_elel_LQint_u;
                 h17_elel_LQpure_d = h_el_LQpure_d;
@@ -325,8 +321,6 @@ void LQ_draw_templates(){
             }
             if(year==2018)
             {
-                h18_elel_pl = h1_elel_pl;
-                h18_elel_mn = h1_elel_mn;
                 h18_elel_LQpure_u = h1_elel_LQpure_u;
                 h18_elel_LQint_u = h1_elel_LQint_u;
                 h18_elel_LQpure_d = h_el_LQpure_d;
@@ -423,7 +417,7 @@ void LQ_draw_templates(){
     TLegend *leg = new TLegend(x_start, y_start, x_end, y_end);
     leg->AddEntry(h16_mumu_LQint_u, "u-LQint16", "l");
     leg->AddEntry(h17_mumu_LQint_u, "u-LQint17", "l");
-    leg->AddEntry(h18_mumu_LQint_u "u-LQint18", "l");
+    leg->AddEntry(h18_mumu_LQint_u, "u-LQint18", "l");
     leg->Draw();
             
     c_mu_iwt->Print("Misc_plots/template_plots/Muons_LQint_u.png");
