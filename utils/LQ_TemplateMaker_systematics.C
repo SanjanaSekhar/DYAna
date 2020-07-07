@@ -237,13 +237,13 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
             else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
             if(flag_q!=0){
-              Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
+              Double_t LQ_denom = tm.getLQReweightingDenom(0);
               if(LQ_denom==0.) {
               //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
               continue;}
               //Double_t LQ_denom = tm.getReweightingDenom();
               //for LQ, 2 terms-> pure and interference
-              Double_t s = tm.m*tm.m;
+              Double_t s = tm.gen_m*tm.gen_m;
               //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
               Double_t reweight_LQpure_norm = ((1./2.56819)*1e9/(128*M_PI*s));
               //weight(cost)

@@ -118,8 +118,8 @@ void LQ_draw_templates(){
                 year, m_LQ, FLAG_MUONS, use_xF,"");
 
             sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(mu_fname2, "%s/Mu%i_MCud_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
-            sprintf(mu_fname3, "%s/Mu%i_MCud_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname2, "%s/Mu%i_MCudm_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname3, "%s/Mu%i_MCudm_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
@@ -265,8 +265,8 @@ void LQ_draw_templates(){
                 year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
             sprintf(el_fname1, "%s/El%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname2, "%s/El%i_MCud_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname3, "%s/El%i_MCud_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname2, "%s/El%i_MCudm_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname3, "%s/El%i_MCudm_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -403,7 +403,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_mumu_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    c_mu_pwt->Print("Misc_plots/template_plots/Muons_LQpure_u.png");
+    //c_mu_pwt->Print("Misc_plots/template_plots/Muons_LQpure_u.png");
     delete c_mu_pwt;
     //print lq int weights for all years
     h17_mumu_LQint_u->SetLineColor(kRed);
@@ -422,7 +422,7 @@ void LQ_draw_templates(){
     leg->AddEntry(h18_mumu_LQint_u, "u-LQint18", "l");
     leg->Draw();
             
-    c_mu_iwt->Print("Misc_plots/template_plots/Muons_LQint_u.png");
+    //c_mu_iwt->Print("Misc_plots/template_plots/Muons_LQint_u.png");
     delete c_mu_iwt;
 
       //print lq pure for all years
@@ -442,7 +442,7 @@ void LQ_draw_templates(){
     leg_2->AddEntry(h18_mumu_LQpure_d, "LQpure18", "l");
     leg_2->Draw();
             
-    c_mu_lqp->Print("Misc_plots/template_plots/Muons_LQpure_d.png");
+    //c_mu_lqp->Print("Misc_plots/template_plots/Muons_LQpure_d.png");
     delete c_mu_lqp;
    
     //print lq int for all years
@@ -462,7 +462,7 @@ void LQ_draw_templates(){
     leg_1->AddEntry(h18_mumu_LQint_d, "d-LQint18", "l");
     leg_1->Draw();
             
-    c_mu_lqi->Print("Misc_plots/template_plots/Muons_LQint_d.png");
+    //c_mu_lqi->Print("Misc_plots/template_plots/Muons_LQint_d.png");
     delete c_mu_lqi;
     }
 
@@ -484,7 +484,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_elel_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
+    //c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
     delete c_el_pwt;
     //print lq int weights for all years
     h17_elel_LQint_u->SetLineColor(kRed);
@@ -502,7 +502,7 @@ void LQ_draw_templates(){
     leg->AddEntry(h18_elel_LQint_u, "u-LQint18", "l");
     leg->Draw();
             
-    c_el_iwt->Print("Misc_plots/template_plots/Elecs_LQint_u.png");
+    //c_el_iwt->Print("Misc_plots/template_plots/Elecs_LQint_u.png");
     delete c_el_iwt;
 
       //print lq pure for all years
@@ -521,7 +521,7 @@ void LQ_draw_templates(){
     leg_2->AddEntry(h18_elel_LQpure_d, "LQpure18", "l");
     leg_2->Draw();
             
-    c_el_lqp->Print("Misc_plots/template_plots/Elecs_LQpure_d.png");
+    //c_el_lqp->Print("Misc_plots/template_plots/Elecs_LQpure_d.png");
     delete c_el_lqp;
    
     //print lq int for all years
@@ -540,7 +540,7 @@ void LQ_draw_templates(){
     leg_1->AddEntry(h18_elel_LQint_d, "d-LQint18", "l");
     leg_1->Draw();
             
-    c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
+    //c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
     }
 /*//print el lqp for all masses in 2016
