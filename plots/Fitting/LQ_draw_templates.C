@@ -24,9 +24,7 @@ void LQ_draw_templates(){
         float x_end = 0.9;
         float y_start = 0.75;
         float y_end = 0.9;
-        const int n_cost_bins = 7;
-        Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 1.0};
-
+       
        // std::cout << "enter m_LQ:";        
        // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
