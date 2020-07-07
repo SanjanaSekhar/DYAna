@@ -309,22 +309,22 @@ void LQ_draw_templates(){
             {
                 h16_elel_LQpure_u = h1_elel_LQpure_u;
                 h16_elel_LQint_u = h1_elel_LQint_u;
-               h16_elel_LQpure_d = h_elel_LQpure_d;
-               h16_elel_LQint_d = h_elel_LQint_d;
+               h16_elel_LQpure_d = h1_elel_LQpure_d;
+               h16_elel_LQint_d = h1_elel_LQint_d;
             }
             if(year==2017)
             {
                 h17_elel_LQpure_u = h1_elel_LQpure_u;
                 h17_elel_LQint_u = h1_elel_LQint_u;
-                h17_elel_LQpure_d = h_elel_LQpure_d;
-               h17_elel_LQint_d = h_elel_LQint_d;
+                h17_elel_LQpure_d = h1_elel_LQpure_d;
+               h17_elel_LQint_d = h1_elel_LQint_d;
             }
             if(year==2018)
             {
                 h18_elel_LQpure_u = h1_elel_LQpure_u;
                 h18_elel_LQint_u = h1_elel_LQint_u;
-                h18_elel_LQpure_d = h_elel_LQpure_d;
-                h18_elel_LQint_d = h_elel_LQint_d;
+                h18_elel_LQpure_d = h1_elel_LQpure_d;
+                h18_elel_LQint_d = h1_elel_LQint_d;
             }
             // h1_elel_asym->SetMaxielm(h1_elel_sym->GetMaxielm()*1.2);
             //h1_elel_LQpure->SetMaxielm(h1_elel_LQint->GetMaxielm()*1.2);
