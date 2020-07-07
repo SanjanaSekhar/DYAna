@@ -549,25 +549,6 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
 
     h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
-<<<<<<< HEAD
-/*
-    printf("\n======h_LQ.h_mu======\n");
-    for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_mu->GetNbinsY();j++){
-            for(int k=1;k<=h_lq->h_mu->GetNbinsZ();k++)
-            printf("i_m = %i, i_rap = %i, i_cost = %i, content = %.12f\n",i,j,k,h_lq->h_mu->GetBinContent(i,j,k));
-        }
-    }
-
-    printf("\n======h_LQ.h_el======\n");
-    for(int i=1;i<=h_lq->h_el->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_el->GetNbinsY();j++){
-            for(int k=1;k<=h_lq->h_el->GetNbinsZ();k++)
-            printf("i_m = %i, i_rap = %i, i_cost = %i, content = %.12f\n",i,j,k,h_lq->h_el->GetBinContent(i,j,k));
-        }
-    }
-*/
-=======
 
     h_lq->h_el_up = (TH2D *) f->Get("h_el_up")->Clone();
     h_lq->h_el_up->SetDirectory(0);
@@ -580,7 +561,6 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
 
     h_lq->h_mu_down = (TH2D *) f->Get("h_mu_down")->Clone();
     h_lq->h_mu_down->SetDirectory(0);
->>>>>>> ed96aa28a228a984ca524f63bb7eeaf77a3be110
     f->Close();
 }
 
