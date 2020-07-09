@@ -323,6 +323,7 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     int shape_sys = 0;
 
     if(!sys_label.empty()){
+        printf("Making fakes template for sys %s \n", sys_label.c_str());
         int sys_shift = 0;
 
         if(sys_label.find("Up") != string::npos){

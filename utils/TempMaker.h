@@ -87,7 +87,7 @@ class TempMaker{
         void fixRFNorm(TH2 *h, int mbin, int year);
         void finish();
         float getReweightingDenom();
-        float getLQReweightingDenom();
+        float getLQReweightingDenom(int flag);
 
 
 
@@ -134,6 +134,8 @@ class TempMaker{
         TLorentzVector *el = 0;
         Float_t pt, gen_m, gen_pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
+
+        int inc_id1, inc_id2;
 
 
 
