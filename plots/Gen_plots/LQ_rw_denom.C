@@ -84,13 +84,14 @@ void normalize(TH2D *h){
             float xw = h->GetXaxis()->GetBinWidth(i);
             float yw = h->GetYaxis()->GetBinWidth(j);
             float content = h->GetBinContent(i,j);
+            float new_content = content/(xw*yw);
             
             float err = h->GetBinError(i,j);
             //printf("i,j xw, yw %i %i %.2f %.2f \n", i,j, xw,yw);
 
             h->SetBinContent(i,j,content/(xw*yw));
             h->SetBinError(i,j,err/(xw*yw));
-            if(content < 1e-6 || content * 1.5 < err){
+            if(content < 1e-6 || new_content < 0. || content * 1.5 < err){
                 printf("WARNING bin %i %i (m = %.0f) has content %.3e +/- %.3e \n", i,j, h->GetXaxis()->GetBinCenter(i), content, err);
             }
 
@@ -104,8 +105,8 @@ void normalize(TH2D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-    char *out_file = "../analyze/SFs/2018/LQ_rw.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_june29.root");
+    char *out_file = "../analyze/SFs/2017/LQ_rw.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_june29.root");
 
     TFile * f_out;
     if(write_out)

@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
 
@@ -80,7 +80,7 @@ void draw_cmp(){
 
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
-    Double_t m_low = 150;
+    Double_t m_low = 510;
     Double_t m_high = 10000;
 
     bool ss = false;
