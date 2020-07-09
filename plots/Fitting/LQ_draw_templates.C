@@ -146,7 +146,7 @@ void LQ_draw_templates(){
             h1_mumu_pl->SetLineColor(kOrange +7);
             h1_mumu_mn->SetLineColor(kRed + 1);
             h1_mumu_LQpure_u->SetLineColor(kOrange +9);
-            h1_mumu_LQint_u->SetLineColor(kYellow + 3);
+            h1_mumu_LQint_u->SetLineColor(kYellow + 7);
             h1_mumu_LQpure_d->SetLineColor(kOrange );
             h1_mumu_LQint_d->SetLineColor(kRed );
 
@@ -296,7 +296,7 @@ void LQ_draw_templates(){
             h1_elel_pl->SetLineColor(kOrange +7);
             h1_elel_mn->SetLineColor(kRed + 1);
             h1_elel_LQpure_u->SetLineColor(kOrange +9);
-            h1_elel_LQint_u->SetLineColor(kYellow + 3);
+            h1_elel_LQint_u->SetLineColor(kYellow + 7);
             h1_elel_LQpure_d->SetLineColor(kOrange );
             h1_elel_LQint_d->SetLineColor(kRed);
 
