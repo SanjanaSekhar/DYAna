@@ -125,6 +125,9 @@ void LQ_draw_templates(){
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
             h_mumu_pl.Scale(0.5);
             h_mumu_mn.Scale(0.5);
+            Double_t alpha= 0.05;
+            double norm = 3./4./(2.+alpha);
+            h_mumu_alpha->Scale(norm)
            
             auto h1_mumu_pl = convert3d(&h_mumu_pl);
             auto h1_mumu_mn = convert3d(&h_mumu_mn);
@@ -203,9 +206,9 @@ void LQ_draw_templates(){
             delete c_mumu1;
         
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
-            h1_mumu_LQpure_d->SetTitle(mu_title);
-            h1_mumu_LQpure_d->Draw("hist");
-            h1_mumu_LQpure_u->Draw("hist same");
+            h1_mumu_LQpure_u->SetTitle(mu_title);
+            h1_mumu_LQpure_u->Draw("hist");
+            h1_mumu_LQpure_d->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_mumu_LQpure_u,"u-LQpure Template","l");
@@ -216,9 +219,9 @@ void LQ_draw_templates(){
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
-            h1_mumu_LQint_d->SetTitle(mu_title);
-            h1_mumu_LQint_d->Draw("hist");
-            h1_mumu_LQint_u->Draw("hist same");
+            h1_mumu_LQint_u->SetTitle(mu_title);
+            h1_mumu_LQint_u->Draw("hist");
+            h1_mumu_LQint_d->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_mumu_LQint_u,"u-LQint Template","l");
@@ -273,6 +276,9 @@ void LQ_draw_templates(){
             
             h_elel_pl.Scale(0.5);
             h_elel_mn.Scale(0.5);
+            Double_t alpha= 0.05;
+            double norm = 3./4./(2.+alpha);
+            h_elel_alpha->Scale(norm)
 
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
@@ -348,9 +354,9 @@ void LQ_draw_templates(){
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQpure_d->SetTitle(el_title);
-            h1_elel_LQpure_d->Draw("hist");
-            h1_elel_LQpure_u->Draw("hist same");
+            h1_elel_LQpure_u->SetTitle(el_title);
+            h1_elel_LQpure_u->Draw("hist");
+            h1_elel_LQpure_d->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_u,"u-LQpure Template","l");
@@ -361,9 +367,9 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQint_d->SetTitle(el_title);
-            h1_elel_LQint_d->Draw("hist");
-            h1_elel_LQint_u->Draw("hist same");
+            h1_elel_LQint_u->SetTitle(el_title);
+            h1_elel_LQint_u->Draw("hist");
+            h1_elel_LQint_d->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQint_u,"u-LQint Template","l");
