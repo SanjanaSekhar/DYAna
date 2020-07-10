@@ -1,8 +1,20 @@
 from ROOT import *
+import os
+from optparse import OptionParser
+from optparse import OptionGroup
 
-fname = "june29_merge_2017.root"
-year = 17
-plot_dir = "Misc_plots/template_plots_sys/"
+parser = OptionParser()
+parser.add_option("-i", "--fin", default='', help="Input file with templates")
+parser.add_option("-o", "--plot_dir", default='../plots/', help="Directory to output plots")
+parser.add_option("-y", "--year", type = 'int', default=16, help="Year")
+
+
+
+(options, args) = parser.parse_args()
+
+if(options.year > 2000):
+    options.year = options.year % 2000
+
 n_m_bins = 8
 
 
@@ -12,8 +24,11 @@ my_excludes = []
 
 gROOT.SetBatch(1)
 
-f = TFile.Open(fname)
+f = TFile.Open(options.fin)
 
+if(not os.path.exists(options.plot_dir)):
+    print("Making directory %s" % options.plot_dir)
+    os.system("mkdir %s" % options.plot_dir)
 
 
 l_base = TLine(0,0,1,1)
@@ -41,7 +56,7 @@ for mbin in range(n_m_bins):
     keys = gDirectory.GetListOfKeys()
     for base in base_strs:
         if('%i' in base):
-            base = base % year
+            base = base % options.year
         print("Doing plot for sys %s " % base)
         c1 = TCanvas("c1", "", 1600, 1000) 
         for key in keys:
@@ -52,7 +67,7 @@ for mbin in range(n_m_bins):
                     skip = True
             if(skip): continue
             if (base in key_name):
-                print("Adding key %s" % key_name)
+                #print("Adding key %s" % key_name)
                 h = gDirectory.Get(key_name)
                 color = kMagenta
                 if('pdf' in key_name):
@@ -80,7 +95,8 @@ for mbin in range(n_m_bins):
         leg.AddEntry(l_other, "Other", "l")
         leg.Draw()
 
-        c1.Print(plot_dir + ("mbin%i_" % mbin) + base + "_all_sys.png")
+
+        c1.Print(options.plot_dir + ("Y%i_" % options.year) + ("mbin%i_" % mbin) + base + "_all_sys.png")
 
     gDirectory.cd("..")
 

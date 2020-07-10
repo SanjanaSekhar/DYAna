@@ -47,9 +47,19 @@ if(not options.prefit):
 else:
     make_workspace(workspace, options.mbin)
     print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
-    fitted_afb = 0.0
-    fitted_a0 = 0.05
-    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFrequentist -t %i --setParameters Afb=%.2f,A0=%.2f %s " %(workspace, options.teststat, options.nToys, fitted_afb, fitted_a0, extra_params))
+    afb = 0.0
+    a0 = 0.05
+    s = 123
+    toys_ws = "workspaces/toys_ws.root"
+    make_workspace(toys_ws, options.mbin)
+    print_and_do("combine -M GoodnessOfFit -m 121 -d %s --algo=%s -s %i --toysFrequentist --saveToys -t %i" #--setParameters Afb=%.2f,A0=%.2f %s " %
+            % (toys_ws, options.teststat, s, options.nToys ))#, afb, a0, extra_params))
+    toys_ws = "workspaces/toys_ws1.root"
+    make_workspace(toys_ws, options.mbin)
+    print_and_do("combine -M GenerateOnly -d %s --toysFrequentist -s %i --saveToys -t %i" # --setParameters Afb=%.2f,A0=%.2f" 
+            % (toys_ws, s, options.nToys)) #, afb, a0))
+    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s  --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root -s %i  -t %i" 
+            %(toys_ws, options.teststat, s, s, options.nToys))
 
 gof_helper(chan, mbin = options.mbin, odir = options.odir, teststat = options.teststat)
 
