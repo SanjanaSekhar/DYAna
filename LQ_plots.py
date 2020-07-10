@@ -107,7 +107,7 @@ pylab.show()
 pylab.close()
 
 
-for m_ll in [700]:
+for m_ll in [600]:
 
 
     s = m_ll*m_ll
@@ -118,27 +118,27 @@ for m_ll in [700]:
 #print("SM AFB is %.3f" % afb)
     sm = SM(x_axis)
     pylab.plot(x_axis,sm_v2,'b',label='SM')
-    pylab.plot(x_axis,sm,'.',label='SM (rough)')
+#   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
     m_lq = 1000.
     y_lq = 0.4
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
-    print F
+   # print F
     pylab.plot(x_axis,F,'r',label='y_ql=0.4')
 
 
     y_lq = 1.0
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
-    print F
+   # print F
     pylab.plot(x_axis,F,'black',label='y_ql=1.0')
 
 
     y_lq = 1.6
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
-    print F
+   # print F
     pylab.plot(x_axis,F,'g',label='y_ql=1.6')
 
 
@@ -158,27 +158,27 @@ for m_ll in [700]:
 #print("SM AFB is %.3f" % afb)
     sm = SM(x_axis)
     pylab.plot(x_axis,sm_v2,'b',label='SM')
-    pylab.plot(x_axis,sm,'.',label='SM (rough)')
+#pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
     y_lq = 1.
-    m_lq = 1000.
+    m_lq = 400.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
-    print F
+   # print F
     pylab.plot(x_axis,F,'r',label='m_LQ=1 TeV')
 
 
-    m_lq = 1500.
+    m_lq = 1000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
-    print F
+   # print F
     pylab.plot(x_axis,F,'black',label='m_LQ=1.5 TeV')
 
 
-    m_lq = 2000.
+    m_lq = 1600.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
-    print F
+    #print F
     pylab.plot(x_axis,F,'g',label='m_LQ=2 TeV')
 
 
