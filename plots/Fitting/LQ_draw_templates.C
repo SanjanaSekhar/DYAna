@@ -127,7 +127,7 @@ void LQ_draw_templates(){
             h_mumu_mn.Scale(0.5);
             Double_t alpha= 0.05;
             double norm = 3./4./(2.+alpha);
-            h_mumu_alpha->Scale(norm)
+            h_mumu_alpha->Scale(norm);
            
             auto h1_mumu_pl = convert3d(&h_mumu_pl);
             auto h1_mumu_mn = convert3d(&h_mumu_mn);
@@ -278,7 +278,7 @@ void LQ_draw_templates(){
             h_elel_mn.Scale(0.5);
             Double_t alpha= 0.05;
             double norm = 3./4./(2.+alpha);
-            h_elel_alpha->Scale(norm)
+            h_elel_alpha->Scale(norm);
 
             auto h1_elel_pl = convert3d(&h_elel_pl);
             auto h1_elel_mn = convert3d(&h_elel_mn);
