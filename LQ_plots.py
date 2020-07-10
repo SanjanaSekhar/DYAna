@@ -48,10 +48,10 @@ def LQ_cost(cost,s, prnt = False):
         XS89_num = (G_F*m_Z0**2*s*y_lq**2*(cal+cvl)*(caq-cvq)*(cost-1)**2*(m_Z0**2-s))
         XS89_denom = (128*sqrt(2)*pi*(2*m_lq**2+s*(1-cost))*((m_Z0**2-s)**2+g_z**2*m_Z0**2))
         XS89 = XS89_num / XS89_denom
-        if(prnt): print("LQ terms: ", SM_part, XS3, XS67, XS89)
+        #if(prnt): print("LQ terms: ", SM_part, XS3, XS67, XS89)
         
-        #return SM_part + XS3 + XS67 + XS89
-        return XS3 + XS67 + XS89
+        return SM_part + XS3 + XS67 + XS89
+        #return XS3 + XS67 + XS89
 
 
 def SM_cost(cost, s, prnt = False):
