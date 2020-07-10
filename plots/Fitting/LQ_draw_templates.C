@@ -146,7 +146,7 @@ void LQ_draw_templates(){
             h1_mumu_pl->SetLineColor(kOrange +7);
             h1_mumu_mn->SetLineColor(kRed + 1);
             h1_mumu_LQpure_u->SetLineColor(kOrange +9);
-            h1_mumu_LQint_u->SetLineColor(kYellow + 7);
+            h1_mumu_LQint_u->SetLineColor(kYellow + 11);
             h1_mumu_LQpure_d->SetLineColor(kOrange );
             h1_mumu_LQint_d->SetLineColor(kRed );
 
@@ -187,11 +187,11 @@ void LQ_draw_templates(){
             //h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
             
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-            h1_mumu_alpha->SetTitle(mu_title); 
+            h1_mumu_pl->SetTitle(mu_title); 
             //h1_mumu_asym->Draw("hist");
             //h1_mumu_sym->Draw("hist same ");
-            h1_mumu_alpha->Draw("hist");
-            h1_mumu_pl->Draw("hist same");
+            h1_mumu_pl->Draw("hist");
+            h1_mumu_alpha->Draw("hist same");
             h1_mumu_mn->Draw("hist same");
             
 
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_mumu2->Print(mu_fname2);
+            //c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            c_mumu3->Print(mu_fname3);
+            //c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
@@ -296,7 +296,7 @@ void LQ_draw_templates(){
             h1_elel_pl->SetLineColor(kOrange +7);
             h1_elel_mn->SetLineColor(kRed + 1);
             h1_elel_LQpure_u->SetLineColor(kOrange +9);
-            h1_elel_LQint_u->SetLineColor(kYellow + 7);
+            h1_elel_LQint_u->SetLineColor(kYellow + 11);
             h1_elel_LQpure_d->SetLineColor(kOrange );
             h1_elel_LQint_d->SetLineColor(kRed);
 
@@ -335,17 +335,17 @@ void LQ_draw_templates(){
             //h1_elel_LQpure->SetMaxielm(h1_elel_LQint->GetMaxielm()*1.2);
             
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
-            h1_elel_alpha->SetTitle(el_title); 
+            h1_elel_pl->SetTitle(el_title); 
             //h1_elel_asym->Draw("hist");
             //h1_elel_sym->Draw("hist same ");
-            h1_elel_alpha->Draw("hist");
-            h1_elel_pl->Draw("hist same");
+            h1_elel_pl->Draw("hist");
+            h1_elel_alpha->Draw("hist same");
             h1_elel_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
-            leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
+            //leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
+            //leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
             leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
             leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
@@ -363,7 +363,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_elel2->Print(el_fname2);
+            //c_elel2->Print(el_fname2);
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
@@ -376,7 +376,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            c_elel3->Print(el_fname3);
+            //c_elel3->Print(el_fname3);
             delete c_elel3;
          
         }

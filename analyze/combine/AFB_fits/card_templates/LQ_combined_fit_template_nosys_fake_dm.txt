@@ -6,14 +6,14 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQmmLQ_3rap_templatesYR.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQmmLQ_ud_templatesYR.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             eeYR   
+bin             mumuYR   
 observation     -1          
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      eeYR    eeYR    eeYR    eeYR     eeYR   eeYR   eeYR    eeYR    eeYR
-process                  alpha   fpl     fmn     top      db     gam    tautau   LQpure  LQint
+bin                      mumuYR    mumuYR    mumuYR    mumuYR     mumuYR   mumuYR   mumuYR    mumuYR    mumuYR
+process                  alpha   fpl     fmn     top      db     gam    tautau   LQpure_d  LQint_d
 process                  -2      0       -1      1        2      5      4        -3     -4
 rate                     -1      -1      -1      -1       -1     -1    -1        -1     -1
 ---------------------------------------------------------------------------------------------------------
