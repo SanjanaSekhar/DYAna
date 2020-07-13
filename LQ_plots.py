@@ -131,14 +131,14 @@ for m_ll in [1000]:
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.8$')
+    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.6$')
 
 
     y_lq = 2.6
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.6$')
+    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.4$')
 
 
     y_lq = 3.2
@@ -199,3 +199,98 @@ for m_ll in [1000]:
     pylab.legend()
     pylab.show()
     pylab.close()
+
+    #down quark
+    Q_q = -1./3.
+    I_3 = -1./2.
+
+
+    SM_norm = quad(lambda x: SM_cost(x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(x_axis,s)/SM_norm
+#afb = AFB(s)
+#print("SM AFB is %.3f" % afb)
+    sm = SM(x_axis)
+    pylab.plot(x_axis,sm_v2,'b',label='SM')
+#   pylab.plot(x_axis,sm,'.',label='SM (rough)')
+
+    m_lq = 2000.
+    y_lq = .8
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'r',label=r'$y_{ue}=0.8$')
+
+    y_lq = 1.8
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.6$')
+
+
+    y_lq = 2.6
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.4$')
+
+
+    y_lq = 3.2
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'y',label=r'$y_{ue}=3.2$')
+
+
+
+    pylab.title(r"ElectroDown, $m_{ee}$ = "+str(m_ll)+ r" GeV, $m_{LQ}$ ="+(" %.1f TeV" % (m_lq/1000)) )
+    pylab.xlabel(r'$cos \theta$')
+    pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
+    pylab.ylim([0., 1.4])
+    pylab.legend()
+    pylab.show()
+    pylab.close()
+
+    SM_norm = quad(lambda x: SM_cost(x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(x_axis,s)/SM_norm
+#afb = AFB(s)
+#print("SM AFB is %.3f" % afb)
+    sm = SM(x_axis)
+    pylab.plot(x_axis,sm_v2,'b',label='SM')
+#pylab.plot(x_axis,sm,'.',label='SM (rough)')
+
+    y_lq = 2
+    m_lq = 2000.
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
+
+
+    m_lq = 3000.
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=3$ TeV')
+
+
+    m_lq = 4000.
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+    #print F
+    pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=4$ TeV')
+
+    m_lq = 5000.
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+    #print F
+    pylab.plot(x_axis,F,'y',label=r'$m_{LQ}=5$ TeV')
+
+    pylab.title(r"ElectroDown, $m_{ee}$ = "+str(m_ll)+ r" GeV, $y_{ue}$ = "+("%.1f " % (y_lq)) )
+    pylab.xlabel(r'$cos \theta$')
+    pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
+    pylab.ylim([0., 1.4])
+    pylab.legend()
+    pylab.show()
+    pylab.close()
+
+
