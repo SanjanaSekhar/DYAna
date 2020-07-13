@@ -87,7 +87,7 @@ def AFB(s):
 
 x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
-
+'''
 E_range = numpy.linspace(1., 400., 400)
 xsecs = []
 Afbs = []
@@ -105,7 +105,7 @@ pylab.close()
 pylab.plot(E_range, Afbs, 'b')
 pylab.show()
 pylab.close()
-
+'''
 
 for m_ll in [1000]:
 
@@ -120,31 +120,31 @@ for m_ll in [1000]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    m_lq = 1000.
-    y_lq = 0.4
+    m_lq = 3000.
+    y_lq = 1
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'r',label='y_ql=0.4')
+    pylab.plot(x_axis,F,'r',label=r'$y_{ue}=1$')
 
 
-    y_lq = 1.0
+    y_lq = 1.8
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'black',label='y_ql=1.0')
+    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.8$')
 
 
-    y_lq = 1.6
+    y_lq = 2.5
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'g',label='y_ql=1.6')
+    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.5$')
 
 
 
 
-    pylab.title("ElectroUp, m_ll = "+str(m_ll)+ (" GeV, m_LQ = %.1f TeV" % (m_lq/1000)) )
+    pylab.title(r"ElectroUp, $m_{ee}$ = "+str(m_ll)+ r" GeV, $m_{LQ}$ ="+(" %.1f TeV" % (m_lq/1000)) )
     pylab.xlabel(r'$cos \theta$')
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
@@ -161,28 +161,28 @@ for m_ll in [1000]:
 #pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
     y_lq = 1.
-    m_lq = 400.
+    m_lq = 2000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'r',label='m_LQ=1 TeV')
+    pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=1 TeV$')
 
 
-    m_lq = 1000.
+    m_lq = 3000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'black',label='m_LQ=1.5 TeV')
+    pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=1.5 TeV$')
 
 
-    m_lq = 1600.
+    m_lq = 7000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
     #print F
-    pylab.plot(x_axis,F,'g',label='m_LQ=2 TeV')
+    pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=2 TeV$')
 
 
-    pylab.title("ElectroUp, m_ll = "+str(m_ll)+ (" GeV, y_ql = %i " % (y_lq)) )
+    pylab.title(r"ElectroUp, $m_{ee}$ = "+str(m_ll)+ r" GeV, $y_{ue}$ = "+("%i " % (y_lq)) )
     pylab.xlabel(r'$cos \theta$')
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
