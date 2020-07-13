@@ -165,21 +165,21 @@ for m_ll in [1000]:
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=1 TeV$')
+    pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
 
 
-    m_lq = 3000.
+    m_lq = 4000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=1.5 TeV$')
+    pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=4$ TeV')
 
 
     m_lq = 7000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
     #print F
-    pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=2 TeV$')
+    pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=7$ TeV')
 
 
     pylab.title(r"ElectroUp, $m_{ee}$ = "+str(m_ll)+ r" GeV, $y_{ue}$ = "+("%i " % (y_lq)) )
