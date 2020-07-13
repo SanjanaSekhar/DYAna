@@ -120,7 +120,7 @@ for m_ll in [1000]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    m_lq = 3000.
+    m_lq = 2000.
     y_lq = .8
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
@@ -186,6 +186,11 @@ for m_ll in [1000]:
     #print F
     pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=4$ TeV')
 
+    m_lq = 5000.
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+    #print F
+    pylab.plot(x_axis,F,'y',label=r'$m_{LQ}=5$ TeV')
 
     pylab.title(r"ElectroUp, $m_{ee}$ = "+str(m_ll)+ r" GeV, $y_{ue}$ = "+("%.1f " % (y_lq)) )
     pylab.xlabel(r'$cos \theta$')
