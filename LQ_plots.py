@@ -121,26 +121,31 @@ for m_ll in [1000]:
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
     m_lq = 3000.
-    y_lq = 1
+    y_lq = 0.02
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'r',label=r'$y_{ue}=1$')
+    pylab.plot(x_axis,F,'r',label=r'$y_{ue}=0.02$')
 
-
-    y_lq = 1.8
+    y_lq = 0.1
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.8$')
+    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=0.1$')
 
 
-    y_lq = 2.5
+    y_lq = 0.5
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.5$')
+    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=0.5$')
 
+
+    y_lq = 1.5
+    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
+    F = LQ_cost(x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'y',label=r'$y_{ue}=1.5$')
 
 
 
@@ -160,7 +165,7 @@ for m_ll in [1000]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    y_lq = 1.
+    y_lq = 0.5
     m_lq = 2000.
     LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
     F = LQ_cost(x_axis,s)/LQ_norm
