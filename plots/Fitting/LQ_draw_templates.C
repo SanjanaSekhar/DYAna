@@ -53,9 +53,9 @@ void LQ_draw_templates(){
         sprintf(mu_title_all_1, "Muons: LQpure");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-     //  for(int i=i_start;i<=i_end;i++)
-      // {
-        Double_t m_LQ=1000.;
+      for(int i=i_start;i<=i_end;i++)
+       {
+        Double_t m_LQ=1000.*i;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -363,7 +363,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_elel2->Print(el_fname2);
+         //   c_elel2->Print(el_fname2);
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
@@ -376,7 +376,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            c_elel3->Print(el_fname3);
+         //   c_elel3->Print(el_fname3);
             delete c_elel3;
          
         }
@@ -490,7 +490,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_elel_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
+   // c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
     delete c_el_pwt;
     //print lq int weights for all years
     h17_elel_LQint_u->SetLineColor(kRed);
@@ -549,8 +549,9 @@ void LQ_draw_templates(){
     //c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
     }
-    /*
+    
 //print el lqp for all masses in 2016
+    if(draw_electrons){
     char leg_entry[50];
     sprintf(leg_entry,"m = %i TeV",int(m_LQ/1000));
     c16_el_lqpall->cd();
@@ -583,8 +584,9 @@ void LQ_draw_templates(){
         h16_elel_LQint_u->Draw("hist same");
         leg_lqiall->AddEntry(h16_elel_LQint_u,leg_entry);
     }
-
+}
 //print mu lqp for all masses in 2016
+    if(draw_muons){
     c16_mu_lqpall->cd();
     if(i==i_start)
     {
@@ -615,11 +617,11 @@ void LQ_draw_templates(){
         h16_mumu_LQint_u->Draw("hist same");
       //  leg_lqiall->AddEntry(h16_mumu_LQint_u,"m = %i"+int(m_LQ));
     }
-
+}
 }    
     
 
-    
+    if(draw_electrons){
     c16_el_lqpall->cd();
     leg_lqpall->Draw();
             
@@ -631,7 +633,8 @@ void LQ_draw_templates(){
             
    // c16_el_lqiall->Print(el_all_lqi16);
     delete c16_el_lqiall;
-
+}
+    if(draw_muons){
     c16_mu_lqpall->cd();
     leg_lqpall->Draw();
             
@@ -643,7 +646,7 @@ void LQ_draw_templates(){
             
    // c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
- */   
+  }
   }
 
 
