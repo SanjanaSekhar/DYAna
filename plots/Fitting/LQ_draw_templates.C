@@ -55,7 +55,7 @@ void LQ_draw_templates(){
 
       // for(int i=i_start;i<=i_end;i++)
       // {
-        Double_t m_LQ=1000.;
+        Double_t m_LQ=3000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -79,8 +79,8 @@ void LQ_draw_templates(){
             char mu_title[100], el_title[100];
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_title, "Muons, m_LQ=%0.1f, year=%i",m_LQ,year);
-            sprintf(el_title, "Electrons, m_LQ=%0.1f, year=%i",m_LQ,year);
+            sprintf(mu_title, "Muons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
+            sprintf(el_title, "Electrons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
 
             if(draw_muons){
 
@@ -479,7 +479,7 @@ void LQ_draw_templates(){
     h18_elel_LQpure_u->SetLineColor(kGreen);
 
     TCanvas *c_el_pwt = new TCanvas("c_el_pwt", "Histograms", 200, 10, 900, 700);
-    h18_elel_LQpure_u->SetTitle("Elecs: u-LQpure");
+    h18_elel_LQpure_u->SetTitle("Electrons, m_LQ = 3 TeV");
     h18_elel_LQpure_u->Draw("hist");
     h17_elel_LQpure_u->Draw("hist same");
     h16_elel_LQpure_u->Draw("hist same");
