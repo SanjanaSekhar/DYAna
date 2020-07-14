@@ -122,7 +122,7 @@ for m_ll in [1000]:
     sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #afb = AFB(s)
 #print("SM AFB is %.3f" % afb)
-    sm = SM(x_axis)
+   # sm = SM(x_axis)
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
