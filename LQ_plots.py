@@ -90,7 +90,7 @@ def AFB(s):
     SM_back = quad(lambda x: SM_cost(flag,x,s), -1., 0.)[0]
     return (SM_for - SM_back)/(SM_for + SM_back)
 
-x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
+
 
 
 E_range = numpy.linspace(1., 400., 400)
@@ -111,6 +111,7 @@ pylab.plot(E_range, Afbs, 'b')
 pylab.show()
 pylab.close()
 '''
+x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
 for m_ll in [1000]:
 
