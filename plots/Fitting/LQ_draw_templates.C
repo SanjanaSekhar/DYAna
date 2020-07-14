@@ -12,7 +12,7 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = true;
+        bool draw_muons = false;
         bool draw_electrons = true;
         const string sys_label = "";
         
@@ -146,8 +146,8 @@ void LQ_draw_templates(){
             h1_mumu_pl->SetLineColor(kOrange +7);
             h1_mumu_mn->SetLineColor(kRed + 1);
             h1_mumu_LQpure_u->SetLineColor(kOrange +9);
-            h1_mumu_LQint_u->SetLineColor(kYellow + 11);
-            h1_mumu_LQpure_d->SetLineColor(kOrange );
+            h1_mumu_LQint_u->SetLineColor(kGreen +3);
+            h1_mumu_LQpure_d->SetLineColor(kBlue);
             h1_mumu_LQint_d->SetLineColor(kRed );
 
             h1_mumu_alpha->SetLineWidth(2);
@@ -202,7 +202,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
-            c_mumu1->Print(mu_fname1);
+            //c_mumu1->Print(mu_fname1);
             delete c_mumu1;
         
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            //c_mumu2->Print(mu_fname2);
+            c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            //c_mumu3->Print(mu_fname3);
+            c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
@@ -296,8 +296,8 @@ void LQ_draw_templates(){
             h1_elel_pl->SetLineColor(kOrange +7);
             h1_elel_mn->SetLineColor(kRed + 1);
             h1_elel_LQpure_u->SetLineColor(kOrange +9);
-            h1_elel_LQint_u->SetLineColor(kYellow + 11);
-            h1_elel_LQpure_d->SetLineColor(kOrange );
+            h1_elel_LQint_u->SetLineColor(kGreen +3);
+            h1_elel_LQpure_d->SetLineColor(kBlue);
             h1_elel_LQint_d->SetLineColor(kRed);
 
             h1_elel_alpha->SetLineWidth(2);
@@ -350,7 +350,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
             leg1->Draw();
-            c_elel1->Print(el_fname1);
+            //c_elel1->Print(el_fname1);
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
@@ -363,7 +363,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            //c_elel2->Print(el_fname2);
+            c_elel2->Print(el_fname2);
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
@@ -376,7 +376,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            //c_elel3->Print(el_fname3);
+            c_elel3->Print(el_fname3);
             delete c_elel3;
          
         }
@@ -490,7 +490,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_elel_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    //c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
+    c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
     delete c_el_pwt;
     //print lq int weights for all years
     h17_elel_LQint_u->SetLineColor(kRed);
