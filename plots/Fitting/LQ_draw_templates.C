@@ -555,64 +555,64 @@ void LQ_draw_templates(){
     c16_el_lqpall->cd();
     if(i==i_start)
     {
-        h16_elel_LQpure->SetLineColor(kRed);
-        h16_elel_LQpure->SetTitle(el_title_all_1);
-        h16_elel_LQpure->Draw("hist");
-        leg_lqpall->AddEntry(h16_elel_LQpure,leg_entry);
+        h16_elel_LQpure_u->SetLineColor(kRed);
+        h16_elel_LQpure_u->SetTitle(el_title_all_1);
+        h16_elel_LQpure_u->Draw("hist");
+        leg_lqpall->AddEntry(h16_elel_LQpure_u,leg_entry);
     }
     else 
     {
-        h16_elel_LQpure->SetLineColor(kGreen+((i-1)*10));
-        h16_elel_LQpure->Draw("hist same");
-        leg_lqpall->AddEntry(h16_elel_LQpure,leg_entry);
+        h16_elel_LQpure_u->SetLineColor(kGreen+((i-1)*10));
+        h16_elel_LQpure_u->Draw("hist same");
+        leg_lqpall->AddEntry(h16_elel_LQpure_u,leg_entry);
     }
 //print el lqp for all masses in 2016
 
     c16_el_lqiall->cd();
     if(i==i_start)
     {
-        h16_elel_LQint->SetLineColor(kBlue);
-        h16_elel_LQint->SetTitle(el_title_all_2);
-        h16_elel_LQint->Draw("hist");
-        leg_lqiall->AddEntry(h16_elel_LQint,leg_entry);
+        h16_elel_LQint_u->SetLineColor(kBlue);
+        h16_elel_LQint_u->SetTitle(el_title_all_2);
+        h16_elel_LQint_u->Draw("hist");
+        leg_lqiall->AddEntry(h16_elel_LQint_u,leg_entry);
     }
     else 
     {
-        h16_elel_LQint->SetLineColor(kBlue+((i)*10));
-        h16_elel_LQint->Draw("hist same");
-        leg_lqiall->AddEntry(h16_elel_LQint,leg_entry);
+        h16_elel_LQint_u->SetLineColor(kBlue+((i)*10));
+        h16_elel_LQint_u->Draw("hist same");
+        leg_lqiall->AddEntry(h16_elel_LQint_u,leg_entry);
     }
 
 //print mu lqp for all masses in 2016
     c16_mu_lqpall->cd();
     if(i==i_start)
     {
-        h16_mumu_LQpure->SetLineColor(kRed);
-        h16_mumu_LQpure->SetTitle(mu_title_all_1);
-        h16_mumu_LQpure->Draw("hist");
-       // leg_lqpall->AddEntry(h16_mumu_LQpure,"m = %i"+int(m_LQ));
+        h16_mumu_LQpure_u->SetLineColor(kRed);
+        h16_mumu_LQpure_u->SetTitle(mu_title_all_1);
+        h16_mumu_LQpure_u->Draw("hist");
+       // leg_lqpall->AddEntry(h16_mumu_LQpure_u,"m = %i"+int(m_LQ));
     }
     else 
     {
-        h16_mumu_LQpure->SetLineColor(kRed+((i)*10));
-        h16_mumu_LQpure->Draw("hist same");
-       // leg_lqpall->AddEntry(h16_mumu_LQpure,"m = %i"+int(m_LQ));
+        h16_mumu_LQpure_u->SetLineColor(kRed+((i)*10));
+        h16_mumu_LQpure_u->Draw("hist same");
+       // leg_lqpall->AddEntry(h16_mumu_LQpure_u,"m = %i"+int(m_LQ));
     }
 //print mu lqp for all masses in 2016
 
     c16_mu_lqiall->cd();
     if(i==i_start)
     {
-        h16_mumu_LQint->SetLineColor(kBlue);
-        h16_mumu_LQint->SetTitle(mu_title_all_2);
-        h16_mumu_LQint->Draw("hist");
-       // leg_lqiall->AddEntry(h16_mumu_LQint,"m = %i"+int(m_LQ));
+        h16_mumu_LQint_u->SetLineColor(kBlue);
+        h16_mumu_LQint_u->SetTitle(mu_title_all_2);
+        h16_mumu_LQint_u->Draw("hist");
+       // leg_lqiall->AddEntry(h16_mumu_LQint_u,"m = %i"+int(m_LQ));
     }
     else 
     {
-        h16_mumu_LQint->SetLineColor(kBlue+((i)*10));
-        h16_mumu_LQint->Draw("hist same");
-      //  leg_lqiall->AddEntry(h16_mumu_LQint,"m = %i"+int(m_LQ));
+        h16_mumu_LQint_u->SetLineColor(kBlue+((i)*10));
+        h16_mumu_LQint_u->Draw("hist same");
+      //  leg_lqiall->AddEntry(h16_mumu_LQint_u,"m = %i"+int(m_LQ));
     }
 
 }    
