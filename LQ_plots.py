@@ -11,34 +11,38 @@ sin2_thetaw = 0.231 #sin^2(theta_W) (weak mixing angle)
 G_F = 1.166e-5
 g_z = 2.4952 #width of Z0
 
-#use coupling definitions from Quigg edition 1
-
-#up quark
-Q_q = 2./3. 
-I_3 = 1./2.
-
-#down quark
-#Q_q = -1./3.
-#I_3 = -1./2.
-
-crq = -2 *Q_q * sin2_thetaw
-clq = 2*I_3- 2. *Q_q * sin2_thetaw
-
-crl = 2 * sin2_thetaw
-cll = 2 * sin2_thetaw - 1
-
-cvq = crq + clq
-caq = -(clq - crq)
-
-cvl = crl + cll
-cal = cll - crl
-
-m_lq = 1000
-y_lq = 1
 
 
-def LQ_cost(cost,s, prnt = False):
-        SM_part = SM_cost(cost, s)
+def constants(flag):
+    #use coupling definitions from Quigg edition 1
+    #up quark
+    Q_q = 2./3. 
+    I_3 = 1./2.
+    if(flag==1)
+        #down quark
+        Q_q = -1./3.
+        I_3 = -1./2.
+
+    crq = -2 *Q_q * sin2_thetaw
+    clq = 2*I_3- 2. *Q_q * sin2_thetaw
+
+    crl = 2 * sin2_thetaw
+    cll = 2 * sin2_thetaw - 1
+
+    cvq = crq + clq
+    caq = -(clq - crq)
+
+    cvl = crl + cll
+    cal = cll - crl
+
+    return cvl,cal,cvq,caq,Q_q
+
+
+
+
+def LQ_cost(flag, cost, s, prnt = False):
+        cvl,cal,cvq,caq,Q_q = constants(flag)
+        SM_part = SM_cost(flag,cost, s)
 
         #pure LQ term
         XS3 = ((cost-1)**2*s*y_lq**4)/(128*pi*(2*m_lq**2+ s*(1-cost))**2)
@@ -54,7 +58,8 @@ def LQ_cost(cost,s, prnt = False):
         #return XS3 + XS67 + XS89
 
 
-def SM_cost(cost, s, prnt = False):
+def SM_cost(flag, cost, s, prnt = False):
+        cvl,cal,cvq,caq,Q_q = constants(flag)
         #pure gamma term
         #cost = -cost # there is some weird negative sign issue 
         XS1 = (pi*alpha**2*Q_q**2*(cost**2+1))/(2*s)
@@ -70,7 +75,7 @@ def SM_cost(cost, s, prnt = False):
         
         return XS1 + XS2 + XS45
 
-
+'''
 
 #rough form of standard model distribution
 def SM(cost):
@@ -78,16 +83,16 @@ def SM(cost):
         return (1. + cost**2) *norm + 0.6*cost
 
 def tot_xsec(s):
-        return quad(lambda x: SM_cost(x, s), -1., 1.)[0]
+        return quad(lambda x: SM_cost(flag,x, s), -1., 1.)[0]
 
 def AFB(s):
-    SM_for = quad(lambda x: SM_cost(x,s), 0., 1.)[0]
-    SM_back = quad(lambda x: SM_cost(x,s), -1., 0.)[0]
+    SM_for = quad(lambda x: SM_cost(flag,x,s), 0., 1.)[0]
+    SM_back = quad(lambda x: SM_cost(flag,x,s), -1., 0.)[0]
     return (SM_for - SM_back)/(SM_for + SM_back)
 
 x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
-'''
+
 E_range = numpy.linspace(1., 400., 400)
 xsecs = []
 Afbs = []
@@ -109,11 +114,11 @@ pylab.close()
 
 for m_ll in [1000]:
 
-
+    flag = 2
     s = m_ll*m_ll
 
-    SM_norm = quad(lambda x: SM_cost(x,s), -1., 1.)[0]
-    sm_v2 = SM_cost(x_axis,s)/SM_norm
+    SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #afb = AFB(s)
 #print("SM AFB is %.3f" % afb)
     sm = SM(x_axis)
@@ -122,28 +127,28 @@ for m_ll in [1000]:
 
     m_lq = 2000.
     y_lq = .8
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$y_{ue}=0.8$')
 
     y_lq = 1.8
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.6$')
 
 
     y_lq = 2.6
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.4$')
 
 
-    y_lq = 3.2
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    y_lq = 0
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'y',label=r'$y_{ue}=3.2$')
 
@@ -157,8 +162,8 @@ for m_ll in [1000]:
     pylab.show()
     pylab.close()
 
-    SM_norm = quad(lambda x: SM_cost(x,s), -1., 1.)[0]
-    sm_v2 = SM_cost(x_axis,s)/SM_norm
+    SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #afb = AFB(s)
 #print("SM AFB is %.3f" % afb)
     sm = SM(x_axis)
@@ -167,28 +172,28 @@ for m_ll in [1000]:
 
     y_lq = 2
     m_lq = 2000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
 
 
     m_lq = 3000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=3$ TeV')
 
 
     m_lq = 4000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
     #print F
     pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=4$ TeV')
 
     m_lq = 5000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
     #print F
     pylab.plot(x_axis,F,'y',label=r'$m_{LQ}=5$ TeV')
 
@@ -200,13 +205,10 @@ for m_ll in [1000]:
     pylab.show()
     pylab.close()
 
-    #down quark
-    Q_q = -1./3.
-    I_3 = -1./2.
+    flag = 1
 
-
-    SM_norm = quad(lambda x: SM_cost(x,s), -1., 1.)[0]
-    sm_v2 = SM_cost(x_axis,s)/SM_norm
+    SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #afb = AFB(s)
 #print("SM AFB is %.3f" % afb)
     sm = SM(x_axis)
@@ -215,28 +217,28 @@ for m_ll in [1000]:
 
     m_lq = 2000.
     y_lq = .8
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$y_{ue}=0.8$')
 
     y_lq = 1.8
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.6$')
 
 
     y_lq = 2.6
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.4$')
 
 
     y_lq = 3.2
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'y',label=r'$y_{ue}=3.2$')
 
@@ -250,8 +252,8 @@ for m_ll in [1000]:
     pylab.show()
     pylab.close()
 
-    SM_norm = quad(lambda x: SM_cost(x,s), -1., 1.)[0]
-    sm_v2 = SM_cost(x_axis,s)/SM_norm
+    SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #afb = AFB(s)
 #print("SM AFB is %.3f" % afb)
     sm = SM(x_axis)
@@ -260,28 +262,28 @@ for m_ll in [1000]:
 
     y_lq = 2
     m_lq = 2000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
 
 
     m_lq = 3000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=3$ TeV')
 
 
     m_lq = 4000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
     #print F
     pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=4$ TeV')
 
     m_lq = 5000.
-    LQ_norm = quad(lambda x: LQ_cost(x,s), -1., 1.)[0]
-    F = LQ_cost(x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
     #print F
     pylab.plot(x_axis,F,'y',label=r'$m_{LQ}=5$ TeV')
 
