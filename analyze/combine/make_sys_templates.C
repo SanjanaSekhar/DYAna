@@ -38,7 +38,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
     }
     else{
 
-      vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS"  };
+      vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS", "_BTAG" };
       //vector<string> sys_labels_raw =  {};
       
       
@@ -51,6 +51,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
             "_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b",
             "_elfakesrw1b", "_elfakesrw2b", "_elfakesrw3b", "_elfakesrw4b",
             "_mufakesrw1b", "_mufakesrw2b", "_mufakesrw3b", "_mufakesrw4b",
+            "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS",
         };
 
       string yr_string; 
