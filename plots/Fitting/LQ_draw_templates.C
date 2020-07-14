@@ -19,7 +19,7 @@ void LQ_draw_templates(){
         //char *plot_dir = "Paper_plots/template_plots";
         char *plot_dir = "Misc_plots/template_plots";
         int i_start = 1; 
-        int i_end = 1;
+        int i_end = 4;
         float x_start = 0.75;
         float x_end = 0.9;
         float y_start = 0.75;
@@ -53,9 +53,9 @@ void LQ_draw_templates(){
         sprintf(mu_title_all_1, "Muons: LQpure");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-      // for(int i=i_start;i<=i_end;i++)
-      // {
-        Double_t m_LQ=3000.;
+       for(int i=i_start;i<=i_end;i++)
+       {
+        Double_t m_LQ=1000.*i;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_mumu2->Print(mu_fname2);
+           // c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            c_mumu3->Print(mu_fname3);
+           // c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
@@ -363,7 +363,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_elel2->Print(el_fname2);
+           // c_elel2->Print(el_fname2);
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
@@ -376,7 +376,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-            c_elel3->Print(el_fname3);
+           // c_elel3->Print(el_fname3);
             delete c_elel3;
          
         }
@@ -490,7 +490,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_elel_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
+    //c_el_pwt->Print("Misc_plots/template_plots/Elecs_LQpure_u.png");
     delete c_el_pwt;
     //print lq int weights for all years
     h17_elel_LQint_u->SetLineColor(kRed);
@@ -549,9 +549,9 @@ void LQ_draw_templates(){
     //c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
     }
-/*//print el lqp for all masses in 2016
+//print el lqp for all masses in 2016
     char leg_entry[50];
-    sprintf(leg_entry,"m = %i",int(m_LQ));
+    sprintf(leg_entry,"m = %i TeV",int(m_LQ/1000));
     c16_el_lqpall->cd();
     if(i==i_start)
     {
@@ -562,7 +562,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_elel_LQpure->SetLineColor(kRed+((i)*10));
+        h16_elel_LQpure->SetLineColor(kGreen+((i-1)*10));
         h16_elel_LQpure->Draw("hist same");
         leg_lqpall->AddEntry(h16_elel_LQpure,leg_entry);
     }
@@ -628,21 +628,21 @@ void LQ_draw_templates(){
     c16_el_lqiall->cd();
     leg_lqiall->Draw();
             
-    c16_el_lqiall->Print(el_all_lqi16);
+   // c16_el_lqiall->Print(el_all_lqi16);
     delete c16_el_lqiall;
 
     c16_mu_lqpall->cd();
     leg_lqpall->Draw();
             
-    c16_mu_lqpall->Print(mu_all_lqp16);
+   // c16_mu_lqpall->Print(mu_all_lqp16);
     delete c16_mu_lqpall;
 
     c16_mu_lqiall->cd();
     leg_lqiall->Draw();
             
-    c16_mu_lqiall->Print(mu_all_lqi16);
+   // c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
-    */
+    
   }
 
 
