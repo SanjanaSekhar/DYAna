@@ -18,7 +18,7 @@ def constants(flag):
     #up quark
     Q_q = 2./3. 
     I_3 = 1./2.
-    if(flag==1)
+    if flag== 1
         #down quark
         Q_q = -1./3.
         I_3 = -1./2.
