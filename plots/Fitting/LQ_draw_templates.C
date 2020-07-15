@@ -43,7 +43,7 @@ void LQ_draw_templates(){
         sprintf(el_all_lqp16,"%s/Electrons_LQpure_all16.png",plot_dir);
         sprintf(el_all_lqi16,"%s/Electrons_LQint_all16.png",plot_dir);
         char el_title_all_1[100], el_title_all_2[100];
-        sprintf(el_title_all_1, "Electrons: LQpure");
+        sprintf(el_title_all_1, "Electrons: LQpure, year=2016");
         sprintf(el_title_all_2, "Electrons: LQint");
 
         char mu_all_lqp16[100], mu_all_lqi16[100];
@@ -564,7 +564,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_elel_LQpure_u->SetLineColor(kGreen+((i-2)*10));
+        h16_elel_LQpure_u->SetLineColor(kGreen+((i-2)*11));
         h16_elel_LQpure_u->Draw("hist same");
         leg_lqpall->AddEntry(h16_elel_LQpure_u,leg_entry);
     }
