@@ -8,43 +8,39 @@ kmax *
 -------------------------------------------------------------------------------
 shapes * * LQm1000_ud_merge_templatesYR.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             eeYR  
+bin             mumuYR  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      eeYR    eeYR    eeYR    eeYR    eeYR   eeYR   eeYR    eeYR      eeYR
+bin                      mumuYR  mumuYR  mumuYR  mumuYR  mumuYR mumuYR mumuYR  mumuYR    mumuYR
 process                  alpha   fpl     fmn     top     db     gam    tautau  LQpure_u  LQint_u
 process                  -2      0       -1      1       4      3      2       -3        -4
-rate                     -1      -1      -1      -1      -1    -1     -1      -1         -1
+rate                     -1      -1      -1      -1      -1    -1     -1       -1        -1
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -       -        -     1.03     -       -
 bk_xsec         lnN      -       -        -     1.05    1.09      -      -       -       -
-gam_xsec        lnN      -       -        -      -       -       1.4     -      -       -       
+gam_xsec        lnN      -       -        -      -       -       1.4     -       -       -       
 
 lumiYR          lnN     1.025  1.025   1.025   1.025   1.025     1.025  1.025    -       -
-#elFakesYR       lnN      -       -        -      -       -       -      -      -       -
-#muFakesYR       lnN      -       -        -      -       -       -      -      -       -
+#elFakesYR       lnN      -       -        -      -       -       -      -       -       -
+#muFakesYR       lnN      -       -        -      -       -       -      -       -       -
 
 ## prefire only for 16,17, hem only 18
-PuYR            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-BTAGYR          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-#prefireYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METJERYR        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METJECYR        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-#METHEMYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+PuYR            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+BTAGYR          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+#prefireYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METJERYR        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METJECYR        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+#METHEMYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
                                                                                                               
-                                                                                                              
-elScaleStatYR   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
-elScaleSystYR   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elScaleGainYR   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elSmearYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-
-elHLTBARYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
-elIDBARYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elRECOBARYR     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elHLTENDYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elIDENDYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elRECOENDYR     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+                                                                                        
+muRCYR          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
+muHLTBARYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
+muIDBARYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muRECOBARYR     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muHLTENDYR      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muIDENDYR       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muRECOENDYR     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
                                                                                                             
 alphaS          shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
 A0Den           shape    1.0     1.0     1.0      -       -      -      -       1.0     1.0    
