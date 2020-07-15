@@ -564,7 +564,7 @@ void LQ_draw_templates(){
     }
     else 
     {
-        h16_elel_LQpure_u->SetLineColor(kGreen+((i-1)*10));
+        h16_elel_LQpure_u->SetLineColor(kGreen+((i-2)*10));
         h16_elel_LQpure_u->Draw("hist same");
         leg_lqpall->AddEntry(h16_elel_LQpure_u,leg_entry);
     }
