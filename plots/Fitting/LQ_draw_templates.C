@@ -12,8 +12,8 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = false;
-        bool draw_electrons = true;
+        bool draw_muons = true;
+        bool draw_electrons = false;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -50,12 +50,12 @@ void LQ_draw_templates(){
         sprintf(mu_all_lqp16,"%s/Muons_LQpure_all16.png",plot_dir);
         sprintf(mu_all_lqi16,"%s/Muons_LQint_all16.png",plot_dir);
         char mu_title_all_1[100], mu_title_all_2[100];
-        sprintf(mu_title_all_1, "Muons: LQpure");
+        sprintf(mu_title_all_1, "Muons: LQpure, year=2016");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-      for(int i=i_start;i<=i_end;i++)
-       {
-        Double_t m_LQ=1000.*i;
+    //  for(int i=i_start;i<=i_end;i++)
+      // {
+        Double_t m_LQ=1000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-           // c_mumu2->Print(mu_fname2);
+            c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-           // c_mumu3->Print(mu_fname3);
+           c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
@@ -397,7 +397,7 @@ void LQ_draw_templates(){
     h18_mumu_LQpure_u->SetLineColor(kGreen);
 
     TCanvas *c_mu_pwt = new TCanvas("c_mu_pwt", "Histograms", 200, 10, 900, 700);
-    h18_mumu_LQpure_u->SetTitle("Muons: u-LQpure");
+    h18_mumu_LQpure_u->SetTitle("Electrons, m_LQ = 1.0 TeV");
     h18_mumu_LQpure_u->Draw("hist");
     h17_mumu_LQpure_u->Draw("hist same");
     h16_mumu_LQpure_u->Draw("hist same");
@@ -549,7 +549,7 @@ void LQ_draw_templates(){
     //c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
     }
-    
+   /* 
 //print el lqp for all masses in 2016
     if(draw_electrons){
     char leg_entry[50];
@@ -647,6 +647,7 @@ void LQ_draw_templates(){
    // c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
   }
+  */
   }
 
 
