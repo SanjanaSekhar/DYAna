@@ -15,7 +15,7 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
     m_LQ = 1000.;
     //year=2018;
     char templates_name[100];
-    sprintf(templates_name,"combine/templates/LQm%i_3rap_sys%i_templates%i.root",int(m_LQ),type,year%2000);
+    sprintf(templates_name,"combine/templates/LQm%i_ud_sys%i_templates%i.root",int(m_LQ),type,year%2000);
     
     const TString pdf_fout_name(templates_name);
     //const TString pdf_fout_name("output_files/sys_test.root");
