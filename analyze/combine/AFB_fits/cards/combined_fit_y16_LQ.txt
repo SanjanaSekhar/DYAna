@@ -6,24 +6,24 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1000_normed_templates16.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm1000_ud_templates16.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             ee16   
+bin             mumu16   
 observation     -1          
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee16    ee16    ee16    ee16    ee16   ee16   ee16    ee16     
-process                  alpha   fpl     fmn     bk      gam    dy_gg  LQpure  LQint
-process                  -2      0       -1      1       5      4      -3      -4
-rate                     -1      -1      -1      -1      -1    -1      -1      -1
----------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -       -      1.03    -      -
-bk_xsec         lnN      -       -        -     1.05     -      -       -      -
-gam_xsec        lnN      -       -        -      -      1.4     -       -      -
+bin                      mumu16    mumu16    mumu16    mumu16    mumu16   mumu16   mumu16    mumu16    mumu16
+process                  alpha     fpl       fmn       top       db       gam      tautau    LQpure_u  LQint_u
+process                  -2        0         -1        1          2        5        4        -3        -4
+rate                     -1       -1         -1       -1         -1       -1       -1        -1        -1
+---------------------------------------------------------------------------------------------------------
+dy_xsec         lnN     1.03     1.03       1.03       -          -        -      1.03        -         -
+bk_xsec         lnN      -       -          -          1.05       1.09     -       -          -         -
+gam_xsec        lnN      -       -          -          -          -        1.4     -          -         -
+	                                                                                              
+lumi16           lnN    1.025    1.025      1.025      1.025      1.025    1.025   1.025      -         -
+#elFakes16       lnN      -       -         -          -          -        -        -         -         - 
+#muFakes16       lnN      -       -         -          -          -        -        -         -         -
 
-lumi16          lnN     1.025  1.025   1.025   1.025   1.025    1.025   -      -
-#elFakes16       lnN      -       -        -      -       -     -       -      -
-#muFakes16       lnN      -       -        -      -       -     -       -      -
 
-#* autoMCStats 10 1
 
