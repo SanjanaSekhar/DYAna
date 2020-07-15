@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = false;
+        bool draw_electrons = true;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -53,9 +53,9 @@ void LQ_draw_templates(){
         sprintf(mu_title_all_1, "Muons: LQpure, year=2016");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-      for(int i=i_start;i<=i_end;i++)
-       {
-        Double_t m_LQ=1000.*i;
+     // for(int i=i_start;i<=i_end;i++)
+      // {
+        Double_t m_LQ=1000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -202,7 +202,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
-            //c_mumu1->Print(mu_fname1);
+            c_mumu1->Print(mu_fname1);
             delete c_mumu1;
         
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
@@ -350,7 +350,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
             leg1->Draw();
-            //c_elel1->Print(el_fname1);
+            c_elel1->Print(el_fname1);
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
@@ -549,7 +549,7 @@ void LQ_draw_templates(){
     //c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
     }
-    
+ /*   
 //print el lqp for all masses in 2016
     if(draw_electrons){
     char leg_entry[50];
@@ -649,7 +649,7 @@ void LQ_draw_templates(){
    // c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
   }
-  
+  */
   }
 
 
