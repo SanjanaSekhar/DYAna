@@ -5,6 +5,7 @@ from ROOT import *
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
+parser.add_option("--q",  default="combined", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--no_plot",  default=False, action="store_true", help="Don't make postfit plots")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
 parser.add_option("--fake_data",  default=False, action="store_true", help="Use fit template without any shape systematics and no fakes")
@@ -22,10 +23,11 @@ for y in [-1]:
     bin_start = 0
     bin_stop = 8
     options.chan="ee"
-    options.no_sys=False
-    options.fake_data=True
+    options.q="u"
+    options.no_sys=True
+    options.fake_data=False
     options.year = y
-
+    '''
     if(options.chan == "ee"):
         print("Chan is ee, will mask mumu channels")
         if(options.year < 0): 
@@ -38,13 +40,13 @@ for y in [-1]:
             extra_params += " --setParameters mask_Y16_ee16=1,mask_Y17_ee17=1,mask_Y18_ee18=1,mask_Y16_ee16_ss=1,mask_Y17_ee17_ss=1,mask_Y18_ee18_ss=1" 
         else:
             extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
-
+    '''
     
     fit_name = options.chan
     if(options.no_sys): fit_name +="_nosys"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_3rap"
+    fit_name+="_"+options.q
     print("\n fit_name = ", fit_name)
 
     if(options.mbin >= 0):
@@ -59,7 +61,7 @@ for y in [-1]:
         print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
         workspace="workspaces/%s_LQ.root" % (options.chan)
-        make_workspace(workspace, options.no_sys, options.fake_data, mLQ, year = options.year)
+        make_workspace(workspace, options.chan, options.q, options.no_sys, options.fake_data, mLQ, year = options.year)
         plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
         print("\n plotdir = ", plotdir)
         print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
@@ -71,7 +73,7 @@ for y in [-1]:
                     % (fit_name))
             extra_args = ""
             if(options.year > 0): extra_args = " -y %i " % options.year
-            print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i" % (fit_name, plotdir, extra_args,mLQ))
+            print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
             print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
             print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
             print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))

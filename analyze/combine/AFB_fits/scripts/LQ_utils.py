@@ -100,15 +100,26 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fout.Close()
     return fitted_afb, fitted_a0
 
-def make_workspace(workspace, no_sys = False, fake_data = False, mLQ = 1000, year = -1):
+def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 1000, year = -1):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
 
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
-
-    if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake.txt"
-    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake.txt"
+    if chan=="ee" and q=="u":
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake.txt"
+    if chan=="ee" and q=="d":
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake.txt"
+    if chan=="mumu" and q=="u":
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake.txt"
+    if chan=="mumu" and q=="d":
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake.txt"
+   
+   
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_LQ.txt" 
 

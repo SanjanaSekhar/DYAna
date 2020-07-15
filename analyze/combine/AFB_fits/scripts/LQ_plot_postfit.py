@@ -374,6 +374,8 @@ parser = OptionParser()
 parser.add_option("--input", "-i", default = "", help="Input file")
 parser.add_option("--output", "-o", default = "", help="Input directory")
 parser.add_option("--mLQ", "-m", type = 'int', default = 0, help="mLQ (for plot label)")
+parser.add_option("--q", "-q", type = 'string', default = "", help="q = u or d")
+parser.add_option("--chan", "-c", type = 'string', default = "", help="ee or mumu")
 parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
 #parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 (options, args) = parser.parse_args()
@@ -386,7 +388,10 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-h_names = ["gam", "LQint", "LQpure" ,"top", "db", "tautau", "alpha", "fpl_fmn"]
+if options.q == "u":
+    h_names = ["gam", "LQint_u", "LQpure_u" ,"top", "db", "tautau", "alpha", "fpl_fmn"]
+elif options.q == "d":
+    h_names = ["gam", "LQint_d", "LQpure_d" ,"top", "db", "tautau", "alpha", "fpl_fmn"]
 #h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -402,8 +407,12 @@ label_color_map['dy'] = ("DY (miss-sign)", kRed + 1)
 label_color_map['tautau'] = ("DY #tau#tau", kMagenta)
 label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
 #label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
-label_color_map['LQint'] = ("LQint", kRed - 7)
-label_color_map['LQpure'] = ("LQpure", kBlue + 7)
+if options.q=="u":
+    label_color_map['LQint_u'] = ("LQint_u", kRed - 7)
+    label_color_map['LQpure_u'] = ("LQpure_u", kBlue + 7)
+if options.q=="d":
+    label_color_map['LQint_d'] = ("LQint_d", kRed - 7)
+    label_color_map['LQpure_d'] = ("LQpure_d", kBlue + 7)
 
 
 dirs = ["Y%i_postfit/"]
@@ -422,8 +431,8 @@ for year in years:
         #mbin_low = m_bins[options.mbin]
         #mbin_high = m_bins[options.mbin+1]
 
-        #if(idx == 0): title = "Muons %i GeV" % (year)
-        if(idx == 0): title = "Electrons %i  GeV mLQ = %i" % (year,mLQ)
+        if(options.chan=="mumu"): title = "Muons %i GeV" % (year)
+        if(options.chan=="ee"): title = "Electrons %i  GeV mLQ = %i" % (year,mLQ)
         #if(idx == 2): title = "Electrons Samesign %i  GeV" % (year)
         
         #if(idx == 2): name_list = h_ss_names
