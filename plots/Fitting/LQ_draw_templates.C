@@ -397,7 +397,7 @@ void LQ_draw_templates(){
     h18_mumu_LQpure_u->SetLineColor(kGreen);
 
     TCanvas *c_mu_pwt = new TCanvas("c_mu_pwt", "Histograms", 200, 10, 900, 700);
-    h18_mumu_LQpure_u->SetTitle("Electrons, m_LQ = 1.0 TeV");
+    h18_mumu_LQpure_u->SetTitle("Muons, m_LQ = 1.0 TeV");
     h18_mumu_LQpure_u->Draw("hist");
     h17_mumu_LQpure_u->Draw("hist same");
     h16_mumu_LQpure_u->Draw("hist same");
@@ -409,7 +409,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_mumu_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    //c_mu_pwt->Print("Misc_plots/template_plots/Muons_LQpure_u.png");
+    c_mu_pwt->Print("Misc_plots/template_plots/Muons_LQpure_u.png");
     delete c_mu_pwt;
     //print lq int weights for all years
     h17_mumu_LQint_u->SetLineColor(kRed);
