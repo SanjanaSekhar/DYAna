@@ -53,9 +53,9 @@ void LQ_draw_templates(){
         sprintf(mu_title_all_1, "Muons: LQpure, year=2016");
         sprintf(mu_title_all_2, "Muons: LQint");
 
-    //  for(int i=i_start;i<=i_end;i++)
-      // {
-        Double_t m_LQ=1000.;
+      for(int i=i_start;i<=i_end;i++)
+       {
+        Double_t m_LQ=1000.*i;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_mumu2->Print(mu_fname2);
+          //  c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-           c_mumu3->Print(mu_fname3);
+          // c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
@@ -409,7 +409,7 @@ void LQ_draw_templates(){
     leg0->AddEntry(h18_mumu_LQpure_u, "u-LQpure18", "l");
     leg0->Draw();
             
-    c_mu_pwt->Print("Misc_plots/template_plots/Muons_LQpure_u.png");
+    //c_mu_pwt->Print("Misc_plots/template_plots/Muons_LQpure_u.png");
     delete c_mu_pwt;
     //print lq int weights for all years
     h17_mumu_LQint_u->SetLineColor(kRed);
@@ -549,7 +549,7 @@ void LQ_draw_templates(){
     //c_el_lqi->Print("Misc_plots/template_plots/Elecs_LQint_d.png");
     delete c_el_lqi;
     }
-   /* 
+    
 //print el lqp for all masses in 2016
     if(draw_electrons){
     char leg_entry[50];
@@ -587,19 +587,21 @@ void LQ_draw_templates(){
 }
 //print mu lqp for all masses in 2016
     if(draw_muons){
+     char leg_entry[50];
+    sprintf(leg_entry,"m = %i TeV",int(m_LQ/1000));
     c16_mu_lqpall->cd();
     if(i==i_start)
     {
         h16_mumu_LQpure_u->SetLineColor(kRed);
         h16_mumu_LQpure_u->SetTitle(mu_title_all_1);
         h16_mumu_LQpure_u->Draw("hist");
-       // leg_lqpall->AddEntry(h16_mumu_LQpure_u,"m = %i"+int(m_LQ));
+        leg_lqpall->AddEntry(h16_mumu_LQpure_u,leg_entry);
     }
     else 
     {
-        h16_mumu_LQpure_u->SetLineColor(kRed+((i)*10));
+        h16_mumu_LQpure_u->SetLineColor(kGreen+((i-2)*11));
         h16_mumu_LQpure_u->Draw("hist same");
-       // leg_lqpall->AddEntry(h16_mumu_LQpure_u,"m = %i"+int(m_LQ));
+       leg_lqpall->AddEntry(h16_mumu_LQpure_u,leg_entry);
     }
 //print mu lqp for all masses in 2016
 
@@ -638,7 +640,7 @@ void LQ_draw_templates(){
     c16_mu_lqpall->cd();
     leg_lqpall->Draw();
             
-   // c16_mu_lqpall->Print(mu_all_lqp16);
+    c16_mu_lqpall->Print(mu_all_lqp16);
     delete c16_mu_lqpall;
 
     c16_mu_lqiall->cd();
@@ -647,7 +649,7 @@ void LQ_draw_templates(){
    // c16_mu_lqiall->Print(mu_all_lqi16);
     delete c16_mu_lqiall;
   }
-  */
+  
   }
 
 
