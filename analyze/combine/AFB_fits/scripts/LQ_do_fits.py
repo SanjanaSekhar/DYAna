@@ -23,7 +23,7 @@ for y in [2016,2017,2018]:
     bin_start = 0
     bin_stop = 8
     options.chan="mumu"
-    options.q="u"
+    options.q="d"
     options.no_sys=False
     options.fake_data=True
     options.year = y
