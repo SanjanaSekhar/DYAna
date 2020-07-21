@@ -13,12 +13,17 @@ parser.add_option("--mask_ee_ss", default=False, action="store_true", help="Mask
 parser.add_option("--mask_ee", default=False, action="store_true", help="Mask ee_ss channels from gof calculation (not from fit)")
 parser.add_option("--mask_mumu", default=False, action="store_true", help="Mask ee_ss channels from gof calculation (not from fit)")
 parser.add_option("--prefit", default=False, action="store_true", help="Sample toys from prefit uncs")
+parser.add_option("--notfreq", default=False, action="store_true", help="Don't use toysFrequentist option")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("-o", "--odir", default="", help = "output directory")
 
 (options, args) = parser.parse_args()
 
 chan = "combined"
+
+toys_freq = "--toysFrequentist" 
+if(options.notfreq):
+    toys_freq = ""
 
 extra_params = ""
 if(options.mask_ee_ss or options.mask_ee or options.mask_mumu):
@@ -41,15 +46,23 @@ if(not options.prefit):
     fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1., mdf = True)
     print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
     print("Based on initial fit, injecting Afb = %.3f A0 = %.3f"  %(fitted_afb, fitted_a0))
-    print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t %i  --setParameters Afb=%.2f,A0=%.2f" 
-            % (options.nToys, fitted_afb, fitted_a0))
+    print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters Afb=%.2f,A0=%.2f" 
+            % (toys_freq, options.nToys, fitted_afb, fitted_a0))
     print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i %s" %(workspace, options.teststat, options.nToys, extra_params))
 else:
     make_workspace(workspace, options.mbin)
     print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
-    fitted_afb = 0.0
-    fitted_a0 = 0.05
-    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFrequentist -t %i --setParameters Afb=%.2f,A0=%.2f %s " %(workspace, options.teststat, options.nToys, fitted_afb, fitted_a0, extra_params))
+    afb = 0.0
+    a0 = 0.05
+    s = 123456
+    #Do in 1 step (equivalent)
+    #print_and_do("combine -M GoodnessOfFit -m 121 -d %s --algo=%s -s %i %s --saveToys -t %i --setParameters Afb=%.2f,A0=%.2f %s "
+    #        % (workspace, options.teststat, s, toys_freq, options.nToys,  afb, a0, extra_params))
+    #Do in 2 steps
+    print_and_do("combine -M GenerateOnly -d %s -s %i %s --saveToys -t %i --setParameters Afb=%.2f,A0=%.2f" 
+            % (workspace, s, toys_freq, options.nToys, afb, a0))
+    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root -s %i %s -t %i" 
+            %(workspace, options.teststat, s, s, toys_freq, options.nToys))
 
 gof_helper(chan, mbin = options.mbin, odir = options.odir, teststat = options.teststat)
 

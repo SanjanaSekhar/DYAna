@@ -24,12 +24,15 @@
 #include "../../utils/HistUtils.C"
 #include "../../utils/PlotUtils.C"
 
-int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, float m_low, float m_high){
+int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, TH2D *h_2d_up, TH2D *h_2d_down, float m_low, float m_high){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
+    int inc_id1, inc_id2;
     Bool_t sig_event(1);
     t_gen->SetBranchAddress("gen_p", &gen_lep_p);
     t_gen->SetBranchAddress("gen_m", &gen_lep_m);
+    t_gen->SetBranchAddress("inc_id1", &inc_id1);
+    t_gen->SetBranchAddress("inc_id2", &inc_id2);
     //t_gen->SetBranchAddress("gen_mu_p", &gen_lep_p);
     //t_gen->SetBranchAddress("gen_mu_m", &gen_lep_m);
     t_gen->SetBranchAddress("m", &m);
@@ -59,6 +62,14 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, float m_low, float m_high){
             float my_cost = cost_st;
             h_2d->Fill(m, my_cost, gen_weight * 1000.);
 
+            if(abs(inc_id1) == 1 && abs(inc_id2) == 1 && inc_id1 * inc_id2 < 0){ //u ubar
+                h_2d_up->Fill(m, my_cost, gen_weight * 1000.);
+            }
+            if(abs(inc_id1) == 2 && abs(inc_id2) == 2 && inc_id1 * inc_id2 < 0){ //d dbar
+                h_2d_down->Fill(m, my_cost, gen_weight * 1000.);
+            }
+
+
         }
     }
     printf("selected %i events \n", nEvents);
@@ -73,11 +84,16 @@ void normalize(TH2D *h){
             float xw = h->GetXaxis()->GetBinWidth(i);
             float yw = h->GetYaxis()->GetBinWidth(j);
             float content = h->GetBinContent(i,j);
+            float new_content = content/(xw*yw);
+            
             float err = h->GetBinError(i,j);
             //printf("i,j xw, yw %i %i %.2f %.2f \n", i,j, xw,yw);
 
             h->SetBinContent(i,j,content/(xw*yw));
             h->SetBinError(i,j,err/(xw*yw));
+            if(content < 1e-6 || new_content < 0. || content * 1.5 < err){
+                printf("WARNING bin %i %i (m = %.0f) has content %.3e +/- %.3e \n", i,j, h->GetXaxis()->GetBinCenter(i), content, err);
+            }
 
         }
     }
@@ -89,9 +105,8 @@ void normalize(TH2D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-
-    char *out_file = "../analyze/SFs/2018/LQ_rw.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_april17.root");
+    char *out_file = "../analyze/SFs/2017/LQ_rw.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_june29.root");
 
     TFile * f_out;
     if(write_out)
@@ -105,8 +120,6 @@ void LQ_rw_denom(){
 
     char plot_dir[] = "Misc_plots/A0_fits/";
 
-    
-
 
 
     int n_cost_bins = 20;
@@ -118,12 +131,17 @@ void LQ_rw_denom(){
     //float LQ_pt_bins[] = {0., 20., 60., 100., 10000};
     float LQ_pt_bins[] = {0., 10000};
 
-    int n_LQ_m_bins = 37;
-    float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 675., 700., 750., 800., 850., 900., 950., 1000., 1050., 1100., 1150., 
-        1200., 1250., 1300., 1350., 1400., 1450., 1500., 1600., 1700., 1800., 1900.,  2000.,  2500.,   3000., };
+    int n_LQ_m_bins = 28;
+    float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 700., 750., 800., 850., 900., 950., 1000.,  1100.,  
+        1200.,  1300., 1400.,  1600.,  1800.,  2000.,  2500.,   3000., };
 
     TH2D *h_mu = new TH2D("h_mu", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
     TH2D *h_el = new TH2D("h_el", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+
+    TH2D *h_mu_up = new TH2D("h_mu_up", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH2D *h_el_up = new TH2D("h_el_up", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH2D *h_mu_down = new TH2D("h_mu_down", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH2D *h_el_down = new TH2D("h_el_down", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
 
     TH1D *h_1d = new TH1D("h1", "", n_cost_bins, cost_bins);
 
@@ -132,8 +150,8 @@ void LQ_rw_denom(){
     float m_low = m_LQ_bins[0];
     float m_high = 14000.;
 
-    make_amc_gen_cost(t_gen_mu,  h_mu, m_low,m_high);
-    make_amc_gen_cost(t_gen_el, h_el, m_low, m_high);
+    make_amc_gen_cost(t_gen_mu,  h_mu, h_mu_up, h_mu_down, m_low,m_high);
+    make_amc_gen_cost(t_gen_el, h_el, h_el_up, h_el_down, m_low, m_high);
     
     /*
     TH1D *h_el_cost_pre = h_el->ProjectionY("h_el_cost_pre", 10,10);
@@ -143,6 +161,13 @@ void LQ_rw_denom(){
 
     normalize(h_mu);
     normalize(h_el);
+
+    normalize(h_mu_up);
+    normalize(h_el_up);
+    normalize(h_mu_down);
+    normalize(h_el_down);
+    
+    //h_el->Print("range");
 
 
     /*
@@ -165,6 +190,10 @@ void LQ_rw_denom(){
         f_out->cd();
         h_mu->Write();
         h_el->Write();
+        h_mu_up->Write();
+        h_el_up->Write();
+        h_mu_down->Write();
+        h_el_down->Write();
         f_out->Print();
         f_out->Close();
     }

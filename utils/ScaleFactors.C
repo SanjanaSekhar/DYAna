@@ -75,6 +75,10 @@ typedef struct{
 typedef struct{
     TH2D *h_mu;
     TH2D *h_el;
+    TH2D *h_mu_up;
+    TH2D *h_el_up;
+    TH2D *h_mu_down;
+    TH2D *h_el_down;
 } LQ_rw_helper;
 
 
@@ -116,20 +120,32 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 }
 
 
-float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG, float m, float cost){
+float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m, float cost){
     TH2D *h_rw;
-    if(FLAG == FLAG_MUONS) h_rw = h_LQ.h_mu;
-    else h_rw = h_LQ.h_el;
-    
-    int xbin = h_rw->GetXaxis()->FindBin(m);
-    int ybin = h_rw->GetYaxis()->FindBin(cost);
-   // int zbin = h_rw->GetZaxis()->FindBin(cost);
-    float weight = h_rw->GetBinContent(xbin, ybin);
-    if(weight==0.){
-    //   printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
-    //   weight = 1e-6;
+    if(FLAG2 == 0){ // everything
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
+        else h_rw = h_LQ.h_el;
+    }
+    else if(FLAG2 == 1){ // up quarks
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
+        else h_rw = h_LQ.h_el_up;
+    }
+    else if(FLAG2 == 2){ // down quarks
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
+        else h_rw = h_LQ.h_el_down;
+    }
+    else{
+        printf("Invalid LQ reweighting flag %i! Options are 0, 1 or 2 \n", FLAG2);
+        exit(1);
     }
 
+    int xbin = h_rw->GetXaxis()->FindBin(m);
+    int ybin = h_rw->GetYaxis()->FindBin(cost);
+    float weight = h_rw->GetBinContent(xbin, ybin);
+    if(weight < 1e-8){
+        printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
+        //weight = 1e-6;
+    }
     return weight;
 
 }
@@ -295,11 +311,26 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
     if(year <2016 || year > 2018) printf("Year is not from 2016-2018. This is bad!! \n");
     //stay in range of histogram
     float sys_unc_mult = 1.0;
-    if (pt >= 115.){
-        sys_unc_mult = 1.5;
-        pt = 90.;
+
+    TAxis *a_pt;
+    if(year == 2016){
+        a_pt=h->GetYaxis();
     }
-    if (pt <= 22.5) pt = 22.5;
+    else{
+        a_pt=h->GetXaxis();
+    }
+
+
+    float min_pt = a_pt->GetBinLowEdge(1);
+    float max_pt = a_pt->GetBinUpEdge(a_pt->GetNbins());
+
+
+    if( pt <= min_pt) pt = min_pt + 1.;
+    if (pt >= max_pt){
+        pt = max_pt - 1.;
+        sys_unc_mult = 1.5;
+    }
+
     TAxis* x_ax =  h->GetXaxis();
     TAxis *y_ax =  h->GetYaxis();
 
@@ -331,15 +362,23 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
     return result;
 }
 
-Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0){
+Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, int systematic_endcap = 0, int pt_systematic_sep = 0){
     float sys_unc_mult = 1.0;
     //get SF for eta's in overlap region (already vetoed superclusters in the
     //region)
-    if(!goodElEta(eta)) eta = eta * 1.2;
+    if(!goodElEta(eta)) eta = 1.6;
 
-    if( pt <= 25.) pt = 25;
-    if (pt >= 450.){
-        pt = 350.;
+    int n_bins_pt = h->GetNbinsY();
+
+    float min_pt = h->GetYaxis()->GetBinLowEdge(1);
+    float max_pt = h->GetYaxis()->GetBinUpEdge(n_bins_pt);
+
+    float mid_pt = 75.;
+    int mid_bin = h->GetYaxis()->FindBin(mid_pt);
+
+    if( pt <= min_pt) pt = min_pt + 1.;
+    if (pt >= max_pt){
+        pt = max_pt - 1.;
         sys_unc_mult = 1.5;
     }
     TAxis* x_ax =  h->GetXaxis();
@@ -348,14 +387,21 @@ Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, i
     int xbin = x_ax->FindBin(eta);
     int ybin = y_ax->FindBin(pt);
     Float_t result = h->GetBinContent(xbin, ybin);
+    bool correct_pt_range = true;
+    if(pt_systematic_sep != 0){
+        correct_pt_range = (pt >= mid_pt && pt_systematic_sep > 0) || (pt < mid_pt && pt_systematic_sep < 0);
+        //correct_pt_range = (ybin > mid_bin && pt_systematic_sep > 0) || (ybin <= mid_bin && pt_systematic_sep < 0);
+    }
     int systematic = systematic_barrel;
     if(abs(eta) > 1.4) systematic = systematic_endcap;
-    if(systematic != 0){
+    if(systematic != 0 && correct_pt_range){
         Float_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
         err =abs(err);
+        if(err > 0.9 * result) err = 0.;
         result += (systematic * err);
     }
     //printf("eta %.2f sys_b %i sys_e %i, sys %i \n", eta, systematic_barrel, systematic_endcap, systematic);
+    
 
     if(result < 0.01 || result > 10.){
         printf("%.2f el SF for Pt %.1f, Eta %1.2f \n", result, pt, eta);
@@ -386,31 +432,8 @@ Float_t get_HLT_SF_1mu(Float_t mu1_pt, Float_t mu1_eta, TH2D *h_SF){
     return result;
 }
 
-Float_t get_HLT_SF_1el(Float_t el1_pt, Float_t el1_eta, TH2D *h_SF){
-    //get HLT SF for event with just 1 elon
-    //stay in range of histogram
-    if (el1_pt >= 350.) el1_pt = 350.;
-    el1_eta = abs(el1_eta);
-    TAxis *x_ax_SF =  h_SF->GetXaxis();
-    TAxis *y_ax_SF =  h_SF->GetYaxis();
-    int xbin1_SF = x_ax_SF->FindBin(el1_eta);
-    int ybin1_SF = y_ax_SF->FindBin(el1_pt);
-
-
-    Float_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
-
-    Float_t result = SF1;
-    if(result < 0.01) printf("0 HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
-    if(TMath::IsNaN(result)){ 
-        printf("Nan HLT SF for Pt %.1f, Eta %1.2f \n", el1_pt, el1_eta);
-        result = 1;
-    }
-    //printf("Result, SF1 = (%0.3f, %0.3f) \n", result, SF1);
-    return result;
-}
-
 Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t lep2_eta, TH2D *h_SF, TH2D *h_MC_EFF, 
-       int systematic_barrel = 0, int systematic_endcap = 0){
+       int systematic_barrel = 0, int systematic_endcap = 0, int pt_systematic_sep = 0){
     float sys1_unc_mult = 1.0;
     float sys2_unc_mult = 1.0;
     //printf("Getting HLT for %.2f %.2f %.2f %.2f \n", lep1_pt, lep1_eta, lep2_pt, lep2_eta);
@@ -418,9 +441,14 @@ Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t l
     //stay in range of histogram
     TAxis *x_ax_SF =  h_SF->GetXaxis();
     TAxis *y_ax_SF =  h_SF->GetYaxis();
+
     int pt_max_bin = y_ax_SF->GetLast();
     double pt_max = y_ax_SF->GetBinUpEdge(pt_max_bin);
     double pt_overflow = y_ax_SF->GetBinCenter(pt_max_bin);
+
+    float mid_pt = 75.;
+    int mid_bin = y_ax_SF->FindBin(mid_pt);
+
     if (lep1_pt >= pt_max){
         sys1_unc_mult = 1.5;
         lep1_pt = pt_overflow;
@@ -440,16 +468,23 @@ Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t l
     Float_t SF1 = h_SF->GetBinContent(xbin1_SF, ybin1_SF);
     Float_t SF2 = h_SF->GetBinContent(xbin2_SF, ybin2_SF);
 
+    bool correct_pt_range1  = true;
+    bool correct_pt_range2  = true;
+    if(pt_systematic_sep != 0){
+        correct_pt_range1 = (lep1_pt >= mid_pt && pt_systematic_sep > 0) || (lep1_pt < mid_pt && pt_systematic_sep < 0);
+        correct_pt_range1 = (lep2_pt >= mid_pt && pt_systematic_sep > 0) || (lep2_pt < mid_pt && pt_systematic_sep < 0);
+    }
+
     int systematic1 = systematic_barrel;
     int systematic2 = systematic_barrel;
     if(abs(lep1_eta) > 1.4) systematic1 = systematic_endcap;
     if(abs(lep2_eta) > 1.4) systematic2 = systematic_endcap;
 
-    if(systematic1 != 0){
+    if(systematic1 != 0 && correct_pt_range1){
         Float_t SF1_err = h_SF->GetBinError(xbin1_SF, ybin1_SF);
         SF1 += sys1_unc_mult * SF1_err * systematic1;
     }
-    if(systematic2 != 0){
+    if(systematic2 != 0 && correct_pt_range2){
         Float_t SF2_err = h_SF->GetBinError(xbin2_SF, ybin2_SF);
         SF2 += sys2_unc_mult * SF2_err * systematic2;
     }
@@ -507,46 +542,24 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/LQ_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
 
-    /*
+
     h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
     h_lq->h_el->SetDirectory(0);
 
     h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
-     printf("\n======h_LQ.h_mu======\n");
-    for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_mu->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_mu->GetBinContent(i,j));
-    }
-    
-    printf("\n======h_LQ.h_el======\n");
-    for(int i=1;i<=h_lq->h_el->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_el->GetNbinsY();j++)
-            printf("i_m = %i, i_cost = %i, content = %.12f\n",i,j,h_lq->h_el->GetBinContent(i,j));
-    }
-    */
-    h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
-    h_lq->h_el->SetDirectory(0);
 
-    h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
-    h_lq->h_mu->SetDirectory(0);
-/*
-    printf("\n======h_LQ.h_mu======\n");
-    for(int i=1;i<=h_lq->h_mu->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_mu->GetNbinsY();j++){
-            for(int k=1;k<=h_lq->h_mu->GetNbinsZ();k++)
-            printf("i_m = %i, i_rap = %i, i_cost = %i, content = %.12f\n",i,j,k,h_lq->h_mu->GetBinContent(i,j,k));
-        }
-    }
+    h_lq->h_el_up = (TH2D *) f->Get("h_el_up")->Clone();
+    h_lq->h_el_up->SetDirectory(0);
 
-    printf("\n======h_LQ.h_el======\n");
-    for(int i=1;i<=h_lq->h_el->GetNbinsX();i++){
-        for(int j=1;j<=h_lq->h_el->GetNbinsY();j++){
-            for(int k=1;k<=h_lq->h_el->GetNbinsZ();k++)
-            printf("i_m = %i, i_rap = %i, i_cost = %i, content = %.12f\n",i,j,k,h_lq->h_el->GetBinContent(i,j,k));
-        }
-    }
-*/
+    h_lq->h_mu_up = (TH2D *) f->Get("h_mu_up")->Clone();
+    h_lq->h_mu_up->SetDirectory(0);
+
+    h_lq->h_el_down = (TH2D *) f->Get("h_el_down")->Clone();
+    h_lq->h_el_down->SetDirectory(0);
+
+    h_lq->h_mu_down = (TH2D *) f->Get("h_mu_down")->Clone();
+    h_lq->h_mu_down->SetDirectory(0);
     f->Close();
 }
 
@@ -584,7 +597,6 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
     sprintf(name, "emu%i_cost_ratio", year % 2000);
     h->rw = (TH1F *) f->Get(name)->Clone();
     h->rw->SetDirectory(0);
-   // h->rw->Print();
 }
 
 

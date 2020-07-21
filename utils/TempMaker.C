@@ -67,6 +67,8 @@ void TempMaker::setup(){
 
     if(!is_data){
         if(is_gen_level){ 
+            t_in->SetBranchAddress("inc_id1", &inc_id1);
+            t_in->SetBranchAddress("inc_id2", &inc_id2);
             t_in->SetBranchAddress("cost_st", &cost_st);
             t_in->SetBranchAddress("pdf_weights", &pdf_weights);
         }
@@ -271,6 +273,17 @@ void TempMaker::setup_systematic(const string &s_label){
         else printf("COULDN'T PARSE SYSTEMATIC %s !!! \n \n", sys_label.c_str());
 
 
+        //extra parsing for lepton efficiency pt ranges
+        if(sys_label.find("PTHIGH") != string::npos){
+            printf("Doing high pt range for this systematic \n");
+            el_SF_pt_range = 1;
+        }
+        else if(sys_label.find("PTLOW") != string::npos){
+            printf("Doing low pt range for this systematic \n");
+            el_SF_pt_range = -1;
+        }
+
+
     }
 }
 
@@ -459,11 +472,13 @@ float TempMaker::getEvtWeight(){
     }
     else if(do_electrons){
         if(do_elID_barrel_sys || do_elID_endcap_sys) 
-            el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF, do_elID_barrel_sys, do_elID_endcap_sys) * get_el_SF(el2_pt, el2_eta, el_SF.ID_SF, do_elID_barrel_sys, do_elID_endcap_sys);
+            el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF, do_elID_barrel_sys, do_elID_endcap_sys, el_SF_pt_range) * 
+                       get_el_SF(el2_pt, el2_eta, el_SF.ID_SF, do_elID_barrel_sys, do_elID_endcap_sys, el_SF_pt_range);
         if(do_elRECO_barrel_sys || do_elRECO_endcap_sys) 
-            el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys) * get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys);
+            el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys, el_SF_pt_range) * 
+                         get_el_SF(el2_pt, el2_eta, el_SF.RECO_SF, do_elRECO_barrel_sys, do_elRECO_endcap_sys, el_SF_pt_range);
         if(do_elHLT_barrel_sys || do_elHLT_endcap_sys) 
-            el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_barrel_sys, do_elHLT_endcap_sys);
+            el_HLT_SF = get_HLT_SF(el1_pt, el1_eta, el2_pt, el2_eta, el_SF.HLT_SF,  el_SF.HLT_MC_EFF, do_elHLT_barrel_sys, do_elHLT_endcap_sys, el_SF_pt_range);
 
 
 
@@ -494,10 +509,10 @@ float TempMaker::getEvtWeight(){
     return evt_weight;
 
 }
-float TempMaker::getLQReweightingDenom(){
-    int flag = FLAG_MUONS;
-    if(do_electrons) flag = FLAG_ELECTRONS;
-    return get_LQ_reweighting_denom(LQ_helper, flag, gen_m, cost_st);
+float TempMaker::getLQReweightingDenom(int flag2 = 0){
+    int flag1 = FLAG_MUONS;
+    if(do_electrons) flag1 = FLAG_ELECTRONS;
+    return get_LQ_reweighting_denom(LQ_helper, flag1, flag2, gen_m, cost_st);
 }
 
 float TempMaker::getReweightingDenom(){
