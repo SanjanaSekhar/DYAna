@@ -11,8 +11,8 @@ class DY_AFB(PhysicsModel):
 
         self.modelBuilder.doVar("Afb[0.6, -1.0,1.0]");
         self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
-       # self.modelBuilder.doVar("yLQ[0.01, -5.0, 5.0]");
-        self.modelBuilder.doSet("POI","Afb")
+        self.modelBuilder.doVar("yLQ[0.01, -5.0, 5.0]");
+        self.modelBuilder.doSet("POI","yLQ")
 
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
@@ -20,8 +20,8 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.factory_('expr::RAlph("@0*@1",Alph,Norm)')
         self.modelBuilder.factory_('expr::Rpl("(@0+@1)",Norm,Afb)')
         self.modelBuilder.factory_('expr::Rmn("(@0-@1)",Norm,Afb)')
-       # self.modelBuilder.factory_('expr::yLQ2("(@0*@0)",yLQ)')
-       # self.modelBuilder.factory_('expr::yLQ4("(@0*@0*@0*@0)",yLQ)')
+        self.modelBuilder.factory_('expr::yLQ2("(@0*@0)",yLQ)')
+        self.modelBuilder.factory_('expr::yLQ4("(@0*@0*@0*@0)",yLQ)')
 
 
  
@@ -32,8 +32,8 @@ class DY_AFB(PhysicsModel):
         if 'alpha' in process: return "RAlph"
         elif 'pl' in process: return "Rpl"
         elif 'mn' in process : return "Rmn"
-       # elif 'LQpure' in process: return "yLQ4"
-       # elif 'LQint' in process: return "yLQ2"
+        elif 'LQpure' in process: return "yLQ4"
+        elif 'LQint' in process: return "yLQ2"
         else:
             #print("Didnt find process %s bin %s in specifications \n" % (process, bin))
             return 1
