@@ -22,7 +22,7 @@ for y in [-1]:
     extra_params=""
     bin_start = 0
     bin_stop = 8
-    options.chan="mumu"
+    options.chan="ee"
     options.q="d"
     options.no_sys=False
     options.fake_data=True
