@@ -8,39 +8,45 @@ kmax *
 -------------------------------------------------------------------------------
 shapes * * LQm1000_ud_merge_templates16.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             mumu16  
+bin             ee16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      mumu16  mumu16  mumu16  mumu16  mumu16 mumu16 mumu16  mumu16    mumu16
+bin                      ee16    ee16    ee16    ee16    ee16   ee16   ee16    ee16      ee16
 process                  alpha   fpl     fmn     top     db     gam    tautau  LQpure_d  LQint_d
 process                  -2      0       -1      1       4      3      2       -3        -4
 rate                     -1      -1      -1      -1      -1    -1     -1       -1        -1
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -       -        -     1.03     -       -
-bk_xsec         lnN      -       -        -     1.05    1.09      -      -       -       -
+db_xsec         lnN      -       -        -      -      1.09      -      -       -       -
+top_xsec		lnN      -       -        -    1.05      -        -      -       -       -
 gam_xsec        lnN      -       -        -      -       -       1.4     -       -       -       
+    
 
 lumi16          lnN     1.025  1.025   1.025   1.025   1.025     1.025  1.025    -       -
 #elFakes16       lnN      -       -        -      -       -       -      -       -       -
 #muFakes16       lnN      -       -        -      -       -       -      -       -       -
 
 ## prefire only for 16,17, hem only 18
-Pu16            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-BTAG16          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-prefire16      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-METJER16        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-METJEC16        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-#METHEM16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+Pu16            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+BTAG16          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+prefire16      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+METJER16        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+METJEC16        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+#METHEM16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
                                                                                                               
-                                                                                        
-muRC16          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
-muHLTBAR16      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
-muIDBAR16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-muISOBAR16     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-muHLTEND16      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-muIDEND16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
-muISOEND16     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+                                                                                                              
+elScaleStat16   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
+elScaleSyst16   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+elScaleGain16   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+elSmear16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+
+elHLTBAR16      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
+elIDBAR16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+elRECOBAR16     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+elHLTEND16      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+elIDEND16       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+elRECOEND16     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
                                                                                                             
 alphaS          shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
 A0Den           shape    1.0     1.0     1.0      -       -      -      -       1.0     1.0    
