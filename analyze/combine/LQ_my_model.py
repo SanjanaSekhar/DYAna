@@ -12,7 +12,7 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.doVar("Afb[0.6, -1.0,1.0]");
         self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
         self.modelBuilder.doVar("yLQ[0.01, -5.0, 5.0]");
-        self.modelBuilder.doSet("POI","A0")
+        self.modelBuilder.doSet("POI","yLQ")
 
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
@@ -32,8 +32,10 @@ class DY_AFB(PhysicsModel):
         if 'alpha' in process: return "RAlph"
         elif 'pl' in process: return "Rpl"
         elif 'mn' in process : return "Rmn"
-        elif 'LQpure' in process: return "yLQ4"
-        elif 'LQint' in process: return "yLQ2"
+        elif 'LQpure_d' in process: return "yLQ4"
+        elif 'LQint_d' in process: return "yLQ2"
+        elif 'LQpure_u' in process: return "yLQ4"
+        elif 'LQint_u' in process: return "yLQ2"
         else:
             #print("Didnt find process %s bin %s in specifications \n" % (process, bin))
             return 1
