@@ -46,7 +46,6 @@ if(not options.prefit):
 
     fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1., mdf = True)
     print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
-    print("Based on initial fit, injecting Afb = %.3f A0 = %.3f"  %(fitted_afb, fitted_a0))
     print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters Afb=%.2f,A0=%.2f" 
             % (toys_freq, options.nToys, afb,a0))
     print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i %s" %(workspace, options.teststat, options.nToys, extra_params))
