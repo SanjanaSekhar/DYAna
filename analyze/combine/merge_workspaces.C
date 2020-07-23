@@ -30,15 +30,15 @@ void CopyDir(TDirectory *source, TDirectory *savdir) {
 void merge_workspaces(){
 
 
-    const TString f1_s("combine/templates/june29_2016.root");
-    const TString fout_s("combine/templates/june29_merge_2016.root");
+    const TString f1_s("combine/templates/july14_2016.root");
+    const TString fout_s("combine/templates/july14_merge_2016.root");
     TFile *f1 = TFile::Open(f1_s, "READ");
     TFile *fout = TFile::Open(fout_s, "RECREATE");
     char dirname[40];
 
 
-    char *sys_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ16_sys_june30";
-    char *pdf_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ16_pdf_june30";
+    char *sys_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ16_sys_july14";
+    char *pdf_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ16_pdf_july14";
     int num_sys_files = 15;
     int num_pdf_files = 15;
 

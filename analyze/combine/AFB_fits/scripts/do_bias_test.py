@@ -11,6 +11,8 @@ parser.add_option("--A0",  default=0.05, type='float', help="A0 value to inject"
 parser.add_option("--nToys",  default=100, type='int', help="How many toys to run")
 parser.add_option("--mbin",  default=0, type='int', help="Which mass bin to run on ")
 parser.add_option("-o", "--odir", default="", help = "output directory")
+parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
+parser.add_option("--prefit", default=False, action="store_true", help="Sample toys from prefit uncs")
 
 (options, args) = parser.parse_args()
 
@@ -29,11 +31,23 @@ h_res_a0 = TH1F("h_res_A0", "", 30, -0.15, 0.15)
 
 print("Will inject AFB %.2f A0 %.2f for all toys " %(options.Afb, options.A0))
 
+if(not options.prefit):
+    print("Sampling toys based on postfit")
+    if(not options.reuse_fit):
+        print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1" % (workspace))
+
 for i in range(options.nToys):
-    print_and_do("combine -M GenerateOnly -d %s --toysFrequentist --bypassFrequentistFit -s %i --saveToys -t 1 --setParameters Afb=%.2f,A0=%.2f" 
+
+    if(not options.prefit):
+        fitted_afb, fitted_a0 = setSnapshot(Afb_val = -1., mdf = True)
+        print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters Afb=%.2f,A0=%.2f" 
+            % (i, options.Afb, options.A0))
+    else:
+
+        print_and_do("combine -M GenerateOnly -d %s -s %i --saveToys -t 1 --toysFrequentist --setParameters Afb=%.2f,A0=%.2f" 
             % (workspace, i, options.Afb, options.A0))
-    #print_and_do("combine -M FitDiagnostics -d %s --saveWorkspace --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i --robustFit 1   --forceRecreateNLL " % (workspace, options.nToys))
-    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root  -t 1 --robustFit 1 --forceRecreateNLL" 
+
+    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL" 
             %(workspace, i))
     f_fit = TFile.Open("multidimfit.root")
     if f_fit:
