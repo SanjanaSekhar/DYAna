@@ -179,7 +179,7 @@ if options.tar:
     print cp_cmd
     os.system(cp_cmd)
     rm_cmd = "rm %s" %(options.tarname + ".tgz")
-    os.system(rm_cmd)
+   # os.system(rm_cmd)
     sys.exit("Finished tarring")
 
 elif (options.haddEOS):
