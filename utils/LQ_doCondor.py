@@ -166,7 +166,8 @@ if options.tar:
             tar_cmd += " " + "output_files/"+item
     if options.cmssw:
         print("tarring CMSSW")
-        tar_cmd += " --exclude='/uscms/home/ssekhar/nobackup/CMSSW_10_5_0/src/LQ_Analysis/*' " 
+        tar_cmd += " --exclude='CMSSW_10_5_0/src/LQ_Analysis/*' " 
+        tar_cmd += " --exclude='CMSSW_10_5_0/src/Analysis/*' " 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
         tar_cmd += " --exclude='%s' " %'*.git*' 
         tar_cmd += " -zcf %s -C %s %s" % ("LQ_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'CMSSW_10_5_0')#where to run this from 
