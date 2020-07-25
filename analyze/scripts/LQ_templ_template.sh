@@ -5,7 +5,7 @@ set -x
 
 ls -la
 pwd
-cd LQ_Analysis/DYAna/analyze
+cd LQ_Analysis/DYAna/analyze #after untarring lqan.tgz
 mkdir output_files
 
 #0 is pdfs, 1 is other sys

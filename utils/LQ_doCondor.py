@@ -47,7 +47,7 @@ parser.add_option("-g", "--getEOS", default = False, action='store_true',  help=
 parser.add_option("-y", "--year", dest='year', type='string', default = 2016,  help="Year for output file location")
 
 parser.add_option("--tar", dest='tar', default = False, action='store_true',  help="Create tarball of current directory")
-parser.add_option("--tarname", dest='tarname', default = "Analysis", help="Name of directory to tar (relative to cmssw_base)")
+parser.add_option("--tarname", dest='tarname', default = "LQ_Analysis", help="Name of directory to tar (relative to cmssw_base)")
 parser.add_option("--tarexclude", dest='tarexclude', default = '', 
         help="Name of directories to exclude from the tar (relative to cmssw_base), format as comma separated string (eg 'dir1, dir2') ")
 parser.add_option("--dy", dest='DY', default = False, action="store_true",  help="Shortcut to create tarball for DY AFB analysis (DYAna directory)")
@@ -87,9 +87,9 @@ def write_job(out, name, nJobs, iJob, eosout=''):
         sub_file.write('cd %s/src\n'%(cmssw_ver))
         sub_file.write('eval `scramv1 runtime -sh`\n')
     else:
-        sub_file.write('xrdcp %s CMSSW.tgz \n' % eos_cmssw_file) 
+        sub_file.write('xrdcp %s LQ_CMSSW.tgz \n' % eos_cmssw_file) 
         sub_file.write('cat LQ_my_script.sh \n')
-        sub_file.write('tar -xzf CMSSW.tgz \n')
+        sub_file.write('tar -xzf LQ_CMSSW.tgz \n')
         sub_file.write('mv LQ_my_script.sh CMSSW_10_5_0/src/ \n')
         sub_file.write('cd CMSSW_10_5_0/src \n')
         sub_file.write('eval `scramv1 runtime -sh`\n')
