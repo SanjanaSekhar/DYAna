@@ -37,8 +37,8 @@ void LQ_merge_workspaces(){
     char dirname[40];
 
 
-    char *sys_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ16_sys_june30";
-    char *pdf_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ16_pdf_june30";
+    char *sys_base = "root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ16_sys_jul25LQ";
+    char *pdf_base = "root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ16_pdf_jul25LQ";
     int num_sys_files = 15;
     int num_pdf_files = 15;
 
