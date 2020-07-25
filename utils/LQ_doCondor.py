@@ -135,14 +135,15 @@ def submit_jobs(lofjobs):
 
 
 
-
+#When you use -h with -c, it causes tar to archive the files symbolic links point to, instead of the linking themselves.
 if options.tar:
     tar_cmd = "tar" 
     excludeList = options.tarexclude.split(',')
     if options.DY:
         print "Using DY tarball options"
         excludeList = ['LQ_Analysis/DYAna/analyze/input_files', 'LQ_Analysis/DYAna/analyze/condor_jobs', 'LQ_Analysis/DYAna/analyze/output_files', 'LQ_Analysis/DYAna/generator_stuff', 
-                       'LQ_Analysis/DYAna/test' ]
+                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots/Misc_plots','LQ_Analysis/DYAna/analyze/combine/templates','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results',
+                       'LQ_Analysis/DYAna/analyze/combine/AFB_fits/postfit_plots' ]
         options.tarname = "LQ_Analysis"
         for item in excludeList:
             #tar_cmd += " --exclude='`%s`' " % ("echo $CMSSW_BASE/src/" + item)
@@ -150,7 +151,7 @@ if options.tar:
         tar_cmd += " --exclude='%s' " %'.git' 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
         tar_cmd += " --exclude='%s' " %'LQ_Analysis/DYAna/analyze/LQ_my_script.sh'
-        tar_cmd += " -zcf %s -C %s %s" % (options.tarname + ".tgz", "$CMSSW_BASE/src/", options.tarname)
+        tar_cmd += " -zchf %s -C %s %s" % (options.tarname + ".tgz", "$CMSSW_BASE/src/", options.tarname)
         print(tar_cmd)
     if options.root_files:
         print "Tarring root files"
@@ -161,7 +162,7 @@ if options.tar:
                          '2017/ElEl17*dy*','2017/ElEl17*ttbar*', '2017/ElEl17*wt*','2017/ElEl17*diboson*', '2017/ElEl17*phot*', 
                          '2018/MuMu18*dy*','2018/MuMu18*ttbar*', '2018/MuMu18*wt*','2018/MuMu18*diboson*', '2018/MuMu18*phot*', 
                          '2018/ElEl18*dy*','2018/ElEl18*ttbar*', '2018/ElEl18*wt*','2018/ElEl18*diboson*', '2018/ElEl18*phot*']
-        tar_cmd = "tar -cf %s" % (options.tarname + ".tgz")
+        tar_cmd = "tar -chf %s" % (options.tarname + ".tgz")
         for item in include_files:
             tar_cmd += " " + "output_files/"+item
     if options.cmssw:
@@ -170,7 +171,7 @@ if options.tar:
         tar_cmd += " --exclude='CMSSW_10_5_0/src/Analysis/*' " 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
         tar_cmd += " --exclude='%s' " %'*.git*' 
-        tar_cmd += " -zcf %s -C %s %s" % ("LQ_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'CMSSW_10_5_0')#where to run this from 
+        tar_cmd += " -zchf %s -C %s %s" % ("LQ_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'CMSSW_10_5_0')#where to run this from 
         options.tarname = "LQ_CMSSW"
 
 
