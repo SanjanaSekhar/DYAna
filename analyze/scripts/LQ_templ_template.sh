@@ -16,4 +16,4 @@ echo ".x combine/LQ_make_sys_templates.C($2,$3, YEAR, TYPE);" > cmd.txt
 
 echo ".q" >> cmd.txt
 root -l -b < cmd.txt
-xrdcp -f combine/templates/*.root $1
+xrdcp -f output_files/*.root $1
