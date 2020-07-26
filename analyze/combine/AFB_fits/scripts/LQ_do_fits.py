@@ -20,7 +20,7 @@ parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits f
 for y in [-1]:
 
     extra_params=""
-    options.chan="ee"
+    options.chan="mumu"
     options.q="u"
     options.no_sys=False
     options.fake_data=True
