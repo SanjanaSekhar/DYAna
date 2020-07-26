@@ -137,7 +137,7 @@ void make_mc_templates(int year, const string &sys_label){
 	
     
     bool do_mu, do_el;
-    if(sys_label.find("mu") != string::npos){
+    if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
         printf("Doing mu only \n");
         do_mu = true;
         do_el = false;

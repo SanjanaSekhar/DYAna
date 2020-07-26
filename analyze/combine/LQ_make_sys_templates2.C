@@ -15,7 +15,7 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
     m_LQ = 1000.;
     //year=2018;
     char templates_name[100];
-    sprintf(templates_name,"combine/templates/LQm%i_ud_sys%i_templates%i.root",int(m_LQ),type,year%2000);
+    sprintf(templates_name,"combine/templates/LQm%i_emu_sys%i_templates%i.root",int(m_LQ),type,year%2000);
     
     const TString pdf_fout_name(templates_name);
     //const TString pdf_fout_name("output_files/sys_test.root");
@@ -46,10 +46,7 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
       
       
       vector<string>  sys_labels_uncorr = 
-        {"_METJER", "_METJEC", "_METHEM", "_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", "_BTAG",
-            "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  
-            "_elHLTBAR", "_elIDBAR", "_elRECOBAR", "_elHLTEND", "_elIDEND", "_elRECOEND",
-            "_ptrw1b", "_ptrw2b", "_ptrw3b", "_ptrw4b", "_ptrw5b", "_ptrw6b", "_ptrw7b"
+        {"_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b",
         };
 
       string yr_string; 
@@ -64,8 +61,8 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
       for(auto iter = sys_labels_raw.begin(); iter !=sys_labels_raw.end(); iter++){
 
           auto cpy = *iter;
-          sys_labels.push_back(iter->append("Up"));
-          sys_labels.push_back(cpy.append("Down"));
+        //  sys_labels.push_back(iter->append("Up"));
+         // sys_labels.push_back(cpy.append("Down"));
       }
     }
       cout << "sys labels: ";
