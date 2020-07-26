@@ -150,6 +150,7 @@ if options.tar:
             tar_cmd += " --exclude='%s' " % (item)
         tar_cmd += " --exclude='%s' " %'.git' 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
+        tar_cmd += " --exclude='%s' " %'.nfs*' 
         tar_cmd += " --exclude='%s' " %'LQ_Analysis/DYAna/analyze/LQ_my_script.sh'
         tar_cmd += " -zchf %s -C %s %s" % (options.tarname + ".tgz", "$CMSSW_BASE/src/", options.tarname)
         print(tar_cmd)
@@ -171,6 +172,7 @@ if options.tar:
         tar_cmd += " --exclude='CMSSW_10_5_0/src/Analysis/*' " 
         tar_cmd += " --exclude='%s' " %'*.tgz' 
         tar_cmd += " --exclude='%s' " %'*.git*' 
+        tar_cmd += " --exclude='%s' " %'.nfs*' 
         tar_cmd += " -zchf %s -C %s %s" % ("LQ_CMSSW" + ".tgz", "$CMSSW_BASE/../", 'CMSSW_10_5_0')#where to run this from 
         options.tarname = "LQ_CMSSW"
 
