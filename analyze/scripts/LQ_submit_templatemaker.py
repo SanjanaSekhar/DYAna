@@ -12,7 +12,7 @@ types = [0, 1]
 labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
-njobs = 15
+njobs = 20
 ending = "jul25LQ"
 
 for year in years:
