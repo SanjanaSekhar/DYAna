@@ -40,8 +40,8 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
     }
     else{
 
-      vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS"  };
-      //vector<string> sys_labels_raw =  {};
+      //vector<string> sys_labels_raw =  { "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS"  };
+      vector<string> sys_labels_raw =  {};
       
       
       
@@ -61,8 +61,8 @@ void LQ_make_sys_templates2(int nJobs = 1, int iJob =0, int year = 2016, int typ
       for(auto iter = sys_labels_raw.begin(); iter !=sys_labels_raw.end(); iter++){
 
           auto cpy = *iter;
-        //  sys_labels.push_back(iter->append("Up"));
-         // sys_labels.push_back(cpy.append("Down"));
+          sys_labels.push_back(iter->append("Up"));
+          sys_labels.push_back(cpy.append("Down"));
       }
     }
       cout << "sys labels: ";
