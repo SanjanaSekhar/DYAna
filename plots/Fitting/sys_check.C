@@ -17,12 +17,12 @@ void sys_check(){
         int year = 2018;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_METJER18";
-        bool do_bkg = true;
+        char *sys = "_elHLTBARPTLOW18";
+        bool do_bkg = false;
         bool do_qcd = false;
         bool do_electrons = true;
-        bool do_muons = true;
-        int i = 7;
+        bool do_muons = false;
+        int i = 0;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
@@ -148,6 +148,7 @@ void sys_check(){
                 h1_mumu_qcd = convert2d(h_mumu_qcd);
                 h1_mumu_qcd_up = convert2d(h_mumu_qcd_up);
                 h1_mumu_qcd_down = convert2d(h_mumu_qcd_down);
+                
 
                 h1_mumu_qcd->SetLineColor(kGray);
                 h1_mumu_qcd->SetLineWidth(2);
@@ -261,6 +262,7 @@ void sys_check(){
                 h1_elel_qcd = convert2d(h_elel_qcd);
                 h1_elel_qcd_up = convert2d(h_elel_qcd_up);
                 h1_elel_qcd_down = convert2d(h_elel_qcd_down);
+                h1_elel_qcd->Print("range");
 
                 h1_elel_qcd->SetLineColor(kGray);
                 h1_elel_qcd->SetLineWidth(2);

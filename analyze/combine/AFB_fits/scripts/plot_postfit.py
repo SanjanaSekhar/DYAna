@@ -242,6 +242,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 pulls[hist_index].SetFillColor(kGray)
                 pulls[hist_index].SetTitle(";"+hist.GetXaxis().GetTitle()+";(Data-Bkg)/Unc.")
                 pulls[hist_index].SetStats(0)
+                chi2 = 0.
+                for i in range(1, pulls[hist_index].GetNbinsX()+1):
+                    chi2 += pulls[hist_index].GetBinContent(i)**2;
+                print("Chi2/nbin for chan %s is %.1f/%i" % (hist.GetName(), chi2, pulls[hist_index].GetNbinsX()))
 
                 LS = .13
 

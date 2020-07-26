@@ -106,7 +106,7 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
         myargs.find("A0").setVal(A0_val)
         #myargs.find("A0").setError(0.)
     # end new lines
-    importPars = w.saveSnapshot('initialFit',myargs)
+    importPars = w.saveSnapshot('initialFit',myargs, True)
     fout = TFile('initialFitWorkspace.root',"recreate")
     fout.WriteTObject(w,'w')
     fout.Close()

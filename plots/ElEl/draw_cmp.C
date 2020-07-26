@@ -30,7 +30,7 @@
 
 const int type = FLAG_ELECTRONS;
 const int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
 
@@ -165,7 +165,7 @@ void draw_cmp(){
     gg_rap->SetFillColor(kOrange);
 
     float m_low = 150.;
-    float m_high = 14000.;
+    float m_high = 171.;
 
     make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
     make_m_cost_pt_xf_hist(t_elel_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap, false, type,   year, m_low, m_high);
