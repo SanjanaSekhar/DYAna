@@ -20,8 +20,6 @@ parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits f
 for y in [-1]:
 
     extra_params=""
-    bin_start = 0
-    bin_stop = 8
     options.chan="ee"
     options.q="u"
     options.no_sys=False
@@ -66,8 +64,8 @@ for y in [-1]:
         print("\n plotdir = ", plotdir)
         print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
         print_and_do("mkdir %s" % (plotdir))
-        print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --setParameters A0=0.05 --freezeParameters A0 -v 2" %(workspace, extra_params))
-        #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s -v 2" %(workspace, extra_params))
+        #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --setParameters A0=0.05 --freezeParameters A0 -v 2" %(workspace, extra_params))
+        print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s -v 2" %(workspace, extra_params))
 
         if(not options.no_plot):
             print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
