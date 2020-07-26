@@ -10,7 +10,7 @@ analyze/condor_jobs/
 *.so
 *.json
 *.tgz
-
+.nfs*
 *FileDump.py
 *.db
 *.aux
