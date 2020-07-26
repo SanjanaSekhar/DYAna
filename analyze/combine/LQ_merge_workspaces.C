@@ -59,9 +59,7 @@ void LQ_merge_workspaces(){
 
 
 
-    for(int i=i_start; i<i_max; i++){
-
-        snprintf(dirname, 10, "w%i", i);
+        snprintf(dirname, 10, "LQ");
         fout->mkdir(dirname);
         fout->cd(dirname);
         TDirectory *savedir = gDirectory;
@@ -79,7 +77,7 @@ void LQ_merge_workspaces(){
             f2->Close();
         }
 
-    }
+    
     fout->Print();
     fout->Write();
     fout->Close();
