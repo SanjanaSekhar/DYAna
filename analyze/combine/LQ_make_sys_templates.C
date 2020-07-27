@@ -2,7 +2,7 @@
 
 
 
-void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=1){
+void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=1, Double_t m_LQ=0.){
     //type0 is pdfs, type1 other sys
 
   //type =0;
@@ -12,10 +12,10 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
     }
   // for(year=2017;year<=2018;year++){
    // for(int i=1;i<=3;i+=2){
-    m_LQ = 1000.;
+  //  m_LQ = 1000.;
    // year=2018;
     char templates_name[100];
-    sprintf(templates_name,"output_files/LQm%i_6cost_sys%i_templates%i.root",int(m_LQ),type,year%2000);
+    sprintf(templates_name,"output_files/LQm%i_sys%i_templates%i.root",int(m_LQ),type,year%2000);
     
     const TString pdf_fout_name(templates_name);
     //const TString pdf_fout_name("output_files/sys_test.root");
@@ -107,7 +107,7 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
                 printf("alpha_denom %.2f \n", alpha_denom);
                 */
 
-                make_mc_templates(year,  *iter);
+                make_mc_templates(year, m_LQ,  *iter);
                 convert_mc_templates(year, *iter);
 
                 pdf_fout->cd();

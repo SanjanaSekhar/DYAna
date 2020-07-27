@@ -29,7 +29,7 @@ TH1F *h1_elel_asym, *h1_elel_sym;
 TH1F *h1_mumu_asym, *h1_mumu_sym; 
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure_u, *h1_elel_LQint_u,*h1_elel_LQpure_d, *h1_elel_LQint_d, *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure_u, *h1_mumu_LQint_u,*h1_mumu_LQpure_d, *h1_mumu_LQint_d, *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
-Double_t m_LQ;
+//Double_t m_LQ;
 
 
 //take m_LQ from command line
@@ -133,7 +133,7 @@ void make_qcd_templates(int year){
 }
 
 //changed
-void make_mc_templates(int year, const string &sys_label){
+void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
 	
     
     bool do_mu, do_el;
@@ -421,7 +421,7 @@ void write_out_templates(const string &sys_label){
 
     bool do_mu, do_el;
 
-    if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
+    if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::nposm){
         do_mu = true;
         do_el = false;
     }
@@ -493,7 +493,7 @@ void write_out_templates(const string &sys_label){
 
 }
 
-void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
+void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_LQ=0.){
  
     for(int year=2016; year<=2018; year++){
    // year =2016;
@@ -516,7 +516,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
 
     //for(int i=1;i<=4;i++){
     
-    m_LQ = 1000.;   
+    //m_LQ = 1000.;   
     char templates_name[100];
     sprintf(templates_name,"combine/templates/LQm%i_6cost_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
@@ -553,7 +553,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1){
         //make_ss_qcd_templates(year);
 
         string sys_label = string("");
-        make_mc_templates(year, sys_label);
+        make_mc_templates(year, m_LQ, sys_label);
         convert_mc_templates(year, sys_label);
 
         fout->cd();
