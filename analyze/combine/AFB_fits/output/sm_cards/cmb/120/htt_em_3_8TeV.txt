@@ -1,0 +1,42 @@
+# Datacard produced by CombineHarvester with git status: analysis-HIG-16-006-freeze-080416-806-g6af279a-dirty
+imax    1 number of bins
+jmax    9 number of processes minus 1
+kmax    * number of nuisance parameters
+--------------------------------------------------------------------------------
+shapes * htt_em_3_8TeV ../common/htt_em.input.root htt_em_3_8TeV/$PROCESS htt_em_3_8TeV/$PROCESS_$SYSTEMATIC
+shapes WH htt_em_3_8TeV ../common/htt_em.input.root htt_em_3_8TeV/WH$MASS htt_em_3_8TeV/WH$MASS_$SYSTEMATIC
+shapes ZH htt_em_3_8TeV ../common/htt_em.input.root htt_em_3_8TeV/ZH$MASS htt_em_3_8TeV/ZH$MASS_$SYSTEMATIC
+shapes ggH htt_em_3_8TeV ../common/htt_em.input.root htt_em_3_8TeV/ggH$MASS htt_em_3_8TeV/ggH$MASS_$SYSTEMATIC
+shapes qqH htt_em_3_8TeV ../common/htt_em.input.root htt_em_3_8TeV/qqH$MASS htt_em_3_8TeV/qqH$MASS_$SYSTEMATIC
+--------------------------------------------------------------------------------
+bin          htt_em_3_8TeV   
+observation  4050.0          
+--------------------------------------------------------------------------------
+bin                                                htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   htt_em_3_8TeV   
+process                                            Ztt             EWK             Fakes           ttbar           ggH_hww125      qqH_hww125      ggH             qqH             WH              ZH              
+process                                            1               2               3               4               5               6               -3              -2              -1              0               
+rate                                               2051.72         619.667         389.666         1036.56         8.50077         1.92728         19.6973         3.56408         1.76671         1.03344         
+--------------------------------------------------------------------------------
+CMS_eff_b_8TeV                             lnN     -               -               -               0.97            -               -               -               -               -               -               
+CMS_eff_e                                  lnN     1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            
+CMS_eff_m                                  lnN     1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            
+CMS_htt_DiBosonNorm_8TeV                   lnN     -               1.15            -               -               -               -               -               -               -               -               
+CMS_htt_em_emu_1jet_high_8TeV_Fakes_bin_15 shape   -               -               1               -               -               -               -               -               -               -               
+CMS_htt_em_emu_1jet_high_8TeV_Fakes_bin_16 shape   -               -               1               -               -               -               -               -               -               -               
+CMS_htt_em_emu_1jet_high_8TeV_Fakes_bin_17 shape   -               -               1               -               -               -               -               -               -               -               
+CMS_htt_em_emu_1jet_high_8TeV_Fakes_bin_3  shape   -               -               1               -               -               -               -               -               -               -               
+CMS_htt_extrap_ztt_emu_1jet_high_8TeV      lnN     1.05            -               -               -               -               -               -               -               -               -               
+CMS_htt_fakes_em_8TeV                      lnN     -               -               1.3             -               -               -               -               -               -               -               
+CMS_htt_fakes_emu_1jet_high_8TeV           lnN     -               -               1.05            -               -               -               -               -               -               -               
+CMS_htt_scale_met_8TeV                     lnN     -               -               -               -               0.99            0.99            0.99            0.99            0.99            0.99            
+CMS_htt_ttbarNorm_8TeV                     lnN     -               -               -               1.1             -               -               -               -               -               -               
+CMS_htt_zttNorm_8TeV                       lnN     1.03            -               -               -               -               -               -               -               -               -               
+CMS_scale_e_highpt_8TeV                    shape   1               -               -               -               1               1               1               1               1               1               
+CMS_scale_j_8TeV                           lnN     -               0.99            -               1.02            1.02            0.99            1.02            0.99            1.01            1.01            
+QCDscale_VH                                lnN     -               -               -               -               -               -               -               -               1.04            1.04            
+QCDscale_ggH1in                            lnN     -               -               -               -               1.125           -               1.125           -               -               -               
+QCDscale_qqH                               lnN     -               -               -               -               -               1.013           -               1.013           -               -               
+UEPS                                       lnN     -               -               -               -               0.978           -               0.978           -               -               -               
+lumi_8TeV                                  lnN     -               1.026           -               -               1.026           1.026           1.026           1.026           1.026           1.026           
+pdf_gg                                     lnN     -               -               -               -               1.097           -               1.097           -               -               -               
+pdf_qqbar                                  lnN     -               -               -               -               -               1.036           -               1.036           1.02            1.02            

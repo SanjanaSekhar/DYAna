@@ -1,0 +1,46 @@
+# Datacard produced by CombineHarvester with git status: analysis-HIG-16-006-freeze-080416-806-g6af279a-dirty
+imax    1 number of bins
+jmax    10 number of processes minus 1
+kmax    * number of nuisance parameters
+--------------------------------------------------------------------------------
+shapes * htt_mt_3_8TeV ../common/htt_mt.input.root htt_mt_3_8TeV/$PROCESS htt_mt_3_8TeV/$PROCESS_$SYSTEMATIC
+shapes WH htt_mt_3_8TeV ../common/htt_mt.input.root htt_mt_3_8TeV/WH$MASS htt_mt_3_8TeV/WH$MASS_$SYSTEMATIC
+shapes ZH htt_mt_3_8TeV ../common/htt_mt.input.root htt_mt_3_8TeV/ZH$MASS htt_mt_3_8TeV/ZH$MASS_$SYSTEMATIC
+shapes ggH htt_mt_3_8TeV ../common/htt_mt.input.root htt_mt_3_8TeV/ggH$MASS htt_mt_3_8TeV/ggH$MASS_$SYSTEMATIC
+shapes qqH htt_mt_3_8TeV ../common/htt_mt.input.root htt_mt_3_8TeV/qqH$MASS htt_mt_3_8TeV/qqH$MASS_$SYSTEMATIC
+--------------------------------------------------------------------------------
+bin          htt_mt_3_8TeV   
+observation  9010.0          
+--------------------------------------------------------------------------------
+bin                                                htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   htt_mt_3_8TeV   
+process                                            ZTT             W               QCD             ZL              ZJ              TT              VV              ggH             qqH             WH              ZH              
+process                                            1               2               3               4               5               6               7               -3              -2              -1              0               
+rate                                               6051.89         1404.27         791.851         101.349         234.311         179.564         107.556         43.7801         7.11645         2.54995         1.47984         
+--------------------------------------------------------------------------------
+CMS_eff_b_8TeV                             lnN     -               -               -               -               -               0.96            -               -               -               -               -               
+CMS_eff_m                                  lnN     1.02            -               -               1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            
+CMS_eff_t_mt_8TeV                          lnN     1.08            -               -               -               -               1.08            1.08            1.08            1.08            1.08            1.08            
+CMS_eff_t_mt_medium_8TeV                   lnN     1.03            -               -               -               -               1.03            1.03            1.03            1.03            1.03            1.03            
+CMS_htt_DiBosonNorm_8TeV                   lnN     -               -               -               -               -               -               1.15            -               -               -               -               
+CMS_htt_QCDShape_mutau_1jet_medium_8TeV    shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_QCDSyst_muTau_1jet_medium_8TeV     lnN     -               -               1.1             -               -               -               -               -               -               -               -               
+CMS_htt_WNorm_muTau_1jet_medium_8TeV       lnN     -               1.15            -               -               -               -               -               -               -               -               -               
+CMS_htt_ZJetFakeTau_muTau_1jet_medium_8TeV lnN     -               -               -               -               1.2             -               -               -               -               -               -               
+CMS_htt_ZLScale_mutau_8TeV                 shape   -               -               -               1               -               -               -               -               -               -               -               
+CMS_htt_ZLeptonFakeTau_mt_8TeV             lnN     -               -               -               1.3             -               -               -               -               -               -               -               
+CMS_htt_extrap_ztt_muTau_1jet_medium_8TeV  lnN     1.05            -               -               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_1jet_medium_8TeV_W_bin_2  shape   -               1               -               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_1jet_medium_8TeV_W_bin_24 shape   -               1               -               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_1jet_medium_8TeV_W_bin_4  shape   -               1               -               -               -               -               -               -               -               -               -               
+CMS_htt_scale_met_8TeV                     lnN     -               1.01            -               1.02            -               1.02            -               0.99            0.99            0.99            0.99            
+CMS_htt_ttbarNorm_8TeV                     lnN     -               -               -               -               -               1.1             -               -               -               -               -               
+CMS_htt_zttNorm_8TeV                       lnN     1.03            -               -               1.03            1.03            -               -               -               -               -               -               
+CMS_scale_j_8TeV                           lnN     -               -               -               1.02            1.02            -               1.03            1.04            0.99            1.01            1.01            
+CMS_scale_t_mutau_8TeV                     shape   1               -               -               -               -               -               -               1               1               1               1               
+QCDscale_VH                                lnN     -               -               -               -               -               -               -               -               -               1.04            1.04            
+QCDscale_ggH1in                            lnN     -               -               -               -               -               -               -               1.105           -               -               -               
+QCDscale_qqH                               lnN     -               -               -               -               -               -               -               -               1.015           -               -               
+UEPS                                       lnN     -               -               -               -               -               -               -               0.946           1.007           1.007           1.007           
+lumi_8TeV                                  lnN     -               -               -               -               -               -               -               1.026           1.026           1.026           1.026           
+pdf_gg                                     lnN     -               -               -               -               -               -               -               1.097           -               -               -               
+pdf_qqbar                                  lnN     -               -               -               -               -               -               -               -               1.036           1.04            1.04            

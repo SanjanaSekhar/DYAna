@@ -1,0 +1,59 @@
+# Datacard produced by CombineHarvester with git status: analysis-HIG-16-006-freeze-080416-806-g6af279a-dirty
+imax    1 number of bins
+jmax    10 number of processes minus 1
+kmax    * number of nuisance parameters
+--------------------------------------------------------------------------------
+shapes * htt_mt_1_7TeV ../common/htt_mt.input.root htt_mt_1_7TeV/$PROCESS htt_mt_1_7TeV/$PROCESS_$SYSTEMATIC
+shapes WH htt_mt_1_7TeV ../common/htt_mt.input.root htt_mt_1_7TeV/WH$MASS htt_mt_1_7TeV/WH$MASS_$SYSTEMATIC
+shapes ZH htt_mt_1_7TeV ../common/htt_mt.input.root htt_mt_1_7TeV/ZH$MASS htt_mt_1_7TeV/ZH$MASS_$SYSTEMATIC
+shapes ggH htt_mt_1_7TeV ../common/htt_mt.input.root htt_mt_1_7TeV/ggH$MASS htt_mt_1_7TeV/ggH$MASS_$SYSTEMATIC
+shapes qqH htt_mt_1_7TeV ../common/htt_mt.input.root htt_mt_1_7TeV/qqH$MASS htt_mt_1_7TeV/qqH$MASS_$SYSTEMATIC
+--------------------------------------------------------------------------------
+bin          htt_mt_1_7TeV   
+observation  11959.0         
+--------------------------------------------------------------------------------
+bin                                                  htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   htt_mt_1_7TeV   
+process                                              ZTT             W               QCD             ZL              ZJ              TT              VV              ggH             qqH             WH              ZH              
+process                                              1               2               3               4               5               6               7               -3              -2              -1              0               
+rate                                                 10620.2         523.776         674.234         148.44          59.0201         0.758802        14.2581         22.6278         0.220582        0.0901233       0.0734967       
+--------------------------------------------------------------------------------
+CMS_eff_b_7TeV                               lnN     -               -               -               -               -               0.9             -               -               -               -               -               
+CMS_eff_m                                    lnN     1.02            -               -               1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            
+CMS_eff_t_mt_7TeV                            lnN     1.08            -               -               -               -               1.08            1.08            1.08            1.08            1.08            1.08            
+CMS_eff_t_mt_medium_7TeV                     lnN     1.03            -               -               -               -               1.03            1.03            1.03            1.03            1.03            1.03            
+CMS_htt_DiBosonNorm_7TeV                     lnN     -               -               -               -               -               -               1.15            -               -               -               -               
+CMS_htt_QCDSyst_muTau_0jet_medium_7TeV       lnN     -               -               1.1             -               -               -               -               -               -               -               -               
+CMS_htt_WNorm_muTau_0jet_medium_7TeV         lnN     -               1.2             -               -               -               -               -               -               -               -               -               
+CMS_htt_ZJetFakeTau_muTau_0jet_medium_7TeV   lnN     -               -               -               -               1.2             -               -               -               -               -               -               
+CMS_htt_ZLScale_mutau_7TeV                   shape   -               -               -               1               -               -               -               -               -               -               -               
+CMS_htt_ZLeptonFakeTau_mt_7TeV               lnN     -               -               -               1.3             -               -               -               -               -               -               -               
+CMS_htt_extrap_ztt_muTau_0jet_medium_7TeV    lnN     1.05            -               -               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_10 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_11 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_12 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_13 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_14 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_15 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_16 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_17 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_19 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_22 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_23 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_25 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_26 shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_3  shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_4  shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_5  shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_mt_muTau_0jet_medium_7TeV_QCD_bin_9  shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_scale_met_7TeV                       lnN     -               1.07            -               1.05            1.05            1.07            -               1.05            1.05            1.05            1.05            
+CMS_htt_ttbarNorm_7TeV                       lnN     -               -               -               -               -               1.08            -               -               -               -               -               
+CMS_htt_zttNorm_7TeV                         lnN     1.03            -               -               1.03            1.03            -               -               -               -               -               -               
+CMS_scale_j_7TeV                             lnN     -               -               -               -               -               0.99            0.98            0.98            0.86            0.97            0.97            
+CMS_scale_t_mutau_7TeV                       shape   1               -               -               -               -               -               -               1               1               1               1               
+QCDscale_VH                                  lnN     -               -               -               -               -               -               -               -               -               1.01            1.01            
+QCDscale_ggH                                 lnN     -               -               -               -               -               -               -               1.08            -               -               -               
+QCDscale_qqH                                 lnN     -               -               -               -               -               -               -               -               1.022           -               -               
+UEPS                                         lnN     -               -               -               -               -               -               -               1.013           1.05            1.05            1.05            
+lumi_7TeV                                    lnN     -               -               -               -               -               -               -               1.022           1.022           1.022           1.022           
+pdf_gg                                       lnN     -               -               -               -               -               -               -               1.097           -               -               -               
+pdf_qqbar                                    lnN     -               -               -               -               -               -               -               -               1.036           1.04            1.04            

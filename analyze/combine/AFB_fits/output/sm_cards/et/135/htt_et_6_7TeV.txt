@@ -1,0 +1,56 @@
+# Datacard produced by CombineHarvester with git status: analysis-HIG-16-006-freeze-080416-806-g6af279a-dirty
+imax    1 number of bins
+jmax    10 number of processes minus 1
+kmax    * number of nuisance parameters
+--------------------------------------------------------------------------------
+shapes * htt_et_6_7TeV ../common/htt_et.input.root htt_et_6_7TeV/$PROCESS htt_et_6_7TeV/$PROCESS_$SYSTEMATIC
+shapes WH htt_et_6_7TeV ../common/htt_et.input.root htt_et_6_7TeV/WH$MASS htt_et_6_7TeV/WH$MASS_$SYSTEMATIC
+shapes ZH htt_et_6_7TeV ../common/htt_et.input.root htt_et_6_7TeV/ZH$MASS htt_et_6_7TeV/ZH$MASS_$SYSTEMATIC
+shapes ggH htt_et_6_7TeV ../common/htt_et.input.root htt_et_6_7TeV/ggH$MASS htt_et_6_7TeV/ggH$MASS_$SYSTEMATIC
+shapes qqH htt_et_6_7TeV ../common/htt_et.input.root htt_et_6_7TeV/qqH$MASS htt_et_6_7TeV/qqH$MASS_$SYSTEMATIC
+--------------------------------------------------------------------------------
+bin          htt_et_6_7TeV   
+observation  13.0            
+--------------------------------------------------------------------------------
+bin                                           htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   htt_et_6_7TeV   
+process                                       ZTT             W               QCD             ZL              ZJ              TT              VV              ggH             qqH             WH              ZH              
+process                                       1               2               3               4               5               6               7               -3              -2              -1              0               
+rate                                          9.25452         1.55644         1.48695         0               1.55494         0.274466        0.215857        0.111504        0.623973        0.00116996      1.17458e-09     
+--------------------------------------------------------------------------------
+CMS_eff_b_7TeV                        lnN     -               -               -               -               -               0.94            0.85            -               -               -               -               
+CMS_eff_e                             lnN     1.02            -               -               1.02            1.02            1.02            1.02            1.02            1.02            1.02            1.02            
+CMS_eff_t_et_7TeV                     lnN     1.08            -               -               -               -               1.08            1.08            1.08            1.08            1.08            1.08            
+CMS_eff_t_et_high_7TeV                lnN     1.012           -               -               -               -               1.012           1.012           1.012           1.012           1.012           1.012           
+CMS_eff_t_et_medium_7TeV              lnN     1.01            -               -               -               -               1.01            1.01            1.01            1.01            1.01            1.01            
+CMS_htt_DiBosonNorm_7TeV              lnN     -               -               -               -               -               -               1.15            -               -               -               -               
+CMS_htt_DiBosonNorm_eleTau_vbf_7TeV   lnN     -               -               -               -               -               -               1.4             -               -               -               -               
+CMS_htt_QCDShape_etau_vbf_7TeV        shape   -               -               1               -               -               -               -               -               -               -               -               
+CMS_htt_QCDSyst_eleTau_vbf_7TeV       lnN     -               -               1.4             -               -               -               -               -               -               -               -               
+CMS_htt_WNorm_eleTau_vbf_7TeV         lnN     -               1.5             -               -               -               -               -               -               -               -               -               
+CMS_htt_ZJetFakeTau_eleTau_vbf_7TeV   lnN     -               -               -               -               1.56            -               -               -               -               -               -               
+CMS_htt_ZLScale_etau_7TeV             shape   -               -               -               1               -               -               -               -               -               -               -               
+CMS_htt_ZLeptonFakeTau_et_high_7TeV   lnN     -               -               -               1.06            -               -               -               -               -               -               -               
+CMS_htt_ZLeptonFakeTau_et_low_7TeV    lnN     -               -               -               1.06            -               -               -               -               -               -               -               
+CMS_htt_ZLeptonFakeTau_et_medium_7TeV lnN     -               -               -               1.08            -               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_W_bin_8    shape   -               1               -               -               -               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZJ_bin_6   shape   -               -               -               -               1               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZJ_bin_9   shape   -               -               -               -               1               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZTT_bin_11 shape   1               -               -               -               -               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZTT_bin_3  shape   1               -               -               -               -               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZTT_bin_5  shape   1               -               -               -               -               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZTT_bin_7  shape   1               -               -               -               -               -               -               -               -               -               -               
+CMS_htt_et_eleTau_vbf_7TeV_ZTT_bin_8  shape   1               -               -               -               -               -               -               -               -               -               -               
+CMS_htt_extrap_ztt_eleTau_vbf_7TeV    lnN     1.1             -               -               1.1             -               -               -               -               -               -               -               
+CMS_htt_scale_met_7TeV                lnN     -               -               -               1.05            1.05            1.07            1.07            1.05            1.05            1.05            1.05            
+CMS_htt_ttbarNorm_7TeV                lnN     -               -               -               -               -               1.08            -               -               -               -               -               
+CMS_htt_ttbarNorm_eleTau_vbf_7TeV     lnN     -               -               -               -               -               1.23            -               -               -               -               -               
+CMS_htt_zttNorm_7TeV                  lnN     1.03            -               -               1.03            1.03            -               -               -               -               -               -               
+CMS_scale_j_7TeV                      lnN     -               -               -               -               -               1.1             1.25            1.2             1.07            1.2             1.2             
+CMS_scale_t_etau_7TeV                 shape   1               -               -               -               -               -               -               1               1               1               1               
+QCDscale_VH                           lnN     -               -               -               -               -               -               -               -               -               1.04            1.04            
+QCDscale_ggH2in                       lnN     -               -               -               -               -               -               -               1.275           -               -               -               
+QCDscale_qqH                          lnN     -               -               -               -               -               -               -               -               0.981           -               -               
+UEPS                                  lnN     -               -               -               -               -               -               -               0.893           0.988           0.988           0.988           
+lumi_7TeV                             lnN     -               -               -               -               -               -               -               1.022           1.022           1.022           1.022           
+pdf_gg                                lnN     -               -               -               -               -               -               -               1.097           -               -               -               
+pdf_qqbar                             lnN     -               -               -               -               -               -               -               -               1.036           1.02            1.02            
