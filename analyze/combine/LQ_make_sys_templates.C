@@ -14,6 +14,7 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
    // for(int i=1;i<=3;i+=2){
   //  m_LQ = 1000.;
    // year=2018;
+    printf("=========================\n m_LQ = %f, year = %d, SYS type = %i \n=========================\n",m_LQ,year,type );
     char templates_name[100];
     sprintf(templates_name,"output_files/LQm%i_sys%i_templates%i.root",int(m_LQ),type,year%2000);
     

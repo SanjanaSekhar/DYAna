@@ -421,7 +421,7 @@ void write_out_templates(const string &sys_label){
 
     bool do_mu, do_el;
 
-    if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::nposm){
+    if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
         do_mu = true;
         do_el = false;
     }
@@ -495,7 +495,7 @@ void write_out_templates(const string &sys_label){
 
 void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_LQ=0.){
  
-    for(int year=2016; year<=2018; year++){
+   
    // year =2016;
 
     bool scramble_data =false ;
@@ -518,7 +518,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_
     
     //m_LQ = 1000.;   
     char templates_name[100];
-    sprintf(templates_name,"combine/templates/LQm%i_6cost_templates%i.root",int(m_LQ),year%2000);
+    sprintf(templates_name,"combine/mtemps/LQm%i_nonsys_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
     TFile * fout = TFile::Open(fout_name, "RECREATE");
 
@@ -568,6 +568,6 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_
     fout->Close();
     printf("Templates written to %s \n", fout_name.Data());
     }
-}
+
 //}
 
