@@ -518,7 +518,7 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_
     
     //m_LQ = 1000.;   
     char templates_name[100];
-    sprintf(templates_name,"combine/mtemps/LQm%i_nonsys_templates%i.root",int(m_LQ),year%2000);
+    sprintf(templates_name,"output_files/LQm%i_nonsys_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
     TFile * fout = TFile::Open(fout_name, "RECREATE");
 
