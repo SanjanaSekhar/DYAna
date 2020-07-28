@@ -126,6 +126,7 @@ def make_workspace(workspace, no_sys = False, fake_data = False,  year = -1):
         for mass in [1500,2000,2500,3000,3500]:
         #comb_card="cards/combined_fit_mbin%i.txt" % mbin
             comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
+            print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
             if(year > 0): years = [year % 2000]
             else: years = [16,17,18]
