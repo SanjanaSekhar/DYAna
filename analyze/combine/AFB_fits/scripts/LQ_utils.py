@@ -130,7 +130,7 @@ def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 
         card="cards/combined_fit_y%i_LQ.txt" % (yr)
         print_and_do("cp %s %s" % (template_card, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
-        print_and_do("""sed -i "s/mLQ/%i/g" %s""" % (mLQ, card))
+        print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mLQ, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
         if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 
