@@ -144,9 +144,11 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
             else:
                 print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
 
+            print_and_do("""sed -i "s/cards/%s/g" %s""" % ("../..", comb_card))
             print("\ncompleted card for channel %s mass %i\n",channel,mass)
-    print("\n=========making workspace for eu=========\n")
+   
+    print("\n=========making workspace for ed=========\n")
     
-    print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i LQ_cards/eu/* -o workspace.root ")
+    print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i LQ_cards/ed/* -o workspace.root ")
     #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
 
