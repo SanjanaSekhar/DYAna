@@ -104,7 +104,7 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
 
 def make_workspace(no_sys = False, fake_data = False,  year = -1):
     print("\n inside make_workspace()")
-    print("Making workspace %s LQ" % (workspace))
+    #print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
     #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
@@ -146,7 +146,7 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
 
             print("\ncompleted card for channel %s mass %i\n",channel,mass)
     print("\n=========making workspace for eu=========\n")
-    print_and_do("cd LQ_cards/")
-    print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i eu/* -o workspace.root ")
+    
+    print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i LQ_cards/eu/* -o workspace.root ")
     #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
 
