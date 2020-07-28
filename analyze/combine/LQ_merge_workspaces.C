@@ -33,11 +33,11 @@ void LQ_merge_workspaces(){
         int mLQ = 1000*i;
         for(int year=16;year<=18;year++){
 
-            char *ending="jul27LQ"
+            char *ending="jul27LQ";
             char f1_s[180];
-            sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ)
+            sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ);
             char fout_s[180];
-            sprintf(fout_s,"combine/mtemps/LQm%i_merge_templates%i.root", mLQ, year)
+            sprintf(fout_s,"combine/mtemps/LQm%i_merge_templates%i.root", mLQ, year);
             //const TString f1_s("root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ16_nonsys_jul27LQ");
             //const TString fout_s("combine/templates/LQm%i_merge_templates%i.root");
             TFile *f1 = TFile::Open(f1_s, "READ");
@@ -45,9 +45,9 @@ void LQ_merge_workspaces(){
             char dirname[40];
 
 
-            char sys_base[180]
+            char sys_base[180];
             sprintf(sys_base,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_sys_%s_m%i", year, ending, mLQ);
-            char pdf_base[180]
+            char pdf_base[180];
             sprintf(pdf_base,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_pdf_%s_m%i", year, ending, mLQ);
             
             
