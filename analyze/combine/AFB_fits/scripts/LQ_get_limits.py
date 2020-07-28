@@ -47,8 +47,8 @@ for y in [-1]:
     fit_name+="_"+options.q
     print("\n fit_name = ", fit_name)
 
-    workspace="workspaces/%s_LQ.root" % (options.chan)
-    make_workspace(workspace, options.no_sys, options.fake_data, year = options.year)
+   # workspace="workspaces/%s_LQ.root" % (options.chan)
+    make_workspace(options.no_sys, options.fake_data, year = options.year)
     '''
         plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
         print("\n plotdir = ", plotdir)
