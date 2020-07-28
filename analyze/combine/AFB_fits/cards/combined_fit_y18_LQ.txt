@@ -6,14 +6,14 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1000_6cost_merge_templates18.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm$MASS_merge_templates18.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             ee18  
+bin             mumu18  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee18    ee18    ee18    ee18    ee18   ee18   ee18    ee18      ee18
-process                  alpha   fpl     fmn     top     db     gam    tautau  LQpure_u  LQint_u
+bin                      mumu18  mumu18  mumu18  mumu18  mumu18 mumu18 mumu18  mumu18    mumu18
+process                  alpha   fpl     fmn     top     db     gam    tautau  LQpure_d  LQint_d
 process                  -2      0       -1      1       4      3      2       -3        -4
 rate                     -1      -1      -1      -1      -1    -1     -1       -1        -1
 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -21,32 +21,27 @@ dy_xsec         lnN     1.03   1.03    1.03      -       -        -     1.03    
 db_xsec         lnN      -       -        -      -      1.09      -      -       -       -
 top_xsec		lnN      -       -        -    1.05      -        -      -       -       -
 gam_xsec        lnN      -       -        -      -       -       1.4     -       -       -       
-     
 
 lumi18          lnN     1.025  1.025   1.025   1.025   1.025     1.025  1.025    -       -
 #elFakes18       lnN      -       -        -      -       -       -      -       -       -
 #muFakes18       lnN      -       -        -      -       -       -      -       -       -
 
 ## prefire only for 16,17, hem only 18
-Pu18            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-BTAG18          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-#prefire18      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METJER18        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METJEC18        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METHEM18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+Pu18            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+BTAG18          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+#prefire18      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METJER18        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METJEC18        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METHEM18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
                                                                                                               
-                                                                                                              
-elScaleStat18   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
-elScaleSyst18   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elScaleGain18   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elSmear18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-
-elHLTBAR18      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
-elIDBAR18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elRECOBAR18     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elHLTEND18      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elIDEND18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elRECOEND18     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+                                                                                        
+muRC18          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
+muHLTBAR18      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
+muIDBAR18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muISOBAR18     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muHLTEND18      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muIDEND18       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muISOEND18     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
                                                                                                             
 alphaS          shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
 A0Den           shape    1.0     1.0     1.0      -       -      -      -       1.0     1.0    
