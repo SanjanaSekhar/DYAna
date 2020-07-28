@@ -144,7 +144,7 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
             else:
                 print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
 
-            print_and_do("""sed -i "s/cards/%s/g" %s""" % ("../..", comb_card))
+            print_and_do("""sed -i "s/cards/%s/g" %s""" % ("..", comb_card))
             print("\ncompleted card for channel %s mass %i\n",channel,mass)
    
     print("\n=========making workspace for ed=========\n")
