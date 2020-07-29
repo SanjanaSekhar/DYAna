@@ -20,7 +20,7 @@ parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits f
 for y in [-1]:
 
     extra_params=""
-    options.chan="ee"
+    options.chan="mumu"
     options.q="u"
     options.no_sys=False
     options.fake_data=True
@@ -52,7 +52,7 @@ for y in [-1]:
         bin_start = options.mbin
         bin_stop = bin_start + 1
 
-    for mLQ in [1000]:
+    for mLQ in [1500]:
     #mLQ = 1000.
     #for mbin in range(bin_start, bin_stop):
     #print(" \n \n Starting fit for bin %i \n\n" % mbin)
