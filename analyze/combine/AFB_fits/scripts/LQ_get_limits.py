@@ -56,7 +56,7 @@ def plotLimits(channel):
     canv.Print('LQ_cards/%s/limits_%s.png'%(channel,channel))
 
 
-#(options, args) = parser.parse_args()
+
 
 extra_params=""
 no_sys=False
@@ -82,7 +82,7 @@ for channel in ['eu','ed','mu','md']:
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
     for mass in [1500,2000,2500,3000,3500]:
-    #comb_card="cards/combined_fit_mbin%i.txt" % mbin
+    
         workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
         comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
         print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
@@ -105,7 +105,7 @@ for channel in ['eu','ed','mu','md']:
             print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
 
         
-        print("\ncompleted card for channel %s mass %i\n"%(channel,mass))
+        print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
         print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
