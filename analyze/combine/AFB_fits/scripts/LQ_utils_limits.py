@@ -125,6 +125,7 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
    
         for mass in [1500,2000,2500,3000,3500]:
         #comb_card="cards/combined_fit_mbin%i.txt" % mbin
+            workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
             comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
             print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
@@ -147,9 +148,9 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
             print_and_do("""sed -i "s/cards/%s/g" %s""" % ("..", comb_card))
             print("\ncompleted card for channel %s mass %i\n",channel,mass)
    
-        print("\n=========making workspace for %s=========\n",channel)
+            print("\n=========making workspace for %s=========\n",channel)
     
-        print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i LQ_cards/%s/* -o %i/workspace.root "%(channel,mass))
-    #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+        #print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i LQ_cards/%s/* -o %i/workspace.root "%(channel,mass))
+            print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
     #print_and_do("combineTool.py -M Asymptotic -d ed/*/workspace.root --there -n .limit")
 
