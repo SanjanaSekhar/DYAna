@@ -1,11 +1,11 @@
-Combination of Y16=../combined_fit_y16_LQ.txt  Y17=../combined_fit_y17_LQ.txt  Y18=../combined_fit_y18_LQ.txt
+Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
 imax 3 number of bins
 jmax 8 number of processes minus 1
 kmax 141 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  ../LQm$MASS_merge_templates16.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  ../LQm$MASS_merge_templates17.root LQ/mumu17_$PROCESS LQ/mumu17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  ../LQm$MASS_merge_templates18.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm3000_merge_templates16.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm3000_merge_templates17.root LQ/mumu17_$PROCESS LQ/mumu17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm3000_merge_templates18.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
