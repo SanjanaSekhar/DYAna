@@ -24,12 +24,12 @@ def plotLimits(channel):
     pads = OnePad()
      
      # Get limit TGraphs as a dictionary
-    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limits_%s.json'%(channel))
+    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limits_%s.json'%(channel,channel))
      
      # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     axis.GetXaxis().SetTitle('m_{%s} (GeV)'%(channel))
-    axis.GetYaxis().SetTitle('95% CL limit on y_{%s}'%(channel))
+    axis.GetYaxis().SetTitle('95%% CL limit on y_{%s}'%(channel))
     pads[0].cd()
     axis.Draw('axis')
      
@@ -53,10 +53,10 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('limits_%s.png'%(channel))
+    canv.Print('LQ_cards/%s/limits_%s.png'%(channel,channel))
 
 
-(options, args) = parser.parse_args()
+#(options, args) = parser.parse_args()
 
 extra_params=""
 no_sys=False
@@ -66,7 +66,7 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['eu']:
+for channel in ['eu','ed','mu','md']:
 
     if channel=='eu':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"

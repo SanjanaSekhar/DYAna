@@ -108,7 +108,7 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
     print("nosys =%s"%(no_sys))
     #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
-    for channel in ['eu','ed','mu','md']:
+    for channel in ['eu']:
 
         if channel=='eu':
             if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
@@ -153,6 +153,6 @@ def make_workspace(no_sys = False, fake_data = False,  year = -1):
     
         #print_and_do("combineTool.py -M T2W  -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -i LQ_cards/%s/* -o %i/workspace.root "%(channel,mass))
             print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
-            print_and_do("combine %s -M AsymptoticLimits  --there -m %i "%(workspace,mass))
+            print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
     #print_and_do("combineTool.py -M Asymptotic -d ed/*/workspace.root --there -n .limit")
 
