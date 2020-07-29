@@ -1,78 +1,120 @@
 
-from LQ_utils_limits import *
 import ROOT
 from ROOT import *
 
-parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
-parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
-parser.add_option("--q",  default="combined", type="string", help="What channels to run the fit over (combined, u, or d)")
-parser.add_option("--no_plot",  default=False, action="store_true", help="Don't make postfit plots")
-parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
-parser.add_option("--fake_data",  default=False, action="store_true", help="Use fit template without any shape systematics and no fakes")
-parser.add_option("--no_cleanup",  default=False, action="store_true", help="Don't remove root files created by fit")
-parser.add_option("--mbin", default = -1, type='int', help="Only do fits for this single mass bin, default is all bins")
-parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
+import subprocess
+import sys, commands, os, fnmatch
+from optparse import OptionParser
+from optparse import OptionGroup
+from itertools import product
+import numpy as np
+
+ from CombineHarvester.CombineTools.plotting import *
+ ROOT.PyConfig.IgnoreCommandLineOptions = True
+ ROOT.gROOT.SetBatch(ROOT.kTRUE)
+
+def print_and_do(s):
+    print("Exec: " + s)
+    os.system(s)
+
+def plotLimits(channel):
+     # Style and pads
+    ModTDRStyle()
+    canv = ROOT.TCanvas('limit', 'limit')
+    pads = OnePad()
+     
+     # Get limit TGraphs as a dictionary
+    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limits_%s.json'%(channel))
+     
+     # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
+    axis = CreateAxisHist(graphs.values()[0])
+    axis.GetXaxis().SetTitle('m_{%s} (GeV)'%(channel))
+    axis.GetYaxis().SetTitle('95% CL limit on y_{%s}'%(channel))
+    pads[0].cd()
+    axis.Draw('axis')
+     
+     # Create a legend in the top left
+    legend = PositionedLegend(0.3, 0.2, 3, 0.015)
+     
+     # Set the standard green and yellow colors and draw
+    StyleLimitBand(graphs)
+    DrawLimitBand(pads[0], graphs, legend=legend)
+    legend.Draw()
+     
+     # Re-draw the frame and tick marks
+    pads[0].RedrawAxis()
+    pads[0].GetFrame().Draw()
+     
+     # Adjust the y-axis range such that the maximum graph value sits 25% below
+     # the top of the frame. Fix the minimum to zero.
+    FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
+     
+     # Standard CMS logo
+    DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
+     
+    #canv.Print('.pdf')
+    canv.Print('limits_%s.png'%(channel))
+
 
 (options, args) = parser.parse_args()
 
+extra_params=""
+no_sys=False
+fake_data=True
+year = -1
 
-
-for y in [-1]:
-
-    extra_params=""
-    #channels=['eu','ed','mu','md']
-   # options.q="u"
-    options.no_sys=False
-    options.fake_data=True
-    options.year = y
-    '''
-    if(options.chan == "ee"):
-        print("Chan is ee, will mask mumu channels")
-        if(options.year < 0): 
-            extra_params += " --setParameters mask_Y16_mumu16=1,mask_Y17_mumu17=1,mask_Y18_mumu18=1" 
-        else:
-            extra_params += " --setParameters mask_Y%i_mumu%i=1" % (options.year % 2000, options.year % 2000)
-    elif(options.chan == "mumu"):
-        print("Chan is mumu, will mask ee and ee_ss channels")
-        if(options.year < 0):
-            extra_params += " --setParameters mask_Y16_ee16=1,mask_Y17_ee17=1,mask_Y18_ee18=1,mask_Y16_ee16_ss=1,mask_Y17_ee17_ss=1,mask_Y18_ee18_ss=1" 
-        else:
-            extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
-    '''
+print("nosys =%s"%(no_sys))
+#make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-    fit_name = options.chan
-    if(options.no_sys): fit_name +="_nosys"
-    if(options.fake_data): fit_name +="_fake_data"
-    if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_"+options.q
-    print("\n fit_name = ", fit_name)
+for channel in ['eu','ed','mu','md']:
 
-   # workspace="workspaces/%s_LQ.root" % (options.chan)
-    make_workspace(options.no_sys, options.fake_data, year = options.year)
-    '''
-        plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
-        print("\n plotdir = ", plotdir)
-        print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
-        print_and_do("mkdir %s" % (plotdir))
-        #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --setParameters A0=0.05 --freezeParameters A0 -v 2" %(workspace, extra_params))
-        print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s " %(workspace, extra_params))
+    if channel=='eu':
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
+    if channel=='ed':
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
+    if channel=='mu':
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
+    if channel=='md':
+        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-        if(not options.no_plot):
-            print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
-                    % (fit_name))
-            extra_args = ""
-            if(options.year > 0): extra_args = " -y %i " % options.year
-            print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
-            print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
-            print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
-            print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
-            if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
+    for mass in [1500,2000,2500,3000,3500]:
+    #comb_card="cards/combined_fit_mbin%i.txt" % mbin
+        workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
+        comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
+        print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
+
+        if(year > 0): years = [year % 2000]
+        else: years = [16,17,18]
+
+        for yr in years:
+            card="cards/combined_fit_y%i_LQ.txt" % (yr)
+            print_and_do("cp %s %s" % (template_card, card))
+            print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+            print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
+            if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
+            if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 
 
-        print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
-        print_and_do("""echo ".q" >> cmd.txt """)
-        print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
-        print_and_do("rm -f cards/sed*")
-        if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
+        if(year < 0 ):
+            print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
+        else:
+            print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
 
-'''
+        
+        print("\ncompleted card for channel %s mass %i\n",channel,mass)
+        print("\n========= making workspace for %s mass %i =========\n",channel,mass)
+        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+        print("\n========= extracting upper limits for %s mass %i =========\n",channel, mass)
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
+
+    print("\n========= collecting limits for channel %s and making json =========\n",channel)
+    print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
+
+    print("\n========= making limit plot for channel %s =========\n",channel)
+    plotLimits(channel)
+
+
