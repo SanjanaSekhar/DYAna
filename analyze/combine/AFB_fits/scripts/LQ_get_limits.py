@@ -9,9 +9,9 @@ from optparse import OptionGroup
 from itertools import product
 import numpy as np
 
- from CombineHarvester.CombineTools.plotting import *
- ROOT.PyConfig.IgnoreCommandLineOptions = True
- ROOT.gROOT.SetBatch(ROOT.kTRUE)
+from CombineHarvester.CombineTools.plotting import *
+ROOT.PyConfig.IgnoreCommandLineOptions = True
+ROOT.gROOT.SetBatch(ROOT.kTRUE)
 
 def print_and_do(s):
     print("Exec: " + s)
@@ -66,7 +66,7 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['eu','ed','mu','md']:
+for channel in ['eu']:
 
     if channel=='eu':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
@@ -107,9 +107,9 @@ for channel in ['eu','ed','mu','md']:
         
         print("\ncompleted card for channel %s mass %i\n",channel,mass)
         print("\n========= making workspace for %s mass %i =========\n",channel,mass)
-        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+        #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n",channel, mass)
-        print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
+        #print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
 
     print("\n========= collecting limits for channel %s and making json =========\n",channel)
     print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
