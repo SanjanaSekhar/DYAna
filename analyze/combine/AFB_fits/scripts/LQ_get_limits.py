@@ -81,7 +81,7 @@ for channel in ['eu','ed','mu','md']:
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    for mass in [1500,2000,2500,3000,3500]:
+    for mass in [4000,4500,5000,5500,6000]:
     
         workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
         comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
@@ -112,9 +112,9 @@ for channel in ['eu','ed','mu','md']:
         print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
 
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-    print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
+    #print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
 
     print("\n========= making limit plot for channel %s =========\n"%(channel))
-    plotLimits(channel)
+    #plotLimits(channel)
 
 
