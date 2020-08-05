@@ -1,5 +1,6 @@
 
 #include "TROOT.h"
+#include "TH1.h"
 #include "TFile.h"
 #include "TObject.h"
 #include "TRatioPlot.h"
@@ -24,12 +25,12 @@ float computeChi2(TH1 *h){
 void unzero_bins(TH1 *h){
     int nBins = h->GetNbinsX();
     for(int i=1; i<= nBins; i++){
-        float val = max(h->GetBinContent(i), 1e-8);
+        float val = std::max(h->GetBinContent(i), 1e-8);
         h->SetBinContent(i,val);
     }
 }
 
-TCanvas *draw_ratio_plot(string title, TH1F *h, TH1F *ratio, char axis_label[80], char ratio_label[80], float ratio_min = 0.01, float ratio_max = 2.){
+TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_label[80], char ratio_label[80], float ratio_min = 0.01, float ratio_max = 2.){
     TCanvas *c = new TCanvas(title.c_str(), "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad((title+"p1").c_str(), "pad1", 0.,0.3,0.98,1.);
     pad1->SetBottomMargin(0);
@@ -78,7 +79,7 @@ TCanvas *draw_ratio_plot(string title, TH1F *h, TH1F *ratio, char axis_label[80]
 
 
 
-TCanvas* make_ratio_plot(string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
+TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
         char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5){
     //ratio is done as h1/h2
 
@@ -106,7 +107,8 @@ TCanvas* make_ratio_plot(string title, TH1* h1, char h1_label[80], TH1* h2, char
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.2, 0.2);
+    //TLegend *leg1 = new TLegend(0.2, 0.2);
+    TLegend *leg1 = new TLegend(0.7, 0.7, 0.9, 0.9);
     leg1->AddEntry(h1, h1_label, "l");
     leg1->AddEntry(h2, h2_label, "l");
     leg1->Draw();
