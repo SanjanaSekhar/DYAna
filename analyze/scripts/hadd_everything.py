@@ -9,7 +9,7 @@ years = [2016, 2017,2018]
 prefixes = ["ElEl", "MuMu"]
 #labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
 labels = ["dy"]
-ending = "_april17"
+ending = "_aug05"
 redo_fakes = False
 
 for year in years:
