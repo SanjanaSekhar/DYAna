@@ -124,6 +124,7 @@ class TempMaker{
         Float_t jet1_btag_SF = 1.0;
         Float_t jet2_btag_SF = 1.0;
 
+        Float_t evt_pdfweight;
         Float_t pdf_weights[60];
         TLorentzVector *lep_p=0;
         TLorentzVector *lep_m=0;
