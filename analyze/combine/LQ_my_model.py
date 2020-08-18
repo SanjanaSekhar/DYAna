@@ -10,7 +10,7 @@ class DY_AFB(PhysicsModel):
         """Create POI and other parameters, and define the POI set."""
 
         self.modelBuilder.doVar("Afb[0.6, -1.0,1.0]");
-        self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
+        self.modelBuilder.doVar("A0[0.05, 0.001, 1.0]");
         self.modelBuilder.doVar("yLQ[0.01, -5.0, 5.0]");
         self.modelBuilder.doSet("POI","yLQ")
 
