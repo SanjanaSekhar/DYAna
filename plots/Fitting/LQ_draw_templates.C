@@ -117,9 +117,9 @@ void LQ_draw_templates(){
             gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
                 year, m_LQ, FLAG_MUONS, use_xF,"");
 
-            sprintf(mu_fname1, "%s/Mu%i_MC6cost_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(mu_fname2, "%s/Mu%i_MC6cost_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
-            sprintf(mu_fname3, "%s/Mu%i_MC6cost_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(mu_fname2, "%s/Mu%i_MC_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname3, "%s/Mu%i_MC_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
@@ -267,9 +267,9 @@ void LQ_draw_templates(){
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure_u, h_elel_LQint_u,h_elel_LQpure_d, h_elel_LQint_d, 
                 year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
-            sprintf(el_fname1, "%s/El%i_MC6cost_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname2, "%s/El%i_MC6cost_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname3, "%s/El%i_MC6cost_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname1, "%s/El%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname2, "%s/El%i_MC_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname3, "%s/El%i_MC_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
