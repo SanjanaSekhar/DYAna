@@ -237,7 +237,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
             else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
             if(flag_q!=0){
-              Double_t LQ_denom = tm.getLQReweightingDenom(0);
+              Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
               if(LQ_denom==0.) {
               //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
               continue;}
@@ -289,17 +289,17 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
               //dLQ temps
               if(flag_q==1){
-              h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
-              h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-              h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-              h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+              h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * tm.evt_pdfweight); 
+              h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight * tm.evt_pdfweight);
+              h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight * tm.evt_pdfweight); 
+              h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight* tm.evt_pdfweight);
               }
               //uLQ temps
               if(flag_q==2){
-              h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight); 
-              h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-              h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-              h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+              h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * tm.evt_pdfweight); 
+              h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight* tm.evt_pdfweight);
+              h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight* tm.evt_pdfweight); 
+              h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight* tm.evt_pdfweight);
               }
               
             }
