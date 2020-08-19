@@ -21,7 +21,7 @@ for y in [-1]:
 
     extra_params=""
     options.chan="ee"
-    options.q="u"
+    options.q="d"
     options.no_sys=False
     options.fake_data=True
     options.year = y
@@ -73,7 +73,7 @@ for y in [-1]:
             extra_args = ""
             if(options.year > 0): extra_args = " -y %i " % options.year
             print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
-            print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
+            print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s " % (workspace, extra_params)) #only to get prefit, probably a better way
             print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
             print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
             if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
