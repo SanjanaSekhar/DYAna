@@ -1,11 +1,11 @@
 Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
 imax 3 number of bins
 jmax 8 number of processes minus 1
-kmax 150 number of nuisance parameters
+kmax 148 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm1500_merge_templates16_aug18LQ.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm1500_merge_templates17_aug18LQ.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm1500_merge_templates18_aug18LQ.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm1500_mlow_merge_templates16_aug18.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm1500_mlow_merge_templates17_aug18.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm1500_mlow_merge_templates18_aug18.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
@@ -33,7 +33,7 @@ Pu18                    shape      -         -         -         -         -    
 REFAC                   shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
 RENORM                  shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
 alphaS                  shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
-db_xsec                 lnN        -         -         -         -         -         -         1.09      -         -         -         -         -         -         -         -         1.09      -         -         -         -         -         -         -         -         1.09      -         -       
+bk_xsec                 lnN        -         -         -         -         -         1.05      1.05      1.05      -         -         -         -         -         -         1.05      1.05      1.05      -         -         -         -         -         -         1.05      1.05      1.05      -       
 dy_xsec                 lnN        -         1.03      -         1.03      1.03      -         -         -         1.03      -         1.03      -         1.03      1.03      -         -         -         1.03      -         1.03      -         1.03      1.03      -         -         -         1.03    
 elHLTBAR16              shape      1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 elHLTBAR17              shape      -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         -         -         -         -       
@@ -77,7 +77,6 @@ emucostrw3b18           shape      -         -         -         -         -    
 emucostrw4b16           shape      -         -         -         -         -         1.0       1.0       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 emucostrw4b17           shape      -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.0       1.0       -         -         -         -         -         -         -         -         -         -         -       
 emucostrw4b18           shape      -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.0       1.0       -         -       
-gam_xsec                lnN        -         -         -         -         -         -         -         1.4       -         -         -         -         -         -         -         -         1.4       -         -         -         -         -         -         -         -         1.4       -       
 lumi16                  lnN        -         1.025     -         1.025     1.025     1.025     1.025     1.025     1.025     -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 lumi17                  lnN        -         -         -         -         -         -         -         -         -         -         1.025     -         1.025     1.025     1.025     1.025     1.025     1.025     -         -         -         -         -         -         -         -         -       
 lumi18                  lnN        -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.025     -         1.025     1.025     1.025     1.025     1.025     1.025   
@@ -164,5 +163,4 @@ ptrw6b18                shape      -         -         -         -         -    
 ptrw7b16                shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 ptrw7b17                shape      -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       -         -         -         -         -         -         -         -         -       
 ptrw7b18                shape      -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
-top_xsec                lnN        -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         1.05      -         -         -       
 pdfs group = pdf21 pdf20 pdf23 pdf22 pdf25 pdf24 pdf27 pdf26 pdf29 pdf28 pdf60 pdf54 pdf55 pdf8 pdf9 pdf2 pdf3 pdf1 pdf6 pdf7 pdf4 pdf5 pdf32 pdf33 pdf30 pdf31 pdf36 pdf37 pdf34 pdf35 pdf38 pdf39 pdf58 pdf59 pdf49 pdf48 pdf43 pdf42 pdf41 pdf40 pdf47 pdf46 pdf45 pdf44 pdf18 pdf19 pdf56 pdf57 pdf50 pdf51 pdf52 pdf53 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17
