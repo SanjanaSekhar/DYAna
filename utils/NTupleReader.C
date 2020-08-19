@@ -409,6 +409,8 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("is_tau_event", &is_tau_event);
         outTrees[idx]->Branch("pu_NtrueInt", &pu_NtrueInt);
 
+        outTrees[idx]->Branch("inc1", "TLorentzVector", &inc1_vec);
+        outTrees[idx]->Branch("inc2", "TLorentzVector", &inc2_vec);
         outTrees[idx]->Branch("inc_id1", &inc_id1);
         outTrees[idx]->Branch("inc_id2", &inc_id2);
         outTrees[idx]->Branch("signal_event", &signal_event);
@@ -1275,6 +1277,8 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
                 inc_2, gen_id[inc_2], gen_Pt[inc_2], gen_Eta[inc_2], gen_Phi[inc_2], gen_E[inc_2]);
     }
     float gen_cost;
+    inc1_vec.SetPtEtaPhiE(gen_Pt[inc_1], gen_Eta[inc_1], gen_Phi[inc_1], gen_E[inc_1]);
+    inc2_vec.SetPtEtaPhiE(gen_Pt[inc_2], gen_Eta[inc_2], gen_Phi[inc_2], gen_E[inc_2]);
     gen_lep_p_vec.SetPtEtaPhiE(gen_Pt[gen_lep_p], gen_Eta[gen_lep_p], gen_Phi[gen_lep_p], gen_E[gen_lep_p]);
     gen_lep_m_vec.SetPtEtaPhiE(gen_Pt[gen_lep_m], gen_Eta[gen_lep_m], gen_Phi[gen_lep_m], gen_E[gen_lep_m]);
     hard_lep_p_vec.SetPtEtaPhiE(gen_Pt[hard_lep_p], gen_Eta[hard_lep_p], gen_Phi[hard_lep_p], gen_E[hard_lep_p]);

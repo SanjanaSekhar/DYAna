@@ -20,7 +20,7 @@ labels = ["dy"]
 eos_files = ["DY_files.txt"]
 #labels = ["diboson"]
 #eos_files = ["diboson_files.txt"]
-ending = "june29"
+ending = "aug05"
 
 for i,script in enumerate(scripts):
     prefix = prefixes[i]

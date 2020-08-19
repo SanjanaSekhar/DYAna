@@ -35,6 +35,8 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_el->Branch("gen_m", "TLorentzVector", &nt.gen_lep_m_vec);
     t_el->Branch("hard_p", "TLorentzVector", &nt.hard_lep_p_vec);
     t_el->Branch("hard_m", "TLorentzVector", &nt.hard_lep_m_vec);
+    t_el->Branch("inc1", "TLorentzVector", &nt.inc1_vec);
+    t_el->Branch("inc2", "TLorentzVector", &nt.inc2_vec);
     t_el->Branch("gen_weight", &gen_weight);
     t_el->Branch("m", &m);
     t_el->Branch("cost_st", &cost_st);
@@ -54,6 +56,8 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_mu->Branch("gen_m", "TLorentzVector", &nt.gen_lep_m_vec);
     t_mu->Branch("hard_p", "TLorentzVector", &nt.hard_lep_p_vec);
     t_mu->Branch("hard_m", "TLorentzVector", &nt.hard_lep_m_vec);
+    t_mu->Branch("inc1", "TLorentzVector", &nt.inc1_vec);
+    t_mu->Branch("inc2", "TLorentzVector", &nt.inc2_vec);
     t_mu->Branch("gen_weight", &gen_weight);
     t_mu->Branch("m", &m);
     t_mu->Branch("cost_st", &cost_st);
@@ -72,10 +76,14 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_tau->Branch("gen_m", "TLorentzVector", &nt.gen_lep_m_vec);
     t_tau->Branch("hard_p", "TLorentzVector", &nt.hard_lep_p_vec);
     t_tau->Branch("hard_m", "TLorentzVector", &nt.hard_lep_m_vec);
+    t_tau->Branch("inc1", "TLorentzVector", &nt.inc1_vec);
+    t_tau->Branch("inc2", "TLorentzVector", &nt.inc2_vec);
     t_tau->Branch("gen_weight", &gen_weight);
     t_tau->Branch("m", &m);
     t_tau->Branch("cost_st", &cost_st);
     t_tau->Branch("cost", &cost);
+    t_tau->Branch("inc_id1", &nt.inc_id1);
+    t_tau->Branch("inc_id2", &nt.inc_id2);
 
     while(nt.getNextFile()){
 
@@ -101,6 +109,9 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
                 cost_st = nt.cost_st;
                 cost = get_cost(gen_p, gen_m);
                 gen_weight = nt.gen_weight;
+                nt.inc1_vec.Print();
+                nt.inc2_vec.Print();
+
 
                 if(gen_id == 11){
                     nEl++;
