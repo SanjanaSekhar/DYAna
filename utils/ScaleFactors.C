@@ -126,13 +126,13 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
         if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
         else h_rw = h_LQ.h_el;
     }
-    else if(FLAG2 == 1){ // up quarks
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
-        else h_rw = h_LQ.h_el_up;
-    }
-    else if(FLAG2 == 2){ // down quarks
+    else if(FLAG2 == 1){ // down quarks
         if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
         else h_rw = h_LQ.h_el_down;
+    }
+    else if(FLAG2 == 2){ // up quarks
+        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
+        else h_rw = h_LQ.h_el_up;
     }
     else{
         printf("Invalid LQ reweighting flag %i! Options are 0, 1 or 2 \n", FLAG2);
