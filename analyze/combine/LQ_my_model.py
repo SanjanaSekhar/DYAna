@@ -12,7 +12,7 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.doVar("Afb[0.6, -1.0,1.0]");
         self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
         self.modelBuilder.doVar("yLQ[0.01, -5.0, 5.0]");
-        self.modelBuilder.doSet("POI","yLQ,Afb")
+        self.modelBuilder.doSet("POI","A0,Afb,yLQ")
 
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
