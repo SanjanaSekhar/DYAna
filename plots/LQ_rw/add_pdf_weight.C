@@ -38,11 +38,11 @@ void add_pdf_weight(int year){
 
 
 
-    float inc1_pdfweight, inc2_pdfweight, pdfweight;
+    float inc1_pdfweight, inc2_pdfweight, evt_pdfweight;
     TLorentzVector *inc1(0), *inc2(0), *gen_lep_p(0), *gen_lep_m(0), cm;
     int inc_id1, inc_id2;
 
-    float E_BEAM = 7500.;
+    float E_BEAM = 6500.;
 
 
     string pdfname;
@@ -58,9 +58,10 @@ void add_pdf_weight(int year){
     sprintf(el_fname, "../../analyze/output_files/%i/ElEl%i_dy_aug05.root", year, year % 2000);
 
 
+
+
     TFile *f_elel_mc = new TFile(el_fname, "update");
     TTree *t_elel_mc = ((TTree *)f_elel_mc->Get("T_sig"));
-
 
 
     t_elel_mc->SetBranchAddress("inc1", &inc1);
@@ -71,7 +72,7 @@ void add_pdf_weight(int year){
     t_elel_mc->SetBranchAddress("inc_id2", &inc_id2);
     TBranch *inc1_pdfweight_el =  t_elel_mc->Branch("inc1_pdfweight", &inc1_pdfweight, "inc1_pdfweight/F");
     TBranch *inc2_pdfweight_el =  t_elel_mc->Branch("inc2_pdfweight", &inc2_pdfweight, "inc2_pdfweight/F");
-    TBranch *pdfweight_el =  t_elel_mc->Branch("evt_pdfweight", &pdfweight, "evt_pdfweight/F");
+    TBranch *evt_pdfweight_el =  t_elel_mc->Branch("evt_pdfweight", &evt_pdfweight, "evt_pdfweight/F");
 
 
     for (int i=0; i<t_elel_mc->GetEntries(); i++) {
@@ -87,11 +88,11 @@ void add_pdf_weight(int year){
         inc1_pdfweight = my_pdf->xfxQ2(inc_id1, x1, scale)/x1;
         inc2_pdfweight = my_pdf->xfxQ2(inc_id2, x2, scale)/x2;
 
-        pdfweight = inc1_pdfweight * inc2_pdfweight;
+        evt_pdfweight = inc1_pdfweight * inc2_pdfweight;
 
         inc1_pdfweight_el->Fill();
         inc2_pdfweight_el->Fill();
-        pdfweight_el->Fill();
+        evt_pdfweight_el->Fill();
 
     }
 
@@ -106,15 +107,16 @@ void add_pdf_weight(int year){
     TFile *f_mumu_mc = new TFile(mu_fname, "update");
     TTree *t_mumu_mc = (TTree *)f_mumu_mc->Get("T_sig");
 
+
     t_mumu_mc->SetBranchAddress("inc1", &inc1);
     t_mumu_mc->SetBranchAddress("inc2", &inc2);
     t_mumu_mc->SetBranchAddress("gen_mu_p", &gen_lep_p);
     t_mumu_mc->SetBranchAddress("gen_mu_m", &gen_lep_m);
     t_mumu_mc->SetBranchAddress("inc_id1", &inc_id1);
     t_mumu_mc->SetBranchAddress("inc_id2", &inc_id2);
-    TBranch *inc1_pdfweight_mu =  t_mumu_mc->Branch("inc1_pdfweight", &inc1_pdfweight);
-    TBranch *inc2_pdfweight_mu =  t_mumu_mc->Branch("inc2_pdfweight", &inc2_pdfweight);
-    TBranch *pdfweight_mu =  t_mumu_mc->Branch("evt_pdfweight", &pdfweight);
+    TBranch *inc1_pdfweight_el =  t_elel_mc->Branch("inc1_pdfweight", &inc1_pdfweight, "inc1_pdfweight/F");
+    TBranch *inc2_pdfweight_el =  t_elel_mc->Branch("inc2_pdfweight", &inc2_pdfweight, "inc2_pdfweight/F");
+    TBranch *evt_pdfweight_el =  t_elel_mc->Branch("evt_pdfweight", &evt_pdfweight, "evt_pdfweight/F");
 
     for (int i=0; i<t_mumu_mc->GetEntries(); i++) {
         t_mumu_mc->GetEntry(i);
@@ -129,11 +131,11 @@ void add_pdf_weight(int year){
         inc1_pdfweight = my_pdf->xfxQ2(inc_id1, x1, scale)/x1;
         inc2_pdfweight = my_pdf->xfxQ2(inc_id2, x2, scale)/x2;
 
-        pdfweight = inc1_pdfweight * inc2_pdfweight;
+        evt_pdfweight = inc1_pdfweight * inc2_pdfweight;
 
         inc1_pdfweight_mu->Fill();
         inc2_pdfweight_mu->Fill();
-        pdfweight_mu->Fill();
+        evt_pdfweight_mu->Fill();
     }
 
     f_mumu_mc->cd();
@@ -148,7 +150,7 @@ void add_pdf_weight(int year){
 
 int main(int argc, char * argv[]){
     if (argc != 2){
-        printf("Takes 1 argument (year) \n");
+        printf("Takes 1 arguments (year) \n");
         exit(1);
     }
     int year = atoi(argv[1]);
