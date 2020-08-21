@@ -68,7 +68,7 @@ void LQ_draw_templates(){
 
         
         //int year = 2017;
-        for (int year = 2016; year<=2018; year++)
+        for (int year = 2016; year<=2016; year++)
         {
 
         init(year);
