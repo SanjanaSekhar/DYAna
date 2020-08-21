@@ -202,7 +202,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
-            c_mumu1->Print(mu_fname1);
+            //c_mumu1->Print(mu_fname1);
             delete c_mumu1;
         
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            //c_mumu2->Print(mu_fname2);
+            c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-           //c_mumu3->Print(mu_fname3);
+           c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
