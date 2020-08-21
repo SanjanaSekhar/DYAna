@@ -113,8 +113,8 @@ TH1F* convert3d(TH3F *h_3d){
     for(int k=1; k<=n_m_bins; k++){    
         for(int i=1; i<=n_binsx; i++){
             for(int j=1; j<= n_binsy; j++){
-            float content = h_3d->GetBinContent(i,j);
-            float error = h_3d->GetBinError(i,j);
+            float content = h_3d->GetBinContent(k,i,j);
+            float error = h_3d->GetBinError(k,i,j);
             int gbin = one_idx(i,j, n_binsx, n_binsy);
             
             //add in case previous bin filled
