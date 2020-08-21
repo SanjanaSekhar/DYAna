@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = true;
+        bool draw_electrons = false;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -125,9 +125,9 @@ void LQ_draw_templates(){
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
             h_mumu_pl.Scale(0.5);
             h_mumu_mn.Scale(0.5);
-            Double_t alpha= 0.05;
-            double norm = 3./4./(2.+alpha);
-            h_mumu_alpha->Scale(norm);
+        //    Double_t alpha= 0.05;
+          //  double norm = 3./4./(2.+alpha);
+           // h_mumu_alpha->Scale(norm);
            
             auto h1_mumu_pl = convert3d(&h_mumu_pl);
             auto h1_mumu_mn = convert3d(&h_mumu_mn);
@@ -187,12 +187,12 @@ void LQ_draw_templates(){
             //h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
             
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-            h1_mumu_pl->SetTitle(mu_title); 
+            h1_mumu_alpha->SetTitle(mu_title); 
             //h1_mumu_asym->Draw("hist");
             //h1_mumu_sym->Draw("hist same ");
-            h1_mumu_pl->Draw("hist");
-            h1_mumu_alpha->Draw("hist same");
-            h1_mumu_mn->Draw("hist same");
+            //h1_mumu_pl->Draw("hist");
+            h1_mumu_alpha->Draw("hist");
+            //h1_mumu_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
@@ -215,7 +215,7 @@ void LQ_draw_templates(){
             leg2->AddEntry(h1_mumu_LQpure_d,"d-LQpure Template","l");
             leg2->Draw();
 
-            c_mumu2->Print(mu_fname2);
+            //c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-           c_mumu3->Print(mu_fname3);
+           //c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }

@@ -22,8 +22,8 @@ for y in [-1]:
     extra_params=""
     options.chan="ee"
     options.q="d"
-    options.no_sys=True
-    options.fake_data=False
+    options.no_sys=False
+    options.fake_data=True
     options.year = y
     '''
     if(options.chan == "ee"):
