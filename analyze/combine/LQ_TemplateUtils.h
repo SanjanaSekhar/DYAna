@@ -66,6 +66,7 @@ void symmetrize3d(TH3F *h_3d){ //this function is called in make_templates.C on 
 	    }
 	}    
 }
+/*
 //changed but doubt
 TH1F* convert3d(TH3F *h_3d){
     int n_m_bins = h_3d->GetNbinsX();
@@ -85,6 +86,43 @@ TH1F* convert3d(TH3F *h_3d){
 	        }
 	    }
 	}
+    return h_1d;
+}
+*/
+int one_idx(int i, int j, int n_binsx, int n_binsy){
+   //lose 2 bins for each row above mid-row
+   
+   if(i <= n_binsx/2) return (i-1) * n_binsy + j;
+   if(j == n_binsy) j-=1;
+   if(j>1) j-=1;
+
+   int base = (n_binsx/2) * n_binsy;
+   return base + std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
+
+}
+
+TH1F* convert3d(TH3F *h_3d){
+    int n_m_bins = h_3d->GetNbinsX();
+    float n_binsx = h_3d->GetNbinsY();
+    float n_binsy = h_3d->GetNbinsZ();
+    int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
+
+    TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_1d_bins, 0, n_1d_bins);// 0 is the 1st numbering of the bin
+    for(int k=1; k<=n_m_bins; k++){    
+        for(int i=1; i<=n_binsx; i++){
+            for(int j=1; j<= n_binsy; j++){
+            float content = h_3d->GetBinContent(i,j);
+            float error = h_3d->GetBinError(i,j);
+            int gbin = one_idx(i,j, n_binsx, n_binsy);
+            
+            //add in case previous bin filled
+            float content_1d = h_1d->GetBinContent(gbin); 
+            float error_1d = h_1d->GetBinError(gbin); 
+            h_1d->SetBinContent(gbin, content_1d + content);
+            h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
+            }
+        }
+    }
     return h_1d;
 }
 
