@@ -213,14 +213,14 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             tm.doCorrections();
             tm.getEvtWeight();
             n++;
-            Double_t gen_cost = tm.cost_st;
-            Double_t var1 = abs(tm.cm.Rapidity());
+            float gen_cost = tm.cost_st;
+            float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
             // SM terms
-            Double_t denom = tm.getReweightingDenom();
-            Double_t reweight_a = gen_cost/ denom;
-            Double_t reweight_s = (1 + gen_cost*gen_cost)/denom;
-            Double_t reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+            float denom = tm.getReweightingDenom();
+            float reweight_a = gen_cost/ denom;
+            float reweight_s = (1 + gen_cost*gen_cost)/denom;
+            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
             //fill SM temps          
             h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
@@ -309,7 +309,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     //int mbin = find_bin(m_bins, m_low + 0.1);
    // tm.fixRFNorm(h_sym, mbin); //not done for LQ
     //tm.fixRFNorm(h_asym, mbin);
-    //tm.fixRFNorm(h_alpha, mbin);
+   // tm.fixRFNorm(h_alpha, mbin,year);
 
 
     h_sym->Scale(0.5);
