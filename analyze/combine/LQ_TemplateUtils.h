@@ -107,6 +107,8 @@ TH1F* convert3d(TH3F *h_3d){
     float n_binsy = h_3d->GetNbinsZ();
     int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
 
+    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+
     TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_1d_bins, 0, n_1d_bins);// 0 is the 1st numbering of the bin
     for(int k=1; k<=n_m_bins; k++){    
         for(int i=1; i<=n_binsx; i++){
