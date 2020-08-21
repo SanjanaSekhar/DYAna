@@ -66,7 +66,7 @@ void symmetrize3d(TH3F *h_3d){ //this function is called in make_templates.C on 
 	    }
 	}    
 }
-/*
+
 //changed but doubt
 TH1F* convert3d(TH3F *h_3d){
     int n_m_bins = h_3d->GetNbinsX();
@@ -88,11 +88,11 @@ TH1F* convert3d(TH3F *h_3d){
 	}
     return h_1d;
 }
-*/
+/*
 int one_idx(int i, int j, int n_binsx, int n_binsy){
    //lose 2 bins for each row above mid-row
    
-   if(i <= n_binsx/2) return (i-1) * n_binsy + j;
+   if(i <= n_binsx/2) return (k-1) * n_xf_bins*n_cost_bins + (i-1) * n_binsy + j;
    if(j == n_binsy) j-=1;
    if(j>1) j-=1;
 
@@ -109,7 +109,7 @@ TH1F* convert3d(TH3F *h_3d){
 
     int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
 
-    TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_1d_bins, 0, n_1d_bins);// 0 is the 1st numbering of the bin
+    TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_1d_bins*n_m_bins, 0, n_1d_bins*n_m_bins);// 0 is the 1st numbering of the bin
     for(int k=1; k<=n_m_bins; k++){    
         for(int i=1; i<=n_binsx; i++){
             for(int j=1; j<= n_binsy; j++){
@@ -127,7 +127,7 @@ TH1F* convert3d(TH3F *h_3d){
     }
     return h_1d;
 }
-
+*/
 int TwoDToOneDIdx(int nYbins, int i, int j){
     nYbins = nYbins/2;
     j = ((j-1) % nYbins) +1;

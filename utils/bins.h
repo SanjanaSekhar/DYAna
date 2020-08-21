@@ -3,18 +3,18 @@
 
 const int n_xf_bins = 4;
 Float_t xf_bins[] = {0., 0.04, 0.07, 0.10, 1.0};
-const int n_y_bins = 4;
-Float_t y_bins[] = {0., 0.6, 1., 1.5, 2.4};
-//const int n_y_bins = 3;
-//Float_t y_bins[] = {0., 0.6, 1., 2.4};
+//const int n_y_bins = 4;
+//Float_t y_bins[] = {0., 0.6, 1., 1.5, 2.4};
+const int n_y_bins = 3;
+Float_t y_bins[] = {0., 0.6, 1., 2.4};
 
 //const int n_cost_bins = 10;
 //Float_t cost_bins[] = {-1.0, -.8, -.6, -.4, -.2, 0., 0.2, 0.4, 0.6, 0.8, 1.0};
 //could merge last 2 cost bins
-const int n_cost_bins = 8;
-Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.0};
-//const int n_cost_bins = 6;
-//Float_t cost_bins[] = {-1.0,  -0.5, -0.25, 0., 0.25, 0.5,  1.0};
+//const int n_cost_bins = 8;
+//Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.0};
+const int n_cost_bins = 6;
+Float_t cost_bins[] = {-1.0,  -0.5, -0.25, 0., 0.25, 0.5,  1.0};
 const int n_cost_ss_bins = n_cost_bins/2;
 Float_t cost_ss_bins[] = {-1.0, -0.75, -0.5, -0.25, 0.0};
 

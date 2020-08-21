@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
             leg3->Draw();
             
-           c_mumu3->Print(mu_fname3);
+            c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
         }
