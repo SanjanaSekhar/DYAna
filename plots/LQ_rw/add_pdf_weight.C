@@ -114,9 +114,9 @@ void add_pdf_weight(int year){
     t_mumu_mc->SetBranchAddress("gen_mu_m", &gen_lep_m);
     t_mumu_mc->SetBranchAddress("inc_id1", &inc_id1);
     t_mumu_mc->SetBranchAddress("inc_id2", &inc_id2);
-    TBranch *inc1_pdfweight_el =  t_elel_mc->Branch("inc1_pdfweight", &inc1_pdfweight, "inc1_pdfweight/F");
-    TBranch *inc2_pdfweight_el =  t_elel_mc->Branch("inc2_pdfweight", &inc2_pdfweight, "inc2_pdfweight/F");
-    TBranch *evt_pdfweight_el =  t_elel_mc->Branch("evt_pdfweight", &evt_pdfweight, "evt_pdfweight/F");
+    TBranch *inc1_pdfweight_mu =  t_elel_mc->Branch("inc1_pdfweight", &inc1_pdfweight, "inc1_pdfweight/F");
+    TBranch *inc2_pdfweight_mu =  t_elel_mc->Branch("inc2_pdfweight", &inc2_pdfweight, "inc2_pdfweight/F");
+    TBranch *evt_pdfweight_mu =  t_elel_mc->Branch("evt_pdfweight", &evt_pdfweight, "evt_pdfweight/F");
 
     for (int i=0; i<t_mumu_mc->GetEntries(); i++) {
         t_mumu_mc->GetEntry(i);
