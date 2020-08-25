@@ -18,11 +18,11 @@ void sys_check(){
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
         char *sys = "_elHLTBARPTLOW18";
-        bool do_bkg = false;
+        bool do_bkg = true;
         bool do_qcd = false;
         bool do_electrons = true;
-        bool do_muons = false;
-        int i = 0;
+        bool do_muons = true;
+        int i = 5;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");

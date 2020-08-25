@@ -69,7 +69,9 @@ typedef struct{
 } fakes_costrw_helper;
 
 typedef struct{
-    TH1F *rw;
+    TH1F *m150_rw;
+    TH1F *m250_rw;
+    TH1F *m510_rw;
 } emu_costrw_helper;
 
 typedef struct{
@@ -594,9 +596,17 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/emu_cost_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/emu_cost_rw.root");
     char name[100];
-    sprintf(name, "emu%i_cost_ratio", year % 2000);
-    h->rw = (TH1F *) f->Get(name)->Clone();
-    h->rw->SetDirectory(0);
+    sprintf(name, "emu%i_m150_cost_ratio", year % 2000);
+    h->m150_rw = (TH1F *) f->Get(name)->Clone();
+    h->m150_rw->SetDirectory(0);
+
+    sprintf(name, "emu%i_m250_cost_ratio", year % 2000);
+    h->m250_rw = (TH1F *) f->Get(name)->Clone();
+    h->m250_rw->SetDirectory(0);
+
+    sprintf(name, "emu%i_m510_cost_ratio", year % 2000);
+    h->m510_rw = (TH1F *) f->Get(name)->Clone();
+    h->m510_rw->SetDirectory(0);
 }
 
 
