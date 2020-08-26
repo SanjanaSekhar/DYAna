@@ -181,7 +181,7 @@ float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
         //Low stat bins should not go crazy
         stat_err = max(stat_err, 0.1f);
         float sys_correction = h_rw->GetBinContent(bin);
-        float sys_err = 0.5 * std::fabs( sys_correction - 1.);
+        float sys_err = 0.2 * std::fabs( sys_correction - 1.);
         float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
 
         int sys_bin = abs(systematic);
