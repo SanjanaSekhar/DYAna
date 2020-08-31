@@ -28,7 +28,7 @@ void LQ_draw_templates(){
        // std::cout << "enter m_LQ:";        
        // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
-      //  gROOT->SetBatch(1);
+        gROOT->SetBatch(1);
 
         TCanvas *c16_el_lqpall = new TCanvas("c_el_lqpall", "Histograms", 200, 10, 900, 700);
         TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
