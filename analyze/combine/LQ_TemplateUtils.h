@@ -96,8 +96,8 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
    if(j == n_binsy) j-=1;
    if(j>1) j-=1;
 
-   int base = (k-1)*n_binsx*n_binsy + (n_binsx/2) * n_binsy;
-   return base + std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
+   int base = (k-1)*((n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2))
+   return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
 
 }
 
