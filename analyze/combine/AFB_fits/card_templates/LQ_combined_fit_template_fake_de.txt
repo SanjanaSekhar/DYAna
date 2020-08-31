@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQmMASS_m1_merge_templatesYR_aug19.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQmMASS_merge_templatesYR_aug19.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             eeYR  
 observation     -1         

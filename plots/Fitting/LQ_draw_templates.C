@@ -17,7 +17,7 @@ void LQ_draw_templates(){
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
-        char *plot_dir = "Misc_plots/template_plots2";
+        char *plot_dir = "Misc_plots/template_plots3";
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.75;
@@ -68,7 +68,7 @@ void LQ_draw_templates(){
 
         
         //int year = 2017;
-        for (int year = 2016; year<=2016; year++)
+        for (int year = 2016; year<=2018; year++)
         {
 
         init(year);
@@ -118,8 +118,8 @@ void LQ_draw_templates(){
                 year, m_LQ, FLAG_MUONS, use_xF,"");
 
             sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(mu_fname2, "%s/Mu%i_MC_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
-            sprintf(mu_fname3, "%s/Mu%i_MC_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname2, "%s/Mu%i_MC_LQpure_m%i_nopdf.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname3, "%s/Mu%i_MC_LQint_m%i_nopdf.png", plot_dir, year%2000, int(m_LQ));
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
@@ -202,7 +202,7 @@ void LQ_draw_templates(){
             leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
-            //c_mumu1->Print(mu_fname1);
+            c_mumu1->Print(mu_fname1);
             delete c_mumu1;
         
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
