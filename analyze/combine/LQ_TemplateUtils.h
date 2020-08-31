@@ -93,10 +93,10 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
    //lose 2 bins for each row above mid-row
    
    if(i <= n_binsx/2) return (k-1) * n_binsx*n_binsy + (i-1) * n_binsy + j;
-   if(j == n_binsy) j-=1;
-   if(j>1) j-=1;
+   if(j == n_binsy) {j-=1; n_binsy-=1;}
+   if(j>1) {j-=1; n_binsy-=1;}
 
-   int base = (k-1)*((n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2));
+   int base = (k-1)*n_binsx*n_binsy;
    return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
 
 }
