@@ -80,12 +80,12 @@ void draw_cmp(){
 
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
-    Double_t m_low = 510;
+    Double_t m_low = 150;
     Double_t m_high = 10000;
 
     bool ss = false;
 
-    bool do_emu_cost_rw = false;
+    bool do_emu_cost_rw = true;
     make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, true,  year, m_low, m_high, ss);
     make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
     make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
