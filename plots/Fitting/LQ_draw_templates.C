@@ -28,7 +28,7 @@ void LQ_draw_templates(){
        // std::cout << "enter m_LQ:";        
        // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
-        gROOT->SetBatch(1);
+      //  gROOT->SetBatch(1);
 
         TCanvas *c16_el_lqpall = new TCanvas("c_el_lqpall", "Histograms", 200, 10, 900, 700);
         TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
@@ -129,18 +129,19 @@ void LQ_draw_templates(){
           //  double norm = 3./4./(2.+alpha);
            // h_mumu_alpha->Scale(norm);
            
-            auto h1_mumu_pl = convert3d(&h_mumu_pl);
-            auto h1_mumu_mn = convert3d(&h_mumu_mn);
+        //    auto h1_mumu_pl = convert3d(&h_mumu_pl);
+          //  auto h1_mumu_mn = convert3d(&h_mumu_mn);
             auto h1_mumu_alpha = convert3d(h_mumu_alpha);
-            auto h1_mumu_sym = convert3d(h_mumu_sym);
-            auto h1_mumu_asym = convert3d(h_mumu_asym);
-            auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
-            auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
-            auto h1_mumu_LQpure_d = convert3d(h_mumu_LQpure_d);
-            auto h1_mumu_LQint_d = convert3d(h_mumu_LQint_d);
+           // auto h1_mumu_sym = convert3d(h_mumu_sym);
+            //auto h1_mumu_asym = convert3d(h_mumu_asym);
+            //auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
+            //auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
+            //auto h1_mumu_LQpure_d = convert3d(h_mumu_LQpure_d);
+            //auto h1_mumu_LQint_d = convert3d(h_mumu_LQint_d);
 
 
             h1_mumu_alpha->SetLineColor(kGreen +3);
+            /*
             h1_mumu_sym->SetLineColor(kBlue);
             h1_mumu_asym->SetLineColor(kRed+1);
             h1_mumu_pl->SetLineColor(kOrange +7);
@@ -185,7 +186,7 @@ void LQ_draw_templates(){
 
            // h1_mumu_asym->SetMaximum(h1_mumu_sym->GetMaximum()*1.2);
             //h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
-            
+           */ 
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_alpha->SetTitle(mu_title); 
             //h1_mumu_asym->Draw("hist");
@@ -198,13 +199,13 @@ void LQ_draw_templates(){
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
             //leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
             //leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
-            leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
-            leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
+          //  leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
+           // leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
             //c_mumu1->Print(mu_fname1);
             delete c_mumu1;
-        
+        /*
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u->SetTitle(mu_title);
             h1_mumu_LQpure_u->Draw("hist");
@@ -230,7 +231,7 @@ void LQ_draw_templates(){
             
             c_mumu3->Print(mu_fname3);
             delete c_mumu3;
-
+*/
         }
 
         if(draw_electrons){
