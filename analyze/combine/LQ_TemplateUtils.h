@@ -108,6 +108,8 @@ TH1F* convert3d(TH3F *h_3d){
   //  int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
 
     int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+    printf("n_1d_bins = %i\n", n_1d_bins);
+    printf("n_1d_bins*n_m_bins = %i\n",n_1d_bins*n_m_bins);
 
     TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_1d_bins*n_m_bins, 0, n_1d_bins*n_m_bins);// 0 is the 1st numbering of the bin
     for(int k=1; k<=n_m_bins; k++){    
@@ -116,6 +118,8 @@ TH1F* convert3d(TH3F *h_3d){
             float content = h_3d->GetBinContent(k,i,j);
             float error = h_3d->GetBinError(k,i,j);
             int gbin = one_idx(i,j, k, n_binsx, n_binsy);
+            printf("(%i,%i,%i) => gbin = %i\n",k,i,j,gbin );
+            
             
             //add in case previous bin filled
             float content_1d = h_1d->GetBinContent(gbin); 
