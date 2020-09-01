@@ -29,6 +29,7 @@ TH1F *h1_elel_asym, *h1_elel_sym;
 TH1F *h1_mumu_asym, *h1_mumu_sym; 
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure_u, *h1_elel_LQint_u,*h1_elel_LQpure_d, *h1_elel_LQint_d, *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure_u, *h1_mumu_LQint_u,*h1_mumu_LQpure_d, *h1_mumu_LQint_d, *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
+int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
 //Double_t m_LQ;
 
 
@@ -367,10 +368,10 @@ void convert_mc_templates(int year, const string &sys_label){
 
         char title[100];
         sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
-        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
+        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mumu_pl->SetDirectory(0);
         sprintf(title, "mumu%i_fmn%s", year%2000, sys_label.c_str());
-        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
+        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mumu_mn->SetDirectory(0);
         make_pl_mn_templates(h1_mumu_sym, h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
 
@@ -385,10 +386,10 @@ void convert_mc_templates(int year, const string &sys_label){
 
         char title[100];
         sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
-        h1_elel_pl = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins *n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
+        h1_elel_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_elel_pl->SetDirectory(0);
         sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
-        h1_elel_mn = new TH1F(title, "Plus template of DY", n_var1_bins * n_cost_bins * n_lq_m_bins, 0, n_var1_bins * n_cost_bins * n_lq_m_bins);
+        h1_elel_mn = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_elel_mn->SetDirectory(0);
         make_pl_mn_templates(h1_elel_sym, h1_elel_asym, h1_elel_pl, h1_elel_mn);
 
