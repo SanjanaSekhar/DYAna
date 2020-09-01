@@ -105,7 +105,6 @@ void normalize(TH2D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-
     char *out_file = "../analyze/SFs/2018/LQ_rw.root";
     TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_aug4.root");
 
@@ -120,8 +119,6 @@ void LQ_rw_denom(){
 
 
     char plot_dir[] = "Misc_plots/A0_fits/";
-
-    
 
 
 

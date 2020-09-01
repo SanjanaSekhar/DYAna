@@ -7,12 +7,12 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-masses=[1500.]
+masses=[1000.]
 years = [2016, 2017,2018]
 #types = [1]
 #labels = ["sys"]
 njobs = 1
-ending = "aug20"
+ending = "aug31_chk_new3"
 for mass in masses:
     for year in years:
             script_name = "scripts/script2.sh"

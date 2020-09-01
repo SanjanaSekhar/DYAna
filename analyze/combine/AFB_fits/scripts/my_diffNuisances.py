@@ -20,7 +20,7 @@ argv.append( '-b-' )
 import ROOT
 ROOT.gROOT.SetBatch(True)
 ROOT.gStyle.SetOptStat(0)
-ROOT.gStyle.SetLabelSize(.03, "XY")
+ROOT.gStyle.SetLabelSize(.025, "XY")
 #ROOT.gSystem.Load("libHiggsAnalysisCombinedLimit")
 argv.remove( '-b-' )
 if hasHelp: argv.append("-h")
@@ -403,7 +403,7 @@ if options.plotfile:
     ROOT.gROOT.SetStyle("Plain")
     ROOT.gStyle.SetOptFit(1)
 
-    canvas_nuis = ROOT.TCanvas("nuisances", "nuisances", 2000, 1000)
+    canvas_nuis = ROOT.TCanvas("nuisances", "nuisances", 2500, 1000)
     canvas_nuis.SetBottomMargin(0.18)
     hist_fit_e_s = hist_fit_s.Clone("errors_s")
     hist_fit_e_b = hist_fit_b.Clone("errors_b")
