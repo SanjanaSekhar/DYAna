@@ -113,7 +113,7 @@ int gen_data_template(TTree *t1, TH2F* h,
 
     TRandom *rand;
     float sign = 1.;
-    //if(scramble_data) rand = new TRandom3();
+    if(scramble_data) rand = new TRandom3();
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
 
@@ -126,11 +126,11 @@ int gen_data_template(TTree *t1, TH2F* h,
             if(!ss){
                 if(scramble_data){
                     //switch + and - back and forth
-                    tm.cost = sign * std::fabs(tm.cost); 
-                    sign *= -1.;
+                    //tm.cost = sign * std::fabs(tm.cost); 
+                    //sign *= -1.;
                     //randomly flip data events
-                    //if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
-                    //else tm.cost = -std::fabs(tm.cost);
+                    if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
+                    else tm.cost = -std::fabs(tm.cost);
                 }
                 h->Fill(var1, tm.cost, 1); 
             }

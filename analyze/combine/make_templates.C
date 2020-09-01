@@ -64,10 +64,20 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = f
         printf("Making fake data \n");
         //one_mc_template(t_mumu_mc, A0, Afb, h_mumu_data, year, m_low, m_high, FLAG_MUONS, use_xF, "");
         //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
-        TTree *mu_ts[6] = {t_mumu_mc, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
-        TTree *el_ts[6] = {t_elel_mc, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
-        gen_combined_background_template(6, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  "");
-        gen_combined_background_template(6, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  "");
+        TTree *mu_ts[3] = {t_mumu_mc, t_mumu_tautau, t_mumu_gamgam, };
+        TTree *el_ts[3] = {t_elel_mc, t_elel_tautau, t_elel_gamgam, };
+
+        //do processes without emu correction first
+        bool emu_costrw = false;
+        gen_combined_background_template(3, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw,  "");
+        gen_combined_background_template(3, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  emu_costrw, "");
+
+        TTree *mu_ts_rw[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
+        TTree *el_ts_rw[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
+
+        emu_costrw = true;
+        gen_combined_background_template(3, mu_ts_rw, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw,  "");
+        gen_combined_background_template(3, el_ts_rw, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  emu_costrw, "");
     }
 
     h1_elel_data = convert2d(h_elel_data);
@@ -454,8 +464,8 @@ void make_templates(int year = -1, string fout_name = "", int iJob =-1){
     if(fout_name == "") fout_name = string("combine/templates/test.root");
     if(year == -1) year = 2016;
     
-    bool scramble_data = true; //randomly flip sign of cos(theta)
-    bool fake_data = false; //use mc instead of data
+    bool scramble_data = false; //randomly flip sign of cos(theta)
+    bool fake_data = true; //use mc instead of data
     use_xF = false;
 
 

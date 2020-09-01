@@ -124,8 +124,14 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
     else: years = [16,17,18]
 
     for yr in years:
+        if(yr == 16):
+            comb_yr = 16
+        else:
+            #some systematics combined between 17 and 18
+            comb_yr = 1718
         card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
         print_and_do("cp %s %s" % (template_card, card))
+        print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
         if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
