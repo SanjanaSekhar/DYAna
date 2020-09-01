@@ -47,6 +47,7 @@ void cleanup_template(TH2F *h){
             float err = h->GetBinError(i,j);
             float max_err = 0.7; //percent
             if(val< min_val){
+                val = min_val;
                 h->SetBinContent(i,j,min_val);
                 h->SetBinError(i,j,err);
             }
