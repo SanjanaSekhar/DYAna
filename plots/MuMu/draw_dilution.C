@@ -44,7 +44,7 @@ void draw_dilution(){
     Float_t y_bins[] = {0., 1., 1.25, 1.5,  2.4};
     TH1F *h_y = new TH1F("h_y", "Y distribution: Mass 150-171 GeV", nBins_y, 0., 2.4);
     TH1F *h_xF = new TH1F("h_xf", "xF distribution: Mass 150-171 GeV", nBins_xf, 0., 0.5);
-    TH1F *h_Nc = new TH1F("h_Nc", "Number Correct; |xF|", nBins_y, 0., 2.4);
+    TH1F *h_Nc = new TH1F("h_Nc", "Number Correct; |y|", nBins_y, 0., 2.4);
     TH1F *h_Ni = new TH1F("h_Ni", "Number Incorrect", nBins_y, 0., 2.4);
     h_Nc->Sumw2();
     h_Ni->Sumw2();
@@ -54,8 +54,8 @@ void draw_dilution(){
     int year = 2018;
     init_mc(year);
 
-    float m_low = 700.;
-    float m_high = 1000.;
+    float m_low = 200.;
+    float m_high = 500.;
 
 
     TempMaker tm(t_mumu_mc, false, year);
@@ -99,9 +99,11 @@ void draw_dilution(){
     c1->Update();
 
 
+    char title[100];
     TCanvas *c2 = new TCanvas("c2", "canva", 100,100, 700,700);
     h_Nc ->SetLineColor(kBlue);
-    h_Nc -> SetTitle("Guessing Lepton Pair Direction as Incident Quark Direction");
+    sprintf(title, "Guessing Lepton Pair Direction as Incident Quark Direction M %.0f-%.0f GeV", m_low, m_high);
+    h_Nc -> SetTitle(title);
     h_Nc->SetStats(kFALSE);
     h_Nc ->SetLineWidth(2);
     h_Ni ->SetLineColor(kRed);
@@ -138,8 +140,10 @@ void draw_dilution(){
     TCanvas *c3 = new TCanvas("c3", "canvas", 200,10, 900,700);
     g_dillu->Draw("A C P");
     g_dillu->SetMarkerStyle(20);
-    g_dillu->SetTitle("Dilution Effect: Mass 700-1000 GeV");
+    sprintf(title, "Dilution Effect: Mass %.0f-%.0f GeV", m_low, m_high);
+    g_dillu->SetTitle(title);
     g_dillu->SetMinimum(0);
+    g_dillu->SetMaximum(1.);
     g_dillu->GetXaxis()->SetTitle("|y|");
     g_dillu->GetYaxis()->SetTitle("Dilution Factor");
 

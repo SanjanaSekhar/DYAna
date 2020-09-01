@@ -124,7 +124,6 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 
 float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m, float cost){
     TH2D *h_rw;
-    
     if(FLAG2 == 0){ // everything
         if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
         else h_rw = h_LQ.h_el;
@@ -144,8 +143,11 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
 
     int xbin = h_rw->GetXaxis()->FindBin(m);
     int ybin = h_rw->GetYaxis()->FindBin(cost);
-   // int zbin = h_rw->GetZaxis()->FindBin(cost);
-    float weight = h_rw->GetBinContent(xbin, ybin); 
+    float weight = h_rw->GetBinContent(xbin, ybin);
+    if(weight < 1e-8){
+        printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
+        //weight = 1e-6;
+    }
     return weight;
 
 }
@@ -179,7 +181,7 @@ float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
         //Low stat bins should not go crazy
         stat_err = max(stat_err, 0.1f);
         float sys_correction = h_rw->GetBinContent(bin);
-        float sys_err = 0.2 * std::fabs( sys_correction - 1.);
+        float sys_err = 0.25 * std::fabs( sys_correction - 1.);
         float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
 
         int sys_bin = abs(systematic);
@@ -541,6 +543,7 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     if(year == 2016)      f = TFile::Open("../analyze/SFs/2016/LQ_rw.root");
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/LQ_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
+
 
     h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
     h_lq->h_el->SetDirectory(0);

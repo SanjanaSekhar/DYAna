@@ -64,17 +64,18 @@ muHLTENDYR                  shape     -       -       -       -        -      - 
                                                                                                                                   
 alphaSYR                    shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 A0DenYR                     shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -       -       -    
-RENORMYR                    shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-FACYR                       shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-REFACYR                     shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+
+RENORMYRC                   shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+FACYRC                      shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+REFACYRC                    shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
                                                                                                                                   
-#emu cost reweig            hting                                                                                                 
+#emu cost reweighting                                                                                                 
 emucostrw1bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 emucostrw2bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 emucostrw3bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 emucostrw4bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 
-##fakes cost rew            eighting                                                                                                 
+##fakes cost reweighting                                                                                                 
 elfakesrw1bYR               shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
 elfakesrw2bYR               shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
 elfakesrw3bYR               shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
