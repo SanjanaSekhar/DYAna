@@ -89,13 +89,13 @@ void cleanup_template(TH3F *h){
                 Double_t max_err = 0.7; //percent
                 if(val< min_val){
                     h->SetBinContent(k,i,j,min_val);
-                    h->SetBinError(k,i,j,err);
+                    h->SetBinError(k,i,j,0.);
                 }
                 if(err > max_err * val){
                     //prevent val froming being close to fit boundary at 0
                     //By setting max stat error
                     err = val * max_err;
-                    h->SetBinError(k,i,j, err);
+                    h->SetBinError(k,i,j, 0.);
                 }
 
 
