@@ -62,17 +62,25 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = t
         gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
     }
     else{
-        float Afb = 0.61;
+         float Afb = 0.61;
         float A0 = 0.06;
         printf("Making fake data \n");
         //one_mc_template(t_mumu_mc, A0, Afb, h_mumu_data, year, m_low, m_high, FLAG_MUONS, use_xF, "");
         //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
-        TTree *mu_ts[6] = {t_mumu_mc, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
-        TTree *el_ts[6] = {t_elel_mc, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
-        //TTree *mu_ts[6] = {t_mumu_nosig, t_mumu_tautau, t_mumu_ttbar, t_mumu_diboson, t_mumu_wt, t_mumu_gamgam};
-        //TTree *el_ts[6] = {t_elel_nosig, t_elel_tautau, t_elel_ttbar, t_elel_diboson, t_elel_wt, t_elel_gamgam};
-        gen_combined_background_template(6, mu_ts, h_mumu_data, year, FLAG_MUONS,  ss, use_xF,  "");
-        gen_combined_background_template(6, el_ts, h_elel_data, year, FLAG_ELECTRONS,  ss, use_xF,  "");
+        TTree *mu_ts[3] = {t_mumu_mc, t_mumu_tautau, t_mumu_gamgam, };
+        TTree *el_ts[3] = {t_elel_mc, t_elel_tautau, t_elel_gamgam, };
+
+        //do processes without emu correction first
+        bool emu_costrw = false;
+        gen_combined_background_template(3, mu_ts, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw,  "");
+        gen_combined_background_template(3, el_ts, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  emu_costrw, "");
+
+        TTree *mu_ts_rw[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
+        TTree *el_ts_rw[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
+
+        emu_costrw = true;
+        gen_combined_background_template(3, mu_ts_rw, h_mumu_data, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw,  "");
+        gen_combined_background_template(3, el_ts_rw, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS,  ss, use_xF,  emu_costrw, "");
     }
 
     h1_elel_data = convert3d(h_elel_data);
