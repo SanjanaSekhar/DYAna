@@ -75,12 +75,12 @@ typedef struct{
 } emu_costrw_helper;
 
 typedef struct{
-    TH2D *h_mu;
-    TH2D *h_el;
-    TH2D *h_mu_up;
-    TH2D *h_el_up;
-    TH2D *h_mu_down;
-    TH2D *h_el_down;
+    TH3D *h_mu;
+    TH3D *h_el;
+    TH3D *h_mu_up;
+    TH3D *h_el_up;
+    TH3D *h_mu_down;
+    TH3D *h_el_down;
 } LQ_rw_helper;
 
 
@@ -122,8 +122,9 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 }
 
 
-float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m, float cost){
+float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m, float rap, float cost){
     TH2D *h_rw;
+    rap = abs(rap);
     if(FLAG2 == 0){ // everything
         if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
         else h_rw = h_LQ.h_el;
@@ -142,10 +143,11 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     }
 
     int xbin = h_rw->GetXaxis()->FindBin(m);
-    int ybin = h_rw->GetYaxis()->FindBin(cost);
-    float weight = h_rw->GetBinContent(xbin, ybin);
+    int ybin = h_rw->GetYaxis()->FindBin(abs(rap));
+    int zbin = h_rw->GetZaxis()->FindBin(cost);
+    float weight = h_rw->GetBinContent(xbin, ybin, zbin);
     if(weight < 1e-8){
-        printf("m %.2f cost %.2f, xbin %i ybin %i,  weight %f \n", m, cost, xbin, ybin, weight);
+        printf("m %.2f rap %.2f cost %.2f, xbin %i ybin %i zbin %i,  weight %f \n", m, rap, cost, xbin, ybin, zbin, weight);
         //weight = 1e-6;
     }
     return weight;
@@ -545,22 +547,22 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
 
 
-    h_lq->h_el = (TH2D *) f->Get("h_el")->Clone();
+    h_lq->h_el = (TH3D *) f->Get("h_el")->Clone();
     h_lq->h_el->SetDirectory(0);
 
-    h_lq->h_mu = (TH2D *) f->Get("h_mu")->Clone();
+    h_lq->h_mu = (TH3D *) f->Get("h_mu")->Clone();
     h_lq->h_mu->SetDirectory(0);
 
-    h_lq->h_el_up = (TH2D *) f->Get("h_el_up")->Clone();
+    h_lq->h_el_up = (TH3D *) f->Get("h_el_up")->Clone();
     h_lq->h_el_up->SetDirectory(0);
 
-    h_lq->h_mu_up = (TH2D *) f->Get("h_mu_up")->Clone();
+    h_lq->h_mu_up = (TH3D *) f->Get("h_mu_up")->Clone();
     h_lq->h_mu_up->SetDirectory(0);
 
-    h_lq->h_el_down = (TH2D *) f->Get("h_el_down")->Clone();
+    h_lq->h_el_down = (TH3D *) f->Get("h_el_down")->Clone();
     h_lq->h_el_down->SetDirectory(0);
 
-    h_lq->h_mu_down = (TH2D *) f->Get("h_mu_down")->Clone();
+    h_lq->h_mu_down = (TH3D *) f->Get("h_mu_down")->Clone();
     h_lq->h_mu_down->SetDirectory(0);
     f->Close();
 }
