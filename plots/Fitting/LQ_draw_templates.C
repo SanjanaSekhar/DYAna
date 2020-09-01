@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = false;
+        bool draw_electrons = true;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -118,30 +118,30 @@ void LQ_draw_templates(){
                 year, m_LQ, FLAG_MUONS, use_xF,"");
 
             sprintf(mu_fname1, "%s/Mu%i_MC_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(mu_fname2, "%s/Mu%i_MC_LQpure_m%i_nopdf.png", plot_dir, year%2000, int(m_LQ));
-            sprintf(mu_fname3, "%s/Mu%i_MC_LQint_m%i_nopdf.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname2, "%s/Mu%i_MC_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
+            sprintf(mu_fname3, "%s/Mu%i_MC_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
 
             auto h_mumu_pl = *h_mumu_sym + *h_mumu_asym;
             auto h_mumu_mn = *h_mumu_sym - *h_mumu_asym;
             h_mumu_pl.Scale(0.5);
             h_mumu_mn.Scale(0.5);
-        //    Double_t alpha= 0.05;
-          //  double norm = 3./4./(2.+alpha);
-           // h_mumu_alpha->Scale(norm);
+            Double_t alpha= 0.05;
+            double norm = 3./4./(2.+alpha);
+            h_mumu_alpha->Scale(norm);
            
-        //    auto h1_mumu_pl = convert3d(&h_mumu_pl);
-          //  auto h1_mumu_mn = convert3d(&h_mumu_mn);
+           auto h1_mumu_pl = convert3d(&h_mumu_pl);
+          auto h1_mumu_mn = convert3d(&h_mumu_mn);
             auto h1_mumu_alpha = convert3d(h_mumu_alpha);
-           // auto h1_mumu_sym = convert3d(h_mumu_sym);
-            //auto h1_mumu_asym = convert3d(h_mumu_asym);
-            //auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
-            //auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
-            //auto h1_mumu_LQpure_d = convert3d(h_mumu_LQpure_d);
-            //auto h1_mumu_LQint_d = convert3d(h_mumu_LQint_d);
+           auto h1_mumu_sym = convert3d(h_mumu_sym);
+           auto h1_mumu_asym = convert3d(h_mumu_asym);
+          auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
+           auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
+           auto h1_mumu_LQpure_d = convert3d(h_mumu_LQpure_d);
+           auto h1_mumu_LQint_d = convert3d(h_mumu_LQint_d);
 
 
             h1_mumu_alpha->SetLineColor(kGreen +3);
-            /*
+            
             h1_mumu_sym->SetLineColor(kBlue);
             h1_mumu_asym->SetLineColor(kRed+1);
             h1_mumu_pl->SetLineColor(kOrange +7);
@@ -160,7 +160,7 @@ void LQ_draw_templates(){
             h1_mumu_LQint_u->SetLineWidth(2);
             h1_mumu_LQpure_d->SetLineWidth(2);
             h1_mumu_LQint_d->SetLineWidth(2);
-
+           /*     
 
             if(year==2016)
             {
@@ -183,29 +183,29 @@ void LQ_draw_templates(){
                 h18_mumu_LQpure_d = h1_mumu_LQpure_d;
                 h18_mumu_LQint_d = h1_mumu_LQint_d;
             }
-
+        */
            // h1_mumu_asym->SetMaximum(h1_mumu_sym->GetMaximum()*1.2);
             //h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
-           */ 
+            
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-            h1_mumu_alpha->SetTitle(mu_title); 
-            //h1_mumu_asym->Draw("hist");
-            //h1_mumu_sym->Draw("hist same ");
-            //h1_mumu_pl->Draw("hist");
-            h1_mumu_alpha->Draw("hist");
-            //h1_mumu_mn->Draw("hist same");
+            h1_mumu_pl->SetTitle(mu_title); 
+           //h1_mumu_asym->Draw("hist");
+           //h1_mumu_sym->Draw("hist same ");
+           h1_mumu_pl->Draw("hist");
+            h1_mumu_alpha->Draw("hist same");
+            h1_mumu_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
             //leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
             //leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
-          //  leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
-           // leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
+           leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
+           leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
-        /*
+        
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u->SetTitle(mu_title);
             h1_mumu_LQpure_u->Draw("hist");
@@ -231,7 +231,7 @@ void LQ_draw_templates(){
             
             c_mumu3->Print(mu_fname3);
             delete c_mumu3;
-*/
+
         }
 
         if(draw_electrons){
@@ -310,7 +310,7 @@ void LQ_draw_templates(){
             h1_elel_LQint_u->SetLineWidth(2);
             h1_elel_LQpure_d->SetLineWidth(2);
             h1_elel_LQint_d->SetLineWidth(2);
-
+            /*
             if(year==2016)
             {
                 h16_elel_LQpure_u = h1_elel_LQpure_u;
@@ -332,6 +332,7 @@ void LQ_draw_templates(){
                 h18_elel_LQpure_d = h1_elel_LQpure_d;
                 h18_elel_LQint_d = h1_elel_LQint_d;
             }
+            */
             // h1_elel_asym->SetMaxielm(h1_elel_sym->GetMaxielm()*1.2);
             //h1_elel_LQpure->SetMaxielm(h1_elel_LQint->GetMaxielm()*1.2);
             
@@ -383,6 +384,7 @@ void LQ_draw_templates(){
         }
     
     }
+    /*
     char mu_title_1[100], el_title_1[100];
     sprintf(mu_title_1, "Muons: m_LQ = %i",int(m_LQ));
     sprintf(el_title_1, "Electrons: m_LQ = %i",int(m_LQ));
