@@ -348,7 +348,6 @@ void TempMaker::doCorrections(){
     if(is_gen_level){
         gen_cm = *gen_lep_p + *gen_lep_m; 
         gen_m = gen_cm.M();
-        gen_rap = gen_cm.Rapidity();
         gen_pt = gen_cm.Pt();
         gen_cost = cost_st;
     }
@@ -487,7 +486,7 @@ float TempMaker::getEvtWeight(){
 
 
 
-        evt_weight = 1000. * el_lumi * base_weight * el_id_SF *el_reco_SF * el_HLT_SF;
+        evt_weight = 1000. * el_lumi * base_weight * el_id_SF *el_reco_SF * el_HLT_SF;;
 
     }
 
@@ -516,7 +515,7 @@ float TempMaker::getEvtWeight(){
 float TempMaker::getLQReweightingDenom(int flag2 = 0){
     int flag1 = FLAG_MUONS;
     if(do_electrons) flag1 = FLAG_ELECTRONS;
-    return get_LQ_reweighting_denom(LQ_helper, flag1, flag2, gen_m, gen_rap, cost_st);
+    return get_LQ_reweighting_denom(LQ_helper, flag1, flag2, gen_m, cost_st);
 }
 
 float TempMaker::getReweightingDenom(){

@@ -133,7 +133,7 @@ class TempMaker{
         TLorentzVector cm, gen_cm;
         TLorentzVector *mu = 0;
         TLorentzVector *el = 0;
-        Float_t pt, gen_m, gen_pt, gen_rap;
+        Float_t pt, gen_m, gen_pt;
         Int_t nJets, pu_NtrueInt, jet1_flavour, jet2_flavour;
 
         int inc_id1, inc_id2;
@@ -223,4 +223,3 @@ void setup_all_SFs(int year){
 }
 
 #endif
-

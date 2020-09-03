@@ -24,7 +24,7 @@
 #include "../../utils/HistUtils.C"
 #include "../../utils/PlotUtils.C"
 
-int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, TH2D *h_2d_up, TH2D *h_2d_down, float m_low, float m_high){
+int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, TH3D *h_2d_up, TH3D *h_2d_down, float m_low, float m_high){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
@@ -54,19 +54,20 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, TH2D *h_2d_up, TH2D *h_2d_down, 
             nEvents++;
             cm = *gen_lep_p + *gen_lep_m;
             float pt = cm.Pt();
+            float rap = abs(cm.Rapidity());
             /*
             float my_cost = get_cost(*gen_lep_p, *gen_lep_m);
             if(cost_st > 0) my_cost = abs(my_cost);
             else my_cost = -abs(my_cost);
             */
             float my_cost = cost_st;
-            h_2d->Fill(m, my_cost, gen_weight * 1000.);
+            h_2d->Fill(m, rap, my_cost, gen_weight * 1000.);
 
             if(abs(inc_id1) == 1 && abs(inc_id2) == 1 && inc_id1 * inc_id2 < 0){ //d dbar
-                h_2d_down->Fill(m, my_cost, gen_weight * 1000.);
+                h_2d_down->Fill(m, rap, my_cost, gen_weight * 1000.);
             }
             if(abs(inc_id1) == 2 && abs(inc_id2) == 2 && inc_id1 * inc_id2 < 0){ //u ubar
-                h_2d_up->Fill(m, my_cost, gen_weight * 1000.);
+                h_2d_up->Fill(m, rap,my_cost, gen_weight * 1000.);
             }
 
 
@@ -78,23 +79,27 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, TH2D *h_2d_up, TH2D *h_2d_down, 
 
 }
 
-void normalize(TH2D *h){
+void normalize(TH3D *h){
     for(int i=1; i<=h->GetNbinsX(); i++){
         for(int j=1; j<=h->GetNbinsY(); j++){
-            float xw = h->GetXaxis()->GetBinWidth(i);
-            float yw = h->GetYaxis()->GetBinWidth(j);
-            float content = h->GetBinContent(i,j);
-            float new_content = content/(xw*yw);
-            
-            float err = h->GetBinError(i,j);
-            //printf("i,j xw, yw %i %i %.2f %.2f \n", i,j, xw,yw);
+            for(int k=1; k<=h->GetNbinsZ(); k++){
+                float xw = h->GetXaxis()->GetBinWidth(i);
+                float yw = h->GetYaxis()->GetBinWidth(j);
+                float zw = h->GetYaxis()->GetBinWidth(k);
+                float content = h->GetBinContent(i,j,k);
+                float new_content = content/(xw*yw *zw);
 
-            h->SetBinContent(i,j,content/(xw*yw));
-            h->SetBinError(i,j,err/(xw*yw));
-            if(content < 1e-6 || new_content < 0. || content * 1.5 < err){
-                printf("WARNING bin %i %i (m = %.0f) has content %.3e +/- %.3e \n", i,j, h->GetXaxis()->GetBinCenter(i), content, err);
+                float err = h->GetBinError(i,j,k);
+                float new_err = err/(xw*yw*zw);
+                //printf("i,j xw, yw %i %i %.2f %.2f \n", i,j, xw,yw);
+
+                h->SetBinContent(i,j,k, new_content);
+                h->SetBinError(i,j,k, new_err);
+                if(content < 1e-6 || new_content < 0. || content * 1.5 < err){
+                    printf("WARNING bin %i %i (m = %.0f) has content %.3e +/- %.3e \n", i,j, h->GetXaxis()->GetBinCenter(i), content, err);
+                }
+
             }
-
         }
     }
 }
@@ -105,8 +110,8 @@ void normalize(TH2D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-    char *out_file = "../analyze/SFs/2018/LQ_rw.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_aug4.root");
+    char *out_file = "../analyze/SFs/2016/LQ_rw.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_aug4.root");
 
     TFile * f_out;
     if(write_out)
@@ -122,6 +127,8 @@ void LQ_rw_denom(){
 
 
 
+    int n_rap_bins = 4;
+    float rap_bins[] = {0., 0.6, 1.0, 1.5, 2.4};
     int n_cost_bins = 20;
     //float cost_bins[] = {-1.,-.8,-.6,-.4,-.2,0.,.2,.4,.6,.8,1.0};
     float cost_bins[] = {-1.,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0.,.1,.2,.3,.4,.5,.6,.7,.8,.9,1.0};
@@ -135,13 +142,13 @@ void LQ_rw_denom(){
     float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 700., 750., 800., 850., 900., 950., 1000.,  1100.,  
         1200.,  1300., 1400.,  1600.,  1800.,  2000.,  2500.,   3000., };
 
-    TH2D *h_mu = new TH2D("h_mu", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
-    TH2D *h_el = new TH2D("h_el", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH3D *h_mu = new TH3D("h_mu", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,    n_cost_bins, cost_bins);
+    TH3D *h_el = new TH3D("h_el", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
 
-    TH2D *h_mu_up = new TH2D("h_mu_up", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
-    TH2D *h_el_up = new TH2D("h_el_up", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
-    TH2D *h_mu_down = new TH2D("h_mu_down", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
-    TH2D *h_el_down = new TH2D("h_el_down", "", n_LQ_m_bins, m_LQ_bins,   n_cost_bins, cost_bins);
+    TH3D *h_mu_up = new TH3D("h_mu_up", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,   n_cost_bins, cost_bins);
+    TH3D *h_el_up = new TH3D("h_el_up", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+    TH3D *h_mu_down = new TH3D("h_mu_down", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+    TH3D *h_el_down = new TH3D("h_el_down", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
 
     TH1D *h_1d = new TH1D("h1", "", n_cost_bins, cost_bins);
 
@@ -174,12 +181,9 @@ void LQ_rw_denom(){
     TH1D *h_el_cost = h_el->ProjectionY("h_el_cost", 10,10);
     TH1D *h_mu_cost = h_mu->ProjectionY("h_mu_cost", 10,10);
     make_ratio_plot("LQ_cos_theta.png", h_el_cost, "El",h_mu_cost, "Mu", "El/Mu", "cos(#theta_{*})", false, true);
-
     TH1D *h_el_m = h_el->ProjectionX("h_el_m");
     TH1D *h_mu_m = h_mu->ProjectionX("h_mu_m");
     make_ratio_plot("LQ_m.png", h_el_m, "El",h_mu_m, "Mu", "El/Mu", "M (GeV)", false, true);
-
-
     h_el_cost->SetLineColor(kBlue);
     h_mu_cost->SetLineColor(kRed);
     h_el_cost->Draw();
