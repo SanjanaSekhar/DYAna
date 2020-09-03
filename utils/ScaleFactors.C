@@ -123,7 +123,7 @@ Float_t get_pileup_SF(Int_t n_int, TH1D *h){
 
 
 float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m, float rap, float cost){
-    TH2D *h_rw;
+    TH3D *h_rw;
     rap = abs(rap);
     if(FLAG2 == 0){ // everything
         if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
