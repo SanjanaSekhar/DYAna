@@ -61,13 +61,15 @@ int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, TH3D *h_2d_up, TH3D *h_2d_down, 
             else my_cost = -abs(my_cost);
             */
             float my_cost = cost_st;
-            h_2d->Fill(m, rap, my_cost, gen_weight * 1000.);
+            
+            //fill in units of pb
+            h_2d->Fill(m, rap, my_cost, gen_weight);
 
             if(abs(inc_id1) == 1 && abs(inc_id2) == 1 && inc_id1 * inc_id2 < 0){ //d dbar
-                h_2d_down->Fill(m, rap, my_cost, gen_weight * 1000.);
+                h_2d_down->Fill(m, rap, my_cost, gen_weight);
             }
             if(abs(inc_id1) == 2 && abs(inc_id2) == 2 && inc_id1 * inc_id2 < 0){ //u ubar
-                h_2d_up->Fill(m, rap,my_cost, gen_weight * 1000.);
+                h_2d_up->Fill(m, rap,my_cost, gen_weight);
             }
 
 
@@ -110,8 +112,8 @@ void normalize(TH3D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-    char *out_file = "../analyze/SFs/2016/LQ_rw.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_aug4.root");
+    char *out_file = "../analyze/SFs/2018/LQ_rw.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_aug4.root");
 
     TFile * f_out;
     if(write_out)
