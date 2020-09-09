@@ -8,45 +8,40 @@ kmax *
 -------------------------------------------------------------------------------
 shapes * * LQm6000_merge_templates17_sep9.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             ee17  
+bin             mumu17  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee17    ee17    ee17    ee17    ee17   ee17   ee17    ee17      ee17
+bin                      mumu17  mumu17  mumu17  mumu17  mumu17 mumu17 mumu17  mumu17    mumu17
 process                  alpha   fpl     fmn     top     db     gam    tautau  LQpure_d  LQint_d
 process                  -2      0       -1      1       4      3      2       -3        -4
 rate                     -1      -1      -1      -1      -1    -1     -1       -1        -1
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -       -        -     1.03     -       -
-db_xsec         lnN      -       -        -      -      1.05      -      -       -       -
-top_xsec	    lnN      -       -        -    1.05      -        -      -       -       -
-gam_xsec        lnN      -       -        -      -       -       1.05     -       -       -       
-
+db_xsec         lnN      -       -        -      -      1.09      -      -       -       -
+top_xsec		lnN      -       -        -    1.05      -        -      -       -       -
+gam_xsec        lnN      -       -        -      -       -       1.4     -       -       -       
 
 lumi17          lnN     1.025  1.025   1.025   1.025   1.025     1.025  1.025    -       -
 #elFakes17       lnN      -       -        -      -       -       -      -       -       -
 #muFakes17       lnN      -       -        -      -       -       -      -       -       -
 
 ## prefire only for 16,17, hem only 18
-Pu17            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-BTAG17          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-prefire17      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METJER17        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-METJEC17        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-#METHEM17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+Pu17            shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+BTAG17          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+prefire17      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METJER17        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+METJEC17        shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+#METHEM17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
                                                                                                               
-                                                                                                              
-elScaleStat17   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
-elScaleSyst17   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elScaleGain17   shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elSmear17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-
-elHLTBAR17      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0 
-elIDBAR17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elRECOBAR17     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elHLTEND17      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elIDEND17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
-elRECOEND17     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0   1.0
+                                                                                        
+muRC17          shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
+muHLTBAR17      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0 
+muIDBAR17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muISOBAR17     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muHLTEND17      shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muIDEND17       shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
+muISOEND17     shape    1.0     1.0     1.0     1.0     1.0    1.0      1.0     1.0    1.0
                                                                                                             
 alphaS          shape    1.0     1.0     1.0      -       -      -     1.0      1.0     1.0   
 A0Den           shape    1.0     1.0     1.0      -       -      -      -       1.0     1.0    

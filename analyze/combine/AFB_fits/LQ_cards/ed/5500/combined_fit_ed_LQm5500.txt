@@ -3,9 +3,9 @@ imax 3 number of bins
 jmax 8 number of processes minus 1
 kmax 150 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm5500_merge_templates16.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm5500_merge_templates17.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm5500_merge_templates18.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm5500_merge_templates16_sep9.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm5500_merge_templates17_sep9.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm5500_merge_templates18_sep9.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
@@ -33,7 +33,7 @@ Pu18                    shape      -         -         -         -         -    
 REFAC                   shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
 RENORM                  shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
 alphaS                  shape      1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         1.0     
-db_xsec                 lnN        -         -         -         -         -         -         1.09      -         -         -         -         -         -         -         -         1.09      -         -         -         -         -         -         -         -         1.09      -         -       
+db_xsec                 lnN        -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         1.05      -         -       
 dy_xsec                 lnN        -         1.03      -         1.03      1.03      -         -         -         1.03      -         1.03      -         1.03      1.03      -         -         -         1.03      -         1.03      -         1.03      1.03      -         -         -         1.03    
 elHLTBAR16              shape      1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 elHLTBAR17              shape      -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         -         -         -         -       
@@ -77,7 +77,7 @@ emucostrw3b18           shape      -         -         -         -         -    
 emucostrw4b16           shape      -         -         -         -         -         1.0       1.0       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 emucostrw4b17           shape      -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.0       1.0       -         -         -         -         -         -         -         -         -         -         -       
 emucostrw4b18           shape      -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.0       1.0       -         -       
-gam_xsec                lnN        -         -         -         -         -         -         -         1.4       -         -         -         -         -         -         -         -         1.4       -         -         -         -         -         -         -         -         1.4       -       
+gam_xsec                lnN        -         -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         1.05      -       
 lumi16                  lnN        -         1.025     -         1.025     1.025     1.025     1.025     1.025     1.025     -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 lumi17                  lnN        -         -         -         -         -         -         -         -         -         -         1.025     -         1.025     1.025     1.025     1.025     1.025     1.025     -         -         -         -         -         -         -         -         -       
 lumi18                  lnN        -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.025     -         1.025     1.025     1.025     1.025     1.025     1.025   
