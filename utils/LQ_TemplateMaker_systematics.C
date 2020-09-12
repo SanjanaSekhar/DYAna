@@ -217,47 +217,76 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
 
+            //flag_q=1 for d-dbar, 2 for u-ubar, 0 for everything
             int flag_q=0;
             if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
             else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
             if(flag_q!=0 && tm.evt_pdfweight >= 0){ 
-            // SM terms
+
+            if(flag_q==1){
+                Q_q=Q_d;
+                caq=caq_d;
+                cvq=cvq_d;
+              }
             
+            if(flag_q==2){
+                Q_q=Q_u;
+                caq=caq_u;
+                cvq=cvq_u;
+              }
+
+            // SM terms
+            /*
             float denom = tm.getReweightingDenom();
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+            */
+
+            //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
+            // jacobian for conversion = 2sqrt(x1x2/s); x1x2s=gen_m^2; sqrt(s) = CM energy -> 13 TeV
+            Double_t s = tm.gen_m*tm.gen_m;
+            Double_t n_conv = (1./2.56819)*1e9;
+            Double_t LQ_jacobian = (2*tm.gen_m*1e-6)/(13*13);
             
-          //  float SM_denom = tm.getReweightingDenom();
+            float denom = tm.getReweightingDenom();
+            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+
+            Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
+            if(LQ_denom==0.) {
+              //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
+            continue;}
+
+            float reweight_s_norm1 = (M_PI*alpha*alpha*Q_q*Q_q)/(2*s);
+            float reweight_s_norm2 = ((cal*cal + cvl*cvl)*(caq*caq + cvq*cvq)*G_F*G_F*pow(m_Z0,4)*s)/(256*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+            float reweight_s_norm3 = (cvl*cvq*(m_Z0*m_Z0-s)*alpha*G_F*m_Z0*m_Z0*Q_q)/(8*sqrt(2)*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+            float reweight_s_norm = (reweight_s_norm1 + reweight_s_norm2 - reweight_s_norm3)*n_conv*LQ_jacobian;
+            float reweight_s = reweight_s_norm*(1 + gen_cost*gen_cost)/LQ_denom;
+
             
-
-
-
+            float reweight_a_norm1 = (8*cvl*cvq*cal*caq*G_F*G_F*pow(m_Z0,4)*s)/(256*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+            float reweight_a_norm2 = (2*cal*caq*(m_Z0*m_Z0-s)*alpha*G_F*m_Z0*m_Z0*Q_q)/(8*sqrt(2)*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+            float reweight_a_norm = (reweight_a_norm1 - reweight_a_norm2)*n_conv*LQ_jacobian;
+            float reweight_a = reweight_a_norm*gen_cost/LQ_denom;
 
 
             //fill SM temps          
-            h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
-            h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight); 
+            h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight); 
+            h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight); 
 
-            h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight);
-            h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight);
+            h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight *tm.evt_pdfweight);
+            h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight *tm.evt_pdfweight);
 
-            h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight); 
-            h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight); 
+            h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight ); 
+            h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight ); 
 
-            //flag_q=1 for d-dbar, 2 for u-ubar, 0 for everything
             
-              Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
-              if(LQ_denom==0.) {
-              //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
-              continue;}
+            
+              
               //for LQ, 2 terms-> pure and interference
 
-              //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
-              // jacobian for conversion = 2sqrt(x1x2/s); x1x2s=gen_m^2; sqrt(s) = CM energy -> 13 TeV
-              Double_t s = tm.gen_m*tm.gen_m;
-              Double_t n_conv = (1./2.56819)*1e9;
-              Double_t LQ_jacobian = (2*tm.gen_m*1e-6)/(13*13);
+              
+              
               
               Double_t reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
               //weight(cost)
@@ -273,17 +302,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               Double_t reweight_LQpure_neg;
               reweight_LQpure_neg = (reweight_LQpure_norm*reweight_LQpure_num/LQ_denom);
 
-              if(flag_q==1){
-                Q_q=Q_d;
-                caq=caq_d;
-                cvq=cvq_d;
-              }
-            
-              if(flag_q==2){
-                Q_q=Q_u;
-                caq=caq_u;
-                cvq=cvq_u;
-              }
+              
               
               Double_t reweight_LQint_norm1 = ((alpha*Q_q)/(16*s));
               Double_t reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
