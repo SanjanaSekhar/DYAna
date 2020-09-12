@@ -190,18 +190,18 @@ void LQ_draw_templates(){
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
            // h1_mumu_pl->SetTitle(mu_title); 
            h1_mumu_sym->Draw("hist");
-           h1_mumu_asym->Draw("hist same ");
+          // h1_mumu_asym->Draw("hist same ");
           // h1_mumu_pl->Draw("hist");
-            h1_mumu_alpha->Draw("hist same");
+          //  h1_mumu_alpha->Draw("hist same");
             //h1_mumu_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
+          //  leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
             leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
            //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
            //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
-            leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
+            //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
@@ -339,18 +339,18 @@ void LQ_draw_templates(){
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
             //h1_elel_pl->SetTitle(el_title); 
             h1_elel_sym->Draw("hist");
-            h1_elel_asym->Draw("hist same ");
+          //  h1_elel_asym->Draw("hist same ");
             //h1_elel_pl->Draw("hist");
-            h1_elel_alpha->Draw("hist same");
+            //h1_elel_alpha->Draw("hist same");
             //h1_elel_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
+            //leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
             leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
             //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
             //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
-            leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
+            //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
             leg1->Draw();
             c_elel1->Print(el_fname1);
             delete c_elel1;
