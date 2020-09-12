@@ -248,12 +248,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
             continue;}
 
-            /*
+
             float denom = tm.getReweightingDenom();
-            float reweight_a = gen_cost/ denom;
-            float reweight_s = (1 + gen_cost*gen_cost)/denom;
+            //float reweight_a = gen_cost/ denom;
+            //float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
-            */
+            
             
             float reweight_s_norm1 = (M_PI*alpha*alpha*Q_q*Q_q)/(2*s);
             float reweight_s_norm2 = ((cal*cal + cvl*cvl)*(caq*caq + cvq*cvq)*G_F*G_F*pow(m_Z0,4)*s)/(256*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
