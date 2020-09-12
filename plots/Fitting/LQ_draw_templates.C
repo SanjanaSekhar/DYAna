@@ -188,8 +188,8 @@ void LQ_draw_templates(){
             //h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
             
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-           // h1_mumu_pl->SetTitle(mu_title); 
-           h1_mumu_sym->Draw("hist");
+            h1_mumu_asym->SetTitle(mu_title); 
+           h1_mumu_asym->Draw("hist");
           // h1_mumu_asym->Draw("hist same ");
           // h1_mumu_pl->Draw("hist");
           //  h1_mumu_alpha->Draw("hist same");
@@ -197,8 +197,8 @@ void LQ_draw_templates(){
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-          //  leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
-            leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
+            leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
+          //  leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
            //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
            //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -337,8 +337,8 @@ void LQ_draw_templates(){
             //h1_elel_LQpure->SetMaxielm(h1_elel_LQint->GetMaxielm()*1.2);
             
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
-            //h1_elel_pl->SetTitle(el_title); 
-            h1_elel_sym->Draw("hist");
+            h1_elel_asym->SetTitle(el_title); 
+            h1_elel_asym->Draw("hist");
           //  h1_elel_asym->Draw("hist same ");
             //h1_elel_pl->Draw("hist");
             //h1_elel_alpha->Draw("hist same");
@@ -346,8 +346,8 @@ void LQ_draw_templates(){
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            //leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
-            leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
+            leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
+            //leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
             //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
             //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
