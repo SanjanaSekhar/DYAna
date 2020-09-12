@@ -117,7 +117,7 @@ void LQ_draw_templates(){
             gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
                 year, m_LQ, FLAG_MUONS, use_xF,"");
 
-            sprintf(mu_fname1, "%s/Mu%i_SMconsistencychk2_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(mu_fname1, "%s/Mu%i_SMconsistencychk2_2_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(mu_fname2, "%s/Mu%i_MC_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
             sprintf(mu_fname3, "%s/Mu%i_MC_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
 
@@ -188,19 +188,19 @@ void LQ_draw_templates(){
             //h1_mumu_LQpure->SetMaximum(h1_mumu_LQint->GetMaximum()*1.2);
             
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-            h1_mumu_pl->SetTitle(mu_title); 
-           //h1_mumu_asym->Draw("hist");
-           //h1_mumu_sym->Draw("hist same ");
-           h1_mumu_pl->Draw("hist");
+           // h1_mumu_pl->SetTitle(mu_title); 
+           h1_mumu_asym->Draw("hist");
+           h1_mumu_sym->Draw("hist same ");
+          // h1_mumu_pl->Draw("hist");
             h1_mumu_alpha->Draw("hist same");
-            h1_mumu_mn->Draw("hist same");
+            //h1_mumu_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            //leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
-            //leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
-           leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
-           leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
+            leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
+            leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
+           //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
+           //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
             leg1->Draw();
             c_mumu1->Print(mu_fname1);
@@ -268,7 +268,7 @@ void LQ_draw_templates(){
             gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure_u, h_elel_LQint_u,h_elel_LQpure_d, h_elel_LQint_d, 
                 year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
-            sprintf(el_fname1, "%s/El%i_SMconsistencychk2_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname1, "%s/El%i_SMconsistencychk2_2_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname2, "%s/El%i_MC_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname3, "%s/El%i_MC_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
 
@@ -337,19 +337,19 @@ void LQ_draw_templates(){
             //h1_elel_LQpure->SetMaxielm(h1_elel_LQint->GetMaxielm()*1.2);
             
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
-            h1_elel_pl->SetTitle(el_title); 
-            //h1_elel_asym->Draw("hist");
-            //h1_elel_sym->Draw("hist same ");
-            h1_elel_pl->Draw("hist");
+            //h1_elel_pl->SetTitle(el_title); 
+            h1_elel_asym->Draw("hist");
+            h1_elel_sym->Draw("hist same ");
+            //h1_elel_pl->Draw("hist");
             h1_elel_alpha->Draw("hist same");
-            h1_elel_mn->Draw("hist same");
+            //h1_elel_mn->Draw("hist same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            //leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
-            //leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
-            leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
-            leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
+            leg1->AddEntry(h1_elel_asym, "Asym Template", "l");
+            leg1->AddEntry(h1_elel_sym, "Sym Template", "l");
+            //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
+            //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
             leg1->Draw();
             c_elel1->Print(el_fname1);
