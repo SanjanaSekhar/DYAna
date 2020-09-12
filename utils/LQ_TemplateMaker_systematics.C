@@ -257,7 +257,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               // jacobian for conversion = 2sqrt(x1x2/s); x1x2s=gen_m^2; sqrt(s) = CM energy -> 13 TeV
               Double_t s = tm.gen_m*tm.gen_m;
               Double_t n_conv = (1./2.56819)*1e9;
-              Double_t LQ_jacobian = (2*tm.gen_m*1e-6)/(13*13)
+              Double_t LQ_jacobian = (2*tm.gen_m*1e-6)/(13*13);
               
               Double_t reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
               //weight(cost)
