@@ -189,8 +189,8 @@ void LQ_draw_templates(){
             
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
            // h1_mumu_pl->SetTitle(mu_title); 
-           h1_mumu_asym->Draw("hist");
-           h1_mumu_sym->Draw("hist same ");
+           h1_mumu_sym->Draw("hist");
+           h1_mumu_asym->Draw("hist same ");
           // h1_mumu_pl->Draw("hist");
             h1_mumu_alpha->Draw("hist same");
             //h1_mumu_mn->Draw("hist same");
@@ -338,8 +338,8 @@ void LQ_draw_templates(){
             
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
             //h1_elel_pl->SetTitle(el_title); 
-            h1_elel_asym->Draw("hist");
-            h1_elel_sym->Draw("hist same ");
+            h1_elel_sym->Draw("hist");
+            h1_elel_asym->Draw("hist same ");
             //h1_elel_pl->Draw("hist");
             h1_elel_alpha->Draw("hist same");
             //h1_elel_mn->Draw("hist same");
