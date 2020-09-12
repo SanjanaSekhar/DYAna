@@ -216,11 +216,24 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float gen_cost = tm.cost_st;
             float var1 = abs(tm.cm.Rapidity());
             if(use_xF)  var1 = tm.xF;
+
+            int flag_q=0;
+            if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
+            else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
+            if(flag_q!=0 && tm.evt_pdfweight >= 0){ 
             // SM terms
+            
             float denom = tm.getReweightingDenom();
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+            
+          //  float SM_denom = tm.getReweightingDenom();
+            
+
+
+
+
 
             //fill SM temps          
             h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
@@ -233,10 +246,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight); 
 
             //flag_q=1 for d-dbar, 2 for u-ubar, 0 for everything
-            int flag_q=0;
-            if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
-            else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
-            if(flag_q!=0 && tm.evt_pdfweight >= 0){
+            
               Double_t LQ_denom = tm.getLQReweightingDenom(flag_q);
               if(LQ_denom==0.) {
               //printf("\nhello flag_q = %i, tm.m = %f, rap = %f, cost = %f\n",flag_q,tm.m,var1,tm.cost); 
