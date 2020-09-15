@@ -37,8 +37,8 @@ def plotLimits(channel):
     legend = PositionedLegend(0.3, 0.2, 3, 0.015)
      
      # Set the standard green and yellow colors and draw
-    StyleLimitBand(graphs)
-    DrawLimitBand(pads[0], graphs, legend=legend)
+    StyleLimitBand(graphs[0:5])
+    DrawLimitBand(pads[0], graphs[0:5], legend=legend)
     legend.Draw()
      
      # Re-draw the frame and tick marks
@@ -53,7 +53,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limits_%s_sep9.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limits_%s_sep15.png'%(channel,channel))
 
 
 
@@ -115,6 +115,7 @@ for channel in ['eu','ed','mu','md']:
     print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
 
     print("\n========= making limit plot for channel %s =========\n"%(channel))
+   # print_and_do("plotLimits.py LQ_cards/%s/limits.json:exp --auto-style"%(channel))
     plotLimits(channel)
 
 
