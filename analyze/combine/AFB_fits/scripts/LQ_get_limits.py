@@ -29,7 +29,7 @@ def plotLimits(channel):
      # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     axis.GetXaxis().SetTitle('m_{S_{%s}} (GeV)'%(channel))
-    axis.GetYaxis().SetTitle('95%% CL limit on y_{%s}'%(channel))
+    axis.GetYaxis().SetTitle('Limits on y_{%s}'%(channel))
     pads[0].cd()
     axis.Draw('axis')
      
@@ -37,8 +37,8 @@ def plotLimits(channel):
     legend = PositionedLegend(0.3, 0.2, 3, 0.015)
      
      # Set the standard green and yellow colors and draw
-    StyleLimitBand(graphs[0:5])
-    DrawLimitBand(pads[0], graphs[0:5], legend=legend)
+    StyleLimitBand(graphs)
+    DrawLimitBand(pads[0], graphs, legend=legend)
     legend.Draw()
      
      # Re-draw the frame and tick marks
@@ -53,7 +53,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limits_%s_sep15.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limits_%s_sep17.png'%(channel,channel))
 
 
 
@@ -109,13 +109,13 @@ for channel in ['eu','ed','mu','md']:
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
        # print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
-        #print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits -m %i -n .limit --there"%(workspace,mass))
 
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-   # print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
+    print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
 
     print("\n========= making limit plot for channel %s =========\n"%(channel))
-   # print_and_do("plotLimits.py LQ_cards/%s/limits.json:exp --auto-style"%(channel))
+    print_and_do("plotLimits.py LQ_cards/%s/limits.json:exp --auto-style"%(channel))
     plotLimits(channel)
 
 
