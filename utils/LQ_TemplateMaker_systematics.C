@@ -253,29 +253,31 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+
+             if(flag_q==1){ //down quark Oz
+              h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
+              h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight);
+              }
+               if(flag_q==2){ // up quark Oz
+              h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
+              h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight);
+              }
             
-            /*
             float reweight_s_norm1 = (M_PI*alpha*alpha*Q_q*Q_q)/(2*s);
             float reweight_s_norm2 = ((cal*cal + cvl*cvl)*(caq*caq + cvq*cvq)*G_F*G_F*pow(m_Z0,4)*s)/(256*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             float reweight_s_norm3 = (cvl*cvq*(m_Z0*m_Z0-s)*alpha*G_F*m_Z0*m_Z0*Q_q)/(8*sqrt(2)*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             float reweight_s_norm = (reweight_s_norm1 + reweight_s_norm2 - reweight_s_norm3)*n_conv*LQ_jacobian;
-            float reweight_s = reweight_s_norm*(1 + gen_cost*gen_cost)/LQ_denom;
+           reweight_s = reweight_s_norm*(1 + gen_cost*gen_cost)/LQ_denom;
 
             
             float reweight_a_norm1 = (8*cvl*cvq*cal*caq*G_F*G_F*pow(m_Z0,4)*s)/(256*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             float reweight_a_norm2 = (2*cal*caq*(m_Z0*m_Z0-s)*alpha*G_F*m_Z0*m_Z0*Q_q)/(8*sqrt(2)*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
             float reweight_a_norm = (reweight_a_norm1 - reweight_a_norm2)*n_conv*LQ_jacobian;
-            float reweight_a = reweight_a_norm*gen_cost/LQ_denom;
-            */
+            reweight_a = reweight_a_norm*gen_cost/LQ_denom;
+            
 
             //fill SM temps
-            /*          
-            h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight); 
-            h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight); 
-
-            h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight *tm.evt_pdfweight);
-            h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight *tm.evt_pdfweight);
-            */
+           
             h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight ); 
             h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight ); 
 
@@ -284,9 +286,23 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             
             h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight ); 
             h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight ); 
+            
+            
+            //check temps
+              if(flag_q==1){ //down quark san
+              h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight); 
+              h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight );
+     
+              }
+              //check temps
+              if(flag_q==2){ //up quark san
+              h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight*tm.evt_pdfweight); 
+              h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight*tm.evt_pdfweight);
+             
+              }
 
-            
-            
+
+
               
               //for LQ, 2 terms-> pure and interference
 
@@ -326,6 +342,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
               Double_t reweight_LQint_neg;
               reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+              /*
               //dLQ temps
               if(flag_q==1){
               h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight *tm.evt_pdfweight); 
@@ -340,7 +357,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight*tm.evt_pdfweight); 
               h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight*tm.evt_pdfweight);
               }
-              
+              */
             }
         }
     }

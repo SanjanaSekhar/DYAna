@@ -12,7 +12,7 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = true;
+        bool draw_muons = false;
         bool draw_electrons = true;
         const string sys_label = "";
         
@@ -269,8 +269,8 @@ void LQ_draw_templates(){
                 year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
             sprintf(el_fname1, "%s/El%i_Oz_sym.png", plot_dir, year%2000);
-            sprintf(el_fname2, "%s/El%i_MC_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname3, "%s/El%i_MC_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname2, "%s/El%i_sym_up_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname3, "%s/El%i_sym_down_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -352,7 +352,7 @@ void LQ_draw_templates(){
             //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
             leg1->Draw();
-            c_elel1->Print(el_fname1);
+          //  c_elel1->Print(el_fname1);
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
@@ -361,11 +361,11 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-            leg2->AddEntry(h1_elel_LQpure_u,"u-LQpure Template","l");
-            leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure Template","l");
+            leg2->AddEntry(h1_elel_LQpure_u,"u quarks-new method","l");
+            leg2->AddEntry(h1_elel_LQpure_d,"u quarks-old method","l");
             leg2->Draw();
 
-           // c_elel2->Print(el_fname2);
+            c_elel2->Print(el_fname2);
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
@@ -374,11 +374,11 @@ void LQ_draw_templates(){
             h1_elel_LQint_u->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-            leg3->AddEntry(h1_elel_LQint_u,"u-LQint Template","l");
-            leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
+            leg3->AddEntry(h1_elel_LQint_u,"d quarks-new method","l");
+            leg3->AddEntry(h1_elel_LQint_d,"d quarks-old method","l");
             leg3->Draw();
             
-          //  c_elel3->Print(el_fname3);
+            c_elel3->Print(el_fname3);
             delete c_elel3;
          
         }
