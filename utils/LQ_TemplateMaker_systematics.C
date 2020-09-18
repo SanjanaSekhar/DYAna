@@ -255,12 +255,12 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
              if(flag_q==1){ //down quark Oz
-              h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
-              h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight);
+              h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight); 
+              h_LQint_d->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight);
               }
                if(flag_q==2){ // up quark Oz
-              h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight); 
-              h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight);
+              h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight); 
+              h_LQpure_d->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight);
               }
             
             float reweight_s_norm1 = (M_PI*alpha*alpha*Q_q*Q_q)/(2*s);
@@ -290,14 +290,14 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             
             //check temps
               if(flag_q==1){ //down quark san
-              h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight); 
-              h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight *tm.evt_pdfweight );
+              h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight *tm.evt_pdfweight); 
+              h_LQint_u->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight *tm.evt_pdfweight );
      
               }
               //check temps
               if(flag_q==2){ //up quark san
-              h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight*tm.evt_pdfweight); 
-              h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight*tm.evt_pdfweight);
+              h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight*tm.evt_pdfweight); 
+              h_LQpure_u->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight*tm.evt_pdfweight);
              
               }
 

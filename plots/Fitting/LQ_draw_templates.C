@@ -269,8 +269,8 @@ void LQ_draw_templates(){
                 year, m_LQ, FLAG_ELECTRONS, use_xF, "");
 
             sprintf(el_fname1, "%s/El%i_Oz_sym.png", plot_dir, year%2000);
-            sprintf(el_fname2, "%s/El%i_sym_up_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname3, "%s/El%i_sym_down_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname2, "%s/El%i_asym_up_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname3, "%s/El%i_asym_down_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -369,9 +369,9 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQint_d->SetTitle(el_title);
-            h1_elel_LQint_d->Draw("hist");
-            h1_elel_LQint_u->Draw("hist same");
+            h1_elel_LQint_u->SetTitle(el_title);
+            h1_elel_LQint_u->Draw("hist");
+            h1_elel_LQint_d->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQint_u,"d quarks-new method","l");
