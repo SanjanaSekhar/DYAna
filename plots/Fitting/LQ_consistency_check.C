@@ -56,6 +56,10 @@ void LQ_consistency_check(){
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_asym->SetDirectory(0);
             //--------------------------------------
+            sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
+            auto h_mumu_alpha = new TH3F(title, "Gauge boson polarization template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_mumu_alpha->SetDirectory(0);
              sprintf(title, "mumu%i_LQpure_u%s", year %2000, sys_label.c_str());
             auto h_mumu_LQpure_u = new TH3F(title, "LQpure template of mc",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
@@ -108,7 +112,7 @@ void LQ_consistency_check(){
             gen_mc_template(t_mumu_mc, h_mumu_dy_new, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
                 year, m_LQ, FLAG_MUONS, use_xF, old, "");
 
-            auto h1_mumu_dy_new = convert3d(&h_mumu_dy_new);
+            auto h1_mumu_dy_new = convert3d(h_mumu_dy_new);
 
              h1_mumu_dy->SetLineColor(kRed);
              h1_mumu_dy->SetLineWidth(2);
