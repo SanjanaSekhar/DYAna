@@ -27,7 +27,7 @@ void LQ_consistency_check(){
        
        // std::cout << "enter m_LQ:";        
        // std::cin >> m_LQ; 
-        gStyle->SetOptStat(0);
+       // gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
 
          Double_t m_LQ=1500.;

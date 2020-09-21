@@ -221,7 +221,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             int flag_q=0;
             if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
             else if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
-            if(flag_q!=0 && tm.evt_pdfweight >= 0){ 
+            if(flag_q!=0){ 
 
             if(flag_q==1){
                 Q_q=Q_d;
@@ -266,7 +266,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight ); 
             h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight ); 
             
-             
+            /* 
             
             float reweight_s_norm1 = (M_PI*alpha*alpha*Q_q*Q_q)/(2*s);
             float reweight_s_norm2 = ((cal*cal + cvl*cvl)*(caq*caq + cvq*cvq)*G_F*G_F*pow(m_Z0,4)*s)/(256*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
@@ -281,7 +281,19 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             reweight_a = reweight_a_norm*gen_cost/LQ_denom;
 
             float reweight_dy = reweight_s + reweight_a;
-            
+
+            */
+
+            float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s)
+        //pure Z0 term
+        float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
+        float XS2_denom = (256*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
+        float XS2 = XS2_num/ XS2_denom;
+        //Z0 gamma interference
+        float XS45_num =  - ((gen_cost*get_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+        float XS45_denom = (8*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)))
+        float XS45 = XS45_num/XS45_denom;
+        reweight_dy = (XS1 + XS2 + XS45)*n_conv*LQ_jacobian/LQ_denom;
 
             if(!old){
                 //using h_sym for full dy temp to check new method
