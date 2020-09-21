@@ -82,8 +82,8 @@ void LQ_consistency_check(){
             gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
                 year, m_LQ, FLAG_MUONS, use_xF, old, "");
 
-            auto h1_mumu_sym = convert3d(&h_mumu_sym);
-            auto h1_mumu_asym = convert3d(&h_mumu_asym);
+            auto h1_mumu_sym = convert3d(h_mumu_sym);
+            auto h1_mumu_asym = convert3d(h_mumu_asym);
 
             int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
 
