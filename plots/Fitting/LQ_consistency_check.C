@@ -43,9 +43,9 @@ void LQ_consistency_check(){
             char mu_title[100], el_title[100];
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_title, "Muons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
+            sprintf(mu_title, "Muons-ddbar, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
             sprintf(el_title, "Electrons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
-             sprintf(mu_fname1, "%s/Mu%i_dy_old_new.png", plot_dir, year%2000);
+             sprintf(mu_fname1, "%s/Mu%i_dy_ddbar_oldnew.png", plot_dir, year%2000);
 
             auto h_mumu_sym = new TH3F(title, "Symmetric template of mc",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
