@@ -55,6 +55,24 @@ void LQ_consistency_check(){
             auto h_mumu_asym = new TH3F(title, "Asymmetric template of mc",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_asym->SetDirectory(0);
+            //--------------------------------------
+             sprintf(title, "mumu%i_LQpure_u%s", year %2000, sys_label.c_str());
+            auto h_mumu_LQpure_u = new TH3F(title, "LQpure template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_mumu_LQpure_u->SetDirectory(0);
+            sprintf(title, "mumu%i_LQint_u%s", year %2000, sys_label.c_str());
+            auto h_mumu_LQint_u = new TH3F(title, "LQint template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_mumu_LQint_u->SetDirectory(0);
+            sprintf(title, "mumu%i_LQpure_d%s", year %2000, sys_label.c_str());
+            auto h_mumu_LQpure_d = new TH3F(title, "LQpure template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_mumu_LQpure_d->SetDirectory(0);
+            sprintf(title, "mumu%i_LQint_d%s", year %2000, sys_label.c_str());
+            auto h_mumu_LQint_d = new TH3F(title, "LQint template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_mumu_LQint_d->SetDirectory(0);
+            //------------------------------------------
             
             bool old = true;
             gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
@@ -86,7 +104,7 @@ void LQ_consistency_check(){
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_dy_new->SetDirectory(0);
 
-            bool old = false;
+            old = false;
             gen_mc_template(t_mumu_mc, h_mumu_dy_new, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
                 year, m_LQ, FLAG_MUONS, use_xF, old, "");
 
@@ -100,8 +118,7 @@ void LQ_consistency_check(){
              TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_dy_new->SetTitle(mu_title); 
             h1_mumu_dy_new->Draw("hist");
-            h1_mumu_dy->Draw("hist same")
-
+            h1_mumu_dy->Draw("hist same");
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
             leg1->AddEntry(h1_mumu_dy, "DY Template - old", "l");
