@@ -356,9 +356,9 @@ void LQ_draw_templates(){
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQpure_u->SetTitle(el_title);
-            h1_elel_LQpure_u->Draw("hist");
-            h1_elel_LQpure_d->Draw("hist same");
+            h1_elel_LQpure_d->SetTitle(el_title);
+//            h1_elel_LQpure_u->Draw("hist");
+            h1_elel_LQpure_d->Draw("hist");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_u,"u quarks-new method","l");
@@ -369,9 +369,9 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQint_u->SetTitle(el_title);
-            h1_elel_LQint_u->Draw("hist");
-            h1_elel_LQint_d->Draw("hist same");
+            h1_elel_LQint_d->SetTitle(el_title);
+//            h1_elel_LQint_u->Draw("hist");
+            h1_elel_LQint_d->Draw("hist");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQint_u,"d quarks-new method","l");

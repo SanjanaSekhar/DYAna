@@ -284,16 +284,16 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
             */
 
-            float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s)
+            float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
         //pure Z0 term
         float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
         float XS2_denom = (256*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
         float XS2 = XS2_num/ XS2_denom;
         //Z0 gamma interference
-        float XS45_num =  - ((gen_cost*get_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-        float XS45_denom = (8*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)))
+        float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+        float XS45_denom = (8*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
         float XS45 = XS45_num/XS45_denom;
-        reweight_dy = (XS1 + XS2 + XS45)*n_conv*LQ_jacobian/LQ_denom;
+        float  reweight_dy = (XS1 + XS2 + XS45)*n_conv*LQ_jacobian/LQ_denom;
 
             if(!old){
                 //using h_sym for full dy temp to check new method

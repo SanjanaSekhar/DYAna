@@ -146,10 +146,10 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     int ybin = h_rw->GetYaxis()->FindBin(abs(rap));
     int zbin = h_rw->GetZaxis()->FindBin(cost);
     float weight = h_rw->GetBinContent(xbin, ybin, zbin);
-    if(weight < 1e-8){
-        printf("m %.2f rap %.2f cost %.2f, xbin %i ybin %i zbin %i,  weight %f \n", m, rap, cost, xbin, ybin, zbin, weight);
+   // if(weight < 1e-8){
+      //  printf("m %.2f rap %.2f cost %.2f, xbin %i ybin %i zbin %i,  weight %f \n", m, rap, cost, xbin, ybin, zbin, weight);
         //weight = 1e-6;
-    }
+   // }
     return weight;
 
 }
