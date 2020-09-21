@@ -102,7 +102,8 @@ void LQ_consistency_check(){
             double norm = 3./8.;
             double afb = 0.6;
 
-            h1_mumu_dy->Add(h1_mumu_pl,h1_mumu_mn,(norm+afb),(norm-afb));
+           // h1_mumu_dy->Add(h1_mumu_pl,h1_mumu_mn,(norm+afb),(norm-afb));
+            h1_mumu_dy = convert3d(h_mumu_sym);
 
             auto h_mumu_dy_new = new TH3F(title, "new dy template",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);

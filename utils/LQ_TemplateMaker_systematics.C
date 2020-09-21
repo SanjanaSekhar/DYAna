@@ -256,8 +256,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
 
             //fill SM temps
            if(old){
-            h_sym->Fill(tm.m, var1, tm.cost, reweight_s * tm.evt_weight ); 
-            h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight ); 
+            h_sym->Fill(tm.m, var1, tm.cost, tm.evt_weight ); 
+          //  h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight ); 
 
             h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight );
             h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight );
@@ -359,7 +359,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
    // tm.fixRFNorm(h_alpha, mbin,year);
 
 
-   if(old) h_sym->Scale(0.5);
+   //h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
     h_LQpure_u->Scale(0.5);
