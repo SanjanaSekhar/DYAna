@@ -65,15 +65,14 @@ void LQ_consistency_check(){
 
             int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
 
-            char title[100];
             sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
-            h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+            auto h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
             h1_mumu_pl->SetDirectory(0);
             sprintf(title, "mumu%i_fmn%s", year%2000, sys_label.c_str());
-            h1_mumu_mn = new TH1F(title, "minus template of DY", n_1d_bins, 0, n_1d_bins);
+            auto h1_mumu_mn = new TH1F(title, "minus template of DY", n_1d_bins, 0, n_1d_bins);
             h1_mumu_mn->SetDirectory(0);
             sprintf(title, "mumu%i_dy%s", year%2000, sys_label.c_str());
-            h1_mumu_dy = new TH1F(title, "template of DY", n_1d_bins, 0, n_1d_bins);
+            auto h1_mumu_dy = new TH1F(title, "template of DY", n_1d_bins, 0, n_1d_bins);
             h1_mumu_dy->SetDirectory(0);
             
             make_pl_mn_templates(&h1_mumu_sym, &h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
@@ -85,7 +84,7 @@ void LQ_consistency_check(){
 
             auto h_mumu_dy_new = new TH3F(title, "new dy template",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
-            h_mumu_sym->SetDirectory(0);
+            h_mumu_dy_new->SetDirectory(0);
 
             bool old = false;
             gen_mc_template(t_mumu_mc, h_mumu_dy_new, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
