@@ -286,7 +286,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             if(!old){
                 //using h_sym for full dy temp to check new method
             h_sym->Fill(tm.m, var1, tm.cost, reweight_dy * tm.evt_weight *tm.evt_pdfweight); 
-            h_sym->Fill(tm.m, var1, -tm.cost, reweight_dy * tm.evt_weight *tm.evt_pdfweight ); 
+           
 
             h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight*tm.evt_pdfweight );
             h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight*tm.evt_pdfweight );
@@ -359,7 +359,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
    // tm.fixRFNorm(h_alpha, mbin,year);
 
 
-    h_sym->Scale(0.5);
+   if(old) h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
     h_LQpure_u->Scale(0.5);
@@ -368,7 +368,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     h_LQint_d->Scale(0.5);
 
     //cleanup_template(h_sym);
-    fixup_template_sum(h_sym, h_asym);
+    if(old) fixup_template_sum(h_sym, h_asym);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); 
 
