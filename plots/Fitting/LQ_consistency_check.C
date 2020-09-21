@@ -97,7 +97,7 @@ void LQ_consistency_check(){
             auto h1_mumu_dy = new TH1F(title, "template of DY", n_1d_bins, 0, n_1d_bins);
             h1_mumu_dy->SetDirectory(0);
             
-            make_pl_mn_templates(&h1_mumu_sym, &h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
+            make_pl_mn_templates(h1_mumu_sym, h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
 
             double norm = 3./8.;
             double afb = 0.6;
