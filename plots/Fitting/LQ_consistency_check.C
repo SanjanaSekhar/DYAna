@@ -43,7 +43,7 @@ void LQ_consistency_check(){
             char mu_title[100], el_title[100];
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
-            sprintf(mu_title, "Muons-ddbar, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
+            sprintf(mu_title, "Muons-uubar, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
             sprintf(el_title, "Electrons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
              sprintf(mu_fname1, "%s/Mu%i_dy_uubar_oldnew.png", plot_dir, year%2000);
 
@@ -136,7 +136,7 @@ void LQ_consistency_check(){
             for(int i=1;i<=n_1d_bins;i++){
                 float content_old = h1_mumu_dy->GetBinContent(i);
                 float content_new = h1_mumu_dy_new->GetBinContent(i);
-                printf("ratio of new to old: %f\n",content_new/content_old);
+                printf("ratio of new to old in bin %i: %f\n",i,content_new/content_old);
             }
         }
     }
