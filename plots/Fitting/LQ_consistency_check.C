@@ -87,7 +87,7 @@ void LQ_consistency_check(){
 
             //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
             int n_1d_bins = n_lq_m_bins*n_y_bins*n_cost_bins;
-            
+
             sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
             auto h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
             h1_mumu_pl->SetDirectory(0);
@@ -132,5 +132,11 @@ void LQ_consistency_check(){
             leg1->Draw();
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
+
+            for(int i=1;i<=n_1d_bins;i++){
+                float content_old = h1_mumu_dy->GetBinContent(i);
+                float content_new = h1_mumu_dy_new->GetBinContent(i);
+                printf("ratio of new to old: %f\n",content_new/content_old);
+            }
         }
     }
