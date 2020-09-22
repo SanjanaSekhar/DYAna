@@ -45,7 +45,8 @@ void LQ_consistency_check(){
 
             sprintf(mu_title, "Muons-uubar, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
             sprintf(el_title, "Electrons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
-             sprintf(mu_fname1, "%s/Mu%i_dy_uubar_oldnew.png", plot_dir, year%2000);
+            sprintf(mu_fname1, "%s/Mu%i_dy_uubar_oldnew.png", plot_dir, year%2000);
+            sprintf(mu_fname2, "%s/Mu%i_dy_uubar_ratio.png", plot_dir, year%2000);
 
             auto h_mumu_sym = new TH3F(title, "Symmetric template of mc",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
@@ -133,10 +134,18 @@ void LQ_consistency_check(){
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
 
+            Double_t bins[n_1d_bins], ratio[n_1d_bins];
             for(int i=1;i<=n_1d_bins;i++){
                 float content_old = h1_mumu_dy->GetBinContent(i);
                 float content_new = h1_mumu_dy_new->GetBinContent(i);
-                printf("ratio of new to old in bin %i: %f\n",i,content_new/content_old);
+                ratio[i-1]=content_new/content_old;
+                bins[i-1]=i-1;
             }
+            TGraph *g = new TGraph(n_1d_bins, bins, ratio);
+            TCanvas *c_mumu2 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
+            g->SetTitle(mu_title); 
+            g->Draw("AC*")
+            c_mumu2->Print(mu_fname2);
+            delete c_mumu2;
         }
     }
