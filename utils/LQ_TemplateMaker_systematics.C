@@ -208,7 +208,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
         bool pass = (tm.m >= lq_m_bins[0]) && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
-        if(pass){
+        if(pass && tm.evt_pdfweight>0.){
 
             tm.doCorrections();
             tm.getEvtWeight();
