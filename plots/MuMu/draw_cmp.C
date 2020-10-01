@@ -30,7 +30,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
@@ -46,15 +46,17 @@ void draw_cmp(){
     init_indv_bkgs(year);
     setup_all_SFs(year);
 
-    int n_pt_bins1 = 40;
-    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, 0, 1000);
+    int n_pt_bins1 = 7;
+    Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
+
+    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, pt_bins1);
 
     int n_xf_bins1 = 5;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};

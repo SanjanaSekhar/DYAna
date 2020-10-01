@@ -29,7 +29,7 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
@@ -39,15 +39,17 @@ void draw_cmp(){
     init(year);
     init_indv_bkgs(year);
 
-    int n_pt_bins1 = 40;
-    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, 0, 1000);
+    int n_pt_bins1 = 7;
+    Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
+
+    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, pt_bins1);
 
     int n_xf_bins1 = 4;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.5};
@@ -165,7 +167,7 @@ void draw_cmp(){
     gg_rap->SetFillColor(kOrange);
 
     float m_low = 150.;
-    float m_high = 171.;
+    float m_high = 10000.;
 
     make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
     make_m_cost_pt_xf_hist(t_elel_mc, mc_m, mc_cost, mc_pt, mc_xf, mc_phi, mc_rap, false, type,   year, m_low, m_high);

@@ -439,9 +439,7 @@ float TempMaker::getEvtWeight(){
     }
 
     if(do_emu_costrw){
-        if(m < 250.) base_weight *= get_emu_costrw_SF(emu_costrw.m150_rw, cost, do_emu_costrw_sys);
-        else if(m < 510.) base_weight *= get_emu_costrw_SF(emu_costrw.m250_rw, cost, do_emu_costrw_sys);
-        else base_weight *= get_emu_costrw_SF(emu_costrw.m510_rw, cost, do_emu_costrw_sys);
+        base_weight *= get_emu_costrw_SF(emu_costrw.rw, cost, do_emu_costrw_sys);
     }
 
 
