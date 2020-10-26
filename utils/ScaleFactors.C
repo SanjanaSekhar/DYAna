@@ -377,7 +377,7 @@ Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, i
     float min_pt = h->GetYaxis()->GetBinLowEdge(1);
     float max_pt = h->GetYaxis()->GetBinUpEdge(n_bins_pt);
 
-    float mid_pt = 75.;
+    float mid_pt = 100.;
     int mid_bin = h->GetYaxis()->FindBin(mid_pt);
 
     if( pt <= min_pt) pt = min_pt + 1.;

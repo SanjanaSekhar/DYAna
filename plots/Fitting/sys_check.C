@@ -17,12 +17,12 @@ void sys_check(){
         int year = 2017;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_muIDBAR";
+        char *sys = "_elIDBARPTLOW";
         bool do_bkg = false;
         bool do_qcd = false;
-        bool do_electrons = false;
-        bool do_muons = true;
-        int i = 1;
+        bool do_electrons = true;
+        bool do_muons = false;
+        int i = 4;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");

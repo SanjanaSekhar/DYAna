@@ -205,8 +205,8 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("elIDEND") != string::npos) do_elID_endcap_sys = sys_shift;
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
-        else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
-        else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
+        else if(sys_label.find("elIDSYS") != string::npos) do_elID_SYS_sys = sys_shift;
+        else if(sys_label.find("elRECOSYS") != string::npos) do_elRECO_SYS_sys = sys_shift;
 
         else if(sys_label.find("elScaleStat") != string::npos) do_elScale_sys = sys_shift;
         else if(sys_label.find("elScaleSyst") != string::npos) do_elScale_sys = sys_shift;
@@ -458,10 +458,10 @@ float TempMaker::getEvtWeight(){
                 get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
         }
         else if(do_muISO_SYS_sys){
-            era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
-                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muSYS_sys, do_muSYS_sys);
-            era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
-                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muSYS_sys, do_muSYS_sys);
+            era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF_SYS,  do_muISO_SYS_sys, do_muISO_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_SYS_sys, do_muISO_SYS_sys);
+            era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF_SYS,  do_muISO_SYS_sys, do_muISO_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_SYS_sys, do_muISO_SYS_sys);
         }
 
 
@@ -472,10 +472,10 @@ float TempMaker::getEvtWeight(){
                 get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
         }
         else if(do_muID_SYS_sys){
-            era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
-                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muSYS_sys, do_muSYS_sys);
-            era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
-                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muSYS_sys, do_muSYS_sys);
+            era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF_SYS,  do_muID_SYS_sys, do_muID_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_SYS_sys, do_muID_SYS_sys);
+            era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF_SYS,  do_muID_SYS_sys, do_muID_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_SYS_sys, do_muID_SYS_sys);
         
         }
 

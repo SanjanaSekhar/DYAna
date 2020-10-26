@@ -172,6 +172,9 @@ class TempMaker{
         int do_muID_barrel_sys = 0;
         int do_muISO_barrel_sys = 0;
 
+        int do_muID_SYS_sys = 0;
+        int do_muISO_SYS_sys = 0;
+
         int do_muHLT_endcap_sys = 0;
         int do_muID_endcap_sys = 0;
         int do_muISO_endcap_sys = 0;
@@ -183,6 +186,8 @@ class TempMaker{
         int do_elID_endcap_sys = 0;
         int do_elHLT_endcap_sys = 0;
         int do_elRECO_endcap_sys = 0;
+        int do_elID_SYS_sys = 0;
+        int do_elRECO_SYS_sys = 0;
         int el_SF_pt_range = 0;
 
         int do_prefire_sys = 0;
