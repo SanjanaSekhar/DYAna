@@ -233,6 +233,11 @@ void make_mc_templates(int year, const string &sys_label){
         h1_mumu_tautau = convert2d(h_mumu_tautau);
         h1_mumu_gam = convert2d(h_mumu_gam);
         h1_mumu_alpha = convert2d(h_mumu_alpha);
+
+        h_mumu_sym->Print("range");
+        h1_mumu_sym->Print("range");
+        h_mumu_asym->Print("range");
+        h1_mumu_asym->Print("range");
         delete h_mumu_alpha, h_mumu_top, h_mumu_db, h_mumu_tautau, h_mumu_gam;
 
     }
@@ -331,6 +336,9 @@ void convert_mc_templates(int year, const string &sys_label){
         n_var1_bins = n_xf_bins;
         var1_bins = xf_bins;
     }
+
+    //merge highest rap bin for high mass templates
+    if(m_low > 550.) n_var1_bins -= 1;
     int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
     if(do_mu){
 
@@ -464,8 +472,8 @@ void make_templates(int year = -1, string fout_name = "", int iJob =-1){
     if(fout_name == "") fout_name = string("combine/templates/test.root");
     if(year == -1) year = 2016;
     
-    bool scramble_data = false; //randomly flip sign of cos(theta)
-    bool fake_data = true; //use mc instead of data
+    bool scramble_data = true; //randomly flip sign of cos(theta)
+    bool fake_data = false; //use mc instead of data
     use_xF = false;
 
 

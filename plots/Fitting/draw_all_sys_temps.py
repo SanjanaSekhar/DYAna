@@ -18,13 +18,14 @@ if(options.year > 2000):
 n_m_bins = 8
 
 
-base_strs = [ 'ee%i_fpl', 'ee%i_fmn', 'mumu%i_fmn', 'mumu%i_fpl']
+base_strs = [ 'ee%i_fpl', 'ee%i_fmn', 'mumu%i_fmn', 'mumu%i_fpl', 'ee%i_top', 'ee%i_db', 'mumu%i_top', 'mumu%i_db']
 #my_excludes = ['RENORM', 'REFAC', 'FAC']
 my_excludes = []
 
 gROOT.SetBatch(1)
 
 f = TFile.Open(options.fin)
+gDirectory.ls()
 
 if(not os.path.exists(options.plot_dir)):
     print("Making directory %s" % options.plot_dir)
@@ -72,8 +73,10 @@ for mbin in range(n_m_bins):
                 color = kMagenta
                 if('pdf' in key_name):
                     color = kGreen+4
+                    if(('top' in base) or ('db' in base)): continue
                 if('RENORM' in key_name or 'FAC' in key_name or 'REFAC' in key_name):
                     color = kRed
+                    if(('top' in base) or ('db' in base)): continue
                 if('ID' in key_name or 'RECO' in key_name or 'HLT' in key_name or 'ISO' in key_name ):
                     color = kBlue
                 h.SetLineColor(color)

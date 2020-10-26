@@ -83,11 +83,6 @@ void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
         set_frac_error(h_sym, h_mn);
 }
 
-int get_n_1d_bins(int n_binsx, int n_binsy){
-    //merge 2 highest cos bins in 2 larger eta bins
-    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
-    return n_1d_bins;
-}
 
 void print_hist(TH2 *h){
     printf("\n");
@@ -127,11 +122,11 @@ int gen_data_template(TTree *t1, TH2F* h,
             if(!ss){
                 if(scramble_data){
                     //switch + and - back and forth
-                    //tm.cost = sign * std::fabs(tm.cost); 
-                    //sign *= -1.;
+                    tm.cost = sign * std::fabs(tm.cost); 
+                    sign *= -1.;
                     //randomly flip data events
-                    if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
-                    else tm.cost = -std::fabs(tm.cost);
+                    //if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
+                    //else tm.cost = -std::fabs(tm.cost);
                 }
                 h->Fill(var1, tm.cost, 1); 
             }
