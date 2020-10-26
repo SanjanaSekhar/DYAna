@@ -21,6 +21,8 @@ typedef struct {
     TH2D *HLT_MC_EFF;
     TH2D *ISO_SF;
     TH2D *ID_SF;
+    TH2D *ISO_SF_SYS;
+    TH2D *ID_SF_SYS;
 } mu_SFs;
 
 
@@ -686,12 +688,18 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_eta_pt")->Clone();
         ID_1->SetDirectory(0);
         era1->ID_SF = ID_1;
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_eta_pt_syst")->Clone();
+        ID_1_SYS->SetDirectory(0);
+        era1->ID_SF_SYS = ID_1_SYS;
         f2->Close();
 
         f3 = TFile::Open("../analyze/SFs/2016/Mu_BCDEF_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")->Clone();
         ISO_1->SetDirectory(0);
         era1->ISO_SF = ISO_1;
+        TH2D *ISO_1_SYS = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt_syst")->Clone();
+        ISO_1_SYS->SetDirectory(0);
+        era1->ISO_SF_SYS = ISO_1_SYS;
         f3->Close();
 
 
@@ -699,12 +707,18 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         TH2D *ID_2 = (TH2D *) f5->Get("NUM_TightID_DEN_genTracks_eta_pt")->Clone();
         ID_2->SetDirectory(0);
         era2->ID_SF = ID_2;
+        TH2D *ID_2_SYS = (TH2D *) f5->Get("NUM_TightID_DEN_genTracks_eta_pt_syst")->Clone();
+        ID_2_SYS->SetDirectory(0);
+        era2->ID_SF_SYS = ID_2_SYS;
         f5->Close();
 
         f6 = TFile::Open("../analyze/SFs/2016/Mu_GH_ISO.root");
         TH2D *ISO_2 = (TH2D *) f6->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")->Clone();
         ISO_2->SetDirectory(0);
         era2->ISO_SF = ISO_2;
+        TH2D *ISO_2_SYS = (TH2D *) f6->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt_syst")->Clone();
+        ISO_2_SYS->SetDirectory(0);
+        era2->ISO_SF_SYS = ISO_2_SYS;
         f6->Close();
 
     }
@@ -725,16 +739,24 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         f2 = TFile::Open("../analyze/SFs/2017/Mu_ID.root");
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta_syst")->Clone();
+        ID_1_SYS->SetDirectory(0);
         era1->ID_SF = ID_1;
         era2->ID_SF = ID_1;
+        era1->ID_SF_SYS = ID_1_SYS;
+        era2->ID_SF_SYS = ID_1_SYS;
         f2->Close();
 
         printf("iso\n");
         f3 = TFile::Open("../analyze/SFs/2017/Mu_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")->Clone();
         ISO_1->SetDirectory(0);
+        TH2D *ISO_1_SYS = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta_syst")->Clone();
+        ISO_1_SYS->SetDirectory(0);
         era1->ISO_SF = ISO_1;
         era2->ISO_SF = ISO_1;
+        era1->ISO_SF_SYS = ISO_1_SYS;
+        era2->ISO_SF_SYS = ISO_1_SYS;
         f3->Close();
 
 
@@ -759,24 +781,33 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         f4->Close();
 
         f2 = TFile::Open("../analyze/SFs/2018/Mu_ID.root");
-        TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_TrackerMuons_pt_abseta")->Clone();
+        TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta_syst")->Clone();
+        ID_1_SYS->SetDirectory(0);
         era1->ID_SF = ID_1;
         era2->ID_SF = ID_1;
+        era1->ID_SF_SYS = ID_1_SYS;
+        era2->ID_SF_SYS = ID_1_SYS;
         f2->Close();
 
         f3 = TFile::Open("../analyze/SFs/2018/Mu_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")->Clone();
         ISO_1->SetDirectory(0);
+        TH2D *ISO_1_SYS = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta_syst")->Clone();
+        ISO_1_SYS->SetDirectory(0);
         era1->ISO_SF = ISO_1;
         era2->ISO_SF = ISO_1;
+        era1->ISO_SF_SYS = ISO_1_SYS;
+        era2->ISO_SF_SYS = ISO_1_SYS;
         f3->Close();
 
 
     }
 
-    if(era1->HLT_SF == NULL || era1->ID_SF == NULL || era1->ISO_SF == NULL  ||
-       era2->HLT_SF == NULL || era2->ID_SF == NULL || era2->ISO_SF == NULL) printf("Something wrong setup muon SF'S !!!! \n\n\n");
+    if(era1->HLT_SF == NULL || era1->ID_SF == NULL || era1->ISO_SF == NULL  || era1->ID_SF_SYS == NULL || era1->ISO_SF_SYS == NULL ||
+       era2->HLT_SF == NULL || era2->ID_SF == NULL || era2->ISO_SF == NULL  || era2->ID_SF_SYS == NULL || era2->ISO_SF_SYS == NULL)
+        printf("Something wrong setup muon SF'S !!!! \n\n\n");
 }
 
 void setup_el_SF(el_SFs *sf, int year){

@@ -92,7 +92,6 @@ void do_fakes_cost_reweight(){
     sprintf(h_name, "mumu%i_ss_cost_ratio", year % 2000);
     TH1F *h_mumu_ratio = (TH1F *) h_mumu_data_sub->Clone(h_name);
     h_mumu_ratio->Divide(mumu_QCD_cost);
-    h_mumu_ratio->Print("range");
 
 
     dummy->Reset();

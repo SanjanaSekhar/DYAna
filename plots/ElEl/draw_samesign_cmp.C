@@ -31,7 +31,7 @@
 const int type = FLAG_ELECTRONS;
 int year = 2018;
 bool write_out = true;
-char *plot_dir = "Paper_plots/";
+char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
 
 
 void draw_samesign_cmp(){
@@ -125,7 +125,7 @@ void draw_samesign_cmp(){
 
 
 
-    bool cost_reweight = true;
+    bool cost_reweight = false;
     make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type,  year, m_low, m_high, ss, in_os_region, cost_reweight);
 
 
@@ -134,7 +134,7 @@ void draw_samesign_cmp(){
 
 
 
-    bool normalize = false;
+    bool normalize = true;
     bool from_fit = false;
     
     if(normalize){
@@ -153,7 +153,7 @@ void draw_samesign_cmp(){
     }
 
 
-    bool scale_error=true;
+    bool scale_error=false;
     float qcd_err = 0.5;
     float back_err = 0.05;
     bool add_err = true;
@@ -184,7 +184,7 @@ void draw_samesign_cmp(){
     m_stack->Add(DY_m);
 
 
-    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; ee Cos(#theta)_{r}");
+    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; ee cos(#theta)");
     cost_stack->Add(back_cost);
     cost_stack->Add(QCD_cost);
     cost_stack->Add(DY_cost);
@@ -237,7 +237,7 @@ void draw_samesign_cmp(){
     if(write_out) c_m->Print(plt_file);
 
     
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", -1., false);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", -1., false);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sElEl%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);

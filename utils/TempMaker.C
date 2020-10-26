@@ -196,6 +196,8 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("muHLTEND") != string::npos) do_muHLT_endcap_sys = sys_shift;
         else if(sys_label.find("muIDEND") != string::npos) do_muID_endcap_sys = sys_shift;
         else if(sys_label.find("muISOEND") != string::npos) do_muISO_endcap_sys = sys_shift;
+        else if(sys_label.find("muIDSYS") != string::npos) do_muID_endcap_sys = sys_shift;
+        else if(sys_label.find("muISOSYS") != string::npos) do_muISO_endcap_sys = sys_shift;
 
         else if(sys_label.find("elIDBAR") != string::npos) do_elID_barrel_sys = sys_shift;
         else if(sys_label.find("elHLTBAR") != string::npos) do_elHLT_barrel_sys = sys_shift;
@@ -455,12 +457,26 @@ float TempMaker::getEvtWeight(){
             era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys) * 
                 get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
         }
+        else if(do_muISO_SYS_sys){
+            era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muSYS_sys, do_muSYS_sys);
+            era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muSYS_sys, do_muSYS_sys);
+        }
+
 
         if(do_muID_barrel_sys || do_muID_endcap_sys){
             era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
                 get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
             era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
                 get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
+        }
+        else if(do_muID_SYS_sys){
+            era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muSYS_sys, do_muSYS_sys);
+            era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF_SYS,  do_muSYS_sys, do_muSYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muSYS_sys, do_muSYS_sys);
+        
         }
 
 

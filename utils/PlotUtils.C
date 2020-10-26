@@ -30,6 +30,32 @@ void unzero_bins(TH1 *h){
     }
 }
 
+void binwidth_normalize(TH1 *h){
+    for (int i=1; i <= h->GetNbinsX(); i++){
+        float content = h->GetBinContent(i);
+        float error = h->GetBinError(i);
+        float width = h->GetBinWidth(i);
+        h->SetBinContent(i, content/width);
+        h->SetBinError(i, error/width);
+    }
+}
+
+
+void binwidth_normalize(THStack *h_stack){
+    for(auto h: *h_stack->GetHists()){
+        binwidth_normalize( (TH1 *) h);
+    }
+}
+
+
+
+
+        
+
+
+
+
+
 TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_label[80], char ratio_label[80], float ratio_min = 0.01, float ratio_max = 2.){
     TCanvas *c = new TCanvas(title.c_str(), "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad((title+"p1").c_str(), "pad1", 0.,0.3,0.98,1.);
@@ -178,6 +204,11 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_data->DrawCopy("P E same");
 
 
+    h_stack->GetYaxis()->SetTitleSize(30);
+    h_stack->GetYaxis()->SetTitleFont(43);
+    h_stack->GetYaxis()->SetTitleOffset(1.2);
+
+
     leg->Draw();
 
     c->cd();
@@ -239,6 +270,4 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
    printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
    return std::make_pair(c, pad1);
 }
-
-
 

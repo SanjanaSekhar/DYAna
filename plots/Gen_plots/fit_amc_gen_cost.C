@@ -86,9 +86,9 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 void fit_amc_gen_cost(){
 
     bool write_out = false;
-    int year = 2018;
+    int year = 2016;
     char *out_file = "../analyze/SFs/2018/a0_fits.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_june29.root");
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_aug4.root");
     gROOT->SetBatch(1);
 
     TFile * f_out;
@@ -153,6 +153,20 @@ void fit_amc_gen_cost(){
         sprintf(title, "%sy%i_m%.0f_pt.png", plot_dir, year -2000, m_low);
         if(write_out) c1->Print(title);
 
+        Double_t dnB, dnF;
+        Double_t nB = h_cost1->IntegralAndError(1,n_bins/2, dnB);
+        Double_t nF = h_cost1->IntegralAndError(n_bins/2 + 1,n_bins, dnF);
+        Double_t n_tot = nB + nF;
+        
+        Double_t AFB = ((nF - nB))/((nF+nB));
+        //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));
+        Double_t B = (1. - AFB)*nEvents/2.;
+        Double_t F = (1. + AFB)*nEvents/2.;
+        Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
+        Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
+
+
+
         c1->SetLogy(false);
         h_cost1->Scale(1./h_cost1->Integral() / bin_size);
         h_cost1->Draw();
@@ -162,8 +176,18 @@ void fit_amc_gen_cost(){
 
         sprintf(title, "%sy%i_m%.0f_cost.png", plot_dir, year-2000,  m_low);
         c1->Print(title);
-        //continue;
+        //
+        printf("Mass range from %.0f to %.0f, nEvents %i \n", m_low, m_high, nEvents);
+        printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
+        printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
+        printf("Counting: Total NF %.0f NB %.0f \n", F, B);
+        //printf("Counting: AFB %.4f +/- %.4f \n", AFB, dAFB);
+        printf("Counting Error v2: AFB %.4f +/- %.4f \n", AFB, dAFB_v2);
+
+        continue;
         //exit(1);
+        //
+
 
         for(int pt_idx = 0; pt_idx < n_pt_bins; pt_idx++){
             pt_low = pt_bins[pt_idx];

@@ -82,7 +82,7 @@ void make_limit_plot(){
     int m_step = 100;
     int m;
     int i=0;
-    bool inc_meas_limit = true;
+    bool inc_meas_limit = false;
     Double_t kl_start = 1.;
     Double_t kl_min = 0.05;
     Double_t kl_step = 0.05;
@@ -154,8 +154,8 @@ void make_limit_plot(){
     two_sig->GetYaxis()->SetTitleOffset(1.0);
     two_sig->GetXaxis()->SetTitle("Z' mass (GeV)");
 
-    two_sig->Draw("Af");
-    one_sig->Draw("fsames");
+    two_sig->Draw("ACf");
+    one_sig->Draw("Cfsames");
     exp->Draw("Csames");
 
     if(inc_meas_limit){

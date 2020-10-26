@@ -30,7 +30,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2016;
+const int year = 2018;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
@@ -233,7 +233,7 @@ void draw_cmp(){
     cost_stack->Add(mc_tautau_cost);
     cost_stack->Add(mc_cost);
 
-    THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs MC; DiElectron Pt (GeV)");
+    THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs MC; DiElectron Pt (GeV); Events / GeV");
     pt_stack->Add(diboson_pt);
     pt_stack->Add(QCD_pt);
     pt_stack->Add(wt_pt);
@@ -241,6 +241,9 @@ void draw_cmp(){
     pt_stack->Add(gg_pt);
     pt_stack->Add(mc_tautau_pt);
     pt_stack->Add(mc_pt);
+
+    binwidth_normalize(pt_stack);
+    binwidth_normalize(data_pt);
 
     THStack *xf_stack = new THStack("xf_stack", "Di-electron x_F Distribution: Data vs MC; x_F");
     xf_stack->Add(diboson_xf);
@@ -268,6 +271,8 @@ void draw_cmp(){
     rap_stack->Add(gg_rap);
     rap_stack->Add(mc_tautau_rap);
     rap_stack->Add(mc_rap);
+
+
 
     gStyle->SetLegendBorderSize(0);
     float x_size = 0.3;
@@ -306,7 +311,7 @@ void draw_cmp(){
 
     
     float x_start = 0.45;
-    float y_start = 0.3;
+    float y_start = 0.15;
     leg2->SetX1(x_start);
     leg2->SetX2(x_start+x_size);
     leg2->SetY1(y_start);

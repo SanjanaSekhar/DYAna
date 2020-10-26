@@ -56,8 +56,7 @@ Double_t test_Zp(FILE *f1, int M_Zp, Double_t cpl, Double_t *AFB_test){
     TH1D * h_dist = new TH1D("h_dist1", "Distribution of test statistic", 400,-50,50);
     TRandom3 *r3 = new TRandom3();
     Double_t x[n_bins]; //randomly generated x vals
-    //Find distribution of test statistic under Null hypothesis (ZPrime is
-    //there)
+    //Find distribution of test statistic under Null hypothesis (ZPrime is there)
     for(int i=0; i<n_trials; i++){
         for(int j=0; j<n_bins; j++){
             x[j] = r3->Gaus(AFB_Zp[j], AFB_unc[j]);

@@ -214,7 +214,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
-            //pass = pass && !opp_sign;
+            else pass = pass && !opp_sign;
             if(pass){
                 double evt_reweight = 0.;
 
@@ -313,7 +313,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_pt);
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
-    set_fakerate_errors(h_err, FR.h, h_cost);
+    //set_fakerate_errors(h_err, FR.h, h_cost);
     if(reweight){
         fakes_costrw_helper h_rw;
         setup_fakes_costrw_helper(&h_rw, year);
