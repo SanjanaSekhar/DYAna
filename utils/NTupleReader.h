@@ -71,6 +71,7 @@ class NTupleReader{
         prefire_SFs prefire_rates;
 
         const float mu_iso_cut = 0.15; //tight PF based iso
+        const float mu_loose_iso_cut = 0.4; //very loose PF based iso
 
         int year = 2016;
 
@@ -166,7 +167,7 @@ class NTupleReader{
         Float_t el_Pt[EL_SIZE], el_Eta[EL_SIZE], el_Phi[EL_SIZE], el_E[EL_SIZE], 
                 el_Charge[EL_SIZE], el_SCEta[EL_SIZE], el_GoodCharge[EL_SIZE];
 
-        Int_t el_IDMedium[EL_SIZE], el_IDMedium_NoIso[EL_SIZE], el_IDTight[EL_SIZE], el_IDTight_NoIso[EL_SIZE];
+        Int_t el_IDMedium[EL_SIZE], el_IDLoose[EL_SIZE], el_IDMedium_NoIso[EL_SIZE], el_IDTight[EL_SIZE], el_IDTight_NoIso[EL_SIZE];
 
         Float_t el_ScaleCorr[EL_SIZE], el_ScaleCorrStatUp[EL_SIZE], el_ScaleCorrStatDown[EL_SIZE],
                                        el_ScaleCorrGainUp[EL_SIZE], el_ScaleCorrGainDown[EL_SIZE],
@@ -184,7 +185,7 @@ class NTupleReader{
 
         int elp_index, elm_index;
         bool good_sign, opp_sign, good_trigger, dimuon_accep, loose_dimuon_id, tight_dimuon_id, emu_ids,
-             mu_iso0, mu_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
+             mu_iso0, mu_iso1, mu_loose_iso0, mu_loose_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
 
         bool signal_event = false;
         bool failed_match = false;

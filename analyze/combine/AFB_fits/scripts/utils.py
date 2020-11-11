@@ -131,6 +131,10 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
             comb_yr = 1718
         card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
         print_and_do("cp %s %s" % (template_card, card))
+        lumi_val = "1.025"
+        if(year == 2017) lumi_val = "1.023"
+
+        print_and_do("""sed -i "s/LUMIV/%s/g" %s""" % (lumi_val, card))
         print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
