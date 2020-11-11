@@ -51,6 +51,7 @@ class NTupleReader{
         void fillEventRC();
         bool getNextFile();
         void finish();
+        bool doTopPTRW(bool PRINT = false);
         bool parseGenParts(bool PRINT);
         int selectAnyGenParts(bool PRINT);
 
@@ -86,6 +87,7 @@ class NTupleReader{
         bool is_data = false;
         bool do_SFs = false;
         bool do_RC = false;
+        bool do_top_ptrw = false;
         bool RC_from_gen = false;
 
         unsigned int nEvents=0;
@@ -111,8 +113,10 @@ class NTupleReader{
         Float_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt, mu_p_SF_up, mu_p_SF_down, mu_m_SF_up, mu_m_SF_down;
         Float_t era1_HLT_SF, era1_iso_SF, era1_id_SF, era2_HLT_SF, era2_iso_SF, era2_id_SF,
                  era1_trk_SF, era2_trk_SF,
-                 jet1_b_weight, jet2_b_weight, pu_SF, pu_SF_up, pu_SF_down;
+                 jet1_b_weight, jet2_b_weight, pu_SF, pu_SF_up, pu_SF_down, top_ptrw, top_ptrw_alpha_up, top_ptrw_alpha_down, 
+                 top_ptrw_beta_up, top_ptrw_beta_down;
         Float_t jet1_btag_SF, jet1_btag_SF_up, jet1_btag_SF_down, jet2_btag_SF, jet2_btag_SF_up, jet2_btag_SF_down;
+
 
         float prefire_SF = 1.0;
         float prefire_SF_up = 1.0;
