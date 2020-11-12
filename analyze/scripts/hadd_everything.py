@@ -6,10 +6,12 @@ from optparse import OptionParser
 from optparse import OptionGroup
 
 years = [2016, 2017,2018]
-prefixes = ["ElEl", "MuMu"]
-#labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
-labels = ["dy"]
-ending = "_aug05"
+#prefixes = ["ElEl", "MuMu"]
+prefixes = ["EMu"]
+#labels = ["dy", "wt", "ttbar", "diboson"]
+#labels = ["dy"]
+labels = ["data"]
+ending = "_nov11"
 redo_fakes = False
 
 for year in years:

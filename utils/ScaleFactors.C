@@ -781,9 +781,9 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         f4->Close();
 
         f2 = TFile::Open("../analyze/SFs/2018/Mu_ID.root");
-        TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta")->Clone();
+        TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_TrackerMuons_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
-        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta_syst")->Clone();
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_TrackerMuons_pt_abseta_syst")->Clone();
         ID_1_SYS->SetDirectory(0);
         era1->ID_SF = ID_1;
         era2->ID_SF = ID_1;
