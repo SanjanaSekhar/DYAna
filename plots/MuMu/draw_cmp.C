@@ -31,7 +31,7 @@
 
 const int type = FLAG_MUONS;
 const int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
 
@@ -185,9 +185,8 @@ void draw_cmp(){
     //gg_cost->Scale(0.);
     //gg_m->Scale(0.);
 
-    bool ss_qcd = true;
-    bool in_os_region = true;
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss_qcd, in_os_region);
+    bool ss_qcd = false;
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss_qcd);
     //QCD_cost->Scale(0.);
 
 

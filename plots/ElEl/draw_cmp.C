@@ -29,7 +29,7 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2018;
 const bool write_out = false;
 char *plot_dir = "Paper_plots/";
 
@@ -183,10 +183,9 @@ void draw_cmp(){
     //gg_cost->Scale(0.);
     //gg_m->Scale(0.);
 
-    bool ss_qcd = true;
-    bool in_os_region = true;
+    bool ss_qcd = false;
     make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, 
-            type, year, m_low, m_high, ss_qcd, in_os_region);
+            type, year, m_low, m_high, ss_qcd);
 
 
     /*

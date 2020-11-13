@@ -85,7 +85,7 @@ void draw_cmp(){
 
     bool ss = false;
 
-    bool do_emu_cost_rw = true;
+    bool do_emu_cost_rw = false;
     make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, true,  year, m_low, m_high, ss);
     make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
     make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);

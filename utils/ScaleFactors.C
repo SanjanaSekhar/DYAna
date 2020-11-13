@@ -61,8 +61,10 @@ typedef struct{
 typedef struct{
     TH1F *el_rw[n_m_bins];
     TH1F *mu_rw[n_m_bins];
+    TH1F *comb_rw[n_m_bins];
     TH1F *el_data_sub[n_m_bins];
     TH1F *mu_data_sub[n_m_bins];
+    TH1F *comb_data_sub[n_m_bins];
 } ptrw_helper;
 
 typedef struct{
@@ -207,6 +209,9 @@ float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0
     TH1F *h_rw, *h_N;
     if(m > m_bins[n_m_bins-2]) m = m_bins[n_m_bins-2] - 0.1;
     int m_bin = find_bin(m_bins, m);
+    h_rw = h.comb_rw[m_bin];
+    h_N = h.comb_data_sub[m_bin];
+    /*
     if(flag == FLAG_MUONS){
         h_rw = h.mu_rw[m_bin];
         h_N = h.mu_data_sub[m_bin];
@@ -215,6 +220,7 @@ float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0
         h_rw = h.el_rw[m_bin];
         h_N = h.el_data_sub[m_bin];
     }
+    */
     TAxis* x_ax =  h_rw->GetXaxis();
     int bin = h_rw->FindBin(pt);
     float correction = h_rw->GetBinContent(bin);
@@ -225,8 +231,9 @@ float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0
         //Low stat bins should not go crazy
         stat_err = max(stat_err, 0.1f);
         float sys_correction = h_rw->GetBinContent(sys_bin);
-        float sys_err = 0.2 * std::fabs( sys_correction - 1.);
-        float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        //float sys_err = 0.2 * std::fabs( sys_correction - 1.);
+        //float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        float error = stat_err;
 
         if(bin == abs(systematic)){
             //shift the reweighting in this bin by the error
@@ -581,6 +588,9 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
         sprintf(h_name, "mumu%i_m%i_pt_ratio", year % 2000, i);
         h->mu_rw[i] = (TH1F *) f->Get(h_name)->Clone();
         h->mu_rw[i]->SetDirectory(0);
+        sprintf(h_name, "comb%i_m%i_pt_ratio", year % 2000, i);
+        h->comb_rw[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->comb_rw[i]->SetDirectory(0);
 
         sprintf(h_name, "elel%i_m%i_pt_data_sub", year % 2000, i);
         h->el_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
@@ -588,6 +598,9 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
         sprintf(h_name, "mumu%i_m%i_pt_data_sub", year % 2000, i);
         h->mu_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
         h->mu_data_sub[i]->SetDirectory(0);
+        sprintf(h_name, "comb%i_m%i_pt_data_sub", year % 2000, i);
+        h->comb_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->comb_data_sub[i]->SetDirectory(0);
     }
 }
 

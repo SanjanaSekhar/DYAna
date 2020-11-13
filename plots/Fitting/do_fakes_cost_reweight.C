@@ -70,7 +70,6 @@ void do_fakes_cost_reweight(){
     int m_low = 150.;
     int m_high = 10000.;
     bool ss = true;
-    bool in_os_region = false;
 
     make_m_cost_pt_xf_hist(t_mumu_ss_data, dummy, mumu_data_cost, dummy, dummy, dummy,  dummy, true, FLAG_MUONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_mumu_ss_diboson, dummy, mumu_other_cost, dummy, dummy, dummy, dummy, false, FLAG_MUONS,   year, m_low, m_high, ss);
@@ -78,7 +77,7 @@ void do_fakes_cost_reweight(){
     make_m_cost_pt_xf_hist(t_mumu_ss_ttbar, dummy, mumu_other_cost, dummy, dummy, dummy, dummy, false, FLAG_MUONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, dummy, mumu_other_cost, dummy, dummy, dummy, dummy, false, FLAG_MUONS,   year, m_low, m_high, ss);
 
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, dummy, mumu_QCD_cost, dummy, dummy, dummy, dummy, FLAG_MUONS, year, m_low, m_high, ss, in_os_region);
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, dummy, mumu_QCD_cost, dummy, dummy, dummy, dummy, FLAG_MUONS, year, m_low, m_high, ss );
 
     sprintf(h_name, "mumu%i_ss_cost_data_sub", year % 2000);
     TH1F *h_mumu_data_sub = (TH1F *) mumu_data_cost->Clone(h_name);
@@ -102,7 +101,7 @@ void do_fakes_cost_reweight(){
     make_m_cost_pt_xf_hist(t_elel_ss_ttbar, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_dy, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
 
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, elel_QCD_cost, dummy, dummy, dummy, dummy, FLAG_ELECTRONS, year, m_low, m_high, ss, in_os_region);
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, elel_QCD_cost, dummy, dummy, dummy, dummy, FLAG_ELECTRONS, year, m_low, m_high, ss );
 
     sprintf(h_name, "elel%i_ss_cost_data_sub", year % 2000);
     TH1F *h_elel_data_sub = (TH1F *) elel_data_cost->Clone(h_name);

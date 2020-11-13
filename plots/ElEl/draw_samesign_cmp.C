@@ -30,7 +30,7 @@
 
 const int type = FLAG_ELECTRONS;
 int year = 2018;
-bool write_out = true;
+bool write_out = false;
 char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
 
 
@@ -115,7 +115,6 @@ void draw_samesign_cmp(){
     float m_low = 150.;
     float m_high = 10000.;
     bool ss = true;
-    bool in_os_region = false;
 
     make_m_cost_pt_xf_hist(t_elel_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap,  true, type,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_ttbar, back_m, back_cost, back_pt, back_xf, back_phi, back_rap, false, type,   year, m_low, m_high, ss);
@@ -126,7 +125,7 @@ void draw_samesign_cmp(){
 
 
     bool cost_reweight = false;
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type,  year, m_low, m_high, ss, in_os_region, cost_reweight);
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type,  year, m_low, m_high, ss, cost_reweight);
 
 
     printf("Integrals of data, QCD, back, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), back_m->Integral(), DY_m->Integral());
@@ -134,7 +133,7 @@ void draw_samesign_cmp(){
 
 
 
-    bool normalize = true;
+    bool normalize = false;
     bool from_fit = false;
     
     if(normalize){

@@ -159,7 +159,7 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 }
 
 void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
-        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool in_os_region=true, bool reweight = false){
+        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool reweight = false){
     TLorentzVector *lep_p=0;
     TLorentzVector *lep_m=0;
     Double_t pt;
@@ -214,7 +214,8 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
-            else pass = pass && !opp_sign;
+            else  pass = pass && !opp_sign;
+            //pass = pass && !opp_sign;
             if(pass){
                 double evt_reweight = 0.;
 
@@ -313,7 +314,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_pt);
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
-    //set_fakerate_errors(h_err, FR.h, h_cost);
+    set_fakerate_errors(h_err, FR.h, h_cost);
     if(reweight){
         fakes_costrw_helper h_rw;
         setup_fakes_costrw_helper(&h_rw, year);
@@ -327,8 +328,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     //if(ss && flag1 != FLAG_MUONS){
     if(ss){
         float scaling = 1.0;
-        if(in_os_region) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
-        else scaling = tot_weight_ss / (tot_weight_ss + tot_weight_os);
+        scaling = tot_weight_ss / (tot_weight_ss + tot_weight_os);
         printf("Scaling is %.2f \n", scaling);
         h_m->Scale(scaling);
         h_pt->Scale(scaling);

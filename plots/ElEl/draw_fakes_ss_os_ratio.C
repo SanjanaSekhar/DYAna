@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_ELECTRONS;
-int year = 2016;
+int year = 2018;
 char *plot_dir = "Misc_plots/";
 
 
@@ -47,19 +47,17 @@ void draw_fakes_ss_os_ratio(){
 
     bool cost_reweight = false;
     
-    bool in_os_region = true;
     bool ss = false;
 
     float m_low = 150.;
     float m_high = 10000.;
 
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, os_fakes_cost, dummy,dummy,dummy,dummy, type, year, m_low, m_high, ss, in_os_region, cost_reweight);
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, os_fakes_cost, dummy,dummy,dummy,dummy, type, year, m_low, m_high, ss,  cost_reweight);
 
     dummy->Reset();
 
-    in_os_region = false;
     ss = true;
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, ss_fakes_cost, dummy,dummy,dummy,dummy, type, year, m_low, m_high, ss, in_os_region, cost_reweight);
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, ss_fakes_cost, dummy,dummy,dummy,dummy, type, year, m_low, m_high, ss,  cost_reweight);
 
     symmetrize1d(os_fakes_cost);
 

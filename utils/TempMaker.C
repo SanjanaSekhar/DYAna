@@ -94,6 +94,7 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("prefire_SF", &prefire_SF);
         t_in->SetBranchAddress("prefire_SF_up", &prefire_SF_up);
         t_in->SetBranchAddress("prefire_SF_down", &prefire_SF_down);
+        t_in->SetBranchAddress("top_ptrw", &top_ptrw);
 
         if(do_muons || do_emu){
             if(is_gen_level){
@@ -415,7 +416,7 @@ float TempMaker::getEvtWeight(){
         //printf("sys is %.4f  \n", *systematic);
         *systematic = 1.;
     }
-    double base_weight = gen_weight * (*systematic) * pu_SF;
+    double base_weight = gen_weight * (*systematic) * pu_SF * top_ptrw;
     if(do_btag_sys != 0){
 #ifndef STAND_ALONE
         jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
