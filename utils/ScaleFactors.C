@@ -569,25 +569,25 @@ void setup_RF_pdf_norm_helper(RF_pdf_norm_helper *h, int year){
     for (int i=0; i< n_m_bins; i++){
         for (int j=0; j< n_pt_bins; j++){
 
-            h->h_R_up = (TH1F *) f->Get("h_R_up")->Clone();
+            h->h_R_up = (TProfile *) f->Get("h_R_up")->Clone();
             h->h_R_up->SetDirectory(0);
-            h->h_F_up = (TH1F *) f->Get("h_F_up")->Clone();
+            h->h_F_up = (TProfile *) f->Get("h_F_up")->Clone();
             h->h_F_up->SetDirectory(0);
-            h->h_RF_up = (TH1F *) f->Get("h_RF_up")->Clone();
+            h->h_RF_up = (TProfile *) f->Get("h_RF_up")->Clone();
             h->h_RF_up->SetDirectory(0);
 
-            h->h_R_down = (TH1F *) f->Get("h_R_down")->Clone();
+            h->h_R_down = (TProfile *) f->Get("h_R_down")->Clone();
             h->h_R_down->SetDirectory(0);
-            h->h_F_down = (TH1F *) f->Get("h_F_down")->Clone();
+            h->h_F_down = (TProfile *) f->Get("h_F_down")->Clone();
             h->h_F_down->SetDirectory(0);
-            h->h_RF_down = (TH1F *) f->Get("h_RF_down")->Clone();
+            h->h_RF_down = (TProfile *) f->Get("h_RF_down")->Clone();
             h->h_RF_down->SetDirectory(0);
 
             char title[100];
-            for(int k = 0; k++; k<60){
+            for(int k = 0; k<60; k++){
                 sprintf(title, "h_pdf%i", k);
                 h->h_pdfs[k] = (TProfile *) f->Get(title);
-                h->h_pdfs[k] ->SetDirectory(0);
+                h->h_pdfs[k]->SetDirectory(0);
             }
 
 

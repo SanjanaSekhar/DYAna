@@ -204,7 +204,7 @@ void setup_all_SFs(int year){
     setup_LQ_rw_helper(&LQ_helper, year);
     setup_ptrw_helper(&ptrw_SFs, year);
     setup_emu_costrw_helper(&emu_costrw, year);
-    setup_RF_pdf_norm_helper(RF_pdf_helper, year);
+    setup_RF_pdf_norm_helper(&RF_pdf_helper, year);
 }
 
 #endif

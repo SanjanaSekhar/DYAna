@@ -72,7 +72,6 @@ void TempMaker::setup(){
             t_in->SetBranchAddress("inc_id1", &inc_id1);
             t_in->SetBranchAddress("inc_id2", &inc_id2);
             t_in->SetBranchAddress("cost_st", &cost_st);
-            t_in->SetBranchAddress("evt_pdfweight", &evt_pdfweight);
             t_in->SetBranchAddress("pdf_weights", &pdf_weights);
         }
         t_in->SetBranchAddress("nJets", &nJets);
@@ -369,23 +368,23 @@ void TempMaker::doCorrections(){
 
 }
 
-void TempMaker::fixRFpdfNorm(TH2 *h, int mbin, int year){
+void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     double avg = 1.;
 
     double *h_RF_up, *h_RF_down, *h_R_up, *h_R_down, *h_F_up, *h_F_down;
 
 
-    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_RF_up->GetBinContent(mbin+1);
-    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = RF_pdf_norm_helper->h_RF_down->GetBinContent(mbin+1);
-    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_R_up->GetBinContent(mbin+1);
-    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = RF_pdf_norm_helper->h_R_down->GetBinContent(mbin+1);
-    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_F_up->GetBinContent(mbin+1);
-    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_norm_helper->h_F_down->GetBinContent(mbin+1);
-    else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
-    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 2. -  RF_pdf_norm_helper->h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_RF_up->GetBinContent(mbin+1);
+    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_RF_down->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_R_up->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_R_down->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_F_up->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_F_down->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 2. -  RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
 
     if(avg != 1.){
-        printf("Sys label was %s, mbin %i correcting average weight by %.3f \n", sys_label.c_str(), mbin, 1./avg);
+        printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
     }
     h->Scale(1./avg);
 }

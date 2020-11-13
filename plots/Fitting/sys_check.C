@@ -14,15 +14,15 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2017;
+        int year = 2016;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_elIDBARPTLOW";
+        char *sys = "_pdf10";
         bool do_bkg = false;
         bool do_qcd = false;
         bool do_electrons = true;
         bool do_muons = false;
-        int i = 4;
+        int i = 0;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
