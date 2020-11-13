@@ -7,12 +7,14 @@ from optparse import OptionGroup
 
 years = [2016, 2017,2018]
 #prefixes = ["ElEl", "MuMu"]
-prefixes = ["EMu"]
-#labels = ["dy", "wt", "ttbar", "diboson"]
+#prefixes = ["EMu"]
+years = [2018]
+prefixes = ["MuMu"]
+labels = ["dy", "wt", "ttbar", "diboson", "phot_ind"]
 #labels = ["dy"]
-labels = ["data"]
+#labels = ["data"]
 ending = "_nov11"
-redo_fakes = False
+redo_fakes = True
 
 for year in years:
     for prefix in prefixes:

@@ -10,6 +10,8 @@ TempMaker::TempMaker(TTree *t, bool isdata=false, int y  = 2016){
 
 void TempMaker::setup(){
 
+
+
     nEntries  =  t_in->GetEntries();
     if(year == 2016) el_lumi=el_lumi16;
     if(year == 2017) el_lumi=el_lumi17;
@@ -173,8 +175,11 @@ void TempMaker::setup(){
 void TempMaker::setup_systematic(const string &s_label){
     sys_label = s_label;
 
+
     if(!sys_label.empty()){
         //doing some systematic
+
+
         if(sys_label.find("Up") != string::npos){
             sys_shift = 1;
         }
@@ -364,34 +369,20 @@ void TempMaker::doCorrections(){
 
 }
 
-void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
+void TempMaker::fixRFpdfNorm(TH2 *h, int mbin, int year){
     double avg = 1.;
 
     double *h_RF_up, *h_RF_down, *h_R_up, *h_R_down, *h_F_up, *h_F_down;
-    if(year == 2016){
-        h_RF_up = h_RF_up16;
-        h_RF_down = h_RF_down16;
-        h_F_up = h_F_up16;
-        h_F_down = h_F_down16;
-        h_R_up = h_R_up16;
-        h_R_down = h_R_down16;
-    }
-    else{
-        h_RF_up = h_RF_up17;
-        h_RF_down = h_RF_down17;
-        h_F_up = h_F_up17;
-        h_F_down = h_F_down17;
-        h_R_up = h_R_up17;
-        h_R_down = h_R_down17;
-    }
 
 
-    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = h_RF_up[mbin];
-    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = h_RF_down[mbin];
-    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = h_R_up[mbin];
-    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = h_R_down[mbin];
-    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = h_F_up[mbin];
-    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = h_F_down[mbin];
+    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_RF_up->GetBinContent(mbin+1);
+    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = RF_pdf_norm_helper->h_RF_down->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_R_up->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = RF_pdf_norm_helper->h_R_down->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_F_up->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_norm_helper->h_F_down->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_norm_helper->h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 2. -  RF_pdf_norm_helper->h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
 
     if(avg != 1.){
         printf("Sys label was %s, mbin %i correcting average weight by %.3f \n", sys_label.c_str(), mbin, 1./avg);

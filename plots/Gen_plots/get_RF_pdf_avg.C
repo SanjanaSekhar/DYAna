@@ -73,7 +73,7 @@ void fill_RF_pdf_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfi
             h_R_up->Fill(m, mu_R_up, gen_weight);
             h_F_up->Fill(m, mu_F_up, gen_weight);
             h_RF_up->Fill(m, mu_RF_up, gen_weight);
-            for(int i=0; i++; i<n_pdfs){
+            for(int i=0; i<n_pdfs; i++){
                 pdfs[i]->Fill(m, pdf_weights[i], gen_weight);
             }
 
@@ -89,9 +89,9 @@ void fill_RF_pdf_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfi
 
 void get_RF_pdf_avg(){
     setTDRStyle();
-    const int year = 2018;
-    char *out_file = "../analyze/SFs/2018/RF_pdf_weights.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_aug4.root");
+    const int year = 2017;
+    char *out_file = "../analyze/SFs/2016/RF_pdf_weights.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_nov13.root");
     const bool write_out = true;
 
     TTree *t_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -126,6 +126,7 @@ void get_RF_pdf_avg(){
     print_profile(h_F_down, n_m_bins);
     print_profile(h_RF_up, n_m_bins);
     print_profile(h_RF_down, n_m_bins);
+    print_profile(h_pdfs[10], n_m_bins);
 
     if(write_out){
         TFile *f_out = TFile::Open(out_file, "RECREATE");
@@ -135,6 +136,10 @@ void get_RF_pdf_avg(){
         h_R_down->Write();
         h_F_down->Write();
         h_RF_down->Write();
+        for(int i=0; i<n_pdfs; i++){
+            h_pdfs[i]->Write();
+        }
+    
         f_out->Close();
     }
 

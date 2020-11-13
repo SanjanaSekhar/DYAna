@@ -85,6 +85,18 @@ typedef struct{
     TH3D *h_el_down;
 } LQ_rw_helper;
 
+typedef struct{
+    TProfile *h_F_up;
+    TProfile *h_R_up;
+    TProfile *h_RF_up;
+    TProfile *h_F_down;
+    TProfile *h_R_down;
+    TProfile *h_RF_down;
+    TProfile *h_pdfs[60];
+} RF_pdf_norm_helper;
+
+    
+
 
 double get_var(Float_t vals[100]){
     float mean(0.), var(0.);
@@ -545,6 +557,44 @@ void setup_A0_helper(A0_helpers *h, int year){
         }
     }
 }
+
+
+
+void setup_RF_pdf_norm_helper(RF_pdf_norm_helper *h, int year){
+    TFile *f;
+
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/RF_pdf_weights.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/RF_pdf_weights.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/RF_pdf_weights.root");
+    for (int i=0; i< n_m_bins; i++){
+        for (int j=0; j< n_pt_bins; j++){
+
+            h->h_R_up = (TH1F *) f->Get("h_R_up")->Clone();
+            h->h_R_up->SetDirectory(0);
+            h->h_F_up = (TH1F *) f->Get("h_F_up")->Clone();
+            h->h_F_up->SetDirectory(0);
+            h->h_RF_up = (TH1F *) f->Get("h_RF_up")->Clone();
+            h->h_RF_up->SetDirectory(0);
+
+            h->h_R_down = (TH1F *) f->Get("h_R_down")->Clone();
+            h->h_R_down->SetDirectory(0);
+            h->h_F_down = (TH1F *) f->Get("h_F_down")->Clone();
+            h->h_F_down->SetDirectory(0);
+            h->h_RF_down = (TH1F *) f->Get("h_RF_down")->Clone();
+            h->h_RF_down->SetDirectory(0);
+
+            char title[100];
+            for(int k = 0; k++; k<60){
+                sprintf(title, "h_pdf%i", k);
+                h->h_pdfs[k] = (TProfile *) f->Get(title);
+                h->h_pdfs[k] ->SetDirectory(0);
+            }
+
+
+        }
+    }
+}
+
 
 void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     TFile *f;
