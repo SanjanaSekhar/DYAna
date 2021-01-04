@@ -17,12 +17,12 @@ void sys_check(){
         int year = 2016;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_pdf10";
+        char *sys = "_ptrw1b16";
         bool do_bkg = false;
         bool do_qcd = false;
         bool do_electrons = true;
         bool do_muons = false;
-        int i = 0;
+        int i = 1;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");

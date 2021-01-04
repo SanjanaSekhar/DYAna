@@ -24,7 +24,7 @@
 #include "../../utils/HistUtils.C"
 #include "../../utils/PlotUtils.C"
 
-int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, TH3D *h_2d_up, TH3D *h_2d_down, float m_low, float m_high){
+int make_amc_gen_cost(TTree *t_gen, TH3D *h_3d, TH3D *h_3d_up, TH3D *h_3d_down, float m_low, float m_high){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
@@ -63,13 +63,16 @@ int make_amc_gen_cost(TTree *t_gen, TH3D *h_2d, TH3D *h_2d_up, TH3D *h_2d_down, 
             float my_cost = cost_st;
             
             //fill in units of pb
-            h_2d->Fill(m, rap, my_cost, gen_weight);
+            h_3d->Fill(m, rap,  my_cost, 0.5*gen_weight);
+            h_3d->Fill(m, rap, -my_cost, 0.5*gen_weight);
 
             if(abs(inc_id1) == 1 && abs(inc_id2) == 1 && inc_id1 * inc_id2 < 0){ //d dbar
-                h_2d_down->Fill(m, rap, my_cost, gen_weight);
+                h_3d_down->Fill(m, rap,  my_cost, 0.5*gen_weight);
+                h_3d_down->Fill(m, rap, -my_cost, 0.5*gen_weight);
             }
             if(abs(inc_id1) == 2 && abs(inc_id2) == 2 && inc_id1 * inc_id2 < 0){ //u ubar
-                h_2d_up->Fill(m, rap,my_cost, gen_weight);
+                h_3d_up->Fill(m, rap,  my_cost, 0.5* gen_weight);
+                h_3d_up->Fill(m, rap, -my_cost, 0.5* gen_weight);
             }
 
 
@@ -97,7 +100,7 @@ void normalize(TH3D *h){
 
                 h->SetBinContent(i,j,k, new_content);
                 h->SetBinError(i,j,k, new_err);
-                if(content < 1e-6 || new_content < 0. || content * 1.5 < err){
+                if(content < 1e-12 || new_content < 0. || content * 1.5 < err){
                     printf("WARNING bin %i %i (m = %.0f) has content %.3e +/- %.3e \n", i,j, h->GetXaxis()->GetBinCenter(i), content, err);
                 }
 
@@ -112,8 +115,8 @@ void normalize(TH3D *h){
 void LQ_rw_denom(){
 
     bool write_out = true;
-    char *out_file = "../analyze/SFs/2018/LQ_rw.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_aug4.root");
+    char *out_file = "../analyze/SFs/2016/LQ_rw.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_aug4.root");
 
     TFile * f_out;
     if(write_out)
@@ -144,13 +147,10 @@ void LQ_rw_denom(){
     float m_LQ_bins[] = {350., 375., 400., 425., 450., 475., 500., 525., 550., 575., 600., 625., 650., 700., 750., 800., 850., 900., 950., 1000.,  1100.,  
         1200.,  1300., 1400.,  1600.,  1800.,  2000.,  2500.,   3000., };
 
-    TH3D *h_mu = new TH3D("h_mu", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,    n_cost_bins, cost_bins);
-    TH3D *h_el = new TH3D("h_el", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+    TH3D *h = new TH3D("h", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,    n_cost_bins, cost_bins);
 
-    TH3D *h_mu_up = new TH3D("h_mu_up", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,   n_cost_bins, cost_bins);
-    TH3D *h_el_up = new TH3D("h_el_up", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
-    TH3D *h_mu_down = new TH3D("h_mu_down", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
-    TH3D *h_el_down = new TH3D("h_el_down", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
+    TH3D *h_up = new TH3D("h_up", "", n_LQ_m_bins, m_LQ_bins, n_rap_bins, rap_bins,   n_cost_bins, cost_bins);
+    TH3D *h_down = new TH3D("h_down", "", n_LQ_m_bins, m_LQ_bins,   n_rap_bins, rap_bins, n_cost_bins, cost_bins);
 
     TH1D *h_1d = new TH1D("h1", "", n_cost_bins, cost_bins);
 
@@ -159,8 +159,8 @@ void LQ_rw_denom(){
     float m_low = m_LQ_bins[0];
     float m_high = 14000.;
 
-    make_amc_gen_cost(t_gen_mu,  h_mu, h_mu_up, h_mu_down, m_low,m_high);
-    make_amc_gen_cost(t_gen_el, h_el, h_el_up, h_el_down, m_low, m_high);
+    make_amc_gen_cost(t_gen_mu,  h, h_up, h_down, m_low,m_high);
+    make_amc_gen_cost(t_gen_el, h, h_up, h_down,  m_low, m_high);
     
     /*
     TH1D *h_el_cost_pre = h_el->ProjectionY("h_el_cost_pre", 10,10);
@@ -168,13 +168,10 @@ void LQ_rw_denom(){
     make_ratio_plot("LQ_cos_theta_pre.png", h_el_cost_pre, "El",h_mu_cost_pre, "Mu", "El/Mu", "cos(#theta_{*})", false, true);
     */
 
-    normalize(h_mu);
-    normalize(h_el);
+    normalize(h);
 
-    normalize(h_mu_up);
-    normalize(h_el_up);
-    normalize(h_mu_down);
-    normalize(h_el_down);
+    normalize(h_up);
+    normalize(h_down);
     
     //h_el->Print("range");
 
@@ -197,12 +194,9 @@ void LQ_rw_denom(){
 
     if(write_out){
         f_out->cd();
-        h_mu->Write();
-        h_el->Write();
-        h_mu_up->Write();
-        h_el_up->Write();
-        h_mu_down->Write();
-        h_el_down->Write();
+        h->Write();
+        h_up->Write();
+        h_down->Write();
         f_out->Print();
         f_out->Close();
     }

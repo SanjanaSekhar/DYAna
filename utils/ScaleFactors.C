@@ -77,12 +77,9 @@ typedef struct{
 } emu_costrw_helper;
 
 typedef struct{
-    TH3D *h_mu;
-    TH3D *h_el;
-    TH3D *h_mu_up;
-    TH3D *h_el_up;
-    TH3D *h_mu_down;
-    TH3D *h_el_down;
+    TH3D *h;
+    TH3D *h_up;
+    TH3D *h_down;
 } LQ_rw_helper;
 
 typedef struct{
@@ -140,16 +137,13 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     TH3D *h_rw;
     rap = abs(rap);
     if(FLAG2 == 0){ // everything
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
-        else h_rw = h_LQ.h_el;
+        h_rw = h_LQ.h;
     }
     else if(FLAG2 == 1){ // down quarks
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
-        else h_rw = h_LQ.h_el_down;
+        h_rw = h_LQ.h_down;
     }
     else if(FLAG2 == 2){ // up quarks
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
-        else h_rw = h_LQ.h_el_up;
+        h_rw = h_LQ.h_up;
     }
     else{
         printf("Invalid LQ reweighting flag %i! Options are 0, 1 or 2 \n", FLAG2);
@@ -194,11 +188,11 @@ float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
     //one systematic for every |cos(theta)| bin (nbins / 2)
     if(systematic != 0){
         float stat_err = h_rw->GetBinError(bin);
-        //Low stat bins should not go crazy
-        stat_err = max(stat_err, 0.1f);
-        float sys_correction = h_rw->GetBinContent(bin);
-        float sys_err = 0.3 * std::fabs( sys_correction - 1.);
-        float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        //stat_err = max(stat_err, 0.1f); // low stat bins don't go crazy
+        //float sys_correction = h_rw->GetBinContent(bin);
+        //float sys_err = 0.3 * std::fabs( sys_correction - 1.);
+        //float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        float error = stat_err;
 
         int sys_bin = abs(systematic);
         int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;
@@ -242,7 +236,7 @@ float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0
         float stat_err = h_rw->GetBinError(sys_bin);
         //Low stat bins should not go crazy
         stat_err = max(stat_err, 0.1f);
-        float sys_correction = h_rw->GetBinContent(sys_bin);
+        //float sys_correction = h_rw->GetBinContent(sys_bin);
         //float sys_err = 0.2 * std::fabs( sys_correction - 1.);
         //float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
         float error = stat_err;
@@ -604,23 +598,18 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
 
 
-    h_lq->h_el = (TH3D *) f->Get("h_el")->Clone();
-    h_lq->h_el->SetDirectory(0);
 
-    h_lq->h_mu = (TH3D *) f->Get("h_mu")->Clone();
-    h_lq->h_mu->SetDirectory(0);
+    h_lq->h = (TH3D *) f->Get("h")->Clone();
+    h_lq->h->SetDirectory(0);
 
-    h_lq->h_el_up = (TH3D *) f->Get("h_el_up")->Clone();
-    h_lq->h_el_up->SetDirectory(0);
 
-    h_lq->h_mu_up = (TH3D *) f->Get("h_mu_up")->Clone();
-    h_lq->h_mu_up->SetDirectory(0);
+    h_lq->h_up = (TH3D *) f->Get("h_up")->Clone();
+    h_lq->h_up->SetDirectory(0);
 
-    h_lq->h_el_down = (TH3D *) f->Get("h_el_down")->Clone();
-    h_lq->h_el_down->SetDirectory(0);
 
-    h_lq->h_mu_down = (TH3D *) f->Get("h_mu_down")->Clone();
-    h_lq->h_mu_down->SetDirectory(0);
+    h_lq->h_down = (TH3D *) f->Get("h_down")->Clone();
+    h_lq->h_down->SetDirectory(0);
+
     f->Close();
 }
 

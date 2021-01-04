@@ -101,7 +101,9 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, TH2D *h_2d_up, TH2D *h_2d_down, 
 
             h_2d->Fill(m, my_cost, fill_weight);
 
-            if(abs(inc_id1) == 1 && abs(inc_id2) == 1 && inc_id1 * inc_id2 < 0){ //u ubar
+            //d is 1, u is 2
+
+            if(abs(inc_id1) == 1 && abs(inc_id2) == 1 && inc_id1 * inc_id2 < 0){ //d dbar
                 my_max = max(pdf_reweight, my_max);
                 h_cost->Fill(my_cost, fill_weight);
                 h_2d_up->Fill(m, my_cost, fill_weight);
@@ -109,7 +111,7 @@ int make_amc_gen_cost(TTree *t_gen, TH2D *h_2d, TH2D *h_2d_up, TH2D *h_2d_down, 
                 //printf("p1 %f p2 %f Q %.1f M %.1f Pz %.1f \n", x1 * E_BEAM, x2 * E_BEAM, sqrt(Q2), m, cm.Pz());
                 //printf("x1 %f x1p %f x2 %f x2p %f \n", x1, x1p, x2, x2p);
             }
-            if(abs(inc_id1) == 2 && abs(inc_id2) == 2 && inc_id1 * inc_id2 < 0){ //d dbar
+            if(abs(inc_id1) == 2 && abs(inc_id2) == 2 && inc_id1 * inc_id2 < 0){ //u ubar
                 my_max = max(pdf_reweight, my_max);
                 h_cost->Fill(my_cost, fill_weight);
                 h_2d_down->Fill(m, my_cost, fill_weight);

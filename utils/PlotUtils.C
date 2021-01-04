@@ -106,7 +106,7 @@ TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_labe
 
 
 TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
-        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5){
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = ""){
     //ratio is done as h1/h2
 
     unzero_bins(h1);
@@ -117,6 +117,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 
     h1->SetLineWidth(3);
     h2->SetLineWidth(3);
+
 
     TCanvas *c = new TCanvas(title.c_str(), "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad((title+"p1").c_str(), "pad1", 0.,0.3,0.98,1.);
@@ -130,6 +131,12 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     h1->Draw("hist E");
     gStyle->SetEndErrorSize(4);
     h2->Draw("hist E same");
+    auto *t = new TText(0., hmax * 0.9, plt_label); 
+    t->SetTextAlign(22); //centered
+    t->SetTextFont(42);
+    t->Draw("same");
+    c->cd();
+
 
 
     gStyle->SetLegendBorderSize(0);
