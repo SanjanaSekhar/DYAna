@@ -29,8 +29,8 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
-int year = 2018;
-bool write_out = false;
+int year = 2016;
+bool write_out = true;
 char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
 
 
@@ -122,14 +122,14 @@ void draw_samesign_cmp(){
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, DY_rap, false, type,   year, m_low, m_high, ss);
 
     bool cost_reweight = false;
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss  cost_reweight);
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss, cost_reweight);
 
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), diboson_m->Integral(), DY_m->Integral());
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_cost->Integral(), QCD_cost->Integral(), diboson_cost->Integral(), DY_cost->Integral());
 
     Double_t n_data = data_m->Integral();
     Double_t n_est = diboson_m->Integral() + QCD_m->Integral() + DY_m->Integral();
-    bool normalize = false;
+    bool normalize = true;
     
     if(normalize){
         Double_t n_data = data_m->Integral();

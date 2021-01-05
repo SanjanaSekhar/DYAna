@@ -109,7 +109,7 @@ void fit_gen_cost(){
     //TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
     TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
     TTree *t_gen1 = (TTree *)f1->Get("T_lhe");
-    int m_idx=0;
+    int m_idx=1;
 
 
     TH1F *h_cost = new TH1F("h_mad_cost", "", 20, -1., 1.);

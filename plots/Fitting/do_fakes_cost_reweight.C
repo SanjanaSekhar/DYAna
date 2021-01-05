@@ -44,7 +44,7 @@ void do_fakes_cost_reweight(){
     setTDRStyle();
     init(year);
     init_indv_bkgs(year);
-    gROOT->SetBatch(0);
+    gROOT->SetBatch(1);
 
 
 
@@ -53,21 +53,23 @@ void do_fakes_cost_reweight(){
     char h_name[100];
 
     TFile *f_out;
-    if(write_out) f_out = TFile::Open(out_file, "UPDATE");
+    if(write_out) f_out = TFile::Open(out_file, "RECREATE");
 
     int n_bins = 8;
 
     TH1F *mumu_data_cost = new TH1F("mumu_data_cost", "Data", n_bins, -1.,1.);
     TH1F *mumu_other_cost = new TH1F("mumu_diboson_cost", "DiBoson (WW, WZ,ZZ)", n_bins, -1.,1);
-    TH1F *mumu_QCD_cost = new TH1F("mumu_QCD_cost", "QCD", n_bins, -1.,1);
+    TH1F *mumu_QCD_ss_cost = new TH1F("mumu_QCD_ss_cost", "QCD", n_bins, -1.,1);
+    TH1F *mumu_QCD_os_cost = new TH1F("mumu_QCD_os_cost", "QCD", n_bins, -1.,1);
 
     TH1F *elel_data_cost = new TH1F("elel_data_cost", "Data", n_bins, -1.,1.);
     TH1F *elel_other_cost = new TH1F("elel_diboson_cost", "DiBoson (WW, WZ,ZZ)", n_bins, -1.,1);
-    TH1F *elel_QCD_cost = new TH1F("elel_QCD_cost", "QCD", n_bins, -1.,1);
+    TH1F *elel_QCD_ss_cost = new TH1F("elel_QCD_ss_cost", "QCD", n_bins, -1.,1);
+    TH1F *elel_QCD_os_cost = new TH1F("elel_QCD_os_cost", "QCD", n_bins, -1.,1);
 
     TH1F *dummy = new TH1F("h_dummy", "", 100, 0, 100);
 
-    int m_low = 150.;
+    int m_low = 170.;
     int m_high = 10000.;
     bool ss = true;
 
@@ -77,20 +79,45 @@ void do_fakes_cost_reweight(){
     make_m_cost_pt_xf_hist(t_mumu_ss_ttbar, dummy, mumu_other_cost, dummy, dummy, dummy, dummy, false, FLAG_MUONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, dummy, mumu_other_cost, dummy, dummy, dummy, dummy, false, FLAG_MUONS,   year, m_low, m_high, ss);
 
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, dummy, mumu_QCD_cost, dummy, dummy, dummy, dummy, FLAG_MUONS, year, m_low, m_high, ss );
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, dummy, mumu_QCD_ss_cost, dummy, dummy, dummy, dummy, FLAG_MUONS, year, m_low, m_high, true);
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, dummy, mumu_QCD_os_cost, dummy, dummy, dummy, dummy, FLAG_MUONS, year, m_low, m_high, false);
+    symmetrize1d(mumu_QCD_os_cost);
 
     sprintf(h_name, "mumu%i_ss_cost_data_sub", year % 2000);
     TH1F *h_mumu_data_sub = (TH1F *) mumu_data_cost->Clone(h_name);
     h_mumu_data_sub->Add(mumu_other_cost, -1);
 
 
-    TCanvas *c_mumu_plot = make_ratio_plot(string("mumu_ss_cost_comparison"), h_mumu_data_sub, "Data - Other Backgrounds", mumu_QCD_cost, "Fakes Estimate", "ratio", "samesign mumu cos(#theta)", logy, false);
+    TCanvas *c_mumu_plot = make_ratio_plot(string("mumu_ss_cost_comparison"), h_mumu_data_sub, "Data - Other Backgrounds", mumu_QCD_ss_cost, "Fakes Estimate", "ratio", "samesign mumu cos(#theta)", logy, false);
     sprintf(plot_file, "%sy%i_mumu_ss_cost_rw.png", plot_dir, year - 2000,  m_low);
     c_mumu_plot->Print(plot_file);
 
     sprintf(h_name, "mumu%i_ss_cost_ratio", year % 2000);
     TH1F *h_mumu_ratio = (TH1F *) h_mumu_data_sub->Clone(h_name);
-    h_mumu_ratio->Divide(mumu_QCD_cost);
+    h_mumu_ratio->Divide(mumu_QCD_ss_cost);
+
+    // Do systematic on shape from os to ss fakes est ratio
+    mumu_QCD_ss_cost->Scale(1./mumu_QCD_ss_cost->Integral());
+    mumu_QCD_os_cost->Scale(1./mumu_QCD_os_cost->Integral());
+
+    TCanvas *c_os_ss_mumu_plot = make_ratio_plot(string("mumu_ss_os_comparison"), mumu_QCD_os_cost, "OS Fakes Estimate", mumu_QCD_ss_cost, "SS Fakes Estimate", "OS/SS", 
+            "mumu cos(#theta)", logy, false, 0.0,2.0);
+    sprintf(plot_file, "%sy%i_mumu_os_ss_cost_ratio.png", plot_dir, year - 2000,  m_low);
+    c_os_ss_mumu_plot->Print(plot_file);
+
+
+    h_mumu_ratio->Print("range");
+    printf("Adding sys errors from os/ss ratio \n");
+    for(int bin = 1; bin<=n_bins; bin++){
+        float corr = h_mumu_ratio->GetBinContent(bin);
+        float ss_cont  = mumu_QCD_ss_cost->GetBinContent(bin);
+        float os_cont  = mumu_QCD_os_cost->GetBinContent(bin);
+        float sys = (fabs(os_cont - ss_cont) / os_cont) * fabs(1. - corr);
+        float stat = h_mumu_ratio->GetBinError(bin);
+        float tot = pow(sys*sys + stat*stat, 0.5);
+        h_mumu_ratio->SetBinError(bin, tot);
+    }
+    h_mumu_ratio->Print("range");
 
 
     dummy->Reset();
@@ -101,26 +128,50 @@ void do_fakes_cost_reweight(){
     make_m_cost_pt_xf_hist(t_elel_ss_ttbar, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_dy, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
 
-    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, elel_QCD_cost, dummy, dummy, dummy, dummy, FLAG_ELECTRONS, year, m_low, m_high, ss );
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, elel_QCD_ss_cost, dummy, dummy, dummy, dummy, FLAG_ELECTRONS, year, m_low, m_high, true );
+    make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, elel_QCD_os_cost, dummy, dummy, dummy, dummy, FLAG_ELECTRONS, year, m_low, m_high, false );
+    symmetrize1d(elel_QCD_os_cost);
 
     sprintf(h_name, "elel%i_ss_cost_data_sub", year % 2000);
     TH1F *h_elel_data_sub = (TH1F *) elel_data_cost->Clone(h_name);
     h_elel_data_sub->Add(elel_other_cost, -1);
 
 
-    TCanvas *c_elel_plot = make_ratio_plot(string("elel_ss_cost_comparison"), h_elel_data_sub, "Data - Other Backgrounds", elel_QCD_cost, "Fakes Estimate", "ratio", "samesign ee cos(#theta)", logy, false);
-    sprintf(plot_file, "%sy%i_elel_ss_cost_rw.png", plot_dir, year - 2000,  m_low);
+    TCanvas *c_elel_plot = make_ratio_plot(string("elel_ss_cost_comparison"), h_elel_data_sub, "Data - Other Backgrounds", elel_QCD_ss_cost, "Fakes Estimate", "ratio", "samesign ee cos(#theta)", logy, false);
+    sprintf(plot_file, "%sy%i_elel_ss_cost_rw.png", plot_dir, year - 2000);
     c_elel_plot->Print(plot_file);
 
     sprintf(h_name, "elel%i_ss_cost_ratio", year % 2000);
     TH1F *h_elel_ratio = (TH1F *) h_elel_data_sub->Clone(h_name);
-    h_elel_ratio->Divide(elel_QCD_cost);
+    h_elel_ratio->Divide(elel_QCD_ss_cost);
+
+    // Do systematic on shape from os to ss fakes est ratio
+    elel_QCD_ss_cost->Scale(1./elel_QCD_ss_cost->Integral());
+    elel_QCD_os_cost->Scale(1./elel_QCD_os_cost->Integral());
+
+    TCanvas *c_os_ss_elel_plot = make_ratio_plot(string("elel_ss_os_comparison"), elel_QCD_os_cost, "OS Fakes Estimate", elel_QCD_ss_cost, "SS Fakes Estimate", 
+            "OS/SS", "elel cos(#theta)", logy, false, 0.0, 2.0);
+    sprintf(plot_file, "%sy%i_elel_os_ss_cost_ratio.png", plot_dir, year - 2000);
+    c_os_ss_elel_plot->Print(plot_file);
+
+
     h_elel_ratio->Print("range");
+    printf("Adding sys errors from os/ss ratio \n");
+    for(int bin = 1; bin<=n_bins; bin++){
+        float corr = h_elel_ratio->GetBinContent(bin);
+        float ss_cont  = elel_QCD_ss_cost->GetBinContent(bin);
+        float os_cont  = elel_QCD_os_cost->GetBinContent(bin);
+        float sys = (fabs(os_cont - ss_cont) / os_cont) * fabs(1. - corr);
+        float stat = h_elel_ratio->GetBinError(bin);
+        float tot = pow(sys*sys + stat*stat, 0.5);
+        h_elel_ratio->SetBinError(bin, tot);
+    }
+    h_elel_ratio->Print("range");
+
 
     if(write_out){
         f_out->cd();
         printf("Writing out \n");
-        f_out->Print();
         h_mumu_ratio->Write();
         h_elel_ratio->Write();
         h_elel_data_sub->Write();

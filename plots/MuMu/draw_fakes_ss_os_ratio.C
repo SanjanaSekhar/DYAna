@@ -75,12 +75,6 @@ void draw_fakes_ss_os_ratio(){
 
 
 
-    bool scale_error=false;
-    float qcd_err = 0.5;
-    float diboson_err = 0.05;
-    bool add_err = true;
-
-    
 
 
     char plot_file[100];

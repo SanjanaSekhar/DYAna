@@ -421,8 +421,7 @@ float TempMaker::getEvtWeight(){
     }
 
     if(do_ptrw){
-        if(do_muons) base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, FLAG_MUONS, do_ptrw_sys); 
-        if(do_electrons) base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, FLAG_ELECTRONS, do_ptrw_sys); 
+        base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, do_ptrw_sys); 
     }
 
     if(year < 2018 && (do_electrons || do_emu)){
@@ -432,7 +431,7 @@ float TempMaker::getEvtWeight(){
     }
 
     if(do_emu_costrw){
-        base_weight *= get_emu_costrw_SF(emu_costrw.rw, cost, do_emu_costrw_sys);
+        base_weight *= get_emu_costrw_SF(emu_costrw, cost, m, do_emu_costrw_sys);
     }
 
 
@@ -558,9 +557,9 @@ void fakes_cost_reweight(TH2 *h_fakes, TH1 *h_rw, int systematic = 0){
 
             //one systematic for every |cos(theta)| bin (nbins / 2)
             if(systematic != 0){
-                float stat_err = h_rw->GetBinError(j);
-                float sys_err = 0.5 * std::fabs( correction - 1.);
-                float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+
+                //error includes sys and stat errors
+                float error = h_rw->GetBinError(j);
 
                 int sys_bin = abs(systematic);
                 int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;

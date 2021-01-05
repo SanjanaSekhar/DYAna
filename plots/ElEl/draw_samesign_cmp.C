@@ -29,8 +29,8 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-int year = 2018;
-bool write_out = false;
+int year = 2016;
+bool write_out = true;
 char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
 
 
@@ -133,7 +133,7 @@ void draw_samesign_cmp(){
 
 
 
-    bool normalize = false;
+    bool normalize = true;
     bool from_fit = false;
     
     if(normalize){

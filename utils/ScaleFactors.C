@@ -73,7 +73,9 @@ typedef struct{
 } fakes_costrw_helper;
 
 typedef struct{
-    TH1F *rw;
+    TH1F *rw_mbin0;
+    TH1F *rw_mbin1;
+    TH1F *rw_mbin2;
 } emu_costrw_helper;
 
 typedef struct{
@@ -182,7 +184,17 @@ float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int sys
 }
 
 
-float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
+float get_emu_costrw_SF(emu_costrw_helper h, float cost, float m, int systematic = 0){
+    int m_bin = find_bin(emu_rw_m_bins, m);
+    TH1F *h_rw;
+    if(m_bin == 0) h_rw = h.rw_mbin0;
+    else if(m_bin == 1) h_rw = h.rw_mbin1;
+    else if(m_bin == 2) h_rw = h.rw_mbin2;
+    else{
+        printf("EMu mbin lookup error for rw. mbin %i, m %.1f \n", m_bin, m);
+        exit(1);
+    }
+
     int bin = h_rw->FindBin(cost);
     float correction = h_rw->GetBinContent(bin);
     //one systematic for every |cos(theta)| bin (nbins / 2)
@@ -211,7 +223,7 @@ float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
 
 
 
-float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0){
+float get_ptrw_SF(ptrw_helper h, float m, float pt, int systematic = 0){
     TH1F *h_rw, *h_N;
     if(m > m_bins[n_m_bins-2]) m = m_bins[n_m_bins-2] - 0.1;
     int m_bin = find_bin(m_bins, m);
@@ -650,10 +662,17 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/emu_cost_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/emu_cost_rw.root");
     char name[100];
-    sprintf(name, "emu%i_cost_ratio", year % 2000);
-    h->rw = (TH1F *) f->Get(name)->Clone();
-    h->rw->SetDirectory(0);
+    sprintf(name, "emu%i_mbin0_cost_ratio", year % 2000);
+    h->rw_mbin0 = (TH1F *) f->Get(name)->Clone();
+    h->rw_mbin0->SetDirectory(0);
 
+    sprintf(name, "emu%i_mbin1_cost_ratio", year % 2000);
+    h->rw_mbin1 = (TH1F *) f->Get(name)->Clone();
+    h->rw_mbin1->SetDirectory(0);
+    
+    sprintf(name, "emu%i_mbin2_cost_ratio", year % 2000);
+    h->rw_mbin2 = (TH1F *) f->Get(name)->Clone();
+    h->rw_mbin2->SetDirectory(0);
 }
 
 

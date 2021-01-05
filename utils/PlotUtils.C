@@ -135,17 +135,17 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     t->SetTextAlign(22); //centered
     t->SetTextFont(42);
     t->Draw("same");
-    c->cd();
 
 
 
     gStyle->SetLegendBorderSize(0);
-    //TLegend *leg1 = new TLegend(0.2, 0.2);
-    TLegend *leg1 = new TLegend(0.7, 0.7, 0.9, 0.9);
+    TLegend *leg1 = new TLegend(0.4, 0.3);
+    //TLegend *leg1 = new TLegend(0.4, 0.55, 0.75, 0.8);
     leg1->AddEntry(h1, h1_label, "l");
     leg1->AddEntry(h2, h2_label, "l");
     leg1->Draw();
 
+    c->cd();
     //gPad->BuildLegend();
     c->cd();
     TPad *pad2 = new TPad((title+"p2").c_str(), "pad2", 0.,0,.98,0.3);

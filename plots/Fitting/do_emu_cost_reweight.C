@@ -44,7 +44,7 @@ void do_emu_cost_reweight(){
     setTDRStyle();
     init_emu(year);
     init_emu_indv_bkgs(year);
-    gROOT->SetBatch(0);
+    gROOT->SetBatch(1);
 
 
 
@@ -65,62 +65,64 @@ void do_emu_cost_reweight(){
     TH1F *dummy = new TH1F("h_dummy", "", 100, 0, 100);
 
 
-    int n_emu_m_bins = 1;
-    int emu_m_bins[] = {150, 10000};
     bool ss = false;
 
-    //for(int i=0; i < n_emu_m_bins; i++){
-    emu_data_cost->Reset();
-    emu_bkg_cost->Reset();
-    emu_dy_cost->Reset();
-    emu_QCD_cost->Reset();
+    for(int mbin = 0; mbin < n_emu_rw_m_bins; mbin++){
+        emu_data_cost->Reset();
+        emu_bkg_cost->Reset();
+        emu_dy_cost->Reset();
+        emu_QCD_cost->Reset();
 
-    int m_low = 150.;
-    int m_high = 100000.;
-
-
-
-    make_emu_m_cost_pt_rap_hist(t_emu_data, dummy, emu_data_cost, dummy,   dummy, true,   year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, dummy, emu_bkg_cost, dummy,  dummy, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_diboson, dummy, emu_bkg_cost, dummy, dummy, false,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_wt, dummy, emu_bkg_cost, dummy,dummy, false,   year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_dy, dummy, emu_dy_cost, dummy, dummy, false,   year, m_low, m_high, ss);
-
-
-    bool fakes_reweight = true;
-    dummy->Reset();
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, dummy, emu_QCD_cost, dummy, dummy, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
-
-    symmetrize1d(emu_bkg_cost);
-    symmetrize1d(emu_QCD_cost);
-
-
-    sprintf(h_name, "emu%i_cost_data_sub", year % 2000);
-    TH1F *h_emu_data_sub = (TH1F *) emu_data_cost->Clone(h_name);
-    h_emu_data_sub->Add(emu_dy_cost, -1);
-    h_emu_data_sub->Add(emu_QCD_cost, -1);
-
-    symmetrize1d(h_emu_data_sub);
+        float m_low = emu_rw_m_bins[mbin];
+        float m_high = emu_rw_m_bins[mbin+1];
 
 
 
-
-    TCanvas *c_emu_plot = make_ratio_plot(string("emu_cost_comparison"), h_emu_data_sub, "Data - Other Backgrounds", emu_bkg_cost, "ttbar + tW + diboson MC Estimate", "ratio", "e#mu cos(#theta)", logy, false);
-    sprintf(plot_file, "%sy%i_emu_cost_rw.png", plot_dir, year - 2000);
-    c_emu_plot->Print(plot_file);
-
-    sprintf(h_name, "emu%i_cost_ratio", year % 2000);
-    TH1F *h_emu_ratio = (TH1F *) h_emu_data_sub->Clone(h_name);
-    h_emu_ratio->Divide(emu_bkg_cost);
+        make_emu_m_cost_pt_rap_hist(t_emu_data, dummy, emu_data_cost, dummy,   dummy, true,   year, m_low, m_high, ss);
+        make_emu_m_cost_pt_rap_hist(t_emu_ttbar, dummy, emu_bkg_cost, dummy,  dummy, false,  year, m_low, m_high, ss);
+        make_emu_m_cost_pt_rap_hist(t_emu_diboson, dummy, emu_bkg_cost, dummy, dummy, false,  year, m_low, m_high, ss);
+        make_emu_m_cost_pt_rap_hist(t_emu_wt, dummy, emu_bkg_cost, dummy,dummy, false,   year, m_low, m_high, ss);
+        make_emu_m_cost_pt_rap_hist(t_emu_dy, dummy, emu_dy_cost, dummy, dummy, false,   year, m_low, m_high, ss);
 
 
+        bool fakes_reweight = false;
+        dummy->Reset();
+        Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, dummy, emu_QCD_cost, dummy, dummy, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
 
-    if(write_out){
-        f_out->cd();
-        printf("Writing out \n");
-        f_out->Print();
-        h_emu_ratio->Write();
-        h_emu_data_sub->Write();
+        symmetrize1d(emu_bkg_cost);
+        symmetrize1d(emu_QCD_cost);
+
+
+        char plt_title[200];
+        sprintf(plt_title, "%i: M %.0f-%0.f GeV", year, m_low, m_high);
+
+
+        sprintf(h_name, "emu%i_mbin%i_cost_data_sub", year % 2000, mbin);
+        TH1F *h_emu_data_sub = (TH1F *) emu_data_cost->Clone(h_name);
+        h_emu_data_sub->Add(emu_dy_cost, -1);
+        h_emu_data_sub->Add(emu_QCD_cost, -1);
+
+        symmetrize1d(h_emu_data_sub);
+
+
+
+
+        TCanvas *c_emu_plot = make_ratio_plot(string("emu_cost_comparison"), h_emu_data_sub, "Data - Other Backgrounds", emu_bkg_cost, "ttbar + tW + diboson MC Estimate", "ratio", "e#mu cos(#theta)", logy, false, 0.5, 1.5, plt_title);
+        sprintf(plot_file, "%sy%i_m%i_emu_cost_rw.png", plot_dir, year - 2000, mbin);
+        c_emu_plot->Print(plot_file);
+
+        sprintf(h_name, "emu%i_mbin%i_cost_ratio", year % 2000, mbin);
+        TH1F *h_emu_ratio = (TH1F *) h_emu_data_sub->Clone(h_name);
+        h_emu_ratio->Divide(emu_bkg_cost);
+
+
+
+        if(write_out){
+            f_out->cd();
+            printf("Writing out \n");
+            f_out->Print();
+            h_emu_ratio->Write();
+            h_emu_data_sub->Write();
+        }
     }
-    //}
 }
