@@ -111,7 +111,7 @@ void make_qcd_templates(int year, const string &sys_label){
         TH2F* h_mumu_qcd = new TH2F(title, "Fakes template",
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_qcd->SetDirectory(0);
-        bool incl_ss = false;
+        bool incl_ss = true;
         bool ss_binning = false;
         float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
         printf("making ElEl fakes template \n");
