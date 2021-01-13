@@ -8,6 +8,33 @@
 using namespace std;
 
 
+void symmetrize2d(TH2F *h_2d){
+    int n_xf_bins = h_2d->GetNbinsX();
+    int n_cost_bins = h_2d->GetNbinsY();
+
+    for(int i=1; i<=n_xf_bins; i++){
+        for(int j=1; j<= n_cost_bins/2; j++){
+            float content = h_2d->GetBinContent(i,j);
+            float error = h_2d->GetBinError(i,j);
+
+            int opp_j = (n_cost_bins + 1) -j;
+            float content2 = h_2d->GetBinContent(i,opp_j);
+            float error2 = h_2d->GetBinError(i,opp_j);
+
+            float new_content = (content + content2)/2.0;
+            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
+            h_2d->SetBinContent(i,j, new_content);
+            h_2d->SetBinContent(i,opp_j, new_content);
+
+            h_2d->SetBinError(i,j, new_error);
+            h_2d->SetBinError(i,opp_j, new_error);
+
+
+        }
+    }
+}
+
+
 void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
     //avoid negative pdfs by fixing up template edges
     int n_xf_bins = h_sym->GetNbinsX();
@@ -36,17 +63,6 @@ void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
     }
 }
 
-void fixup_stat_err(TH2F *h){
-    //Templates made by using each event twice. Artificially increases stats,
-    //should increase stat uncertainty on each bin by sqrt(2)
-    for(int i=0; i<= h->GetNbinsX()+1; i++){
-        for(int j=0; j<= h->GetNbinsY()+1; j++){
-            float err = h->GetBinError(i,j);
-            float new_err = err * sqrt(2);
-            h->SetBinError(i,j,new_err);
-        }
-    }
-}
 
 
 void cleanup_template(TH2F *h){
@@ -82,40 +98,33 @@ void cleanup_fakes_template(TH2F *h){
     TH2F *h_copy = (TH2F *) h->Clone("clone");
     for(int i=1; i<= h->GetNbinsX(); i++){
         for(int j=1; j<= h->GetNbinsY(); j++){
-            printf("%i %i \n", i,j);
+            float small_val = 0.5;
             float min_val = 1e-6;
             float val = h->GetBinContent(i,j);
             float err = h->GetBinError(i,j);
             float max_err = 0.7; //percent
             if(val< min_val){
-                int near_j = (j >= h->GetNbinsY()/2) ? j - 1 : j + 1;
-                printf("i,j, near_j, %i %i %i \n", i,j, near_j);
-                float near_val = h_copy->GetBinContent(i, near_j);
-                float near_err = h_copy->GetBinError(i, near_j);
-
-                float bin_diff = (near_val - val)/sqrt(err*err + near_err*near_err);
-                printf("near_val, near_err, bin_diff %.1f %.1f %.1f \n", near_val, near_err, bin_diff);
-
-                if(near_val > 0 && bin_diff  < 1){
-                    //bins aren't significantly different. Smooth them
-                    float avg = (near_val + val) / 2.;
-                    h->SetBinContent(i,j,avg);
-                    h->SetBinContent(i,near_j, avg);
+                if(err > 0.5 && abs(val)/err < 1.){
+                    //bin content is negative/small but uncertainty overlaps with 0
+                    // change bin content to be positive so that this
+                    // uncertainty can be in the template (can't put an unc. on zero)
+                    val = err / 2.;
+                    h->SetBinContent(i,j, val);
                 }
-                else{
+
+                else if(val < min_val){
+                    //zero this bin
                     val = min_val;
                     h->SetBinContent(i,j,min_val);
-                    h->SetBinError(i,j,err);
                 }
             }
+
             if(err > max_err * val){
                 //prevent val froming being close to fit boundary at 0
-                //By setting max stat error
+                //By setting max error as a fraction of the bin content
                 err = val * max_err;
                 h->SetBinError(i,j, err);
             }
-
-
 
         }
     }
@@ -271,9 +280,6 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
     h_alpha->Scale(0.5);
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
-    fixup_stat_err(h_sym);
-    fixup_stat_err(h_asym);
-    fixup_stat_err(h_alpha);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral());
     return 0;
@@ -546,7 +552,8 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
     if(!incl_ss) scaling = 1.;
 
     h->Scale(scaling);
-
+    //symmetrize to avg statistical fluctuations before removing negative bins
+    symmetrize2d(h);
     //remove negative bins
     printf("Before:\n");
     h->Print("range");
