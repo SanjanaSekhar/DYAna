@@ -233,10 +233,6 @@ void make_mc_templates(int year, const string &sys_label){
         h1_mumu_gam = convert2d(h_mumu_gam);
         h1_mumu_alpha = convert2d(h_mumu_alpha);
 
-        h_mumu_sym->Print("range");
-        h1_mumu_sym->Print("range");
-        h_mumu_asym->Print("range");
-        h1_mumu_asym->Print("range");
         delete h_mumu_alpha, h_mumu_top, h_mumu_db, h_mumu_tautau, h_mumu_gam;
 
     }

@@ -17,17 +17,25 @@ process                             alpha   fpl     fmn     top      db     gam 
 process                             -2      0       -1      1        2      5      3      -2      0       -1      1        2      5       3       4        4   
 rate                                -1      -1      -1      -1       -1     -1    -1      -1      -1      -1      -1       -1     -1     -1      -1       -1   
 --------------------------------------------------------------------------------------------------------------------- ---------------------------------
+#systematics with 'YR' are uncorrelated accross years, with 'YRC' are correlated between 17/18
+
 dy_xsec                     lnN     1.03   1.03    1.03      -        -      -      -      1.03   1.03    1.03     -        -      -       -     1.03    1.03   
 db_xsec                     lnN      -       -        -      -       1.04    -      -       -       -       -      -       1.04    -       -       -       -    
 top_xsec                    lnN      -       -        -     1.05      -      -      -       -       -       -     1.05      -      -       -       -       -    
 gam_xsec                    lnN      -       -        -      -        -     1.4     -       -       -       -      -        -     1.4      -       -       -    
-                                                                                                                                  
-lumiYR                      lnN     LUMIV  LUMIV   LUMIV   LUMIV    LUMIV  LUMIV    -      LUMIV  LUMIV  LUMIV   LUMIV   LUMIV   LUMIV     -     LUMIV   LUMIV  
 elFakesYR                   lnN      -       -        -      -        -      -     1.5      -       -       -      -        -      -       -       -       -    
 muFakesYR                   lnN      -       -        -      -        -      -      -       -       -       -      -        -      -      1.5      -       -    
                                                                                                                                   
-## prefire only             for 16,17, hem only 18                                                                                
-PuYR                        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
+#Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
+lumiYR                      lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV    -      LYRV    LYRV    LYRV   LYRV     LYRV   LYRV     -      LYRV    LYRV  
+lumiXY                      lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV    -      LXYV    LXYV    LXYV   LXYV     LXYV   LXYV     -      LXYV    LXYV  
+lumiLS                      lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV    -      LLSV    LLSV    LLSV   LLSV     LLSV   LLSV     -      LLSV    LLSV  
+lumiDB                      lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV    -      LDBV    LDBV    LDBV   LDBV     LDBV   LDBV     -      LDBV    LDBV  
+lumiBC                      lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV    -      LBCV    LBCV    LBCV   LBCV     LBCV   LBCV     -      LBCV    LBCV  
+lumiGS                      lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV    -      LGSV    LGSV    LGSV   LGSV     LGSV   LGSV     -      LGSV    LGSV  
+                                                                                                                                  
+## prefire only for 16,17, hem only 18                                                                                
+Pu                          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 BTAGYR                      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #prefireYR                  shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 METJERYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
@@ -36,23 +44,24 @@ METJECYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0
                                                                                                                                           
                                                                                                                                           
 elScaleStatYR               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elScaleSystYR               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
 elScaleGainYR               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elSmearYR                   shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elScaleSyst                 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elSmear                     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
                                                                                                                                   
 elHLTBARPTHIGHYR            shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elIDBARPTHIGHYR             shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elRECOBARPTHIGHYR           shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
 elHLTENDPTHIGHYR            shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elIDENDPTHIGHYR             shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elRECOENDPTHIGHYR           shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-
 elHLTBARPTLOWYR             shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elIDBARPTLOWYR              shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elRECOBARPTLOWYR            shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
 elHLTENDPTLOWYR             shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elIDENDPTLOWYR              shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
-elRECOENDPTLOWYR            shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+
+elIDBARPTHIGH               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elIDBARPTLOW                shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elIDENDPTHIGH               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elIDENDPTLOW                shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+
+elRECOBARPTHIGH             shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elRECOENDPTHIGH             shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elRECOBARPTLOW              shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
+elRECOENDPTLOW              shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
                                                                                                                                           
 muRCYR                      shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
 muIDBARYR                   shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
@@ -61,19 +70,19 @@ muHLTBARYR                  shape     -       -       -       -        -      - 
 muIDENDYR                   shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
 muISOENDYR                  shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
 muHLTENDYR                  shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
+muIDSYS                     shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
+muISOSYS                    shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
                                                                                                                                   
-alphaSYR                    shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-A0DenYR                     shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -       -       -    
-
+alphaSYRC                   shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 RENORMYRC                   shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 FACYRC                      shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 REFACYRC                    shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
                                                                                                                                   
 #emu cost reweighting                                                                                                 
-emucostrw1bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
-emucostrw2bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
-emucostrw3bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
-emucostrw4bYR               shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw1bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw2bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw3bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw4bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 
 ##fakes cost reweighting                                                                                                 
 elfakesrw1bYR               shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
@@ -88,13 +97,13 @@ mufakesrw4bYR               shape    -       -        -      -        -      -  
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
-ptrw1bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw2bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw3bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw4bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw5bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw6bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw7bYR                    shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw1bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw2bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw3bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw4bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw5bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw6bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw7bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                        shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0    

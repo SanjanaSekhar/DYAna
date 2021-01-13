@@ -185,6 +185,8 @@ float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int sys
 
 
 float get_emu_costrw_SF(emu_costrw_helper h, float cost, float m, int systematic = 0){
+    if(m < emu_rw_m_bins[0]) m = emu_rw_m_bins[0] + 1.;
+    if(m > emu_rw_m_bins[n_emu_rw_m_bins - 1]) m = emu_rw_m_bins[n_emu_rw_m_bins] - 1.;
     int m_bin = find_bin(emu_rw_m_bins, m);
     TH1F *h_rw;
     if(m_bin == 0) h_rw = h.rw_mbin0;
@@ -661,6 +663,11 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
     if(year == 2016) f = TFile::Open("../analyze/SFs/2016/emu_cost_rw.root");
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/emu_cost_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/emu_cost_rw.root");
+    else{
+        printf("Year is %i ?? ", year);
+        exit(1);
+    }
+    f->Print();
     char name[100];
     sprintf(name, "emu%i_mbin0_cost_ratio", year % 2000);
     h->rw_mbin0 = (TH1F *) f->Get(name)->Clone();

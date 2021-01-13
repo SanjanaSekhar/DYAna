@@ -112,6 +112,32 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fout.Close()
     return fitted_afb, fitted_a0
 
+def do_lumi(card, year):
+        l_vals = dict()
+        l_vals['LYRV'] = [1.022, 1.02, 1.015]
+        l_vals['LXYV'] = [1.009, 1.009, 1.02]
+        l_vals['LLSV'] = [-1,1.003, 1.002] 
+        l_vals['LDBV'] = [1.004, 1.004, -1]
+        l_vals['LBCV'] = [-1, 1.003, 1.002]
+        l_vals['LGSV'] = [1.004, 1.001, -1]
+
+        idx = year - 16
+
+
+        for key,l_val in l_vals.items():
+            val = l_val[idx]
+            f_string = ""
+            if(val > 0):
+                f_string = "%.3f" % val
+            else:
+                f_string = "  -  "
+
+            print_and_do("""sed -i "s/%s/%s/g" %s""" % (key, f_string, card))
+
+        print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
+
+
+
 def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1):
     print("Making workspace %s mbin %i" % (workspace, mbin))
     template_card="card_templates/combined_fit_template.txt"
@@ -131,10 +157,8 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
             comb_yr = 1718
         card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
         print_and_do("cp %s %s" % (template_card, card))
-        lumi_val = "1.025"
-        if(year == 2017) lumi_val = "1.023"
+        do_lumi(card, yr)
 
-        print_and_do("""sed -i "s/LUMIV/%s/g" %s""" % (lumi_val, card))
         print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
@@ -147,3 +171,16 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
 
     print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks" % (comb_card, mbin, workspace))
+
+def make_gen_level_workspace(workspace, mbin,  year = -1):
+    print("Making workspace %s mbin %i" % (workspace, mbin))
+    template_card="card_templates/gen_level_fit_template.txt"
+
+    yr = year % 2000
+
+    card="cards/gen_level_fit_y%i_mbin%i.txt" % (yr, mbin)
+    print_and_do("cp %s %s" % (template_card, card))
+
+    print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+
+    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s" % (card, mbin, workspace))

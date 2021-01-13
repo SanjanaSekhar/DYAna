@@ -25,7 +25,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
 
 
     
-    vector<string> sys_labels;
+    vector<string> sys_labels, sys_labels_raw;
     if (type ==0){
         for(int i =1; i<= 60; i++){
             char name1[20], name2[20];
@@ -48,7 +48,7 @@ void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0)
             "_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b",
             "_elfakesrw1b", "_elfakesrw2b", "_elfakesrw3b", "_elfakesrw4b",
             "_mufakesrw1b", "_mufakesrw2b", "_mufakesrw3b", "_mufakesrw4b",
-            "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS",
+            "_RENORM", "_FAC", "_REFAC","_alphaS",
         };
 
       string yr_string; 

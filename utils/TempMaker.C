@@ -406,6 +406,7 @@ float TempMaker::getEvtWeight(){
         //printf("sys is %.4f  \n", *systematic);
         *systematic = 1.;
     }
+    //top_ptrw is 1 for non-ttbar samples
     double base_weight = gen_weight * (*systematic) * pu_SF * top_ptrw;
     if(do_btag_sys != 0){
 #ifndef STAND_ALONE

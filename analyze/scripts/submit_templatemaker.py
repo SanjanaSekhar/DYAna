@@ -8,12 +8,13 @@ def print_and_do(s):
     return os.system(s)
 
 years = [2016, 2017,2018]
+#years = [2018]
 types = [0, 1]
 labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
-njobs = 25
-ending = "oct1"
+njobs = 15
+ending = "jan12"
 
 for year in years:
 

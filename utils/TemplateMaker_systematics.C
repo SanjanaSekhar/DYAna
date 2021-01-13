@@ -36,6 +36,18 @@ void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
     }
 }
 
+void fixup_stat_err(TH2F *h){
+    //Templates made by using each event twice. Artificially increases stats,
+    //should increase stat uncertainty on each bin by sqrt(2)
+    for(int i=0; i<= h->GetNbinsX()+1; i++){
+        for(int j=0; j<= h->GetNbinsY()+1; j++){
+            float err = h->GetBinError(i,j);
+            float new_err = err * sqrt(2);
+            h->SetBinError(i,j,new_err);
+        }
+    }
+}
+
 
 void cleanup_template(TH2F *h){
     //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
@@ -63,6 +75,53 @@ void cleanup_template(TH2F *h){
         }
     }
 }
+
+
+void cleanup_fakes_template(TH2F *h){
+    //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
+    TH2F *h_copy = (TH2F *) h->Clone("clone");
+    for(int i=1; i<= h->GetNbinsX(); i++){
+        for(int j=1; j<= h->GetNbinsY(); j++){
+            printf("%i %i \n", i,j);
+            float min_val = 1e-6;
+            float val = h->GetBinContent(i,j);
+            float err = h->GetBinError(i,j);
+            float max_err = 0.7; //percent
+            if(val< min_val){
+                int near_j = (j >= h->GetNbinsY()/2) ? j - 1 : j + 1;
+                printf("i,j, near_j, %i %i %i \n", i,j, near_j);
+                float near_val = h_copy->GetBinContent(i, near_j);
+                float near_err = h_copy->GetBinError(i, near_j);
+
+                float bin_diff = (near_val - val)/sqrt(err*err + near_err*near_err);
+                printf("near_val, near_err, bin_diff %.1f %.1f %.1f \n", near_val, near_err, bin_diff);
+
+                if(near_val > 0 && bin_diff  < 1){
+                    //bins aren't significantly different. Smooth them
+                    float avg = (near_val + val) / 2.;
+                    h->SetBinContent(i,j,avg);
+                    h->SetBinContent(i,near_j, avg);
+                }
+                else{
+                    val = min_val;
+                    h->SetBinContent(i,j,min_val);
+                    h->SetBinError(i,j,err);
+                }
+            }
+            if(err > max_err * val){
+                //prevent val froming being close to fit boundary at 0
+                //By setting max stat error
+                err = val * max_err;
+                h->SetBinError(i,j, err);
+            }
+
+
+
+        }
+    }
+    h_copy->Delete();
+}
+
 
 //set error on dest histogram to match fractional error on source histogram
 void set_frac_error(TH1 *h_source, TH1 *h_dest){
@@ -212,6 +271,9 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
     h_alpha->Scale(0.5);
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
+    fixup_stat_err(h_sym);
+    fixup_stat_err(h_asym);
+    fixup_stat_err(h_alpha);
     t1->ResetBranchAddresses();
     printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral());
     return 0;
@@ -312,7 +374,7 @@ int one_mc_template(TTree *t1, Double_t a0, Double_t afb, TH2F* h_dy,
 
 
 
-std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
+void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false, string sys_label = ""){
     h->Sumw2();
 
@@ -476,15 +538,21 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
         printf("After iter %i current fakerate est is %.0f \n", l, h->Integral());
 
     }
-    //remove negative bins
-    cleanup_template(h);
 
-    set_fakerate_errors(h_err, FR.h, h);
-    // remove outliers
+    //scale to just OS normalization
     tot_weight_os = std::max(1e-4, tot_weight_os);
     tot_weight_ss = std::max(1e-4, tot_weight_ss);
     float scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     if(!incl_ss) scaling = 1.;
+
+    h->Scale(scaling);
+
+    //remove negative bins
+    printf("Before:\n");
+    h->Print("range");
+    cleanup_fakes_template(h);
+    printf("After: \n");
+    h->Print("range");
 
 
     fakes_costrw_helper h_rw;
@@ -492,9 +560,10 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     if(flag1 == FLAG_MUONS) fakes_cost_reweight(h, h_rw.mu_rw, shape_sys);
     else fakes_cost_reweight(h, h_rw.el_rw, shape_sys);
     
+    set_fakerate_errors(h_err, FR.h, h);
     Double_t err;
     Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);
     printf("Total fakerate est is %.0f +/- %.0f \n", integ, err);
-    return std::make_pair(scaling, err/integ);
+    return;
 }
 

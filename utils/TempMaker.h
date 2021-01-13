@@ -193,7 +193,7 @@ BTag_effs btag_effs;
 #endif
 
 void setup_all_SFs(int year){
-    printf("Setting up SF's \n");
+    //printf("Setting up SF's \n");
 #ifndef STAND_ALONE
     setup_btag_SFs(&b_reader, &btag_effs, year);
 #endif
