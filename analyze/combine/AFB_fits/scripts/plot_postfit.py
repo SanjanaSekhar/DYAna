@@ -245,7 +245,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 chi2 = 0.
                 for i in range(1, pulls[hist_index].GetNbinsX()+1):
                     chi2 += pulls[hist_index].GetBinContent(i)**2;
-                print("Chi2/nbin for chan %s is %.1f/%i" % (hist.GetName(), chi2, pulls[hist_index].GetNbinsX()))
+                print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pulls[hist_index].GetNbinsX()))
 
                 LS = .13
 
@@ -444,7 +444,7 @@ for year in years:
                 if(h != None):
                     h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
             if(h != None):
-                h.Print()
+                #h.Print()
                 hist_list.append(h)
                 label_list.append(label_color_map[name][0])
                 color_list.append(label_color_map[name][1])

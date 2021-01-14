@@ -29,10 +29,10 @@
 
 
 
-const int year = 2018;
-char *out_file = "../analyze/SFs/2018/emu_cost_rw.root";
+const int year = 2016;
+char *out_file = "../analyze/SFs/2016/emu_cost_rw.root";
 const bool write_out = true;
-char *plot_dir = "Misc_plots/emu_cost_reweights/";
+char *plot_dir = "Misc_plots/emu_cost_reweights_test/";
 
 
 
@@ -89,8 +89,12 @@ void do_emu_cost_reweight(){
         dummy->Reset();
         Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, dummy, emu_QCD_cost, dummy, dummy, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
 
+        float qcd_err = 0.5;
+        setHistError(emu_QCD_cost, qcd_err);
+
         symmetrize1d(emu_bkg_cost);
         symmetrize1d(emu_QCD_cost);
+
 
 
         char plt_title[200];

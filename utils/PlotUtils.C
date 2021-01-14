@@ -139,7 +139,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.4, 0.3);
+    TLegend *leg1 = new TLegend(0.4, 0.15);
     //TLegend *leg1 = new TLegend(0.4, 0.55, 0.75, 0.8);
     leg1->AddEntry(h1, h1_label, "l");
     leg1->AddEntry(h2, h2_label, "l");

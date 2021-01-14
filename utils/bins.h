@@ -21,8 +21,8 @@ Float_t amc_alpha[n_m_bins] =        {0.056, 0.056, 0.047, 0.055, 0.042, 0.030, 
 Float_t amc_alpha_unc[n_m_bins] =    {0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.007, 0.007};
 
 
-int n_emu_rw_m_bins = 3;
-float emu_rw_m_bins[] = {170., 320., 510., 2000.};
+const int n_emu_rw_m_bins = 5;
+float emu_rw_m_bins[] = {170., 200., 250., 320., 510., 2000.};
 
 
 
