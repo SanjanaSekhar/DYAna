@@ -17,11 +17,11 @@ void sys_check(){
         int year = 2016;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_emucostrw4b16";
+        char *sys = "";
         bool do_bkg = true;
-        bool do_qcd = false;
+        bool do_qcd = true;
         bool do_electrons = true;
-        bool do_muons = false;
+        bool do_muons = true;
         int i = 1;
         setup_all_SFs(year);
 
@@ -245,7 +245,7 @@ void sys_check(){
                 printf("elel Bkg: nom %.0f, up %.0f, down %.0f \n", h_elel_bkg->Integral(), h_elel_bkg_up->Integral(), h_elel_bkg_down->Integral());
             }
             if(do_qcd){
-                bool incl_ss = false;
+                bool incl_ss = true;
                 bool ss_binning = false;
                 gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
                         FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
