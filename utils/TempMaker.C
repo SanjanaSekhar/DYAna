@@ -59,11 +59,17 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("mu", &mu);
         t_in->SetBranchAddress("mu1_charge", &mu1_charge);
         t_in->SetBranchAddress("met_pt", &met_pt);
+        t_in->SetBranchAddress("el1_pt", &el1_pt);
+        t_in->SetBranchAddress("el1_eta", &el1_eta);
+        t_in->SetBranchAddress("mu1_pt", &mu1_pt);
+        t_in->SetBranchAddress("mu1_eta", &mu1_eta);
     }
 
     if(is_one_iso){
         if(do_muons) t_in->SetBranchAddress("iso_mu", &iso_lep);
         if(do_electrons) t_in->SetBranchAddress("iso_el", &iso_lep);
+        if(do_emu) t_in->SetBranchAddress("iso_lep", &iso_lep);
+
     }
 
 

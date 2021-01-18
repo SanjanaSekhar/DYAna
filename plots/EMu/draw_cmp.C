@@ -93,7 +93,7 @@ void draw_cmp(){
     make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, ss);
 
     bool fakes_reweight = true;
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
+    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
 
 
     Double_t data_count = data_m->Integral();

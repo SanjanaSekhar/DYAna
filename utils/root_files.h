@@ -13,7 +13,7 @@ TFile *f_mumu_mc, *f_mumu_data, *f_mumu_QCD, *f_mumu_WJets, *f_mumu_WJets_contam
 TTree *t_mumu_mc, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam,  *t_mumu_tautau;
 
 TFile *f_emu_dy, *f_emu_data, *f_emu_QCD, *f_emu_WJets, *f_emu_WJets_contam;
-TTree *t_emu_dy, *t_emu_data, *t_emu_QCD, *t_emu_WJets, *t_emu_WJets_contam;
+TTree *t_emu_dy, *t_emu_data, *t_emu_QCD, *t_emu_WJets, *t_emu_WJets_contam, *t_emu_QCD_contam;
 
 TTree *t_elel_ss_dy,  *t_elel_ss_data; 
 TTree *t_mumu_ss_dy,  *t_mumu_ss_data ;
@@ -307,6 +307,7 @@ void init_emu(int year){
 
         f_emu_WJets_contam = TFile::Open("../analyze/output_files/2016/EMu16_fakes_contam_nov11.root");
         t_emu_WJets_contam = (TTree *)f_emu_WJets_contam->Get("T_WJets");
+        t_emu_QCD_contam = (TTree *)f_emu_WJets_contam->Get("T_QCD");
     }
     if (year == 2017){
         f_emu_data = TFile::Open("../analyze/output_files/2017/EMu17_data_nov11.root");
@@ -320,6 +321,7 @@ void init_emu(int year){
 
         f_emu_WJets_contam = TFile::Open("../analyze/output_files/2017/EMu17_fakes_contam_nov11.root");
         t_emu_WJets_contam = (TTree *)f_emu_WJets_contam->Get("T_WJets");
+        t_emu_QCD_contam = (TTree *)f_emu_WJets_contam->Get("T_QCD");
     }
     if (year == 2018){
         f_emu_data = TFile::Open("../analyze/output_files/2018/EMu18_data_nov11.root");
@@ -333,6 +335,7 @@ void init_emu(int year){
 
         f_emu_WJets_contam = TFile::Open("../analyze/output_files/2018/EMu18_fakes_contam_nov11.root");
         t_emu_WJets_contam = (TTree *)f_emu_WJets_contam->Get("T_WJets");
+        t_emu_QCD_contam = (TTree *)f_emu_WJets_contam->Get("T_QCD");
     }
 
 

@@ -335,6 +335,9 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
     //stay in range of histogram
     float sys_unc_mult = 1.0;
 
+    //not used
+    int pt_systematic_sep = 0;
+
     TAxis *a_pt;
     if(year == 2016){
         a_pt=h->GetYaxis();
@@ -346,6 +349,7 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
 
     float min_pt = a_pt->GetBinLowEdge(1);
     float max_pt = a_pt->GetBinUpEdge(a_pt->GetNbins());
+    float mid_pt = 60.;
 
 
     if( pt <= min_pt) pt = min_pt + 1.;
@@ -368,12 +372,17 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
         xbin = x_ax->FindBin(pt);
         ybin = y_ax->FindBin(abs(eta));
     }
+    bool correct_pt_range = true;
+    if(pt_systematic_sep != 0){
+        correct_pt_range = (pt >= mid_pt && pt_systematic_sep > 0) || (pt < mid_pt && pt_systematic_sep < 0);
+        //correct_pt_range = (ybin > mid_bin && pt_systematic_sep > 0) || (ybin <= mid_bin && pt_systematic_sep < 0);
+    }
 
 
     Float_t result = h->GetBinContent(xbin, ybin);
     int systematic = systematic_barrel;
     if(abs(eta) > 1.4) systematic = systematic_endcap;
-    if(systematic != 0){
+    if(systematic != 0 && correct_pt_range){
         Float_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
         err =abs(err);
         result += (systematic * err);
@@ -525,6 +534,8 @@ Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t l
 
     Float_t MC_EFF1 = h_MC_EFF->GetBinContent(xbin1_MC_EFF, ybin1_MC_EFF);
     Float_t MC_EFF2 = h_MC_EFF->GetBinContent(xbin2_MC_EFF, ybin2_MC_EFF);
+
+
     Float_t result = (1 - (1-MC_EFF1*SF1)*(1-MC_EFF2*SF2))/
                       (1 - (1-MC_EFF1)*(1-MC_EFF2));
     //printf("%.1f %.1f SF: %.3f %.3f, MC EFF: %.3f %.3f  comb %.3f \n", lep1_pt, lep2_pt, SF1, SF2, MC_EFF1, MC_EFF2, result);
