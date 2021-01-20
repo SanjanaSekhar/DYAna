@@ -29,9 +29,9 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2018;
-const bool write_out = false;
-char *plot_dir = "Paper_plots/";
+const int year = 2016;
+const bool write_out = true;
+char *plot_dir = "Paper_plots/prefit_kinematics/";
 
 
 void draw_cmp(){
@@ -74,15 +74,15 @@ void draw_cmp(){
     TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, m_bins);
     */
     int n_m_bins = 30;
-    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 150, 2000);
-    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 150, 2000);
-    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 150, 2000);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 150, 2000);
-    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 150, 2000);
-    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 150, 2000);
-    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, 150, 2000);
-    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, 150, 2000);
-    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, 150, 2000);
+    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 170, 2000);
+    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 170, 2000);
+    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 170, 2000);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 170, 2000);
+    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 170, 2000);
+    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 170, 2000);
+    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, 170, 2000);
+    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, 170, 2000);
+    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, 170, 2000);
 
     int num_cost_bins = 10;
     TH1F *data_cost = new TH1F("data_cost", "Data", n_cost_bins, -1.,1.);
@@ -166,7 +166,7 @@ void draw_cmp(){
     gg_phi->SetFillColor(kOrange);
     gg_rap->SetFillColor(kOrange);
 
-    float m_low = 150.;
+    float m_low = 170.;
     float m_high = 10000.;
 
     make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);

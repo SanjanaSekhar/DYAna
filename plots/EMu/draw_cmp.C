@@ -28,8 +28,8 @@
 #include "../../utils/PlotUtils.C"
 #include "../../utils/root_files.h"
 
-int year = 2018;
-const bool write_out = false;
+int year = 2016;
+const bool write_out = true;
 char *plot_dir = "Paper_plots/";
 
 
@@ -71,16 +71,16 @@ void draw_cmp(){
 
 
     int n_rap_bins = 20;
-    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
-    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.5,2.5);
-    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
-    TH1F *wt_rap = new TH1F("wt_rap", "QCD", n_rap_bins, -2.5,2.5);
-    TH1F *dy_rap = new TH1F("dy_rap", "QCD", n_rap_bins, -2.5,2.5);
-    TH1F *qcd_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
+    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.4,2.4);
+    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.4,2.4);
+    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.4,2.4);
+    TH1F *wt_rap = new TH1F("wt_rap", "QCD", n_rap_bins, -2.4,2.4);
+    TH1F *dy_rap = new TH1F("dy_rap", "QCD", n_rap_bins, -2.4,2.4);
+    TH1F *qcd_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.4,2.4);
 
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
-    Double_t m_low = 150;
+    Double_t m_low = 170;
     Double_t m_high = 10000;
 
     bool ss = false;
@@ -93,7 +93,8 @@ void draw_cmp(){
     make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, ss);
 
     bool fakes_reweight = true;
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight);
+    bool fakes_sys_errors = false;
+    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight, fakes_sys_errors);
 
 
     Double_t data_count = data_m->Integral();

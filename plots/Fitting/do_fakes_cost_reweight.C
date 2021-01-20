@@ -29,9 +29,9 @@
 
 
 
-const int year = 2018;
-char *out_file = "../analyze/SFs/2018/fakes_cost_rw.root";
-const bool write_out = false;
+const int year = 2016;
+char *out_file = "../analyze/SFs/2016/fakes_cost_rw.root";
+const bool write_out = true;
 char *plot_dir = "Misc_plots/fakes_cost_reweights/";
 
 
@@ -51,6 +51,7 @@ void do_fakes_cost_reweight(){
     bool logy = false;
     char plot_file[100];
     char h_name[100];
+    char plt_title[100];
 
     TFile *f_out;
     if(write_out) f_out = TFile::Open(out_file, "RECREATE");
@@ -95,7 +96,9 @@ void do_fakes_cost_reweight(){
     symmetrize1d(h_mumu_data_sub);
 
 
-    TCanvas *c_mumu_plot = make_ratio_plot(string("mumu_ss_cost_comparison"), h_mumu_data_sub, "Data - Other Backgrounds", mumu_QCD_ss_cost, "Fakes Estimate", "ratio", "samesign mumu cos(#theta)", logy, false, 0.0, 2.0);
+    sprintf(plt_title, "Muons %i", year);
+    TCanvas *c_mumu_plot = make_ratio_plot(string("mumu_ss_cost_comparison"), h_mumu_data_sub, "Data - Other Backgrounds", mumu_QCD_ss_cost, "Fakes Estimate", 
+            "ratio", "samesign mumu cos(#theta)", logy, false, 0.0, 2.0, plt_title);
     sprintf(plot_file, "%sy%i_mumu_ss_cost_rw.png", plot_dir, year - 2000);
     c_mumu_plot->Print(plot_file);
 
@@ -107,8 +110,8 @@ void do_fakes_cost_reweight(){
     mumu_QCD_ss_cost->Scale(1./mumu_QCD_ss_cost->Integral());
     mumu_QCD_os_cost->Scale(1./mumu_QCD_os_cost->Integral());
 
-    TCanvas *c_os_ss_mumu_plot = make_ratio_plot(string("mumu_ss_os_comparison"), mumu_QCD_os_cost, "OS Fakes Estimate", mumu_QCD_ss_cost, "SS Fakes Estimate", "OS/SS", 
-            "mumu cos(#theta)", logy, false, 0.0,2.0);
+    TCanvas *c_os_ss_mumu_plot = make_ratio_plot(string("mumu_ss_os_comparison"), mumu_QCD_os_cost, "OS Fakes Estimate", mumu_QCD_ss_cost, "SS Fakes Estimate", 
+            "OS/SS", "mumu cos(#theta)", logy, false, 0.0,2.0, plt_title);
     sprintf(plot_file, "%sy%i_mumu_os_ss_cost_ratio.png", plot_dir, year - 2000);
     c_os_ss_mumu_plot->Print(plot_file);
 
@@ -116,13 +119,15 @@ void do_fakes_cost_reweight(){
     h_mumu_ratio->Print("range");
     printf("Adding sys errors from os/ss ratio \n");
     for(int bin = 1; bin<=n_bins; bin++){
+        
         float corr = h_mumu_ratio->GetBinContent(bin);
         float ss_cont  = mumu_QCD_ss_cost->GetBinContent(bin);
         float os_cont  = mumu_QCD_os_cost->GetBinContent(bin);
         float sys = (fabs(os_cont - ss_cont) / os_cont) * fabs(1. - corr);
         float stat = h_mumu_ratio->GetBinError(bin);
-        float tot = pow(sys*sys + stat*stat, 0.5);
-        h_mumu_ratio->SetBinError(bin, tot);
+        float tot_err = pow(sys*sys + stat*stat, 0.5);
+        tot_err = std::fmin(tot_err, 0.7*corr);
+        h_mumu_ratio->SetBinError(bin, tot_err);
     }
     h_mumu_ratio->Print("range");
 
@@ -144,12 +149,14 @@ void do_fakes_cost_reweight(){
     symmetrize1d(elel_QCD_os_cost);
 
     sprintf(h_name, "elel%i_ss_cost_data_sub", year % 2000);
+    
     TH1F *h_elel_data_sub = (TH1F *) elel_data_cost->Clone(h_name);
     h_elel_data_sub->Add(elel_other_cost, -1);
     symmetrize1d(h_elel_data_sub);
 
-
-    TCanvas *c_elel_plot = make_ratio_plot(string("elel_ss_cost_comparison"), h_elel_data_sub, "Data - Other Backgrounds", elel_QCD_ss_cost, "Fakes Estimate", "ratio", "samesign ee cos(#theta)", logy, false, 0.0, 2.0);
+    sprintf(plt_title, "Electrons %i", year);
+    TCanvas *c_elel_plot = make_ratio_plot(string("elel_ss_cost_comparison"), h_elel_data_sub, "Data - Other Backgrounds", elel_QCD_ss_cost, "Fakes Estimate", 
+            "ratio", "samesign ee cos(#theta)", logy, false, 0.0, 2.0, plt_title);
     sprintf(plot_file, "%sy%i_elel_ss_cost_rw.png", plot_dir, year - 2000);
     c_elel_plot->Print(plot_file);
 
@@ -162,7 +169,7 @@ void do_fakes_cost_reweight(){
     elel_QCD_os_cost->Scale(1./elel_QCD_os_cost->Integral());
 
     TCanvas *c_os_ss_elel_plot = make_ratio_plot(string("elel_ss_os_comparison"), elel_QCD_os_cost, "OS Fakes Estimate", elel_QCD_ss_cost, "SS Fakes Estimate", 
-            "OS/SS", "elel cos(#theta)", logy, false, 0.0, 2.0);
+            "OS/SS", "elel cos(#theta)", logy, false, 0.0, 2.0, plt_title);
     sprintf(plot_file, "%sy%i_elel_os_ss_cost_ratio.png", plot_dir, year - 2000);
     c_os_ss_elel_plot->Print(plot_file);
 

@@ -30,9 +30,9 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
-const bool write_out = false;
-char *plot_dir = "Paper_plots/";
+const int year = 2016;
+const bool write_out = true;
+char *plot_dir = "Paper_plots/prefit_kinematics/";
 
 
 
@@ -70,15 +70,15 @@ void draw_cmp(){
     TH1F *gg_xf = new TH1F("gg_xf", "MC signal", n_xf_bins1,  xf_bins1);
 
     int n_m_bins = 30;
-    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 150, 2000);
-    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 150, 2000);
-    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 150, 2000);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 150, 2000);
-    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 150, 2000);
-    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 150, 2000);
-    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, 150, 2000);
-    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, 150, 2000);
-    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, 150, 2000);
+    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 170, 2000);
+    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 170, 2000);
+    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 170, 2000);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 170, 2000);
+    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 170, 2000);
+    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 170, 2000);
+    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, 170, 2000);
+    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, 170, 2000);
+    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, 170, 2000);
 
     int num_cost_bins = 10;
     TH1F *data_cost = new TH1F("data_cost", "Data", n_cost_bins, -1.,1.);
@@ -168,7 +168,7 @@ void draw_cmp(){
 
 
 
-    float m_low = 150.;
+    float m_low = 170.;
     float m_high = 13000;
     bool ss = false;
 

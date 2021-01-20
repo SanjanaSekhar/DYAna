@@ -29,9 +29,10 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
-int year = 2016;
+int year = 2018;
 bool write_out = true;
-char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
+//char *plot_dir = "Misc_plots/samesign_cmp/";
+char *plot_dir = "Paper_plots/";
 
 
 
@@ -110,7 +111,7 @@ void draw_samesign_cmp(){
     DY_phi->SetFillColor(kRed+1);
     DY_rap->SetFillColor(kRed+1);
 
-    int m_low = 150.;
+    int m_low = 170.;
     int m_high = 10000.;
     bool ss = true;
 
@@ -127,23 +128,24 @@ void draw_samesign_cmp(){
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), diboson_m->Integral(), DY_m->Integral());
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_cost->Integral(), QCD_cost->Integral(), diboson_cost->Integral(), DY_cost->Integral());
 
-    Double_t n_data = data_m->Integral();
-    Double_t n_est = diboson_m->Integral() + QCD_m->Integral() + DY_m->Integral();
     bool normalize = true;
     
     if(normalize){
-        Double_t n_data = data_m->Integral();
-        Double_t n_mc = diboson_m->Integral() +  DY_m->Integral();
-        Double_t n_QCD = QCD_m->Integral();
+        Double_t n_data = data_cost->Integral();
+        Double_t n_mc = diboson_cost->Integral() +  DY_cost->Integral();
+        Double_t n_QCD = QCD_cost->Integral();
         Double_t qcd_ratio = (n_data - n_mc) / n_QCD;
         printf("Ratio of obs to expected QCD is %.2f \n", qcd_ratio);
 
 
+        QCD_cost->Scale(qcd_ratio);
+
+        /*
         QCD_m->Scale(qcd_ratio);
         QCD_pt->Scale(qcd_ratio);
-        QCD_cost->Scale(qcd_ratio);
         QCD_xf->Scale(qcd_ratio);
         QCD_phi->Scale(qcd_ratio);
+        */
     }
 
 
@@ -154,7 +156,7 @@ void draw_samesign_cmp(){
     bool add_err = true;
     if(scale_error){
         setHistError(QCD_m, qcd_err, add_err);
-        setHistError(QCD_cost, qcd_err, add_err);
+        //setHistError(QCD_cost, qcd_err, add_err);
         setHistError(QCD_xf, qcd_err, add_err);
         setHistError(QCD_phi, qcd_err, add_err);
 
@@ -213,7 +215,7 @@ void draw_samesign_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.3, 0.3);
+    TLegend *leg1 = new TLegend(0.3, 0.25);
     leg1->AddEntry(data_pt, "data", "p");
     leg1->AddEntry(DY_pt, "DY (miss-sign)", "f");
     leg1->AddEntry(QCD_pt, "QCD + WJets", "f");

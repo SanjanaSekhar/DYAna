@@ -486,6 +486,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
     cleanup_hist(h_m);
     cleanup_hist(h_cost);
     cleanup_hist(h_pt);
+    cleanup_hist(h_rap);
 
 
     if(sys_errors){
@@ -499,9 +500,16 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
     if(reweight){
         fakes_costrw_helper h_rw;
         setup_fakes_costrw_helper(&h_rw, year);
-        //h_cost->Print("range");
+
+        float prev_weight = h_cost->Integral();
         fakes_cost_reweight(h_cost, h_rw.el_rw);
-        //h_cost->Print("range");
+        float new_weight = h_cost->Integral();
+
+        //scale other histograms to account for this reweight
+
+        h_m->Scale(new_weight/prev_weight);
+        h_pt->Scale(new_weight/prev_weight);
+        h_rap->Scale(new_weight/prev_weight);
     }
 
 

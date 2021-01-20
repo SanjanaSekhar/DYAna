@@ -29,9 +29,10 @@
 #include "../../utils/PlotUtils.C"
 
 const int type = FLAG_ELECTRONS;
-int year = 2016;
+int year = 2018;
 bool write_out = true;
-char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
+//char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
+char *plot_dir = "Paper_plots/";
 
 
 void draw_samesign_cmp(){
@@ -137,18 +138,21 @@ void draw_samesign_cmp(){
     bool from_fit = false;
     
     if(normalize){
-        Double_t n_data = data_m->Integral();
-        Double_t n_mc = back_m->Integral() +  DY_m->Integral();
-        Double_t n_QCD = QCD_m->Integral();
+        Double_t n_data = data_cost->Integral();
+        Double_t n_mc = back_cost->Integral() +  DY_cost->Integral();
+        Double_t n_QCD = QCD_cost->Integral();
         Double_t qcd_ratio = (n_data - n_mc) / n_QCD;
         printf("Ratio of obs to expected QCD is %.2f \n", qcd_ratio);
 
 
+        QCD_cost->Scale(qcd_ratio);
+
+        /*
         QCD_m->Scale(qcd_ratio);
         QCD_pt->Scale(qcd_ratio);
-        QCD_cost->Scale(qcd_ratio);
         QCD_xf->Scale(qcd_ratio);
         QCD_phi->Scale(qcd_ratio);
+        */
     }
 
 
@@ -158,7 +162,7 @@ void draw_samesign_cmp(){
     bool add_err = true;
     if(scale_error){
         setHistError(QCD_m, qcd_err, add_err);
-        setHistError(QCD_cost, qcd_err, add_err);
+        //setHistError(QCD_cost, qcd_err, add_err);
         setHistError(QCD_xf, qcd_err, add_err);
         setHistError(QCD_phi, qcd_err, add_err);
 

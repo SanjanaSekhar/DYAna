@@ -210,13 +210,13 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_data->SetMarkerColor(1);
     h_data->DrawCopy("P E same");
 
+    leg->Draw();
 
     h_stack->GetYaxis()->SetTitleSize(30);
     h_stack->GetYaxis()->SetTitleFont(43);
     h_stack->GetYaxis()->SetTitleOffset(1.2);
 
 
-    leg->Draw();
 
     c->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
@@ -237,13 +237,14 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     }
     auto h_ratio = (TH1F *) h_data->Clone("h_ratio" + label);
     float center = 1.0;
+    float ratio_range = 0.5;
     bool do_diff = false;
     if(do_diff){
         center = 0.0;
         h_ratio->Add(sum, -1.);
     }
-    h_ratio->SetMinimum(center - 0.5);
-    h_ratio->SetMaximum(center + 0.5);
+    h_ratio->SetMinimum(center - ratio_range);
+    h_ratio->SetMaximum(center + ratio_range);
     h_ratio->Sumw2();
     h_ratio->SetStats(0);
     h_ratio->Divide(sum);

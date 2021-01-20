@@ -19,10 +19,10 @@ void sys_check(){
         char *plot_dir = "Misc_plots/sys_checks";
         char *sys = "_muIDBAR";
         bool do_bkg = false;
-        bool do_qcd = false;
+        bool do_qcd = true;
         bool do_electrons = false;
         bool do_muons = true;
-        int i = 1;
+        int i = 4;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
@@ -162,6 +162,7 @@ void sys_check(){
                 h1_mumu_qcd_down->SetLineColor(kOrange +1);
                 h1_mumu_qcd_down->SetLineWidth(2);
                 printf("mumu fakes: nom %.0f, up %.0f, down %.0f \n", h_mumu_qcd->Integral(), h_mumu_qcd_up->Integral(), h_mumu_qcd_down->Integral());
+                h1_mumu_qcd->Print("range");
             }
 
 
