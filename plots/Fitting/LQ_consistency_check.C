@@ -86,8 +86,8 @@ void LQ_consistency_check(){
             auto h1_mumu_sym = convert3d(h_mumu_sym);
             auto h1_mumu_asym = convert3d(h_mumu_asym);
 
-            //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
-            int n_1d_bins = n_lq_m_bins*n_y_bins*n_cost_bins;
+            int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
+            //int n_1d_bins = n_lq_m_bins*n_y_bins*n_cost_bins;
 
             sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
             auto h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
@@ -104,8 +104,8 @@ void LQ_consistency_check(){
             double norm = 3./8.;
             double afb = 0.6;
 
-           // h1_mumu_dy->Add(h1_mumu_pl,h1_mumu_mn,(norm+afb),(norm-afb));
-            h1_mumu_dy = convert3d(h_mumu_sym);
+            h1_mumu_dy->Add(h1_mumu_pl,h1_mumu_mn,(norm+afb),(norm-afb));
+            //h1_mumu_dy = convert3d(h_mumu_sym);
 
             auto h_mumu_dy_new = new TH3F(title, "new dy template",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
