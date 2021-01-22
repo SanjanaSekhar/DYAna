@@ -349,6 +349,8 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
               Double_t reweight_LQint_neg;
               reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
+
+              print(reweight_LQpure_pos);
               
               //dLQ temps
               if(flag_q==1){
