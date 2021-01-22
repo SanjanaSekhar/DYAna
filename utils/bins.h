@@ -22,8 +22,8 @@ const int n_m_bins = 8;
 Float_t m_bins[] = {150, 170, 200,  250, 320, 510, 700, 1000, 14000};
 
 
-const int n_lq_m_bins = 2;
-Float_t lq_m_bins[] = { 510., 700.,1000.};
+const int n_lq_m_bins = 4;
+Float_t lq_m_bins[] = { 320., 510., 700.,1000., 14000.};
 //
 const int n_pt_bins = 7;
 Float_t pt_bins[] = {0., 10., 20., 30., 50., 70., 100., 10000. };
@@ -31,6 +31,8 @@ Float_t pt_bins[] = {0., 10., 20., 30., 50., 70., 100., 10000. };
 Float_t amc_alpha[n_m_bins] =        {0.056, 0.056, 0.047, 0.055, 0.042, 0.030, 0.018, 0.012};
 Float_t amc_alpha_unc[n_m_bins] =    {0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 0.007, 0.007};
 
+const int n_emu_rw_m_bins = 5;
+float emu_rw_m_bins[] = {170., 200., 250., 320., 510., 2000.};
 #endif
 
 
@@ -56,8 +58,6 @@ Float_t amc_alpha_unc[n_m_bins] =    {0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 
 
 
 
-const int n_emu_rw_m_bins = 5;
-float emu_rw_m_bins[] = {170., 200., 250., 320., 510., 2000.};
 
 
 
