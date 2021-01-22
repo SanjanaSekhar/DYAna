@@ -16,13 +16,13 @@ void sys_check(){
     
         int year = 2016;
         init(year);
-        char *plot_dir = "Misc_plots/sys_checks_test";
-        char *sys = "_emucostrw4b16";
-        bool do_bkg = true;
-        bool do_qcd = false;
-        bool do_electrons = true;
-        bool do_muons = false;
-        int i = 5;
+        char *plot_dir = "Misc_plots/sys_checks";
+        char *sys = "_muIDBAR";
+        bool do_bkg = false;
+        bool do_qcd = true;
+        bool do_electrons = false;
+        bool do_muons = true;
+        int i = 4;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
@@ -48,6 +48,8 @@ void sys_check(){
             var1_bins = xf_bins;
         }
 
+        TH2F * h_elel_data = new TH2F("elel_data", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
         TH2F * h_elel_bkg = new TH2F("elel_bkg", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_bkg_up = new TH2F("elel_bkg_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_bkg_down = new TH2F("elel_bkg_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -59,6 +61,8 @@ void sys_check(){
         TH2F * h_elel_plain = new TH2F("elel_plain", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_sys_up = new TH2F("elel_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_elel_sys_down = new TH2F("elel_down", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
+        TH2F * h_mumu_data = new TH2F("mumu_data", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 
         TH2F * h_mumu_bkg = new TH2F("mumu_bkg", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH2F * h_mumu_bkg_up = new TH2F("mumu_bkg_up", "", n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -85,6 +89,7 @@ void sys_check(){
 
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
         TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
+        TH1F *h1_elel_data, *h1_mumu_data;
 
         if(do_muons){
             printf("Making mumu temps \n");
@@ -157,7 +162,9 @@ void sys_check(){
                 h1_mumu_qcd_down->SetLineColor(kOrange +1);
                 h1_mumu_qcd_down->SetLineWidth(2);
                 printf("mumu fakes: nom %.0f, up %.0f, down %.0f \n", h_mumu_qcd->Integral(), h_mumu_qcd_up->Integral(), h_mumu_qcd_down->Integral());
+                h1_mumu_qcd->Print("range");
             }
+
 
 
 
@@ -262,7 +269,6 @@ void sys_check(){
                 h1_elel_qcd = convert2d(h_elel_qcd);
                 h1_elel_qcd_up = convert2d(h_elel_qcd_up);
                 h1_elel_qcd_down = convert2d(h_elel_qcd_down);
-                h1_elel_qcd->Print("range");
 
                 h1_elel_qcd->SetLineColor(kGray);
                 h1_elel_qcd->SetLineWidth(2);

@@ -106,10 +106,10 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
 }
 void fit_gen_cost(){
     gStyle->SetOptStat(0);
-    TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
-    //TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
+    TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
     TTree *t_gen1 = (TTree *)f1->Get("T_lhe");
-    int m_idx=0;
+    int m_idx=1;
 
 
     TH1F *h_cost = new TH1F("h_mad_cost", "", 20, -1., 1.);
@@ -134,8 +134,10 @@ void fit_gen_cost(){
 
     //func->FixParameter(1, 0.094);
     
-    Double_t nB = h_cost->Integral(1,10);
-    Double_t nF = h_cost->Integral(11,20);
+    Double_t dnB, dnF;
+    Double_t nB = h_cost->IntegralAndError(1,10, dnB);
+    Double_t nF = h_cost->IntegralAndError(11,20, dnF);
+    Double_t n_tot = nB + nF;
     
     //bin size is 0.1, so 1/bin_size = 10.
     h_cost->Scale(10./h_cost->Integral());
@@ -148,10 +150,13 @@ void fit_gen_cost(){
     Double_t B = (1. - AFB)*nEvents/2.;
     Double_t F = (1. + AFB)*nEvents/2.;
     Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
+    Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
 
     printf("Mass range from %.0f to %.0f \n", m_low, m_high);
     printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
     printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
     printf("Counting: NF %.0f NB %.0f \n", F, B);
     printf("Counting: AFB %.4f +/- %.4f \n", AFB, dAFB);
+    printf("Counting Error v2: AFB %.4f +/- %.4f \n", AFB, dAFB_v2);
+
 }

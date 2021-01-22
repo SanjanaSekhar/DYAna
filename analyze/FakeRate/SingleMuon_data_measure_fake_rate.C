@@ -39,11 +39,12 @@ void SingleMuon_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin="", 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
 
-            bool tri_muon_id = nt.mu_size >= 3 && nt.mu_IsLooseMuon[0] && nt.mu_IsLooseMuon[1] && nt.mu_IsLooseMuon[2] && 
-                nt.mu_Pt[0] > 29. &&  nt.mu_Pt[1] > 15. && nt.mu_Pt[2] > 15.  && 
-                abs(nt.mu_Eta[0]) < 2.4 && abs(nt.mu_Eta[1]) < 2.4  && abs(nt.mu_Eta[2]) < 2.4;  ;
 
-            if(nt.good_trigger &&  tri_muon_id && nt.met_pt < 25.){
+
+            bool tri_muon_id = nt.loose_dimuon_id &&  nt.mu_size >= 3  
+                && nt.mu_Pt[2] > 15.  && abs(nt.mu_Eta[2]) < 2.4  && nt.mu_IsLooseMuon[2] && (nt.mu_PFIso[2] < nt.mu_loose_iso_cut);
+
+            if(nt.good_trigger &&  tri_muon_id){
 
                 //Want events with 3 muons, 2 from Z and 1 extra
 
@@ -71,7 +72,7 @@ void SingleMuon_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin="", 
                 bool m12_in_Z = in_Z_window(m12);
 
                 bool iso[3];
-                iso[0] = nt.mu_IsTightMuon[0] && nt.mu_PFIso[0] < nt.mu_iso_cut;
+                iso[0] = nt.mu_IsTightMuon[0] &&  nt.mu_PFIso[0] < nt.mu_iso_cut;
                 iso[1] = nt.mu_IsTightMuon[1] &&  nt.mu_PFIso[1] < nt.mu_iso_cut;
                 iso[2] = nt.mu_IsTightMuon[2] &&  nt.mu_PFIso[2] < nt.mu_iso_cut;
 
@@ -110,7 +111,7 @@ void SingleMuon_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin="", 
                 }
 
 
-                if( (mu_p != -1) ){
+                if( (mu_p != -1) && nt.has_nobjets && nt.met_pt < 100.){
                     double dphi = ang_dist(nt.mu_Phi[mu_extra], nt.met_phi);
                     mu_pt = nt.mu_Pt[mu_extra];
                     mu_eta = nt.mu_Eta[mu_extra];

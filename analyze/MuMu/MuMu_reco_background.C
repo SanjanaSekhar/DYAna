@@ -18,6 +18,11 @@ void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
     nt.do_SFs = true;
     nt.do_RC = true;
     nt.RC_from_gen = false;
+    if(fin.find("TTbar") != string::npos){
+        printf("Turning on top pt reweighting \n");
+        nt.do_top_ptrw = true;
+    }
+
     nt.setupSFs();
     nt.setupRC();
 
@@ -36,6 +41,7 @@ void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
             if(nt.good_trigger && nt.loose_dimuon_id && nt.cm_m > 50. ){
+                //if(nt.nEvents > 10) exit(1);
                 nt.fillEvent();
 
                 nt.fillEventSFs();

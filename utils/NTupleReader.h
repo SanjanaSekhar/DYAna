@@ -51,6 +51,7 @@ class NTupleReader{
         void fillEventRC();
         bool getNextFile();
         void finish();
+        bool doTopPTRW(bool PRINT = false);
         bool parseGenParts(bool PRINT);
         int selectAnyGenParts(bool PRINT);
 
@@ -71,6 +72,7 @@ class NTupleReader{
         prefire_SFs prefire_rates;
 
         const float mu_iso_cut = 0.15; //tight PF based iso
+        const float mu_loose_iso_cut = 0.4; //very loose PF based iso
 
         int year = 2016;
 
@@ -85,6 +87,7 @@ class NTupleReader{
         bool is_data = false;
         bool do_SFs = false;
         bool do_RC = false;
+        bool do_top_ptrw = false;
         bool RC_from_gen = false;
 
         unsigned int nEvents=0;
@@ -110,8 +113,10 @@ class NTupleReader{
         Float_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt, mu_p_SF_up, mu_p_SF_down, mu_m_SF_up, mu_m_SF_down;
         Float_t era1_HLT_SF, era1_iso_SF, era1_id_SF, era2_HLT_SF, era2_iso_SF, era2_id_SF,
                  era1_trk_SF, era2_trk_SF,
-                 jet1_b_weight, jet2_b_weight, pu_SF, pu_SF_up, pu_SF_down;
+                 jet1_b_weight, jet2_b_weight, pu_SF, pu_SF_up, pu_SF_down, top_ptrw, top_ptrw_alpha_up, top_ptrw_alpha_down, 
+                 top_ptrw_beta_up, top_ptrw_beta_down;
         Float_t jet1_btag_SF, jet1_btag_SF_up, jet1_btag_SF_down, jet2_btag_SF, jet2_btag_SF_up, jet2_btag_SF_down;
+
 
         float prefire_SF = 1.0;
         float prefire_SF_up = 1.0;
@@ -166,7 +171,7 @@ class NTupleReader{
         Float_t el_Pt[EL_SIZE], el_Eta[EL_SIZE], el_Phi[EL_SIZE], el_E[EL_SIZE], 
                 el_Charge[EL_SIZE], el_SCEta[EL_SIZE], el_GoodCharge[EL_SIZE];
 
-        Int_t el_IDMedium[EL_SIZE], el_IDMedium_NoIso[EL_SIZE], el_IDTight[EL_SIZE], el_IDTight_NoIso[EL_SIZE];
+        Int_t el_IDMedium[EL_SIZE], el_IDLoose[EL_SIZE], el_IDMedium_NoIso[EL_SIZE], el_IDTight[EL_SIZE], el_IDTight_NoIso[EL_SIZE];
 
         Float_t el_ScaleCorr[EL_SIZE], el_ScaleCorrStatUp[EL_SIZE], el_ScaleCorrStatDown[EL_SIZE],
                                        el_ScaleCorrGainUp[EL_SIZE], el_ScaleCorrGainDown[EL_SIZE],
@@ -184,7 +189,7 @@ class NTupleReader{
 
         int elp_index, elm_index;
         bool good_sign, opp_sign, good_trigger, dimuon_accep, loose_dimuon_id, tight_dimuon_id, emu_ids,
-             mu_iso0, mu_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
+             mu_iso0, mu_iso1, mu_loose_iso0, mu_loose_iso1,  mu_tight_id0, mu_tight_id1,  dielec_id, el_iso0, el_iso1;
 
         bool signal_event = false;
         bool failed_match = false;

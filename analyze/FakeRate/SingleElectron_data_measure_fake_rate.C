@@ -37,7 +37,7 @@ void SingleElectron_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin=
             nt.getEvent(i);
 
             if(nt.good_trigger &&  nt.dielec_id && nt.el_size >= 3
-                    && nt.el_ScaleCorr[2] * nt.el_Pt[2] > 15. && goodElEta(nt.el_SCEta[2]) &&  nt.el_IDMedium_NoIso[2]){
+                    && nt.el_ScaleCorr[2] * nt.el_Pt[2] > 15. && goodElEta(nt.el_SCEta[2]) &&  nt.el_IDLoose[2]){
 
                 //Want events with 3 electrons, 2 from Z and 1 extra
 
@@ -104,7 +104,7 @@ void SingleElectron_data_measure_fake_rate(int nJobs =1, int iJob=0, string fin=
                 }
 
 
-                if( (el_p != -1) && nt.has_nobjets && nt.met_pt < 25.){
+                if( (el_p != -1) && nt.has_nobjets && nt.met_pt < 100.){
                     el_pt = nt.el_Pt[el_extra];
                     el_eta = nt.el_Eta[el_extra];
                     pass = iso[el_extra];

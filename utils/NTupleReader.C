@@ -93,6 +93,8 @@ void NTupleReader::setupSFs(){
         printf("getting electron SFs \n");
         setup_el_SF(&el_SF, year);
     }
+
+    top_ptrw = top_ptrw_alpha_up = top_ptrw_alpha_down = top_ptrw_beta_up = top_ptrw_beta_down =  1.0;
     printf("Retrieved Scale Factors \n\n");
 }
 
@@ -224,6 +226,7 @@ bool NTupleReader::getNextFile(){
                 tin->SetBranchAddress("el_Phi", &el_Phi);
                 tin->SetBranchAddress("el_E", &el_E);
                 tin->SetBranchAddress("el_Charge", &el_Charge);
+                tin->SetBranchAddress("el_IDLoose", &el_IDLoose);
                 tin->SetBranchAddress("el_IDMedium", &el_IDMedium);
                 tin->SetBranchAddress("el_IDTight", &el_IDTight);
                 tin->SetBranchAddress("el_SCEta", &el_SCEta);
@@ -415,6 +418,12 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("inc_id2", &inc_id2);
         outTrees[idx]->Branch("signal_event", &signal_event);
 
+        outTrees[idx]->Branch("top_ptrw", &top_ptrw);
+        outTrees[idx]->Branch("top_ptrw_alpha_up", &top_ptrw_alpha_up);
+        outTrees[idx]->Branch("top_ptrw_alpha_down", &top_ptrw_alpha_down);
+        outTrees[idx]->Branch("top_ptrw_beta_up", &top_ptrw_beta_up);
+        outTrees[idx]->Branch("top_ptrw_beta_down", &top_ptrw_beta_down);
+
         if(do_muons || do_emu){
             outTrees[idx]->Branch("gen_mu_m", "TLorentzVector", &gen_lep_m_vec);
             outTrees[idx]->Branch("gen_mu_p", "TLorentzVector", &gen_lep_p_vec);
@@ -488,7 +497,8 @@ void NTupleReader::getEvent(int i){
     if(mu_size > MU_SIZE || el_size > EL_SIZE ||  gen_size >GEN_SIZE) printf("WARNING: MU_SIZE EL_SIZE OR GEN_SIZE TOO LARGE \n");
     if(met_size != 1) printf("WARNING: Met size not equal to 1\n");
     if(do_muons){
-        opp_sign = good_trigger = dimuon_accep = loose_dimuon_id = tight_dimuon_id = mu_iso0 = mu_iso1 = mu_tight_id0 = mu_tight_id1 = false;
+        opp_sign = good_trigger = dimuon_accep = loose_dimuon_id = tight_dimuon_id = mu_iso0 = mu_iso1 = 
+             mu_loose_iso0 = mu_loose_iso1 = mu_tight_id0 = mu_tight_id1 = false;
         if(mu_size >= 2){
 
             opp_sign = ((abs(mu_Charge[0] - mu_Charge[1])) > 0.01);
@@ -510,10 +520,15 @@ void NTupleReader::getEvent(int i){
             }
             dimuon_accep = mu_Pt[0] > min_pt &&  mu_Pt[1] > 15. &&
                 abs(mu_Eta[0]) < 2.4 && abs(mu_Eta[1]) < 2.4;
-            loose_dimuon_id = dimuon_accep && mu_IsLooseMuon[0] && mu_IsLooseMuon[1];
 
             mu_iso0 = mu_PFIso[0] < mu_iso_cut;
             mu_iso1 = mu_PFIso[1] < mu_iso_cut;
+
+            mu_loose_iso0 = mu_PFIso[0] < mu_loose_iso_cut;
+            mu_loose_iso1 = mu_PFIso[1] < mu_loose_iso_cut;
+
+            loose_dimuon_id = dimuon_accep && mu_IsLooseMuon[0] && mu_IsLooseMuon[1] && mu_loose_iso0 && mu_loose_iso1;
+
 
             mu_tight_id0 = mu_Pt[0] > min_pt && abs(mu_Eta[0]) < 2.4 && mu_iso0 && mu_IsTightMuon[0];
             mu_tight_id1 = mu_Pt[1] > 15. && abs(mu_Eta[1]) < 2.4 && mu_iso1 && mu_IsTightMuon[1];
@@ -560,7 +575,7 @@ void NTupleReader::getEvent(int i){
                 min_pt = 35.;
             }
 
-            dielec_id = el_IDMedium_NoIso[0] && el_IDMedium_NoIso[1] &&
+            dielec_id = el_IDLoose[0] && el_IDLoose[1] &&
                 el_ScaleCorr[0] * el_Pt[0] > min_pt &&  el_ScaleCorr[1] * el_Pt[1] > 15. &&
                 goodElEta(el_SCEta[0]) && goodElEta(el_SCEta[1]);
 
@@ -852,6 +867,9 @@ void NTupleReader::fillEventSFs(){
         el_id_SF = get_el_SF(el1_pt, el1_eta, el_SF.ID_SF);
         el_reco_SF = get_el_SF(el1_pt, el1_eta, el_SF.RECO_SF);
     }
+
+    if(do_top_ptrw) doTopPTRW();
+        
 }
 
 void NTupleReader::fillEventRC(){
@@ -1347,6 +1365,86 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
 
     if(PRINT) memset(out_buff, 0, 10000);
     return abs(gen_id[gen_lep_p]);
+}
+
+bool NTupleReader::doTopPTRW(bool PRINT = false){
+
+
+
+    char out_buff[50000];
+
+
+    if(PRINT) memset(out_buff, 0, 10000);
+    if(PRINT) sprintf(out_buff + strlen(out_buff),"Event %i \n", event_idx);
+
+    int FINAL_COPY = 62;
+    //Particle ID's
+    int TOP = 6;
+
+
+    int i_top =-1;
+    int i_antitop =-1;
+
+
+
+    for(unsigned int k=0; k<gen_size; k++){
+        if(gen_id[k] == TOP && gen_status[k] == FINAL_COPY){
+            if(i_top != -1) printf("Extra top");
+            i_top = k;
+        }
+        if(gen_id[k] == -TOP && gen_status[k] == FINAL_COPY){
+            if(i_antitop != -1) printf("Extra anti-top");
+            i_antitop = k;
+        }
+
+
+
+            if( abs(gen_id[k]) ==6 ){
+                sprintf(out_buff + strlen(out_buff),"Parton (ID = %i stat = %i): \n"
+                        "    Mom1 ID: %i Mom2 ID: %i  \n"
+                        "    Dau1 ID: %i Dau2 ID: %i  \n",
+                        gen_id[k], gen_status[k], 
+                        gen_Mom0ID[k],  gen_Mom1ID[k], 
+                        gen_Dau0ID[k],  gen_Dau1ID[k] );
+
+                sprintf(out_buff + strlen(out_buff),"(pt, eta, phi,E) = %4.2f %4.2f %4.2f %4.2f \n", 
+                        gen_Pt[k], gen_Eta[k], gen_Phi[k], gen_E[k]);
+            }
+    }
+    if(i_top == -1 || i_antitop == -1){
+        top_ptrw = top_ptrw_alpha_up = top_ptrw_alpha_down = top_ptrw_beta_up = top_ptrw_beta_down =  1.0;
+        printf("didn't find top pair \n");
+        return false;
+    }
+
+
+    double top_pt  = gen_Pt[i_top];
+    double antitop_pt  = gen_Pt[i_top];
+
+    top_pt = std::min(top_pt, 500.);
+    antitop_pt = std::min(antitop_pt, 500.);
+
+    double alpha = 0.0615;
+    double beta = 0.0005;
+
+
+    top_ptrw = TMath::Exp(alpha - beta * top_pt) * TMath::Exp(alpha - beta * antitop_pt);
+    top_ptrw_alpha_up = TMath::Exp(1.5*alpha - beta * top_pt) * TMath::Exp(1.5*alpha - beta * antitop_pt);
+    top_ptrw_alpha_down = TMath::Exp(0.5*alpha - beta * top_pt) * TMath::Exp(0.5*alpha - beta * antitop_pt);
+    top_ptrw_beta_up = TMath::Exp(alpha - 1.5*beta * top_pt) * TMath::Exp(alpha - 1.5*beta * antitop_pt);
+    top_ptrw_beta_down = TMath::Exp(alpha - 0.5*beta * top_pt) * TMath::Exp(alpha - 0.5*beta * antitop_pt);
+
+    //printf("top_ptrw %.3f \n", top_ptrw);
+
+
+
+    if(PRINT){
+        sprintf(out_buff + strlen(out_buff), "\n\n");
+        fputs(out_buff, stdout);
+    }
+
+    if(PRINT) memset(out_buff, 0, 10000);
+    return true;
 }
 
 

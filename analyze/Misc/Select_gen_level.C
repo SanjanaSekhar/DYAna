@@ -29,6 +29,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     float cost_st,cost,m, gen_weight;
 
     float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
+    float pdf_weights[60];
    
 
     t_el->Branch("gen_p", "TLorentzVector", &nt.gen_lep_p_vec);
@@ -47,6 +48,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_el->Branch("mu_F_down", &mu_F_down);
     t_el->Branch("mu_RF_up", &mu_RF_up);
     t_el->Branch("mu_RF_down", &mu_RF_down);
+    t_el->Branch("pdf_weights", &nt.pdf_weights, "pdf_weights[60]/F");
     t_el->Branch("inc_id1", &nt.inc_id1);
     t_el->Branch("inc_id2", &nt.inc_id2);
     t_el->Branch("sig_event", &nt.signal_event);
@@ -68,6 +70,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_mu->Branch("mu_F_down", &mu_F_down);
     t_mu->Branch("mu_RF_up", &mu_RF_up);
     t_mu->Branch("mu_RF_down", &mu_RF_down);
+    t_mu->Branch("pdf_weights", &nt.pdf_weights, "pdf_weights[60]/F");
     t_mu->Branch("inc_id1", &nt.inc_id1);
     t_mu->Branch("inc_id2", &nt.inc_id2);
     t_mu->Branch("sig_event", &nt.signal_event);
@@ -109,8 +112,6 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
                 cost_st = nt.cost_st;
                 cost = get_cost(gen_p, gen_m);
                 gen_weight = nt.gen_weight;
-                nt.inc1_vec.Print();
-                nt.inc2_vec.Print();
 
 
                 if(gen_id == 11){

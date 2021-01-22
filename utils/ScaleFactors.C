@@ -21,6 +21,8 @@ typedef struct {
     TH2D *HLT_MC_EFF;
     TH2D *ISO_SF;
     TH2D *ID_SF;
+    TH2D *ISO_SF_SYS;
+    TH2D *ID_SF_SYS;
 } mu_SFs;
 
 
@@ -59,8 +61,10 @@ typedef struct{
 typedef struct{
     TH1F *el_rw[n_m_bins];
     TH1F *mu_rw[n_m_bins];
+    TH1F *comb_rw[n_m_bins];
     TH1F *el_data_sub[n_m_bins];
     TH1F *mu_data_sub[n_m_bins];
+    TH1F *comb_data_sub[n_m_bins];
 } ptrw_helper;
 
 typedef struct{
@@ -69,19 +73,26 @@ typedef struct{
 } fakes_costrw_helper;
 
 typedef struct{
-    TH1F *m150_rw;
-    TH1F *m250_rw;
-    TH1F *m510_rw;
+    TH1F *rw[n_emu_rw_m_bins];
 } emu_costrw_helper;
 
 typedef struct{
-    TH3D *h_mu;
-    TH3D *h_el;
-    TH3D *h_mu_up;
-    TH3D *h_el_up;
-    TH3D *h_mu_down;
-    TH3D *h_el_down;
+    TH3D *h;
+    TH3D *h_up;
+    TH3D *h_down;
 } LQ_rw_helper;
+
+typedef struct{
+    TProfile *h_F_up;
+    TProfile *h_R_up;
+    TProfile *h_RF_up;
+    TProfile *h_F_down;
+    TProfile *h_R_down;
+    TProfile *h_RF_down;
+    TProfile *h_pdfs[60];
+} RF_pdf_norm_helper;
+
+    
 
 
 double get_var(Float_t vals[100]){
@@ -126,16 +137,13 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
     TH3D *h_rw;
     rap = abs(rap);
     if(FLAG2 == 0){ // everything
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu;
-        else h_rw = h_LQ.h_el;
+        h_rw = h_LQ.h;
     }
     else if(FLAG2 == 1){ // down quarks
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_down;
-        else h_rw = h_LQ.h_el_down;
+        h_rw = h_LQ.h_down;
     }
     else if(FLAG2 == 2){ // up quarks
-        if(FLAG1 == FLAG_MUONS) h_rw = h_LQ.h_mu_up;
-        else h_rw = h_LQ.h_el_up;
+        h_rw = h_LQ.h_up;
     }
     else{
         printf("Invalid LQ reweighting flag %i! Options are 0, 1 or 2 \n", FLAG2);
@@ -174,17 +182,23 @@ float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int sys
 }
 
 
-float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
+float get_emu_costrw_SF(emu_costrw_helper h, float cost, float m, int systematic = 0){
+    if(m < emu_rw_m_bins[0]) m = emu_rw_m_bins[0] + 1.;
+    if(m > emu_rw_m_bins[n_emu_rw_m_bins - 1]) m = emu_rw_m_bins[n_emu_rw_m_bins] - 1.;
+    int m_bin = find_bin(emu_rw_m_bins, m);
+    TH1F *h_rw;
+    if(m_bin < n_emu_rw_m_bins && m_bin >= 0) h_rw = h.rw[m_bin];
+    else{
+        printf("EMu mbin lookup error for rw. mbin %i, m %.1f \n", m_bin, m);
+        exit(1);
+    }
+
     int bin = h_rw->FindBin(cost);
     float correction = h_rw->GetBinContent(bin);
     //one systematic for every |cos(theta)| bin (nbins / 2)
     if(systematic != 0){
         float stat_err = h_rw->GetBinError(bin);
-        //Low stat bins should not go crazy
-        stat_err = max(stat_err, 0.1f);
-        float sys_correction = h_rw->GetBinContent(bin);
-        float sys_err = 0.25 * std::fabs( sys_correction - 1.);
-        float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        float error = stat_err;
 
         int sys_bin = abs(systematic);
         int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;
@@ -203,10 +217,13 @@ float get_emu_costrw_SF(TH1 *h_rw, float cost, int systematic = 0){
 
 
 
-float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0){
+float get_ptrw_SF(ptrw_helper h, float m, float pt, int systematic = 0){
     TH1F *h_rw, *h_N;
     if(m > m_bins[n_m_bins-2]) m = m_bins[n_m_bins-2] - 0.1;
     int m_bin = find_bin(m_bins, m);
+    h_rw = h.comb_rw[m_bin];
+    h_N = h.comb_data_sub[m_bin];
+    /*
     if(flag == FLAG_MUONS){
         h_rw = h.mu_rw[m_bin];
         h_N = h.mu_data_sub[m_bin];
@@ -215,6 +232,7 @@ float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0
         h_rw = h.el_rw[m_bin];
         h_N = h.el_data_sub[m_bin];
     }
+    */
     TAxis* x_ax =  h_rw->GetXaxis();
     int bin = h_rw->FindBin(pt);
     float correction = h_rw->GetBinContent(bin);
@@ -224,9 +242,10 @@ float get_ptrw_SF(ptrw_helper h, float m, float pt, int flag, int systematic = 0
         float stat_err = h_rw->GetBinError(sys_bin);
         //Low stat bins should not go crazy
         stat_err = max(stat_err, 0.1f);
-        float sys_correction = h_rw->GetBinContent(sys_bin);
-        float sys_err = 0.2 * std::fabs( sys_correction - 1.);
-        float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        //float sys_correction = h_rw->GetBinContent(sys_bin);
+        //float sys_err = 0.2 * std::fabs( sys_correction - 1.);
+        //float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+        float error = stat_err;
 
         if(bin == abs(systematic)){
             //shift the reweighting in this bin by the error
@@ -316,6 +335,9 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
     //stay in range of histogram
     float sys_unc_mult = 1.0;
 
+    //not used
+    int pt_systematic_sep = 0;
+
     TAxis *a_pt;
     if(year == 2016){
         a_pt=h->GetYaxis();
@@ -327,6 +349,7 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
 
     float min_pt = a_pt->GetBinLowEdge(1);
     float max_pt = a_pt->GetBinUpEdge(a_pt->GetNbins());
+    float mid_pt = 60.;
 
 
     if( pt <= min_pt) pt = min_pt + 1.;
@@ -349,12 +372,17 @@ Float_t get_mu_SF(Float_t pt, Float_t eta, int year, TH2D *h, int systematic_bar
         xbin = x_ax->FindBin(pt);
         ybin = y_ax->FindBin(abs(eta));
     }
+    bool correct_pt_range = true;
+    if(pt_systematic_sep != 0){
+        correct_pt_range = (pt >= mid_pt && pt_systematic_sep > 0) || (pt < mid_pt && pt_systematic_sep < 0);
+        //correct_pt_range = (ybin > mid_bin && pt_systematic_sep > 0) || (ybin <= mid_bin && pt_systematic_sep < 0);
+    }
 
 
     Float_t result = h->GetBinContent(xbin, ybin);
     int systematic = systematic_barrel;
     if(abs(eta) > 1.4) systematic = systematic_endcap;
-    if(systematic != 0){
+    if(systematic != 0 && correct_pt_range){
         Float_t err = sys_unc_mult * h->GetBinError(xbin, ybin);
         err =abs(err);
         result += (systematic * err);
@@ -377,7 +405,7 @@ Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, i
     float min_pt = h->GetYaxis()->GetBinLowEdge(1);
     float max_pt = h->GetYaxis()->GetBinUpEdge(n_bins_pt);
 
-    float mid_pt = 75.;
+    float mid_pt = 100.;
     int mid_bin = h->GetYaxis()->FindBin(mid_pt);
 
     if( pt <= min_pt) pt = min_pt + 1.;
@@ -506,6 +534,8 @@ Float_t get_HLT_SF(Float_t lep1_pt, Float_t lep1_eta, Float_t lep2_pt, Float_t l
 
     Float_t MC_EFF1 = h_MC_EFF->GetBinContent(xbin1_MC_EFF, ybin1_MC_EFF);
     Float_t MC_EFF2 = h_MC_EFF->GetBinContent(xbin2_MC_EFF, ybin2_MC_EFF);
+
+
     Float_t result = (1 - (1-MC_EFF1*SF1)*(1-MC_EFF2*SF2))/
                       (1 - (1-MC_EFF1)*(1-MC_EFF2));
     //printf("%.1f %.1f SF: %.3f %.3f, MC EFF: %.3f %.3f  comb %.3f \n", lep1_pt, lep2_pt, SF1, SF2, MC_EFF1, MC_EFF2, result);
@@ -539,6 +569,44 @@ void setup_A0_helper(A0_helpers *h, int year){
     }
 }
 
+
+
+void setup_RF_pdf_norm_helper(RF_pdf_norm_helper *h, int year){
+    TFile *f;
+
+    if(year == 2016) f = TFile::Open("../analyze/SFs/2016/RF_pdf_weights.root");
+    else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/RF_pdf_weights.root");
+    else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/RF_pdf_weights.root");
+    for (int i=0; i< n_m_bins; i++){
+        for (int j=0; j< n_pt_bins; j++){
+
+            h->h_R_up = (TProfile *) f->Get("h_R_up")->Clone();
+            h->h_R_up->SetDirectory(0);
+            h->h_F_up = (TProfile *) f->Get("h_F_up")->Clone();
+            h->h_F_up->SetDirectory(0);
+            h->h_RF_up = (TProfile *) f->Get("h_RF_up")->Clone();
+            h->h_RF_up->SetDirectory(0);
+
+            h->h_R_down = (TProfile *) f->Get("h_R_down")->Clone();
+            h->h_R_down->SetDirectory(0);
+            h->h_F_down = (TProfile *) f->Get("h_F_down")->Clone();
+            h->h_F_down->SetDirectory(0);
+            h->h_RF_down = (TProfile *) f->Get("h_RF_down")->Clone();
+            h->h_RF_down->SetDirectory(0);
+
+            char title[100];
+            for(int k = 0; k<60; k++){
+                sprintf(title, "h_pdf%i", k);
+                h->h_pdfs[k] = (TProfile *) f->Get(title);
+                h->h_pdfs[k]->SetDirectory(0);
+            }
+
+
+        }
+    }
+}
+
+
 void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     TFile *f;
 
@@ -547,23 +615,18 @@ void setup_LQ_rw_helper(LQ_rw_helper *h_lq, int year){
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/LQ_rw.root");
 
 
-    h_lq->h_el = (TH3D *) f->Get("h_el")->Clone();
-    h_lq->h_el->SetDirectory(0);
 
-    h_lq->h_mu = (TH3D *) f->Get("h_mu")->Clone();
-    h_lq->h_mu->SetDirectory(0);
+    h_lq->h = (TH3D *) f->Get("h")->Clone();
+    h_lq->h->SetDirectory(0);
 
-    h_lq->h_el_up = (TH3D *) f->Get("h_el_up")->Clone();
-    h_lq->h_el_up->SetDirectory(0);
 
-    h_lq->h_mu_up = (TH3D *) f->Get("h_mu_up")->Clone();
-    h_lq->h_mu_up->SetDirectory(0);
+    h_lq->h_up = (TH3D *) f->Get("h_up")->Clone();
+    h_lq->h_up->SetDirectory(0);
 
-    h_lq->h_el_down = (TH3D *) f->Get("h_el_down")->Clone();
-    h_lq->h_el_down->SetDirectory(0);
 
-    h_lq->h_mu_down = (TH3D *) f->Get("h_mu_down")->Clone();
-    h_lq->h_mu_down->SetDirectory(0);
+    h_lq->h_down = (TH3D *) f->Get("h_down")->Clone();
+    h_lq->h_down->SetDirectory(0);
+
     f->Close();
 }
 
@@ -581,6 +644,9 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
         sprintf(h_name, "mumu%i_m%i_pt_ratio", year % 2000, i);
         h->mu_rw[i] = (TH1F *) f->Get(h_name)->Clone();
         h->mu_rw[i]->SetDirectory(0);
+        sprintf(h_name, "comb%i_m%i_pt_ratio", year % 2000, i);
+        h->comb_rw[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->comb_rw[i]->SetDirectory(0);
 
         sprintf(h_name, "elel%i_m%i_pt_data_sub", year % 2000, i);
         h->el_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
@@ -588,6 +654,9 @@ void setup_ptrw_helper(ptrw_helper *h, int year){
         sprintf(h_name, "mumu%i_m%i_pt_data_sub", year % 2000, i);
         h->mu_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
         h->mu_data_sub[i]->SetDirectory(0);
+        sprintf(h_name, "comb%i_m%i_pt_data_sub", year % 2000, i);
+        h->comb_data_sub[i] = (TH1F *) f->Get(h_name)->Clone();
+        h->comb_data_sub[i]->SetDirectory(0);
     }
 }
 
@@ -597,18 +666,18 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
     if(year == 2016) f = TFile::Open("../analyze/SFs/2016/emu_cost_rw.root");
     else if(year == 2017) f = TFile::Open("../analyze/SFs/2017/emu_cost_rw.root");
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/emu_cost_rw.root");
+    else{
+        printf("Year is %i ?? ", year);
+        exit(1);
+    }
+    f->Print();
     char name[100];
-    sprintf(name, "emu%i_m150_cost_ratio", year % 2000);
-    h->m150_rw = (TH1F *) f->Get(name)->Clone();
-    h->m150_rw->SetDirectory(0);
+    for(int i=0; i<n_emu_rw_m_bins; i++){
+        sprintf(name, "emu%i_mbin0_cost_ratio", year % 2000);
+        h->rw[i] = (TH1F *) f->Get(name)->Clone();
+        h->rw[i]->SetDirectory(0);
+    }
 
-    sprintf(name, "emu%i_m250_cost_ratio", year % 2000);
-    h->m250_rw = (TH1F *) f->Get(name)->Clone();
-    h->m250_rw->SetDirectory(0);
-
-    sprintf(name, "emu%i_m510_cost_ratio", year % 2000);
-    h->m510_rw = (TH1F *) f->Get(name)->Clone();
-    h->m510_rw->SetDirectory(0);
 }
 
 
@@ -695,12 +764,18 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_eta_pt")->Clone();
         ID_1->SetDirectory(0);
         era1->ID_SF = ID_1;
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_eta_pt_syst")->Clone();
+        ID_1_SYS->SetDirectory(0);
+        era1->ID_SF_SYS = ID_1_SYS;
         f2->Close();
 
         f3 = TFile::Open("../analyze/SFs/2016/Mu_BCDEF_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")->Clone();
         ISO_1->SetDirectory(0);
         era1->ISO_SF = ISO_1;
+        TH2D *ISO_1_SYS = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt_syst")->Clone();
+        ISO_1_SYS->SetDirectory(0);
+        era1->ISO_SF_SYS = ISO_1_SYS;
         f3->Close();
 
 
@@ -708,12 +783,18 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         TH2D *ID_2 = (TH2D *) f5->Get("NUM_TightID_DEN_genTracks_eta_pt")->Clone();
         ID_2->SetDirectory(0);
         era2->ID_SF = ID_2;
+        TH2D *ID_2_SYS = (TH2D *) f5->Get("NUM_TightID_DEN_genTracks_eta_pt_syst")->Clone();
+        ID_2_SYS->SetDirectory(0);
+        era2->ID_SF_SYS = ID_2_SYS;
         f5->Close();
 
         f6 = TFile::Open("../analyze/SFs/2016/Mu_GH_ISO.root");
         TH2D *ISO_2 = (TH2D *) f6->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt")->Clone();
         ISO_2->SetDirectory(0);
         era2->ISO_SF = ISO_2;
+        TH2D *ISO_2_SYS = (TH2D *) f6->Get("NUM_TightRelIso_DEN_TightIDandIPCut_eta_pt_syst")->Clone();
+        ISO_2_SYS->SetDirectory(0);
+        era2->ISO_SF_SYS = ISO_2_SYS;
         f6->Close();
 
     }
@@ -734,16 +815,24 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         f2 = TFile::Open("../analyze/SFs/2017/Mu_ID.root");
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_genTracks_pt_abseta_syst")->Clone();
+        ID_1_SYS->SetDirectory(0);
         era1->ID_SF = ID_1;
         era2->ID_SF = ID_1;
+        era1->ID_SF_SYS = ID_1_SYS;
+        era2->ID_SF_SYS = ID_1_SYS;
         f2->Close();
 
         printf("iso\n");
         f3 = TFile::Open("../analyze/SFs/2017/Mu_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")->Clone();
         ISO_1->SetDirectory(0);
+        TH2D *ISO_1_SYS = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta_syst")->Clone();
+        ISO_1_SYS->SetDirectory(0);
         era1->ISO_SF = ISO_1;
         era2->ISO_SF = ISO_1;
+        era1->ISO_SF_SYS = ISO_1_SYS;
+        era2->ISO_SF_SYS = ISO_1_SYS;
         f3->Close();
 
 
@@ -770,22 +859,31 @@ void setup_mu_SFs(mu_SFs *era1, mu_SFs *era2, int year){
         f2 = TFile::Open("../analyze/SFs/2018/Mu_ID.root");
         TH2D *ID_1 = (TH2D *) f2->Get("NUM_TightID_DEN_TrackerMuons_pt_abseta")->Clone();
         ID_1->SetDirectory(0);
+        TH2D *ID_1_SYS = (TH2D *) f2->Get("NUM_TightID_DEN_TrackerMuons_pt_abseta_syst")->Clone();
+        ID_1_SYS->SetDirectory(0);
         era1->ID_SF = ID_1;
         era2->ID_SF = ID_1;
+        era1->ID_SF_SYS = ID_1_SYS;
+        era2->ID_SF_SYS = ID_1_SYS;
         f2->Close();
 
         f3 = TFile::Open("../analyze/SFs/2018/Mu_ISO.root");
         TH2D *ISO_1 = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta")->Clone();
         ISO_1->SetDirectory(0);
+        TH2D *ISO_1_SYS = (TH2D *) f3->Get("NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta_syst")->Clone();
+        ISO_1_SYS->SetDirectory(0);
         era1->ISO_SF = ISO_1;
         era2->ISO_SF = ISO_1;
+        era1->ISO_SF_SYS = ISO_1_SYS;
+        era2->ISO_SF_SYS = ISO_1_SYS;
         f3->Close();
 
 
     }
 
-    if(era1->HLT_SF == NULL || era1->ID_SF == NULL || era1->ISO_SF == NULL  ||
-       era2->HLT_SF == NULL || era2->ID_SF == NULL || era2->ISO_SF == NULL) printf("Something wrong setup muon SF'S !!!! \n\n\n");
+    if(era1->HLT_SF == NULL || era1->ID_SF == NULL || era1->ISO_SF == NULL  || era1->ID_SF_SYS == NULL || era1->ISO_SF_SYS == NULL ||
+       era2->HLT_SF == NULL || era2->ID_SF == NULL || era2->ISO_SF == NULL  || era2->ID_SF_SYS == NULL || era2->ISO_SF_SYS == NULL)
+        printf("Something wrong setup muon SF'S !!!! \n\n\n");
 }
 
 void setup_el_SF(el_SFs *sf, int year){

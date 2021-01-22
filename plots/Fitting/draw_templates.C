@@ -10,7 +10,7 @@ void draw_templates(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2017;
+        int year = 2016;
         init(year);
         setup_all_SFs(year);
         //char *plot_dir = "Paper_plots/template_plots";

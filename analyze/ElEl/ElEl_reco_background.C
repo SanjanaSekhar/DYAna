@@ -16,6 +16,12 @@ void ElEl_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
     nt.iJob = iJob;
     nt.do_electrons = true;
     nt.do_SFs = true;
+    if(fin.find("TTbar") != string::npos){
+        printf("Turning on top pt reweighting \n");
+        nt.do_top_ptrw = true;
+    }
+
+
     nt.setupSFs();
     nt.setupOutputTree("T_sig");
     nt.setupOutputTree("T_WJets");

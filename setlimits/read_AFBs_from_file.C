@@ -10,7 +10,7 @@
 
 const int n_bins = 3;
 Double_t AFB_SM[n_bins] = {0.570, 0.575, 0.590};
-Double_t AFB_unc[n_bins] = {0.025, 0.037, 0.062};
+Double_t AFB_unc[n_bins] = {0.034, 0.046, 0.052};
 Double_t AFB_measured[n_bins] = {0.644, 0.593, 0.571};
 //Double_t AFB_measured[n_bins] = {0.570, 0.575, 0.590};
 

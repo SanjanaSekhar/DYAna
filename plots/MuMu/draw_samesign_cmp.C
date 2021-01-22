@@ -31,6 +31,7 @@
 const int type = FLAG_MUONS;
 int year = 2018;
 bool write_out = true;
+//char *plot_dir = "Misc_plots/samesign_cmp/";
 char *plot_dir = "Paper_plots/";
 
 
@@ -110,10 +111,9 @@ void draw_samesign_cmp(){
     DY_phi->SetFillColor(kRed+1);
     DY_rap->SetFillColor(kRed+1);
 
-    int m_low = 150.;
+    int m_low = 170.;
     int m_high = 10000.;
     bool ss = true;
-    bool in_os_region = false;
 
 
     make_m_cost_pt_xf_hist(t_mumu_ss_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,   year, m_low, m_high, ss);
@@ -122,41 +122,41 @@ void draw_samesign_cmp(){
     make_m_cost_pt_xf_hist(t_mumu_ss_wt, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, DY_rap, false, type,   year, m_low, m_high, ss);
 
-    //Fakerate_est_mu(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, year, m_low, m_high, ss, in_os_region);
     bool cost_reweight = false;
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss, in_os_region, cost_reweight);
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss, cost_reweight);
 
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), diboson_m->Integral(), DY_m->Integral());
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_cost->Integral(), QCD_cost->Integral(), diboson_cost->Integral(), DY_cost->Integral());
 
-    Double_t n_data = data_m->Integral();
-    Double_t n_est = diboson_m->Integral() + QCD_m->Integral() + DY_m->Integral();
-    bool normalize = false;
+    bool normalize = true;
     
     if(normalize){
-        Double_t n_data = data_m->Integral();
-        Double_t n_mc = diboson_m->Integral() +  DY_m->Integral();
-        Double_t n_QCD = QCD_m->Integral();
+        Double_t n_data = data_cost->Integral();
+        Double_t n_mc = diboson_cost->Integral() +  DY_cost->Integral();
+        Double_t n_QCD = QCD_cost->Integral();
         Double_t qcd_ratio = (n_data - n_mc) / n_QCD;
         printf("Ratio of obs to expected QCD is %.2f \n", qcd_ratio);
 
 
+        QCD_cost->Scale(qcd_ratio);
+
+        /*
         QCD_m->Scale(qcd_ratio);
         QCD_pt->Scale(qcd_ratio);
-        QCD_cost->Scale(qcd_ratio);
         QCD_xf->Scale(qcd_ratio);
         QCD_phi->Scale(qcd_ratio);
+        */
     }
 
 
 
-    bool scale_error=true;
+    bool scale_error=false;
     float qcd_err = 0.5;
     float diboson_err = 0.05;
     bool add_err = true;
     if(scale_error){
         setHistError(QCD_m, qcd_err, add_err);
-        setHistError(QCD_cost, qcd_err, add_err);
+        //setHistError(QCD_cost, qcd_err, add_err);
         setHistError(QCD_xf, qcd_err, add_err);
         setHistError(QCD_phi, qcd_err, add_err);
 
@@ -188,7 +188,7 @@ void draw_samesign_cmp(){
 
 
 
-    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; MuMu Cos(#theta)_{r}");
+    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; MuMu sos(#theta)");
     cost_stack->Add(diboson_cost);
     cost_stack->Add(QCD_cost);
     cost_stack->Add(DY_cost);
@@ -215,7 +215,7 @@ void draw_samesign_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.3, 0.3);
+    TLegend *leg1 = new TLegend(0.3, 0.25);
     leg1->AddEntry(data_pt, "data", "p");
     leg1->AddEntry(DY_pt, "DY (miss-sign)", "f");
     leg1->AddEntry(QCD_pt, "QCD + WJets", "f");
@@ -240,7 +240,7 @@ void draw_samesign_cmp(){
     if(write_out) c_m->Print(plt_file);
 
     
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta_r)", 500., false);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", -1., false);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sMuMu%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);

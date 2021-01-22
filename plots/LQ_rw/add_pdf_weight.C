@@ -54,8 +54,8 @@ void add_pdf_weight(int year){
 
     char mu_fname[100], el_fname[100];
 
-    sprintf(mu_fname, "../../analyze/output_files/%i/MuMu%i_dy_aug05.root", year, year % 2000);
-    sprintf(el_fname, "../../analyze/output_files/%i/ElEl%i_dy_aug05.root", year, year % 2000);
+    sprintf(mu_fname, "../../analyze/output_files/%i/MuMu%i_dy_nov11.root", year, year % 2000);
+    sprintf(el_fname, "../../analyze/output_files/%i/ElEl%i_dy_nov11.root", year, year % 2000);
 
 
 

@@ -8,6 +8,33 @@
 using namespace std;
 
 
+void symmetrize2d(TH2F *h_2d){
+    int n_xf_bins = h_2d->GetNbinsX();
+    int n_cost_bins = h_2d->GetNbinsY();
+
+    for(int i=1; i<=n_xf_bins; i++){
+        for(int j=1; j<= n_cost_bins/2; j++){
+            float content = h_2d->GetBinContent(i,j);
+            float error = h_2d->GetBinError(i,j);
+
+            int opp_j = (n_cost_bins + 1) -j;
+            float content2 = h_2d->GetBinContent(i,opp_j);
+            float error2 = h_2d->GetBinError(i,opp_j);
+
+            float new_content = (content + content2)/2.0;
+            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
+            h_2d->SetBinContent(i,j, new_content);
+            h_2d->SetBinContent(i,opp_j, new_content);
+
+            h_2d->SetBinError(i,j, new_error);
+            h_2d->SetBinError(i,opp_j, new_error);
+
+
+        }
+    }
+}
+
+
 void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
     //avoid negative pdfs by fixing up template edges
     int n_xf_bins = h_sym->GetNbinsX();
@@ -37,6 +64,7 @@ void fixup_template_sum(TH2F *h_sym, TH2F *h_asym){
 }
 
 
+
 void cleanup_template(TH2F *h){
     //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
     for(int i=0; i<= h->GetNbinsX()+1; i++){
@@ -64,6 +92,46 @@ void cleanup_template(TH2F *h){
     }
 }
 
+
+void cleanup_fakes_template(TH2F *h){
+    //printf("%i %i \n", h->GetNbinsX(), h->GetNbinsY());
+    TH2F *h_copy = (TH2F *) h->Clone("clone");
+    for(int i=1; i<= h->GetNbinsX(); i++){
+        for(int j=1; j<= h->GetNbinsY(); j++){
+            float small_val = 0.5;
+            float min_val = 1e-6;
+            float val = h->GetBinContent(i,j);
+            float err = h->GetBinError(i,j);
+            float max_err = 0.7; //percent
+            if(val< min_val){
+                if(err > 0.5 && abs(val)/err < 1.){
+                    //bin content is negative/small but uncertainty overlaps with 0
+                    // change bin content to be positive so that this
+                    // uncertainty can be in the template (can't put an unc. on zero)
+                    val = err / 2.;
+                    h->SetBinContent(i,j, val);
+                }
+
+                else if(val < min_val){
+                    //zero this bin
+                    val = min_val;
+                    h->SetBinContent(i,j,min_val);
+                }
+            }
+
+            if(err > max_err * val){
+                //prevent val froming being close to fit boundary at 0
+                //By setting max error as a fraction of the bin content
+                err = val * max_err;
+                h->SetBinError(i,j, err);
+            }
+
+        }
+    }
+    h_copy->Delete();
+}
+
+
 //set error on dest histogram to match fractional error on source histogram
 void set_frac_error(TH1 *h_source, TH1 *h_dest){
     for(int i=0; i<= h_source->GetNbinsX() * h_source->GetNbinsY(); i++){ //works for 1d and 2d histograms
@@ -83,11 +151,6 @@ void make_pl_mn_templates(TH1* h_sym, TH1* h_asym, TH1* h_pl, TH1 *h_mn){
         set_frac_error(h_sym, h_mn);
 }
 
-int get_n_1d_bins(int n_binsx, int n_binsy){
-    //merge 2 highest cos bins in 2 larger eta bins
-    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
-    return n_1d_bins;
-}
 
 void print_hist(TH2 *h){
     printf("\n");
@@ -127,11 +190,11 @@ int gen_data_template(TTree *t1, TH2F* h,
             if(!ss){
                 if(scramble_data){
                     //switch + and - back and forth
-                    //tm.cost = sign * std::fabs(tm.cost); 
-                    //sign *= -1.;
+                    tm.cost = sign * std::fabs(tm.cost); 
+                    sign *= -1.;
                     //randomly flip data events
-                    if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
-                    else tm.cost = -std::fabs(tm.cost);
+                    //if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
+                    //else tm.cost = -std::fabs(tm.cost);
                 }
                 h->Fill(var1, tm.cost, 1); 
             }
@@ -317,7 +380,7 @@ int one_mc_template(TTree *t1, Double_t a0, Double_t afb, TH2F* h_dy,
 
 
 
-std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
+void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH2F *h, 
         int year,  Double_t m_low, Double_t m_high, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false, string sys_label = ""){
     h->Sumw2();
 
@@ -349,7 +412,8 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
             printf("Doing fakes costrw sys %i \n", shape_sys);
         }
     }
-    
+   
+    Double_t eta1,eta2,pt1,pt2;
 
 
     TH2D *h_err;
@@ -411,26 +475,36 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                     if(l==0){
                         if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
+
                         evt_reweight = mu1_fakerate/(1-mu1_fakerate);
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 1);
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 1);
                     }
 
                     if(l==1){
                         mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = -(mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+
+                        h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(mu2_fakerate/(1-mu2_fakerate)));
+                        h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f),  -0.5*(mu1_fakerate/(1-mu1_fakerate)));
                     }
                     if(l==2){
                         if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = -(mu1_fakerate )/(1-mu1_fakerate);
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight());
                     }
                     if(l==3){
                         mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+                        h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight() * (mu2_fakerate/(1-mu2_fakerate)));
+                        h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight() * (mu1_fakerate/(1-mu1_fakerate)));
                     }
-                    if((l==0) && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), tm.getEvtWeight());
-                    if((l==0) && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), tm.getEvtWeight());
                 }
                 else{
                     Double_t el1_fakerate, el2_fakerate; 
@@ -438,26 +512,38 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
                         if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = el1_fakerate/(1-el1_fakerate);
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 1);
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), 1);
                     }
                     if(l==1){
                         el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = -(el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
+
+                        h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -0.5*(el2_fakerate/(1-el2_fakerate)));
+                        h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -0.5*(el1_fakerate/(1-el1_fakerate)));
+
                     }
                     if(l==2){
 
                         if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = -(el1_fakerate )/(1-el1_fakerate);
+
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight());
                     }
                     if(l==3){
 
                         el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
+
+                        h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight() * (el2_fakerate/(1-el2_fakerate)));
+                        h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight() * (el1_fakerate/(1-el1_fakerate)));
                     }
-                    if((l==0)  && tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), tm.getEvtWeight());
-                    if((l==0)  && tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), tm.getEvtWeight());
                 }
                 double tot_evt_weight = 0.;
                 if(is_data) tot_evt_weight = evt_reweight; 
@@ -481,15 +567,31 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
         printf("After iter %i current fakerate est is %.0f \n", l, h->Integral());
 
     }
-    //remove negative bins
-    cleanup_template(h);
 
-    set_fakerate_errors(h_err, FR.h, h);
-    // remove outliers
-    tot_weight_os = std::max(1e-4, tot_weight_os);
-    tot_weight_ss = std::max(1e-4, tot_weight_ss);
+
+    //symmetrize to avg statistical fluctuations before removing negative bins
+    symmetrize2d(h);
+    //remove negative bins
+    cleanup_fakes_template(h);
+
+
+    //scale to just OS normalization
+    //
+    printf("Tot weight OS is %.1f, ss %.1f, hist integral %.1f \n", tot_weight_os, tot_weight_ss, h->Integral());
+    if(tot_weight_os > 10.){
+        tot_weight_ss = std::max(1e-4, tot_weight_ss);
+        tot_weight_os = std::max(1e-4, tot_weight_os);
+    }
+    else{ //low stats, use weight after negative bin cleanups
+        tot_weight_ss = std::max(1e-4, tot_weight_ss);
+        tot_weight_os = h->Integral() - tot_weight_ss;
+    }
     float scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
     if(!incl_ss) scaling = 1.;
+    h->Scale(scaling);
+    h_err->Scale(scaling);
+
+    set_fakerate_errors(h_err, FR.h, h);
 
 
     fakes_costrw_helper h_rw;
@@ -499,7 +601,11 @@ std::pair<float, float> gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *
     
     Double_t err;
     Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);
+
+
+    printf("After Scale: \n");
+    h->Print("range");
     printf("Total fakerate est is %.0f +/- %.0f \n", integ, err);
-    return std::make_pair(scaling, err/integ);
+    return;
 }
 

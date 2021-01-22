@@ -22,10 +22,11 @@
 #include "TSystem.h"
 #include "../../utils/root_files.h"
 #include "../../utils/HistUtils.C"
+#include "../../utils/ScaleFactors.C"
 #include "../../utils/PlotUtils.C"
 
 int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt, TH1F *h_xf,  
-        float m_low, float m_high, float pt_low, float pt_high){
+        float m_low, float m_high, float pt_low, float pt_high, bool do_ptrw = false, int year = 2016){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     Bool_t sig_event(1);
@@ -41,6 +42,8 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 
 
 
+    ptrw_helper ptrw_SFs; 
+    setup_ptrw_helper(&ptrw_SFs, year);
 
 
     int nEvents=0;
@@ -60,6 +63,11 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
             if(pt >= pt_low && pt <= pt_high){
                 if(gen_weight >0) nEvents++;
                 else  nEvents--;
+
+                if(do_ptrw){
+                    float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
+                    gen_weight *= ptrw;
+                }
 
                 h_cost_st->Fill(my_cost, gen_weight);
                 //h_cost_st->Fill(-cost_st, gen_weight);
@@ -86,9 +94,10 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 void fit_amc_gen_cost(){
 
     bool write_out = false;
-    int year = 2018;
-    char *out_file = "../analyze/SFs/2018/a0_fits.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_june29.root");
+    int year = 2017;
+    bool do_ptrw = false;
+    char *out_file = "../analyze/SFs/2017/a0_fits.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_aug4.root");
     gROOT->SetBatch(1);
 
     TFile * f_out;
@@ -102,6 +111,8 @@ void fit_amc_gen_cost(){
 
 
     char plot_dir[] = "Misc_plots/A0_fits/";
+
+    if(do_ptrw) printf("PT reweighting is ON! \n");
 
 
 
@@ -142,9 +153,9 @@ void fit_amc_gen_cost(){
         float pt_high = 100000.;
         char title[100];
         TCanvas *c1 = new TCanvas("c1", "", 1000, 800);
-        nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high);
+        nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
         float norm = h_cost1->Integral();
-        nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high);
+        nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
         sprintf(title, "M %.0f-%.0f GeV, dilepton pT; pT", m_low, m_high);
         h_pt->SetTitle(title);
         h_pt->Scale(1./h_pt->Integral());
@@ -152,6 +163,20 @@ void fit_amc_gen_cost(){
         c1->SetLogy();
         sprintf(title, "%sy%i_m%.0f_pt.png", plot_dir, year -2000, m_low);
         if(write_out) c1->Print(title);
+
+        Double_t dnB, dnF;
+        Double_t nB = h_cost1->IntegralAndError(1,n_bins/2, dnB);
+        Double_t nF = h_cost1->IntegralAndError(n_bins/2 + 1,n_bins, dnF);
+        Double_t n_tot = nB + nF;
+        
+        Double_t AFB = ((nF - nB))/((nF+nB));
+        //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));
+        Double_t B = (1. - AFB)*nEvents/2.;
+        Double_t F = (1. + AFB)*nEvents/2.;
+        Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
+        Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
+
+
 
         c1->SetLogy(false);
         h_cost1->Scale(1./h_cost1->Integral() / bin_size);
@@ -162,8 +187,18 @@ void fit_amc_gen_cost(){
 
         sprintf(title, "%sy%i_m%.0f_cost.png", plot_dir, year-2000,  m_low);
         c1->Print(title);
-        //continue;
+        //
+        printf("Mass range from %.0f to %.0f, nEvents %i \n", m_low, m_high, nEvents);
+        printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
+        printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
+        printf("Counting: Total NF %.0f NB %.0f \n", F, B);
+        //printf("Counting: AFB %.4f +/- %.4f \n", AFB, dAFB);
+        printf("Counting Error v2: AFB %.4f +/- %.4f \n", AFB, dAFB_v2);
+
+        continue;
         //exit(1);
+        //
+
 
         for(int pt_idx = 0; pt_idx < n_pt_bins; pt_idx++){
             pt_low = pt_bins[pt_idx];
@@ -177,8 +212,8 @@ void fit_amc_gen_cost(){
 
             h_cost1->Reset();
             h_pt->Reset();
-            nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high);
-            nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high);
+            nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
+            nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
             //int nEvents2 = make_gen_cost(t_gen_el,  h_cost2, m_low, m_high);
 
 

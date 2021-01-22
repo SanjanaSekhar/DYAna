@@ -38,57 +38,46 @@ void write_roo_hist(TH1F *h, RooRealVar *my_var){
     w->import(r);
     delete h;
 }
-void symmetrize2d(TH2F *h_2d){
-    int n_xf_bins = h_2d->GetNbinsX();
-    int n_cost_bins = h_2d->GetNbinsY();
-
-    for(int i=1; i<=n_xf_bins; i++){
-        for(int j=1; j<= n_cost_bins/2; j++){
-            float content = h_2d->GetBinContent(i,j);
-            float error = h_2d->GetBinError(i,j);
-
-            int opp_j = (n_cost_bins + 1) -j;
-            float content2 = h_2d->GetBinContent(i,opp_j);
-            float error2 = h_2d->GetBinError(i,opp_j);
-
-            float new_content = (content + content2)/2.0;
-            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
-            h_2d->SetBinContent(i,j, new_content);
-            h_2d->SetBinContent(i,opp_j, new_content);
-
-            h_2d->SetBinError(i,j, new_error);
-            h_2d->SetBinError(i,opp_j, new_error);
-
-
-        }
-    }
-}
 
 int one_idx(int i, int j, int n_binsx, int n_binsy){
-   //lose 2 bins for each row above mid-row
+
+    //get rid of high rap bins if needed
+    if( i > n_binsx) i -=1;
+
    
-   if(i <= n_binsx/2) return (i-1) * n_binsy + j;
+   //lose 2 bins for each row above mid-row
+   if(i <= std::ceil(n_binsx/2.)) return (i-1) * n_binsy + j;
    if(j == n_binsy) j-=1;
    if(j>1) j-=1;
 
-   int base = (n_binsx/2) * n_binsy;
-   return base + std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
+   int base = std::ceil(n_binsx/2.) * n_binsy;
+   return base + std::max((i - std::ceil(n_binsx/2.) -1), 0.)* (n_binsy-2) + j;
 
 }
 
+int get_n_1d_bins(int n_binsx, int n_binsy){
+    //merge 2 highest cos bins in 2 larger eta bins
+    int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+    return n_1d_bins;
+}
 
 
 TH1F* convert2d(TH2F *h_2d){
     float n_binsx = h_2d->GetNbinsX();
     float n_binsy = h_2d->GetNbinsY();
-    int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
+
+    float n_binsx_new = n_binsx;
+    //merge highest rap bin for high mass templates
+    if(m_low > 550.) n_binsx_new = n_binsx -1;
+
+    int n_1d_bins = get_n_1d_bins(n_binsx_new, n_binsy);
 
     TH1F *h_1d = new TH1F(h_2d->GetName(), "",  n_1d_bins, 0, n_1d_bins);
     for(int i=1; i<=n_binsx; i++){
         for(int j=1; j<=n_binsy; j++){
             float content = h_2d->GetBinContent(i,j);
             float error = h_2d->GetBinError(i,j);
-            int gbin = one_idx(i,j, n_binsx, n_binsy);
+            int gbin = one_idx(i,j, n_binsx_new, n_binsy);
             
             //add in case previous bin filled
             float content_1d = h_1d->GetBinContent(gbin); 

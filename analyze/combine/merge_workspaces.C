@@ -30,17 +30,21 @@ void CopyDir(TDirectory *source, TDirectory *savdir) {
 void merge_workspaces(){
 
 
-    const TString f1_s("combine/templates/aug26_2017.root");
-    const TString fout_s("combine/templates/aug26_merge_2017.root");
-    TFile *f1 = TFile::Open(f1_s, "READ");
-    TFile *fout = TFile::Open(fout_s, "RECREATE");
-    char dirname[40];
-
-
-    char *sys_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ17_sys_aug26";
-    char *pdf_base = "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ17_pdf_aug26";
+    //const TString f1_s("combine/templates/oct1_2017.root");
+    int year = 2018;
+    char label[] =  "jan12";
+    char f1_s[200], fout_s[200], sys_base[200], pdf_base[200], dirname[40];
+    sprintf(f1_s, "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_%s/file_0.root", year-2000, label);
+    sprintf(fout_s, "combine/templates/%s_merge_%i.root", label, year);
+    sprintf(sys_base, "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_sys_%s", year -2000, label);
+    sprintf(pdf_base,  "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_pdf_%s", year - 2000, label);
     int num_sys_files = 15;
     int num_pdf_files = 15;
+
+    TFile *f1 = TFile::Open(f1_s, "READ");
+    TFile *fout = TFile::Open(fout_s, "RECREATE");
+
+
 
     std::vector<string> fs;
     for(int i=0; i<num_sys_files; i++){

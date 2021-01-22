@@ -21,23 +21,31 @@ int find_bin(float * bins, float val){
 void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
     //1d output
     float err_sum = 0.;
+    float hist_sum = 0.;
     for(int i=1; i<= h_errs->GetNbinsX(); i++){
         for(int j=1; j<= h_errs->GetNbinsY(); j++){
-            float fr = h_fr->GetBinContent(i,j);
-            float err = h_fr->GetBinError(i,j);
+            float f_err = h_fr->GetBinError(i,j);
+            float f = h_fr->GetBinContent(i,j);
             float num = h_errs->GetBinContent(i,j);
-            err_sum += err*err*num*num;
+            //compute error on f/(1-f). Derive is 1/(1-f)^2
+            float err = f_err/(1.-f)/(1.-f);
+            err_sum += err*num;
+            hist_sum += num*f/(1.-f);
+            //printf("i,j,f,f_err,num,err: %i %i %.3f %.3f %.1f %.1f \n", i,j, f, f_err, num, err);
         }
     }
+    float err_frac = err_sum/h->Integral();
+
     float n_events = h->Integral();
     for(int i=1; i<= h->GetNbinsX(); i++){
         float bin_num = h->GetBinContent(i);
-        float scaling = pow(bin_num/n_events, 2);
         float num_err = pow(h->GetBinError(i),2);
-        float weight_err = scaling * err_sum;
+        float weight_err = pow(err_frac*bin_num, 2);
         float new_err = 0.;
         float max_err = 0.7;
+
         new_err = std::min((float) (max_err * h->GetBinContent(i)), sqrt(num_err + weight_err));
+
 
         h->SetBinError(i, new_err);
     }
@@ -46,20 +54,27 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
 void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH2F *h){
     //2d output
     float err_sum = 0.;
+    float hist_sum = 0.;
     for(int i=1; i<= h_errs->GetNbinsX(); i++){
         for(int j=1; j<= h_errs->GetNbinsY(); j++){
-            float err = h_fr->GetBinError(i,j);
+            float f_err = h_fr->GetBinError(i,j);
+            float f = h_fr->GetBinContent(i,j);
             float num = h_errs->GetBinContent(i,j);
-            err_sum += err*err*num*num;
+            //compute error on f/(1-f). Derive is 1/(1-f)^2
+            float err = f_err/(1.-f)/(1.-f);
+            err_sum += err*num;
+            hist_sum += num*f/(1.-f);
+            //printf("i,j,f,f_err,num,err: %i %i %.3f %.3f %.1f %.1f \n", i,j, f, f_err, num, err);
         }
     }
-    float n_err_events = h_errs->Integral();
+    float err_frac = err_sum/h->Integral();
+
+    //printf("err_sum, sum_est, tot_evts, err_frac %.1f %.1f %.1f %.1f \n", err_sum, hist_sum, h->Integral(), err_frac);
     for(int i=1; i<= h->GetNbinsX(); i++){
         for(int j=1; j<= h->GetNbinsY(); j++){
             float bin_num = h->GetBinContent(i, j);
-            float scaling = pow(bin_num/n_err_events, 2);
             float num_err = pow(h->GetBinError(i,j),2);
-            float weight_err = scaling * err_sum;
+            float weight_err = pow(err_frac*bin_num, 2);
             float new_err = 0.;
             float max_err = 0.7;
 
@@ -85,7 +100,7 @@ void fakes_cost_reweight(TH1 *h_fakes, TH1 *h_rw){
         float old_err = h_fakes->GetBinError(i);
 
         float new_val = old_val * h_rw->GetBinContent(i);
-        float new_err = std::min(0.7 * new_val, sqrt(old_err*old_err + pow(old_val - new_val, 2)));
+        float new_err = old_err * h_rw->GetBinContent(i);
 
         h_fakes->SetBinContent(i, new_val);
         h_fakes->SetBinError(i, new_err);
@@ -180,9 +195,9 @@ typedef struct {
 //static type means functions scope is only this file, to avoid conflicts
 void setup_new_el_fakerate(FakeRate *FR, int year){
     TFile *f0;
-    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate_dec4.root");
-    else if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate_nov1.root");
-    else if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_nov1.root");
+    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate.root");
+    else if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate.root");
+    else if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate.root");
     else printf("Year was %i ?? \n", year);
     TH2D *h1 = (TH2D *) gDirectory->Get("h_rate_new")->Clone();
     h1->SetDirectory(0);
@@ -191,9 +206,9 @@ void setup_new_el_fakerate(FakeRate *FR, int year){
 }
 void setup_new_mu_fakerate(FakeRate *FR, int year){
     TFile *f0;
-    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate_dec4.root");
-    else if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate_oct18.root");
-    else if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_oct18.root");
+    if (year == 2016)      f0 = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate.root");
+    else if (year == 2017) f0 = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate.root");
+    else if (year == 2018) f0 = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate.root");
     else printf("Year was %i ?? \n", year);
     TDirectory *subdir = gDirectory;
     TH2D *h1 = (TH2D *) subdir->Get("h_rate_new")->Clone();

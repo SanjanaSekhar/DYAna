@@ -10,6 +10,8 @@ TempMaker::TempMaker(TTree *t, bool isdata=false, int y  = 2016){
 
 void TempMaker::setup(){
 
+
+
     nEntries  =  t_in->GetEntries();
     if(year == 2016) el_lumi=el_lumi16;
     if(year == 2017) el_lumi=el_lumi17;
@@ -57,11 +59,17 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("mu", &mu);
         t_in->SetBranchAddress("mu1_charge", &mu1_charge);
         t_in->SetBranchAddress("met_pt", &met_pt);
+        t_in->SetBranchAddress("el1_pt", &el1_pt);
+        t_in->SetBranchAddress("el1_eta", &el1_eta);
+        t_in->SetBranchAddress("mu1_pt", &mu1_pt);
+        t_in->SetBranchAddress("mu1_eta", &mu1_eta);
     }
 
     if(is_one_iso){
         if(do_muons) t_in->SetBranchAddress("iso_mu", &iso_lep);
         if(do_electrons) t_in->SetBranchAddress("iso_el", &iso_lep);
+        if(do_emu) t_in->SetBranchAddress("iso_lep", &iso_lep);
+
     }
 
 
@@ -70,7 +78,6 @@ void TempMaker::setup(){
             t_in->SetBranchAddress("inc_id1", &inc_id1);
             t_in->SetBranchAddress("inc_id2", &inc_id2);
             t_in->SetBranchAddress("cost_st", &cost_st);
-            t_in->SetBranchAddress("evt_pdfweight", &evt_pdfweight);
             t_in->SetBranchAddress("pdf_weights", &pdf_weights);
         }
         t_in->SetBranchAddress("nJets", &nJets);
@@ -94,6 +101,7 @@ void TempMaker::setup(){
         t_in->SetBranchAddress("prefire_SF", &prefire_SF);
         t_in->SetBranchAddress("prefire_SF_up", &prefire_SF_up);
         t_in->SetBranchAddress("prefire_SF_down", &prefire_SF_down);
+        t_in->SetBranchAddress("top_ptrw", &top_ptrw);
 
         if(do_muons || do_emu){
             if(is_gen_level){
@@ -172,8 +180,11 @@ void TempMaker::setup(){
 void TempMaker::setup_systematic(const string &s_label){
     sys_label = s_label;
 
+
     if(!sys_label.empty()){
         //doing some systematic
+
+
         if(sys_label.find("Up") != string::npos){
             sys_shift = 1;
         }
@@ -196,6 +207,8 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("muHLTEND") != string::npos) do_muHLT_endcap_sys = sys_shift;
         else if(sys_label.find("muIDEND") != string::npos) do_muID_endcap_sys = sys_shift;
         else if(sys_label.find("muISOEND") != string::npos) do_muISO_endcap_sys = sys_shift;
+        else if(sys_label.find("muIDSYS") != string::npos) do_muID_endcap_sys = sys_shift;
+        else if(sys_label.find("muISOSYS") != string::npos) do_muISO_endcap_sys = sys_shift;
 
         else if(sys_label.find("elIDBAR") != string::npos) do_elID_barrel_sys = sys_shift;
         else if(sys_label.find("elHLTBAR") != string::npos) do_elHLT_barrel_sys = sys_shift;
@@ -203,8 +216,8 @@ void TempMaker::setup_systematic(const string &s_label){
         else if(sys_label.find("elIDEND") != string::npos) do_elID_endcap_sys = sys_shift;
         else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
         else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
-        else if(sys_label.find("elHLTEND") != string::npos) do_elHLT_endcap_sys = sys_shift;
-        else if(sys_label.find("elRECOEND") != string::npos) do_elRECO_endcap_sys = sys_shift;
+        else if(sys_label.find("elIDSYS") != string::npos) do_elID_SYS_sys = sys_shift;
+        else if(sys_label.find("elRECOSYS") != string::npos) do_elRECO_SYS_sys = sys_shift;
 
         else if(sys_label.find("elScaleStat") != string::npos) do_elScale_sys = sys_shift;
         else if(sys_label.find("elScaleSyst") != string::npos) do_elScale_sys = sys_shift;
@@ -364,33 +377,19 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     double avg = 1.;
 
     double *h_RF_up, *h_RF_down, *h_R_up, *h_R_down, *h_F_up, *h_F_down;
-    if(year == 2016){
-        h_RF_up = h_RF_up16;
-        h_RF_down = h_RF_down16;
-        h_F_up = h_F_up16;
-        h_F_down = h_F_down16;
-        h_R_up = h_R_up16;
-        h_R_down = h_R_down16;
-    }
-    else{
-        h_RF_up = h_RF_up17;
-        h_RF_down = h_RF_down17;
-        h_F_up = h_F_up17;
-        h_F_down = h_F_down17;
-        h_R_up = h_R_up17;
-        h_R_down = h_R_down17;
-    }
 
 
-    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = h_RF_up[mbin];
-    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = h_RF_down[mbin];
-    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = h_R_up[mbin];
-    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = h_R_down[mbin];
-    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = h_F_up[mbin];
-    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = h_F_down[mbin];
+    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_RF_up->GetBinContent(mbin+1);
+    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_RF_down->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_R_up->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_R_down->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_F_up->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_F_down->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 2. -  RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
 
     if(avg != 1.){
-        printf("Sys label was %s, mbin %i correcting average weight by %.3f \n", sys_label.c_str(), mbin, 1./avg);
+        printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
     }
     h->Scale(1./avg);
 }
@@ -412,7 +411,8 @@ float TempMaker::getEvtWeight(){
         //printf("sys is %.4f  \n", *systematic);
         *systematic = 1.;
     }
-    double base_weight = gen_weight * (*systematic) * pu_SF;
+    //top_ptrw is 1 for non-ttbar samples
+    double base_weight = gen_weight * (*systematic) * pu_SF * top_ptrw;
     if(do_btag_sys != 0){
 #ifndef STAND_ALONE
         jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
@@ -427,8 +427,7 @@ float TempMaker::getEvtWeight(){
     }
 
     if(do_ptrw){
-        if(do_muons) base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, FLAG_MUONS, do_ptrw_sys); 
-        if(do_electrons) base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, FLAG_ELECTRONS, do_ptrw_sys); 
+        base_weight *= get_ptrw_SF(ptrw_SFs, m, pt, do_ptrw_sys); 
     }
 
     if(year < 2018 && (do_electrons || do_emu)){
@@ -438,9 +437,7 @@ float TempMaker::getEvtWeight(){
     }
 
     if(do_emu_costrw){
-        if(m < 250.) base_weight *= get_emu_costrw_SF(emu_costrw.m150_rw, cost, do_emu_costrw_sys);
-        else if(m < 510.) base_weight *= get_emu_costrw_SF(emu_costrw.m250_rw, cost, do_emu_costrw_sys);
-        else base_weight *= get_emu_costrw_SF(emu_costrw.m510_rw, cost, do_emu_costrw_sys);
+        base_weight *= get_emu_costrw_SF(emu_costrw, cost, m, do_emu_costrw_sys);
     }
 
 
@@ -456,12 +453,26 @@ float TempMaker::getEvtWeight(){
             era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys) * 
                 get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_barrel_sys, do_muISO_endcap_sys);
         }
+        else if(do_muISO_SYS_sys){
+            era1_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ISO_SF_SYS,  do_muISO_SYS_sys, do_muISO_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ISO_SF,  do_muISO_SYS_sys, do_muISO_SYS_sys);
+            era2_iso_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ISO_SF_SYS,  do_muISO_SYS_sys, do_muISO_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ISO_SF,  do_muISO_SYS_sys, do_muISO_SYS_sys);
+        }
+
 
         if(do_muID_barrel_sys || do_muID_endcap_sys){
             era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
                 get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
             era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys) * 
                 get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_barrel_sys, do_muID_endcap_sys);
+        }
+        else if(do_muID_SYS_sys){
+            era1_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era1_SFs.ID_SF_SYS,  do_muID_SYS_sys, do_muID_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era1_SFs.ID_SF,  do_muID_SYS_sys, do_muID_SYS_sys);
+            era2_id_SF = get_mu_SF(mu1_pt, mu1_eta, year, era2_SFs.ID_SF_SYS,  do_muID_SYS_sys, do_muID_SYS_sys) * 
+                get_mu_SF(mu2_pt, mu2_eta, year, era2_SFs.ID_SF,  do_muID_SYS_sys, do_muID_SYS_sys);
+        
         }
 
 
@@ -552,9 +563,9 @@ void fakes_cost_reweight(TH2 *h_fakes, TH1 *h_rw, int systematic = 0){
 
             //one systematic for every |cos(theta)| bin (nbins / 2)
             if(systematic != 0){
-                float stat_err = h_rw->GetBinError(j);
-                float sys_err = 0.5 * std::fabs( correction - 1.);
-                float error = pow(stat_err * stat_err + sys_err * sys_err, 0.5);
+
+                //error includes sys and stat errors
+                float error = h_rw->GetBinError(j);
 
                 int sys_bin = abs(systematic);
                 int opp_bin = (h_rw->GetNbinsX() + 1) -sys_bin;

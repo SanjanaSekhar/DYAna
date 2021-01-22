@@ -19,7 +19,7 @@ const int n_cost_ss_bins = n_cost_bins/2;
 Float_t cost_ss_bins[] = {-1.0, -0.75, -0.5, -0.25, 0.0};
 
 const int n_m_bins = 8;
-Float_t m_bins[] = {150, 171, 200,  250, 320, 510, 700, 1000, 14000};
+Float_t m_bins[] = {150, 170, 200,  250, 320, 510, 700, 1000, 14000};
 
 
 const int n_lq_m_bins = 2;
@@ -54,6 +54,10 @@ Float_t amc_alpha_unc[n_m_bins] =    {0.005, 0.005, 0.005, 0.005, 0.005, 0.005, 
 
 
 
+
+
+const int n_emu_rw_m_bins = 5;
+float emu_rw_m_bins[] = {170., 200., 250., 320., 510., 2000.};
 
 
 

@@ -108,6 +108,9 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 }
 
 
+
+
+
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
         bool is_data=false, int flag1 = FLAG_MUONS,
         int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
@@ -159,7 +162,7 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 }
 
 void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
-        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool in_os_region=true, bool reweight = false){
+        int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool reweight = false, bool sys_errors = false){
     TLorentzVector *lep_p=0;
     TLorentzVector *lep_m=0;
     Double_t pt;
@@ -214,7 +217,8 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
             else opp_sign = ((abs(tm.el1_charge - tm.el2_charge)) > 0.01);
             if(!ss) pass = pass && opp_sign;
-            //pass = pass && !opp_sign;
+            //else if(flag1 == FLAG_ELECTRONS) pass = pass && !opp_sign;
+            //else pass = pass && !opp_sign;
             if(pass){
                 double evt_reweight = 0.;
 
@@ -223,28 +227,36 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                     if(l==0){
                         if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
+
                         evt_reweight = mu1_fakerate/(1-mu1_fakerate);
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 1);
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 1);
                     }
 
                     if(l==1){
                         mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = -(mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+
+                        h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(mu2_fakerate/(1-mu2_fakerate)));
+                        h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f),  -0.5*(mu1_fakerate/(1-mu1_fakerate)));
                     }
                     if(l==2){
-                        n++;
                         if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = -(mu1_fakerate )/(1-mu1_fakerate);
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight());
                     }
                     if(l==3){
-                        n++;
                         mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+                        h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight() * (mu2_fakerate/(1-mu2_fakerate)));
+                        h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight() * (mu1_fakerate/(1-mu1_fakerate)));
                     }
-                    if((l==0) && tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), tm.getEvtWeight());
-                    if((l==0) && tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), tm.getEvtWeight());
                 }
                 else{
                     Double_t el1_fakerate, el2_fakerate; 
@@ -252,28 +264,38 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                         if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = el1_fakerate/(1-el1_fakerate);
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 1);
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), 1);
                     }
                     if(l==1){
                         el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = -(el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
+
+                        h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -0.5*(el2_fakerate/(1-el2_fakerate)));
+                        h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -0.5*(el1_fakerate/(1-el1_fakerate)));
+
                     }
                     if(l==2){
-                        n++;
 
                         if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = -(el1_fakerate )/(1-el1_fakerate);
+
+
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight());
                     }
                     if(l==3){
 
-                        n++;
                         el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
+
+                        h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight() * (el2_fakerate/(1-el2_fakerate)));
+                        h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight() * (el1_fakerate/(1-el1_fakerate)));
                     }
-                    if((l==0)  && tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), tm.getEvtWeight());
-                    if((l==0)  && tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), tm.getEvtWeight());
                 }
                 double tot_evt_weight = 0.;
                 if(is_data) tot_evt_weight = evt_reweight; 
@@ -313,7 +335,22 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_pt);
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
-    set_fakerate_errors(h_err, FR.h, h_cost);
+
+    if(ss){
+        float scaling = 1.0;
+        scaling = tot_weight_ss / (tot_weight_ss + tot_weight_os);
+        printf("Scaling is %.2f \n", scaling);
+        h_m->Scale(scaling);
+        h_pt->Scale(scaling);
+        h_xf->Scale(scaling);
+        h_cost->Scale(scaling);
+        h_phi->Scale(scaling);
+        h_rap->Scale(scaling);
+        h_err->Scale(scaling);
+    }
+
+
+    if(sys_errors) set_fakerate_errors(h_err, FR.h, h_cost);
     if(reweight){
         fakes_costrw_helper h_rw;
         setup_fakes_costrw_helper(&h_rw, year);
@@ -325,148 +362,154 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
 
 
     //if(ss && flag1 != FLAG_MUONS){
-    if(ss){
-        float scaling = 1.0;
-        if(in_os_region) scaling = tot_weight_os / (tot_weight_ss + tot_weight_os);
-        else scaling = tot_weight_ss / (tot_weight_ss + tot_weight_os);
-        printf("Scaling is %.2f \n", scaling);
-        h_m->Scale(scaling);
-        h_pt->Scale(scaling);
-        h_xf->Scale(scaling);
-        h_cost->Scale(scaling);
-        h_phi->Scale(scaling);
-        h_rap->Scale(scaling);
-    }
     Double_t err;
     printf("Total fakerate est is %.0f +/- %.0f \n", h_cost->IntegralAndError(1, h_cost->GetNbinsX(), err), err);
     return;
 }
 
 
-void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int flag1 = FLAG_MUONS, 
-        int year=2016, float m_low = 150., float m_high = 10000., bool reweight = true){
+void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_QCD_MC, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int flag1 = FLAG_MUONS, 
+        int year=2016, float m_low = 150., float m_high = 10000., bool reweight = false, bool sys_errors = false){
     FakeRate el_FR, mu_FR;
     //TH2D *FR;
     setup_new_el_fakerate(&el_FR, year);
     setup_new_mu_fakerate(&mu_FR, year);
+    TH2D *h_mu_err = (TH2D *) mu_FR.h->Clone("h_err");
+    h_mu_err->Reset();
+    TH2D *h_el_err = (TH2D *) el_FR.h->Clone("h_err");
+    h_el_err->Reset();
     //FR.h->Print();
-    for (int l=0; l<=2; l++){
+    bool is_data = false;
+    bool is_one_iso = false;
+
+    float tot_weight_os = 0.;
+    float tot_weight_ss = 0.;
+    for (int l=0; l<=3; l++){
         TTree *t;
-        if (l==0) t = t_WJets;
-        if (l==1) t = t_QCD;
-        if (l==2) t = t_WJets_MC;
-        Float_t m, xF, cost, jet1_btag, jet2_btag, gen_weight;
-        Float_t jet1_pt, jet2_pt, pu_SF;
-
-        Float_t el_id_SF, el_reco_SF;
-        Float_t era1_iso_SF, era1_id_SF;
-        Float_t era2_iso_SF, era2_id_SF;
-        Float_t evt_fakerate, lep1_fakerate, lep2_fakerate, el1_eta, el1_pt, mu1_eta, mu1_pt;
-        TLorentzVector *el = 0;
-        TLorentzVector *mu = 0;
-        Int_t iso_lep;
-        Float_t met_pt, el1_charge, mu1_charge;
-        Int_t nJets, no_bjets;
-        nJets = 2;
-        pu_SF=1;
-        t->SetBranchAddress("cost", &cost);
-        t->SetBranchAddress("mu1_charge", &mu1_charge);
-        t->SetBranchAddress("el1_charge", &el1_charge);
-        t->SetBranchAddress("met_pt", &met_pt);
-        t->SetBranchAddress("jet2_btag", &jet2_btag);
-        t->SetBranchAddress("jet1_btag", &jet1_btag);
-        t->SetBranchAddress("jet1_pt", &jet1_pt);
-        t->SetBranchAddress("jet2_pt", &jet2_pt);
-        //t1->SetBranchAddress("evt_fakerate", &evt_fakerate);
-        //t1->SetBranchAddress("el_fakerate", &el1_fakerate);
-        t->SetBranchAddress("el1_pt", &el1_pt);
-        t->SetBranchAddress("mu1_pt", &mu1_pt);
-        t->SetBranchAddress("el1_eta", &el1_eta);
-        t->SetBranchAddress("mu1_eta", &mu1_eta);
-        t->SetBranchAddress("nJets", &nJets);
-        t->SetBranchAddress("el", &el);
-        t->SetBranchAddress("mu", &mu);
-        t->SetBranchAddress("has_nobjets", &no_bjets);
-
-        if(l==0 || l==2 ){
-            t->SetBranchAddress("iso_lep", &iso_lep);
+        if (l==0){
+            t = t_WJets;
+            is_data = true;
+            is_one_iso = true;
         }
-        if(l==2){
-            t->SetBranchAddress("el_id_SF", &el_id_SF);
-            t->SetBranchAddress("el_reco_SF", &el_reco_SF);
-            t->SetBranchAddress("gen_weight", &gen_weight);
-            t->SetBranchAddress("pu_SF", &pu_SF);
-            t->SetBranchAddress("era1_id_SF", &era1_id_SF);
-            t->SetBranchAddress("era2_id_SF", &era2_id_SF);
+        if (l==1){
+            t = t_QCD;
+            is_data = true;
+            is_one_iso = false;
         }
+        if (l==2){
+            t = t_WJets_MC;
+            is_data = false;
+            is_one_iso = true;
+        }
+        if (l==3){
+            t = t_QCD_MC;
+            is_data = false;
+            is_one_iso = false;
+        }
+        TempMaker tm(t, is_data, year);
+        tm.do_emu = true;
+        tm.is_one_iso = is_one_iso;
+
+        tm.setup();
+
+
 
         Long64_t size  =  t->GetEntries();
+        int n=0;
+        float avg_mc_weight = 0.;
         for (int i=0; i<size; i++) {
-            t->GetEntry(i);
-            if(l==0){
-                //iso_lep: 0 = muons, 1 electrons
-                if(iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);
-                else  lep1_fakerate = get_new_fakerate_prob(el1_pt, el1_eta, el_FR.h);
-                evt_fakerate = lep1_fakerate/(1-lep1_fakerate);
-            }
-            if(l==1){
-                lep1_fakerate = get_new_fakerate_prob(el1_pt, el1_eta, el_FR.h);
-                lep2_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);
-                evt_fakerate = -(lep1_fakerate/(1-lep1_fakerate)) * (lep2_fakerate/(1-lep2_fakerate));
-            }
-            if(l==2){
-                Double_t era1_SF = era1_id_SF;
-                Double_t era2_SF = era2_id_SF;
+            tm.getEvent(i);
 
-                Double_t mu_SF, mu_lumi;
-                if(year ==2016){
-                    mu_SF = (era1_SF *bcdef_lumi16 + era2_SF * gh_lumi16) / 
-                    (bcdef_lumi16 + gh_lumi16);
-                    mu_lumi=mu_lumi16;
-                }
-                if(year==2017){
-                    mu_SF = era1_SF;
-                    mu_lumi=mu_lumi17;
-                }
-                if(year==2018){
-                    mu_SF = (era1_SF *mu_lumi18_era1 + era2_SF * mu_lumi18_era2) / 
-                    (mu_lumi18);
-                    mu_lumi=mu_lumi18;
-                }
+            bool opp_sign =  ((abs(tm.mu1_charge - tm.el1_charge)) > 0.01);
+            bool pass = tm.m>= m_low && tm.m <= m_high && tm.met_pt < met_cut  && tm.has_no_bjets && opp_sign &&
 
-                Double_t mc_weight = gen_weight * el_id_SF * el_reco_SF *pu_SF *
-                    mu_SF  * 1000. * mu_lumi;
-                if(iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(mu1_pt, mu1_eta, mu_FR.h);
-                else            lep1_fakerate = get_new_fakerate_prob(el1_pt, el1_eta, el_FR.h);
-                evt_fakerate = -(lep1_fakerate * mc_weight)/(1-lep1_fakerate);
-            }
-
-            TLorentzVector cm = *el + *mu;
-            float m = cm.M();
-            bool opp_sign =  ((abs(mu1_charge - el1_charge)) > 0.01);
-            bool pass = m>= m_low && m <= m_high && met_pt < met_cut  && no_bjets && opp_sign && 
-                ((flag1 == FLAG_MUONS && mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && el1_pt > 29.));
+                ((flag1 == FLAG_MUONS && tm.mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && tm.el1_pt > 29.));
             if(pass){
-                //if(l==3) printf("Evt fr %.2e \n", evt_fakerate);
-                h_m->Fill(m, evt_fakerate);
-                h_pt->Fill(cm.Pt(), evt_fakerate);
-                h_cost->Fill(cost, evt_fakerate);
-                h_rap->Fill(cm.Rapidity(), evt_fakerate);
+                double evt_reweight = 0.;
+                float lep1_fakerate, lep2_fakerate;
+                if(l==0){
+                    //iso_lep: 0=muon passed iso, 1=electron passed iso
+                    if(tm.iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, mu_FR.h);
+                    else  lep1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, el_FR.h);
+
+                    evt_reweight = lep1_fakerate/(1-lep1_fakerate);
+
+                    if(tm.iso_lep ==1) h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 1);
+                    if(tm.iso_lep ==0) h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 1);
+                }
+                if(l==1){
+                    lep1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, mu_FR.h);
+                    lep2_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, el_FR.h);
+                    evt_reweight = -(lep1_fakerate/(1-lep1_fakerate)) * (lep2_fakerate/(1-lep2_fakerate));
+
+
+                        h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(lep2_fakerate/(1-lep2_fakerate)));
+                        h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  -0.5*(lep1_fakerate/(1-lep1_fakerate)));
+                }
+                if(l==2){
+                    if(tm.iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, mu_FR.h);
+                    else            lep1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, el_FR.h);
+                    evt_reweight = -(lep1_fakerate)/(1-lep1_fakerate);
+
+                        if(tm.iso_lep ==1) h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==0) h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight());
+
+                }
+                if(l==3){
+                    lep1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, mu_FR.h);
+                    lep2_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, el_FR.h);
+                    evt_reweight = (lep1_fakerate/(1-lep1_fakerate)) * (lep2_fakerate/(1-lep2_fakerate));
+
+                        h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight() * (lep2_fakerate/(1-lep2_fakerate)));
+                        h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 0.5*tm.getEvtWeight() * (lep1_fakerate/(1-lep1_fakerate)));
+
+                    }
+
+                    double tot_evt_weight = 0.;
+                    if(is_data) tot_evt_weight = evt_reweight; 
+                    else{
+                        tot_evt_weight = evt_reweight * tm.getEvtWeight();
+                        //printf("%.3e %.3e \n", tm.getEvtWeight(), tot_evt_weight);
+                    }
+
+                    h_m->Fill(tm.m, tot_evt_weight);
+                    h_pt->Fill(tm.cm.Pt(), tot_evt_weight);
+                    h_cost->Fill(tm.cost, tot_evt_weight);
+                    h_rap->Fill(tm.cm.Rapidity(),tot_evt_weight);
+                    if(opp_sign) tot_weight_os += tot_evt_weight;
+                    else tot_weight_ss += tot_evt_weight;
+                }
             }
-        }
 
         printf("After iter %i current fakerate est is %.0f \n", l, h_m->Integral());
     }
     cleanup_hist(h_m);
     cleanup_hist(h_cost);
     cleanup_hist(h_pt);
+    cleanup_hist(h_rap);
+
+
+    if(sys_errors){
+        set_fakerate_errors(h_mu_err, mu_FR.h, h_cost);
+        set_fakerate_errors(h_mu_err, mu_FR.h, h_m);
+
+        set_fakerate_errors(h_el_err, el_FR.h, h_cost);
+        set_fakerate_errors(h_el_err, el_FR.h, h_m);
+    }
 
     if(reweight){
         fakes_costrw_helper h_rw;
         setup_fakes_costrw_helper(&h_rw, year);
-        //h_cost->Print("range");
+
+        float prev_weight = h_cost->Integral();
         fakes_cost_reweight(h_cost, h_rw.el_rw);
-        //h_cost->Print("range");
+        float new_weight = h_cost->Integral();
+
+        //scale other histograms to account for this reweight
+
+        h_m->Scale(new_weight/prev_weight);
+        h_pt->Scale(new_weight/prev_weight);
+        h_rap->Scale(new_weight/prev_weight);
     }
 
 

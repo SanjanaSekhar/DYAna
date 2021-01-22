@@ -30,6 +30,32 @@ void unzero_bins(TH1 *h){
     }
 }
 
+void binwidth_normalize(TH1 *h){
+    for (int i=1; i <= h->GetNbinsX(); i++){
+        float content = h->GetBinContent(i);
+        float error = h->GetBinError(i);
+        float width = h->GetBinWidth(i);
+        h->SetBinContent(i, content/width);
+        h->SetBinError(i, error/width);
+    }
+}
+
+
+void binwidth_normalize(THStack *h_stack){
+    for(auto h: *h_stack->GetHists()){
+        binwidth_normalize( (TH1 *) h);
+    }
+}
+
+
+
+
+        
+
+
+
+
+
 TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_label[80], char ratio_label[80], float ratio_min = 0.01, float ratio_max = 2.){
     TCanvas *c = new TCanvas(title.c_str(), "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad((title+"p1").c_str(), "pad1", 0.,0.3,0.98,1.);
@@ -80,7 +106,7 @@ TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_labe
 
 
 TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
-        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5){
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = ""){
     //ratio is done as h1/h2
 
     unzero_bins(h1);
@@ -91,6 +117,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 
     h1->SetLineWidth(3);
     h2->SetLineWidth(3);
+
 
     TCanvas *c = new TCanvas(title.c_str(), "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad((title+"p1").c_str(), "pad1", 0.,0.3,0.98,1.);
@@ -104,15 +131,21 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     h1->Draw("hist E");
     gStyle->SetEndErrorSize(4);
     h2->Draw("hist E same");
+    auto *t = new TText(0., hmax * 0.9, plt_label); 
+    t->SetTextAlign(22); //centered
+    t->SetTextFont(42);
+    t->Draw("same");
+
 
 
     gStyle->SetLegendBorderSize(0);
-    //TLegend *leg1 = new TLegend(0.2, 0.2);
-    TLegend *leg1 = new TLegend(0.7, 0.7, 0.9, 0.9);
+    TLegend *leg1 = new TLegend(0.4, 0.15);
+    //TLegend *leg1 = new TLegend(0.4, 0.55, 0.75, 0.8);
     leg1->AddEntry(h1, h1_label, "l");
     leg1->AddEntry(h2, h2_label, "l");
     leg1->Draw();
 
+    c->cd();
     //gPad->BuildLegend();
     c->cd();
     TPad *pad2 = new TPad((title+"p2").c_str(), "pad2", 0.,0,.98,0.3);
@@ -177,8 +210,13 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_data->SetMarkerColor(1);
     h_data->DrawCopy("P E same");
 
-
     leg->Draw();
+
+    h_stack->GetYaxis()->SetTitleSize(30);
+    h_stack->GetYaxis()->SetTitleFont(43);
+    h_stack->GetYaxis()->SetTitleOffset(1.2);
+
+
 
     c->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
@@ -199,13 +237,14 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     }
     auto h_ratio = (TH1F *) h_data->Clone("h_ratio" + label);
     float center = 1.0;
+    float ratio_range = 0.5;
     bool do_diff = false;
     if(do_diff){
         center = 0.0;
         h_ratio->Add(sum, -1.);
     }
-    h_ratio->SetMinimum(center - 0.5);
-    h_ratio->SetMaximum(center + 0.5);
+    h_ratio->SetMinimum(center - ratio_range);
+    h_ratio->SetMaximum(center + ratio_range);
     h_ratio->Sumw2();
     h_ratio->SetStats(0);
     h_ratio->Divide(sum);
@@ -239,6 +278,4 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
    printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
    return std::make_pair(c, pad1);
 }
-
-
 

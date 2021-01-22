@@ -30,9 +30,9 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = true;
-char *plot_dir = "Paper_plots/";
+char *plot_dir = "Paper_plots/prefit_kinematics/";
 
 
 
@@ -46,15 +46,17 @@ void draw_cmp(){
     init_indv_bkgs(year);
     setup_all_SFs(year);
 
-    int n_pt_bins1 = 40;
-    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, 0, 1000);
-    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, 0, 1000);
+    int n_pt_bins1 = 7;
+    Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
+
+    TH1F *mc_pt = new TH1F("mc_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *mc_tautau_pt = new TH1F("mc_tautau_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *data_pt = new TH1F("data_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *diboson_pt = new TH1F("diboson_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *wt_pt = new TH1F("wt_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "MC signal", n_pt_bins1, pt_bins1);
+    TH1F *gg_pt = new TH1F("gg_pt", "MC signal", n_pt_bins1, pt_bins1);
 
     int n_xf_bins1 = 5;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};
@@ -68,15 +70,15 @@ void draw_cmp(){
     TH1F *gg_xf = new TH1F("gg_xf", "MC signal", n_xf_bins1,  xf_bins1);
 
     int n_m_bins = 30;
-    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 150, 2000);
-    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 150, 2000);
-    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 150, 2000);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 150, 2000);
-    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 150, 2000);
-    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 150, 2000);
-    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, 150, 2000);
-    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, 150, 2000);
-    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, 150, 2000);
+    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, 170, 2000);
+    TH1F *mc_m = new TH1F("mc_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, 170, 2000);
+    TH1F *mc_tautau_m = new TH1F("mc_tautau_m", "MC no signal (qq, gluglu qbarqbar)", n_m_bins, 170, 2000);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, 170, 2000);
+    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, 170, 2000);
+    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, 170, 2000);
+    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, 170, 2000);
+    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, 170, 2000);
+    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, 170, 2000);
 
     int num_cost_bins = 10;
     TH1F *data_cost = new TH1F("data_cost", "Data", n_cost_bins, -1.,1.);
@@ -166,7 +168,7 @@ void draw_cmp(){
 
 
 
-    float m_low = 150.;
+    float m_low = 170.;
     float m_high = 13000;
     bool ss = false;
 
@@ -183,9 +185,8 @@ void draw_cmp(){
     //gg_cost->Scale(0.);
     //gg_m->Scale(0.);
 
-    bool ss_qcd = true;
-    bool in_os_region = true;
-    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss_qcd, in_os_region);
+    bool ss_qcd = false;
+    make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type, year, m_low, m_high, ss_qcd);
     //QCD_cost->Scale(0.);
 
 
@@ -231,7 +232,7 @@ void draw_cmp(){
     cost_stack->Add(mc_tautau_cost);
     cost_stack->Add(mc_cost);
 
-    THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs MC; DiElectron Pt (GeV)");
+    THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs MC; DiElectron Pt (GeV); Events / GeV");
     pt_stack->Add(diboson_pt);
     pt_stack->Add(QCD_pt);
     pt_stack->Add(wt_pt);
@@ -239,6 +240,9 @@ void draw_cmp(){
     pt_stack->Add(gg_pt);
     pt_stack->Add(mc_tautau_pt);
     pt_stack->Add(mc_pt);
+
+    binwidth_normalize(pt_stack);
+    binwidth_normalize(data_pt);
 
     THStack *xf_stack = new THStack("xf_stack", "Di-electron x_F Distribution: Data vs MC; x_F");
     xf_stack->Add(diboson_xf);
@@ -266,6 +270,8 @@ void draw_cmp(){
     rap_stack->Add(gg_rap);
     rap_stack->Add(mc_tautau_rap);
     rap_stack->Add(mc_rap);
+
+
 
     gStyle->SetLegendBorderSize(0);
     float x_size = 0.3;
@@ -304,7 +310,7 @@ void draw_cmp(){
 
     
     float x_start = 0.45;
-    float y_start = 0.3;
+    float y_start = 0.15;
     leg2->SetX1(x_start);
     leg2->SetX2(x_start+x_size);
     leg2->SetY1(y_start);
