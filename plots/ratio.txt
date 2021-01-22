@@ -1,0 +1,277 @@
+
+Processing Fitting/LQ_consistency_check.C...
+=========================
+ m_LQ = 1500.000000, draw_muons = 0, draw_electrons = 1 
+=========================
+init year 2016  
+Setting up SF's 
+Making mc template for sys  
+Fixed up bin 1 2 1. Old asym val was -4.20, new is -1.91 
+
+Fixed up bin 1 2 2. Old asym val was -4.43, new is -2.91 
+
+Fixed up bin 1 3 1. Old asym val was -2.48, new is -0.61 
+
+Fixed up bin 1 3 2. Old asym val was -6.96, new is -2.09 
+
+Fixed up bin 1 3 3. Old asym val was -4.17, new is -2.17 
+
+Fixed up bin 1 4 2. Old asym val was -2.33, new is -0.42 
+
+Fixed up bin 1 4 3. Old asym val was -4.14, new is -1.25 
+
+Fixed up bin 2 2 1. Old asym val was -1.70, new is -0.78 
+
+Fixed up bin 2 2 2. Old asym val was -2.34, new is -1.01 
+
+Fixed up bin 2 2 3. Old asym val was -1.47, new is -0.85 
+
+Fixed up bin 2 3 1. Old asym val was -0.76, new is -0.16 
+
+Fixed up bin 2 3 2. Old asym val was -2.78, new is -0.56 
+
+Fixed up bin 2 3 3. Old asym val was -1.81, new is -0.67 
+
+Fixed up bin 2 4 1. Old asym val was -0.01, new is -0.00 
+
+Fixed up bin 2 4 2. Old asym val was -0.65, new is -0.03 
+
+Fixed up bin 2 4 3. Old asym val was -0.92, new is -0.20 
+
+MC templates generated from 331851 events. Sym integral is 400.6 
+ 
+Making mc template for sys  
+Fixed up bin 1 1 1. Old asym val was -268.17, new is -24.41 
+
+Fixed up bin 1 1 2. Old asym val was -320.14, new is -26.26 
+
+Fixed up bin 1 1 3. Old asym val was -175.53, new is -26.17 
+
+Fixed up bin 1 1 4. Old asym val was -59.08, new is -20.58 
+
+Fixed up bin 1 2 1. Old asym val was -325.72, new is -6.21 
+
+Fixed up bin 1 2 2. Old asym val was -391.62, new is -15.81 
+
+Fixed up bin 1 2 3. Old asym val was -265.65, new is -15.30 
+
+Fixed up bin 1 2 4. Old asym val was -80.44, new is -15.43 
+
+Fixed up bin 1 3 1. Old asym val was -215.48, new is -2.10 
+
+Fixed up bin 1 3 2. Old asym val was -505.27, new is -17.11 
+
+Fixed up bin 1 3 3. Old asym val was -324.49, new is -11.81 
+
+Fixed up bin 1 3 4. Old asym val was -126.92, new is -16.64 
+
+Fixed up bin 1 4 1. Old asym val was 1.13, new is -0.03 
+
+Fixed up bin 1 4 2. Old asym val was -156.59, new is -2.57 
+
+Fixed up bin 1 4 3. Old asym val was -220.92, new is -5.70 
+
+Fixed up bin 1 4 4. Old asym val was -73.25, new is -9.49 
+
+Fixed up bin 2 1 1. Old asym val was -50.23, new is -9.37 
+
+Fixed up bin 2 1 2. Old asym val was -33.20, new is -9.26 
+
+Fixed up bin 2 1 3. Old asym val was -23.58, new is -9.24 
+
+Fixed up bin 2 2 1. Old asym val was -44.66, new is -2.40 
+
+Fixed up bin 2 2 2. Old asym val was -63.37, new is -4.47 
+
+Fixed up bin 2 2 3. Old asym val was -37.56, new is -4.64 
+
+Fixed up bin 2 2 4. Old asym val was -10.79, new is -5.93 
+
+Fixed up bin 2 3 1. Old asym val was -17.80, new is -0.45 
+
+Fixed up bin 2 3 2. Old asym val was -63.41, new is -2.17 
+
+Fixed up bin 2 3 3. Old asym val was -36.05, new is -4.56 
+
+Fixed up bin 2 3 4. Old asym val was -12.48, new is -4.21 
+
+Fixed up bin 2 4 1. Old asym val was -0.03, new is -0.00 
+
+Fixed up bin 2 4 2. Old asym val was -11.20, new is -0.17 
+
+Fixed up bin 2 4 3. Old asym val was -11.90, new is -0.95 
+
+Fixed up bin 2 4 4. Old asym val was -3.99, new is -1.16 
+
+MC templates generated from 331851 events. Sym integral is 2227.3 
+ 
+init year 2017  
+Setting up SF's 
+hlt
+id
+iso
+Making mc template for sys  
+Fixed up bin 1 2 2. Old asym val was -6.19, new is -3.42 
+
+Fixed up bin 1 3 1. Old asym val was -3.00, new is -1.21 
+
+Fixed up bin 1 3 2. Old asym val was -8.71, new is -2.76 
+
+Fixed up bin 1 3 3. Old asym val was -5.54, new is -3.01 
+
+Fixed up bin 1 4 1. Old asym val was 0.06, new is -0.00 
+
+Fixed up bin 1 4 2. Old asym val was -3.23, new is -0.41 
+
+Fixed up bin 1 4 3. Old asym val was -5.19, new is -1.26 
+
+Fixed up bin 2 2 1. Old asym val was -2.22, new is -0.97 
+
+Fixed up bin 2 2 2. Old asym val was -2.76, new is -1.11 
+
+Fixed up bin 2 2 3. Old asym val was -1.58, new is -1.03 
+
+Fixed up bin 2 3 1. Old asym val was -1.22, new is -0.24 
+
+Fixed up bin 2 3 2. Old asym val was -3.42, new is -0.66 
+
+Fixed up bin 2 3 3. Old asym val was -2.12, new is -0.76 
+
+Fixed up bin 2 4 1. Old asym val was -0.01, new is -0.00 
+
+Fixed up bin 2 4 2. Old asym val was -0.76, new is -0.12 
+
+Fixed up bin 2 4 3. Old asym val was -1.14, new is -0.32 
+
+MC templates generated from 592308 events. Sym integral is 494.3 
+ 
+Making mc template for sys  
+Fixed up bin 1 1 1. Old asym val was -348.28, new is -39.61 
+
+Fixed up bin 1 1 2. Old asym val was -425.83, new is -35.07 
+
+Fixed up bin 1 1 3. Old asym val was -208.05, new is -31.96 
+
+Fixed up bin 1 1 4. Old asym val was -80.62, new is -30.38 
+
+Fixed up bin 1 2 1. Old asym val was -407.70, new is -11.14 
+
+Fixed up bin 1 2 2. Old asym val was -569.25, new is -15.79 
+
+Fixed up bin 1 2 3. Old asym val was -321.27, new is -16.22 
+
+Fixed up bin 1 2 4. Old asym val was -111.66, new is -20.06 
+
+Fixed up bin 1 3 1. Old asym val was -265.64, new is -3.32 
+
+Fixed up bin 1 3 2. Old asym val was -719.87, new is -11.90 
+
+Fixed up bin 1 3 3. Old asym val was -470.85, new is -15.72 
+
+Fixed up bin 1 3 4. Old asym val was -161.25, new is -18.09 
+
+Fixed up bin 1 4 1. Old asym val was 6.81, new is -0.00 
+
+Fixed up bin 1 4 2. Old asym val was -205.77, new is -1.78 
+
+Fixed up bin 1 4 3. Old asym val was -301.08, new is -6.22 
+
+Fixed up bin 1 4 4. Old asym val was -114.56, new is -11.33 
+
+Fixed up bin 2 1 1. Old asym val was -59.08, new is -12.44 
+
+Fixed up bin 2 1 2. Old asym val was -54.59, new is -12.17 
+
+Fixed up bin 2 1 3. Old asym val was -36.81, new is -10.82 
+
+Fixed up bin 2 2 1. Old asym val was -63.92, new is -3.16 
+
+Fixed up bin 2 2 2. Old asym val was -78.06, new is -5.06 
+
+Fixed up bin 2 2 3. Old asym val was -43.27, new is -4.95 
+
+Fixed up bin 2 2 4. Old asym val was -15.55, new is -5.89 
+
+Fixed up bin 2 3 1. Old asym val was -34.13, new is -0.73 
+
+Fixed up bin 2 3 2. Old asym val was -86.94, new is -3.30 
+
+Fixed up bin 2 3 3. Old asym val was -49.14, new is -3.51 
+
+Fixed up bin 2 3 4. Old asym val was -16.03, new is -4.60 
+
+Fixed up bin 2 4 1. Old asym val was 0.33, new is -0.00 
+
+Fixed up bin 2 4 2. Old asym val was -12.46, new is -0.58 
+
+Fixed up bin 2 4 3. Old asym val was -17.09, new is -1.01 
+
+Fixed up bin 2 4 4. Old asym val was -6.30, new is -1.45 
+
+MC templates generated from 592308 events. Sym integral is 2775.9 
+ 
+init year 2018  
+Setting up SF's 
+Making mc template for sys  
+Fixed up bin 1 2 1. Old asym val was -8.26, new is -3.55 
+
+Fixed up bin 1 2 2. Old asym val was -8.24, new is -4.90 
+
+Fixed up bin 1 3 1. Old asym val was -4.10, new is -1.32 
+
+Fixed up bin 1 3 2. Old asym val was -10.90, new is -3.70 
+
+Fixed up bin 1 3 3. Old asym val was -9.02, new is -4.03 
+
+Fixed up bin 1 4 1. Old asym val was -0.04, new is -0.02 
+
+Fixed up bin 1 4 2. Old asym val was -4.23, new is -0.83 
+
+Fixed up bin 1 4 3. Old asym val was -6.79, new is -1.89 
+
+Fixed up bin 2 2 1. Old asym val was -3.40, new is -1.22 
+
+Fixed up bin 2 2 2. Old asym val was -3.82, new is -1.39 
+
+Fixed up bin 2 2 3. Old asym val was -2.25, new is -1.41 
+
+Fixed up bin 2 3 1. Old asym val was -1.50, new is -0.35 
+
+Fixed up bin 2 3 2. Old asym val was -4.59, new is -1.03 
+
+Fixed up bin 2 3 3. Old asym val was -3.12, new is -1.09 
+
+Fixed up bin 2 4 1. Old asym val was -0.02, new is -0.00 
+
+Fixed up bin 2 4 2. Old asym val was -1.16, new is -0.13 
+
+Fixed up bin 2 4 3. Old asym val was -1.62, new is -0.39 
+
+MC templates generated from 591152 events. Sym integral is 697.1 
+ 
+Making mc template for sys  
+Fixed up bin 1 1 1. Old asym val was -660.72, new is -149.51 
+
+Fixed up bin 1 1 2. Old asym val was -562.53, new is -54.86 
+
+Fixed up bin 1 1 3. Old asym val was -221.31, new is -56.09 
+
+Fixed up bin 1 1 4. Old asym val was -91.07, new is -44.18 
+
+Fixed up bin 1 2 1. Old asym val was -690.58, new is -13.75 
+
+Fixed up bin 1 2 2. Old asym val was -736.66, new is -26.90 
+
+Fixed up bin 1 2 3. Old asym val was -476.97, new is -27.73 
+
+Fixed up bin 1 2 4. Old asym val was -146.37, new is -29.00 
+
+Fixed up bin 1 3 1. Old asym val was -363.65, new is -3.71 
+
+Fixed up bin 1 3 2. Old asym val was -961.65, new is -14.99 
+
+Fixed up bin 1 3 3. Old asym val was -660.07, new is -21.91 
+
+Fixed up bin 1 3 4. Old asym val was -221.78, new is -27.16 
+
+Fixed up bin 1 4 1. Old asym val was -0.88, new is -0.03 

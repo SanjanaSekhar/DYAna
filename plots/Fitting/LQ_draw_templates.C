@@ -17,7 +17,7 @@ void LQ_draw_templates(){
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
-        char *plot_dir = "Misc_plots/template_plots3";
+        char *plot_dir = "Misc_plots/";
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.75;
