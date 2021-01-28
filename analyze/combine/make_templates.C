@@ -203,21 +203,18 @@ void make_mc_templates(int year, const string &sys_label){
         printf("Making mumu mc \n");
         gen_mc_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, m_low, m_high, FLAG_MUONS, use_xF, sys_label );
         TTree *mumu_ts[2] = {t_mumu_ttbar, t_mumu_wt};
-        printf("Making mumu back \n");
         bool emu_costrw = true;
         gen_combined_background_template(2, mumu_ts, h_mumu_top, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
 
 
         mumu_ts[0] = t_mumu_diboson;
         gen_combined_background_template(1, mumu_ts, h_mumu_db, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
-        emu_costrw = false;
 
+        emu_costrw = false;
         mumu_ts[0] = t_mumu_tautau;
-        printf("Making mumu tautau \n");
         gen_combined_background_template(1, mumu_ts, h_mumu_tautau, year, m_low, m_high, FLAG_MUONS,  ss, use_xF,  emu_costrw, sys_label);
 
         mumu_ts[0] = t_mumu_gamgam;
-        printf("Making mumu gamgam \n");
         gen_combined_background_template(1, mumu_ts, h_mumu_gam, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw, sys_label);
 
 
@@ -267,7 +264,7 @@ void make_mc_templates(int year, const string &sys_label){
                 n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_gam->SetDirectory(0);
 
-        printf("starting elel dy \n");
+        printf("Making elel mc \n");
         gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, year, m_low, m_high, FLAG_ELECTRONS,  use_xF, sys_label);
 
         TTree *elel_ts[2] = {t_elel_ttbar, t_elel_wt};
@@ -276,13 +273,12 @@ void make_mc_templates(int year, const string &sys_label){
 
         elel_ts[0] = t_elel_diboson;
         gen_combined_background_template(1, elel_ts, h_elel_db, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
-        emu_costrw = false;
 
+        emu_costrw = false;
         elel_ts[0] = t_elel_tautau;
         gen_combined_background_template(1, elel_ts, h_elel_tautau, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
         elel_ts[0] = t_elel_gamgam;
-        printf("Making ee gamgam \n");
         gen_combined_background_template(1, elel_ts, h_elel_gam, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
 
@@ -297,6 +293,7 @@ void make_mc_templates(int year, const string &sys_label){
         h1_elel_tautau = convert2d(h_elel_tautau);
         h1_elel_gam = convert2d(h_elel_gam);
         h1_elel_alpha = convert2d(h_elel_alpha);
+
         delete h_elel_alpha, h_elel_top, h_elel_db, h_elel_tautau, h_elel_gam;
     }
 

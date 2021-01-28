@@ -11,15 +11,15 @@ def print_and_do(s):
 
 #labels = ["gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18", "gof_postfit", "gof_postfit_y16_mumu", "gof_postfit_y16_ee" ]
 
-labels = [ "impacts",
+labels = [ "gof_postfit", 
+        "impacts",
         "bias_test_afb6_a00", "bias_test_afb6_a01", "bias_test_afb0_a00", "bias_test_afb0_a01",
-"gof_postfit", 
 #"gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18",
 #"gof_postfit_y16_ee", "gof_postfit_y16_mumu",
 ]
-date = "Jan12"
+date = "Jan20"
 
-odir = "../plots/Misc_plots/fit_checks_jan12/"
+odir = "../plots/Misc_plots/fit_checks_jan20/"
 print_and_do("mkdir %s" % odir)
 
 

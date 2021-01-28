@@ -53,9 +53,13 @@ int make_temps(TTree *t_gen, TH1F *h_raw, TH1F *h_sym, TH1F *h_asym, TH1F *h_alp
 
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
-        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 30.;
+        //bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
+            //&& max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 26. && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+        bool pass = true;
+        cm = *gen_lep_p + *gen_lep_m;
+        //bool pass = abs(cm.Rapidity()) < 2.4;
         if(m >= m_low && m <= m_high && pass){
-            cm = *gen_lep_p + *gen_lep_m;
+
             float pt = cm.Pt();
             /*
             float my_cost = get_cost(*gen_lep_p, *gen_lep_m);
@@ -109,8 +113,8 @@ void make_gen_templates(){
 
     int year = 2016;
     bool do_ptrw = true;
-    string fout_name = string("combine/templates/y17_gen_temps.root");
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_nov13.root");
+    string fout_name = string("combine/templates/y16_gen_temps.root");
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_nov13.root");
     gROOT->SetBatch(1);
 
     TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -148,6 +152,20 @@ void make_gen_templates(){
 
         make_temps(t_gen_mu, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year);
         make_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year);
+
+        Double_t dnB, dnF;
+
+        Double_t nB = h_raw->IntegralAndError(1,n_bins/2, dnB);
+        Double_t nF = h_raw->IntegralAndError(n_bins/2 + 1,n_bins, dnF);
+        Double_t n_tot = nB + nF;
+        
+        Double_t AFB = ((nF - nB))/((nF+nB));
+        Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
+
+        printf("Counting AFB %.3f +/- %.3f \n", AFB, dAFB_v2);
+
+
+
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);

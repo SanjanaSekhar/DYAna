@@ -394,7 +394,7 @@ h_names = ["gam", "db", "qcd", "top",  "tautau", "alpha", "fpl_fmn"]
 h_ss_names = ["bk", "dy", "qcd"]
 
 
-m_bins = [150, 171, 200,  250, 320, 510, 700, 1000, 14000]
+m_bins = [150, 170, 200,  250, 320, 510, 700, 1000, 14000]
 
 
 label_color_map = dict()

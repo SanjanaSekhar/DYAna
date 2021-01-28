@@ -84,8 +84,8 @@ print(par_str)
 print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit " % workspace)
 print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i" % (workspace, par_str, options.nThreads))
 print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/impacts_mbin%i.json --named %s" % (workspace, options.odir, options.mbin, par_str))
-print_and_do("python scripts/my_plotImpacts.py -i %s/impacts_mbin%i.json -o %s/impact_plot_afb_mbin%s --POI Afb" % (options.odir, options.mbin, options.odir, options.mbin))
-print_and_do("python scripts/my_plotImpacts.py -i %s/impacts_mbin%i.json -o %s/impact_plot_a0_mbin%s --POI A0" % (options.odir, options.mbin, options.odir, options.mbin))
+print_and_do("python scripts/my_plotImpacts.py -i %s/impacts_mbin%i.json -o %s/impact_plot_afb_mbin%s --POI Afb --blind" % (options.odir, options.mbin, options.odir, options.mbin))
+print_and_do("python scripts/my_plotImpacts.py -i %s/impacts_mbin%i.json -o %s/impact_plot_a0_mbin%s --POI A0 --blind" % (options.odir, options.mbin, options.odir, options.mbin))
 print_and_do("rm higgsCombine_*")
 
 
