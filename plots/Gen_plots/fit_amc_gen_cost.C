@@ -26,7 +26,8 @@
 #include "../../utils/PlotUtils.C"
 
 int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt, TH1F *h_xf,  
-        float m_low, float m_high, float pt_low, float pt_high, bool do_ptrw = false, int year = 2016){
+        float m_low, float m_high, float pt_low, float pt_high, float rap_low, float rap_high, 
+        bool do_ptrw = false, int year = 2016){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     Bool_t sig_event(1);
@@ -60,7 +61,8 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
             else my_cost = -abs(my_cost);
             */
             float my_cost = cost_st;
-            if(pt >= pt_low && pt <= pt_high){
+            float rap = abs(cm.Rapidity());
+            if(pt >= pt_low && pt <= pt_high && rap >= rap_low && rap <= rap_high){
                 if(gen_weight >0) nEvents++;
                 else  nEvents--;
 
@@ -93,11 +95,11 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 
 void fit_amc_gen_cost(){
 
-    bool write_out = false;
-    int year = 2017;
+    bool write_out = true;
+    int year = 2016;
     bool do_ptrw = false;
-    char *out_file = "../analyze/SFs/2017/a0_fits.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_aug4.root");
+    char *out_file = "../analyze/SFs/2016/a0_fits.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_aug4.root");
     gROOT->SetBatch(1);
 
     TFile * f_out;
@@ -113,6 +115,8 @@ void fit_amc_gen_cost(){
     char plot_dir[] = "Misc_plots/A0_fits/";
 
     if(do_ptrw) printf("PT reweighting is ON! \n");
+
+
 
 
 
@@ -151,11 +155,13 @@ void fit_amc_gen_cost(){
         h_cost1->Reset();
         float pt_low = 0.;
         float pt_high = 100000.;
+        float rap_low = 0.;
+        float rap_high = 10000.;
         char title[100];
         TCanvas *c1 = new TCanvas("c1", "", 1000, 800);
-        nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
+        nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
         float norm = h_cost1->Integral();
-        nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
+        nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
         sprintf(title, "M %.0f-%.0f GeV, dilepton pT; pT", m_low, m_high);
         h_pt->SetTitle(title);
         h_pt->Scale(1./h_pt->Integral());
@@ -170,10 +176,6 @@ void fit_amc_gen_cost(){
         Double_t n_tot = nB + nF;
         
         Double_t AFB = ((nF - nB))/((nF+nB));
-        //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));
-        Double_t B = (1. - AFB)*nEvents/2.;
-        Double_t F = (1. + AFB)*nEvents/2.;
-        Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
         Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
 
 
@@ -191,92 +193,82 @@ void fit_amc_gen_cost(){
         printf("Mass range from %.0f to %.0f, nEvents %i \n", m_low, m_high, nEvents);
         printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
         printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
-        printf("Counting: Total NF %.0f NB %.0f \n", F, B);
-        //printf("Counting: AFB %.4f +/- %.4f \n", AFB, dAFB);
-        printf("Counting Error v2: AFB %.4f +/- %.4f \n", AFB, dAFB_v2);
+        printf("Counting AFB %.4f +/- %.4f \n", AFB, dAFB_v2);
+        printf("Counting: Total NF %.0f NB %.0f \n", nF, nB);
 
-        continue;
+        //continue;
         //exit(1);
         //
 
 
         for(int pt_idx = 0; pt_idx < n_pt_bins; pt_idx++){
-            pt_low = pt_bins[pt_idx];
-            pt_high = pt_bins[pt_idx+1];
-            //pt_low = pt_bins[pt_idx] * m_low;
-            //pt_high = pt_bins[pt_idx+1] * m_low;
-            printf("pt low, high  %.1f %.1f \n", pt_low, pt_high);
+            for(int rap_idx =0; rap_idx < n_rap_bins; rap_idx++){
+                pt_low = pt_bins[pt_idx];
+                pt_high = pt_bins[pt_idx+1];
+                rap_low = rap_bins[rap_idx];
+                rap_high = rap_bins[rap_idx+1];
+                //pt_low = pt_bins[pt_idx] * m_low;
+                //pt_high = pt_bins[pt_idx+1] * m_low;
+                printf("pt low, high  %.1f %.1f \n", pt_low, pt_high);
+                printf("rap low, high  %.1f %.1f \n", rap_low, rap_high);
 
-            //float pt_low = 0.;
-            //float pt_high = 10000.;
+                //float pt_low = 0.;
+                //float pt_high = 10000.;
 
-            h_cost1->Reset();
-            h_pt->Reset();
-            nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
-            nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, do_ptrw, year);
-            //int nEvents2 = make_gen_cost(t_gen_el,  h_cost2, m_low, m_high);
-
-
-
-
-            
-            /*
-            Double_t nB = h_cost1->Integral(1,n_bins/2);
-            Double_t nF = h_cost1->Integral(n_bins/2 + 1,n_bins);
-            Double_t AFB = ((nF - nB))/((nF+nB));
-            //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));
-            Double_t B = (1. - AFB)*nEvents/2.;
-            Double_t F = (1. + AFB)*nEvents/2.;
-            Double_t dAFB = sqrt(4.*F*B/pow(F+B, 3));
-            //Double_t dAFB = sqrt(4.*nF*nB/pow(nF+nB, 3));
-            */
-            
-            //Normalize hist & divide by bin size
-            h_cost1->Scale(1./h_cost1->Integral() / bin_size);
-            h_cost1->Fit(func);
-            sprintf(title, "a0_y%i_m%i_pt%i", year -2000, m_idx, pt_idx);
-            RooRealVar *A0_fit = new RooRealVar(title, "", func->GetParameter(1));
-            A0_fit->setError(func->GetParError(1));
+                h_cost1->Reset();
+                h_pt->Reset();
+                nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
+                nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
 
 
-            sprintf(title, "amc_fit_ratio_y%i_m%i_pt%i", year -2000, m_idx, pt_idx);
 
-            TH1F *h_ratio = (TH1F *) h_cost1->Clone(title);
-            auto to_remove = h_ratio->GetFunction("func");
-            h_ratio->GetListOfFunctions()->Remove(to_remove);
+                
+                //Normalize hist & divide by bin size
+                h_cost1->Scale(1./h_cost1->Integral() / bin_size);
+                h_cost1->Fit(func);
+                sprintf(title, "a0_y%i_m%i_pt%i_rap%i", year -2000, m_idx, pt_idx, rap_idx);
+                RooRealVar *A0_fit = new RooRealVar(title, "", func->GetParameter(1));
+                A0_fit->setError(func->GetParError(1));
 
-            for(int i=1; i <= n_bins; i++){
-                float bin_cent = h_cost1->GetBinCenter(i);
-                float fit_val = func->Eval(bin_cent);
-                h_fit->SetBinContent(i, fit_val);
-                h_fit->SetBinError(i, 0.);
+
+                sprintf(title, "amc_fit_ratio_y%i_m%i_pt%i_rap%i", year -2000, m_idx, pt_idx, rap_idx);
+
+                TH1F *h_ratio = (TH1F *) h_cost1->Clone(title);
+                auto to_remove = h_ratio->GetFunction("func");
+                h_ratio->GetListOfFunctions()->Remove(to_remove);
+
+                for(int i=1; i <= n_bins; i++){
+                    float bin_cent = h_cost1->GetBinCenter(i);
+                    float fit_val = func->Eval(bin_cent);
+                    h_fit->SetBinContent(i, fit_val);
+                    h_fit->SetBinError(i, 0.);
+                }
+                h_ratio->Divide(h_fit);
+
+
+                sprintf(title, "M %.0f-%.0f GeV, pt %.0f-%.0f GeV |Y| %.1f-%.1f; cos(#theta_{*})", m_low, m_high, pt_low, pt_high, rap_low, rap_high);
+                h_cost1->SetTitle(title);
+                sprintf(title, "%sy%i_m%.0f_ptbin%i_rapbin%i_fit.png", plot_dir, year -2000, m_low, pt_idx, rap_idx);
+
+
+
+                TCanvas *c = draw_ratio_plot(string(title), h_cost1, h_ratio, "cos(#theta)", "MC/fit", 0.7, 1.3);
+                c->Print(title);
+                //h_cost2->Scale(1./h_cost2->Integral() / bin_size);
+                //h_cost2->Draw("same");
+                //h_cost2->SetLineColor(kBlack);
+
+
+                printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
+                printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
+
+
+                if(write_out){
+                    f_out->cd();
+                    h_ratio->Write();
+                    A0_fit->Write();
+                }
             }
-            h_ratio->Divide(h_fit);
-
-
-            sprintf(title, "M %.0f-%.0f GeV, pt %.0f-%.0f GeV; cos(#theta_{*})", m_low, m_high, pt_low, pt_high);
-            h_cost1->SetTitle(title);
-            sprintf(title, "%sy%i_m%.0f_ptbin%i_fit.png", plot_dir, year -2000, m_low, pt_idx);
-
-
-
-            TCanvas *c = draw_ratio_plot(string(title), h_cost1, h_ratio, "cos(#theta)", "MC/fit", 0.7, 1.3);
-            c->Print(title);
-            //h_cost2->Scale(1./h_cost2->Integral() / bin_size);
-            //h_cost2->Draw("same");
-            //h_cost2->SetLineColor(kBlack);
-
-
-            printf("AFB: %.4f +/- %.4f \n", func->GetParameter(0), func->GetParError(0));
-            printf("A0: %.3f +/- %.3f \n", func->GetParameter(1), func->GetParError(1));
-
-
-            if(write_out){
-                f_out->cd();
-                h_ratio->Write();
-                A0_fit->Write();
-            }
-
 
         }
     }

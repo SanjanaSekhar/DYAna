@@ -10,7 +10,7 @@ void draw_templates(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2016;
+        int year = 2018;
         init(year);
         setup_all_SFs(year);
         //char *plot_dir = "Paper_plots/template_plots";
@@ -83,9 +83,9 @@ void draw_templates(){
             double norm = 3./4./(2.+alpha);
             h_mumu_alpha->Scale(norm);
 
-            h_mumu_pl.Print("range");
+            //h_mumu_pl.Print("range");
             auto h1_mumu_pl = convert2d(&h_mumu_pl);
-            h1_mumu_pl->Print("range");
+            //h1_mumu_pl->Print("range");
             auto h1_mumu_mn = convert2d(&h_mumu_mn);
             auto h1_mumu_alpha = convert2d(h_mumu_alpha);
             auto h1_mumu_sym = convert2d(h_mumu_sym);
