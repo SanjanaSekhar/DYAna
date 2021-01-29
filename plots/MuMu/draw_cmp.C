@@ -296,7 +296,7 @@ void draw_cmp(){
     TCanvas *c_m, *c_cost, *c_pt, *c_xf, *c_phi, *c_rap;
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
-    writeExtraText = false;
+    writeExtraText = true;
     char plt_file[100];
 
 

@@ -532,7 +532,7 @@ float TempMaker::getLQReweightingDenom(int flag2 = 0){
 
 float TempMaker::getReweightingDenom(){
     //printf("%.2f %.2f %.2f \n", cost, gen_cm.M(), gen_cm.Pt());
-    return get_reweighting_denom(A0_helper, cost_st, gen_m, gen_pt, do_A0_sys);
+    return get_reweighting_denom(A0_helper, cost_st, gen_m, gen_pt, abs(gen_rap), do_A0_sys);
 }
 
 
