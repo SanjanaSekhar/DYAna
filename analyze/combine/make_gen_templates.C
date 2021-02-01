@@ -53,14 +53,15 @@ int make_temps(TTree *t_gen, TH1F *h_raw, TH1F *h_sym, TH1F *h_asym, TH1F *h_alp
 
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
-        //bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
-            //&& max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 26. && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
-        bool pass = true;
+        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
+            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 26. && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+        //bool pass = true;
         cm = *gen_lep_p + *gen_lep_m;
         //bool pass = abs(cm.Rapidity()) < 2.4;
         if(m >= m_low && m <= m_high && pass){
 
             float pt = cm.Pt();
+            float rap = abs(cm.Rapidity());
             /*
             float my_cost = get_cost(*gen_lep_p, *gen_lep_m);
             if(cost_st > 0) my_cost = abs(my_cost);
@@ -70,7 +71,7 @@ int make_temps(TTree *t_gen, TH1F *h_raw, TH1F *h_sym, TH1F *h_asym, TH1F *h_alp
             if(gen_weight >0) nEvents++;
             else  nEvents--;
 
-            float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, 0);
+            float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
 
             float reweight_a = gen_cost/ denom;
             float reweight_s = (1 + gen_cost*gen_cost)/denom;
@@ -163,6 +164,8 @@ void make_gen_templates(){
         Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
 
         printf("Counting AFB %.3f +/- %.3f \n", AFB, dAFB_v2);
+        printf("F, B : %.3e %.3e \n", nF, nB);
+        h_raw->Print("range");
 
 
 

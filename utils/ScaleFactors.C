@@ -178,8 +178,13 @@ float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, float r
     int bin = x_ax->FindBin(cost);
     float correction = h_correction->GetBinContent(bin);
     
-    float denom = 3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost));
-    return denom * correction;
+    float denom = (3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost)));
+    if(denom < 0  || isnan(denom)){
+        printf("Denom %.3f, cost,m,pt,rap: %.2f, %.0f, %.0f %.1f \n", denom, cost, m, pt, rap);
+        A0_ = 0.05;
+        denom = (3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost)));
+    }
+    return denom;
 }
 
 
