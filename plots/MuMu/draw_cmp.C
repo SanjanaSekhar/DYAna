@@ -26,6 +26,7 @@
 #include "../../utils/HistMaker.C"
 #include "../../utils/PlotUtils.C"
 #include "../../utils/root_files.h"
+#include "../../utils/Colors.h"
 
 
 
@@ -113,48 +114,48 @@ void draw_cmp(){
     TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
     TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
-    mc_tautau_cost->SetFillColor(kMagenta);
-    mc_tautau_m->SetFillColor(kMagenta);
-    mc_tautau_pt->SetFillColor(kMagenta);
-    mc_tautau_xf->SetFillColor(kMagenta);
-    mc_tautau_phi->SetFillColor(kMagenta);
-    mc_tautau_rap->SetFillColor(kMagenta);
+    mc_tautau_cost->SetFillColor(tautau_c);
+    mc_tautau_m->SetFillColor(tautau_c);
+    mc_tautau_pt->SetFillColor(tautau_c);
+    mc_tautau_xf->SetFillColor(tautau_c);
+    mc_tautau_phi->SetFillColor(tautau_c);
+    mc_tautau_rap->SetFillColor(tautau_c);
 
-    mc_cost->SetFillColor(kRed+1);
-    mc_m->SetFillColor(kRed+1);
-    mc_pt->SetFillColor(kRed+1);
-    mc_xf->SetFillColor(kRed+1);
-    mc_phi->SetFillColor(kRed+1);
-    mc_rap->SetFillColor(kRed+1);
+    mc_cost->SetFillColor(DY_c);
+    mc_m->SetFillColor(DY_c);
+    mc_pt->SetFillColor(DY_c);
+    mc_xf->SetFillColor(DY_c);
+    mc_phi->SetFillColor(DY_c);
+    mc_rap->SetFillColor(DY_c);
 
-    ttbar_cost->SetFillColor(kBlue);
-    ttbar_m->SetFillColor(kBlue);
-    ttbar_pt->SetFillColor(kBlue);
-    ttbar_xf->SetFillColor(kBlue);
-    ttbar_phi->SetFillColor(kBlue);
-    ttbar_rap->SetFillColor(kBlue);
+    ttbar_cost->SetFillColor(ttbar_c);
+    ttbar_m->SetFillColor(ttbar_c);
+    ttbar_pt->SetFillColor(ttbar_c);
+    ttbar_xf->SetFillColor(ttbar_c);
+    ttbar_phi->SetFillColor(ttbar_c);
+    ttbar_rap->SetFillColor(ttbar_c);
 
 
-    wt_cost->SetFillColor(kOrange+7);
-    wt_m->SetFillColor(kOrange+7);
-    wt_pt->SetFillColor(kOrange+7);
-    wt_xf->SetFillColor(kOrange+7);
-    wt_phi->SetFillColor(kOrange+7);
-    wt_rap->SetFillColor(kOrange+7);
+    wt_cost->SetFillColor(wt_c);
+    wt_m->SetFillColor(wt_c);
+    wt_pt->SetFillColor(wt_c);
+    wt_xf->SetFillColor(wt_c);
+    wt_phi->SetFillColor(wt_c);
+    wt_rap->SetFillColor(wt_c);
 
-    diboson_cost->SetFillColor(kGreen+3);
-    diboson_m->SetFillColor(kGreen+3);
-    diboson_pt->SetFillColor(kGreen+3);
-    diboson_xf->SetFillColor(kGreen+3);
-    diboson_phi->SetFillColor(kGreen+3);
-    diboson_rap->SetFillColor(kGreen+3);
+    diboson_cost->SetFillColor(diboson_c);
+    diboson_m->SetFillColor(diboson_c);
+    diboson_pt->SetFillColor(diboson_c);
+    diboson_xf->SetFillColor(diboson_c);
+    diboson_phi->SetFillColor(diboson_c);
+    diboson_rap->SetFillColor(diboson_c);
 
-    QCD_cost->SetFillColor(kRed-7);
-    QCD_m->SetFillColor(kRed-7);
-    QCD_pt->SetFillColor(kRed-7);
-    QCD_xf->SetFillColor(kRed-7);
-    QCD_phi->SetFillColor(kRed-7);
-    QCD_rap->SetFillColor(kRed-7);
+    QCD_cost->SetFillColor(qcd_c);
+    QCD_m->SetFillColor(qcd_c);
+    QCD_pt->SetFillColor(qcd_c);
+    QCD_xf->SetFillColor(qcd_c);
+    QCD_phi->SetFillColor(qcd_c);
+    QCD_rap->SetFillColor(qcd_c);
 
     gg_cost->SetFillColor(kOrange);
     gg_m->SetFillColor(kOrange);

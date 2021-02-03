@@ -30,14 +30,54 @@
 #include "../../utils/Colors.h"
 
 int year = 2016;
-const bool write_out = false;
-char *plot_dir = "Paper_plots/";
+const bool write_out = true;
+char *plot_dir = "Paper_plots/ttbar_check/";
+char *label = "_after_toprw_";
+bool do_top_pt_rw = true;
+
+void make_ttbar_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,   TH1F *h_rap, bool is_data = false, 
+        int year=2016, float m_low = 150., float m_high = 999999., bool do_top_rw = true){
+    Long64_t size  =  t1->GetEntries();
+    TempMaker tm(t1, is_data, year);
+    tm.do_emu = true;
+    //if(!is_data) tm.do_emu_costrw = costrw;
+
+    tm.setup();
+    int nEvents=0;
+
+    for (int i=0; i<tm.nEntries; i++) {
+        tm.getEvent(i);
+        bool pass  = tm.m >= m_low && tm.m <= m_high;
+        bool has_a_bjet = tm.jet1_btag || tm.jet2_btag;
+        if(pass && has_a_bjet){
+            nEvents++;
+            tm.doCorrections();
+            tm.getEvtWeight();
+
+            Double_t evt_weight;
+            if(do_top_rw || is_data) evt_weight = tm.evt_weight;
+            else evt_weight = tm.evt_weight / tm.top_ptrw;
+
+            if(tm.top_ptrw > 2 || tm.top_ptrw < 0.){
+                printf("top pt rw is %.2f ? \n", tm.top_ptrw);
+            }
+
+            h_m->Fill(tm.m, evt_weight);
+            h_cost->Fill(tm.cost, evt_weight);
+            h_pt->Fill(tm.cm.Pt(), evt_weight);
+            h_rap->Fill(tm.cm.Rapidity(), evt_weight);
+
+
+        }
+    }
+    printf("Selected %i events \n", nEvents);
+    tm.finish();
+}
 
 
 
 
-
-void draw_cmp(){
+void draw_ttbar_val(){
 
     printf("Year is %i \n", year);
     setTDRStyle();
@@ -46,19 +86,15 @@ void draw_cmp(){
     init_emu_indv_bkgs(year);
     setup_all_SFs(year);
 
-    float m_bin_size = 30.;
-	float m_bin_low = 170.;
-	int n_m_bins = 30;
-	float m_bin_high = m_bin_low + n_m_bins*m_bin_size;
+                                
 
-    TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *wt_m = new TH1F("wt_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *dy_m = new TH1F("dy_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *qcd_m = new TH1F("qcd_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
+    TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
+    TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
+    TH1F *wt_m = new TH1F("wt_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
+    TH1F *dy_m = new TH1F("dy_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
+    TH1F *qcd_m = new TH1F("qcd_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
 
-    float pt_bin_size  = 10.;
     TH1F *data_pt = new TH1F("data_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *diboson_pt = new TH1F("diboson_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
@@ -67,7 +103,6 @@ void draw_cmp(){
     TH1F *qcd_pt = new TH1F("qcd_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
 
     int n_cost_bins = 8;
-    float cost_bin_size = 2./8;
     TH1F *data_cost = new TH1F("data_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *ttbar_cost = new TH1F("ttbar_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *diboson_cost = new TH1F("diboson_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
@@ -77,29 +112,25 @@ void draw_cmp(){
 
 
     int n_rap_bins = 20;
-	float rap_bin_low = -2.4;
-    float rap_bin_high = 2.4;
-    float rap_bin_size = (rap_bin_high - rap_bin_low) / n_rap_bins;
-    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, rap_bin_low,rap_bin_high);
-    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, rap_bin_low,rap_bin_high);
-    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, rap_bin_low,rap_bin_high);
-    TH1F *wt_rap = new TH1F("wt_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
-    TH1F *dy_rap = new TH1F("dy_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
-    TH1F *qcd_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
+    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.4,2.4);
+    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.4,2.4);
+    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.4,2.4);
+    TH1F *wt_rap = new TH1F("wt_rap", "QCD", n_rap_bins, -2.4,2.4);
+    TH1F *dy_rap = new TH1F("dy_rap", "QCD", n_rap_bins, -2.4,2.4);
+    TH1F *qcd_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.4,2.4);
 
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
     Double_t m_low = 170;
     Double_t m_high = 10000;
 
-    bool ss = false;
 
     bool do_emu_cost_rw = false;
-    make_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, true,  year, m_low, m_high, ss);
-    make_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
-    make_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
-    make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
-    make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, ss);
+    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, true,  year, m_low, m_high, do_top_pt_rw);
+    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, false,  year, m_low, m_high,  do_top_pt_rw);
+    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, false,  year, m_low, m_high,  do_top_pt_rw);
+    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, false,  year, m_low, m_high,  do_top_pt_rw);
+    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, do_top_pt_rw);
 
     bool fakes_reweight = true;
     bool fakes_sys_errors = false;
@@ -206,7 +237,7 @@ void draw_cmp(){
     rap_stack->Add(ttbar_rap);
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.4,0.3);
+    TLegend *leg1 = new TLegend(0.4, 0.3);
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
     leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");
@@ -221,37 +252,33 @@ void draw_cmp(){
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
     writeExtraText = true;
-    char plt_file[100], y_ax_label[100];
+    char plt_file[100];
     
     bool logy = true;
     bool logx = false;
 
-    sprintf(plt_file, "%sEMu%i_m_cmp.pdf", plot_dir, year % 2000);
+    sprintf(plt_file, "%sEMu%i%s_m_cmp.pdf", plot_dir,  year % 2000, label);
 
-    sprintf(y_ax_label, "Events/%.0f GeV", m_bin_size);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, -1, logy);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", "", -1., true);
     CMS_lumi(p_m, year, 33 );
     if(write_out) c_m->Print(plt_file);
 
     logy = false;
-    sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", y_ax_label, -1., logy,logx);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", "", -1., logy,logx);
     CMS_lumi(p_cost, year, 33);
-    sprintf(plt_file, "%sEMu%i_cost_cmp.pdf", plot_dir, year % 2000);
+    sprintf(plt_file, "%sEMu%i%s_cost_cmp.pdf", plot_dir, year % 2000, label);
     if(write_out) c_cost->Print(plt_file);
 
     logy = true;
-    sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", y_ax_label, -1., logy, logx);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", "", -1., logy, logx);
     CMS_lumi(p_pt, year, 33);
-    sprintf(plt_file, "%sEMu%i_pt_cmp.pdf", plot_dir, year % 2000);
+    sprintf(plt_file, "%sEMu%i%s_pt_cmp.pdf", plot_dir,  year % 2000, label);
     if(write_out) c_pt->Print(plt_file);
 
     logy = true;
-    sprintf(y_ax_label, "Events/%.1f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  -1., logy, logx);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", "", -1., logy, logx);
     CMS_lumi(p_rap, year, 33);
-    sprintf(plt_file, "%sEMu%i_rap_cmp.pdf", plot_dir, year % 2000);
+    sprintf(plt_file, "%sEMu%i%s_rap_cmp.pdf", plot_dir, year % 2000, label);
     if(write_out) c_rap->Print(plt_file);
 
 

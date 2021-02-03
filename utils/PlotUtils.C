@@ -191,7 +191,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 }
 
 
-std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel, 
+std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel,
         float hmax =-1., bool logy = true, bool logx= false){
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
@@ -210,18 +210,28 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_data->SetMarkerColor(1);
     h_data->DrawCopy("P E same");
 
+    int axis_title_size = 25;
+    int axis_label_size = 20;
     leg->Draw();
 
-    h_stack->GetYaxis()->SetTitleSize(30);
+    h_stack->GetYaxis()->SetTitleSize(axis_title_size);
     h_stack->GetYaxis()->SetTitleFont(43);
     h_stack->GetYaxis()->SetTitleOffset(1.2);
+
+    h_stack->GetYaxis()->SetTitle(ylabel);
+    h_stack->GetYaxis()->SetNdivisions(505);
+    h_stack->GetYaxis()->SetTitleSize(axis_title_size);
+    h_stack->GetYaxis()->SetTitleFont(43);
+    h_stack->GetYaxis()->SetTitleOffset(1.2);
+    h_stack->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    h_stack->GetYaxis()->SetLabelSize(axis_label_size);
 
 
 
     c->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
     //pad2->SetTopMargin(0);
-    pad2->SetBottomMargin(0.2);
+    pad2->SetBottomMargin(0.4);
     pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
@@ -259,18 +269,18 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     // Y axis m_ratio plot settings
    h_ratio->GetYaxis()->SetTitle("Obs/Exp");
    h_ratio->GetYaxis()->SetNdivisions(505);
-   h_ratio->GetYaxis()->SetTitleSize(20);
+   h_ratio->GetYaxis()->SetTitleSize(axis_title_size);
    h_ratio->GetYaxis()->SetTitleFont(43);
    h_ratio->GetYaxis()->SetTitleOffset(1.2);
    h_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetYaxis()->SetLabelSize(15);
+   h_ratio->GetYaxis()->SetLabelSize(axis_label_size);
    // X axis m_ratio plot settings
    h_ratio->GetXaxis()->SetTitle(xlabel);
-   h_ratio->GetXaxis()->SetTitleSize(20);
+   h_ratio->GetXaxis()->SetTitleSize(axis_title_size);
    h_ratio->GetXaxis()->SetTitleFont(43);
    h_ratio->GetXaxis()->SetTitleOffset(3.);
    h_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetXaxis()->SetLabelSize(20);
+   h_ratio->GetXaxis()->SetLabelSize(axis_label_size);
 
    float chi2 = computeChi2(h_ratio);
    int n_bins = h_ratio->GetNbinsX();
