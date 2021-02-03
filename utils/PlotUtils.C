@@ -212,6 +212,9 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     int axis_title_size = 25;
     int axis_label_size = 20;
+
+    float ratio_min = 0.;
+    float ratio_max = 2.;
     leg->Draw();
 
     h_stack->GetYaxis()->SetTitleSize(axis_title_size);
@@ -253,8 +256,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         center = 0.0;
         h_ratio->Add(sum, -1.);
     }
-    h_ratio->SetMinimum(center - ratio_range);
-    h_ratio->SetMaximum(center + ratio_range);
+    h_ratio->SetMinimum(ratio_min);
+    h_ratio->SetMaximum(ratio_max);
     h_ratio->Sumw2();
     h_ratio->SetStats(0);
     h_ratio->Divide(sum);

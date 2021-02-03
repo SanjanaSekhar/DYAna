@@ -27,6 +27,7 @@
 #include "../../utils/HistMaker.C"
 #include "../../utils/root_files.h"
 #include "../../utils/PlotUtils.C"
+#include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
 const int year = 2016;

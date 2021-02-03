@@ -27,6 +27,7 @@
 #include "../../utils/HistMaker.C"
 #include "../../utils/root_files.h"
 #include "../../utils/PlotUtils.C"
+#include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
 int year = 2018;
@@ -90,28 +91,28 @@ void draw_samesign_cmp(){
 
     TH1F * dummy = new TH1F("dummy", "", 100, 0., 100.);
 
-    back_m->SetFillColor(kGreen+3);
-    back_cost->SetFillColor(kGreen + 3);
-    back_xf->SetFillColor(kGreen+3);
-    back_pt->SetFillColor(kGreen+3);
-    back_phi->SetFillColor(kGreen+3);
-    back_rap->SetFillColor(kGreen+3);
+    back_m->SetFillColor(diboson_c);
+    back_cost->SetFillColor(diboson_c);
+    back_xf->SetFillColor(diboson_c);
+    back_pt->SetFillColor(diboson_c);
+    back_phi->SetFillColor(diboson_c);
+    back_rap->SetFillColor(diboson_c);
 
-    QCD_xf->SetFillColor(kRed -7);
-    QCD_m->SetFillColor(kRed -7);
-    QCD_cost->SetFillColor(kRed -7);
-    QCD_pt->SetFillColor(kRed -7);
-    QCD_phi->SetFillColor(kRed -7);
-    QCD_rap->SetFillColor(kRed -7);
+    QCD_xf->SetFillColor(QCD_c);
+    QCD_m->SetFillColor(QCD_c);
+    QCD_cost->SetFillColor(QCD_c);
+    QCD_pt->SetFillColor(QCD_c);
+    QCD_phi->SetFillColor(QCD_c);
+    QCD_rap->SetFillColor(QCD_c);
 
 
 
-    DY_xf->SetFillColor(kRed+1);
-    DY_pt->SetFillColor(kRed+1);
-    DY_m->SetFillColor(kRed+1);
-    DY_cost->SetFillColor(kRed+1);
-    DY_phi->SetFillColor(kRed+1);
-    DY_rap->SetFillColor(kRed+1);
+    DY_xf->SetFillColor(DY_c);
+    DY_pt->SetFillColor(DY_c);
+    DY_m->SetFillColor(DY_c);
+    DY_cost->SetFillColor(DY_c);
+    DY_phi->SetFillColor(DY_c);
+    DY_rap->SetFillColor(DY_c);
 
     float m_low = 150.;
     float m_high = 10000.;

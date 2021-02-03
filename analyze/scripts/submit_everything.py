@@ -7,7 +7,7 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-years = [2018]
+years = [2017]
 #prefixes = ["EMu"]
 #scripts = ["EMu_reco_background.C"]
 #scripts = ["EMu_reco_data.C"]
