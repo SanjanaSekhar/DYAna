@@ -110,13 +110,9 @@ void draw_cmp(){
     Double_t fake_count = qcd_m->Integral();
     Double_t mc_count = ttbar_m->Integral() + diboson_m->Integral() + wt_m->Integral() + dy_m->Integral();
 
-    //includes lumi unc
-    float fake_err = 0.5;
-    double top_unc = pow(0.05*0.05 + 0.025*0.025, 0.5);
-    double diboson_unc = pow(0.09*0.09 + 0.025*0.025, 0.5);
-    double dy_unc = pow(0.03*0.03 + 0.025*0.025, 0.5);
-    Double_t fake_unc = fake_err * fake_count;
-    Double_t mc_unc = (ttbar_m->Integral() + wt_m->Integral()) * top_unc + diboson_m->Integral() * diboson_unc + dy_m->Integral()*dy_unc;
+
+    Double_t fake_unc = qcd_sys_unc * fake_count;
+    Double_t mc_unc = (ttbar_m->Integral() + wt_m->Integral()) * top_sys_unc + diboson_m->Integral() * diboson_sys_unc + dy_m->Integral()*dy_sys_unc;
 
     printf("Data count %.0f +/- %.0f \n", data_count, sqrt(data_count));
     printf("MC count %.0f +/- %0.f \n", mc_count, mc_unc);
@@ -126,25 +122,25 @@ void draw_cmp(){
                           pow(data_count/(mc_count + fake_count)/(mc_count + fake_count), 2) * (fake_unc*fake_unc + mc_unc*mc_unc));
     printf("Ratio is %1.3f +/- %1.3f \n", ratio, unc);
 
-    setHistError(qcd_m, fake_err);
-    setHistError(qcd_cost, fake_err);
-    setHistError(qcd_pt, fake_err);
+    setHistError(qcd_m, qcd_sys_unc);
+    setHistError(qcd_cost, qcd_sys_unc);
+    setHistError(qcd_pt, qcd_sys_unc);
 
-    setHistError(diboson_m, diboson_unc);
-    setHistError(diboson_cost, diboson_unc);
-    setHistError(diboson_pt, diboson_unc);
+    setHistError(diboson_m, diboson_sys_unc);
+    setHistError(diboson_cost, diboson_sys_unc);
+    setHistError(diboson_pt, diboson_sys_unc);
 
-    setHistError(dy_m, dy_unc);
-    setHistError(dy_cost, dy_unc);
-    setHistError(dy_pt, dy_unc);
+    setHistError(dy_m, dy_sys_unc);
+    setHistError(dy_cost, dy_sys_unc);
+    setHistError(dy_pt, dy_sys_unc);
 
-    setHistError(ttbar_m, top_unc);
-    setHistError(ttbar_cost, top_unc);
-    setHistError(ttbar_pt, top_unc);
+    setHistError(ttbar_m, top_sys_unc);
+    setHistError(ttbar_cost, top_sys_unc);
+    setHistError(ttbar_pt, top_sys_unc);
 
-    setHistError(wt_m, top_unc);
-    setHistError(wt_cost, top_unc);
-    setHistError(wt_pt, top_unc);
+    setHistError(wt_m, top_sys_unc);
+    setHistError(wt_cost, top_sys_unc);
+    setHistError(wt_pt, top_sys_unc);
 
 
     dy_m->SetFillColor(DY_c);
@@ -225,31 +221,32 @@ void draw_cmp(){
     
     bool logy = true;
     bool logx = false;
+    bool draw_sys_uncs = true;
 
     sprintf(plt_file, "%sEMu%i_m_cmp.pdf", plot_dir, year % 2000);
 
     sprintf(y_ax_label, "Events/%.0f GeV", m_bin_size);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, -1, logy);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, -1, logy,logx, draw_sys_uncs);
     CMS_lumi(p_m, year, 33 );
     if(write_out) c_m->Print(plt_file);
 
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", y_ax_label, -1., logy,logx);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", y_ax_label, -1., logy,logx, draw_sys_uncs);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sEMu%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
 
     logy = true;
     sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", y_ax_label, -1., logy, logx);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", y_ax_label, -1., logy, logx, draw_sys_uncs);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sEMu%i_pt_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_pt->Print(plt_file);
 
     logy = true;
     sprintf(y_ax_label, "Events/%.1f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  -1., logy, logx);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  -1., logy, logx, draw_sys_uncs);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sEMu%i_rap_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_rap->Print(plt_file);
