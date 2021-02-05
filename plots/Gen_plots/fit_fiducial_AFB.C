@@ -27,21 +27,45 @@
 #include "../../utils/TemplateMaker_systematics.C"
 
 
+TH1F *h_uncut, *h_raw, *h_sym, *h_asym, *h_pl, *h_mn, *h_alpha;
+
+
+double fit_fcn(double *x, double *par){
+
+    double xx = x[0];
+
+    double AFB = par[0];
+    double A0 = par[1];
+
+    double alpha = 3./4./(2-A0);
+    double norm = 3./4./(2+alpha);
+
+    double rAlpha = alpha * norm;
+    double rPl = (norm + AFB);
+    double rMn = (norm - AFB);
+
+    double x_alpha = h_alpha->GetBinContent(h_alpha->FindBin(xx));
+    double x_pl = h_pl->GetBinContent(h_pl->FindBin(xx));
+    double x_mn = h_mn->GetBinContent(h_mn->FindBin(xx));
+
+    return rAlpha * x_alpha + rPl*x_pl + rMn*x_mn;
+}
 
 
 
-void make_gen_templates(){
+
+
+
+void make_gen_sys_templates(){
 
     int year = 2016;
     bool do_ptrw = true;
-    string fout_name = string("combine/templates/y16_gen_temps.root");
     TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_nov13.root");
     gROOT->SetBatch(1);
 
     TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
     TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
 
-    TFile * fout = TFile::Open(fout_name.c_str(), "RECREATE");
 
     char dirname[40];
 
@@ -52,13 +76,13 @@ void make_gen_templates(){
     //int i_max = 1;
 
     int n_bins = 40;
-    TH1F *h_uncut = new TH1F("cost_uncut", "", n_bins, -1., 1.);
-    TH1F *h_raw = new TH1F("cost_data_obs", "", n_bins, -1., 1.);
-    TH1F *h_sym = new TH1F("cost_sym", "", n_bins, -1., 1.);
-    TH1F *h_asym = new TH1F("cost_asym", "", n_bins, -1., 1.);
-    TH1F *h_pl = new TH1F("cost_pl", "", n_bins, -1., 1.);
-    TH1F *h_mn = new TH1F("cost_mn", "", n_bins, -1., 1.);
-    TH1F *h_alpha = new TH1F("cost_alpha", "", n_bins, -1., 1.);
+    h_uncut = new TH1F("cost_uncut", "", n_bins, -1., 1.);
+    h_raw = new TH1F("cost_data_obs", "", n_bins, -1., 1.);
+    h_sym = new TH1F("cost_sym", "", n_bins, -1., 1.);
+    h_asym = new TH1F("cost_asym", "", n_bins, -1., 1.);
+    h_pl = new TH1F("cost_pl", "", n_bins, -1., 1.);
+    h_mn = new TH1F("cost_mn", "", n_bins, -1., 1.);
+    h_alpha = new TH1F("cost_alpha", "", n_bins, -1., 1.);
 
     float m_low, m_high;
 
@@ -77,21 +101,6 @@ void make_gen_templates(){
         nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
         nEvents += make_gen_temps(t_gen_el, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
 
-        Double_t dnB, dnF;
-
-        Double_t nB = h_raw->IntegralAndError(1,n_bins/2, dnB);
-        Double_t nF = h_raw->IntegralAndError(n_bins/2 + 1,n_bins, dnF);
-        Double_t n_tot = nB + nF;
-        
-        Double_t AFB = ((nF - nB))/((nF+nB));
-        Double_t dAFB_v2 = sqrt( pow(dnB * 2. * nF / (n_tot*n_tot),2) + pow(dnF * 2. * nB / (n_tot*n_tot),2));
-
-        printf("Counting AFB %.3f +/- %.3f \n", AFB, dAFB_v2);
-        printf("F, B : %.3e %.3e \n", nF, nB);
-        h_raw->Print("range");
-
-
-
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
@@ -106,16 +115,15 @@ void make_gen_templates(){
         h_mn->Scale(scale_);
         h_alpha->Scale(scale_);
 
-        fout->cd();
-        snprintf(dirname, 10, "w%i", i);
-        gDirectory->mkdir(dirname);
-        gDirectory->cd(dirname);
+        TF1 my_func("fit_fcn", fit_fcn, -1., 1., 2);
+        my_func.SetParLimits(0, -0.7, 0.7);
+        my_func.SetParLimits(1, -0.5, 0.5);
+        my_func.SetParameter(0, 0.6);
+        my_func.SetParameter(1, 0.08);
 
-        h_uncut->Write();
-        h_raw->Write();
-        h_pl->Write();
-        h_mn->Write();
-        h_alpha->Write();
+        h_raw->Fit(&my_func, "L");
+        my_func.Print();
+
 
         h_uncut->Reset();
         h_raw->Reset();
@@ -128,8 +136,5 @@ void make_gen_templates(){
 
     }
 
-
-    fout->Close();
-    printf("Templates written to %s \n", fout_name.c_str());
 
 }

@@ -609,3 +609,83 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
     return;
 }
 
+//make templates based on generator level samples (used for assessing impact of
+//fiducial cuts on AFB
+int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *h_asym, TH1F *h_alpha,  
+        float m_low, float m_high, bool do_ptrw = false, int year = 2016, string sys = ""){
+    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
+    float gen_weight, m, cost, cost_st;
+    Bool_t sig_event(1);
+    t_gen->SetBranchAddress("gen_p", &gen_lep_p);
+    t_gen->SetBranchAddress("gen_m", &gen_lep_m);
+    //t_gen->SetBranchAddress("gen_mu_p", &gen_lep_p);
+    //t_gen->SetBranchAddress("gen_mu_m", &gen_lep_m);
+    t_gen->SetBranchAddress("m", &m);
+    t_gen->SetBranchAddress("cost", &cost);
+    t_gen->SetBranchAddress("cost_st", &cost_st);
+    t_gen->SetBranchAddress("gen_weight", &gen_weight);
+    t_gen->SetBranchAddress("sig_event", &sig_event);
+
+
+    A0_helpers A0_helper; 
+    setup_A0_helper(&A0_helper, year);
+
+    ptrw_helper ptrw_SFs; 
+    setup_ptrw_helper(&ptrw_SFs, year);
+
+
+    int nEvents=0;
+
+    for (int i=0; i<t_gen->GetEntries(); i++) {
+        t_gen->GetEntry(i);
+        h_uncut->Fill(cost_st, gen_weight);
+        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
+            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 26. && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+        //bool pass = true;
+        cm = *gen_lep_p + *gen_lep_m;
+
+        //bool pass = abs(cm.Rapidity()) < 2.4;
+        if(m >= m_low && m <= m_high && pass){
+
+            float pt = cm.Pt();
+            float rap = abs(cm.Rapidity());
+            float gen_cost = cost_st;
+            if(gen_weight >0) nEvents++;
+            else  nEvents--;
+
+            float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
+
+            float reweight_a = gen_cost/ denom;
+            float reweight_s = (1 + gen_cost*gen_cost)/denom;
+            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+
+
+            if(do_ptrw){
+                float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
+                gen_weight *= ptrw;
+            }
+
+
+            h_raw->Fill(gen_cost, gen_weight);
+
+            h_sym->Fill(gen_cost, reweight_s * gen_weight); 
+            h_sym->Fill(-gen_cost, reweight_s * gen_weight); 
+
+            h_asym->Fill(gen_cost, reweight_a * gen_weight);
+            h_asym->Fill(-gen_cost, -reweight_a * gen_weight);
+
+            h_alpha->Fill(gen_cost, reweight_alpha * gen_weight); 
+            h_alpha->Fill(-gen_cost, reweight_alpha * gen_weight); 
+             
+
+        }
+    }
+    printf("selected %i events \n", nEvents);
+
+    //cleanup_template(h_sym);
+    //fixup_template_sum(h_sym, h_asym);
+
+    return nEvents;
+
+}
+
