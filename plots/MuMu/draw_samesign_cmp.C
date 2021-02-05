@@ -30,9 +30,9 @@
 
 const int type = FLAG_MUONS;
 int year = 2018;
-bool write_out = true;
-//char *plot_dir = "Misc_plots/samesign_cmp/";
-char *plot_dir = "Paper_plots/";
+bool write_out = false;
+char *plot_dir = "Misc_plots/samesign_cmp_test/";
+//char *plot_dir = "Paper_plots/";
 
 
 
@@ -233,28 +233,33 @@ void draw_samesign_cmp(){
     writeExtraText = false;
     char plt_file[100];
 
+    bool draw_sys_uncs = false;
+    bool logx = false;
 
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)", -1., true);
+    
+
+
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)", "", -1., true, logx, draw_sys_uncs);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sMuMu%i_ss_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
 
     
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", -1., false);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", -1., false, logx, draw_sys_uncs);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sMuMu%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
 
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)", -1., true);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", -1.,  true, logx, draw_sys_uncs);
     CMS_lumi(p_pt, year, 33);
 
-    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)", -1., true);
+    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", -1., true, logx, draw_sys_uncs);
     CMS_lumi(p_xf, year, 33);
 
-    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi", -1., true);
+    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi","", -1., true, logx, draw_sys_uncs);
     CMS_lumi(p_phi, year, 33);
 
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y", -1., true);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y","", -1., true, logx, draw_sys_uncs);
     CMS_lumi(p_rap, year, 33);
 
 

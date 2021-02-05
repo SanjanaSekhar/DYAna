@@ -29,10 +29,11 @@
 
 
 
-const int year = 2016;
+const int year = 2018;
 char *out_file = "../analyze/SFs/2016/fakes_cost_rw.root";
-const bool write_out = true;
-char *plot_dir = "Misc_plots/fakes_cost_reweights/";
+const bool write_out = false;
+bool corr_ss = true;
+char *plot_dir = "Misc_plots/fakes_cost_reweights_test/";
 
 
 
@@ -65,6 +66,7 @@ void do_fakes_cost_reweight(){
 
     TH1F *elel_data_cost = new TH1F("elel_data_cost", "Data", n_bins, -1.,1.);
     TH1F *elel_other_cost = new TH1F("elel_diboson_cost", "DiBoson (WW, WZ,ZZ)", n_bins, -1.,1);
+    TH1F *elel_dy_ss_cost = new TH1F("elel_dy_ss_cost", "DiBoson (WW, WZ,ZZ)", n_bins, -1.,1);
     TH1F *elel_QCD_ss_cost = new TH1F("elel_QCD_ss_cost", "QCD", n_bins, -1.,1);
     TH1F *elel_QCD_os_cost = new TH1F("elel_QCD_os_cost", "QCD", n_bins, -1.,1);
 
@@ -138,7 +140,7 @@ void do_fakes_cost_reweight(){
     make_m_cost_pt_xf_hist(t_elel_ss_diboson, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_wt, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_ttbar, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
-    make_m_cost_pt_xf_hist(t_elel_ss_dy, dummy, elel_other_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
+    make_m_cost_pt_xf_hist(t_elel_ss_dy, dummy, elel_dy_ss_cost, dummy, dummy, dummy, dummy, false, FLAG_ELECTRONS,   year, m_low, m_high, ss);
 
     ss = true;
     make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, dummy, elel_QCD_ss_cost, dummy, dummy, dummy, dummy, FLAG_ELECTRONS, 
@@ -148,10 +150,35 @@ void do_fakes_cost_reweight(){
             year, m_low, m_high, ss, reweight, sys_errors);
     symmetrize1d(elel_QCD_os_cost);
 
+
+
+    if(corr_ss){
+        //apply DY samesign corrections
+        char fn_ss_dy[100];
+        sprintf(fn_ss_dy, "../analyze/SFs/%i/dy_ss_rw.root", year);
+
+        TFile *f = new TFile(fn_ss_dy, "READ");
+        f->cd();
+        TH1F *h_dy_ss_corrs = (TH1F *)gDirectory->Get("h_ss_ratio");
+        for(int i=1; i<= n_cost_bins; i++){
+            float corr = h_dy_ss_corrs->GetBinContent(i);
+            float corr_err = h_dy_ss_corrs->GetBinError(i);
+            float cont = elel_dy_ss_cost->GetBinContent(i);
+            float err = elel_dy_ss_cost->GetBinError(i);
+            float new_err = sqrt(err*err + corr_err*cont*corr_err*cont);
+            elel_dy_ss_cost->SetBinContent(i, cont*corr);
+            elel_dy_ss_cost->SetBinError(i, new_err);
+
+        }
+    }
+
+
+
     sprintf(h_name, "elel%i_ss_cost_data_sub", year % 2000);
     
     TH1F *h_elel_data_sub = (TH1F *) elel_data_cost->Clone(h_name);
     h_elel_data_sub->Add(elel_other_cost, -1);
+    h_elel_data_sub->Add(elel_dy_ss_cost, -1);
     symmetrize1d(h_elel_data_sub);
 
     sprintf(plt_title, "Electrons %i", year);
