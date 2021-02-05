@@ -95,11 +95,11 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
 
 void fit_amc_gen_cost(){
 
-    bool write_out = true;
-    int year = 2018;
+    bool write_out = false;
+    int year = 2017;
     bool do_ptrw = false;
-    char *out_file = "../analyze/SFs/2018/a0_fits.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_nov13.root");
+    char *out_file = "../analyze/SFs/2017/a0_fits.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_nov13.root");
     gROOT->SetBatch(1);
 
     TFile * f_out;
@@ -196,7 +196,7 @@ void fit_amc_gen_cost(){
         printf("Counting AFB %.4f +/- %.4f \n", AFB, dAFB_v2);
         printf("Counting: Total NF %.0f NB %.0f \n", nF, nB);
 
-        //continue;
+        continue;
         //exit(1);
         //
 

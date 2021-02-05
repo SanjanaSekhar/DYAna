@@ -633,51 +633,56 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
     ptrw_helper ptrw_SFs; 
     setup_ptrw_helper(&ptrw_SFs, year);
 
+    //float pt_cut = 26.;
+    float pt_cut = 38;
+
 
     int nEvents=0;
 
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
-        h_uncut->Fill(cost_st, gen_weight);
+
         bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
             && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 26. && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
-        //bool pass = true;
-        cm = *gen_lep_p + *gen_lep_m;
-
         //bool pass = abs(cm.Rapidity()) < 2.4;
-        if(m >= m_low && m <= m_high && pass){
-
-            float pt = cm.Pt();
-            float rap = abs(cm.Rapidity());
-            float gen_cost = cost_st;
-            if(gen_weight >0) nEvents++;
-            else  nEvents--;
-
-            float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
-
-            float reweight_a = gen_cost/ denom;
-            float reweight_s = (1 + gen_cost*gen_cost)/denom;
-            float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+        if(m >= m_low && m <= m_high){
+            h_uncut->Fill(cost_st, gen_weight);
+            if(pass){
+                cm = *gen_lep_p + *gen_lep_m;
 
 
-            if(do_ptrw){
-                float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
-                gen_weight *= ptrw;
+                float pt = cm.Pt();
+                float rap = abs(cm.Rapidity());
+                float gen_cost = cost_st;
+                if(gen_weight >0) nEvents++;
+                else  nEvents--;
+
+                float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
+
+                float reweight_a = gen_cost/ denom;
+                float reweight_s = (1 + gen_cost*gen_cost)/denom;
+                float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+
+
+                if(do_ptrw){
+                    float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
+                    gen_weight *= ptrw;
+                }
+
+
+                h_raw->Fill(gen_cost, gen_weight);
+
+                h_sym->Fill(gen_cost, reweight_s * gen_weight); 
+                h_sym->Fill(-gen_cost, reweight_s * gen_weight); 
+
+                h_asym->Fill(gen_cost, reweight_a * gen_weight);
+                h_asym->Fill(-gen_cost, -reweight_a * gen_weight);
+
+                h_alpha->Fill(gen_cost, reweight_alpha * gen_weight); 
+                h_alpha->Fill(-gen_cost, reweight_alpha * gen_weight); 
+                 
+
             }
-
-
-            h_raw->Fill(gen_cost, gen_weight);
-
-            h_sym->Fill(gen_cost, reweight_s * gen_weight); 
-            h_sym->Fill(-gen_cost, reweight_s * gen_weight); 
-
-            h_asym->Fill(gen_cost, reweight_a * gen_weight);
-            h_asym->Fill(-gen_cost, -reweight_a * gen_weight);
-
-            h_alpha->Fill(gen_cost, reweight_alpha * gen_weight); 
-            h_alpha->Fill(-gen_cost, reweight_alpha * gen_weight); 
-             
-
         }
     }
     printf("selected %i events \n", nEvents);
