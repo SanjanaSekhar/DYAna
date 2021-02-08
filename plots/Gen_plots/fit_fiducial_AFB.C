@@ -29,6 +29,14 @@
 
 TH1F *h_uncut, *h_raw, *h_sym, *h_asym, *h_pl, *h_mn, *h_alpha;
 
+void poisson_errs(TH1 *h){
+    for(int i=1; i<= h->GetNbinsX(); i++){
+        float cont = h->GetBinContent(i);
+        h->SetBinError(i, sqrt(cont));
+    }
+}
+
+
 
 double fit_fcn(double *x, double *par){
 
@@ -37,7 +45,7 @@ double fit_fcn(double *x, double *par){
     double AFB = par[0];
     double A0 = par[1];
 
-    double alpha = 3./4./(2-A0);
+    double alpha = 2.*A0/(2.-A0);
     double norm = 3./4./(2+alpha);
 
     double rAlpha = alpha * norm;
@@ -56,11 +64,11 @@ double fit_fcn(double *x, double *par){
 
 
 
-void make_gen_sys_templates(){
+void fit_fiducial_AFB(){
 
-    int year = 2016;
-    bool do_ptrw = true;
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_nov13.root");
+    int year = 2017;
+    bool do_ptrw = false;
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_nov13.root");
     gROOT->SetBatch(1);
 
     TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -76,6 +84,8 @@ void make_gen_sys_templates(){
     //int i_max = 1;
 
     int n_bins = 40;
+
+    float bin_size = 2./n_bins;
     h_uncut = new TH1F("cost_uncut", "", n_bins, -1., 1.);
     h_raw = new TH1F("cost_data_obs", "", n_bins, -1., 1.);
     h_sym = new TH1F("cost_sym", "", n_bins, -1., 1.);
@@ -85,7 +95,20 @@ void make_gen_sys_templates(){
     h_alpha = new TH1F("cost_alpha", "", n_bins, -1., 1.);
 
     float m_low, m_high;
+    TF1 func = TF1("func_uncut", "3./8.*(1 + x*x + ([1]/2.)*(1-3*x*x)) + [0]*x", -1., 1.);
 
+    func.SetParameter(0,0.6);
+    func.SetParameter(1,0.08);
+    func.SetParName(0, "AFB");
+    func.SetParName(1, "A0");
+
+    TF1 my_func("fit_fcn", fit_fcn, -1., 1., 2);
+    my_func.SetParLimits(0, -0.7, 0.7);
+    my_func.SetParLimits(1, -0.5, 0.5);
+    my_func.SetParameter(0, 0.6);
+    my_func.SetParameter(1, 0.08);
+    my_func.SetParName(0, "AFB");
+    my_func.SetParName(1, "A0");
     
 
     for(int i=i_start; i<i_max; i++){
@@ -115,14 +138,38 @@ void make_gen_sys_templates(){
         h_mn->Scale(scale_);
         h_alpha->Scale(scale_);
 
-        TF1 my_func("fit_fcn", fit_fcn, -1., 1., 2);
-        my_func.SetParLimits(0, -0.7, 0.7);
-        my_func.SetParLimits(1, -0.5, 0.5);
-        my_func.SetParameter(0, 0.6);
-        my_func.SetParameter(1, 0.08);
+        poisson_errs(h_raw);
+
+
+        h_uncut->Scale(1./h_uncut->Integral() / bin_size);
+        h_uncut->Fit(&func);
 
         h_raw->Fit(&my_func, "L");
-        my_func.Print();
+
+
+        /*
+        TCanvas *c1 = new TCanvas("c1", "", 1000, 800);
+        h_uncut->Draw();
+        c1->Print("test.png");
+        */
+
+        float afb_full = func.GetParameter(0);
+        float a0_full = func.GetParameter(1);
+
+        float afb_fid = my_func.GetParameter(0);
+        float a0_fid = my_func.GetParameter(1);
+
+        float afb_fid_unc = my_func.GetParError(0);
+        float a0_fid_unc = my_func.GetParError(1);
+
+        float afb_shift = afb_full - afb_fid;
+        float a0_shift = a0_full - a0_fid;
+
+        printf("AFB shift is: %.3f +/- %.3f \n", afb_shift, afb_fid_unc);
+        printf("A0 shift is: %.3f +/- %.3f \n", a0_shift, a0_fid_unc);
+
+
+
 
 
         h_uncut->Reset();
