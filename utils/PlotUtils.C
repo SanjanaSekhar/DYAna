@@ -114,7 +114,8 @@ TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_labe
 
 
 TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
-        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = ""){
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = "",
+        TH1F *custom_ratio = nullptr){
     //ratio is done as h1/h2
 
     unzero_bins(h1);
@@ -163,12 +164,20 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     pad2->Draw();
     pad2->cd();
 
-    auto ratio = (TH1F *) h1->Clone("h_ratio");
+
+    TH1F *ratio;
+    if(custom_ratio == nullptr){
+        ratio = (TH1F *) h1->Clone("h_ratio");
+        ratio->Sumw2();
+        ratio->SetStats(0);
+        ratio->Divide(h2);
+    }
+    else{
+        ratio = custom_ratio;
+        ratio->SetStats(0);
+    }
     ratio->SetMinimum(ratio_min);
     ratio->SetMaximum(ratio_max);
-    ratio->Sumw2();
-    ratio->SetStats(0);
-    ratio->Divide(h2);
     ratio->SetMarkerStyle(21);
     ratio->SetLineColor(kBlack);
     ratio->Draw("ep");

@@ -129,7 +129,7 @@ void draw_samesign_cmp(){
     bool cost_reweight = false;
     make_fakerate_est(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, QCD_m, QCD_cost, QCD_pt, QCD_xf, QCD_phi, QCD_rap, type,  year, m_low, m_high, ss, cost_reweight);
     
-    bool corr_ss = false;
+    bool corr_ss = true;
     if(corr_ss){
         //apply DY samesign corrections
         char fn_ss_dy[100];
@@ -138,14 +138,26 @@ void draw_samesign_cmp(){
         TFile *f = new TFile(fn_ss_dy, "READ");
         f->cd();
         TH1F *h_dy_ss_corrs = (TH1F *)gDirectory->Get("h_ss_ratio");
+        TH1F *h_dy_ss_mlow_cost = (TH1F *)gDirectory->Get("DY_ss_mlow_cost");
+        h_dy_ss_mlow_cost->Scale(1./h_dy_ss_mlow_cost->Integral());
         float pre_scale = DY_cost->Integral();
         for(int i=1; i<= n_cost_bins; i++){
             float corr = h_dy_ss_corrs->GetBinContent(i);
-            float corr_err = h_dy_ss_corrs->GetBinError(i);
+            float corr_stat_err = h_dy_ss_corrs->GetBinError(i);
             float cont = DY_cost->GetBinContent(i);
+            float new_cont = cont * corr;
             float err = DY_cost->GetBinError(i);
-            float new_err = sqrt(err*err + corr_err*cont*corr_err*cont);
-            DY_cost->SetBinContent(i, cont*corr);
+            float scaled_cont = cont / pre_scale;
+            float scaled_mlow = h_dy_ss_mlow_cost->GetBinContent(i);
+            //fraction difference in distributions is a sys error
+            float corr_sys_err = min(0.5, abs(scaled_cont - scaled_mlow)/(0.5 * (scaled_mlow + scaled_cont)));
+            //corr_sys_err = 0.;
+
+            printf("scaled_cont, scaled_mlow: %.3f, %.3f \n", scaled_cont, scaled_mlow);
+            printf("err, corr_stat_err, corr_sys_err: %.3f %.3f %.3f \n", err, corr_stat_err, corr_sys_err);
+
+            float new_err = sqrt(err*err + (corr_stat_err*corr_stat_err + corr_sys_err*corr_sys_err) *new_cont*new_cont);
+            DY_cost->SetBinContent(i, new_cont);
             DY_cost->SetBinError(i, new_err);
 
         }
@@ -157,6 +169,8 @@ void draw_samesign_cmp(){
         DY_phi->Scale(dy_scale);
         DY_rap->Scale(dy_scale);
     }
+
+    DY_cost->Print("range");
     
 
 

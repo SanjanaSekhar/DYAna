@@ -612,9 +612,12 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
 //make templates based on generator level samples (used for assessing impact of
 //fiducial cuts on AFB
 int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *h_asym, TH1F *h_alpha,  
-        float m_low, float m_high, bool do_ptrw = false, int year = 2016, string sys = ""){
+        float m_low, float m_high, bool do_ptrw = false, int year = 2016, string sys_label = ""){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
+    float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
+    float evt_weight;
+    float pdf_weights[60];
     Bool_t sig_event(1);
     t_gen->SetBranchAddress("gen_p", &gen_lep_p);
     t_gen->SetBranchAddress("gen_m", &gen_lep_m);
@@ -625,6 +628,13 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
     t_gen->SetBranchAddress("cost_st", &cost_st);
     t_gen->SetBranchAddress("gen_weight", &gen_weight);
     t_gen->SetBranchAddress("sig_event", &sig_event);
+    t_gen->SetBranchAddress("mu_R_up", &mu_R_up);
+    t_gen->SetBranchAddress("mu_R_down", &mu_R_down);
+    t_gen->SetBranchAddress("mu_F_up", &mu_F_up);
+    t_gen->SetBranchAddress("mu_F_down", &mu_F_down);
+    t_gen->SetBranchAddress("mu_RF_up", &mu_RF_up);
+    t_gen->SetBranchAddress("mu_RF_down", &mu_RF_down);
+    t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
 
 
     A0_helpers A0_helper; 
@@ -634,19 +644,44 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
     setup_ptrw_helper(&ptrw_SFs, year);
 
     //float pt_cut = 26.;
-    float pt_cut = 38;
+    float pt_cut = 30.;
 
 
     int nEvents=0;
 
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
+        if(sys_label.find("ptcutUp") != string::npos) pt_cut = 38.;
+        if(sys_label.find("ptcutdown") != string::npos) pt_cut = 26.;
 
         bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
-            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > 26. && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
         if(m >= m_low && m <= m_high){
-            h_uncut->Fill(cost_st, gen_weight);
+            evt_weight = gen_weight;
+
+            if(sys_label == string("RENORMUp")) evt_weight *= mu_R_up;
+            else if(sys_label == string ("RENORMDown")) evt_weight *= mu_R_down;
+            else if(sys_label == string ("FACUp")) evt_weight *= mu_F_down;
+            else if(sys_label == string ("FACDown")) evt_weight *= mu_F_down;
+            else if(sys_label == string ("REFACUp")) evt_weight *= mu_RF_down;
+            else if(sys_label == string ("REFACDown"))  evt_weight *= mu_RF_down;
+            else if(sys_label.find("pdf") != string::npos){
+                int n_pdf = 60;
+                float comb = 0.;
+                for(int j=0; j<n_pdf; j++){
+                    float diff = abs(1 - pdf_weights[j]);
+                    if(diff >= 1.) diff = 0.9;
+                    comb += pow(diff,2);
+                }
+                comb = sqrt(comb);
+                if(sys_label.find("Up") != string::npos) evt_weight *= abs((1+comb));
+                if(sys_label.find("Down") != string::npos) evt_weight *= abs((1-comb));
+            }
+
+
+
+            h_uncut->Fill(cost_st, evt_weight);
             if(pass){
                 cm = *gen_lep_p + *gen_lep_m;
 
@@ -654,7 +689,7 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
                 float pt = cm.Pt();
                 float rap = abs(cm.Rapidity());
                 float gen_cost = cost_st;
-                if(gen_weight >0) nEvents++;
+                if(evt_weight >0) nEvents++;
                 else  nEvents--;
 
                 float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
@@ -666,20 +701,20 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
 
                 if(do_ptrw){
                     float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
-                    gen_weight *= ptrw;
+                    evt_weight *= ptrw;
                 }
 
 
-                h_raw->Fill(gen_cost, gen_weight);
+                h_raw->Fill(gen_cost, evt_weight);
 
-                h_sym->Fill(gen_cost, reweight_s * gen_weight); 
-                h_sym->Fill(-gen_cost, reweight_s * gen_weight); 
+                h_sym->Fill(gen_cost, reweight_s * evt_weight); 
+                h_sym->Fill(-gen_cost, reweight_s * evt_weight); 
 
-                h_asym->Fill(gen_cost, reweight_a * gen_weight);
-                h_asym->Fill(-gen_cost, -reweight_a * gen_weight);
+                h_asym->Fill(gen_cost, reweight_a * evt_weight);
+                h_asym->Fill(-gen_cost, -reweight_a * evt_weight);
 
-                h_alpha->Fill(gen_cost, reweight_alpha * gen_weight); 
-                h_alpha->Fill(-gen_cost, reweight_alpha * gen_weight); 
+                h_alpha->Fill(gen_cost, reweight_alpha * evt_weight); 
+                h_alpha->Fill(-gen_cost, reweight_alpha * evt_weight); 
                  
 
             }
