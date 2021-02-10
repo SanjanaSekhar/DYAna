@@ -66,6 +66,7 @@ for mbin in range(n_m_bins):
             for exc in my_excludes:
                 if (exc in key_name):
                     skip = True
+            if('pdf' in key_name and ('fpl' not in base or 'fmn' not in base)): skip = True
             if(skip): continue
             if (base in key_name):
                 #print("Adding key %s" % key_name)
