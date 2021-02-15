@@ -208,7 +208,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
         bool pass = (tm.m >= lq_m_bins[0]) && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
-        if(pass && tm.evt_pdfweight>0.){
+        if(pass){
 
             tm.doCorrections();
             tm.getEvtWeight();
@@ -221,7 +221,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
             int flag_q=0;
             if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
             if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
-            if(flag_q!=0){ 
+	    if(flag_q!=0){ 
 
             if(flag_q==1){
                 Q_q=Q_d;
@@ -350,7 +350,7 @@ int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h
               Double_t reweight_LQint_neg;
               reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
 
-              print(reweight_LQpure_pos);
+              //printf("%f\n",reweight_LQpure_pos);
               
               //dLQ temps
               if(flag_q==1){
