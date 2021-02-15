@@ -8,6 +8,14 @@
 #include "TProfile.h"
 #include "TStyle.h"
 
+
+
+float dy_sys_unc = 0.1;
+float qcd_sys_unc = 0.48;
+float diboson_sys_unc = 0.15;
+float top_sys_unc = 0.11;
+float gam_sys_unc = 0.35;
+
 float computeChi2(TH1 *h){
     // only use on ratio plots, with expected value of 1
     float sum = 0.;
@@ -106,7 +114,8 @@ TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_labe
 
 
 TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
-        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = ""){
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = "",
+        TH1F *custom_ratio = nullptr){
     //ratio is done as h1/h2
 
     unzero_bins(h1);
@@ -155,12 +164,20 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     pad2->Draw();
     pad2->cd();
 
-    auto ratio = (TH1F *) h1->Clone("h_ratio");
+
+    TH1F *ratio;
+    if(custom_ratio == nullptr){
+        ratio = (TH1F *) h1->Clone("h_ratio");
+        ratio->Sumw2();
+        ratio->SetStats(0);
+        ratio->Divide(h2);
+    }
+    else{
+        ratio = custom_ratio;
+        ratio->SetStats(0);
+    }
     ratio->SetMinimum(ratio_min);
     ratio->SetMaximum(ratio_max);
-    ratio->Sumw2();
-    ratio->SetStats(0);
-    ratio->Divide(h2);
     ratio->SetMarkerStyle(21);
     ratio->SetLineColor(kBlack);
     ratio->Draw("ep");
@@ -191,8 +208,8 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 }
 
 
-std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel, 
-        float hmax =-1., bool logy = true, bool logx= false){
+std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel,
+        float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0){
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
@@ -208,20 +225,28 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     gStyle->SetEndErrorSize(4);
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
-    h_data->DrawCopy("P E same");
+    h_data->DrawCopy("P E0X0 same");
+
+    int axis_title_size = 25;
+    int axis_label_size = 20;
 
     leg->Draw();
 
-    h_stack->GetYaxis()->SetTitleSize(30);
+
+    h_stack->GetYaxis()->SetTitle(ylabel);
+    h_stack->GetYaxis()->SetNdivisions(505);
+    h_stack->GetYaxis()->SetTitleSize(axis_title_size);
     h_stack->GetYaxis()->SetTitleFont(43);
-    h_stack->GetYaxis()->SetTitleOffset(1.2);
+    h_stack->GetYaxis()->SetTitleOffset(1.5);
+    h_stack->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    h_stack->GetYaxis()->SetLabelSize(axis_label_size);
 
 
 
     c->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
     //pad2->SetTopMargin(0);
-    pad2->SetBottomMargin(0.2);
+    pad2->SetBottomMargin(0.4);
     pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
@@ -235,21 +260,68 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     for (int i=0;i<stackHists->GetSize();++i) {
       sum->Add((TH1*)stackHists->At(i));
     }
+    //make separate tgraph for uncertainty on 'stacked' hists
+    int nbins = sum->GetNbinsX();
+    TGraphErrors *ratio_unc = new TGraphErrors(nbins+2);
+    for(int i= 0; i<= nbins+1; i++){
+        float x,y,ex,ey,content;
+        int idx = i;
+
+        if(i ==0){
+            idx = i+1; 
+            x = sum->GetXaxis()->GetBinLowEdge(idx);
+            ex = 0;
+        }
+        else if(i==nbins+1){
+            idx = i-1;
+            x = sum->GetXaxis()->GetBinUpEdge(idx);
+            ex = 0;
+        }
+        else{
+            x = sum->GetXaxis()->GetBinCenter(idx);
+            ex = sum->GetXaxis()->GetBinWidth(idx);
+        }
+
+        content = sum->GetBinContent(idx);
+        y = 1.;
+        if(content > 0) ey = sum->GetBinError(idx) / sum->GetBinContent(idx);
+        else ey = 0.;
+        
+        ratio_unc->SetPoint(i, x,y);
+        ratio_unc->SetPointError(i, ex,ey);
+
+    }
+    for(int i= 1; i<= nbins; i++) sum->SetBinError(i, 0.);
+
+    unzero_bins(sum);
+
+    ratio_unc->SetFillColor(kBlack);
+    ratio_unc->SetFillStyle(3010);
+    //ratio_unc->Print("all");
+
+
+
     auto h_ratio = (TH1F *) h_data->Clone("h_ratio" + label);
-    float center = 1.0;
-    float ratio_range = 0.5;
+    h_ratio->Sumw2();
+    h_ratio->SetStats(0);
     bool do_diff = false;
+
+    float center = 1.0;
     if(do_diff){
         center = 0.0;
         h_ratio->Add(sum, -1.);
     }
-    h_ratio->SetMinimum(center - ratio_range);
-    h_ratio->SetMaximum(center + ratio_range);
-    h_ratio->Sumw2();
-    h_ratio->SetStats(0);
     h_ratio->Divide(sum);
+    //h_ratio->Print("range");
+
+
+    float ratio_min = center - ratio_range;
+    float ratio_max = center + ratio_range;
+    h_ratio->SetMinimum(ratio_min);
+    h_ratio->SetMaximum(ratio_max);
     h_ratio->SetMarkerStyle(21);
-    h_ratio->Draw("ep");
+    h_ratio->Draw("EPX0");
+    if(draw_sys_unc) ratio_unc->Draw("3 same");
     TLine *l1 = new TLine(150,1,2000,1);
     l1->SetLineStyle(2);
     l1->Draw();
@@ -259,18 +331,18 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     // Y axis m_ratio plot settings
    h_ratio->GetYaxis()->SetTitle("Obs/Exp");
    h_ratio->GetYaxis()->SetNdivisions(505);
-   h_ratio->GetYaxis()->SetTitleSize(20);
+   h_ratio->GetYaxis()->SetTitleSize(axis_title_size);
    h_ratio->GetYaxis()->SetTitleFont(43);
    h_ratio->GetYaxis()->SetTitleOffset(1.2);
    h_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetYaxis()->SetLabelSize(15);
+   h_ratio->GetYaxis()->SetLabelSize(axis_label_size);
    // X axis m_ratio plot settings
    h_ratio->GetXaxis()->SetTitle(xlabel);
-   h_ratio->GetXaxis()->SetTitleSize(20);
+   h_ratio->GetXaxis()->SetTitleSize(axis_title_size);
    h_ratio->GetXaxis()->SetTitleFont(43);
    h_ratio->GetXaxis()->SetTitleOffset(3.);
    h_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetXaxis()->SetLabelSize(20);
+   h_ratio->GetXaxis()->SetLabelSize(axis_label_size);
 
    float chi2 = computeChi2(h_ratio);
    int n_bins = h_ratio->GetNbinsX();

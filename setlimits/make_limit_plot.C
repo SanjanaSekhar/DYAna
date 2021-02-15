@@ -32,7 +32,7 @@ Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test)
     printf("Couldn't find limit for M=%i, returning kl_min \n", M_Zp);
     return kl_min;
 }
-Double_t get_var(int n_vals, Double_t *vals){
+Double_t get_stddev(int n_vals, Double_t *vals){
     Double_t mean, var;
     int n_entries = n_vals;
     for(int i =0; i< n_vals; i++){
@@ -76,9 +76,10 @@ TGraph *makeAFillGraph(int len, Double_t *x, Double_t *y1, Double_t *y2, int lin
 
 void make_limit_plot(){
     int n_m_bins = 100;
-    int n_trials = 200;
+    int n_trials = 400;
     int m_start = 1500;
     int m_max = 4000;
+    //int m_max = 2000;
     int m_step = 100;
     int m;
     int i=0;
@@ -92,7 +93,7 @@ void make_limit_plot(){
     Double_t masses[n_m_bins], kl_limit[n_m_bins], kl_expected_lim[n_m_bins], kl_expected_lim_up[n_m_bins], 
              kl_expected_lim_upup[n_m_bins], kl_expected_lim_down[n_m_bins],    
              kl_expected_lim_downdown[n_m_bins], kl_lim_trials[n_m_bins][n_trials],
-             kl_limit_stds[n_m_bins];
+             kl_limit_stds[n_m_bins], kl_limit_2stds[n_m_bins];
     Double_t meas_lim =1.0;
 
     for(m = m_start; m <=m_max; m+=m_step){
@@ -107,8 +108,8 @@ void make_limit_plot(){
             kl_limit[i] = meas_lim;
         }
         Double_t exp_lim  = get_kl_limit(f1, m, kl_start, AFB_SM);
-        printf("EXP LIM IS %.2f \n", exp_lim);
         if(i>0) exp_lim = max(exp_lim, kl_expected_lim[i-1]);
+        printf("EXP LIM IS %.2f \n", exp_lim);
         masses[i] = m;
         kl_expected_lim[i] = exp_lim;
         //generate random expected limits
@@ -119,17 +120,26 @@ void make_limit_plot(){
             }
             kl_lim_trials[i][j] = get_kl_limit(f1, m, kl_expected_lim[i]+2*kl_step, AFB_rand);
         }
-        kl_limit_stds[i] = get_var(n_trials, kl_lim_trials[i]);
-        kl_expected_lim_up[i] = kl_expected_lim[i] + kl_limit_stds[i];
-        kl_expected_lim_upup[i] = kl_expected_lim[i] + 2*kl_limit_stds[i];
-        kl_expected_lim_down[i] = max(kl_expected_lim[i] - kl_limit_stds[i], 0.);
-        kl_expected_lim_downdown[i] = max(kl_expected_lim[i] - 2*kl_limit_stds[i], 0.);
+        kl_limit_stds[i] = min(exp_lim, get_stddev(n_trials, kl_lim_trials[i]));
+        kl_limit_2stds[i] = min(exp_lim, 2.*get_stddev(n_trials, kl_lim_trials[i]));
         i++;
     }
     setTDRStyle();
     TGraph *exp = new TGraph(i, masses, kl_expected_lim);    
-    TGraph *one_sig = makeAFillGraph(i, masses, kl_expected_lim_down, kl_expected_lim_up, 0, kGreen+1, 1001);
-    TGraph *two_sig = makeAFillGraph(i, masses, kl_expected_lim_downdown, kl_expected_lim_upup, 0, kOrange, 1001);
+    TGraphErrors *one_sig = new TGraphErrors(i, masses, kl_expected_lim, nullptr, kl_limit_stds);
+    TGraphErrors *two_sig = new TGraphErrors(i, masses, kl_expected_lim, nullptr, kl_limit_2stds);
+    //TGraph *one_sig = makeAFillGraph(i, masses, kl_expected_lim_down, kl_expected_lim_up, 0, kGreen+1, 1001);
+    //TGraph *two_sig = makeAFillGraph(i, masses, kl_expected_lim_downdown, kl_expected_lim_upup, 0, kOrange, 1001);
+    //
+    one_sig->SetFillColor(kGreen+1);
+    two_sig->SetFillColor(kOrange);
+
+    for(int idx=0; idx <i; idx++){
+        printf("%i %.2f %.2f %.2f \n", idx, masses[idx], kl_expected_lim[idx], kl_limit_stds[idx]);
+    }
+    //exp->Print();
+    //one_sig->Print();
+    //two_sig->Print();
 
 
     exp->SetLineColor(1);
@@ -154,9 +164,9 @@ void make_limit_plot(){
     two_sig->GetYaxis()->SetTitleOffset(1.0);
     two_sig->GetXaxis()->SetTitle("Z' mass (GeV)");
 
-    two_sig->Draw("ACf");
-    one_sig->Draw("Cfsames");
-    exp->Draw("Csames");
+    two_sig->Draw("AL3SAME");
+    one_sig->Draw("3SAME");
+    exp->Draw("LSAME");
 
     if(inc_meas_limit){
         TGraph *meas = new TGraph(i, masses, kl_limit);    

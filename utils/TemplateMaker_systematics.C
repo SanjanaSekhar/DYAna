@@ -79,7 +79,7 @@ void cleanup_template(TH2F *h){
                 h->SetBinContent(i,j,min_val);
                 h->SetBinError(i,j,err);
             }
-            if(err > max_err * val){
+            if(err >= max_err * val){
                 //prevent val froming being close to fit boundary at 0
                 //By setting max stat error
                 err = val * max_err;
@@ -190,11 +190,11 @@ int gen_data_template(TTree *t1, TH2F* h,
             if(!ss){
                 if(scramble_data){
                     //switch + and - back and forth
-                    tm.cost = sign * std::fabs(tm.cost); 
-                    sign *= -1.;
+                    //tm.cost = sign * std::fabs(tm.cost); 
+                    //sign *= -1.;
                     //randomly flip data events
-                    //if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
-                    //else tm.cost = -std::fabs(tm.cost);
+                    if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
+                    else tm.cost = -std::fabs(tm.cost);
                 }
                 h->Fill(var1, tm.cost, 1); 
             }
@@ -607,5 +607,125 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
     h->Print("range");
     printf("Total fakerate est is %.0f +/- %.0f \n", integ, err);
     return;
+}
+
+//make templates based on generator level samples (used for assessing impact of
+//fiducial cuts on AFB
+int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *h_asym, TH1F *h_alpha,  
+        float m_low, float m_high, bool do_ptrw = false, int year = 2016, string sys_label = ""){
+    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
+    float gen_weight, m, cost, cost_st;
+    float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
+    float evt_weight;
+    float pdf_weights[60];
+    Bool_t sig_event(1);
+    t_gen->SetBranchAddress("gen_p", &gen_lep_p);
+    t_gen->SetBranchAddress("gen_m", &gen_lep_m);
+    //t_gen->SetBranchAddress("gen_mu_p", &gen_lep_p);
+    //t_gen->SetBranchAddress("gen_mu_m", &gen_lep_m);
+    t_gen->SetBranchAddress("m", &m);
+    t_gen->SetBranchAddress("cost", &cost);
+    t_gen->SetBranchAddress("cost_st", &cost_st);
+    t_gen->SetBranchAddress("gen_weight", &gen_weight);
+    t_gen->SetBranchAddress("sig_event", &sig_event);
+    t_gen->SetBranchAddress("mu_R_up", &mu_R_up);
+    t_gen->SetBranchAddress("mu_R_down", &mu_R_down);
+    t_gen->SetBranchAddress("mu_F_up", &mu_F_up);
+    t_gen->SetBranchAddress("mu_F_down", &mu_F_down);
+    t_gen->SetBranchAddress("mu_RF_up", &mu_RF_up);
+    t_gen->SetBranchAddress("mu_RF_down", &mu_RF_down);
+    t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
+
+
+    A0_helpers A0_helper; 
+    setup_A0_helper(&A0_helper, year);
+
+    ptrw_helper ptrw_SFs; 
+    setup_ptrw_helper(&ptrw_SFs, year);
+
+    //float pt_cut = 26.;
+    float pt_cut = 30.;
+
+
+    int nEvents=0;
+
+    for (int i=0; i<t_gen->GetEntries(); i++) {
+        t_gen->GetEntry(i);
+        if(sys_label.find("ptcutUp") != string::npos) pt_cut = 38.;
+        if(sys_label.find("ptcutdown") != string::npos) pt_cut = 26.;
+
+        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
+            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+        //bool pass = abs(cm.Rapidity()) < 2.4;
+        if(m >= m_low && m <= m_high){
+            evt_weight = gen_weight;
+
+            if(sys_label == string("RENORMUp")) evt_weight *= mu_R_up;
+            else if(sys_label == string ("RENORMDown")) evt_weight *= mu_R_down;
+            else if(sys_label == string ("FACUp")) evt_weight *= mu_F_down;
+            else if(sys_label == string ("FACDown")) evt_weight *= mu_F_down;
+            else if(sys_label == string ("REFACUp")) evt_weight *= mu_RF_down;
+            else if(sys_label == string ("REFACDown"))  evt_weight *= mu_RF_down;
+            else if(sys_label.find("pdf") != string::npos){
+                int n_pdf = 60;
+                float comb = 0.;
+                for(int j=0; j<n_pdf; j++){
+                    float diff = abs(1 - pdf_weights[j]);
+                    if(diff >= 1.) diff = 0.9;
+                    comb += pow(diff,2);
+                }
+                comb = sqrt(comb);
+                if(sys_label.find("Up") != string::npos) evt_weight *= abs((1+comb));
+                if(sys_label.find("Down") != string::npos) evt_weight *= abs((1-comb));
+            }
+
+
+
+            h_uncut->Fill(cost_st, evt_weight);
+            if(pass){
+                cm = *gen_lep_p + *gen_lep_m;
+
+
+                float pt = cm.Pt();
+                float rap = abs(cm.Rapidity());
+                float gen_cost = cost_st;
+                if(evt_weight >0) nEvents++;
+                else  nEvents--;
+
+                float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
+
+                float reweight_a = gen_cost/ denom;
+                float reweight_s = (1 + gen_cost*gen_cost)/denom;
+                float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
+
+
+                if(do_ptrw){
+                    float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
+                    evt_weight *= ptrw;
+                }
+
+
+                h_raw->Fill(gen_cost, evt_weight);
+
+                h_sym->Fill(gen_cost, reweight_s * evt_weight); 
+                h_sym->Fill(-gen_cost, reweight_s * evt_weight); 
+
+                h_asym->Fill(gen_cost, reweight_a * evt_weight);
+                h_asym->Fill(-gen_cost, -reweight_a * evt_weight);
+
+                h_alpha->Fill(gen_cost, reweight_alpha * evt_weight); 
+                h_alpha->Fill(-gen_cost, reweight_alpha * evt_weight); 
+                 
+
+            }
+        }
+    }
+    printf("selected %i events \n", nEvents);
+
+    //cleanup_template(h_sym);
+    //fixup_template_sum(h_sym, h_asym);
+
+    return nEvents;
+
 }
 

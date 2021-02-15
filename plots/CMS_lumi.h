@@ -8,7 +8,7 @@
 // Global variables
 //
 
-bool draw_CMS = false;
+bool draw_CMS = true;
 TString cmsText     = "CMS";
 float cmsTextFont   = 61;  // default is helvetic-bold
 
@@ -18,9 +18,9 @@ float extraTextFont = 52;  // default is helvetica-italics
 
 // text sizes and text offsets with respect to the top frame
 // in unit of the top margin size
-float lumiTextSize     = 0.6;
+float lumiTextSize     = 0.75;
 float lumiTextOffset   = 0.2;
-float cmsTextSize      = 0.75;
+float cmsTextSize      = 0.85;
 float cmsTextOffset    = 0.1;  // only used in outOfFrame version
 
 float relPosX    = 0.085;

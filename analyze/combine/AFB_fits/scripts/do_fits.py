@@ -10,6 +10,7 @@ parser.add_option("--fake_data",  default=False, action="store_true", help="Use 
 parser.add_option("--no_cleanup",  default=False, action="store_true", help="Don't remove root files created by fit")
 parser.add_option("--mbin", default = -1, type='int', help="Only do fits for this single mass bin, default is all bins")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
+parser.add_option("-v", "--verbose", default = 0, type='int', help="Turn up verbosity on fits")
 
 (options, args) = parser.parse_args()
 
@@ -28,6 +29,9 @@ elif(options.chan == "mumu"):
         extra_params += " --setParameters mask_Y16_ee16=1,mask_Y17_ee17=1,mask_Y18_ee18=1,mask_Y16_ee16_ss=1,mask_Y17_ee17_ss=1,mask_Y18_ee18_ss=1" 
     else:
         extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
+
+if(options.verbose > 0):
+    extra_params +=" --verbose %i" % options.verbose
 
 
 

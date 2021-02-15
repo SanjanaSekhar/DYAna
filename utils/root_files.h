@@ -9,6 +9,9 @@
 TFile *f_elel_mc, *f_elel_data, *f_elel_QCD, *f_elel_WJets, *f_elel_WJets_contam, *f_elel_QCD_contam;
 TTree *t_elel_mc, *t_elel_data, *t_elel_QCD, *t_elel_WJets, *t_elel_WJets_contam, *t_elel_QCD_contam,  *t_elel_tautau;
 
+TFile *f_elel_dy_mlow, *f_elel_data_mlow;
+TTree *t_elel_dy_mlow, *t_elel_data_mlow, *t_elel_ss_dy_mlow, *t_elel_ss_data_mlow;
+
 TFile *f_mumu_mc, *f_mumu_data, *f_mumu_QCD, *f_mumu_WJets, *f_mumu_WJets_contam, *f_mumu_QCD_contam;
 TTree *t_mumu_mc, *t_mumu_data, *t_mumu_QCD, *t_mumu_WJets, *t_mumu_WJets_contam, *t_mumu_QCD_contam,  *t_mumu_tautau;
 
@@ -121,6 +124,43 @@ void init_indv_bkgs(int year){
         t_elel_ss_diboson = (TTree *) f_elel_diboson ->Get("T_ss");
     }
 }
+
+
+
+void init_mlow(int year){
+    init_indv_bkgs(year);
+
+    if(year == 2016){
+        f_elel_dy_mlow = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_dy_mlow_jan28.root");
+        t_elel_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_sig");
+        t_elel_ss_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_ss");
+
+        f_elel_data_mlow = (TFile*) TFile::Open("../analyze/output_files/2016/ElEl16_data_mlow_jan28.root");
+        t_elel_data_mlow = (TTree *)f_elel_data_mlow->Get("T_sig");
+        t_elel_ss_data_mlow = (TTree *)f_elel_data_mlow->Get("T_ss");
+    }
+    if(year == 2017){
+        f_elel_dy_mlow = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_dy_mlow_jan28.root");
+        t_elel_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_sig");
+        t_elel_ss_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_ss");
+
+        f_elel_data_mlow = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_data_mlow_jan28.root");
+        t_elel_data_mlow = (TTree *)f_elel_data_mlow->Get("T_sig");
+        t_elel_ss_data_mlow = (TTree *)f_elel_data_mlow->Get("T_ss");
+    }
+    if(year == 2018){
+        f_elel_dy_mlow = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_dy_mlow_jan28.root");
+        t_elel_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_sig");
+        t_elel_ss_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_ss");
+
+        f_elel_data_mlow = (TFile*) TFile::Open("../analyze/output_files/2018/ElEl18_data_mlow_jan28.root");
+        t_elel_data_mlow = (TTree *)f_elel_data_mlow->Get("T_sig");
+        t_elel_ss_data_mlow = (TTree *)f_elel_data_mlow->Get("T_ss");
+
+    }
+}
+
+
 
 
 void init_mc(int year){

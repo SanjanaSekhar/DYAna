@@ -6,6 +6,7 @@ import math
 from math import sqrt
 import array
 from optparse import OptionParser
+import CMS_lumi, tdrstyle
 
 
 gStyle.SetOptStat(0)
@@ -50,7 +51,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
         print histlist
         return 0
 
-    #tdrstyle.setTDRStyle()
+    tdrstyle.setTDRStyle()
 
     myCan = TCanvas(name,name,width,height)
     myCan.Divide(padx,pady)
@@ -204,7 +205,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
                 hist.SetTitleOffset(1.1,"xy")
-                hist.GetYaxis().SetTitle('Events')
+                hist.GetYaxis().SetTitle('Events / bin')
                 hist.GetYaxis().SetLabelSize(mLS)
                 hist.GetYaxis().SetTitleSize(mLS)
                 if logy == True:
@@ -240,7 +241,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 # Build the pull
                 pulls.append(Make_Pull_plot(hist,totlist[hist_index]))
                 pulls[hist_index].SetFillColor(kGray)
-                pulls[hist_index].SetTitle(";"+hist.GetXaxis().GetTitle()+";(Data-Bkg)/Unc.")
+                pulls[hist_index].SetTitle(";"+hist.GetXaxis().GetTitle()+";(Data-Bkg)/#sigma")
                 pulls[hist_index].SetStats(0)
                 chi2 = 0.
                 for i in range(1, pulls[hist_index].GetNbinsX()+1):
@@ -260,13 +261,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 pulls[hist_index].GetXaxis().SetTitleSize(LS)
 
                 pulls[hist_index].GetXaxis().SetTitle(xtitle)
-                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/Unc.")
+                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/#sigma")
                 pulls[hist_index].Draw('hist')
 
                 if logy == True:
                     mains[hist_index].SetLogy()
 
-                #CMS_lumi.CMS_lumi(thisPad, year, 11)
+                CMS_lumi.CMS_lumi(thisPad, year, 11)
 
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
@@ -394,7 +395,7 @@ h_names = ["gam", "db", "qcd", "top",  "tautau", "alpha", "fpl_fmn"]
 h_ss_names = ["bk", "dy", "qcd"]
 
 
-m_bins = [150, 171, 200,  250, 320, 510, 700, 1000, 14000]
+m_bins = [150, 170, 200,  250, 320, 510, 700, 1000, 14000]
 
 
 label_color_map = dict()

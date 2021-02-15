@@ -60,4 +60,9 @@ float emu_rw_m_bins[] = {170., 200., 250., 320., 510., 2000.};
 
 
 
+//used in template reweighting
+float rap_bins[] = {0., 0.5, 1.0, 1.5, 2.0, 2.5, 4.0, 100.};
+const int n_rap_bins = 7;
+
+
 

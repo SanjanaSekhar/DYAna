@@ -2,13 +2,13 @@ import sys, commands, os
 
 Mzp=10000
 KL=0.05
-KL_start = 0.65
+KL_start = 0.05
 
-#for Mzp in range(2500, 4000, 100):
-for Mzp in [4000]:
-    for KL_idx in range(6):
+for Mzp in range(2000, 2500, 100):
+#for Mzp in [4000]:
+    for KL_idx in range(3):
 
-        KL = 0.05 * (KL_idx+1) + KL_start
+        KL = 0.05 * (KL_idx) + KL_start
         print("Generating events for Mzp = %i KL = %.2f " % (Mzp, KL))
         cur_dir = os.getcwd()
         os.chdir("MG5_aMC_v2_6_2")

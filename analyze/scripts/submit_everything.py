@@ -7,27 +7,26 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-years = [2018]
+years = [2017]
 #prefixes = ["EMu"]
 #scripts = ["EMu_reco_background.C"]
 #scripts = ["EMu_reco_data.C"]
-prefixes = ["MuMu"]
-#scripts = ["ElEl_reco_data.C"]
+#prefixes = ["MuMu", "ElEl"]
 #scripts = ["MuMu_reco_mc.C", "ElEl_reco_mc.C"]
-scripts = ["MuMu_reco_background.C"]
-njobs = 10
+prefixes = ["ElEl"]
+#scripts = ["ElEl_reco_data.C"]
+scripts = ["ElEl_reco_mc.C"]
+njobs = 25
 
 #labels = ["wt", "ttbar", "diboson", "dy"]
 #eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "DY_files.txt"]
-labels = ["wt", "ttbar", "diboson", "phot_ind"]
-eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "PhotInd_files.txt"]
-#labels = ["dy"]
-#eos_files = ["DY_files.txt"]
-#labels = ["data"]
-#eos_files = ["SingleMuon_files.txt"]
+#labels = ["data_mlow"]
+#eos_files = ["SingleElectron_files.txt"]
+labels = ["dy_mlow"]
+eos_files = ["DY_files_mlow.txt"]
 #labels = ["diboson"]
 #eos_files = ["diboson_files.txt"]
-ending = "nov11"
+ending = "jan28"
 
 for i,script in enumerate(scripts):
     prefix = prefixes[i]

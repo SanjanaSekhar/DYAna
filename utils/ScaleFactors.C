@@ -54,8 +54,8 @@ typedef struct{
 } prefire_SFs;
 
 typedef struct{
-    TH1F *ratios[n_m_bins][n_pt_bins];
-    RooRealVar *A0_fits[n_m_bins][n_pt_bins];
+    TH1F *ratios[n_m_bins][n_pt_bins][n_rap_bins];
+    RooRealVar *A0_fits[n_m_bins][n_pt_bins][n_rap_bins];
 } A0_helpers;
 
 typedef struct{
@@ -163,22 +163,28 @@ float get_LQ_reweighting_denom(LQ_rw_helper h_LQ, int FLAG1, int FLAG2, float m,
 }
 
 
-float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, int systematic = 0){
+float get_reweighting_denom(A0_helpers h, float cost, float m, float pt, float rap, int systematic = 0){
     if(m <= m_bins[0]) m = m_bins[0] + 0.1;
     int m_bin = find_bin(m_bins, m);
     int pt_bin = find_bin(pt_bins, pt);
-    float A0_ = h.A0_fits[m_bin][pt_bin]->getValV();
+    int rap_bin = find_bin(rap_bins, rap);
+    float A0_ = h.A0_fits[m_bin][pt_bin][rap_bin]->getValV();
     if(systematic !=0){
-        float err = h.A0_fits[m_bin][pt_bin]->getError();
+        float err = h.A0_fits[m_bin][pt_bin][rap_bin]->getError();
         A0_ += systematic * err;
     }
-    TH1F *h_correction = h.ratios[m_bin][pt_bin];
+    TH1F *h_correction = h.ratios[m_bin][pt_bin][rap_bin];
     TAxis* x_ax =  h_correction->GetXaxis();
     int bin = x_ax->FindBin(cost);
     float correction = h_correction->GetBinContent(bin);
     
-    float denom = 3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost));
-    return denom * correction;
+    float denom = (3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost)));
+    if(denom < 0  || isnan(denom)){
+        printf("Denom %.3f, cost,m,pt,rap: %.2f, %.0f, %.0f %.1f \n", denom, cost, m, pt, rap);
+        A0_ = 0.05;
+        denom = (3./8.*(1.+cost*cost + 0.5 * A0_ * (1. - 3. *cost*cost)));
+    }
+    return denom;
 }
 
 
@@ -558,13 +564,15 @@ void setup_A0_helper(A0_helpers *h, int year){
     else if(year == 2018) f = TFile::Open("../analyze/SFs/2018/a0_fits.root");
     for (int i=0; i< n_m_bins; i++){
         for (int j=0; j< n_pt_bins; j++){
+            for (int k=0; k< n_pt_bins; k++){
 
-            char title[100];
-            sprintf(title, "amc_fit_ratio_y%i_m%i_pt%i", year -2000, i, j);
-            h->ratios[i][j] = (TH1F *) f->Get(title)->Clone();
-            h->ratios[i][j]->SetDirectory(0);
-            sprintf(title, "a0_y%i_m%i_pt%i", year -2000, i, j);
-            h->A0_fits[i][j] = (RooRealVar *) f->Get(title)->Clone();
+                char title[100];
+                sprintf(title, "amc_fit_ratio_y%i_m%i_pt%i_rap%i", year -2000, i, j, k);
+                h->ratios[i][j][k] = (TH1F *) f->Get(title)->Clone();
+                h->ratios[i][j][k]->SetDirectory(0);
+                sprintf(title, "a0_y%i_m%i_pt%i_rap%i", year -2000, i, j, k);
+                h->A0_fits[i][j][k] = (RooRealVar *) f->Get(title)->Clone();
+            }
         }
     }
 }
