@@ -161,8 +161,8 @@ std::tuple<float,float,float,float,float,float> get_afb_fid(float m_low, float m
     float afb_fid = my_func.GetParameter(0);
     float a0_fid = my_func.GetParameter(1);
 
-    float afb_fid_unc = my_func.GetParError(0);
-    float a0_fid_unc = my_func.GetParError(1);
+    float afb_fid_unc = max(my_func.GetParError(0), func.GetParError(0));
+    float a0_fid_unc = max(my_func.GetParError(1), func.GetParError(0));
 
 
     return std::make_tuple(afb_full, a0_full, afb_fid, a0_fid, afb_fid_unc, a0_fid_unc);
@@ -226,6 +226,8 @@ void fit_fiducial_AFB(){
         printf("Nominal: \n");
         printf("AFB shift is: %.3f +/- %.3f \n", afb_shift[i], afb_shift_stat_unc[i]);
         printf("A0 shift is: %.3f +/- %.3f \n", a0_shift[i], a0_shift_stat_unc[i]);
+
+        continue;
 
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
 

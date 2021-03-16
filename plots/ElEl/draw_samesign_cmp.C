@@ -30,10 +30,10 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-int year = 2018;
-bool write_out = false;
+int year = 2016;
+bool write_out = true;
 //char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
-char *plot_dir = "Paper_plots/";
+char *plot_dir = "Paper_plots/prefit_kinematics";
 
 
 void draw_samesign_cmp(){

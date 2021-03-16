@@ -36,6 +36,7 @@ def setTDRStyle():
   tdrStyle.SetFrameLineColor(1)
   tdrStyle.SetFrameLineStyle(1)
   tdrStyle.SetFrameLineWidth(1)
+
   
 #For the histo:
   #tdrStyle.SetHistFillColor(1)
@@ -118,6 +119,7 @@ def setTDRStyle():
   tdrStyle.SetLabelOffset(0.007, "XYZ")
   tdrStyle.SetLabelSize(0.05, "XYZ")
 
+
 # For the axis:
 
   tdrStyle.SetAxisColor(1, "XYZ")
@@ -146,7 +148,7 @@ def setTDRStyle():
   # tdrStyle.SetTimeOffset(Double_t toffset)
   # tdrStyle.SetHistMinimumZero(kTRUE)
 
-  tdrStyle.SetHatchesLineWidth(5)
-  tdrStyle.SetHatchesSpacing(0.05)
+  #tdrStyle.SetHatchesLineWidth(5)
+  #tdrStyle.SetHatchesSpacing(0.05)
 
   tdrStyle.cd()

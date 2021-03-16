@@ -62,10 +62,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
         colors = default_colors
     stacks = []
     legends = []
+    legends_list = []
     mains = []
     subs = []
     pulls = []
     logString = ''
+    leg_align_right = True
+    CMS_align_right = False
 
     # For each hist/data distribution
     for hist_index, hist in enumerate(histlist):
@@ -126,11 +129,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     subs.append(TPad(hist.GetName()+'_sub',hist.GetName()+'_sub',0, 0, 0, 0))
 
                 leg_align_right = True
+                CMS_align_right = False
                 x_max = totlist[hist_index].GetMaximumBin()
                 nbins = totlist[hist_index].GetXaxis().GetNbins()
                 if(2 *x_max > nbins):
                     print("Found max val in bin %i, aligning legend on the left" % x_max)
                     leg_align_right = False
+                    CMS_align_right = True
                 if not logy: 
                     y_start  = 0.77
                     y_end = 0.9
@@ -143,7 +148,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     legends.append(TLegend(x_start,y_start-0.02*(len(bkglist[0])+len(signals)),x_start + x_size,y_end))
                 else: 
                     legends.append(TLegend(0.2,0.11,0.45,0.2+0.02*(len(bkglist[0])+len(signals))))
+
                 stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
+                legends_list.append([])
 
 
                 # Set margins and make these two pads primitives of the division, thisPad
@@ -175,7 +182,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     if bkgNames == []: this_bkg_name = bkg.GetName().split('_')[0]
                     elif type(bkgNames[0]) != list: this_bkg_name = bkgNames[bkg_index]
                     else: this_bkg_name = bkgNames[hist_index][bkg_index]
-                    legends[hist_index].AddEntry(bkg,this_bkg_name,'f')
+                    legends_list[hist_index].append((bkg,this_bkg_name,'f'))
                     
                 # Go to main pad, set logy if needed
                 mains[hist_index].cd()
@@ -221,19 +228,21 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     if logy == True:
                         signals[hist_index].SetMinimum(1e-3)
                     if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
-                    legends[hist_index].AddEntry(signals[hist_index],this_sig_name,'L')
+                    legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
                     signals[hist_index].Draw('hist same')
 
                 totlist[hist_index].SetFillColor(kBlack)
                 totlist[hist_index].SetFillStyle(3354)
 
                 totlist[hist_index].Draw('e2 same')
-                legends[hist_index].Draw()
 
                 if not dataOff:
-                    legends[hist_index].AddEntry(hist,dataName,datastyle)
+                    legends_list[hist_index].append((hist,dataName,datastyle))
                     hist.Draw(datastyle+' same')
 
+                for entry in legends_list[hist_index][::-1]:
+                    legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
+                legends[hist_index].Draw()
                 gPad.RedrawAxis()
 
                 # Draw the pull
@@ -267,12 +276,15 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 if logy == True:
                     mains[hist_index].SetLogy()
 
-                CMS_lumi.CMS_lumi(thisPad, year, 11)
+                if(CMS_align_right): CMS_loc = 33
+                else: CMS_loc = 11
+                CMS_lumi.CMS_lumi(thisPad, year, CMS_loc)
 
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
     else:
         myCan.Print(tag+'/'+name+'.png','png')
+        myCan.Print(tag+'/'+name+'.pdf','pdf')
 
 
 def reducedCorrMatrixHist(fit_result,varsOfInterest=[]):
@@ -450,6 +462,6 @@ for year in years:
                 label_list.append(label_color_map[name][0])
                 color_list.append(label_color_map[name][1])
 
-        makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin" ) 
+        makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin", year = year ) 
 
 

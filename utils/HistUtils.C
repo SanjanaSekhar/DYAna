@@ -19,6 +19,13 @@ int find_bin(float * bins, float val){
     return bin;
 }
 
+double AFB_counting_unc(double F,double B, double dF, double dB){
+    double n_tot = F+B;
+    return sqrt(pow(dB * 2. * F / (n_tot*n_tot),2) + pow(dF * 2. * B / (n_tot*n_tot),2));
+}
+
+
+
 void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
     //1d output
     float err_sum = 0.;

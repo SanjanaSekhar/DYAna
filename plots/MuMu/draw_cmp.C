@@ -162,12 +162,12 @@ void draw_cmp(){
     QCD_phi->SetFillColor(qcd_c);
     QCD_rap->SetFillColor(qcd_c);
 
-    gg_cost->SetFillColor(kOrange);
-    gg_m->SetFillColor(kOrange);
-    gg_pt->SetFillColor(kOrange);
-    gg_xf->SetFillColor(kOrange);
-    gg_phi->SetFillColor(kOrange);
-    gg_rap->SetFillColor(kOrange);
+    gg_cost->SetFillColor(gamgam_c);
+    gg_m->SetFillColor(gamgam_c);
+    gg_pt->SetFillColor(gamgam_c);
+    gg_xf->SetFillColor(gamgam_c);
+    gg_phi->SetFillColor(gamgam_c);
+    gg_rap->SetFillColor(gamgam_c);
 
 
 

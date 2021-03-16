@@ -29,9 +29,9 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
+int year = 2018;
 const bool write_out = false;
-char *plot_dir = "Paper_plots/";
+char *plot_dir = "Paper_plots/EMu_plots/";
 
 
 
@@ -101,6 +101,8 @@ void draw_cmp(){
     make_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, false,  year, m_low, m_high, ss, do_emu_cost_rw);
     make_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, false,  year, m_low, m_high, ss);
 
+
+
     bool fakes_reweight = true;
     bool fakes_sys_errors = false;
     Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight, fakes_sys_errors);
@@ -116,31 +118,55 @@ void draw_cmp(){
 
     printf("Data count %.0f +/- %.0f \n", data_count, sqrt(data_count));
     printf("MC count %.0f +/- %0.f \n", mc_count, mc_unc);
-    printf("Fake count %.0f +/- %.0f \n", fake_count, fake_unc);
+    printf("Fake count %.0f +/- %.0f (frac %.2f) \n", fake_count, fake_unc, fake_count / (mc_count + fake_count));
     Double_t ratio = data_count / (mc_count + fake_count);
     Double_t unc = sqrt( (data_count/(mc_count + fake_count)/(mc_count + fake_count)) +  
                           pow(data_count/(mc_count + fake_count)/(mc_count + fake_count), 2) * (fake_unc*fake_unc + mc_unc*mc_unc));
     printf("Ratio is %1.3f +/- %1.3f \n", ratio, unc);
 
+    Double_t data_F = data_cost->Integral(1,n_cost_bins/2);
+    Double_t data_B = data_cost->Integral(n_cost_bins/2 + 1, n_cost_bins);
+    Double_t data_AFB = (data_F - data_B)/(data_F+data_B);
+   
+    Double_t data_dAFB = AFB_counting_unc(data_F, data_B, sqrt(data_F), sqrt(data_B));
+    printf("F %.0f, B %.0f \n", data_F, data_B);
+    printf("AFB %.3f +/- %.3f \n", data_AFB, data_dAFB);
+
+
+    Double_t diboson_dF, diboson_dB;
+    Double_t diboson_F = diboson_cost->IntegralAndError(1,n_cost_bins/2, diboson_dF);
+    Double_t diboson_B = diboson_cost->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, diboson_dB);
+    Double_t diboson_AFB = (diboson_F - diboson_B)/(diboson_F+diboson_B);
+   
+    Double_t diboson_dAFB = AFB_counting_unc(diboson_F, diboson_B, diboson_dF, diboson_dB);
+    printf("Diboson F %.0f, B %.0f \n", diboson_F, diboson_B);
+    printf("Diboson AFB %.3f +/- %.3f \n", diboson_AFB, diboson_dAFB);
+
+
     setHistError(qcd_m, qcd_sys_unc);
     setHistError(qcd_cost, qcd_sys_unc);
     setHistError(qcd_pt, qcd_sys_unc);
+    setHistError(qcd_rap, qcd_sys_unc);
 
     setHistError(diboson_m, diboson_sys_unc);
     setHistError(diboson_cost, diboson_sys_unc);
     setHistError(diboson_pt, diboson_sys_unc);
+    setHistError(diboson_rap, diboson_sys_unc);
 
     setHistError(dy_m, dy_sys_unc);
     setHistError(dy_cost, dy_sys_unc);
     setHistError(dy_pt, dy_sys_unc);
+    setHistError(dy_rap, dy_sys_unc);
 
     setHistError(ttbar_m, top_sys_unc);
     setHistError(ttbar_cost, top_sys_unc);
     setHistError(ttbar_pt, top_sys_unc);
+    setHistError(ttbar_rap, top_sys_unc);
 
     setHistError(wt_m, top_sys_unc);
     setHistError(wt_cost, top_sys_unc);
     setHistError(wt_pt, top_sys_unc);
+    setHistError(wt_rap, top_sys_unc);
 
 
     dy_m->SetFillColor(DY_c);
@@ -181,11 +207,11 @@ void draw_cmp(){
     pt_stack->Add(wt_pt);
     pt_stack->Add(ttbar_pt);
 
-    symmetrize1d(diboson_cost);
-    symmetrize1d(qcd_cost);
-    symmetrize1d(wt_cost);
-    symmetrize1d(dy_cost);
-    symmetrize1d(ttbar_cost);
+    //symmetrize1d(diboson_cost);
+    //symmetrize1d(qcd_cost);
+    //symmetrize1d(wt_cost);
+    //symmetrize1d(dy_cost);
+    //symmetrize1d(ttbar_cost);
 
     THStack *cost_stack = new THStack("cost_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     cost_stack->Add(diboson_cost);

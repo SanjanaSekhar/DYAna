@@ -90,6 +90,7 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
         tm.getEvent(i);
         bool pass  = tm.m >= m_low && tm.m <= m_high && tm.met_pt < met_cut && tm.has_no_bjets;
         if(pass){
+
             nEvents++;
             tm.doCorrections();
             tm.getEvtWeight();

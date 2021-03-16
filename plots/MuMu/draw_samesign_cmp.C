@@ -29,10 +29,10 @@
 #include "../../utils/root_files.h"
 
 const int type = FLAG_MUONS;
-int year = 2018;
+int year = 2016;
 bool write_out = false;
-char *plot_dir = "Misc_plots/samesign_cmp_test/";
-//char *plot_dir = "Paper_plots/";
+//char *plot_dir = "Misc_plots/samesign_cmp_test/";
+char *plot_dir = "Paper_plots/prefit_kinematics";
 
 
 
