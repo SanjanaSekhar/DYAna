@@ -55,22 +55,40 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
     Double_t weight, bjet_SF;
 
     char const *sys;
-    if (systematic == 0) sys = "central";
-    if (systematic == 1) sys = "up";
-    if (systematic == -1) sys = "down";
 
     if(std::abs(flavour - 5.) < 0.01){ //bjet
+
+        if (systematic == 0) sys = "central";
+        if (systematic == 1) sys = "up_correlated";
+        if (systematic == -1) sys = "down_correlated";
+        if (systematic == 2) sys = "up_uncorrelated";
+        if (systematic == -2) sys = "down_uncorrelated";
+
         bjet_SF = b_readers.b_reader.eval_auto_bounds(sys, BTagEntry::FLAV_B, eta, pt);
         weight = btag_weight_helper(pt, eta, bjet_SF, btag_effs.b_eff);
         //printf("B jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
 
     }
     else if (std::abs(flavour - 4.) < 0.01){ //cjet
+
+        if (systematic == 0) sys = "central";
+        if (systematic == 1) sys = "up_correlated";
+        if (systematic == -1) sys = "down_correlated";
+        if (systematic == 2) sys = "up_uncorrelated";
+        if (systematic == -2) sys = "down_uncorrelated";
+
         bjet_SF = b_readers.c_reader.eval_auto_bounds(sys, BTagEntry::FLAV_C, eta, pt);
         weight = btag_weight_helper(pt, eta, bjet_SF, btag_effs.c_eff);
         //printf("C jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
     else{ //udsg jet
+
+        //udsgs only have one uncertainty which is taken to be uncorrelated
+        if (systematic == 0 || systematic == 1 || systematic == -1) sys = "central";
+        if (systematic == 2) sys = "up";
+        if (systematic == -2) sys = "down";
+
+
         bjet_SF = b_readers.udsg_reader.eval_auto_bounds(sys, BTagEntry::FLAV_UDSG, eta,pt);
         weight = btag_weight_helper(pt, eta, bjet_SF, btag_effs.udsg_eff);
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
@@ -129,20 +147,27 @@ Double_t get_emu_btag_weight(Double_t pt1, Double_t eta1, Float_t flavour1, Doub
 void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
     TH1::AddDirectory(kFALSE);
     char file[80];
-    // USE OLD FOR NOW, CHANGE WHEN REMAKE NTUPLES
-    BTagCalibration calib;
-    //if(year == 2016) sprintf(file, "%s", "SFs/2016/DeepCSV_2016LegacySF_V1.csv");
+    BTagCalibration calib_bc, calib_udsg;
     
-    if(year == 2016) calib = BTagCalibration("DeepCSV", "../analyze/SFs/2016/DeepCSV_2016LegacySF_V1.csv");
-    if(year == 2017) calib = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V4_B_F.csv");
-    if(year == 2018) calib = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V1.csv");
+    if(year == 2016){
+        calib_bc = BTagCalibration("DeepCSV", "../analyze/SFs/2016/DeepCSV_2016LegacySF_V1_YearCorrelation-V1.csv");
+        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2016/DeepCSV_2016LegacySF_V1.csv");
+    }
+    if(year == 2017){
+        calib_bc = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V4_B_F_YearCorrelation-V1.csv");
+        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V5_B_F.csv");
+    }
+    if(year == 2018){
+        calib_bc = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V1_YearCorrelation-V1.csv");
+        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V2.csv");
+    }
 
-    btag_r->b_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
-    btag_r->b_reader.load(calib, BTagEntry::FLAV_B, "comb");
-    btag_r->c_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
-    btag_r->c_reader.load(calib, BTagEntry::FLAV_C, "comb");
-    btag_r->udsg_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down"});
-    btag_r->udsg_reader.load(calib, BTagEntry::FLAV_UDSG, "incl");
+    btag_r->b_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up_correlated", "down_correlated", "up_uncorrelated", "down_uncorrelated"});
+    btag_r->b_reader.load(calib_bc, BTagEntry::FLAV_B, "comb");
+    btag_r->c_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up_correlated", "down_correlated", "up_uncorrelated", "down_uncorrelated"});
+    btag_r->c_reader.load(calib_bc, BTagEntry::FLAV_C, "comb");
+    btag_r->udsg_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down" });
+    btag_r->udsg_reader.load(calib_udsg, BTagEntry::FLAV_UDSG, "incl");
 
 
     TFile *f0;
