@@ -55,7 +55,7 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
         float pt = cm.Pt();
         //printf("M= %.2f \n", cm.M());
         if(cm.M() >= m_low && cm.M() < m_high && (lep1_id < 14) && (lep2_id < 14)
-            && (!phot_ind || q1_id == 22 || q2_id ==22)
+            && (!phot_ind || ((q1_id == 22 || q2_id ==22) && (q1_id != 22 || q2_id != 22)) )
            //&& ((abs(lep_pls->Eta()) < 2.5) && (abs(lep_mns->Eta()) < 2.5))
             && pt >= pt_low && pt <= pt_high
 
@@ -105,31 +105,40 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
     return nSelected;
 }
 void fit_gen_cost(){
-    gStyle->SetOptStat(0);
+    //gStyle->SetOptStat(0);
+    gStyle->SetOptFit(1);
+    gStyle->SetStatX(0.47);
+    gStyle->SetStatY(0.9);
     //TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
-    TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
+    TFile *f1= TFile::Open("../generator_stuff/root_files/photInd_lux_may2.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
     TTree *t_gen1 = (TTree *)f1->Get("T_lhe");
     int m_idx=1;
 
 
-    TH1F *h_cost = new TH1F("h_mad_cost", "", 20, -1., 1.);
+    TH1F *h_cost = new TH1F("h", "NLO Photon Induced (= 1 photon); cos(#theta)", 20, -1., 1.);
     TH1F *h_cost_r = new TH1F("h_mad_cost_r", "", 20, -1., 1.);
     TH1F *h_pt = new TH1F("h_pt", "", 40, 0., 200.);
     TH1F *h_xf = new TH1F("h_xf", "", 20, 0., 1.);
 
-    float m_low = m_bins[m_idx];
-    float m_high = m_bins[m_idx+1];
+    //float m_low = m_bins[m_idx];
+    //float m_high = m_bins[m_idx+1];
+    float m_low = 170;
+    float m_high = 10000;
 
     float pt_low = 0.;
     float pt_high = 100000;
+    bool phot_ind = true;
 
-    int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high, pt_low, pt_high);
+    int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high, pt_low, pt_high, phot_ind);
 
 
     //TF1 *func = new TF1("func", "(1 + x*x + [1]*(1-x*x) + (4./3.)*(2. + [1])*[0]*x) /(8./3. + 4.*[1]/3.)", -1., 1.);
-    TF1 *func = new TF1("func", "3./8.*(1 + x*x + ([1]/2.)*(1-3*x*x)) + [0]*x", -1., 1.);
+    TF1 *func = new TF1("func", "3./8.*(1 + x*x + ([1]/2.)*(1-3*x*x) + [0]*x)", -1., 1.);
     func->SetParameter(0,0.6);
-    func->SetParameter(1,0.05);
+    func->SetParameter(1,0.1);
+    func->SetParName(0, "A4");
+    func->SetParName(1, "A0");
     //func->SetParLimits(1, -1.0, 1.0);
 
     //func->FixParameter(1, 0.094);
@@ -142,8 +151,10 @@ void fit_gen_cost(){
     //bin size is 0.1, so 1/bin_size = 10.
     h_cost->Scale(10./h_cost->Integral());
     h_cost->Fit(func);
+    h_cost->Draw();
+    h_cost->SetMaximum(1.5);
 
-    h_pt->Draw("hist");
+    //h_pt->Draw("hist");
 
     Double_t AFB = ((nF - nB))/((nF+nB));
     //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));

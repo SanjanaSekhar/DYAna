@@ -1,4 +1,5 @@
-
+#ifndef PLOT_UTILS
+#define PLOT_UTILS
 #include "TROOT.h"
 #include "TH1.h"
 #include "TFile.h"
@@ -114,7 +115,7 @@ TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_labe
 
 
 TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2, char h2_label[80], char ratio_label[80], 
-        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plt_label[100] = "",
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
         TH1F *custom_ratio = nullptr){
     //ratio is done as h1/h2
 
@@ -135,15 +136,37 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     pad1->cd();
     if(logy) pad1->SetLogy();
     float hmax = 1.2 * std::max(h1->GetMaximum(), h2->GetMaximum());
+    if(logy) hmax *=2;
     h1->SetMaximum(hmax);
     h1->SetMinimum(1e-5);
+    if(logy && hmax > 1) h1->SetMinimum(1e-1);
     h1->Draw("hist E");
     gStyle->SetEndErrorSize(4);
     h2->Draw("hist E same");
-    auto *t = new TText(0., hmax * 0.9, plt_label); 
-    t->SetTextAlign(22); //centered
-    t->SetTextFont(42);
-    t->Draw("same");
+    pad1->cd();
+    TLatex latext; 
+    latext.SetNDC();
+    latext.SetTextColor(kBlack);
+    latext.SetTextAlign(22); //centered
+    latext.SetTextFont(42);
+    latext.SetTextSize(0.04);    
+
+
+    float H = pad1->GetWh();
+    float W = pad1->GetWw();
+    float l = pad1->GetLeftMargin();
+    float t = pad1->GetTopMargin();
+    float r = pad1->GetRightMargin();
+    float b = pad1->GetBottomMargin();
+
+    float w = 1-l-r;
+
+    //printf("l %.3f,r %.3f,t %.3f,b %.3f,W %.3f,H %.3f \n",l,r,t,b,W,H);
+
+
+    latext.DrawLatex(l + w/2, 1-2*t ,plot_label);
+    //latext.DrawLatex( l + W/2, 0.9*top, plot_label); 
+    pad1->Update();
 
 
 
@@ -208,8 +231,8 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 }
 
 
-std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel,
-        float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0){
+std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel, TString plot_label,
+        float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0, bool draw_chi2 = false){
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
@@ -231,6 +254,27 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     int axis_label_size = 20;
 
     leg->Draw();
+
+
+    TLatex latext; 
+    latext.SetNDC();
+    latext.SetTextColor(kBlack);
+    latext.SetTextAlign(22); //center
+    latext.SetTextFont(42);
+    latext.SetTextSize(0.04);    
+
+
+    float H = pad1->GetWh();
+    float W = pad1->GetWw();
+    float l = pad1->GetLeftMargin();
+    float t = pad1->GetTopMargin();
+    float r = pad1->GetRightMargin();
+    float b = pad1->GetBottomMargin();
+
+    float w = 1-l-r;
+
+
+    latext.DrawLatex(l + w/2, 1-2*t ,plot_label);
 
 
     h_stack->GetYaxis()->SetTitle(ylabel);
@@ -319,13 +363,15 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     float ratio_max = center + ratio_range;
     h_ratio->SetMinimum(ratio_min);
     h_ratio->SetMaximum(ratio_max);
-    h_ratio->SetMarkerStyle(21);
+    //h_ratio->SetMarkerStyle(21);
     h_ratio->Draw("EPX0");
     if(draw_sys_unc) ratio_unc->Draw("3 same");
+    /*
     TLine *l1 = new TLine(150,1,2000,1);
     l1->SetLineStyle(2);
     l1->Draw();
     c->cd();
+    */
 
     h_ratio->SetTitle("");
     // Y axis m_ratio plot settings
@@ -347,7 +393,32 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
    float chi2 = computeChi2(h_ratio);
    int n_bins = h_ratio->GetNbinsX();
 
+
+   if(draw_chi2){
+       char chi2_label[100];
+       sprintf(chi2_label, "#chi^{2} = %.1f", chi2);
+
+       TLatex latext; 
+       latext.SetNDC();
+       latext.SetTextColor(kBlack);
+       latext.SetTextAlign(32); //right
+       latext.SetTextFont(42);
+       latext.SetTextSize(0.1);    
+
+
+       float H = pad2->GetWh();
+       float W = pad2->GetWw();
+       float l = pad2->GetLeftMargin();
+       float t = pad2->GetTopMargin();
+       float r = pad2->GetRightMargin();
+       float b = pad2->GetBottomMargin();
+
+       pad2->cd();
+       latext.DrawLatex(1-1.2*r, 1-2.2*t ,chi2_label);
+   }
+
    printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
    return std::make_pair(c, pad1);
 }
 
+#endif

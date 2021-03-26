@@ -357,30 +357,30 @@ void draw_cmp(){
     
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta)",y_ax_label, -1., logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta)",y_ax_label, plot_label, -1., logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sElEl%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
 
     logy = true;
     //sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dielectron pt (GeV)","", -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dielectron pt (GeV)","", plot_label -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sElEl%i_pt_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_pt->Print(plt_file);
 
-    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_xf, year, 33);
     sprintf(plt_file, "%sElEl%i_xf_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_xf->Print(plt_file);
 
-    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dielectron #phi","", -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dielectron #phi","", plot_label -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_phi, year, 33);
     sprintf(plt_file, "%sElEl%i_phi_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_phi->Print(plt_file);
 
     sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dielectron Y",y_ax_label, -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dielectron Y",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sElEl%i_rap_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_rap->Print(plt_file);

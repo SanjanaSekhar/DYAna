@@ -29,11 +29,14 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
-const bool write_out = true;
+int year = 2017;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/ttbar_check/";
 char *label = "_after_toprw_";
-bool do_top_pt_rw = true;
+bool normalize = false;
+bool do_top_pt_rw = false;
+char* plot_label = "Before top p_{T} reweighting";
+//char* plot_label = "After top p_{T} reweighting";
 
 void make_ttbar_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,   TH1F *h_rap, bool is_data = false, 
         int year=2016, float m_low = 150., float m_high = 999999., bool do_top_rw = true){
@@ -86,14 +89,15 @@ void draw_ttbar_val(){
     init_emu_indv_bkgs(year);
     setup_all_SFs(year);
 
-                                
+    float m_max = 750.;                             
+    float m_min = 170.;
 
-    TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
-    TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
-    TH1F *wt_m = new TH1F("wt_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
-    TH1F *dy_m = new TH1F("dy_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
-    TH1F *qcd_m = new TH1F("qcd_m", "MC Signal (qqbar, qglu, qbarglu)", 30, 150, 1000);
+    TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", 30, m_min, m_max);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", 30, m_min, m_max);
+    TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", 30, m_min, m_max);
+    TH1F *wt_m = new TH1F("wt_m", "MC Signal (qqbar, qglu, qbarglu)", 30, m_min, m_max);
+    TH1F *dy_m = new TH1F("dy_m", "MC Signal (qqbar, qglu, qbarglu)", 30, m_min, m_max);
+    TH1F *qcd_m = new TH1F("qcd_m", "MC Signal (qqbar, qglu, qbarglu)", 30, m_min, m_max);
 
     TH1F *data_pt = new TH1F("data_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *ttbar_pt = new TH1F("ttbar_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
@@ -141,6 +145,7 @@ void draw_ttbar_val(){
     Double_t fake_count = qcd_m->Integral();
     Double_t mc_count = ttbar_m->Integral() + diboson_m->Integral() + wt_m->Integral() + dy_m->Integral();
 
+
     //includes lumi unc
     float fake_err = 0.5;
     double top_unc = pow(0.05*0.05 + 0.025*0.025, 0.5);
@@ -156,6 +161,35 @@ void draw_ttbar_val(){
     Double_t unc = sqrt( (data_count/(mc_count + fake_count)/(mc_count + fake_count)) +  
                           pow(data_count/(mc_count + fake_count)/(mc_count + fake_count), 2) * (fake_unc*fake_unc + mc_unc*mc_unc));
     printf("Ratio is %1.3f +/- %1.3f \n", ratio, unc);
+
+    if(normalize){
+        qcd_m->Scale(ratio);
+        qcd_cost->Scale(ratio);
+        qcd_pt->Scale(ratio);
+        qcd_rap->Scale(ratio);
+
+        diboson_m->Scale(ratio);
+        diboson_cost->Scale(ratio);
+        diboson_pt->Scale(ratio);
+        diboson_rap->Scale(ratio);
+
+        dy_m->Scale(ratio);
+        dy_cost->Scale(ratio);
+        dy_pt->Scale(ratio);
+        dy_rap->Scale(ratio);
+
+
+        ttbar_m->Scale(ratio);
+        ttbar_cost->Scale(ratio);
+        ttbar_pt->Scale(ratio);
+        ttbar_rap->Scale(ratio);
+
+        wt_m->Scale(ratio);
+        wt_cost->Scale(ratio);
+        wt_pt->Scale(ratio);
+        wt_rap->Scale(ratio);
+    }
+
 
     setHistError(qcd_m, fake_err);
     setHistError(qcd_cost, fake_err);
@@ -216,11 +250,11 @@ void draw_ttbar_val(){
     pt_stack->Add(wt_pt);
     pt_stack->Add(ttbar_pt);
 
-    symmetrize1d(diboson_cost);
     symmetrize1d(qcd_cost);
-    symmetrize1d(wt_cost);
-    symmetrize1d(dy_cost);
-    symmetrize1d(ttbar_cost);
+    //symmetrize1d(diboson_cost);
+    //symmetrize1d(wt_cost);
+    //symmetrize1d(dy_cost);
+    //symmetrize1d(ttbar_cost);
 
     THStack *cost_stack = new THStack("cost_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     cost_stack->Add(diboson_cost);
@@ -256,27 +290,31 @@ void draw_ttbar_val(){
     
     bool logy = true;
     bool logx = false;
+    bool draw_sys_unc = false;
+    float ratio_range = 0.2;
+    bool draw_chi2 = true;
 
     sprintf(plt_file, "%sEMu%i%s_m_cmp.pdf", plot_dir,  year % 2000, label);
 
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", "", -1., true);
+    logy = true;
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", "", plot_label, -1., logy, logx, draw_sys_unc, ratio_range, draw_chi2);
     CMS_lumi(p_m, year, 33 );
     if(write_out) c_m->Print(plt_file);
 
     logy = false;
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", "", -1., logy,logx);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", "", plot_label, -1., logy,logx, draw_sys_unc, ratio_range, draw_chi2);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sEMu%i%s_cost_cmp.pdf", plot_dir, year % 2000, label);
     if(write_out) c_cost->Print(plt_file);
 
     logy = true;
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", "", -1., logy, logx);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", "", plot_label, -1., logy, logx, draw_sys_unc, ratio_range, draw_chi2);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sEMu%i%s_pt_cmp.pdf", plot_dir,  year % 2000, label);
     if(write_out) c_pt->Print(plt_file);
 
     logy = true;
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", "", -1., logy, logx);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", "", plot_label, -1., logy, logx, draw_sys_unc, ratio_range, draw_chi2);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sEMu%i%s_rap_cmp.pdf", plot_dir, year % 2000, label);
     if(write_out) c_rap->Print(plt_file);

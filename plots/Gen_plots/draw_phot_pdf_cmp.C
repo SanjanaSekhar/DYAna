@@ -5,11 +5,11 @@
 
 void draw_phot_pdf_cmp(){
     gStyle->SetOptStat(0);
-    TFile *f_mad= TFile::Open("/home/ozamram/Documents/Research/B2GTTrees/generator_stuff/root_files/photOnly_lux_may2.root");
-    //TFile * f_mad = TFile::Open("/home/ozamram/Documents/Research/B2GTTrees/generator_stuff/root_files/phot_induced_aug21.root");
+    TFile *f_mad= TFile::Open("../generator_stuff/root_files/photOnly_lux_may2.root");
+    //TFile * f_mad = TFile::Open("..//generator_stuff/root_files/phot_induced_aug21.root");
     TTree *t_mad = (TTree *)f_mad->Get("T_lhe");
 
-    TFile *f_pwg = TFile::Open("/home/ozamram/Documents/Research/B2GTTrees/generator_stuff/root_files/photInd_lux_may2.root");
+    TFile *f_pwg = TFile::Open("../generator_stuff/root_files/photInd_lux_may2.root");
     TTree *t_pwg = (TTree *) f_pwg->Get("T_lhe");
 
     char title[80] = "LO vs. NLO QED, Lux (M > 150)";
@@ -25,10 +25,12 @@ void draw_phot_pdf_cmp(){
 
     float m_low = 150.;
     float m_high = 10000.;
+    float pt_low = 0.;
+    float pt_high = 100000.;
     bool phot_ind = true;
 
-    make_gen_cost(t_mad,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, phot_ind);
-    make_gen_cost(t_pwg,  h_pwg_cost_st, h_pwg_cost_r, h_pwg_pt, h_pwg_xf, m_low, m_high, phot_ind);
+    make_gen_cost(t_mad,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low = pt_low, pt_high = pt_high, phot_ind);
+    make_gen_cost(t_pwg,  h_pwg_cost_st, h_pwg_cost_r, h_pwg_pt, h_pwg_xf, m_low, m_high, pt_low = pt_low, pt_high = pt_high, phot_ind);
 
     h_mad_cost_st->Scale(1./h_mad_cost_st->Integral());
     h_pwg_cost_st->Scale(1./h_pwg_cost_st->Integral());
@@ -66,11 +68,23 @@ void draw_phot_pdf_cmp(){
     h_mad_xf->SetLineWidth(3);
     h_pwg_xf->SetLineWidth(3);
 
+    printf("NLO (star): ");
+    print_counting_AFB(h_pwg_cost_st);
+
+    printf("LO (star): ");
+    print_counting_AFB(h_mad_cost_st);
+
+    printf("NLO (reco): ");
+    print_counting_AFB(h_pwg_cost_r);
+
+    printf("LO (reco): ");
+    print_counting_AFB(h_mad_cost_r);
+
     
-    make_ratio_plot("lo_vs_nlo_lux_cost_cmp.pdf", h_mad_cost_st, "lo",h_pwg_cost_st, "nlo", "lo/nlo", "cos(#theta_{*})", false, true);
-    make_ratio_plot("lo_vs_nlo_lux_xf_cmp.pdf", h_mad_xf, "lo",h_pwg_xf, "nlo", "lo/nlo", "x_{F}", false, true);
-    make_ratio_plot("lo_vs_nlo_lux_pt_cmp.pdf", h_mad_pt, "lo",h_pwg_pt, "nlo", "lo/nlo", "p_{T}", false, true);
-    make_ratio_plot("lo_vs_nlo_cost_r_cmp.pdf", h_mad_cost_r, "lo",h_pwg_cost_r, "nlo", "lo/nlo", "cos(#theta_{r})", false, true);
+    make_ratio_plot("lo_vs_nlo_lux_cost_cmp.png", h_mad_cost_st, "lo",h_pwg_cost_st, "nlo", "lo/nlo", "cos(#theta_{*})", false, true);
+    make_ratio_plot("lo_vs_nlo_lux_xf_cmp.png", h_mad_xf, "lo",h_pwg_xf, "nlo", "lo/nlo", "x_{F}", false, true);
+    make_ratio_plot("lo_vs_nlo_lux_pt_cmp.png", h_mad_pt, "lo",h_pwg_pt, "nlo", "lo/nlo", "p_{T}", false, true);
+    make_ratio_plot("lo_vs_nlo_cost_r_cmp.png", h_mad_cost_r, "lo",h_pwg_cost_r, "nlo", "lo/nlo", "cos(#theta_{r})", false, true);
 
     return;
 }

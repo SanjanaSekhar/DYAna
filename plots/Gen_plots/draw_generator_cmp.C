@@ -37,6 +37,10 @@ void draw_generator_cmp(){
     TFile *f_pwg = TFile::Open("../generator_stuff/root_files/powheg_m700_april30.root");
     TTree *t_pwg = (TTree *)f_pwg->Get("T_lhe");
 
+    float pt_low = 0.;
+    float pt_high = 10000.;
+    float rap_low = -1.;
+    float rap_high = 100.;
     float m_low = 700;
     float m_high = 14000.;
     bool phot_ind = false;
@@ -62,8 +66,8 @@ void draw_generator_cmp(){
     TH1F *h_mad_xf = new TH1F("h_mad_xf", title, 20, 0.,.5);
 
 
-    make_amc_gen_cost(t_mad_mu,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high);
-    make_amc_gen_cost(t_mad_el,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high);
+    make_amc_gen_cost(t_mad_mu,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low, pt_high, rap_low, rap_high);
+    make_amc_gen_cost(t_mad_el,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low, pt_high, rap_low, rap_high);
     make_gen_cost(t_pwg,  h_pwg_cost_st, h_pwg_cost_r, h_pwg_pt, h_pwg_xf, m_low, m_high, phot_ind);
 
     h_mad_cost_st->Scale(1./h_mad_cost_st->Integral());
