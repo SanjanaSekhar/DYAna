@@ -17,6 +17,8 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
     nt.iJob = iJob;
     nt.do_electrons = true;
     nt.do_SFs = true;
+    nt.do_pdf_reweight = true;
+
     nt.setupSFs();
     nt.setupOutputTree("T_sig");
     nt.setupOutputTree("T_WJets");
@@ -33,7 +35,8 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 70. && nt.cm_m < 130.){
+            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 150.){
+                    //nt.cm_m > 70. && nt.cm_m < 130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
 

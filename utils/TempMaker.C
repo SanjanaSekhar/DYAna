@@ -200,6 +200,7 @@ void TempMaker::setup_systematic(const string &s_label){
     if(sys_shift !=0){
         if(sys_label.find("BTAGCOR") != string::npos) do_btag_sys = sys_shift;
         else if(sys_label.find("BTAGUNCOR") != string::npos) do_btag_sys = 2*sys_shift;
+        else if(sys_label.find("BTAGLIGHT") != string::npos) do_btag_sys = 3*sys_shift;
         else if(sys_label.find("Pu") != string::npos) do_pileup_sys = sys_shift;
         else if(sys_label.find("muRC") != string::npos) do_muRC_sys = sys_shift;
         else if(sys_label.find("muHLTBAR") != string::npos) do_muHLT_barrel_sys = sys_shift;

@@ -1,4 +1,4 @@
-#define STAND_ALONE
+//#define STAND_ALONE
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
 #include "../../utils/root_files.h"
@@ -17,12 +17,12 @@ void sys_check(){
         int year = 2016;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_muIDBAR";
-        bool do_bkg = false;
-        bool do_qcd = true;
+        char *sys = "_BTAGLIGHT";
+        bool do_bkg = true;
+        bool do_qcd = false;
         bool do_electrons = false;
         bool do_muons = true;
-        int i = 4;
+        int i = 1;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");

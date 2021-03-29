@@ -18,9 +18,18 @@ void compute_norms(FILE *root_files, Float_t *norms, unsigned int *nFiles){
                 sample_xsec = 0;
             }
             int sample_idx;
-            float xsec;
+            float xsec = 0.;
             int nparams = sscanf(lines, "! idx = %i xsec = %f \n", &sample_idx, &xsec);
-            if(nparams < 2 || sample_idx >= MAX_SAMPLES){
+            if(nparams < 2){ //try to parse in other format
+                char sample_name[200];
+                nparams = sscanf(lines, "!%s xsec_pb = %e \n", sample_name, &xsec);
+                if(nparams == 2){
+                    xsec *= 1000.; //pb to fb
+                    sample_idx = sample_i + 1; //just increase index by 1 for this sample
+                }
+            }
+
+            if(nparams < 2 ||  xsec == 0. || sample_idx >= MAX_SAMPLES){
                 printf("ERROR: Unable to parse sample header. Exiting");
                 exit(EXIT_FAILURE);
             }
@@ -69,6 +78,11 @@ NTupleReader::NTupleReader(const char *fin_name, const char *fout_name, bool is_
         printf("Done with normalizations \n\n\n");
     }
     fout = TFile::Open(fout_name, "RECREATE");
+
+    for(int i=0; i<60; i++) pdf_weights[i] = 1.;
+    for(int i=0; i<100; i++) pdfext_weights[i] = 1.;
+
+
 }
 
 void NTupleReader::setupSFs(){
@@ -101,13 +115,18 @@ void NTupleReader::setupSFs(){
 bool NTupleReader::getNextFile(){
     if(fileCount != 0 && fin != nullptr) fin->Close();
     char lines[300];
+    int sample_idx = 0;
+    float xsec = 0.;
     while(fgets(lines, 300, root_files)){
         if(lines[0] == '#' || is_empty_line(lines)) continue; //comment line
         else if(lines[0] == '!'){//sample header
-            int sample_idx;
-            float xsec;
             if(!is_data){
                 int nparams = sscanf(lines, "! idx = %i xsec = %f \n", &sample_idx, &xsec);
+                if(nparams < 2){
+                    char sample_name[200];
+                    nparams = sscanf(lines, "!%s xsec_pb = %e \n", sample_name, &xsec);
+                    if (nparams ==2) sample_idx += 1; //just increase index by 1 for this sample
+                }
                 if(nparams < 2 || sample_idx >= MAX_SAMPLES){
                     printf("ERROR: Unable to parse sample header. Exiting");
                     exit(EXIT_FAILURE);
@@ -263,12 +282,10 @@ bool NTupleReader::getNextFile(){
                 tin->SetBranchAddress("pu_NtrueInt",&pu_NtrueInt);
 
                 tin->SetBranchAddress("scale_Weights", &scale_Weights);
-                tin->SetBranchAddress("pdf_Weights", &pdf_weights);
                 tin->SetBranchAddress("alphas_Weights", &alpha_weights);
 
                 tin->SetBranchAddress("alphas_size", &alphas_size);
                 tin->SetBranchAddress("scale_size", &scale_size);
-                tin->SetBranchAddress("pdf_size", &pdf_size);
 
                 tin->SetBranchAddress("gen_Mom0ID", &gen_Mom0ID);
                 tin->SetBranchAddress("gen_Mom1ID", &gen_Mom1ID);
@@ -283,6 +300,16 @@ bool NTupleReader::getNextFile(){
                 else{
                     tin->SetBranchAddress("metsyst_Pt", &met_syst_pt);
                     tin->SetBranchAddress("metsyst_Phi", &met_syst_phi);
+                }
+                if(do_pdf_reweight){
+                    tin->SetBranchAddress("pdf_size", &pdf_size);
+                    tin->SetBranchAddress("pdf_Weights", &pdf_weights);
+
+                    if(year == 2017 || year == 2018){
+                        tin->SetBranchAddress("pdf_nnpdf30_weight", &nnpdf30_weight);
+                        tin->SetBranchAddress("pdfext_Weights", &pdfext_weights);
+                    }
+
                 }
 
 
@@ -303,6 +330,9 @@ void NTupleReader::setupOutputTree(char treeName[100]){
     int idx = nOutTrees;
     nOutTrees++;
     outTrees[idx] = new TTree(treeName, "");
+
+    bool is_sig_tree = (strstr(treeName, "sig") != NULL);
+    printf("Setting up tree %s (sig_tree = %i) \n", treeName, is_sig_tree);
 
     outTrees[idx]->Branch("year", &year, "year/I");
     outTrees[idx]->Branch("m", &cm_m);
@@ -404,7 +434,6 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("prefire_SF", &prefire_SF);
         outTrees[idx]->Branch("prefire_SF_up", &prefire_SF_up);
         outTrees[idx]->Branch("prefire_SF_down", &prefire_SF_down);
-        outTrees[idx]->Branch("pdf_weights", &pdf_weights, "pdf_weights[60]/F");
         outTrees[idx]->Branch("jet1_flavour", &jet1_flavour, "jet1_flavour/I");
         outTrees[idx]->Branch("jet2_flavour", &jet2_flavour, "jet2_flavour/I");
         outTrees[idx]->Branch("jet1_btag_SF", &jet1_btag_SF);
@@ -423,6 +452,12 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("top_ptrw_alpha_down", &top_ptrw_alpha_down);
         outTrees[idx]->Branch("top_ptrw_beta_up", &top_ptrw_beta_up);
         outTrees[idx]->Branch("top_ptrw_beta_down", &top_ptrw_beta_down);
+
+        if(do_pdf_reweight && is_sig_tree){
+            outTrees[idx]->Branch("pdf_weights", &pdf_weights, "pdf_weights[60]/F");
+            outTrees[idx]->Branch("pdfext_weights", &pdfext_weights, "pdfext_weights[100]/F");
+            outTrees[idx]->Branch("nnpdf30_weight", &nnpdf30_weight);
+        }
 
         if(do_muons || do_emu){
             outTrees[idx]->Branch("gen_mu_m", "TLorentzVector", &gen_lep_m_vec);
@@ -713,6 +748,7 @@ void NTupleReader::fillEvent(){
 
     if(!is_data){
         gen_weight = evt_Gen_Weight * normalization;
+        if(do_pdf_reweight) gen_weight *= nnpdf30_weight;
     }
 
 }
@@ -781,11 +817,6 @@ void NTupleReader::fillEventSFs(){
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
     if(year < 2018) prefireCorrs(); 
 
-    if(pdf_size <60){
-        for(int i=0;i<60; i++){
-            pdf_weights[i] = 1.;
-        }
-    }
     if(scale_size > 0){
         mu_F_up = scale_Weights[0];
         mu_F_down = scale_Weights[1];

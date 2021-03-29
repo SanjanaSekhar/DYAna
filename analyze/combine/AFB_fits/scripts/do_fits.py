@@ -61,20 +61,20 @@ for mbin in range(bin_start, bin_stop):
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 
     if(not options.no_plot):
-        print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
+        print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
                 % (fit_name, mbin))
         extra_args = ""
         if(options.year > 0): extra_args = " -y %i " % options.year
         print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir, mbin, extra_args))
         print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
-        print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (plotdir))
+        print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --prefit fitDiagnosticsTest.root -p Afb --skipFitB -g %s" % (plotdir))
         print_and_do("mv %s_fit_shapes_mbin%i.root %s" %(fit_name, mbin, plotdir))
-        if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
+        if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
 
     print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
     print_and_do("""echo ".q" >> cmd.txt """)
-    print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_fit_results_mbin%i.txt" % (fit_name, mbin))
+    print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_fit_results_mbin%i.txt" % (fit_name, mbin))
     print_and_do("rm -f cards/sed*")
-    if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
+    if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfitTest.root")
 

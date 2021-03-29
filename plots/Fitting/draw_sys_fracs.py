@@ -10,20 +10,33 @@ sys_keys = ["pdf", "refac", "lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "em
 
 color_dict = dict()
 color_dict["pdf"] = kGreen +3
-color_dict["recac"] = kOrange + 7
+color_dict["refac"] = kOrange + 7
 color_dict["lep_eff"] = kRed
 color_dict["mc_xsec"] = kBlue
 color_dict["fakes"] = kRed -7 
 color_dict["other"] = kGray
+color_dict["ptrw"] = kOrange
 color_dict["pileup"] =  kCyan
 color_dict["emucostrw"] = kMagenta + 4
+
+name_dict = dict()
+name_dict["pdf"] = "PDFs"
+name_dict["refac"] = "Renorm. & Fac. Scales"
+name_dict["lep_eff"] = "Lepton Efficiencies"
+name_dict["mc_xsec"] = "MC Cross Sections"
+name_dict["fakes"] = "Fakes Estimate"
+name_dict["other"] = "Other"
+name_dict["ptrw"] = "DY p_{T} Reweighting"
+name_dict["pileup"] =  "Pileup"
+name_dict["emucostrw"] = "e#mu Shape Correction"
+
 
 
 
 def get_frac_diffs(h_sys, h_nom, h_tot):
     nbins = h_sys.GetNbinsX()
     avg_diff = 0.
-    fracs = np.array([0]*nbins)
+    fracs = np.array([0.]*nbins, dtype=np.float64)
     for ibin in range(1, nbins + 1):
         c_sys = h_sys.GetBinContent(ibin)
         c_nom = h_nom.GetBinContent(ibin)
@@ -34,24 +47,25 @@ def get_frac_diffs(h_sys, h_nom, h_tot):
     return fracs
 
 
-def setup_dict(nBins):
+def setup_sys_dict(nBins):
     d_sys = dict()
 
     for key in sys_keys:
-        d_sys[key] = np.array([0]*nBins)
+        d_sys[key] = np.array([0.]*nBins, dtype=np.float64)
     
     return d_sys
 
-def dict_to_hists(d, nBins):
+def dict_to_hists(d):
     hists = []
     for key in sys_keys:
+        nBins = d[key].shape[0]
         h = TH1F("h_"+key,key, nBins, 0.5, 0.5 + nBins)
         h.SetLineColor(color_dict[key])
-        h.SetLineWidth(1)
-        for i in range(i,nBins+1):
-            h.SetBinContent(i, d[key][i])
+        h.SetLineWidth(4)
+        for i in range(1,nBins+1):
+            h.SetBinContent(i, d[key][i-1])
 
-        hists.append[h]
+        hists.append(h)
     return hists
 
 
@@ -65,7 +79,7 @@ def add_sys(d, fracs, sys_name):
     elif("xsec" in sys_name and "fakes" not in sys_name): key_name = "mc_xsec"
     elif("fakes" in sys_name): key_name = "fakes"
     elif("ptrw" in sys_name): key_name = "ptrw"
-    elif("pu" in sys_name): key_name = "pileup"
+    elif("Pu" in sys_name): key_name = "pileup"
     elif("emu" in sys_name): key_name = "emucostrw"
     else: key_name = "other"
 
@@ -88,7 +102,7 @@ def get_sys_dict(mbin, year, chan):
     f = TFile.Open(f_in_name)
     gDirectory.cd("w%i" % mbin)
     h = gDirectory.Get("ee%i_fpl" % year)
-    nBins = h.GetNBinsX()
+    nBins = h.GetNbinsX()
     keys = gDirectory.GetListOfKeys()
 
 
@@ -120,6 +134,7 @@ def get_sys_dict(mbin, year, chan):
         #print("Doing base %s" % base)
         h_base = gDirectory.Get(base)
         for key in keys:
+            
             key_name = key.GetName()
             if(key_name == base): continue
             skip = False
@@ -135,14 +150,14 @@ def get_sys_dict(mbin, year, chan):
                 fracs = get_frac_diffs(h, h_base, h_tot)
                 #plus templates get normalization factor of 0.75 in fit
                 if('fpl' in base):
-                    fracs *= 0.75
+                    fracs = fracs * 0.75
                 
                 #average up and down templates
                 fracs *= 0.5
 
                 parse = (key_name.split("_"))
                 sys_name = parse[2]
-                add_sys(d_fracs, fracs, sys_name)
+                add_sys(sys_dict, fracs, sys_name)
 
 
         #do xsec uncertainties
@@ -152,21 +167,8 @@ def get_sys_dict(mbin, year, chan):
         #raw_sys_dict[xsec_names[idx]] = change
 
 
-    return d_fracs
+    return sys_dict
 
-
-def add_sys(d, fracs, sys_name):
-    if("pdf" in sys_name): key_name = 'pdf'
-    elif('RENORM' in sys_name or 'FAC' in sys_name or 'REFAC' in sys_name): key_name = 'refac'
-    elif('ID' in sys_name or 'RECO' in sys_name or 'HLT' in sys_name or 'ISO' in sys_name ): key_name = "lep_eff"
-    elif("xsec" in sys_name and "fakes" not in sys_name): key_name = "mc_xsec"
-    elif("fakes" in sys_name): key_name = "fakes"
-    elif("ptrw" in sys_name): key_name = "ptrw"
-    elif("pu" in sys_name): key_name = "pileup"
-    elif("emu" in sys_name): key_name = "emucostrw"
-    else: key_name = "other"
-
-    d[key_name] += fracs
 
 
 parser = OptionParser()
@@ -178,6 +180,7 @@ chans= ["ee16",  "ee17", "ee18", "mumu16", "mumu17", "mumu18"]
 years= [16,17,18, 16, 17,18]
 
 gROOT.SetBatch(1)
+gStyle.SetOptStat(0)
 
 
 
@@ -192,14 +195,30 @@ for idx,chan in enumerate(chans):
     hists = dict_to_hists(sys_dict)
 
     c = TCanvas(chan, "", 1600, 1000)
+    hmax = 0.
 
-    hists[0].GetXaxis.SetTitle("Template Bin")
-    hists[0].GetYaxis.SetTitle("Fractional Uncertainty")
+    for h in hists:
+        hmax = max(hmax, h.GetMaximum())
+    hmax *=1.3
+
+    h_dummy = hists[0].Clone("h_dummy")
+    h_dummy.Reset()
+    h_dummy.SetTitle("Channel: %s" % chan) 
+    h_dummy.GetXaxis().SetTitle("Template Bin")
+    h_dummy.GetYaxis().SetTitle("Fractional Uncertainty")
+    h_dummy.SetMaximum(hmax)
+    h_dummy.Draw("hist")
 
     for h in hists:
         h.Draw("hist same")
 
-    c.Print("test.png")
+    leg = TLegend(0.25, 0.2)
+    for h in hists:
+        leg.AddEntry(h, name_dict[h.GetTitle()], "l")
+
+    leg.Draw()
+    c.Print("test2.png")
+
     break
 
 

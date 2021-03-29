@@ -58,7 +58,7 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
 
     if(std::abs(flavour - 5.) < 0.01){ //bjet
 
-        if (systematic == 0) sys = "central";
+        if (systematic == 0 || systematic == 3 || systematic  == -3) sys = "central";
         if (systematic == 1) sys = "up_correlated";
         if (systematic == -1) sys = "down_correlated";
         if (systematic == 2) sys = "up_uncorrelated";
@@ -71,7 +71,7 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
     }
     else if (std::abs(flavour - 4.) < 0.01){ //cjet
 
-        if (systematic == 0) sys = "central";
+        if (systematic == 0 || systematic == 3 || systematic  == -3) sys = "central";
         if (systematic == 1) sys = "up_correlated";
         if (systematic == -1) sys = "down_correlated";
         if (systematic == 2) sys = "up_uncorrelated";
@@ -83,10 +83,11 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
     }
     else{ //udsg jet
 
-        //udsgs only have one uncertainty which is taken to be uncorrelated
-        if (systematic == 0 || systematic == 1 || systematic == -1) sys = "central";
-        if (systematic == 2) sys = "up";
-        if (systematic == -2) sys = "down";
+        //udsgs only have one uncertainty which is taken to be uncorrelated wrt
+        //to others and the year
+        if (systematic == 3) sys = "up";
+        if (systematic == -3) sys = "down";
+        if(abs(systematic) < 3) sys = "central";
 
 
         bjet_SF = b_readers.udsg_reader.eval_auto_bounds(sys, BTagEntry::FLAV_UDSG, eta,pt);
