@@ -79,6 +79,7 @@ void TempMaker::setup(){
             t_in->SetBranchAddress("inc_id2", &inc_id2);
             t_in->SetBranchAddress("cost_st", &cost_st);
             t_in->SetBranchAddress("pdf_weights", &pdf_weights);
+            t_in->SetBranchAddress("nnpdf30_weight", &nnpdf30_weight);
         }
         t_in->SetBranchAddress("nJets", &nJets);
         t_in->SetBranchAddress("gen_weight", &gen_weight);

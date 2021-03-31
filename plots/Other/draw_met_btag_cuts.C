@@ -42,6 +42,8 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
 
 
     tm.setup();
+    float nnpdf30_weight = 1;
+    tm.t_in->SetBranchAddress("nnpdf30_weight", &nnpdf30_weight);
     int nEvents=0;
 
     int n1=0;
@@ -56,6 +58,7 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
         if(tm.m >= 170.){
             tm.doCorrections();
             tm.getEvtWeight();
+            tm.evt_weight /= nnpdf30_weight;
 
             h_neither->Fill(tm.cost, tm.evt_weight);
 
@@ -81,8 +84,9 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
 
 
 void draw_met_btag_cuts(){
-    int year = 2016;
+    int year = 2017;
     char *plot_dir = "Paper_plots/";
+    bool write_out = false;
     int flag1;
 
 
@@ -160,13 +164,15 @@ void draw_met_btag_cuts(){
     char plt_file1[200], plt_file2[200];
     sprintf(plt_file1, "%sMuMu%i_met_cut.pdf", plot_dir, year % 2000);
     sprintf(plt_file2, "%sMuMu%i_btag_cut.pdf", plot_dir, year % 2000);
-    make_ratio_plot(plt_file1, h_mumu_mc_btagonly, "Before",h_mumu_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", false);
-    make_ratio_plot(plt_file2, h_mumu_mc_metonly,  "Before",h_mumu_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", false);
+    
+    bool logy = false;
+    make_ratio_plot(plt_file1, h_mumu_mc_btagonly, "Before",h_mumu_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
+    make_ratio_plot(plt_file2, h_mumu_mc_metonly,  "Before",h_mumu_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
 
     sprintf(plt_file1, "%sElEl%i_met_cut.pdf", plot_dir, year % 2000);
     sprintf(plt_file2, "%sElEl%i_btag_cut.pdf", plot_dir, year % 2000);
-    make_ratio_plot(plt_file1, h_elel_mc_btagonly, "Before",h_elel_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", false);
-    make_ratio_plot(plt_file2, h_elel_mc_metonly,  "Before",h_elel_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", false);
+    make_ratio_plot(plt_file1, h_elel_mc_btagonly, "Before",h_elel_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
+    make_ratio_plot(plt_file2, h_elel_mc_metonly,  "Before",h_elel_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
 
 }
 

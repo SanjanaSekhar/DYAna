@@ -9,7 +9,8 @@ void draw_phot_pdf_cmp(){
     //TFile * f_mad = TFile::Open("..//generator_stuff/root_files/phot_induced_aug21.root");
     TTree *t_mad = (TTree *)f_mad->Get("T_lhe");
 
-    TFile *f_pwg = TFile::Open("../generator_stuff/root_files/photInd_lux_may2.root");
+    //TFile *f_pwg = TFile::Open("../generator_stuff/root_files/photInd_lux_may2.root");
+    TFile *f_pwg = TFile::Open("../generator_stuff/root_files/PhotInd_M150_mar29.root");
     TTree *t_pwg = (TTree *) f_pwg->Get("T_lhe");
 
     char title[80] = "LO vs. NLO QED, Lux (M > 150)";
@@ -29,8 +30,8 @@ void draw_phot_pdf_cmp(){
     float pt_high = 100000.;
     bool phot_ind = true;
 
-    make_gen_cost(t_mad,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low = pt_low, pt_high = pt_high, phot_ind);
-    make_gen_cost(t_pwg,  h_pwg_cost_st, h_pwg_cost_r, h_pwg_pt, h_pwg_xf, m_low, m_high, pt_low = pt_low, pt_high = pt_high, phot_ind);
+    make_gen_cost(t_mad,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high,  pt_low,  pt_high, phot_ind);
+    make_gen_cost(t_pwg,  h_pwg_cost_st, h_pwg_cost_r, h_pwg_pt, h_pwg_xf, m_low, m_high,  pt_low,  pt_high, phot_ind);
 
     h_mad_cost_st->Scale(1./h_mad_cost_st->Integral());
     h_pwg_cost_st->Scale(1./h_pwg_cost_st->Integral());

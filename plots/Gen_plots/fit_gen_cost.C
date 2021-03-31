@@ -55,7 +55,7 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
         float pt = cm.Pt();
         //printf("M= %.2f \n", cm.M());
         if(cm.M() >= m_low && cm.M() < m_high && (lep1_id < 14) && (lep2_id < 14)
-            && (!phot_ind || ((q1_id == 22 || q2_id ==22) && (q1_id != 22 || q2_id != 22)) )
+            && (!phot_ind || ((q1_id == 22 || q2_id ==22) && (q1_id == 22 || q2_id == 22)) )
            //&& ((abs(lep_pls->Eta()) < 2.5) && (abs(lep_mns->Eta()) < 2.5))
             && pt >= pt_low && pt <= pt_high
 

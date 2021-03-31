@@ -31,8 +31,8 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2016;
-const bool write_out = true;
+const int year = 2017;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
 
@@ -344,7 +344,7 @@ void draw_cmp(){
 
 
     sprintf(y_ax_label, "Events/%.0f GeV", m_bin_size);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)",y_ax_label, -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sMuMu%i_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
@@ -367,17 +367,17 @@ void draw_cmp(){
 
     logy = true;
     //sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", plot_label -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sMuMu%i_pt_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_pt->Print(plt_file);
 
-    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_xf, year, 33);
     sprintf(plt_file, "%sMuMu%i_xf_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_xf->Print(plt_file);
 
-    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi","", plot_label -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi","", plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_phi, year, 33);
     sprintf(plt_file, "%sMuMu%i_phi_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_phi->Print(plt_file);

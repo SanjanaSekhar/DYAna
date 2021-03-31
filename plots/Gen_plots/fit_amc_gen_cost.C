@@ -25,11 +25,11 @@
 #include "../../utils/ScaleFactors.C"
 #include "../../utils/PlotUtils.C"
 
-int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt, TH1F *h_xf,  
+int make_amc_gen_cost(TTree *t_gen, TH1F *h_m, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt, TH1F *h_xf,  
         float m_low, float m_high, float pt_low, float pt_high, float rap_low, float rap_high, 
-        bool do_ptrw = false, int year = 2016){
+        bool do_ptrw = false, bool nnpdf_unrw = false, int year = 2016){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
-    float gen_weight, m, cost, cost_st;
+    float gen_weight, m, cost, cost_st, nnpdf30_weight;
     Bool_t sig_event(1);
     t_gen->SetBranchAddress("gen_p", &gen_lep_p);
     t_gen->SetBranchAddress("gen_m", &gen_lep_m);
@@ -40,6 +40,7 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
     t_gen->SetBranchAddress("cost_st", &cost_st);
     t_gen->SetBranchAddress("gen_weight", &gen_weight);
     t_gen->SetBranchAddress("sig_event", &sig_event);
+    if(nnpdf_unrw) t_gen->SetBranchAddress("nnpdf30_weight", &nnpdf30_weight);
 
 
 
@@ -70,6 +71,11 @@ int make_amc_gen_cost(TTree *t_gen, TH1F *h_cost_st, TH1F *h_cost_r, TH1F *h_pt,
                     float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
                     gen_weight *= ptrw;
                 }
+                if(nnpdf_unrw){
+                    gen_weight /= nnpdf30_weight;
+                }
+
+                h_m->Fill(m, gen_weight);
 
                 h_cost_st->Fill(my_cost, gen_weight);
                 //h_cost_st->Fill(-cost_st, gen_weight);
@@ -98,6 +104,7 @@ void fit_amc_gen_cost(){
     bool write_out = false;
     int year = 2016;
     bool do_ptrw = true;
+    bool do_nnpdf_unrw = false;
     char *out_file = "../analyze/SFs/2017/a0_fits.root";
     TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_nov13.root");
     gROOT->SetBatch(1);
@@ -159,9 +166,9 @@ void fit_amc_gen_cost(){
         float rap_high = 10000.;
         char title[100];
         TCanvas *c1 = new TCanvas("c1", "", 1000, 800);
-        nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
+        nEvents = make_amc_gen_cost(t_gen_mu,  h_dummy, h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw, year);
         float norm = h_cost1->Integral();
-        nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
+        nEvents += make_amc_gen_cost(t_gen_el,  h_dummy, h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw, year);
         sprintf(title, "M %.0f-%.0f GeV, dilepton pT; pT", m_low, m_high);
         h_pt->SetTitle(title);
         h_pt->Scale(1./h_pt->Integral());
@@ -217,8 +224,8 @@ void fit_amc_gen_cost(){
 
                 h_cost1->Reset();
                 h_pt->Reset();
-                nEvents = make_amc_gen_cost(t_gen_mu,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
-                nEvents += make_amc_gen_cost(t_gen_el,  h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, year);
+                nEvents = make_amc_gen_cost(t_gen_mu,  h_dummy, h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw, year);
+                nEvents += make_amc_gen_cost(t_gen_el,  h_dummy, h_cost1, h_dummy, h_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw, year);
 
 
 

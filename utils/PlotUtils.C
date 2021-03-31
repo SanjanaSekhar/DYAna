@@ -56,7 +56,61 @@ void binwidth_normalize(THStack *h_stack){
     }
 }
 
+TCanvas *draw_single_plot(TString plt_fname, TH1F *h, TString xlabel, TString ylabel, TString plot_label, bool logy = true, bool write_out = true){ 
+    TCanvas *c = new TCanvas(plt_fname, "Histograms", 800,800);
+    float hmax = 1.2 * h->GetMaximum();
+    if(logy) hmax *=2;
+    h->SetMaximum(hmax);
+    h->SetMinimum(1e-5);
+    if(logy && hmax > 10) h->SetMinimum(1e-1);
+    h->SetLineColor(kBlue);
+    h->SetLineWidth(3);
+    h->Draw("histe");
+    h->GetXaxis()->SetTitle(xlabel);
+    h->GetYaxis()->SetTitle(ylabel);
 
+    //h->GetYaxis()->SetNdivisions(505);
+    //h->GetYaxis()->SetTitleSize(20);
+    //h->GetYaxis()->SetTitleFont(43);
+    //h->GetYaxis()->SetTitleOffset(1.2);
+    h->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    h->GetYaxis()->SetLabelSize(25);
+    // X axis h plot settings
+    //h->GetXaxis()->SetTitleSize(20);
+    //h->GetXaxis()->SetTitleFont(43);
+    //h->GetXaxis()->SetTitleOffset(3.);
+    h->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    h->GetXaxis()->SetLabelSize(25);
+
+
+
+    TLatex latext; 
+    latext.SetNDC();
+    latext.SetTextColor(kBlack);
+    latext.SetTextAlign(22); //centered
+    latext.SetTextFont(42);
+    latext.SetTextSize(0.04);    
+
+
+    float H = c->GetWh();
+    float W = c->GetWw();
+    float l = c->GetLeftMargin();
+    float t = c->GetTopMargin();
+    float r = c->GetRightMargin();
+    float b = c->GetBottomMargin();
+
+    float w = 1-l-r;
+
+    //printf("l %.3f,r %.3f,t %.3f,b %.3f,W %.3f,H %.3f \n",l,r,t,b,W,H);
+
+
+    latext.DrawLatex(l + w/2, 1-2*t ,plot_label);
+
+    if(write_out) c->Print(plt_fname);
+
+
+    return c;
+}
 
 
         
@@ -139,7 +193,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     if(logy) hmax *=2;
     h1->SetMaximum(hmax);
     h1->SetMinimum(1e-5);
-    if(logy && hmax > 1) h1->SetMinimum(1e-1);
+    if(logy && hmax > 10) h1->SetMinimum(1e-1);
     h1->Draw("hist E");
     gStyle->SetEndErrorSize(4);
     h2->Draw("hist E same");

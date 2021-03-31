@@ -678,7 +678,6 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
         printf("Year is %i ?? ", year);
         exit(1);
     }
-    f->Print();
     char name[100];
     for(int i=0; i<n_emu_rw_m_bins; i++){
         sprintf(name, "emu%i_mbin0_cost_ratio", year % 2000);
