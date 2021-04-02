@@ -100,10 +100,13 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
 }
 
 
-Double_t get_emu_btag_weight(Double_t pt1, Double_t eta1, Float_t flavour1, Double_t pt2, Double_t eta2, Float_t flavour2, BTag_effs btag_effs, BTag_readers b_readers){
-    //compute weighting from btagging scale factors
+float get_pos_btag_weight(int nJets, Double_t pt1, Double_t eta1, Float_t flavour1, Double_t pt2, Double_t eta2, Float_t flavour2, BTag_effs btag_effs, BTag_readers b_readers){
+    //compute weighting from btagging scale factors for tagging one of the jets
+    //as a b
 
     Double_t bjet1_SF, bjet1_eff, bjet2_SF, bjet2_eff;
+
+    if(nJets ==0) return 1.;
 
     if(std::abs(flavour1 - 5.) < 0.01){ //bjet
         bjet1_SF = b_readers.b_reader.eval_auto_bounds("central", BTagEntry::FLAV_B, eta1, pt1);
@@ -122,6 +125,7 @@ Double_t get_emu_btag_weight(Double_t pt1, Double_t eta1, Float_t flavour1, Doub
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
 
+    if(nJets ==1) return bjet1_SF;
 
     if(std::abs(flavour2 - 5.) < 0.01){ //bjet
         bjet2_SF = b_readers.b_reader.eval_auto_bounds("central", BTagEntry::FLAV_B, eta2, pt2);
@@ -139,9 +143,11 @@ Double_t get_emu_btag_weight(Double_t pt1, Double_t eta1, Float_t flavour1, Doub
         bjet2_eff= btag_eff(pt2, eta2, btag_effs.udsg_eff);
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
+
+
     
-    Double_t P_mc = bjet1_eff + bjet2_eff - bjet1_eff*bjet2_eff;
-    Double_t P_data = bjet1_SF*bjet1_eff + bjet2_SF*bjet2_eff - bjet1_SF*bjet2_SF*bjet1_eff*bjet2_eff;
+    float P_mc = bjet1_eff + bjet2_eff - bjet1_eff*bjet2_eff;
+    float P_data = bjet1_SF*bjet1_eff + bjet2_SF*bjet2_eff - bjet1_SF*bjet2_SF*bjet1_eff*bjet2_eff;
     return P_data/P_mc;
 }
 
