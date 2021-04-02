@@ -34,9 +34,10 @@ const bool write_out = false;
 char *plot_dir = "Paper_plots/ttbar_check/";
 char *label = "_after_toprw_";
 bool normalize = false;
-bool do_top_pt_rw = false;
-char* plot_label = "Before top p_{T} reweighting";
-//char* plot_label = "After top p_{T} reweighting";
+bool do_top_pt_rw = true;
+//char* plot_label = "Before top p_{T} reweighting";
+char* plot_label = "After top p_{T} reweighting";
+//TODO FIX BTAGGING SF FOR THIS SELECTION!!!
 
 void make_ttbar_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,   TH1F *h_rap, bool is_data = false, 
         int year=2016, float m_low = 150., float m_high = 999999., bool do_top_rw = true){
@@ -290,7 +291,7 @@ void draw_ttbar_val(){
     
     bool logy = true;
     bool logx = false;
-    bool draw_sys_unc = false;
+    bool draw_sys_unc = true;
     float ratio_range = 0.2;
     bool draw_chi2 = true;
 

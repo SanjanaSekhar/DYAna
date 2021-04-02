@@ -29,7 +29,9 @@ void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-
     nt.setupOutputTree("T_QCD");
     nt.setupOutputTree("T_ss");
     int iso_lep;
+    float positive_btag_SF = 1.;
     nt.outTrees[1]->Branch("iso_lep", &iso_lep);
+    nt.outTrees[0]->Branch("positive_btag_SF", &positive_btag_SF);
 
 
     while(nt.getNextFile()){
@@ -40,6 +42,7 @@ void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-
             if(nt.good_trigger && nt.emu_ids  && nt.cm_m > 130.){
                 nt.fillEvent();
                 nt.fillEventSFs();
+                positive_btag_SF = nt.fillPosBtagSF();
 
                 bool one_iso = nt.mu_tight_id0 ^ nt.el_iso0;
 

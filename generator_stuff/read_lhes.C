@@ -12,7 +12,8 @@
 void read_lhes(){
     TTree *t1 = new TTree("T_lhe", "Lhe event info for mass binned DY");
     t1->SetDirectory(0);
-    string f1("/home/ozamram/Documents/Research/Generators/MG5_aMC_v2_6_2/PhotInd_mar29/Events/run_01/unweighted_events.lhe");
+    string f1("/home/ozamram/Documents/Research/Generators/MG5_aMC_v2_6_2/DY_LO_test/Events/run_01/unweighted_events.lhe");
+    //string f1("/home/ozamram/Documents/Research/Generators/MG5_aMC_v2_6_2/PhotInd_mar29/Events/run_01/unweighted_events.lhe");
     //string f1("/home/ozamram/Documents/Research/Generators/POWHEG-BOX-V2/Z_ew-BMNNPV/DY_m250_april25/pwgevents.lhe");
     //string f1("/home/ozamram/Documents/Research/B2GTTrees/generator_stuff/DY_M700_events.lhe");
     //string f1("/uscms_data/d3/oamram/CMSSW_8_0_24_patch1/src/Analysis/B2GTTrees/generator_stuff/MG5/m200/cmsgrid_final.lhe");
@@ -23,7 +24,7 @@ void read_lhes(){
     //fill_tree(f2, t1, true);
     //fill_tree(f3, t1, true);
 
-    TFile *fout1 = TFile::Open("root_files/PhotInd_M150_mar29.root", "RECREATE");
+    TFile *fout1 = TFile::Open("root_files/DY_LO_test_april1.root", "RECREATE");
     fout1->cd();
     t1->Write();
     fout1->Close();

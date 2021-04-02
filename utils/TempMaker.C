@@ -398,7 +398,7 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     h->Scale(1./avg);
 }
 
-float TempMaker::getEvtWeight(){
+float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
     if(is_data){
         evt_weight = 1.;
         return 1.;
@@ -417,17 +417,19 @@ float TempMaker::getEvtWeight(){
     }
     //top_ptrw is 1 for non-ttbar samples
     double base_weight = gen_weight * (*systematic) * pu_SF * top_ptrw;
-    if(do_btag_sys != 0){
+    if(incl_btag_SFs){
+        if(do_btag_sys != 0){
 #ifndef STAND_ALONE
-        jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
-        jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
+            jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
+            jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
 #endif
-    }
-    if (nJets >= 1){
-        base_weight *= jet1_btag_SF;
-    }
-    if (nJets >= 2){
-        base_weight *= jet2_btag_SF;
+        }
+        if (nJets >= 1){
+            base_weight *= jet1_btag_SF;
+        }
+        if (nJets >= 2){
+            base_weight *= jet2_btag_SF;
+        }
     }
 
     if(do_ptrw){

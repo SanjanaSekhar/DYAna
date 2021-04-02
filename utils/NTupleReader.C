@@ -797,6 +797,13 @@ void NTupleReader::hemRescale(){
 
 }
 
+float NTupleReader::fillPosBtagSF(){
+    float result = 1.;
+
+    if(nJets==0) return 1.;
+    else return get_pos_btag_weight(nJets, jet1_pt, jet1_eta, jet1_flavour, jet2_pt, jet2_eta, jet2_flavour, btag_effs, b_reader)
+}
+
 
 
 void NTupleReader::fillEventSFs(){
