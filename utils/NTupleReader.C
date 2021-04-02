@@ -24,7 +24,6 @@ void compute_norms(FILE *root_files, Float_t *norms, unsigned int *nFiles){
                 char sample_name[200];
                 nparams = sscanf(lines, "!%s xsec_pb = %e \n", sample_name, &xsec);
                 if(nparams == 2){
-                    xsec *= 1000.; //pb to fb
                     sample_idx = sample_i + 1; //just increase index by 1 for this sample
                 }
             }
@@ -115,8 +114,6 @@ void NTupleReader::setupSFs(){
 bool NTupleReader::getNextFile(){
     if(fileCount != 0 && fin != nullptr) fin->Close();
     char lines[300];
-    int sample_idx = 0;
-    float xsec = 0.;
     while(fgets(lines, 300, root_files)){
         if(lines[0] == '#' || is_empty_line(lines)) continue; //comment line
         else if(lines[0] == '!'){//sample header
@@ -331,7 +328,7 @@ void NTupleReader::setupOutputTree(char treeName[100]){
     nOutTrees++;
     outTrees[idx] = new TTree(treeName, "");
 
-    bool is_sig_tree = (strstr(treeName, "sig") != NULL);
+    bool is_sig_tree = (strstr(treeName, "sig") != NULL) || (strstr(treeName, "gen") != NULL);
     printf("Setting up tree %s (sig_tree = %i) \n", treeName, is_sig_tree);
 
     outTrees[idx]->Branch("year", &year, "year/I");
@@ -748,7 +745,6 @@ void NTupleReader::fillEvent(){
 
     if(!is_data){
         gen_weight = evt_Gen_Weight * normalization;
-        if(do_pdf_reweight) gen_weight *= nnpdf30_weight;
     }
 
 }
@@ -1396,6 +1392,15 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
 
     if(PRINT) memset(out_buff, 0, 10000);
     return abs(gen_id[gen_lep_p]);
+}
+
+void NTupleReader::doNNPDFRW(){
+    //make sure to call this after parsed gen particles!
+
+    if(do_pdf_reweight){
+        nnpdf30_weight /= get_nnpdf_normfix(gen_m);
+        gen_weight *= nnpdf30_weight;
+    }
 }
 
 bool NTupleReader::doTopPTRW(bool PRINT = false){

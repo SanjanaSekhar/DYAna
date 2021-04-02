@@ -3,11 +3,15 @@
 
 void draw_year_cmp(){
 
-    char *plot_dir = "Misc_plots/gen_level_year_cmp";
-    char *label = "default";
+    char *plot_dir = "Misc_plots/gen_level_year_cmp/";
+    char *label = "new17_unrw";
 
     bool do_ptrw = false;
     bool do_nnpdf_unrw = false;
+
+    bool normalize = false;
+
+    char plt_file[100];
 
 
     //gROOT->SetBatch(1);
@@ -18,7 +22,7 @@ void draw_year_cmp(){
     TTree *t16_gen_mu = (TTree *) f16_gen->Get("T_gen_mu");
     TTree *t16_gen_el = (TTree *) f16_gen->Get("T_gen_el");
 
-    TFile *f17_gen = TFile::Open("../analyze/output_files/DY17_gen_level_nov13.root");
+    TFile *f17_gen = TFile::Open("../analyze/output_files/DY17_gen_level_mar29.root");
     TTree *t17_gen_mu = (TTree *) f17_gen->Get("T_gen_mu");
     TTree *t17_gen_el = (TTree *) f17_gen->Get("T_gen_el");
 
@@ -55,8 +59,10 @@ void draw_year_cmp(){
     make_amc_gen_cost(t16_gen_mu,  h16_m, h16_cost, h_dummy, h16_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw);
     make_amc_gen_cost(t16_gen_el,  h16_m, h16_cost, h_dummy, h16_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw);
 
+    do_nnpdf_unrw = true;
     make_amc_gen_cost(t17_gen_mu,  h17_m, h17_cost, h_dummy, h17_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw);
     make_amc_gen_cost(t17_gen_el,  h17_m, h17_cost, h_dummy, h17_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw);
+    do_nnpdf_unrw = false;
 
     make_amc_gen_cost(t18_gen_mu,  h18_m, h18_cost, h_dummy, h18_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw);
     make_amc_gen_cost(t18_gen_el,  h18_m, h18_cost, h_dummy, h18_pt, h_dummy, m_low, m_high, pt_low, pt_high, rap_low, rap_high, do_ptrw, do_nnpdf_unrw);

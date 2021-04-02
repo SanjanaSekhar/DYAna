@@ -187,7 +187,7 @@ void init_mc(int year){
     }
     else if(year == 2017){
 
-        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_dy_mar25.root");
+        f_elel_mc = (TFile*) TFile::Open("../analyze/output_files/2017/ElEl17_dy_mar31.root");
         t_elel_mc = (TTree *)f_elel_mc->Get("T_sig");
         t_elel_tautau= (TTree *) f_elel_mc->Get("T_tautau");
         t_elel_ss_dy = (TTree *)f_elel_mc->Get("T_ss");
@@ -197,7 +197,7 @@ void init_mc(int year){
 
     //------------------------------------------------------------------------------
     
-        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_dy_mar25.root");
+        f_mumu_mc = (TFile*) TFile::Open("../analyze/output_files/2017/MuMu17_dy_mar31.root");
         t_mumu_mc = (TTree *)f_mumu_mc->Get("T_sig");
         t_mumu_tautau = (TTree *) f_mumu_mc->Get("T_tautau");
         t_mumu_ss_dy = (TTree *)f_mumu_mc->Get("T_ss");

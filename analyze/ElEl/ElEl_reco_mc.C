@@ -7,9 +7,9 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
 {
 
 
-    if(fin == "") fin = string("EOS_files/2016/DY_files_test.txt");
+    if(fin == "") fin = string("EOS_files/2017/DY_files_test.txt");
     NTupleReader nt(fin.c_str(),"output_files/ElEl_dy_test.root", false);
-    if (year == -1) year = 2016;
+    if (year == -1) year = 2017;
     nt.year = year;
 
 
@@ -41,6 +41,7 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
                 nt.fillEventSFs();
 
                 nt.parseGenParts();
+                nt.doNNPDFRW();
                 bool one_iso = nt.el_iso0 ^ nt.el_iso1;
 
 

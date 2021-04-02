@@ -52,6 +52,7 @@ class NTupleReader{
         bool getNextFile();
         void finish();
         bool doTopPTRW(bool PRINT = false);
+        void doNNPDFRW();
         bool parseGenParts(bool PRINT);
         int selectAnyGenParts(bool PRINT);
 
@@ -61,6 +62,8 @@ class NTupleReader{
         unsigned int nFiles;
         Float_t normalization = 1.0;
         Float_t norms[MAX_SAMPLES]; // computed normalizations to apply to each event in a sample (based on xsection and total weight)
+        int sample_idx = 0;
+        float xsec = 0.;
         FILE *root_files;
         TFile *fout;
 

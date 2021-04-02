@@ -41,6 +41,7 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
                 nt.fillEventSFs();
                 nt.parseGenParts();
                 nt.fillEventRC();
+                nt.doNNPDFRW();
                 bool one_tight = nt.mu_tight_id0 ^ nt.mu_tight_id1;
 
                 //pick the category

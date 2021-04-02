@@ -8,7 +8,7 @@
 #define FLAG_M_BINS 0
 #define FLAG_PT_BINS 1
 
-int find_bin(float * bins, float val){
+int find_bin(const float * bins, float val){
     int bin =0;
     int max_bin = 10000;
     while(bin < max_bin){

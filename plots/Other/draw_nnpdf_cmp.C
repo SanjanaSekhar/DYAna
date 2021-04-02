@@ -56,8 +56,11 @@ void make_hists(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int
         tm.getEvent(i);
 
         if(tm.has_no_bjets && tm.met_pt< met_cut && tm.m >= 170.){
+            nEvents++;
             tm.doCorrections();
             tm.getEvtWeight();
+            if(isnan(nnpdf30_weight) || nnpdf30_weight > 100.)
+                printf("nnpdf30_weight is %.3f, m %.2f \n", nnpdf30_weight, tm.m);
             if(nnpdf_unrw) tm.evt_weight /= nnpdf30_weight;
 
             h_m->Fill(tm.m,tm.evt_weight);
@@ -68,6 +71,7 @@ void make_hists(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int
 
         }
     }
+    printf("Selected %i events \n", nEvents);
     //printf("n1,n2,n3: %i %i %i \n", n1,n2,n3);
     tm.finish();
 }
@@ -75,7 +79,7 @@ void make_hists(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int
 
 void draw_nnpdf_cmp(){
     int year = 2017;
-    char *plot_dir = "Paper_plots/nnpdf_cmp/";
+    char *plot_dir = "Misc_plots/nnpdf_cmp/";
     bool write_out = true;
     int flag1 = FLAG_ELECTRONS;
 
@@ -83,7 +87,7 @@ void draw_nnpdf_cmp(){
     setTDRStyle();
     init(year);
 
-    char *file_label = "ElEl17";
+    char *file_label = "ElEl17_normfix";
     char *plt_label = "Electrons: 2017";
 
     char *name1 = "DY NNPDF 3.0";
@@ -143,6 +147,8 @@ void draw_nnpdf_cmp(){
     nnpdf_unrw = true;
     make_hists(t, m2, cost2, pt2, rap2, flag1, year, nnpdf_unrw);
 
+    m1->Print("range");
+    m2->Print("range");
 
     logy = true;
     sprintf(plt_file1, "%s%s_m_cmp.pdf", plot_dir, file_label);
