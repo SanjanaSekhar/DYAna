@@ -2,16 +2,18 @@
 
 
 
-void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="")
+void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
 {
 
     if(fin == "") fin = string("EOS_files/2017/TTbar_files.txt");
     NTupleReader nt(fin.c_str(),"output_files/test.root", false);
-    nt.year = 2017;
+    if (year == -1) year = 2016;
+    nt.year = year;
+    printf("Year is %i \n", nt.year);
     nt.do_muons = true;
     nt.do_electrons = true;
 
-    string fout_name = string("Btag_eff_MC_2017.root");
+    string fout_name = string("Btag_eff_MC_2018_ttbar.root");
     TFile *fout = TFile::Open(fout_name.c_str(), "RECREATE");
 
     Double_t Eta_bins[] = {0, 0.9, 1.2, 2.1, 2.4}; 
@@ -24,6 +26,13 @@ void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="")
     TH2D *c_denom = new TH2D("c_denom", "Efficiency for b-tagging c-jets", nPt_bins, Pt_bins, nEta_bins, Eta_bins);
     TH2D *udsg_num = new TH2D("udsg_num", "Efficiency for b-tagging udsg-jets", nPt_bins, Pt_bins, nEta_bins, Eta_bins);
     TH2D *udsg_denom = new TH2D("udsg_denom", "Efficiency for b-tagging udsg-jets", nPt_bins, Pt_bins, nEta_bins, Eta_bins);
+
+    b_num->Sumw2();
+    b_denom->Sumw2();
+    c_num->Sumw2();
+    c_denom->Sumw2();
+    udsg_num->Sumw2();
+    udsg_denom->Sumw2();
 
     unsigned int nJets=0;
     unsigned int nB=0;
@@ -41,26 +50,26 @@ void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="")
     while(nt.getNextFile()){
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.jet_size >= 2 && nt.cm_m > 130. && 
-                    ((nt.dimuon_id && nt.mu_iso0 && nt.mu_iso1) || (nt.dielec_id && nt.el_iso0 && nt.el_iso1))  ){
+            if(nt.jet_size >= 2 && (nt.loose_dimuon_id || nt.dielec_id)){
+                nt.fillEvent();
                 for(int j=0; j < nt.jet_size; j++){
                     if(nt.jet_Pt[j] < 20.) continue;
                     int flavour = std::abs(nt.jet_hadronflavour[j]);
                     if (flavour == B){
 
                         nB++;
-                        if(nt.jet_btag[j] >= nt.bjet_med_cut) b_num->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]));
-                        b_denom->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]));
+                        if(nt.jet_btag[j] >= nt.bjet_med_cut) b_num->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]), nt.gen_weight);
+                        b_denom->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]), nt.gen_weight);
                     }
                     else if (flavour == C){
                         nC++;
-                        if(nt.jet_btag[j] >= nt.bjet_med_cut) c_num->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]));
-                        c_denom->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]));
+                        if(nt.jet_btag[j] >= nt.bjet_med_cut) c_num->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]), nt.gen_weight);
+                        c_denom->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]), nt.gen_weight);
                     }
                     else if (nt.jet_genPt[j] > 8.){
                         nUDSG++;
-                        if(nt.jet_btag[j] >= nt.bjet_med_cut) udsg_num->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]));
-                        udsg_denom->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]));
+                        if(nt.jet_btag[j] >= nt.bjet_med_cut) udsg_num->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]), nt.gen_weight);
+                        udsg_denom->Fill(nt.jet_Pt[j], std::abs(nt.jet_Eta[j]), nt.gen_weight);
                     }
                     nJets++;
                 }

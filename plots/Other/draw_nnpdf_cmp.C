@@ -87,8 +87,8 @@ void draw_nnpdf_cmp(){
     setTDRStyle();
     init(year);
 
-    char *file_label = "ElEl17_normfix";
-    char *plt_label = "Electrons: 2017";
+    char *file_label = "ElEl17_nonormfix";
+    char *plt_label = "Electrons: 2017 (No normalization fix)";
 
     char *name1 = "DY NNPDF 3.0";
     char *name2 = "DY NNPDF 3.1";

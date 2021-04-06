@@ -7,7 +7,7 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/PhotInd_M150/B2GAna
 
 
 ##PhotInd M500
-!idx = 19 xsec = 0.027
+!idx = 19 xsec = 0.01
 #################
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/PhotInd_M500/B2GAnaFW_9_4_X_V0_oamram-crab_PhotInd_M500_2017_step2b-092dbe4ee9b874883e19626ddbf3d288/200210_170513/0000/B2GTTreeNtupleExtra_1.root
 

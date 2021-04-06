@@ -1,5 +1,5 @@
 ################ WTbar files
-!idx = 15 xsec = 34.91
+!idx = 15 xsec = 35.85
 #########################
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200122_194123/0000/B2GTTreeNtupleExtra_1.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200122_194123/0000/B2GTTreeNtupleExtra_10.root
@@ -159,7 +159,7 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/ST_tW_antitop_5f_in
 
 
 ################ WT files
-!idx = 14 xsec = 34.91
+!idx = 14 xsec = 35.85
 #########################
 
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2017/Jan22/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/B2GAnaFW_9_4_X_V0_RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/200122_193956/0000/B2GTTreeNtupleExtra_1.root

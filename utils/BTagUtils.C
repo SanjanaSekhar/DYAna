@@ -151,7 +151,8 @@ float get_pos_btag_weight(int nJets, Double_t pt1, Double_t eta1, Float_t flavou
     return P_data/P_mc;
 }
 
-void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
+void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year, bool incl_systematics = true, bool use_dy_samples = false){
+    printf("Setting up btag SFs... \n");
     TH1::AddDirectory(kFALSE);
     char file[80];
     BTagCalibration calib_bc, calib_udsg;
@@ -169,18 +170,32 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
         calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V2.csv");
     }
 
-    btag_r->b_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up_correlated", "down_correlated", "up_uncorrelated", "down_uncorrelated"});
+    std::vector<string> sys_types, udsg_sys_types;
+    if(incl_systematics){ 
+        sys_types = {"up_correlated", "down_correlated", "up_uncorrelated", "down_uncorrelated"};
+        udsg_sys_types = {"up", "down"};
+    }
+
+    btag_r->b_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", sys_types);
     btag_r->b_reader.load(calib_bc, BTagEntry::FLAV_B, "comb");
-    btag_r->c_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up_correlated", "down_correlated", "up_uncorrelated", "down_uncorrelated"});
+    btag_r->c_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", sys_types);
     btag_r->c_reader.load(calib_bc, BTagEntry::FLAV_C, "comb");
-    btag_r->udsg_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", {"up", "down" });
+    btag_r->udsg_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", udsg_sys_types);
     btag_r->udsg_reader.load(calib_udsg, BTagEntry::FLAV_UDSG, "incl");
 
 
     TFile *f0;
-    if (year == 2016)  f0 = TFile::Open("../analyze/SFs/2016/BTag_efficiency_may24.root");
-    if (year == 2017)  f0 = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017.root");
-    if (year == 2018)  f0 = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018.root");
+    if(!use_dy_samples){
+        if (year == 2016)  f0 = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_ttbar.root");
+        if (year == 2017)  f0 = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_ttbar.root");
+        if (year == 2018)  f0 = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_ttbar.root");
+    }
+    else{
+        if (year == 2016)  f0 = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_dy.root");
+        if (year == 2017)  f0 = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_dy.root");
+        if (year == 2018)  f0 = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_dy.root");
+    }
+
     TDirectory *subdir0 = gDirectory;
     TH2D *b_eff = (TH2D *) subdir0->Get("b_eff")->Clone();
     TH2D *c_eff = (TH2D *) subdir0->Get("c_eff")->Clone();
@@ -191,6 +206,6 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year){
     b_effs->b_eff = b_eff;
     b_effs->c_eff = c_eff;
     b_effs->udsg_eff = udsg_eff;
-    printf("Btag SF's set up \n");
+    printf(" Done \n");
 }
 #endif

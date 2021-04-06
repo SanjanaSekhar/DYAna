@@ -16,7 +16,7 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     nt.do_SFs = true;
     nt.do_RC = true;
     nt.RC_from_gen = true;
-    nt.do_pdf_reweight = true;
+    nt.is_signal_sample = true;
     
     nt.setupSFs();
     nt.setupRC();
