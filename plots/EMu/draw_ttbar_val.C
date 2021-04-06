@@ -29,12 +29,12 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2017;
-const bool write_out = false;
-char *plot_dir = "Paper_plots/ttbar_check/";
+int year = 2016;
+const bool write_out = true;
+char *plot_dir = "Misc_plots/ttbar_check/";
 char *label = "_after_toprw_";
 bool normalize = false;
-bool do_top_pt_rw = true;
+bool do_top_pt_rw =true;
 //char* plot_label = "Before top p_{T} reweighting";
 char* plot_label = "After top p_{T} reweighting";
 
@@ -198,7 +198,13 @@ void make_ttbar_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F 
     //if(!is_data) tm.do_emu_costrw = costrw;
 
     tm.setup();
+
+    float positive_btag_SF;
+    if(!is_data) tm.t_in->SetBranchAddress("positive_btag_SF", &positive_btag_SF);
+
+
     int nEvents=0;
+    bool incl_antibtag_SFs= false;
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
@@ -207,11 +213,13 @@ void make_ttbar_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F 
         if(pass && has_a_bjet){
             nEvents++;
             tm.doCorrections();
-            tm.getEvtWeight();
+            tm.getEvtWeight(incl_antibtag_SFs);
 
             Double_t evt_weight;
             if(do_top_rw || is_data) evt_weight = tm.evt_weight;
             else evt_weight = tm.evt_weight / tm.top_ptrw;
+
+            if(!is_data) evt_weight *= positive_btag_SF;
 
             if(tm.top_ptrw > 2 || tm.top_ptrw < 0.){
                 printf("top pt rw is %.2f ? \n", tm.top_ptrw);
@@ -486,7 +494,7 @@ void draw_ttbar_val(){
     
     bool logy = true;
     bool logx = false;
-    bool draw_sys_unc = true;
+    bool draw_sys_unc = false;
     float ratio_range = 0.2;
     bool draw_chi2 = true;
 

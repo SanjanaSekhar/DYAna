@@ -53,6 +53,7 @@ class NTupleReader{
         void finish();
         bool doTopPTRW(bool PRINT = false);
         void doNNPDFRW();
+        float getPosBtagSF();
         bool parseGenParts(bool PRINT);
         int selectAnyGenParts(bool PRINT);
 
@@ -91,7 +92,7 @@ class NTupleReader{
         bool do_SFs = false;
         bool do_RC = false;
         bool do_top_ptrw = false;
-        bool do_pdf_reweight = false;
+        bool is_signal_sample = false;
         bool RC_from_gen = false;
 
         unsigned int nEvents=0;

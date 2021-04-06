@@ -42,7 +42,7 @@ void EMu_reco_background(int nJobs =1, int iJob = 0, string fin = "", int year=-
             if(nt.good_trigger && nt.emu_ids  && nt.cm_m > 130.){
                 nt.fillEvent();
                 nt.fillEventSFs();
-                positive_btag_SF = nt.fillPosBtagSF();
+                positive_btag_SF = nt.getPosBtagSF();
 
                 bool one_iso = nt.mu_tight_id0 ^ nt.el_iso0;
 

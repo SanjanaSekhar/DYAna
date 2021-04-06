@@ -87,11 +87,10 @@ NTupleReader::NTupleReader(const char *fin_name, const char *fout_name, bool is_
 void NTupleReader::setupSFs(){
     do_SFs = true;
 
-    printf("getting pu SFs \n");
-
     setup_pileup_systematic(&pu_sys, year);
 
-    setup_btag_SFs(&b_reader, &btag_effs, year);
+    bool setup_btag_systematics = false;
+    setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics, is_signal_sample);
 
     if(year < 2018) setup_prefire_SFs(&prefire_rates, year);
 
@@ -298,7 +297,7 @@ bool NTupleReader::getNextFile(){
                     tin->SetBranchAddress("metsyst_Pt", &met_syst_pt);
                     tin->SetBranchAddress("metsyst_Phi", &met_syst_phi);
                 }
-                if(do_pdf_reweight){
+                if(is_signal_sample){
                     tin->SetBranchAddress("pdf_size", &pdf_size);
                     tin->SetBranchAddress("pdf_Weights", &pdf_weights);
 
@@ -450,7 +449,7 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("top_ptrw_beta_up", &top_ptrw_beta_up);
         outTrees[idx]->Branch("top_ptrw_beta_down", &top_ptrw_beta_down);
 
-        if(do_pdf_reweight && is_sig_tree){
+        if(is_signal_sample && is_sig_tree){
             outTrees[idx]->Branch("pdf_weights", &pdf_weights, "pdf_weights[60]/F");
             outTrees[idx]->Branch("pdfext_weights", &pdfext_weights, "pdfext_weights[100]/F");
             outTrees[idx]->Branch("nnpdf30_weight", &nnpdf30_weight);
@@ -797,11 +796,11 @@ void NTupleReader::hemRescale(){
 
 }
 
-float NTupleReader::fillPosBtagSF(){
+float NTupleReader::getPosBtagSF(){
     float result = 1.;
 
     if(nJets==0) return 1.;
-    else return get_pos_btag_weight(nJets, jet1_pt, jet1_eta, jet1_flavour, jet2_pt, jet2_eta, jet2_flavour, btag_effs, b_reader)
+    else return get_pos_btag_weight(nJets, jet1_pt, jet1_eta, jet1_flavour, jet2_pt, jet2_eta, jet2_flavour, btag_effs, b_reader);
 }
 
 
@@ -1404,7 +1403,7 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
 void NTupleReader::doNNPDFRW(){
     //make sure to call this after parsed gen particles!
 
-    if(do_pdf_reweight){
+    if(is_signal_sample && (year == 2017 || year == 2018)){
         nnpdf30_weight /= get_nnpdf_normfix(gen_m);
         gen_weight *= nnpdf30_weight;
     }
@@ -1477,7 +1476,11 @@ bool NTupleReader::doTopPTRW(bool PRINT = false){
     top_ptrw_beta_up = TMath::Exp(alpha - 1.5*beta * top_pt) * TMath::Exp(alpha - 1.5*beta * antitop_pt);
     top_ptrw_beta_down = TMath::Exp(alpha - 0.5*beta * top_pt) * TMath::Exp(alpha - 0.5*beta * antitop_pt);
 
-    //printf("top_ptrw %.3f \n", top_ptrw);
+    if(top_ptrw > 3.0 || top_ptrw < 0.3){
+
+        printf("top_ptrw %.3f. top_pt %.2f anti_top_pt %.2f \n", top_ptrw, top_pt, antitop_pt);
+        top_ptrw = 1.0;
+    }
 
 
 

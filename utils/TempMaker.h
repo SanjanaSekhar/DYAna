@@ -60,7 +60,7 @@ class TempMaker{
         void setup_systematic(const string &s_label);
         void getEvent(int i);
         void doCorrections();
-        float getEvtWeight();
+        float getEvtWeight(bool add_btag_SF);
         void fixRFNorm(TH2 *h, int mbin, int year);
         void finish();
         float getReweightingDenom();
@@ -195,7 +195,8 @@ BTag_effs btag_effs;
 void setup_all_SFs(int year){
     //printf("Setting up SF's \n");
 #ifndef STAND_ALONE
-    setup_btag_SFs(&b_reader, &btag_effs, year);
+    bool setup_btag_systematics = true;
+    setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics);
 #endif
     setup_el_SF(&el_SF, year);
     setup_mu_SFs(&era1_SFs, &era2_SFs,  year);

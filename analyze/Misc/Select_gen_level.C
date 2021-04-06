@@ -15,7 +15,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     nt.RC_from_gen = true;
 
     nt.print_gen_warning = false;
-    nt.do_pdf_reweight = true;
+    nt.is_signal_sample = true;
 
     int good = 0;
     int bad = 0;

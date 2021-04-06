@@ -17,7 +17,7 @@ void ElEl_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
     nt.iJob = iJob;
     nt.do_electrons = true;
     nt.do_SFs = true;
-    nt.do_pdf_reweight = true;
+    nt.is_signal_sample = true;
 
     nt.setupSFs();
     nt.setupOutputTree("T_sig");
