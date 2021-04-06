@@ -54,6 +54,8 @@ void draw_generator_cmp(){
     sprintf(plt_title3, "pwg_vs_mad_m%.0f_cost_xf_cmp.pdf", m_low);
     sprintf(plt_title4, "pwg_vs_mad_m%.0f_cost_r_cmp.pdf", m_low);
 
+    TH1F *h_mad_m = new TH1F("h_mad_m", "", 30, 150,1000);
+    TH1F *h_pwg_m = new TH1F("h_pwg_m", "", 30, 150,1000);
 
     TH1F *h_pwg_cost_st = new TH1F("h_pwg_cost_st", title, 20, -1., 1.);
     TH1F *h_pwg_cost_r = new TH1F("h_pwg_cost_r", title, 20, -1., 1.);
@@ -66,8 +68,8 @@ void draw_generator_cmp(){
     TH1F *h_mad_xf = new TH1F("h_mad_xf", title, 20, 0.,.5);
 
 
-    make_amc_gen_cost(t_mad_mu,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low, pt_high, rap_low, rap_high);
-    make_amc_gen_cost(t_mad_el,  h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low, pt_high, rap_low, rap_high);
+    make_amc_gen_cost(t_mad_mu,  h_mad_m, h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low, pt_high, rap_low, rap_high);
+    make_amc_gen_cost(t_mad_el,  h_mad_m, h_mad_cost_st, h_mad_cost_r, h_mad_pt, h_mad_xf, m_low, m_high, pt_low, pt_high, rap_low, rap_high);
     make_gen_cost(t_pwg,  h_pwg_cost_st, h_pwg_cost_r, h_pwg_pt, h_pwg_xf, m_low, m_high, phot_ind);
 
     h_mad_cost_st->Scale(1./h_mad_cost_st->Integral());
