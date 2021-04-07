@@ -4,13 +4,14 @@ import sys, commands, os, fnmatch
 from optparse import OptionParser
 from optparse import OptionGroup
 
-years = [2016, 2017]
-prefixes = ["ElEl"]
-#prefixes = ["EMu"]
+years = [2018]
+#prefixes = ["MuMu", "ElEl"]
+prefixes = ["EMu"]
 #years = [2018]
 #prefixes = ["ElEl"]
-labels = ["wt", "dy", "ttbar", "diboson", "phot_ind"]
-ending = "_mar25"
+#labels = ["wt", "dy", "ttbar", "diboson", "phot_ind"]
+labels = ["wt", "dy", "ttbar", "diboson"]
+ending = "_april5"
 
 for year in years:
     for prefix in prefixes:

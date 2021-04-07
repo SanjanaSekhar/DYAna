@@ -75,7 +75,7 @@ root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/TT_DiLept_TuneCP5_1
 
 ################ TTbarSemiLep files
 #831.76  * 0.438
-#!idx = 17 xsec = 364.3
+!idx = 17 xsec = 364.3
 #####################
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_153827/0000/B2GTTreeNtupleExtra_1.root
 root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_153827/0000/B2GTTreeNtupleExtra_10.root
