@@ -30,10 +30,13 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-int year = 2016;
+int year = 2018;
 bool write_out = true;
 //char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
-char *plot_dir = "Paper_plots/prefit_kinematics";
+char *plot_dir = "Paper_plots/prefit_kinematics/";
+char *plot_label = "Electrons: Same Sign Control Region";
+char *plot_label_cos = "Electrons: Same Sign Control Region (normalized)";
+bool normalize = true;
 
 
 void draw_samesign_cmp(){
@@ -180,7 +183,6 @@ void draw_samesign_cmp(){
 
 
 
-    bool normalize = false;
     bool from_fit = false;
 
 
@@ -279,34 +281,36 @@ void draw_samesign_cmp(){
     TCanvas *c_m, *c_cost, *c_pt, *c_xf, *c_phi, *c_rap;
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
-    writeExtraText = false;
+    writeExtraText = true;
     char plt_file[100];
+    float ratio_range_cos = 0.4;
+    float ratio_range = 1.0;
 
     bool logx = false;
     bool draw_sys_uncs = false;
 
 
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)","", plot_label, -1., true, logx, draw_sys_uncs);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sElEl%i_ss_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
 
     
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", plot_label, -1., false, logx, draw_sys_uncs);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", plot_label_cos, -1., false, logx, draw_sys_uncs, ratio_range_cos);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sElEl%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
 
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dielectron pt (GeV)","", plot_label, -1., true, logx, draw_sys_uncs);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dielectron pt (GeV)","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_pt, year, 33);
 
-    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label, -1., true, logx, draw_sys_uncs);
+    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_xf, year, 33);
 
-    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dielectron #phi","", plot_label, -1., true, logx, draw_sys_uncs);
+    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dielectron #phi","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_phi, year, 33);
 
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y","", plot_label, -1., true, logx, draw_sys_uncs);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
 }
 

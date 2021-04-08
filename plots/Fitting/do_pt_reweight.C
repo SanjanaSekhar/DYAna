@@ -29,10 +29,11 @@
 
 
 
-const int year = 2018;
-char *out_file = "../analyze/SFs/2018/pt_rw.root";
+const int year = 2016;
+char *out_file = "../analyze/SFs/2016/pt_rw.root";
 const bool write_out = true;
-char *plot_dir = "Misc_plots/pt_reweights/";
+//char *plot_dir = "Misc_plots/pt_reweights/";
+char *plot_dir = "Paper_plots/pt_reweights/";
 
 
 

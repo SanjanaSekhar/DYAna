@@ -29,10 +29,10 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2017;
-const bool write_out = false;
+int year = 2018;
+const bool write_out = true;
 char *plot_dir = "Paper_plots/EMu_plots/";
-char *plot_label = "";
+char *plot_label = "e#mu Control Region";
 
 
 
@@ -273,31 +273,32 @@ void draw_cmp(){
     bool logy = true;
     bool logx = false;
     bool draw_sys_uncs = true;
+    float ratio_range = 0.3;
 
     sprintf(plt_file, "%sEMu%i_m_cmp.pdf", plot_dir, year % 2000);
 
     sprintf(y_ax_label, "Events/%.0f GeV", m_bin_size);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, -1, logy,logx, draw_sys_uncs);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, -1, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     if(write_out) c_m->Print(plt_file);
 
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", y_ax_label, plot_label, -1., logy,logx, draw_sys_uncs);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)", y_ax_label, plot_label, -1., logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sEMu%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
 
     logy = true;
     sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dilepton pt (GeV)", y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sEMu%i_pt_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_pt->Print(plt_file);
 
     logy = true;
     sprintf(y_ax_label, "Events/%.1f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  plot_label, -1., logy, logx, draw_sys_uncs);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sEMu%i_rap_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_rap->Print(plt_file);

@@ -420,13 +420,15 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_ratio->SetMaximum(ratio_max);
     //h_ratio->SetMarkerStyle(21);
     h_ratio->Draw("EPX0");
-    if(draw_sys_unc) ratio_unc->Draw("3 same");
-    /*
-    TLine *l1 = new TLine(150,1,2000,1);
-    l1->SetLineStyle(2);
-    l1->Draw();
-    c->cd();
-    */
+    if(draw_sys_unc){
+        ratio_unc->Draw("3 same");
+        float line_start = h_ratio->GetXaxis()->GetXmin();
+        float line_stop = h_ratio->GetXaxis()->GetXmax();
+        TLine *l1 = new TLine(line_start,1,line_stop,1);
+        l1->SetLineStyle(9);
+        l1->SetLineWidth(2);
+        l1->Draw();
+    }
 
     h_ratio->SetTitle("");
     // Y axis m_ratio plot settings

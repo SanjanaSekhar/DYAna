@@ -29,14 +29,14 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2018;
+int year = 2016;
 const bool write_out = true;
 char *plot_dir = "Misc_plots/ttbar_check/";
-char *label = "_after_toprw_";
+char *label = "_before_toprw_";
 bool normalize = false;
 bool do_top_pt_rw =false;
-//char* plot_label = "Before top p_{T} reweighting";
-char* plot_label = "After top p_{T} reweighting";
+char* plot_label = "Before top p_{T} reweighting";
+//char* plot_label = "After top p_{T} reweighting";
 
 void Fakerate_est_emu_ttbar(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_QCD_MC, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, TH1F *h_el_pt, TH1F *h_mu_pt, 
         int flag1 = FLAG_MUONS, int year=2016, float m_low = 150., float m_high = 10000., bool reweight = false, bool sys_errors = false){
