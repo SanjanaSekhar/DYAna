@@ -5,19 +5,20 @@ import sys, commands, os, fnmatch
 from optparse import OptionParser
 from optparse import OptionGroup
 
-years = [2016]
+years = [2016,2017,2018]
 prefixes = ["ElEl", "MuMu"]
 #prefixes = ["EMu"]
 #years = [2018]
 #prefixes = ["ElEl"]
-labels = ["wt", "dy", "ttbar", "diboson", "phot_ind"]
+#labels = ["wt", "dy", "ttbar", "diboson"]
+labels = ["phot_ind"]
 
 #labels = ["wt", "ttbar", "diboson", "dy"]
 #labels = ["dy_mlow", "data_mlow"]
 #labels = ["dy"]
 #labels = ["data"]
-ending = "_april5"
-redo_fakes = True
+ending = "_april7"
+redo_fakes = False
 
 for year in years:
     for prefix in prefixes:

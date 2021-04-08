@@ -82,7 +82,7 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
 
 
 void draw_met_btag_cuts(){
-    int year = 2018;
+    int year = 2017;
     char *plot_dir = "Paper_plots/";
     bool write_out = false;
     int flag1;

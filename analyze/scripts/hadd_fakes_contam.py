@@ -6,11 +6,11 @@ from optparse import OptionGroup
 
 years = [2018]
 #prefixes = ["MuMu", "ElEl"]
-prefixes = ["EMu"]
+#prefixes = ["EMu"]
 #years = [2018]
-#prefixes = ["ElEl"]
-#labels = ["wt", "dy", "ttbar", "diboson", "phot_ind"]
-labels = ["wt", "dy", "ttbar", "diboson"]
+prefixes = ["MuMu"]
+labels = ["wt", "dy", "ttbar", "diboson", "phot_ind"]
+#labels = ["wt", "dy", "ttbar", "diboson"]
 ending = "_april5"
 
 for year in years:

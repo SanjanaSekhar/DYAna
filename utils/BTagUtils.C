@@ -100,11 +100,13 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
 }
 
 
-float get_pos_btag_weight(int nJets, Double_t pt1, Double_t eta1, Float_t flavour1, Double_t pt2, Double_t eta2, Float_t flavour2, BTag_effs btag_effs, BTag_readers b_readers){
+float get_pos_btag_weight(int nJets, bool jet1_tagged, Double_t pt1, Double_t eta1, Float_t flavour1, 
+        bool jet2_tagged, Double_t pt2, Double_t eta2, Float_t flavour2, BTag_effs btag_effs, BTag_readers b_readers){
     //compute weighting from btagging scale factors for tagging one of the jets
     //as a b
 
     Double_t bjet1_SF, bjet1_eff, bjet2_SF, bjet2_eff;
+    float jet1_weight, jet2_weight;
 
     if(nJets ==0) return 1.;
 
@@ -125,7 +127,11 @@ float get_pos_btag_weight(int nJets, Double_t pt1, Double_t eta1, Float_t flavou
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
 
-    if(nJets ==1) return bjet1_SF;
+    if(jet1_tagged) jet1_weight = bjet1_SF;
+    else  jet1_weight = (1. - bjet1_eff * bjet1_SF) / (1. - bjet1_eff);
+
+    if(nJets ==1) return jet1_weight;
+    
 
     if(std::abs(flavour2 - 5.) < 0.01){ //bjet
         bjet2_SF = b_readers.b_reader.eval_auto_bounds("central", BTagEntry::FLAV_B, eta2, pt2);
@@ -144,11 +150,13 @@ float get_pos_btag_weight(int nJets, Double_t pt1, Double_t eta1, Float_t flavou
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
 
-
+    if(jet2_tagged) jet2_weight = bjet2_SF;
+    else  jet2_weight = (1. - bjet2_eff * bjet2_SF) / (1. - bjet2_eff);
     
-    float P_mc = bjet1_eff + bjet2_eff - bjet1_eff*bjet2_eff;
-    float P_data = bjet1_SF*bjet1_eff + bjet2_SF*bjet2_eff - bjet1_SF*bjet2_SF*bjet1_eff*bjet2_eff;
-    return P_data/P_mc;
+    float result  = jet1_weight * jet2_weight;
+    
+    printf("tagged1  flav1 tagged weight %i  %.0f %.2f, tagged2, flav2, weight  %i %.0f %.2f, res %.2f \n", jet1_tagged, flavour1, jet1_weight, jet2_tagged, flavour2, jet2_weight, result);
+    return result;
 }
 
 void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year, bool incl_systematics = true, bool use_dy_samples = false){
@@ -163,11 +171,11 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year, bool incl
     }
     if(year == 2017){
         calib_bc = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V4_B_F_YearCorrelation-V1.csv");
-        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V5_B_F.csv");
+        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2017/DeepCSV_94XSF_V4_B_F.csv");
     }
     if(year == 2018){
         calib_bc = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V1_YearCorrelation-V1.csv");
-        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V2.csv");
+        calib_udsg = BTagCalibration("DeepCSV", "../analyze/SFs/2018/DeepCSV_102XSF_V1.csv");
     }
 
     std::vector<string> sys_types, udsg_sys_types;

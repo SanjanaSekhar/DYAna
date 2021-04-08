@@ -50,7 +50,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_el->Branch("mu_RF_up", &mu_RF_up);
     t_el->Branch("mu_RF_down", &mu_RF_down);
     t_el->Branch("pdf_weights", &nt.pdf_weights, "pdf_weights[60]/F");
-    t_el->Branch("pdfext_weights", &nt.pdfext_weights, "pdfext_weights[100]/F");
+    //t_el->Branch("pdfext_weights", &nt.pdfext_weights, "pdfext_weights[100]/F");
     t_el->Branch("nnpdf30_weight", &nt.nnpdf30_weight);
     t_el->Branch("inc_id1", &nt.inc_id1);
     t_el->Branch("inc_id2", &nt.inc_id2);
@@ -74,7 +74,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_mu->Branch("mu_RF_up", &mu_RF_up);
     t_mu->Branch("mu_RF_down", &mu_RF_down);
     t_mu->Branch("pdf_weights", &nt.pdf_weights, "pdf_weights[60]/F");
-    t_mu->Branch("pdfext_weights", &nt.pdfext_weights, "pdfext_weights[100]/F");
+    //t_mu->Branch("pdfext_weights", &nt.pdfext_weights, "pdfext_weights[100]/F");
     t_mu->Branch("nnpdf30_weight", &nt.nnpdf30_weight);
     t_mu->Branch("inc_id1", &nt.inc_id1);
     t_mu->Branch("inc_id2", &nt.inc_id2);

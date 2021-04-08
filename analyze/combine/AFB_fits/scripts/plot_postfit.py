@@ -12,7 +12,8 @@ import CMS_lumi, tdrstyle
 gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
 
-def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1):  
+def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
+        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1):  
     # histlist is just the generic list but if bkglist is specified (non-empty)
     # then this function will stack the backgrounds and compare against histlist as if 
     # it is data. The imporant bit is that bkglist is a list of lists. The first index
@@ -97,6 +98,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
         
         # Otherwise it's a TH1 hopefully
         else:
+            titleSize = 0.09
             alpha = 1
             if dataOff:
                 alpha = 0
@@ -106,12 +108,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 hist.SetMarkerStyle(8)
             if 'hist' in datastyle.lower():
                 hist.SetFillColorAlpha(0,0)
+
+            hist.GetXaxis().SetTitle(xtitle)
+            hist.GetYaxis().SetTitle(ytitle)
             
             # If there are no backgrounds, only plot the data (semilog if desired)
             if len(bkglist) == 0:
                 hist.SetMaximum(1.13*hist.GetMaximum())
-                hist.GetXaxis().SetTitle(xtitle)
-                hist.GetYaxis().SetTitle(ytitle)
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
                     hist.SetTitleOffset(1.1)
@@ -154,15 +157,15 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
                 # Set margins and make these two pads primitives of the division, thisPad
-                mains[hist_index].SetBottomMargin(0.0)
-                mains[hist_index].SetLeftMargin(0.16)
+                mains[hist_index].SetBottomMargin(0.04)
+                mains[hist_index].SetLeftMargin(0.17)
                 mains[hist_index].SetRightMargin(0.05)
                 mains[hist_index].SetTopMargin(0.08)
 
-                subs[hist_index].SetLeftMargin(0.16)
+                subs[hist_index].SetLeftMargin(0.17)
                 subs[hist_index].SetRightMargin(0.05)
                 subs[hist_index].SetTopMargin(0)
-                subs[hist_index].SetBottomMargin(0.3)
+                subs[hist_index].SetBottomMargin(0.35)
                 mains[hist_index].Draw()
                 subs[hist_index].Draw()
 
@@ -206,15 +209,16 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                         h.SetMinimum(0.)
 
                 
-                mLS = 0.06
+                mLS = 0.08
                 # Now draw the main pad
                 data_leg_title = hist.GetTitle()
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
-                hist.SetTitleOffset(1.1,"xy")
+                hist.SetTitleOffset(1.15,"xy")
                 hist.GetYaxis().SetTitle('Events / bin')
                 hist.GetYaxis().SetLabelSize(mLS)
                 hist.GetYaxis().SetTitleSize(mLS)
+                hist.GetXaxis().SetLabelOffset(999)
                 if logy == True:
                     hist.SetMinimum(1e-3)
                 hist.Draw(datastyle)
@@ -244,6 +248,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
+
+
+
+                legends[hist_index].SetBorderSize(0)
                 legends[hist_index].Draw()
                 gPad.RedrawAxis()
 
@@ -268,11 +276,14 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 pulls[hist_index].GetYaxis().SetLabelSize(LS)
                 pulls[hist_index].GetYaxis().SetTitleSize(LS)
                 pulls[hist_index].GetYaxis().SetNdivisions(306)
+                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/#sigma")
+
+                pulls[hist_index].GetXaxis().SetLabelOffset(0.05)
                 pulls[hist_index].GetXaxis().SetLabelSize(LS)
                 pulls[hist_index].GetXaxis().SetTitleSize(LS)
-
                 pulls[hist_index].GetXaxis().SetTitle(xtitle)
-                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/#sigma")
+
+
                 pulls[hist_index].Draw('hist')
 
                 if logy == True:

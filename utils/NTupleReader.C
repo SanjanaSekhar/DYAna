@@ -800,7 +800,7 @@ float NTupleReader::getPosBtagSF(){
     float result = 1.;
 
     if(nJets==0) return 1.;
-    else return get_pos_btag_weight(nJets, jet1_pt, jet1_eta, jet1_flavour, jet2_pt, jet2_eta, jet2_flavour, btag_effs, b_reader);
+    else return get_pos_btag_weight(nJets, jet1_btag > bjet_med_cut, jet1_pt, jet1_eta, jet2_btag > bjet_med_cut, jet1_flavour, jet2_pt, jet2_eta, jet2_flavour, btag_effs, b_reader);
 }
 
 
