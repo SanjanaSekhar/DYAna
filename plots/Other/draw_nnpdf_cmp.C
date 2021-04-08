@@ -80,8 +80,8 @@ void make_hists(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int
 void draw_nnpdf_cmp(){
     int year = 2017;
     char *plot_dir = "Misc_plots/nnpdf_cmp/";
-    bool write_out = true;
-    int flag1 = FLAG_ELECTRONS;
+    bool write_out = false;
+    int flag1 = FLAG_MUONS;
 
 
     setTDRStyle();

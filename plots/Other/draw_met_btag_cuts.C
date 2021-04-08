@@ -43,7 +43,6 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
 
     tm.setup();
     float nnpdf30_weight = 1;
-    tm.t_in->SetBranchAddress("nnpdf30_weight", &nnpdf30_weight);
     int nEvents=0;
 
     int n1=0;
@@ -58,7 +57,6 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
         if(tm.m >= 170.){
             tm.doCorrections();
             tm.getEvtWeight();
-            tm.evt_weight /= nnpdf30_weight;
 
             h_neither->Fill(tm.cost, tm.evt_weight);
 
@@ -84,7 +82,7 @@ void make_cut_hists(TTree *t1, TH1F *h_both, TH1F* h_metonly, TH1F *h_btagonly ,
 
 
 void draw_met_btag_cuts(){
-    int year = 2017;
+    int year = 2018;
     char *plot_dir = "Paper_plots/";
     bool write_out = false;
     int flag1;
@@ -93,38 +91,39 @@ void draw_met_btag_cuts(){
     setTDRStyle();
     init(year);
 
-    
 
-    TH1F *h_mumu_mc_both = new TH1F("h_mumu_mc1", "Binned MC", 20, -1.,1.);
-    TH1F *h_mumu_mc_metonly = new TH1F("h_mumu_mc2", "Binned MC", 20, -1.,1.);
-    TH1F *h_mumu_mc_btagonly = new TH1F("h_mumu_mc3", "Binned MC", 20, -1.,1.);
-    TH1F *h_mumu_mc_neither = new TH1F("h_mumu_mc4", "Binned MC", 20, -1.,1.);
+    int n_cos_theta_bins = 20;
 
-    TH1F *h_mumu_top_both = new TH1F("h_mumu_top1", "Binned top", 20, -1.,1.);
-    TH1F *h_mumu_top_metonly = new TH1F("h_mumu_top2", "Binned top", 20, -1.,1.);
-    TH1F *h_mumu_top_btagonly = new TH1F("h_mumu_top3", "Binned top", 20, -1.,1.);
-    TH1F *h_mumu_top_neither = new TH1F("h_mumu_top4", "Binned top", 20, -1.,1.);
+    TH1F *h_mumu_mc_both = new TH1F("h_mumu_mc1", "Binned MC", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_mc_metonly = new TH1F("h_mumu_mc2", "Binned MC", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_mc_btagonly = new TH1F("h_mumu_mc3", "Binned MC", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_mc_neither = new TH1F("h_mumu_mc4", "Binned MC", n_cos_theta_bins, -1.,1.);
 
-    TH1F *h_mumu_diboson_both = new TH1F("h_mumu_diboson1", "Binned diboson", 20, -1.,1.);
-    TH1F *h_mumu_diboson_metonly = new TH1F("h_mumu_diboson2", "Binned diboson", 20, -1.,1.);
-    TH1F *h_mumu_diboson_btagonly = new TH1F("h_mumu_diboson3", "Binned diboson", 20, -1.,1.);
-    TH1F *h_mumu_diboson_neither = new TH1F("h_mumu_diboson4", "Binned diboson", 20, -1.,1.);
+    TH1F *h_mumu_top_both = new TH1F("h_mumu_top1", "Binned top", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_top_metonly = new TH1F("h_mumu_top2", "Binned top", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_top_btagonly = new TH1F("h_mumu_top3", "Binned top", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_top_neither = new TH1F("h_mumu_top4", "Binned top", n_cos_theta_bins, -1.,1.);
+
+    TH1F *h_mumu_diboson_both = new TH1F("h_mumu_diboson1", "Binned diboson", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_diboson_metonly = new TH1F("h_mumu_diboson2", "Binned diboson", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_diboson_btagonly = new TH1F("h_mumu_diboson3", "Binned diboson", n_cos_theta_bins, -1.,1.);
+    TH1F *h_mumu_diboson_neither = new TH1F("h_mumu_diboson4", "Binned diboson", n_cos_theta_bins, -1.,1.);
 
 
-    TH1F *h_elel_mc_both = new TH1F("h_elel_mc1", "Binned MC", 20, -1.,1.);
-    TH1F *h_elel_mc_metonly = new TH1F("h_elel_mc2", "Binned MC", 20, -1.,1.);
-    TH1F *h_elel_mc_btagonly = new TH1F("h_elel_mc3", "Binned MC", 20, -1.,1.);
-    TH1F *h_elel_mc_neither = new TH1F("h_elel_mc4", "Binned MC", 20, -1.,1.);
+    TH1F *h_elel_mc_both = new TH1F("h_elel_mc1", "Binned MC", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_mc_metonly = new TH1F("h_elel_mc2", "Binned MC", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_mc_btagonly = new TH1F("h_elel_mc3", "Binned MC", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_mc_neither = new TH1F("h_elel_mc4", "Binned MC", n_cos_theta_bins, -1.,1.);
 
-    TH1F *h_elel_top_both = new TH1F("h_elel_top1", "Binned top", 20, -1.,1.);
-    TH1F *h_elel_top_metonly = new TH1F("h_elel_top2", "Binned top", 20, -1.,1.);
-    TH1F *h_elel_top_btagonly = new TH1F("h_elel_top3", "Binned top", 20, -1.,1.);
-    TH1F *h_elel_top_neither = new TH1F("h_elel_top4", "Binned top", 20, -1.,1.);
+    TH1F *h_elel_top_both = new TH1F("h_elel_top1", "Binned top", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_top_metonly = new TH1F("h_elel_top2", "Binned top", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_top_btagonly = new TH1F("h_elel_top3", "Binned top", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_top_neither = new TH1F("h_elel_top4", "Binned top", n_cos_theta_bins, -1.,1.);
 
-    TH1F *h_elel_diboson_both = new TH1F("h_elel_diboson1", "Binned diboson", 20, -1.,1.);
-    TH1F *h_elel_diboson_metonly = new TH1F("h_elel_diboson2", "Binned diboson", 20, -1.,1.);
-    TH1F *h_elel_diboson_btagonly = new TH1F("h_elel_diboson3", "Binned diboson", 20, -1.,1.);
-    TH1F *h_elel_diboson_neither = new TH1F("h_elel_diboson4", "Binned diboson", 20, -1.,1.);
+    TH1F *h_elel_diboson_both = new TH1F("h_elel_diboson1", "Binned diboson", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_diboson_metonly = new TH1F("h_elel_diboson2", "Binned diboson", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_diboson_btagonly = new TH1F("h_elel_diboson3", "Binned diboson", n_cos_theta_bins, -1.,1.);
+    TH1F *h_elel_diboson_neither = new TH1F("h_elel_diboson4", "Binned diboson", n_cos_theta_bins, -1.,1.);
 
 
     
@@ -164,15 +163,22 @@ void draw_met_btag_cuts(){
     char plt_file1[200], plt_file2[200];
     sprintf(plt_file1, "%sMuMu%i_met_cut.pdf", plot_dir, year % 2000);
     sprintf(plt_file2, "%sMuMu%i_btag_cut.pdf", plot_dir, year % 2000);
+
+    float ratio_min = 0.9;
+    float ratio_max = 1.1;
     
     bool logy = false;
-    make_ratio_plot(plt_file1, h_mumu_mc_btagonly, "Before",h_mumu_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
-    make_ratio_plot(plt_file2, h_mumu_mc_metonly,  "Before",h_mumu_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
+    char plot_label[100];
 
+    sprintf(plot_label, "Muons %i", year);
+    make_ratio_plot(plt_file1, h_mumu_mc_btagonly, "Before",h_mumu_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", logy, write_out,ratio_min,ratio_max, plot_label);
+    make_ratio_plot(plt_file2, h_mumu_mc_metonly,  "Before",h_mumu_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", logy, write_out,ratio_min,ratio_max, plot_label);
+
+    sprintf(plot_label, "Electrons %i", year);
     sprintf(plt_file1, "%sElEl%i_met_cut.pdf", plot_dir, year % 2000);
     sprintf(plt_file2, "%sElEl%i_btag_cut.pdf", plot_dir, year % 2000);
-    make_ratio_plot(plt_file1, h_elel_mc_btagonly, "Before",h_elel_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
-    make_ratio_plot(plt_file2, h_elel_mc_metonly,  "Before",h_elel_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", logy, write_out);
+    make_ratio_plot(plt_file1, h_elel_mc_btagonly, "Before",h_elel_mc_both, "After MET Cut", "Before/After", "cos(#theta_{r})", logy, write_out,ratio_min,ratio_max, plot_label);
+    make_ratio_plot(plt_file2, h_elel_mc_metonly,  "Before",h_elel_mc_both, "After anti-b-tag Cut", "Before/After", "cos(#theta_{r})", logy, write_out,ratio_min,ratio_max, plot_label);
 
 }
 

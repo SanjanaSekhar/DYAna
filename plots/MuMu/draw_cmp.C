@@ -31,7 +31,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2017;
+const int year = 2018;
 const bool write_out = false;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
@@ -367,7 +367,7 @@ void draw_cmp(){
 
     logy = true;
     //sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", plot_label, -1., logy, logx, false, 0.2);
     CMS_lumi(p_pt, year, 33);
     sprintf(plt_file, "%sMuMu%i_pt_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_pt->Print(plt_file);

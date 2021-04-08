@@ -297,6 +297,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(logx) pad1->SetLogx();
     h_stack->Draw("hist");
     if(hmax <= 0. ) hmax = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
+    if(logy) hmax *=2;
     h_stack->SetMaximum(hmax);
     h_stack->SetMinimum(0.1);
     gStyle->SetEndErrorSize(4);

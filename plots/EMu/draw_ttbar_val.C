@@ -29,12 +29,12 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
+int year = 2018;
 const bool write_out = true;
 char *plot_dir = "Misc_plots/ttbar_check/";
 char *label = "_after_toprw_";
 bool normalize = false;
-bool do_top_pt_rw =true;
+bool do_top_pt_rw =false;
 //char* plot_label = "Before top p_{T} reweighting";
 char* plot_label = "After top p_{T} reweighting";
 
@@ -219,7 +219,7 @@ void make_ttbar_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F 
             if(do_top_rw || is_data) evt_weight = tm.evt_weight;
             else evt_weight = tm.evt_weight / tm.top_ptrw;
 
-            if(!is_data) evt_weight *= positive_btag_SF;
+            //if(!is_data) evt_weight *= positive_btag_SF;
 
             if(tm.top_ptrw > 2 || tm.top_ptrw < 0.){
                 printf("top pt rw is %.2f ? \n", tm.top_ptrw);
@@ -268,19 +268,19 @@ void draw_ttbar_val(){
     TH1F *dy_pt = new TH1F("dy_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *qcd_pt = new TH1F("qcd_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
 
-    TH1F *data_el_pt = new TH1F("data_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *ttbar_el_pt = new TH1F("ttbar_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *diboson_el_pt = new TH1F("diboson_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *wt_el_pt = new TH1F("wt_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *dy_el_pt = new TH1F("dy_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *qcd_el_pt = new TH1F("qcd_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
+    TH1F *data_el_pt = new TH1F("data_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 20, 500);
+    TH1F *ttbar_el_pt = new TH1F("ttbar_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 20, 500);
+    TH1F *diboson_el_pt = new TH1F("diboson_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 20, 500);
+    TH1F *wt_el_pt = new TH1F("wt_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 20, 500);
+    TH1F *dy_el_pt = new TH1F("dy_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 20, 500);
+    TH1F *qcd_el_pt = new TH1F("qcd_el_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 20, 500);
 
-    TH1F *data_mu_pt = new TH1F("data_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *ttbar_mu_pt = new TH1F("ttbar_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *diboson_mu_pt = new TH1F("diboson_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *wt_mu_pt = new TH1F("wt_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *dy_mu_pt = new TH1F("dy_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
-    TH1F *qcd_mu_pt = new TH1F("qcd_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 500);
+    TH1F *data_mu_pt = new TH1F("data_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 30, 500);
+    TH1F *ttbar_mu_pt = new TH1F("ttbar_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 30, 500);
+    TH1F *diboson_mu_pt = new TH1F("diboson_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 30, 500);
+    TH1F *wt_mu_pt = new TH1F("wt_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 30, 500);
+    TH1F *dy_mu_pt = new TH1F("dy_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 30, 500);
+    TH1F *qcd_mu_pt = new TH1F("qcd_mu_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 30, 500);
 
 
 
@@ -309,7 +309,7 @@ void draw_ttbar_val(){
 
     bool do_emu_cost_rw = false;
     make_ttbar_emu_m_cost_pt_rap_hist(t_emu_data, data_m, data_cost, data_pt, data_rap, data_el_pt, data_mu_pt, true,  year, m_low, m_high, do_top_pt_rw);
-    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, data_el_pt, data_mu_pt, false,  year, m_low, m_high,  do_top_pt_rw);
+    make_ttbar_emu_m_cost_pt_rap_hist(t_emu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_rap, ttbar_el_pt, ttbar_mu_pt, false,  year, m_low, m_high,  do_top_pt_rw);
     make_ttbar_emu_m_cost_pt_rap_hist(t_emu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_rap, diboson_el_pt, diboson_mu_pt, false,  year, m_low, m_high,  do_top_pt_rw);
     make_ttbar_emu_m_cost_pt_rap_hist(t_emu_wt, wt_m, wt_cost, wt_pt, wt_rap, wt_el_pt, wt_mu_pt, false,  year, m_low, m_high,  do_top_pt_rw);
     make_ttbar_emu_m_cost_pt_rap_hist(t_emu_dy, dy_m, dy_cost, dy_pt, dy_rap, dy_el_pt, dy_mu_pt, false,  year, m_low, m_high, do_top_pt_rw);
@@ -424,6 +424,18 @@ void draw_ttbar_val(){
     diboson_rap->SetFillColor(diboson_c);
     qcd_rap->SetFillColor(qcd_c);
 
+    dy_el_pt->SetFillColor(DY_c);
+    ttbar_el_pt->SetFillColor(ttbar_c);
+    wt_el_pt->SetFillColor(wt_c); 
+    diboson_el_pt->SetFillColor(diboson_c);
+    qcd_el_pt->SetFillColor(qcd_c);
+
+    dy_mu_pt->SetFillColor(DY_c);
+    ttbar_mu_pt->SetFillColor(ttbar_c);
+    wt_mu_pt->SetFillColor(wt_c); 
+    diboson_mu_pt->SetFillColor(diboson_c);
+    qcd_mu_pt->SetFillColor(qcd_c);
+
     THStack *m_stack = new THStack("m_stack", "EMu Mass Distribution: Data vs MC ; m_{e#mu} (GeV)");
     m_stack->Add(diboson_m);
     m_stack->Add(qcd_m);
@@ -451,14 +463,14 @@ void draw_ttbar_val(){
     cost_stack->Add(wt_cost);
     cost_stack->Add(ttbar_cost);
 
-    THStack *rap_stack = new THStack("rap_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
+    THStack *rap_stack = new THStack("rap_stack", ")");
     rap_stack->Add(diboson_rap);
     rap_stack->Add(qcd_rap);
     rap_stack->Add(dy_rap);
     rap_stack->Add(wt_rap);
     rap_stack->Add(ttbar_rap);
 
-    THStack *el_pt_stack = new THStack("el_pt_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
+    THStack *el_pt_stack = new THStack("el_pt_stack", "");
     el_pt_stack->Add(diboson_el_pt);
     el_pt_stack->Add(qcd_el_pt);
     el_pt_stack->Add(dy_el_pt);
@@ -466,7 +478,7 @@ void draw_ttbar_val(){
     el_pt_stack->Add(ttbar_el_pt);
 
 
-    THStack *mu_pt_stack = new THStack("mu_pt_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
+    THStack *mu_pt_stack = new THStack("mu_pt_stack", "");
     mu_pt_stack->Add(diboson_mu_pt);
     mu_pt_stack->Add(qcd_mu_pt);
     mu_pt_stack->Add(dy_mu_pt);

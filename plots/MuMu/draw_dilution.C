@@ -36,16 +36,25 @@
 void draw_dilution(){
     //setTDRStyle();
     gStyle->SetOptStat(0);
+    bool use_xf = false;
 
     const int nBins_xf = 10;
-    Float_t xf_bins[] = {0., 0.02, 0.04, 0.07, 1.0};
+    float xf_max = 0.3;
 
     const int nBins_y = 10;
     Float_t y_bins[] = {0., 1., 1.25, 1.5,  2.4};
     TH1F *h_y = new TH1F("h_y", "Y distribution: Mass 150-171 GeV", nBins_y, 0., 2.4);
-    TH1F *h_xF = new TH1F("h_xf", "xF distribution: Mass 150-171 GeV", nBins_xf, 0., 0.5);
-    TH1F *h_Nc = new TH1F("h_Nc", "Number Correct; |y|", nBins_y, 0., 2.4);
-    TH1F *h_Ni = new TH1F("h_Ni", "Number Incorrect", nBins_y, 0., 2.4);
+    TH1F *h_xF = new TH1F("h_xf", "xF distribution: Mass 150-171 GeV", nBins_xf, 0., xf_max);
+    TH1F *h_Nc, *h_Ni;
+    if(!use_xf){
+        h_Nc = new TH1F("h_Nc", "Number Correct; |y|", nBins_y, 0., 2.4);
+        h_Ni = new TH1F("h_Ni", "Number Incorrect", nBins_y, 0., 2.4);
+    }
+    else{
+        h_Nc = new TH1F("h_Nc", "Number Correct; |y|", nBins_xf, 0., xf_max);
+        h_Ni = new TH1F("h_Ni", "Number Incorrect", nBins_xf, 0., xf_max);
+    }
+
     h_Nc->Sumw2();
     h_Ni->Sumw2();
 
@@ -54,8 +63,8 @@ void draw_dilution(){
     int year = 2018;
     init_mc(year);
 
-    float m_low = 200.;
-    float m_high = 500.;
+    float m_low = 700.;
+    float m_high = 1000.;
 
 
     TempMaker tm(t_mumu_mc, false, year);
@@ -75,8 +84,15 @@ void draw_dilution(){
             double rap = std::abs(tm.cm.Rapidity());
             h_y->Fill(rap, tm.evt_weight);
             h_xF->Fill(tm.xF, tm.evt_weight);
-            if(ratio > 0) h_Nc->Fill(rap, tm.evt_weight);
-            if(ratio < 0) h_Ni->Fill(rap, tm.evt_weight);
+            if(!use_xf){
+                if(ratio > 0) h_Nc->Fill(rap, tm.evt_weight);
+                if(ratio < 0) h_Ni->Fill(rap, tm.evt_weight);
+            }
+            else{
+                if(ratio > 0) h_Nc->Fill(tm.xF, tm.evt_weight);
+                if(ratio < 0) h_Ni->Fill(tm.xF, tm.evt_weight);
+            }
+
 
 
         }
@@ -118,24 +134,41 @@ void draw_dilution(){
     leg1->Draw();
     c2->Update();
 
-    Double_t dilu[nBins_y], dilu_error[nBins_y], xF_center[nBins_y]; 
+    Double_t dilu[nBins_y], dilu_error[nBins_y], x_center[nBins_y]; 
 
-    for (int i=1; i <= nBins_y; i++){
+    int nbins;
+    if(!use_xf) nbins = nBins_y;
+    else nbins = nBins_xf;
+
+    int nNonZero = nbins;
+
+    for (int i=1; i <= nbins; i++){
         double Nc = h_Nc->GetBinContent(i);
         double Ni = h_Ni->GetBinContent(i);
 
         double Nc_e = h_Nc->GetBinError(i);
         double Ni_e = h_Ni->GetBinError(i);
-        
-        xF_center[i] = h_Nc->GetBinCenter(i);
-        dilu[i-1] = (Nc - Ni)/(Nc + Ni);
 
-        dilu_error[i-1] = sqrt(pow(2*Nc_e * Ni / pow(Nc + Ni,2),2) + pow(2*Ni_e * Nc / pow(Nc + Ni,2),2));
-        printf("Num events %.1f, xf %.2f Dilu %.2f error %1.3e \n", Nc+Ni, xF_center[i],
-                dilu[i-1], dilu_error[i-1]);
+        double dilu_ = (Nc - Ni)/(Nc + Ni);
+        double dilu_error_ = sqrt(pow(2*Nc_e * Ni / pow(Nc + Ni,2),2) + pow(2*Ni_e * Nc / pow(Nc + Ni,2),2));
+
+        if(dilu_ > 0. && dilu_ <= 1. && dilu_error_ < 0.5){
+
+
+            dilu[i-1] = dilu_;
+            dilu_error[i-1] = dilu_error_;
+            x_center[i-1] = h_Nc->GetBinCenter(i);
+            printf("Num events %.1f, xf %.2f Dilu %.2f error %1.3e \n", Nc+Ni, x_center[i-1],
+                    dilu[i-1], dilu_error[i-1]);
+        }
+        else{
+            if(nNonZero ==nbins) nNonZero = i-1;
+        }
     }
+    printf("graphing %i points \n", nNonZero);
 
-    TGraphErrors *g_dillu = new TGraphErrors(nBins_xf, xF_center, dilu, 0, dilu_error);
+    TGraphErrors *g_dillu = new TGraphErrors(nNonZero, x_center, dilu, 0, dilu_error);
+    g_dillu->Print();
 
     TCanvas *c3 = new TCanvas("c3", "canvas", 200,10, 900,700);
     g_dillu->Draw("A C P");
@@ -144,25 +177,11 @@ void draw_dilution(){
     g_dillu->SetTitle(title);
     g_dillu->SetMinimum(0);
     g_dillu->SetMaximum(1.);
-    g_dillu->GetXaxis()->SetTitle("|y|");
+    if(!use_xf) g_dillu->GetXaxis()->SetTitle("|y|");
+    else g_dillu->GetXaxis()->SetTitle("x_{F}");
     g_dillu->GetYaxis()->SetTitle("Dilution Factor");
 
     c3->Update();
-
-
-    /*
-    lumiTextSize     = 0.2;
-    lumiTextOffset   = 0.2;
-    cmsTextSize      = 0.35;
-    cmsTextOffset    = 0.2;  // only used in outOfFrame version
-    writeExtraText = true;
-    extraText = "Simulation";
-    lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
-    int iPeriod = 0; 
-    CMS_lumi( c3, iPeriod, 11 );
-    CMS_lumi( c2, iPeriod, 33 );
-    */
-
 
 
 

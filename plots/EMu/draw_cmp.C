@@ -109,6 +109,13 @@ void draw_cmp(){
     Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight, fakes_sys_errors);
 
 
+    symmetrize1d(qcd_cost);
+    symmetrize1d(ttbar_cost);
+    //symmetrize1d(diboson_cost);
+    //symmetrize1d(wt_cost);
+    //symmetrize1d(dy_cost);
+
+
     Double_t data_count = data_m->Integral();
     Double_t fake_count = qcd_m->Integral();
     Double_t mc_count = ttbar_m->Integral() + diboson_m->Integral() + wt_m->Integral() + dy_m->Integral();
@@ -125,6 +132,13 @@ void draw_cmp(){
                           pow(data_count/(mc_count + fake_count)/(mc_count + fake_count), 2) * (fake_unc*fake_unc + mc_unc*mc_unc));
     printf("Ratio is %1.3f +/- %1.3f \n", ratio, unc);
 
+    TH1F *total_mc = (TH1F *) diboson_cost->Clone("total_mc");
+    total_mc->Add(qcd_cost);
+    total_mc->Add(dy_cost);
+    total_mc->Add(wt_cost);
+    total_mc->Add(ttbar_cost);
+
+
     Double_t data_F = data_cost->Integral(1,n_cost_bins/2);
     Double_t data_B = data_cost->Integral(n_cost_bins/2 + 1, n_cost_bins);
     Double_t data_AFB = (data_F - data_B)/(data_F+data_B);
@@ -132,6 +146,17 @@ void draw_cmp(){
     Double_t data_dAFB = AFB_counting_unc(data_F, data_B, sqrt(data_F), sqrt(data_B));
     printf("F %.0f, B %.0f \n", data_F, data_B);
     printf("AFB %.3f +/- %.3f \n", data_AFB, data_dAFB);
+
+
+
+    Double_t total_mc_dF, total_mc_dB;
+    Double_t total_mc_F = total_mc->IntegralAndError(1,n_cost_bins/2, total_mc_dF);
+    Double_t total_mc_B = total_mc->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, total_mc_dB);
+    Double_t total_mc_AFB = (total_mc_F - total_mc_B)/(total_mc_F+total_mc_B);
+   
+    Double_t total_mc_dAFB = AFB_counting_unc(total_mc_F, total_mc_B, total_mc_dF, total_mc_dB);
+    printf("total_mc F %.0f, B %.0f \n", total_mc_F, total_mc_B);
+    printf("total_mc AFB %.3f +/- %.3f \n", total_mc_AFB, total_mc_dAFB);
 
 
     Double_t diboson_dF, diboson_dB;
@@ -208,11 +233,6 @@ void draw_cmp(){
     pt_stack->Add(wt_pt);
     pt_stack->Add(ttbar_pt);
 
-    //symmetrize1d(diboson_cost);
-    //symmetrize1d(qcd_cost);
-    //symmetrize1d(wt_cost);
-    //symmetrize1d(dy_cost);
-    //symmetrize1d(ttbar_cost);
 
     THStack *cost_stack = new THStack("cost_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     cost_stack->Add(diboson_cost);
@@ -220,6 +240,10 @@ void draw_cmp(){
     cost_stack->Add(dy_cost);
     cost_stack->Add(wt_cost);
     cost_stack->Add(ttbar_cost);
+
+
+
+
 
     THStack *rap_stack = new THStack("rap_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     rap_stack->Add(diboson_rap);
