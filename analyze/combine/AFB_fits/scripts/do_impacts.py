@@ -18,7 +18,7 @@ extra_params = ""
 
 
         
-all_sys = ["METJER", "METJEC", "elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "muRC", "Pu", "BTAG",
+all_sys = ["METJER", "METJEC", "elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "muRC", "Pu", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" ,
             "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
             "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
             "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
@@ -35,6 +35,7 @@ correlate_all = ["elScaleSyst", "elSmear", "Pu", "muIDSYS", "muISOSYS", "elRECOB
                  "elIDBARPTHIGH", "elIDENDPTHIGH", "elIDBARPTLOW", "elIDENDPTLOW", 
                  "dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
                  "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
+                 "BTAGCOR"
                  ] 
 
 correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 

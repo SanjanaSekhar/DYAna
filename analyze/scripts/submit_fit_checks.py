@@ -8,8 +8,9 @@ def print_and_do(s):
     return os.system(s)
 
 cmds = [
-"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated\n",
-"python scripts/do_impacts.py -o temp/  --mbin $3 \n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated\n",
+#"python scripts/do_impacts.py -o temp/  --mbin $3 \n",
+"python scripts/check_sys_uncs.py -o temp/  --mbin $3 \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.6 --A0 0.00 \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.6 --A0 0.1 \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.0 --A0 0.00 \n",
@@ -26,15 +27,16 @@ cmds = [
 #"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit -y 2018 --mask_ee \n"
 ]
 
-labels = [ "gof_postfit", 
-        "impacts",  
+labels = [ #"gof_postfit", 
+        #"impacts",  
+        "sys_uncs",
         #"bias_test_afb6_a00", "bias_test_afb6_a01", "bias_test_afb0_a00", "bias_test_afb0_a01",
 ]
 
 
 cpy_cmd = "xrdcp -f temp/* $1 \n"
 
-date = "Feb08"
+date = "april11"
 n_m_bins = 8
 
 

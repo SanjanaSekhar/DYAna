@@ -60,7 +60,7 @@ for mbin in range(bin_start, bin_stop):
     print_and_do("mkdir %s" % (plotdir))
 
     plotdir_swap="postfit_plots/%s_swap_axis_mbin%i" % (fit_name, mbin)
-    print_and_do("[ -e %s ] && rm -r %s" % (plotdir_swap, plotdir_wap))
+    print_and_do("[ -e %s ] && rm -r %s" % (plotdir_swap, plotdir_swap))
     print_and_do("mkdir %s" % (plotdir_swap))
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 

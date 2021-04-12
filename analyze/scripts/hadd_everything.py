@@ -11,13 +11,13 @@ prefixes = ["ElEl", "MuMu"]
 #years = [2018]
 #prefixes = ["ElEl"]
 #labels = ["wt", "dy", "ttbar", "diboson"]
-labels = ["phot_ind"]
+#labels = ["phot_ind"]
 
 #labels = ["wt", "ttbar", "diboson", "dy"]
 #labels = ["dy_mlow", "data_mlow"]
-#labels = ["dy"]
+labels = ["dy"]
 #labels = ["data"]
-ending = "_april7"
+ending = "_april11"
 redo_fakes = False
 
 for year in years:

@@ -39,12 +39,16 @@ lumisYR group = lumiXY lumiLS lumiDB lumiBC lumiGS
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu                          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
-BTAGYR                      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #prefireYR                  shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 METJERYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 METJECYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #METHEMYR                   shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
                                                                                                                                           
+BTAGUNCORYR                 shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
+BTAGCOR                     shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
+BTAGLIGHTYR                 shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
+
+BTAGSYR group = BTAGUNCORYR BTAGCOR BTAGLIGHTYR
                                                                                                                                           
 elScaleStatYR               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    
 elScaleGainYR               shape    1.0     1.0     1.0     1.0      1.0    1.0    -       -       -       -      -        -      -       -      1.0      -    

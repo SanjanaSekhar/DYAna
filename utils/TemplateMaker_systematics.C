@@ -603,8 +603,8 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
     Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), err);
 
 
-    printf("After Scale: \n");
-    h->Print("range");
+    //printf("After Scale: \n");
+    //h->Print("range");
     printf("Total fakerate est is %.0f +/- %.0f \n", integ, err);
     return;
 }

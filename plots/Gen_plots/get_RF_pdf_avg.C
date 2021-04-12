@@ -94,10 +94,10 @@ void fill_RF_pdf_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfi
 
 void get_RF_pdf_avg(){
     setTDRStyle();
-    const int year = 2017;
-    char *out_file = "../analyze/SFs/2017/RF_pdf_weights.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_mar29.root");
-    const bool write_out = false;
+    const int year = 2018;
+    char *out_file = "../analyze/SFs/2018/RF_pdf_weights.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_april11.root");
+    const bool write_out = true;
     const bool print_nnpdf = true;
 
     TTree *t_mu = (TTree *) f_gen->Get("T_gen_mu");

@@ -818,7 +818,6 @@ void NTupleReader::fillEventSFs(){
 
     
 
-    *systematic = std::max(std::min(*systematic, 3.0f), 0.333f);
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
     if(year < 2018) prefireCorrs(); 
 

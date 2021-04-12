@@ -102,12 +102,13 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
             nt.fillEvent();
 
 
-            mu_F_up = nt.scale_Weights[0];
-            mu_F_down = nt.scale_Weights[1];
-            mu_R_up = nt.scale_Weights[2];
-            mu_R_down = nt.scale_Weights[4];
-            mu_RF_up = nt.scale_Weights[3];
-            mu_RF_down = nt.scale_Weights[5];
+        mu_F_up = std::max(std::min(nt.scale_Weights[0], nt.sys_max), nt.sys_min);
+        mu_F_down = std::max(std::min(nt.scale_Weights[1], nt.sys_max), nt.sys_min);
+        mu_R_up = std::max(std::min(nt.scale_Weights[2], nt.sys_max), nt.sys_min);
+        mu_R_down = std::max(std::min(nt.scale_Weights[4], nt.sys_max), nt.sys_min);
+        mu_RF_up = std::max(std::min(nt.scale_Weights[3], nt.sys_max), nt.sys_min);
+        mu_RF_down = std::max(std::min(nt.scale_Weights[5], nt.sys_max), nt.sys_min);
+
 
             int gen_id = nt.selectAnyGenParts();
             nt.doNNPDFRW();
