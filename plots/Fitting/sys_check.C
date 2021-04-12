@@ -1,4 +1,4 @@
-//#define STAND_ALONE
+#define STAND_ALONE
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
 #include "../../utils/root_files.h"
@@ -14,13 +14,14 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2016;
+        int year = 2018;
+        bool draw_ratio = true;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_BTAGLIGHT";
-        bool do_bkg = true;
+        char *sys = "_RENORM";
+        bool do_bkg = false;
         bool do_qcd = false;
-        bool do_electrons = false;
+        bool do_electrons = true;
         bool do_muons = true;
         int i = 1;
         setup_all_SFs(year);
@@ -171,6 +172,13 @@ void sys_check(){
 
             sprintf(mu_title, "Muons: %s", sys);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
+            if(draw_ratio){
+
+                TPad *mumu_cpad1 = new TPad("mumu_cp1", "pad1", 0.,0.3,0.98,1.);
+                mumu_cpad1->SetBottomMargin(0);
+                mumu_cpad1->Draw();
+                mumu_cpad1->cd();
+            }
             h1_mumu_plain->SetTitle(mu_title);
             h1_mumu_plain->SetMinimum(0.);
             h1_mumu_plain->Draw("hist");
@@ -202,6 +210,41 @@ void sys_check(){
                 leg1->AddEntry(h1_mumu_qcd_down, "Sys Down qcd Template", "l");
             }
             leg1->Draw();
+
+            if(draw_ratio){
+                TH1F *h1_ratio_mumu_sys_up = (TH1F *) h1_mumu_sys_up->Clone("h_ratio_mumu_sys_up");
+                TH1F *h1_ratio_mumu_sys_down = (TH1F *) h1_mumu_sys_down->Clone("h_ratio_mumu_sys_down");
+
+                h1_ratio_mumu_sys_up->Divide(h1_mumu_plain);
+                h1_ratio_mumu_sys_down->Divide(h1_mumu_plain);
+
+                c_mumu1->cd();
+                TPad *mumu_cpad2 = new TPad("mumu_cp2", "pad2", 0.,0,.98,0.3);
+                mumu_cpad2->SetBottomMargin(0.2);
+                mumu_cpad2->SetGridy();
+                mumu_cpad2->Draw();
+                mumu_cpad2->cd();
+                h1_ratio_mumu_sys_up->Draw("hist");
+                h1_ratio_mumu_sys_down->Draw("hist same");
+
+                h1_ratio_mumu_sys_up->SetMaximum(1.1);
+                h1_ratio_mumu_sys_up->SetMinimum(0.9);
+
+                h1_ratio_mumu_sys_up->GetYaxis()->SetTitle("Ratio wrt Nom.");
+                h1_ratio_mumu_sys_up->GetXaxis()->SetTitle("Template Bin");
+                h1_ratio_mumu_sys_up->GetYaxis()->SetNdivisions(505);
+                h1_ratio_mumu_sys_up->GetYaxis()->SetTitleSize(20);
+                h1_ratio_mumu_sys_up->GetYaxis()->SetLabelFont(43);
+                h1_ratio_mumu_sys_up->GetYaxis()->SetLabelSize(20);
+                h1_ratio_mumu_sys_up->GetYaxis()->SetTitleFont(43);
+                h1_ratio_mumu_sys_up->GetXaxis()->SetTitleSize(20);
+                h1_ratio_mumu_sys_up->GetXaxis()->SetLabelFont(43);
+                h1_ratio_mumu_sys_up->GetXaxis()->SetLabelSize(20);
+                h1_ratio_mumu_sys_up->GetXaxis()->SetTitleFont(43);
+                h1_ratio_mumu_sys_up->GetXaxis()->SetTitleOffset(3.);
+                h1_ratio_mumu_sys_up->GetYaxis()->SetTitleOffset(1.5);
+            }
+
 
             c_mumu1->Print(mu_fname1);
         }
@@ -283,6 +326,13 @@ void sys_check(){
 
             sprintf(el_title, "Electrons: %s", sys);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
+            if(draw_ratio){
+
+                TPad *elel_cpad1 = new TPad("elel_cp1", "pad1", 0.,0.3,0.98,1.);
+                elel_cpad1->SetBottomMargin(0);
+                elel_cpad1->Draw();
+                elel_cpad1->cd();
+            }
             h1_elel_plain->SetMinimum(0.);
             h1_elel_plain->SetTitle(el_title);
             h1_elel_plain->Draw("hist");
@@ -315,6 +365,40 @@ void sys_check(){
                 leg1->AddEntry(h1_elel_qcd_down, "Sys Down qcd Template", "l");
             }
             leg1->Draw();
+
+            if(draw_ratio){
+                TH1F *h1_ratio_elel_sys_up = (TH1F *) h1_elel_sys_up->Clone("h_ratio_elel_sys_up");
+                TH1F *h1_ratio_elel_sys_down = (TH1F *) h1_elel_sys_down->Clone("h_ratio_elel_sys_down");
+
+                h1_ratio_elel_sys_up->Divide(h1_elel_plain);
+                h1_ratio_elel_sys_down->Divide(h1_elel_plain);
+
+                c_elel1->cd();
+                TPad *elel_cpad2 = new TPad("elel_cp2", "pad2", 0.,0,.98,0.3);
+                elel_cpad2->SetBottomMargin(0.2);
+                elel_cpad2->SetGridy();
+                elel_cpad2->Draw();
+                elel_cpad2->cd();
+                h1_ratio_elel_sys_up->Draw("hist");
+                h1_ratio_elel_sys_down->Draw("hist same");
+
+                h1_ratio_elel_sys_up->SetMaximum(1.1);
+                h1_ratio_elel_sys_up->SetMinimum(0.9);
+
+                h1_ratio_elel_sys_up->GetYaxis()->SetTitle("Ratio wrt Nom.");
+                h1_ratio_elel_sys_up->GetXaxis()->SetTitle("Template Bin");
+                h1_ratio_elel_sys_up->GetYaxis()->SetNdivisions(505);
+                h1_ratio_elel_sys_up->GetYaxis()->SetTitleSize(20);
+                h1_ratio_elel_sys_up->GetYaxis()->SetLabelFont(43);
+                h1_ratio_elel_sys_up->GetYaxis()->SetLabelSize(20);
+                h1_ratio_elel_sys_up->GetYaxis()->SetTitleFont(43);
+                h1_ratio_elel_sys_up->GetXaxis()->SetTitleSize(20);
+                h1_ratio_elel_sys_up->GetXaxis()->SetLabelFont(43);
+                h1_ratio_elel_sys_up->GetXaxis()->SetLabelSize(20);
+                h1_ratio_elel_sys_up->GetXaxis()->SetTitleFont(43);
+                h1_ratio_elel_sys_up->GetXaxis()->SetTitleOffset(3.);
+                h1_ratio_elel_sys_up->GetYaxis()->SetTitleOffset(1.5);
+            }
 
             c_elel1->Print(el_fname1);
         

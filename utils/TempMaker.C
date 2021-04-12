@@ -411,10 +411,11 @@ float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
         if(sys_shift > 0) *systematic = pdf_weights[do_pdf_sys-1];
         if(sys_shift < 0) *systematic = 2. - pdf_weights[do_pdf_sys-1];
     }
-    if(abs(*systematic) > 10.0 || abs(*systematic) < 0.01 || std::isnan(*systematic)){
+    if(std::isnan(*systematic)){
         //printf("sys is %.4f  \n", *systematic);
         *systematic = 1.;
     }
+    *systematic = std::max(std::min(*systematic, 3.0f), 0.333f);
     //top_ptrw is 1 for non-ttbar samples
     double base_weight = gen_weight * (*systematic) * pu_SF * top_ptrw;
     if(incl_btag_SFs){

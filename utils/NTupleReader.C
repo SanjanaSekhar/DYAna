@@ -816,16 +816,19 @@ void NTupleReader::fillEventSFs(){
     jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, 0);
     jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, 0);
 
+    
+
+    *systematic = std::max(std::min(*systematic, 3.0f), 0.333f);
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
     if(year < 2018) prefireCorrs(); 
 
     if(scale_size > 0){
-        mu_F_up = scale_Weights[0];
-        mu_F_down = scale_Weights[1];
-        mu_R_up = scale_Weights[2];
-        mu_R_down = scale_Weights[4];
-        mu_RF_up = scale_Weights[3];
-        mu_RF_down = scale_Weights[5];
+        mu_F_up = std::max(std::min(scale_Weights[0], sys_max), sys_min);
+        mu_F_down = std::max(std::min(scale_Weights[1], sys_max), sys_min);
+        mu_R_up = std::max(std::min(scale_Weights[2], sys_max), sys_min);
+        mu_R_down = std::max(std::min(scale_Weights[4], sys_max), sys_min);
+        mu_RF_up = std::max(std::min(scale_Weights[3], sys_max), sys_min);
+        mu_RF_down = std::max(std::min(scale_Weights[5], sys_max), sys_min);
     }
     else{
         mu_R_up = mu_R_down = mu_F_up = mu_F_down = mu_RF_up = mu_RF_down = 1.0;

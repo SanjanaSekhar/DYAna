@@ -113,6 +113,10 @@ class NTupleReader{
 
         float bjet_med_cut = 0.;
 
+        float sys_max = 3.0;
+        float sys_min = 1/3.0;
+
+
         Float_t cm_m, xF, cost, cost_r, cost_st, mu1_pt, mu2_pt, mu1_eta, mu2_eta, jet1_pt, jet2_pt, jet1_eta, jet2_eta, 
                  gen_weight, jet1_csv, jet1_btag, jet2_csv, jet2_btag, gen_m;
         Float_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt, mu_p_SF_up, mu_p_SF_down, mu_m_SF_up, mu_m_SF_down;
