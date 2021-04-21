@@ -618,6 +618,7 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
     float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
     float evt_weight;
     float pdf_weights[60];
+    int  do_ptrw_sys = 0;
     Bool_t sig_event(1);
     t_gen->SetBranchAddress("gen_p", &gen_lep_p);
     t_gen->SetBranchAddress("gen_m", &gen_lep_m);
@@ -643,6 +644,20 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
     ptrw_helper ptrw_SFs; 
     setup_ptrw_helper(&ptrw_SFs, year);
 
+
+    if(sys_label.find("ptrw") != string::npos){
+        int foo;
+        if(  sys_label.find("Up") != string::npos){
+            sscanf(sys_label.c_str(), "ptrw%ibUp", &do_ptrw_sys);
+        }
+        else{
+            sscanf(sys_label.c_str(), "ptrw%ibDown", &do_ptrw_sys);
+            do_ptrw_sys *= -1;
+        }
+    printf("ptrw sys %i \n", do_ptrw_sys);
+    }
+
+
     //float pt_cut = 26.;
     float pt_cut = 30.;
 
@@ -659,6 +674,9 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
         //bool pass = abs(cm.Rapidity()) < 2.4;
         if(m >= m_low && m <= m_high){
             evt_weight = gen_weight;
+            cm = *gen_lep_p + *gen_lep_m;
+            float pt = cm.Pt();
+            float rap = abs(cm.Rapidity());
 
             if(sys_label == string("RENORMUp")) evt_weight *= mu_R_up;
             else if(sys_label == string ("RENORMDown")) evt_weight *= mu_R_down;
@@ -678,16 +696,21 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
                 if(sys_label.find("Up") != string::npos) evt_weight *= abs((1+comb));
                 if(sys_label.find("Down") != string::npos) evt_weight *= abs((1-comb));
             }
+            else if (sys_label.find("ptrw") == string::npos && sys_labe.find("ptcut") == string::npos && sys_label != string("")){
+                printf("Can't find sys %s \n", sys_label.c_str());
+            }
+
+            if(do_ptrw){
+                float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, do_ptrw_sys); 
+                evt_weight *= ptrw;
+            }
 
 
 
             h_uncut->Fill(cost_st, evt_weight);
             if(pass){
-                cm = *gen_lep_p + *gen_lep_m;
 
 
-                float pt = cm.Pt();
-                float rap = abs(cm.Rapidity());
                 float gen_cost = cost_st;
                 if(evt_weight >0) nEvents++;
                 else  nEvents--;
@@ -699,10 +722,6 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
                 float reweight_alpha = (1 - gen_cost*gen_cost)/denom;
 
 
-                if(do_ptrw){
-                    float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, 0); 
-                    evt_weight *= ptrw;
-                }
 
 
                 h_raw->Fill(gen_cost, evt_weight);

@@ -13,13 +13,14 @@ def print_and_do(s):
 
 labels = [ "gof_postfit", 
         "impacts",
+        "sys_uncs",
         #"bias_test_afb6_a00", "bias_test_afb6_a01", "bias_test_afb0_a00", "bias_test_afb0_a01",
 #"gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18",
 #"gof_postfit_y16_ee", "gof_postfit_y16_mumu",
 ]
-date = "Feb08"
+date = "april12"
 
-odir = "../plots/Misc_plots/fit_checks_feb08/"
+odir = "../plots/Misc_plots/fit_checks_april12/"
 print_and_do("mkdir %s" % odir)
 
 

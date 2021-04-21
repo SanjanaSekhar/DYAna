@@ -34,13 +34,12 @@ lumiDB                      lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV
 lumiBC                      lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV    -      LBCV    LBCV    LBCV   LBCV     LBCV   LBCV     -      LBCV    LBCV  
 lumiGS                      lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV    -      LGSV    LGSV    LGSV   LGSV     LGSV   LGSV     -      LGSV    LGSV  
 
-lumisYR group = lumiXY lumiLS lumiDB lumiBC lumiGS                                                                                                                                  
+lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS                                                                                                                                  
 
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu                          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #prefireYR                  shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
-METJERYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 METJECYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #METHEMYR                   shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
                                                                                                                                           
@@ -134,7 +133,7 @@ ptrw5bYRC                   shape    1.0     1.0     1.0     -        -      -  
 ptrw6bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 ptrw7bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 
-ptrwsYR group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw4bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC
+ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw4bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                        shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0    
@@ -199,7 +198,8 @@ pdf59                       shape    1.0     1.0     1.0     -        -      -  
 pdf60                       shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0    
 
 
-* autoMCStats 50 1
+#* autoMCStats 50 1
 #* autoMCStats 500000 1
+* autoMCStats 0 1
 
 pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60

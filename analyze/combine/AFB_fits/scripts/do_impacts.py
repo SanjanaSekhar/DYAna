@@ -18,7 +18,7 @@ extra_params = ""
 
 
         
-all_sys = ["METJER", "METJEC", "elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "muRC", "Pu", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" ,
+all_sys = ["METJEC", "elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "muRC", "Pu", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" ,
             "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
             "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
             "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
@@ -48,6 +48,9 @@ pars17 = []
 pars18 = []
 pars_comb = []
 
+for i in range(1,61):
+    pars_comb.append("pdf" + str(i))
+
 for par in all_sys:
     if(par not in correlate_all): 
         pars16.append(par + "16")
@@ -65,6 +68,7 @@ for par in all_sys:
 pars16.append("prefire16")
 pars17.append("prefire17")
 pars18.append("METHEM18")
+
 
 par_str = ""
 

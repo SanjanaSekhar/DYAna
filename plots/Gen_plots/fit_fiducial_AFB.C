@@ -73,7 +73,7 @@ std::tuple<float,float,float,float,float,float> get_afb_fid(float m_low, float m
 
     if(!init){
 
-        f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_nov13.root");
+        f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_april11.root");
         gROOT->SetBatch(1);
 
         t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -184,9 +184,8 @@ void fit_fiducial_AFB(){
     int i_start=1;
 
     int i_max = n_m_bins;
-    //int i_max = 1;
 
-    vector<string>  sys_labels_raw = { "pdf", "RENORM", "FAC", "REFAC","ptcut"};
+    vector<string>  sys_labels_raw = { "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",  "pdf", "RENORM", "FAC", "REFAC","ptcut" };
 
     vector<string> sys_labels;
 
@@ -227,7 +226,7 @@ void fit_fiducial_AFB(){
         printf("AFB shift is: %.3f +/- %.3f \n", afb_shift[i], afb_shift_stat_unc[i]);
         printf("A0 shift is: %.3f +/- %.3f \n", a0_shift[i], a0_shift_stat_unc[i]);
 
-        continue;
+        //continue;
 
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
 

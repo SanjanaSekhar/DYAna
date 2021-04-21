@@ -16,8 +16,8 @@ chan = "combined"
 
 
 individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "muFakesYR", "Pu", "prefireYR", "METJECYR", "muRCYR"]
-group_pars =["pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",   "muIDsYR", "muHLTsYR", "RFscalesYRC","emucostrwsYRC","elfakesrwsYR","mufakesrwsYR", "ptrwsYR",
-        "BTAGSYR"] 
+group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",   "muIDsYR", "muHLTsYR", 
+                "elfakesrwsYR","mufakesrwsYR", "BTAGSYR"] 
 
 sys_name_conv = dict()
 
@@ -49,7 +49,7 @@ sys_name_conv['ptrwsYR'] = "DY $p_{T}$ Correction"
 
 def par_to_freezestr(par):
     if("YRC" in par):
-        par16 = par.replace("YR", "16")
+        par16 = par.replace("YRC", "16")
         par1718 = par.replace("YRC", "1718")
         return par16 + "," + par1718
     elif("YR" in par):
@@ -77,13 +77,13 @@ print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.
 d = dict()
 n = 0
 for indi_par in individual_pars:
-    n+=1
     freeze_str = par_to_freezestr(indi_par)
     print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.root -w w --snapshotName "MultiDimFit" -n _%s """ % (freeze_str, indi_par))
     sys_unc = compute_sys("nom1", indi_par)
     d[indi_par] = sys_unc
 
 for group_par in group_pars:
+    n+=1
     freeze_str = par_to_freezestr(group_par)
     print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.root -w w --snapshotName "MultiDimFit" -n _%s """ % (freeze_str, group_par))
     sys_unc = compute_sys("nom1", group_par)
