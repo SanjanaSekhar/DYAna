@@ -31,7 +31,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2017;
+const int year = 2018;
 const bool write_out = true;
 char *plot_dir = "Misc_plots/rap_check/";
 

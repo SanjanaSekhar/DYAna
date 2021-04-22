@@ -30,7 +30,7 @@
 #include "../../utils/Colors.h"
 
 int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/EMu_plots/";
 char *plot_label = "e#mu Control Region";
 
@@ -139,8 +139,8 @@ void draw_cmp(){
     total_mc->Add(ttbar_cost);
 
 
-    Double_t data_F = data_cost->Integral(1,n_cost_bins/2);
-    Double_t data_B = data_cost->Integral(n_cost_bins/2 + 1, n_cost_bins);
+    Double_t data_B = data_cost->Integral(1,n_cost_bins/2);
+    Double_t data_F = data_cost->Integral(n_cost_bins/2 + 1, n_cost_bins);
     Double_t data_AFB = (data_F - data_B)/(data_F+data_B);
    
     Double_t data_dAFB = AFB_counting_unc(data_F, data_B, sqrt(data_F), sqrt(data_B));
@@ -150,8 +150,8 @@ void draw_cmp(){
 
 
     Double_t total_mc_dF, total_mc_dB;
-    Double_t total_mc_F = total_mc->IntegralAndError(1,n_cost_bins/2, total_mc_dF);
-    Double_t total_mc_B = total_mc->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, total_mc_dB);
+    Double_t total_mc_B = total_mc->IntegralAndError(1,n_cost_bins/2, total_mc_dB);
+    Double_t total_mc_F = total_mc->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, total_mc_dF);
     Double_t total_mc_AFB = (total_mc_F - total_mc_B)/(total_mc_F+total_mc_B);
    
     Double_t total_mc_dAFB = AFB_counting_unc(total_mc_F, total_mc_B, total_mc_dF, total_mc_dB);
@@ -160,8 +160,8 @@ void draw_cmp(){
 
 
     Double_t diboson_dF, diboson_dB;
-    Double_t diboson_F = diboson_cost->IntegralAndError(1,n_cost_bins/2, diboson_dF);
-    Double_t diboson_B = diboson_cost->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, diboson_dB);
+    Double_t diboson_B = diboson_cost->IntegralAndError(1,n_cost_bins/2, diboson_dB);
+    Double_t diboson_F = diboson_cost->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, diboson_dF);
     Double_t diboson_AFB = (diboson_F - diboson_B)/(diboson_F+diboson_B);
    
     Double_t diboson_dAFB = AFB_counting_unc(diboson_F, diboson_B, diboson_dF, diboson_dB);

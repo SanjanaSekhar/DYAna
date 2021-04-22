@@ -390,7 +390,7 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_F_up->GetBinContent(mbin+1);
     else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_F_down->GetBinContent(mbin+1);
     else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
-    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 2. -  RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 1./RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
 
     if(avg != 1.){
         printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
@@ -408,8 +408,12 @@ float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
     if(do_pileup_sys == -1) pu_SF = pu_SF_down;
     if(do_pileup_sys == 1) pu_SF = pu_SF_up;
     if(do_pdf_sys != 0){
-        if(sys_shift > 0) *systematic = pdf_weights[do_pdf_sys-1];
-        if(sys_shift < 0) *systematic = 2. - pdf_weights[do_pdf_sys-1];
+        float pdf_weight = pdf_weights[do_pdf_sys-1];
+        pdf_weight = std::max(std::min(pdf_weight, 3.0f), 0.333f);
+        if(sys_shift > 0) *systematic = pdf_weight;
+        if(sys_shift < 0) *systematic = 1./pdf_weight;
+        //if(counter < 20) printf("%.4f \n", *systematic);
+        //counter++;
     }
     if(std::isnan(*systematic)){
         //printf("sys is %.4f  \n", *systematic);

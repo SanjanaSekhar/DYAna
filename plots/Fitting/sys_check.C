@@ -14,16 +14,16 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2018;
+        int year = 2017;
         bool draw_ratio = true;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_RENORM";
+        char *sys = "_pdf19";
         bool do_bkg = false;
         bool do_qcd = false;
-        bool do_electrons = true;
+        bool do_electrons = false;
         bool do_muons = true;
-        int i = 1;
+        int i = 7;
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");

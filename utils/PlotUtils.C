@@ -12,7 +12,7 @@
 
 
 float dy_sys_unc = 0.1;
-float qcd_sys_unc = 0.48;
+float qcd_sys_unc = 0.55;
 float diboson_sys_unc = 0.15;
 float top_sys_unc = 0.11;
 float gam_sys_unc = 0.35;

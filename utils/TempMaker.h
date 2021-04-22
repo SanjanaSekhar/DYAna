@@ -81,6 +81,8 @@ class TempMaker{
         int iso_lep = -1;        
         float el_lumi = 0.;
 
+        int counter =0;
+
         string sys_label = string("");
         TTree *t_in;
 
