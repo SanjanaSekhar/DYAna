@@ -230,6 +230,8 @@ int gen_mc_template(TTree *t1, TH2F* h_sym, TH2F *h_asym, TH2F *h_alpha,
     tm.is_gen_level = true;
     tm.do_ptrw = true;
 
+    tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
+
     tm.setup_systematic(sys_label);
     tm.setup();
 
@@ -301,6 +303,14 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH2F* h,
         else tm.do_electrons = true;
         tm.is_gen_level = false;
         tm.do_emu_costrw = emu_reweight;
+
+        auto hname = h->GetName();
+        if(string(hname).find("top") != string::npos) tm.btag_mc_eff_idx = 0; //idx for ttbar MC btag effs
+        else if(string(hname).find("gam") != string::npos) tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
+        else tm.btag_mc_eff_idx = 2; //idx for diboson MC btag effs
+
+        printf("h %s : btag mc idx %i \n", h->GetName(), tm.btag_mc_eff_idx);
+
 
         tm.setup_systematic(sys_label);
         tm.setup();
@@ -696,7 +706,7 @@ int make_gen_temps(TTree *t_gen, TH1F *h_uncut, TH1F *h_raw, TH1F *h_sym, TH1F *
                 if(sys_label.find("Up") != string::npos) evt_weight *= abs((1+comb));
                 if(sys_label.find("Down") != string::npos) evt_weight *= abs((1-comb));
             }
-            else if (sys_label.find("ptrw") == string::npos && sys_labe.find("ptcut") == string::npos && sys_label != string("")){
+            else if (sys_label.find("ptrw") == string::npos && sys_label.find("ptcut") == string::npos && sys_label != string("")){
                 printf("Can't find sys %s \n", sys_label.c_str());
             }
 

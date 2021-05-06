@@ -425,8 +425,8 @@ float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
     if(incl_btag_SFs){
         if(do_btag_sys != 0){
 #ifndef STAND_ALONE
-            jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
-            jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
+            jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys, btag_mc_eff_idx);
+            jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys, btag_mc_eff_idx);
 #endif
         }
         if (nJets >= 1){

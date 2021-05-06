@@ -96,7 +96,7 @@ def write_job(out, name, nJobs, iJob, eosout=''):
         sub_file.write('scram b ProjectRename \n')
 
     sub_file.write('xrdcp %s tarDir.tgz\n' %eos_an_file)
-    sub_file.write('tar -xvzf tarDir.tgz \n')
+    sub_file.write('tar -xzf tarDir.tgz \n')
     #sub_file.write('rm -r tarDir.tgz \n')
     sub_file.write('scram b -j \n')
     sub_file.write('eval `scramv1 runtime -sh`\n')

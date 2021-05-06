@@ -24,11 +24,11 @@ if(options.chan == "ee"):
     else:
         extra_params += " --setParameters mask_Y%i_mumu%i=1" % (options.year % 2000, options.year % 2000)
 elif(options.chan == "mumu"):
-    print("Chan is mumu, will mask ee and ee_ss channels")
+    print("Chan is mumu, will mask ee channels")
     if(options.year < 0):
-        extra_params += " --setParameters mask_Y16_ee16=1,mask_Y17_ee17=1,mask_Y18_ee18=1,mask_Y16_ee16_ss=1,mask_Y17_ee17_ss=1,mask_Y18_ee18_ss=1" 
+        extra_params += " --setParameters mask_Y16_ee16=1,mask_Y17_ee17=1,mask_Y18_ee18=1" 
     else:
-        extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
+        extra_params += " --setParameters mask_Y%i_ee%i=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
 
 if(options.verbose > 0):
     extra_params +=" --verbose %i" % options.verbose
@@ -42,7 +42,9 @@ bin_start = 0
 bin_stop = 8
 
 fit_name = options.chan
-if(options.no_sys): fit_name +="_nosys"
+if(options.no_sys): 
+    fit_name +="_nosys"
+    extra_params += " --freezeParameters allConstrainedNuisances"
 if(options.fake_data): fit_name +="_fake_data"
 if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
 
@@ -55,7 +57,7 @@ for mbin in range(bin_start, bin_stop):
     print(" \n \n Starting fit for bin %i \n\n" % mbin)
 
     workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
-    make_workspace(workspace, mbin, no_sys = options.no_sys, fake_data = options.fake_data, year = options.year)
+    make_workspace(workspace, mbin, fake_data = options.fake_data, year = options.year)
 
     plotdir="postfit_plots/%s_mbin%i" % (fit_name, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
@@ -66,7 +68,7 @@ for mbin in range(bin_start, bin_stop):
     print_and_do("mkdir %s" % (plotdir_swap))
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 
-    if(not options.no_plot):
+    if(not options.no_plot ):
         print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
                 % (fit_name, mbin))
         extra_args = ""

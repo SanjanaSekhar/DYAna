@@ -87,11 +87,11 @@ def print_and_do(s):
 def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fit_name = 'fit_s'
     workspace = d+'higgsCombineTest.FitDiagnostics.mH120.root'
-    fit_file = d+'fitDiagnostics.root'
+    fit_file = d+'fitDiagnosticsTest.root'
     if(mdf):
         fit_name = 'fit_mdf'
         workspace = d+'higgsCombineTest.MultiDimFit.mH120.root'
-        fit_file = d+'multidimfit.root'
+        fit_file = d+'multidimfitTest.root'
     w_f = TFile.Open(workspace)
     w = w_f.Get('w')
     fr_f = TFile.Open(fit_file)
@@ -138,7 +138,7 @@ def do_lumi(card, year):
 
 
 
-def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1):
+def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1, symMCStats = True):
     print("Making workspace %s mbin %i" % (workspace, mbin))
     template_card="card_templates/combined_fit_template.txt"
     if(no_sys): template_card = "card_templates/combined_fit_template_nosys.txt"
@@ -170,7 +170,9 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
 
-    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks --symMCStats" % (comb_card, mbin, workspace))
+    if(symMCStats): extra_arg = "--symMCStats"
+    else: extra_arg = ""
+    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks %s" % (comb_card, mbin, workspace, extra_arg))
 
 def make_gen_level_workspace(workspace, mbin,  year = -1):
     print("Making workspace %s mbin %i" % (workspace, mbin))

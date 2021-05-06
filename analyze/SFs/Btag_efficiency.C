@@ -5,7 +5,7 @@
 void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
 {
 
-    if(fin == "") fin = string("EOS_files/2017/TTbar_files.txt");
+    if(fin == "") fin = string("EOS_files/2016/DY_files_test.txt");
     NTupleReader nt(fin.c_str(),"output_files/test.root", false);
     if (year == -1) year = 2016;
     nt.year = year;
@@ -13,8 +13,8 @@ void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
     nt.do_muons = true;
     nt.do_electrons = true;
 
-    string fout_name = string("Btag_eff_MC_2018_ttbar.root");
-    TFile *fout = TFile::Open(fout_name.c_str(), "RECREATE");
+    //string fout_name = string("Btag_eff_MC_2016_diboson.root");
+    //TFile *fout = TFile::Open(fout_name.c_str(), "RECREATE");
 
     Double_t Eta_bins[] = {0, 0.9, 1.2, 2.1, 2.4}; 
     Int_t nEta_bins = 4;
@@ -47,7 +47,9 @@ void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
     int B =5;
     int C =4;
 
+    int nFiles = 0;
     while(nt.getNextFile()){
+        nFiles++;
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
             if(nt.jet_size >= 2 && (nt.loose_dimuon_id || nt.dielec_id)){
@@ -76,15 +78,15 @@ void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
 
             }
         }
+        if(nFiles > 30) break;
         printf("moving on to next file, currently %i Jets \n\n", nJets);
 
     }
 
-    nt.finish();
 
     printf("There were %i Bs %i Cs and %i UDSGs in %i files.\n",
             nB, nC, nUDSG, nt.fileCount);
-    fout->cd();
+    nt.fout->cd();
 
     TH2D* b_eff = (TH2D *) b_num->Clone("b_eff");
     b_eff->Divide(b_denom);
@@ -102,8 +104,9 @@ void Btag_efficiency(int nJobs =1, int iJob = 0, string fin ="", int year =-1)
     udsg_eff->Write();
 
 
-    printf("Writing output to file at %s \n", fout_name.c_str());
-    fout->Close();
+    //printf("Writing output to file at %s \n", fout_name.c_str());
+    nt.finish();
+    //ntfout->Close();
 
     return;
 }

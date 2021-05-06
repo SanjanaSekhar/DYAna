@@ -176,6 +176,8 @@ class TempMaker{
         int do_elSmear_sys = 0;
         
         float elp_rescale, elm_rescale;
+
+        int btag_mc_eff_idx = 0;
 };
 
 

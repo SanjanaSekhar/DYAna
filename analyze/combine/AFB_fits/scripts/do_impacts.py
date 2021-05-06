@@ -14,9 +14,9 @@ parser.add_option("-o", "--odir", default="impacts/", help = "output directory")
 
 chan = "combined"
 
-extra_params = ""
 
 
+extra_params = "--X-rtd MINIMIZER_no_analytic"
         
 all_sys = ["METJEC", "elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "muRC", "Pu", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" ,
             "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
@@ -86,8 +86,8 @@ make_workspace(workspace, options.mbin)
 print("Num pars = %i " % (len(pars16) + len(pars17) + len(pars18) + len(pars_comb)))
 print(par_str)
 
-print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit " % workspace)
-print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i" % (workspace, par_str, options.nThreads))
+print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s " % (workspace, extra_params))
+print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s" % (workspace, par_str, options.nThreads, extra_params))
 print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/impacts_mbin%i.json --named %s" % (workspace, options.odir, options.mbin, par_str))
 print_and_do("python scripts/my_plotImpacts.py -i %s/impacts_mbin%i.json -o %s/impact_plot_afb_mbin%s --POI Afb --blind" % (options.odir, options.mbin, options.odir, options.mbin))
 print_and_do("python scripts/my_plotImpacts.py -i %s/impacts_mbin%i.json -o %s/impact_plot_a0_mbin%s --POI A0 --blind" % (options.odir, options.mbin, options.odir, options.mbin))

@@ -78,7 +78,9 @@ void fill_RF_pdf_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfi
             h_F_up->Fill(m, mu_F_up, gen_weight);
             h_RF_up->Fill(m, mu_RF_up, gen_weight);
             for(int i=0; i<n_pdfs; i++){
-                pdfs[i]->Fill(m, pdf_weights[i], gen_weight);
+                float pdf_weight = pdf_weights[i];
+                pdf_weight = std::max(std::min(pdf_weight, 3.0f), 0.333f);
+                pdfs[i]->Fill(m, pdf_weight, gen_weight);
             }
             if(h_nnpdfrw != nullptr) h_nnpdfrw->Fill(m, nnpdf30_weight, gen_weight);
 
@@ -94,9 +96,9 @@ void fill_RF_pdf_hists(TTree *t_dy, TProfile *h_R_up, TProfile *h_R_down, TProfi
 
 void get_RF_pdf_avg(){
     setTDRStyle();
-    const int year = 2018;
-    char *out_file = "../analyze/SFs/2018/RF_pdf_weights.root";
-    TFile *f_gen = TFile::Open("../analyze/output_files/DY18_gen_level_april11.root");
+    const int year = 2016;
+    char *out_file = "../analyze/SFs/2016/RF_pdf_weights.root";
+    TFile *f_gen = TFile::Open("../analyze/output_files/DY16_gen_level_april11.root");
     const bool write_out = true;
     const bool print_nnpdf = true;
 

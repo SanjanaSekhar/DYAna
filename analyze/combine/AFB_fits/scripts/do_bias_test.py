@@ -25,6 +25,8 @@ chan = "combined"
 workspace = "workspaces/%s_fit_bias_tests_%i.root" % (chan, options.mbin)
 make_workspace(workspace, options.mbin, no_sys = options.no_sys)
 
+extra_params = "--X-rtd MINIMIZER_no_analytic"
+
 
 print("Will inject AFB %.2f A0 %.2f for all toys " %(options.Afb, options.A0))
 
@@ -36,7 +38,7 @@ pull_a0 = []
 if(not options.prefit):
     print("Sampling toys based on postfit")
     if(not options.reuse_fit):
-        print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1" % (workspace))
+        print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s" % (workspace, extra_params))
 
 for i in range(options.nToys):
 
@@ -54,9 +56,9 @@ for i in range(options.nToys):
         print_and_do("combine -M GenerateOnly -d %s -s %i --saveToys -t 1 --toysFrequentist --setParameters Afb=%.2f,A0=%.2f" 
             % (workspace, i, options.Afb, options.A0))
 
-    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL" 
-            %(workspace, i))
-    f_fit = TFile.Open("multidimfit.root")
+    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" 
+            %(workspace, i, extra_params))
+    f_fit = TFile.Open("multidimfitTest.root")
     if f_fit:
         fr = f_fit.Get('fit_mdf')
         myargs = RooArgSet(fr.floatParsFinal())

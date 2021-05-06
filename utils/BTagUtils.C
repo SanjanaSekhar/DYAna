@@ -11,9 +11,15 @@ typedef struct {
 } BTag_readers;
 
 typedef struct {
-    TH2D *b_eff;
-    TH2D *c_eff;
-    TH2D *udsg_eff;
+    TH2D *b_eff_dy;
+    TH2D *c_eff_dy;
+    TH2D *udsg_eff_dy;
+    TH2D *b_eff_ttbar;
+    TH2D *c_eff_ttbar;
+    TH2D *udsg_eff_ttbar;
+    TH2D *b_eff_diboson;
+    TH2D *c_eff_diboson;
+    TH2D *udsg_eff_diboson;
 } BTag_effs;
 
 
@@ -50,11 +56,29 @@ Double_t btag_weight_helper(Double_t pt, Double_t eta, Double_t SF, TH2D *mc_eff
     Double_t weight = (1-SF*eff)/(1-eff);
     return weight;
 }
-Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs btag_effs, BTag_readers b_readers, int systematic = 0){
+Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs btag_effs, BTag_readers b_readers, int systematic = 0, int btag_mc_eff_idx = 0){
     //compute weighting from btagging scale factors
     Double_t weight, bjet_SF;
 
     char const *sys;
+
+    TH2D *b_eff, *c_eff, *udsg_eff;
+
+    if(btag_mc_eff_idx == 0){ //tbar
+        b_eff = btag_effs.b_eff_ttbar;
+        c_eff = btag_effs.c_eff_ttbar;
+        udsg_eff = btag_effs.udsg_eff_ttbar;
+    }
+    else if(btag_mc_eff_idx == 1){ //dy
+        b_eff = btag_effs.b_eff_dy;
+        c_eff = btag_effs.c_eff_dy;
+        udsg_eff = btag_effs.udsg_eff_dy;
+    }
+    else if(btag_mc_eff_idx == 2){ //dy
+        b_eff = btag_effs.b_eff_diboson;
+        c_eff = btag_effs.c_eff_diboson;
+        udsg_eff = btag_effs.udsg_eff_diboson;
+    }
 
     if(std::abs(flavour - 5.) < 0.01){ //bjet
 
@@ -65,7 +89,7 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
         if (systematic == -2) sys = "down_uncorrelated";
 
         bjet_SF = b_readers.b_reader.eval_auto_bounds(sys, BTagEntry::FLAV_B, eta, pt);
-        weight = btag_weight_helper(pt, eta, bjet_SF, btag_effs.b_eff);
+        weight = btag_weight_helper(pt, eta, bjet_SF, b_eff);
         //printf("B jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
 
     }
@@ -78,7 +102,7 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
         if (systematic == -2) sys = "down_uncorrelated";
 
         bjet_SF = b_readers.c_reader.eval_auto_bounds(sys, BTagEntry::FLAV_C, eta, pt);
-        weight = btag_weight_helper(pt, eta, bjet_SF, btag_effs.c_eff);
+        weight = btag_weight_helper(pt, eta, bjet_SF, c_eff);
         //printf("C jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
     else{ //udsg jet
@@ -91,7 +115,7 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
 
 
         bjet_SF = b_readers.udsg_reader.eval_auto_bounds(sys, BTagEntry::FLAV_UDSG, eta,pt);
-        weight = btag_weight_helper(pt, eta, bjet_SF, btag_effs.udsg_eff);
+        weight = btag_weight_helper(pt, eta, bjet_SF, udsg_eff);
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
     if(bjet_SF == 0) printf("WARNING: Scale factor return 0 for Flavour %1.0f pt %.0f eta %1.1f \n!",
@@ -107,23 +131,26 @@ float get_pos_btag_weight(int nJets, bool jet1_tagged, Double_t pt1, Double_t et
 
     Double_t bjet1_SF, bjet1_eff, bjet2_SF, bjet2_eff;
     float jet1_weight, jet2_weight;
+    TH2D *b_eff = btag_effs.b_eff_ttbar;
+    TH2D *c_eff = btag_effs.c_eff_ttbar;
+    TH2D *udsg_eff = btag_effs.udsg_eff_ttbar;
 
     if(nJets ==0) return 1.;
 
     if(std::abs(flavour1 - 5.) < 0.01){ //bjet
         bjet1_SF = b_readers.b_reader.eval_auto_bounds("central", BTagEntry::FLAV_B, eta1, pt1);
-        bjet1_eff= btag_eff(pt1, eta1, btag_effs.b_eff);
+        bjet1_eff= btag_eff(pt1, eta1, b_eff);
         //printf("B jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
 
     }
     else if (std::abs(flavour1 - 4.) < 0.01){ //cjet
         bjet1_SF = b_readers.c_reader.eval_auto_bounds("central", BTagEntry::FLAV_C, eta1, pt1);
-        bjet1_eff= btag_eff(pt1, eta1, btag_effs.c_eff);
+        bjet1_eff= btag_eff(pt1, eta1, c_eff);
         //printf("C jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
     else{ //udsg jet
         bjet1_SF = b_readers.udsg_reader.eval_auto_bounds("central", BTagEntry::FLAV_UDSG, eta1,pt1);
-        bjet1_eff= btag_eff(pt1, eta1, btag_effs.udsg_eff);
+        bjet1_eff= btag_eff(pt1, eta1, udsg_eff);
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
 
@@ -135,18 +162,18 @@ float get_pos_btag_weight(int nJets, bool jet1_tagged, Double_t pt1, Double_t et
 
     if(std::abs(flavour2 - 5.) < 0.01){ //bjet
         bjet2_SF = b_readers.b_reader.eval_auto_bounds("central", BTagEntry::FLAV_B, eta2, pt2);
-        bjet2_eff= btag_eff(pt2, eta2, btag_effs.b_eff);
+        bjet2_eff= btag_eff(pt2, eta2, b_eff);
         //printf("B jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
 
     }
     else if (std::abs(flavour2 - 4.) < 0.01){ //cjet
         bjet2_SF = b_readers.c_reader.eval_auto_bounds("central", BTagEntry::FLAV_C, eta2, pt2);
-        bjet2_eff= btag_eff(pt2, eta2, btag_effs.c_eff);
+        bjet2_eff= btag_eff(pt2, eta2, c_eff);
         //printf("C jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
     else{ //udsg jet
         bjet2_SF = b_readers.udsg_reader.eval_auto_bounds("central", BTagEntry::FLAV_UDSG, eta2,pt2);
-        bjet2_eff= btag_eff(pt2, eta2, btag_effs.udsg_eff);
+        bjet2_eff= btag_eff(pt2, eta2, udsg_eff);
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
 
@@ -159,7 +186,7 @@ float get_pos_btag_weight(int nJets, bool jet1_tagged, Double_t pt1, Double_t et
     return result;
 }
 
-void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year, bool incl_systematics = true, bool use_dy_samples = false){
+void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year, bool incl_systematics = true){
     printf("Setting up btag SFs... \n");
     TH1::AddDirectory(kFALSE);
     char file[80];
@@ -190,30 +217,53 @@ void setup_btag_SFs(BTag_readers *btag_r, BTag_effs *b_effs, int year, bool incl
     btag_r->c_reader.load(calib_bc, BTagEntry::FLAV_C, "comb");
     btag_r->udsg_reader = BTagCalibrationReader (BTagEntry::OP_MEDIUM, "central", udsg_sys_types);
     btag_r->udsg_reader.load(calib_udsg, BTagEntry::FLAV_UDSG, "incl");
-
+    
+    TFile *f0_ttbar, *f0_dy, *f0_diboson;
 
     TFile *f0;
-    if(!use_dy_samples){
-        if (year == 2016)  f0 = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_ttbar.root");
-        if (year == 2017)  f0 = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_ttbar.root");
-        if (year == 2018)  f0 = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_ttbar.root");
+    if (year == 2016){
+        f0_ttbar = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_ttbar.root");
+        f0_dy = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_dy.root");
+        f0_diboson = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_diboson.root");
     }
-    else{
-        if (year == 2016)  f0 = TFile::Open("../analyze/SFs/2016/Btag_eff_MC_2016_dy.root");
-        if (year == 2017)  f0 = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_dy.root");
-        if (year == 2018)  f0 = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_dy.root");
+    else if (year == 2017){
+        f0_ttbar = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_ttbar.root");
+        f0_dy = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_dy.root");
+        f0_diboson = TFile::Open("../analyze/SFs/2017/Btag_eff_MC_2017_diboson.root");
+    }
+    else if (year == 2018){
+        f0_ttbar = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_ttbar.root");
+        f0_dy = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_dy.root");
+        f0_diboson = TFile::Open("../analyze/SFs/2018/Btag_eff_MC_2018_diboson.root");
     }
 
-    TDirectory *subdir0 = gDirectory;
-    TH2D *b_eff = (TH2D *) subdir0->Get("b_eff")->Clone();
-    TH2D *c_eff = (TH2D *) subdir0->Get("c_eff")->Clone();
-    TH2D *udsg_eff = (TH2D *) subdir0->Get("udsg_eff")->Clone();
-    b_eff->SetDirectory(0);
-    c_eff->SetDirectory(0);
-    udsg_eff->SetDirectory(0);
-    b_effs->b_eff = b_eff;
-    b_effs->c_eff = c_eff;
-    b_effs->udsg_eff = udsg_eff;
+    f0_ttbar->cd();
+    b_effs->b_eff_ttbar = (TH2D *) f0_ttbar->Get("b_eff")->Clone();
+    b_effs->c_eff_ttbar = (TH2D *) f0_ttbar->Get("c_eff")->Clone();
+    b_effs->udsg_eff_ttbar = (TH2D *) f0_ttbar->Get("udsg_eff")->Clone();
+    b_effs->b_eff_ttbar->SetDirectory(0);
+    b_effs->c_eff_ttbar->SetDirectory(0);
+    b_effs->udsg_eff_ttbar->SetDirectory(0);
+
+
+    f0_dy->cd();
+    b_effs->b_eff_dy = (TH2D *) f0_dy->Get("b_eff")->Clone();
+    b_effs->c_eff_dy = (TH2D *) f0_dy->Get("c_eff")->Clone();
+    b_effs->udsg_eff_dy = (TH2D *) f0_dy->Get("udsg_eff")->Clone();
+    b_effs->b_eff_dy->SetDirectory(0);
+    b_effs->c_eff_dy->SetDirectory(0);
+    b_effs->udsg_eff_dy->SetDirectory(0);
+
+
+    f0_diboson->cd();
+    b_effs->b_eff_diboson = (TH2D *) f0_diboson->Get("b_eff")->Clone();
+    b_effs->c_eff_diboson = (TH2D *) f0_diboson->Get("c_eff")->Clone();
+    b_effs->udsg_eff_diboson = (TH2D *) f0_diboson->Get("udsg_eff")->Clone();
+    b_effs->b_eff_diboson->SetDirectory(0);
+    b_effs->c_eff_diboson->SetDirectory(0);
+    b_effs->udsg_eff_diboson->SetDirectory(0);
+
+
     printf(" Done \n");
 }
 #endif

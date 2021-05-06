@@ -433,10 +433,13 @@ if (__name__ == "__main__"):
     label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
     label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
 
+    fracs = dict()
+    for name in h_names:
+        fracs[name] = 0.
+
     dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/"]
     if(options.ss): dirs = dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
     f_in = TFile.Open(options.input)
-    gam_frac_avg = 0.
     for year in years:
         for idx, dir_name in enumerate(dirs):
             dir_ = dir_name % (year % 2000, year % 2000)
@@ -478,14 +481,16 @@ if (__name__ == "__main__"):
                     hist_list.append(h)
                     label_list.append(label_color_map[name][0])
                     color_list.append(label_color_map[name][1])
-                    if(name == "gam"):
-                        gam_frac = h.Integral()/h_tot_sig.Integral()
-                        print("Chan %i Year %i Phot ind frac %.3f \n" % (idx, year, gam_frac))
-                        gam_frac_avg += gam_frac
+
+                    this_frac = h.Integral()/h_tot.Integral()
+                    print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
+                    fracs[name] += this_frac
 
             makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin", year = year ) 
 
-    gam_frac_avg /= (len(years)*len(dirs))
-    print("Average photon induced fraction is  %.3f \n" % gam_frac_avg)
+    for key in fracs.keys():
+        fracs[key] /= (len(years)*len(dirs))
+
+        print("Average fraction for %s  is  %.3f \n" % (key, fracs[key]))
 
 

@@ -90,7 +90,12 @@ void NTupleReader::setupSFs(){
     setup_pileup_systematic(&pu_sys, year);
 
     bool setup_btag_systematics = false;
-    setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics, is_signal_sample);
+    if(is_signal_sample) btag_mc_eff_idx = 1; //dy
+    else if(!do_top_ptrw) btag_mc_eff_idx =2; //diboson
+    else btag_mc_eff_idx = 0; //ttbar
+
+    printf("Btag mc eff idx is %i \n", btag_mc_eff_idx);
+    setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics);
 
     if(year < 2018) setup_prefire_SFs(&prefire_rates, year);
 
@@ -813,8 +818,8 @@ void NTupleReader::fillEventSFs(){
     //printf("%i %.3f %.3f %.3f \n", pu_NtrueInt, pu_SF, pu_SF_up, pu_SF_down);
 
 
-    jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, 0);
-    jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, 0);
+    jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, 0, btag_mc_eff_idx);
+    jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, 0, btag_mc_eff_idx);
 
     
 

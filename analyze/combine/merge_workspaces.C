@@ -31,8 +31,8 @@ void merge_workspaces(){
 
 
     //const TString f1_s("combine/templates/oct1_2017.root");
-    int year = 2016;
-    char label[] =  "april11";
+    int year = 2018;
+    char label[] =  "april23";
     char f1_s[200], fout_s[200], sys_base[200], pdf_base[200], dirname[40];
     sprintf(f1_s, "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_%s/file_0.root", year-2000, label);
     //sprintf(f1_s, "combine/templates/2016_templates_jan20.root");
