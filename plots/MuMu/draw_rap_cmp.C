@@ -31,9 +31,10 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = true;
-char *plot_dir = "Misc_plots/rap_check/";
+//char *plot_dir = "Misc_plots/rap_check/";
+char *plot_dir = "Paper_plots/rap_check/";
 
 
 

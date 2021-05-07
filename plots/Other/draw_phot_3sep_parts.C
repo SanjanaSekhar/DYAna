@@ -38,7 +38,7 @@ void draw_phot_3sep_parts(){
 
 
     const int type = FLAG_MUONS;
-    const int year = 2018;
+    const int year = 2016;
     const bool write_out = true;
     char *plot_dir = "Misc_plots/photon_bkg/";
     char *file_label = "LPair_3sep";
@@ -125,6 +125,16 @@ void draw_phot_3sep_parts(){
     make_m_cost_pt_xf_hist(t1, m1, cost1, pt1, xf1, phi1, rap1, false, type, year, m_low, m_high);
     make_m_cost_pt_xf_hist(t2, m2, cost2, pt2, xf1, phi1, rap2, false, type, year, m_low, m_high);
     make_m_cost_pt_xf_hist(t3, m3, cost3, pt3, xf1, phi1, rap3, false, type, year, m_low, m_high);
+
+    printf("Elastic:\n");
+    cost1->Print("range\n");
+    print_counting_AFB(cost1);
+    printf("Semi-Elastic:\n");
+    cost2->Print("range\n");
+    print_counting_AFB(cost2);
+    printf("Inelastic:\n");
+    cost3->Print("range\n");
+    print_counting_AFB(cost3);
 
     m1->SetLineColor(kBlue);
     m2->SetLineColor(kMagenta +3);

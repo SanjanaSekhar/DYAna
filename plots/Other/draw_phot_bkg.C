@@ -39,7 +39,7 @@ void draw_phot_bkg(){
 
     const int type = FLAG_MUONS;
     const int year = 2018;
-    const bool write_out = true;
+    const bool write_out = false;
     char *plot_dir = "Misc_plots/photon_bkg/";
     char *file_label = "MuMu18";
     char *plt_label = "Photon Induced Bkg, Muons, 2018";
@@ -48,7 +48,7 @@ void draw_phot_bkg(){
 
 
 
-    char *f1n= "../analyze/output_files/2018/MuMu18_phot_ind_nov11.root";
+    char *f1n= "../analyze/output_files/2018/MuMu18_phot_ind_may7.root";
 
 
 

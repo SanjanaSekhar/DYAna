@@ -34,6 +34,7 @@ void print_counting_AFB(TH1F *h_cost){
     double AFB = (F-B)/(F+B);
     double AFB_unc = AFB_counting_unc(F,B,dF, dB);
 
+    printf("F = %.0f +/- %.0f B = %.0f +/- %.0f \n", F, dF, B, dB);
     printf("Counting AFB %.4f +/- %.4f \n", AFB, AFB_unc);
     return;
 }

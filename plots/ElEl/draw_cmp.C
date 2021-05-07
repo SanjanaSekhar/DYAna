@@ -30,7 +30,7 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2018;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";

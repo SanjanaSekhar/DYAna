@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2018;
+int year = 2017;
 const bool write_out = false;
 char *plot_dir = "Paper_plots/EMu_plots/";
 char *plot_label = "e#mu Control Region";

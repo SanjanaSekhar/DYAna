@@ -115,6 +115,12 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
         bool is_data=false, int flag1 = FLAG_MUONS,
         int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
+        h_m->Sumw2();
+        h_cost->Sumw2();
+        h_pt->Sumw2();
+        h_xf->Sumw2();
+        h_phi->Sumw2();
+        h_rap->Sumw2();
     //read event data
         TempMaker tm(t1, is_data, year);
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
@@ -336,6 +342,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_pt);
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
+    cleanup_hist(h_rap);
 
     if(ss){
         float scaling = 1.0;

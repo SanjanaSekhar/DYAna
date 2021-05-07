@@ -429,6 +429,11 @@ float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
             jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys, btag_mc_eff_idx);
 #endif
         }
+        if(isnan(jet1_btag_SF) || isnan(jet2_btag_SF) || jet1_btag_SF <= 0.  || jet2_btag_SF <= 0. || jet1_btag_SF > 10. || jet2_btag_SF > 10.){
+            //printf("Jet1 SF %.3e pt %.2f eta %.2f \n", jet1_btag_SF, jet1_pt, jet1_eta);
+            //printf("Jet2 SF %.3e pt %.2f eta %.2f \n", jet2_btag_SF, jet2_pt, jet2_eta);
+            jet1_btag_SF = jet2_btag_SF = 1.;
+        }
         if (nJets >= 1){
             base_weight *= jet1_btag_SF;
         }

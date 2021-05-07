@@ -184,5 +184,7 @@ void make_limit_plot(){
     extraText = "Preliminary";
     int iPeriod = -1; 
     CMS_lumi( c1, iPeriod, 0 );
+    c1->Print("limit.png");
+    c1->Print("limit.pdf");
 
 }
