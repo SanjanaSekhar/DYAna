@@ -23,6 +23,12 @@ void ElEl_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
 
 
     nt.setupSFs();
+
+    if(fin.find("LPair") != string::npos){
+        nt.btag_mc_eff_idx = 1;
+    }
+
+
     nt.setupOutputTree("T_sig");
     nt.setupOutputTree("T_WJets");
     nt.setupOutputTree("T_QCD");

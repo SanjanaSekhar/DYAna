@@ -118,8 +118,11 @@ Double_t get_btag_weight(Double_t pt, Double_t eta, Float_t flavour, BTag_effs b
         weight = btag_weight_helper(pt, eta, bjet_SF, udsg_eff);
         //printf("UDSG jet, SF is %0.3f, weight is %.4f \n", bjet_SF, weight);
     }
-    if(bjet_SF == 0) printf("WARNING: Scale factor return 0 for Flavour %1.0f pt %.0f eta %1.1f \n!",
-                            flavour, pt, eta);
+    if(isnan(weight) || weight <=  0. || weight >= 10.){
+        weight = 1.;
+        printf("WARNING: Scale factor %.2f for Flavour %1.0f pt %.0f eta %1.1f! Setting to 1 \n" ,
+                            weight, flavour, pt, eta);
+    }
     return weight;
 }
 

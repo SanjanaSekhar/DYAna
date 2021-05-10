@@ -1,0 +1,207 @@
+!GamGamToEEElElM120to200Pt15toInfCepGenlpair13TeVv2   xsec_pb = 1.928604e-02 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEElElM120to200Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200522/0000/B2GTTreeNtupleExtra_1.root
+
+
+!GamGamToEEElElM1400to2300Pt15toInfCepGenlpair13TeVv2   xsec_pb = 5.534892e-06 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEElElM1400to2300Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200543/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEElElM200to400Pt15toInfCepGenlpair13TeVv2   xsec_pb = 5.228793e-03 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEElElM200to400Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200604/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEElElM2300toInfPt15toInfCepGenlpair13TeVv2   xsec_pb = 5.019190e-07 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEElElM2300toInfPt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200628/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEElElM400to800Pt15toInfCepGenlpair13TeVv2   xsec_pb = 6.390465e-04 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEElElM400to800Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200650/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEElElM800to1400Pt15toInfCepGenlpair13TeVv2   xsec_pb = 5.491244e-05 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEElElM800to1400Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200711/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelElSYM120to200Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.0615341
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelElSYM120to200Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_181928/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+!GamGamToEEInelElSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.21993e-05
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelElSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200755/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelElSYM200to400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.0189634
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelElSYM200to400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200817/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelElSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 1.88699e-06
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelElSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200840/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelElSYM400to800Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.00252233
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelElSYM400to800Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200900/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelElSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.000224805
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelElSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200921/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelInelSYM120to200Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 5.020332e-02 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelInelSYM120to200Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_200944/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelInelSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.447431e-05 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelInelSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201004/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+
+!GamGamToEEInelInelSYM200to400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 1.733213e-02 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelInelSYM200to400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201026/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelInelSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.002663e-06 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelInelSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201048/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToEEInelInelSYM400to800Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.496753e-03 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelInelSYM400to800Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201109/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+
+
+!GamGamToEEInelInelSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.389933e-04 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToEEInelInelSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201134/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuElElM120to200Pt15toInfCepGenlpair13TeVv2   xsec_pb = 1.927824e-02 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuElElM120to200Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201157/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuElElM1400to2300Pt15toInfCepGenlpair13TeVv2   xsec_pb = 5.600176e-06 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuElElM1400to2300Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201218/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuElElM200to400Pt15toInfCepGenlpair13TeVv2   xsec_pb = 5.264839e-03 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuElElM200to400Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201239/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuElElM2300toInfPt15toInfCepGenlpair13TeVv2   xsec_pb = 5.031201e-07 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuElElM2300toInfPt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201303/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuElElM400to800Pt15toInfCepGenlpair13TeVv2   xsec_pb = 6.373320e-04 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuElElM400to800Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201324/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+!GamGamToMuMuElElM800to1400Pt15toInfCepGenlpair13TeVv2   xsec_pb = 5.482578e-05 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuElElM800to1400Pt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201346/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelElSYM120to200Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.0612095
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelElSYM120to200Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201409/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelElSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.22726e-05
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelElSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201432/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelElSYM200to400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.0191102
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelElSYM200to400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201455/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelElSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 1.90754e-06
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelElSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201519/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelElSYM400to800Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.00254173
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelElSYM400to800Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201542/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+
+
+!GamGamToMuMuInelElSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.000226966
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelElSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201604/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelInelSYM120to200Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 5.024474e-02 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelInelSYM120to200Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201632/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelInelSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.401345e-05 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelInelSYM1400to2300Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201652/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelInelSYM200to400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 1.727466e-02 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelInelSYM200to400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201713/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelInelSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.006361e-06 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelInelSYM2300toInfPt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201736/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToMuMuInelInelSYM400to800Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.534169e-03 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelInelSYM400to800Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201758/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+
+
+!GamGamToMuMuInelInelSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 2.381068e-04 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToMuMuInelInelSYM800to1400Pt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201819/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+
+!GamGamToTauTauElElM50toInfPt15toInfCepGenlpair13TeVv2      xsec_pb = 1.979895e-01 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToTauTauElElM50toInfPt15toInfCepGenlpair13TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201841/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToTauTauInelElSYM50toInfPt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 0.528773
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToTauTauInelElSYM50toInfPt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201907/0000/B2GTTreeNtupleExtra_1.root
+
+
+
+!GamGamToTauTauInelInelSYM50toInfPt15toInfCepGenlpairpythia613TeVv2   xsec_pb = 3.751682e-01 
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2016/Mar25/GamGamToTauTauInelInelSYM50toInfPt15toInfCepGenlpairpythia613TeVv2/B2GAnaFW_9_4_X_bbilin-MINIAOD-28028af67189b3de7224b79195bd0e1d/210325_201928/0000/B2GTTreeNtupleExtra_1.root
+
+

@@ -4,6 +4,7 @@
 
 void make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type=0){
     //type0 is pdfs, type1 other sys
+    scramble_data = true;
     if(nJobs == 0){
         printf("Invalid setting of 0 total jobs! Going to change it to be 1 job (ie this process runs over all systematics) \n");
         nJobs = 1;

@@ -13,14 +13,19 @@ years = [2016, 2017,2018]
 #scripts = ["EMu_reco_data.C"]
 prefixes = ["ElEl", "MuMu"]
 #scripts = ["ElEl_reco_mc.C"]
-#scripts = ["ElEl_reco_background.C", "MuMu_reco_background.C"]
+scripts = ["ElEl_reco_background.C", "MuMu_reco_background.C"]
 #prefixes = ["ElEl"]
 #scripts = ["ElEl_reco_data.C"]
-scripts = ["ElEl_reco_mc.C", "MuMu_reco_mc.C"]
-njobs = 15
+#scripts = ["ElEl_reco_mc.C", "MuMu_reco_mc.C"]
+njobs = 10
 
 #labels = ["wt", "ttbar", "diboson", "phot_ind"]
 #eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "PhotInd_files.txt" ]
+
+#labels = ["diboson", "phot_ind"]
+#eos_files = ["diboson_files.txt", "PhotIndLPair_files.txt" ]
+labels = ["phot_ind"]
+eos_files = ["PhotIndLPair_files.txt" ]
 
 
 #labels = ["wt"]
@@ -31,11 +36,11 @@ njobs = 15
 #eos_files = ["SingleElectron_files.txt"]
 #labels = ["ttbar"]
 #eos_files = ["TTbar_files.txt"]
-labels = ["dy"]
-eos_files = ["DY_files.txt"]
+#labels = ["dy"]
+#eos_files = ["DY_files.txt"]
 #labels = ["phot_ind"]
 #eos_files = ["PhotInd_files.txt"]
-ending = "april11"
+ending = "may7"
 
 for i,script in enumerate(scripts):
     prefix = prefixes[i]

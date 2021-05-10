@@ -5,8 +5,8 @@ void compute_norms(FILE *root_files, Float_t *norms, unsigned int *nFiles){
     Float_t sample_xsec = 0;
     unsigned int sample_i=0;
 
-    char lines[300];
-    while(fgets(lines, 300, root_files)){
+    char lines[500];
+    while(fgets(lines, 500, root_files)){
         if(lines[0] == '#' || is_empty_line(lines)) continue; // comment line
         if(lines[0] == '!'){
             //sample header line
@@ -117,8 +117,8 @@ void NTupleReader::setupSFs(){
 
 bool NTupleReader::getNextFile(){
     if(fileCount != 0 && fin != nullptr) fin->Close();
-    char lines[300];
-    while(fgets(lines, 300, root_files)){
+    char lines[500];
+    while(fgets(lines, 500, root_files)){
         if(lines[0] == '#' || is_empty_line(lines)) continue; //comment line
         else if(lines[0] == '!'){//sample header
             if(!is_data){

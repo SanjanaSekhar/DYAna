@@ -29,6 +29,8 @@ TH1F *h1_mumu_asym, *h1_mumu_sym;
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_top, *h1_elel_db,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_top, *h1_mumu_db,  *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 
+bool scramble_data = true;
+
 
 
 
@@ -218,9 +220,11 @@ void make_mc_templates(int year, const string &sys_label){
         gen_combined_background_template(1, mumu_ts, h_mumu_gam, year, m_low, m_high, FLAG_MUONS,  ss, use_xF, emu_costrw, sys_label);
 
 
-        symmetrize2d(h_mumu_gam);
         symmetrize2d(h_mumu_top);
-        //symmetrize2d(h_mumu_db);
+        if(scramble_data){
+            symmetrize2d(h_mumu_db);
+            symmetrize2d(h_mumu_gam);
+        }
 
         h1_mumu_sym = convert2d(h_mumu_sym);
         h1_mumu_asym = convert2d(h_mumu_asym);
@@ -282,9 +286,11 @@ void make_mc_templates(int year, const string &sys_label){
         gen_combined_background_template(1, elel_ts, h_elel_gam, year, m_low, m_high, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
 
-        symmetrize2d(h_elel_gam);
         symmetrize2d(h_elel_top);
-        //symmetrize2d(h_elel_db);
+        if(scramble_data){
+            symmetrize2d(h_elel_db);
+            symmetrize2d(h_elel_gam);
+        }
         
         h1_elel_sym = convert2d(h_elel_sym);
         h1_elel_asym = convert2d(h_elel_asym);
@@ -464,7 +470,7 @@ void make_templates(int year = -1, string fout_name = "", int iJob =-1){
     if(fout_name == "") fout_name = string("combine/templates/test.root");
     if(year == -1) year = 2016;
     
-    bool scramble_data = true; //randomly flip sign of cos(theta)
+    scramble_data = true; //randomly flip sign of cos(theta)
     bool fake_data = false; //use mc instead of data
     use_xF = false;
 

@@ -96,8 +96,8 @@ def add_sys(d, fracs, sys_name):
     elif("BTAG" in sys_name): key_name = "btag"
     else: 
         key_name = "other"
-        if(np.mean(fracs) > 1e-3):
-            print(sys_name, np.mean(fracs))
+        if(np.max(fracs) > 0.01**2):
+            print(sys_name, np.mean(fracs), np.max(fracs))
 
     d[key_name] += fracs
 
@@ -195,7 +195,10 @@ parser = OptionParser()
 parser.add_option("-m", "--mbin", type = 'int', default=1, help="mass bin")
 parser.add_option("-o", "--plot_dir", default="test/", help="Plotting directory")
 
+
 (options, args) = parser.parse_args()
+
+os.system("mkdir %s" % options.plot_dir)
 
 chans= ["ee16",  "ee17", "ee18", "mumu16", "mumu17", "mumu18"]
 years= [16,17,18, 16, 17,18]
