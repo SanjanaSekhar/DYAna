@@ -221,10 +221,12 @@ void make_mc_templates(int year, const string &sys_label){
 
 
         symmetrize2d(h_mumu_top);
+        /*
         if(scramble_data){
             symmetrize2d(h_mumu_db);
             symmetrize2d(h_mumu_gam);
         }
+        */
 
         h1_mumu_sym = convert2d(h_mumu_sym);
         h1_mumu_asym = convert2d(h_mumu_asym);
@@ -287,10 +289,12 @@ void make_mc_templates(int year, const string &sys_label){
 
 
         symmetrize2d(h_elel_top);
+        /*
         if(scramble_data){
             symmetrize2d(h_elel_db);
             symmetrize2d(h_elel_gam);
         }
+        */
         
         h1_elel_sym = convert2d(h_elel_sym);
         h1_elel_asym = convert2d(h_elel_asym);

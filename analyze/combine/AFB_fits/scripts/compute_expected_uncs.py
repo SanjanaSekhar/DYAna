@@ -62,7 +62,7 @@ if(options.mbin >= 0):
 print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
 print_and_do("""echo ".q" >> cmd.txt """)
 
-seed = 123456
+seed = 12345
 
 for mbin in range(bin_start, bin_stop):
 

@@ -14,8 +14,8 @@ types = [0, 1]
 labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
-njobs = 15
-ending = "may7"
+njobs = 25
+ending = "may11_nonsym"
 
 for year in years:
 

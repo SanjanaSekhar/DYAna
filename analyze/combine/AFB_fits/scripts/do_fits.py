@@ -11,6 +11,7 @@ parser.add_option("--no_cleanup",  default=False, action="store_true", help="Don
 parser.add_option("--mbin", default = -1, type='int', help="Only do fits for this single mass bin, default is all bins")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("-v", "--verbose", default = 0, type='int', help="Turn up verbosity on fits")
+parser.add_option("--noSymMCStats", default = False, action="store_true",  help="Don't add constraints to mcStat nuisances")
 
 (options, args) = parser.parse_args()
 
@@ -38,13 +39,15 @@ extra_params += "--X-rtd MINIMIZER_no_analytic"
 
 
 
-bin_start = 0
+bin_start = 1
 bin_stop = 8
 
 fit_name = options.chan
 if(options.no_sys): 
     fit_name +="_nosys"
     extra_params += " --freezeParameters allConstrainedNuisances"
+if(options.noSymMCStats):
+    fit_name += "_noSymMC"
 if(options.fake_data): fit_name +="_fake_data"
 if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
 
@@ -57,7 +60,7 @@ for mbin in range(bin_start, bin_stop):
     print(" \n \n Starting fit for bin %i \n\n" % mbin)
 
     workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
-    make_workspace(workspace, mbin, fake_data = options.fake_data, year = options.year)
+    make_workspace(workspace, mbin, fake_data = options.fake_data, year = options.year, symMCStats = not (options.noSymMCStats) )
 
     plotdir="postfit_plots/%s_mbin%i" % (fit_name, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
