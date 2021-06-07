@@ -90,6 +90,7 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
         tm.getEvent(i);
         bool pass  = tm.m >= m_low && tm.m <= m_high && tm.met_pt < met_cut && tm.has_no_bjets;
         if(pass){
+
             nEvents++;
             tm.doCorrections();
             tm.getEvtWeight();
@@ -114,6 +115,12 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
         bool is_data=false, int flag1 = FLAG_MUONS,
         int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
+        h_m->Sumw2();
+        h_cost->Sumw2();
+        h_pt->Sumw2();
+        h_xf->Sumw2();
+        h_phi->Sumw2();
+        h_rap->Sumw2();
     //read event data
         TempMaker tm(t1, is_data, year);
         if(flag1 == FLAG_MUONS) tm.do_muons = true;
@@ -136,10 +143,10 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
                 nEvents++;
                 tm.doCorrections();
                 tm.getEvtWeight();
-                double pt = tm.cm.Pt();
+                //if(flag1 == FLAG_ELECTRONS && (tm.el2_pt < 20 && tm.el2_eta > 1.8)) tm.evt_weight = 0;
 
                 h_m->Fill(tm.m,tm.evt_weight);
-                h_pt->Fill(pt,tm.evt_weight);
+                h_pt->Fill(tm.pt,tm.evt_weight);
                 h_xf->Fill(tm.xF, tm.evt_weight);
                 if(h_phi != nullptr) h_phi->Fill(tm.cm.Phi(), tm.evt_weight);
                 if(h_rap != nullptr) h_rap->Fill(tm.cm.Rapidity(), tm.evt_weight);
@@ -335,6 +342,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
     cleanup_hist(h_pt);
     cleanup_hist(h_xf);
     cleanup_hist(h_cost);
+    cleanup_hist(h_rap);
 
     if(ss){
         float scaling = 1.0;

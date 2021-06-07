@@ -32,8 +32,8 @@
 const int year = 2016;
 char *out_file = "../analyze/SFs/2016/fakes_cost_rw.root";
 const bool write_out = true;
-bool corr_ss = false;
-char *plot_dir = "Misc_plots/fakes_cost_reweights/";
+bool corr_ss = true;
+char *plot_dir = "Paper_plots/fakes_cost_reweights/";
 
 
 

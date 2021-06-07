@@ -16,6 +16,8 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     nt.do_SFs = true;
     nt.do_RC = true;
     nt.RC_from_gen = true;
+    nt.is_signal_sample = true;
+    
     nt.setupSFs();
     nt.setupRC();
     nt.setupOutputTree("T_sig");
@@ -33,12 +35,13 @@ void MuMu_reco_mc(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
 
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
-            if(nt.good_trigger && nt.loose_dimuon_id && nt.cm_m > 70. && nt.cm_m < 130. ){
-                    //nt.cm_m > 50. && nt.cm_m < 130. ){
+            if(nt.good_trigger && nt.loose_dimuon_id && nt.cm_m > 150){
+                    //nt.cm_m > 70. && nt.cm_m < 130. ){
                 nt.fillEvent();
                 nt.fillEventSFs();
                 nt.parseGenParts();
                 nt.fillEventRC();
+                nt.doNNPDFRW();
                 bool one_tight = nt.mu_tight_id0 ^ nt.mu_tight_id1;
 
                 //pick the category

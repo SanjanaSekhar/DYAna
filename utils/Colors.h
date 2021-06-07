@@ -5,3 +5,4 @@ int wt_c = kCyan - 6;
 int diboson_c = kGreen+3;
 int qcd_c = kRed-7;
 int tautau_c = kMagenta;
+int gamgam_c = kOrange;

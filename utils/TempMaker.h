@@ -60,7 +60,7 @@ class TempMaker{
         void setup_systematic(const string &s_label);
         void getEvent(int i);
         void doCorrections();
-        float getEvtWeight();
+        float getEvtWeight(bool add_btag_SF);
         void fixRFNorm(TH2 *h, int mbin, int year);
         void finish();
         float getReweightingDenom();
@@ -80,6 +80,8 @@ class TempMaker{
 
         int iso_lep = -1;        
         float el_lumi = 0.;
+
+        int counter =0;
 
         string sys_label = string("");
         TTree *t_in;
@@ -102,7 +104,7 @@ class TempMaker{
         Float_t jet1_btag_SF = 1.0;
         Float_t jet2_btag_SF = 1.0;
 
-        Float_t evt_pdfweight;
+        Float_t evt_pdfweight, nnpdf30_weight;
         Float_t pdf_weights[60];
         TLorentzVector *lep_p=0;
         TLorentzVector *lep_m=0;
@@ -174,6 +176,8 @@ class TempMaker{
         int do_elSmear_sys = 0;
         
         float elp_rescale, elm_rescale;
+
+        int btag_mc_eff_idx = 0;
 };
 
 
@@ -195,7 +199,8 @@ BTag_effs btag_effs;
 void setup_all_SFs(int year){
     //printf("Setting up SF's \n");
 #ifndef STAND_ALONE
-    setup_btag_SFs(&b_reader, &btag_effs, year);
+    bool setup_btag_systematics = true;
+    setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics);
 #endif
     setup_el_SF(&el_SF, year);
     setup_mu_SFs(&era1_SFs, &era2_SFs,  year);

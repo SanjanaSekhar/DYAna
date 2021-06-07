@@ -30,9 +30,12 @@
 
 const int type = FLAG_MUONS;
 int year = 2018;
-bool write_out = false;
-char *plot_dir = "Misc_plots/samesign_cmp_test/";
-//char *plot_dir = "Paper_plots/";
+bool write_out = true;
+//char *plot_dir = "Misc_plots/samesign_cmp_test/";
+char *plot_dir = "Paper_plots/prefit_kinematics/";
+bool normalize_cos = true;
+char *plot_label = "Muons: Same Sign Control Region";
+char *plot_label_cos = "Muons: Same Sign Control Region (normalized)";
 
 
 
@@ -128,9 +131,8 @@ void draw_samesign_cmp(){
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_m->Integral(), QCD_m->Integral(), diboson_m->Integral(), DY_m->Integral());
     printf("Integrals of data, QCD, diboson, DY are %.2f %.2f %.2f %.2f \n", data_cost->Integral(), QCD_cost->Integral(), diboson_cost->Integral(), DY_cost->Integral());
 
-    bool normalize = true;
     
-    if(normalize){
+    if(normalize_cos){
         Double_t n_data = data_cost->Integral();
         Double_t n_mc = diboson_cost->Integral() +  DY_cost->Integral();
         Double_t n_QCD = QCD_cost->Integral();
@@ -235,31 +237,33 @@ void draw_samesign_cmp(){
 
     bool draw_sys_uncs = false;
     bool logx = false;
+    float ratio_range_cos = 0.4;
+    float ratio_range = 1.0;
 
     
 
 
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)", "", -1., true, logx, draw_sys_uncs);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)", "", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sMuMu%i_ss_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
 
     
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", -1., false, logx, draw_sys_uncs);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", plot_label_cos, -1., false, logx, draw_sys_uncs, ratio_range_cos);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sMuMu%i_ss_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
 
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", -1.,  true, logx, draw_sys_uncs);
+    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", plot_label, -1.,  true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_pt, year, 33);
 
-    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", -1., true, logx, draw_sys_uncs);
+    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_xf, year, 33);
 
-    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi","", -1., true, logx, draw_sys_uncs);
+    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_phi, year, 33);
 
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y","", -1., true, logx, draw_sys_uncs);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg5, "rap", "dimuon Y","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
 
 

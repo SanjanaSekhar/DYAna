@@ -7,7 +7,7 @@
 #define FLAG_M_BINS 0
 #define FLAG_PT_BINS 1
 
-int find_bin(float * bins, float val){
+int find_bin(const float * bins, float val){
     int bin =0;
     int max_bin = 10000;
     while(bin < max_bin){
@@ -17,6 +17,27 @@ int find_bin(float * bins, float val){
     if(bin == max_bin) printf("Something went wrong find bin for val %.f \n", val);
     return bin;
 }
+
+
+double AFB_counting_unc(double F,double B, double dF, double dB){
+    double n_tot = F+B;
+    return sqrt(pow(dB * 2. * F / (n_tot*n_tot),2) + pow(dF * 2. * B / (n_tot*n_tot),2));
+}
+
+void print_counting_AFB(TH1F *h_cost){
+    double F,B, dF, dB;
+    int nBins = h_cost->GetNbinsX();
+    B = h_cost->IntegralAndError(1, nBins/2, dB);
+    F = h_cost->IntegralAndError(nBins/2 + 1, nBins, dF);
+
+    double AFB = (F-B)/(F+B);
+    double AFB_unc = AFB_counting_unc(F,B,dF, dB);
+
+    printf("F = %.0f +/- %.0f B = %.0f +/- %.0f \n", F, dF, B, dB);
+    printf("Counting AFB %.4f +/- %.4f \n", AFB, AFB_unc);
+    return;
+}
+
 
 void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
     //1d output

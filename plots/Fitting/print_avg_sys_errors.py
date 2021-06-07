@@ -43,16 +43,23 @@ def get_sys_dict(mbin, year, chan):
 
     ee_base_strs = [ 'ee%i_fpl', 'ee%i_top', 'ee%i_db', 'ee%i_qcd', 'ee%i_gam'  ]
     mumu_base_strs = [ 'mumu%i_fpl', 'mumu%i_top', 'mumu%i_db', 'mumu%i_qcd', 'mumu%i_gam'  ]
+    #combine these names into a single systematic
     removes = ['Up', 'Down', 'PTHIGH', 'PTLOW', 'BAR', 'END']
+    #plus template gets factor of 3/4s in norm
+    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4]
+    mumu_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'mumu_fakes_xsec', 'gamgam_xsec']
+    ee_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'ee_fakes_xsec', 'gamgam_xsec']
     my_excludes = []
 
     if(chan == 'ee'):
         base_strs = ee_base_strs
+        xsec_names = ee_xsec_names
     else:
         base_strs = mumu_base_strs
+        xsec_names = mumu_xsec_names
 
 
-    for base in base_strs:
+    for idx,base in enumerate(base_strs):
         if('%i' in base):
             base = base % year
         #print("Doing base %s" % base)
@@ -87,6 +94,12 @@ def get_sys_dict(mbin, year, chan):
                 else:
                     raw_sys_dict[sys_name] = change
 
+        #do xsec uncertainties
+        xsec_unc = xsec_uncs[idx]
+        change = xsec_unc * h_base.Integral()/h_tot.Integral()
+        #print(xsec_names[idx], xsec_unc, h_base.Integral(), h_tot.Integral())
+        raw_sys_dict[xsec_names[idx]] = change
+
 
     for key in raw_sys_dict.keys():
         sys_ = key
@@ -94,10 +107,13 @@ def get_sys_dict(mbin, year, chan):
             sys_ = sys_.replace(r, '')
         sys = sys_.translate(None, digits) # remove numbers
         #halve effect because each sys has up and down versions
+        if('xsec' not in key): fac = 0.5
+        else: fac = 1.
+
         if(sys in sys_dict.keys()):
-            sys_dict[sys] += 0.5 * raw_sys_dict[key]
+            sys_dict[sys] += fac * raw_sys_dict[key]
         else:
-            sys_dict[sys] = 0.5 * raw_sys_dict[key]
+            sys_dict[sys] = fac * raw_sys_dict[key]
 
     return sys_dict
 

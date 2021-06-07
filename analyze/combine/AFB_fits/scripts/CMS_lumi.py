@@ -13,19 +13,19 @@ writeExtraText = True
 extraText   = "Preliminary"
 extraTextFont = 52 
 
-lumiTextSize     = 0.6
+lumiTextSize     = 0.75
 lumiTextOffset   = 0.2
 
-cmsTextSize      = 0.75
+cmsTextSize      = 0.85
 cmsTextOffset    = 0.1
 
-relPosX    = 0.045
+relPosX    = 0.085
 relPosY    = 0.035
-relExtraDY = 1.2
+relExtraDY = 1.0
 
 extraOverCmsTextSize  = 0.76
 
-lumi_13TeV = "20.1 fb^{-1}"
+lumi_13TeV = "35.9 fb^{-1}"
 lumi_8TeV  = "19.7 fb^{-1}" 
 lumi_7TeV  = "5.1 fb^{-1}"
 lumi_sqrtS = ""
@@ -87,8 +87,16 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
         lumiText += "8 TeV"
     elif ( iPeriod==0 ):
         lumiText += lumi_sqrtS
+    elif(iPeriod==2016):
+        lumiText += "2016 (36 fb^{-1})"
+    elif(iPeriod==2017):
+        lumiText += "2017 (42 fb^{-1})"
+    elif(iPeriod==2018):
+        lumiText += "2018 (59 fb^{-1})"
+    elif(iPeriod==-1):
+      lumiText += "2016-2018 (137 fb^{-1})"
             
-    print lumiText
+    print iPeriod, lumiText
 
     latex = rt.TLatex()
     latex.SetNDC()

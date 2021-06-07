@@ -33,7 +33,7 @@
 const int type = FLAG_ELECTRONS;
 const int year = 2016;
 const bool write_out = true;
-char *plot_dir = "Misc_plots/rap_check/";
+char *plot_dir = "Paper_plots/rap_check/";
 
 
 
@@ -171,9 +171,12 @@ void draw_rap_cmp(){
         bool draw_sys_uncs = true;
         float ratio_range = 0.5;
 
+        char plot_label[100];
+
+        sprintf(plot_label, "Electrons %.0f-%.0f GeV",m_low, m_high);
 
         sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
-        std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg1, "rap", "dielectron Y",y_ax_label, -1., logy, logx, draw_sys_uncs, ratio_range);
+        std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg1, "rap", "dielectron Y",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
         CMS_lumi(p_rap, year, 33);
         sprintf(plt_file, "%sElEl%i_mbin%i_rap_cmp.png", plot_dir, year % 2000, i);
         if(write_out) c_rap->Print(plt_file);

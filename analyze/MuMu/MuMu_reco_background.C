@@ -24,6 +24,10 @@ void MuMu_reco_background(int nJobs =1, int iJob = 0, string fin ="", int year =
     }
 
     nt.setupSFs();
+
+    if(fin.find("LPair") != string::npos){
+        nt.btag_mc_eff_idx = 1;
+    }
     nt.setupRC();
 
     nt.setupOutputTree("T_sig");

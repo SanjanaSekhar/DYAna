@@ -45,16 +45,20 @@ void draw_AFB_mbins(){
 
 
 
-    //TGraphErrors *g_sm = new TGraphErrors(n_m_bins, m, y_powheg, x_err, y_powheg_errs);
-    TGraph *g_sm = new TGraphErrors(n_m_bins, m, y_powheg);
+    TGraph *g_sm_pow = new TGraphErrors(n_m_bins, m, y_powheg);
+    TGraph *g_sm_amc = new TGraphErrors(n_m_bins, m, y_amc);
     TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_comb, m_err, y_comb_errs);
     TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_mumu, m_err, y_mumu_errs);
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
-    g_sm->SetMarkerColor(kBlue);
-    g_sm->SetLineColor(kBlue);
-    g_sm->SetLineWidth(4);
+    g_sm_amc->SetMarkerColor(kCyan-6);
+    g_sm_amc->SetLineColor(kCyan-6);
+    g_sm_amc->SetLineWidth(4);
+
+    g_sm_pow->SetMarkerColor(kBlue);
+    g_sm_pow->SetLineColor(kBlue);
+    g_sm_pow->SetLineWidth(4);
 
 
     g_comb->SetMarkerColor(kBlack);
@@ -79,26 +83,27 @@ void draw_AFB_mbins(){
     pad1->SetBottomMargin(0.012);
     pad1->Draw();
     pad1->cd();
-    g_sm->Draw("ALP");
-    g_sm->GetYaxis()->SetRangeUser(0.2, 0.75);
-    g_sm->GetXaxis()->SetLimits(100., 1400.);
-    g_sm->Draw("ALP");
+    g_sm_pow->GetYaxis()->SetRangeUser(0.2, 0.75);
+    g_sm_pow->GetXaxis()->SetLimits(100., 1400.);
+    g_sm_pow->Draw("ALP");
+    g_sm_amc->Draw("LP same");
     g_mumu->Draw("PE same");
     g_elel->Draw("PE same");
     g_comb->Draw("PE same");
 
 
-    g_sm->GetYaxis()->SetTitle("Forward Backward Asymmetry");
-    g_sm->GetYaxis()->SetNdivisions(505);
-    g_sm->GetYaxis()->SetTitleSize(20);
-    g_sm->GetYaxis()->SetTitleFont(43);
-    //g_sm->GetYaxis()->SetTitleOffset(1.2);
-    g_sm->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-    g_sm->GetYaxis()->SetLabelSize(15);
+    g_sm_pow->GetYaxis()->SetTitle("Forward Backward Asymmetry");
+    g_sm_pow->GetYaxis()->SetNdivisions(505);
+    g_sm_pow->GetYaxis()->SetTitleSize(20);
+    g_sm_pow->GetYaxis()->SetTitleFont(43);
+    g_sm_pow->GetYaxis()->SetTitleOffset(1.2);
+    g_sm_pow->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    g_sm_pow->GetYaxis()->SetLabelSize(15);
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.5, 0.65, 0.75, 0.8);
-    leg1->AddEntry(g_sm, "Standard Model A_{FB} from POWHEG", "l");
+    leg1->AddEntry(g_sm_pow, "Standard Model A_{FB} from POWHEG", "l");
+    leg1->AddEntry(g_sm_amc, "Standard Model A_{FB} from aMC@NLO", "l");
     leg1->AddEntry(g_mumu, "#mu#mu Measurement", "p");
     leg1->AddEntry(g_elel, "ee Measurement", "p");
     leg1->AddEntry(g_comb, "Combined Measurement", "p");

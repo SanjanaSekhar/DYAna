@@ -10,9 +10,9 @@
 
 const int n_bins = 3;
 Double_t AFB_SM[n_bins] = {0.570, 0.575, 0.590};
-Double_t AFB_unc[n_bins] = {0.034, 0.046, 0.052};
-Double_t AFB_measured[n_bins] = {0.644, 0.593, 0.571};
-//Double_t AFB_measured[n_bins] = {0.570, 0.575, 0.590};
+Double_t AFB_unc[n_bins] = {0.023, 0.033, 0.052};
+//Double_t AFB_measured[n_bins] = {0.644, 0.593, 0.571};
+Double_t AFB_measured[n_bins] = {0.570, 0.575, 0.590};
 
 void read_AFBs(FILE *f1, Double_t *AFBs, int M_Zp, Double_t kL){
     rewind(f1);

@@ -32,15 +32,15 @@ void merge_workspaces(){
 
     //const TString f1_s("combine/templates/oct1_2017.root");
     int year = 2018;
-    char label[] =  "feb08";
+    char label[] =  "may11_nonsym";
     char f1_s[200], fout_s[200], sys_base[200], pdf_base[200], dirname[40];
     sprintf(f1_s, "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_%s/file_0.root", year-2000, label);
     //sprintf(f1_s, "combine/templates/2016_templates_jan20.root");
     sprintf(fout_s, "combine/templates/%s_merge_%i.root", label, year);
     sprintf(sys_base, "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_sys_%s", year -2000, label);
     sprintf(pdf_base,  "root://cmseos.fnal.gov//store/user/oamram/Condor_outputs/templ%i_pdf_%s", year - 2000, label);
-    int num_sys_files = 15;
-    int num_pdf_files = 15;
+    int num_sys_files = 25;
+    int num_pdf_files = 25;
 
     TFile *f1 = TFile::Open(f1_s, "READ");
     TFile *fout = TFile::Open(fout_s, "RECREATE");

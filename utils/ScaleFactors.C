@@ -447,6 +447,27 @@ Float_t get_el_SF(Float_t pt, Float_t eta, TH2D *h, int systematic_barrel = 0, i
     }
     return result;
 }
+
+Float_t get_nnpdf_normfix(float gen_m){
+
+    const float m_bins_mc[] = {100, 200,  400, 500, 700, 800, 1000, 1500, 2000, 3000}; //match mbins of MC samples
+    const float norms[] = { 0.950, 0.954, 0.977, 0.984, 0.993, 1.000, 1.014, 1.039, 1.074};
+    //float norms[] = { 0.949, 0.951, 0.953, 0.956, 0.966, 0.984, 0.996, 1.019, };
+
+    if(gen_m<=m_bins_mc[0]) return norms[0];
+    if(gen_m>=m_bins_mc[9]) return norms[8];
+
+    int bin = find_bin(m_bins_mc, gen_m);
+    float res = norms[bin];
+    if(isnan(res) || res > 2. || res < 0.5 ){
+        printf("m, i, norm: %.1f %i %.3f \n", gen_m, bin, res);
+        res = 1.;
+    }
+
+    return res;
+}
+
+
 Float_t get_HLT_SF_1mu(Float_t mu1_pt, Float_t mu1_eta, TH2D *h_SF){
     //get HLT SF for event with just 1 muon
     //stay in range of histogram
@@ -678,7 +699,6 @@ void setup_emu_costrw_helper(emu_costrw_helper *h, int year){
         printf("Year is %i ?? ", year);
         exit(1);
     }
-    f->Print();
     char name[100];
     for(int i=0; i<n_emu_rw_m_bins; i++){
         sprintf(name, "emu%i_mbin0_cost_ratio", year % 2000);

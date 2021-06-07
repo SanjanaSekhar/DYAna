@@ -16,7 +16,7 @@
 #define MU_SIZE 100
 #define EL_SIZE 100
 #define JET_SIZE 60
-#define MAX_SAMPLES 20
+#define MAX_SAMPLES 100
 
 const double root2 = sqrt(2);
 double Ebeam = 6500.;
@@ -52,6 +52,8 @@ class NTupleReader{
         bool getNextFile();
         void finish();
         bool doTopPTRW(bool PRINT = false);
+        void doNNPDFRW();
+        float getPosBtagSF();
         bool parseGenParts(bool PRINT);
         int selectAnyGenParts(bool PRINT);
 
@@ -61,6 +63,8 @@ class NTupleReader{
         unsigned int nFiles;
         Float_t normalization = 1.0;
         Float_t norms[MAX_SAMPLES]; // computed normalizations to apply to each event in a sample (based on xsection and total weight)
+        int sample_idx = 0;
+        float xsec = 0.;
         FILE *root_files;
         TFile *fout;
 
@@ -88,6 +92,7 @@ class NTupleReader{
         bool do_SFs = false;
         bool do_RC = false;
         bool do_top_ptrw = false;
+        bool is_signal_sample = false;
         bool RC_from_gen = false;
 
         unsigned int nEvents=0;
@@ -108,6 +113,11 @@ class NTupleReader{
 
         float bjet_med_cut = 0.;
 
+        float sys_max = 3.0;
+        float sys_min = 1/3.0;
+
+        int btag_mc_eff_idx = 0;
+
         Float_t cm_m, xF, cost, cost_r, cost_st, mu1_pt, mu2_pt, mu1_eta, mu2_eta, jet1_pt, jet2_pt, jet1_eta, jet2_eta, 
                  gen_weight, jet1_csv, jet1_btag, jet2_csv, jet2_btag, gen_m;
         Float_t mu_p_SF, mu_m_SF, mu_p_SF_alt, mu_m_SF_alt, mu_p_SF_up, mu_p_SF_down, mu_m_SF_up, mu_m_SF_down;
@@ -121,6 +131,8 @@ class NTupleReader{
         float prefire_SF = 1.0;
         float prefire_SF_up = 1.0;
         float prefire_SF_down = 1.0;
+
+        float nnpdf30_weight = 1.0;
 
         BTag_readers b_reader;
         BTag_effs btag_effs;
@@ -145,9 +157,10 @@ class NTupleReader{
         TLorentzVector gen_lep_p_vec, gen_lep_m_vec, hard_lep_p_vec, hard_lep_m_vec;
         TLorentzVector el, mu;
         TLorentzVector inc1_vec, inc2_vec;
-        Float_t scale_Weights[10], pdf_weights[60], alpha_weights[2];
+        Float_t scale_Weights[10], pdf_weights[60], pdfext_weights[100], alpha_weights[2];
         int inc_id1 = 0;
         int inc_id2 = 0;
+
 
 
         UInt_t evt_RunNumber, evt_LumiBlock;

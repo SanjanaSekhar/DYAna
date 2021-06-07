@@ -15,6 +15,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     nt.RC_from_gen = true;
 
     nt.print_gen_warning = false;
+    nt.is_signal_sample = true;
 
     int good = 0;
     int bad = 0;
@@ -49,6 +50,8 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_el->Branch("mu_RF_up", &mu_RF_up);
     t_el->Branch("mu_RF_down", &mu_RF_down);
     t_el->Branch("pdf_weights", &nt.pdf_weights, "pdf_weights[60]/F");
+    //t_el->Branch("pdfext_weights", &nt.pdfext_weights, "pdfext_weights[100]/F");
+    t_el->Branch("nnpdf30_weight", &nt.nnpdf30_weight);
     t_el->Branch("inc_id1", &nt.inc_id1);
     t_el->Branch("inc_id2", &nt.inc_id2);
     t_el->Branch("sig_event", &nt.signal_event);
@@ -71,6 +74,8 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_mu->Branch("mu_RF_up", &mu_RF_up);
     t_mu->Branch("mu_RF_down", &mu_RF_down);
     t_mu->Branch("pdf_weights", &nt.pdf_weights, "pdf_weights[60]/F");
+    //t_mu->Branch("pdfext_weights", &nt.pdfext_weights, "pdfext_weights[100]/F");
+    t_mu->Branch("nnpdf30_weight", &nt.nnpdf30_weight);
     t_mu->Branch("inc_id1", &nt.inc_id1);
     t_mu->Branch("inc_id2", &nt.inc_id2);
     t_mu->Branch("sig_event", &nt.signal_event);
@@ -82,6 +87,7 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
     t_tau->Branch("inc1", "TLorentzVector", &nt.inc1_vec);
     t_tau->Branch("inc2", "TLorentzVector", &nt.inc2_vec);
     t_tau->Branch("gen_weight", &gen_weight);
+    t_tau->Branch("nnpdf30_weight", &nt.nnpdf30_weight);
     t_tau->Branch("m", &m);
     t_tau->Branch("cost_st", &cost_st);
     t_tau->Branch("cost", &cost);
@@ -96,14 +102,16 @@ void Select_gen_level(int nJobs =1, int iJob = 0, string fin = "", int year =-1)
             nt.fillEvent();
 
 
-            mu_F_up = nt.scale_Weights[0];
-            mu_F_down = nt.scale_Weights[1];
-            mu_R_up = nt.scale_Weights[2];
-            mu_R_down = nt.scale_Weights[4];
-            mu_RF_up = nt.scale_Weights[3];
-            mu_RF_down = nt.scale_Weights[5];
+        mu_F_up = std::max(std::min(nt.scale_Weights[0], nt.sys_max), nt.sys_min);
+        mu_F_down = std::max(std::min(nt.scale_Weights[1], nt.sys_max), nt.sys_min);
+        mu_R_up = std::max(std::min(nt.scale_Weights[2], nt.sys_max), nt.sys_min);
+        mu_R_down = std::max(std::min(nt.scale_Weights[4], nt.sys_max), nt.sys_min);
+        mu_RF_up = std::max(std::min(nt.scale_Weights[3], nt.sys_max), nt.sys_min);
+        mu_RF_down = std::max(std::min(nt.scale_Weights[5], nt.sys_max), nt.sys_min);
+
 
             int gen_id = nt.selectAnyGenParts();
+            nt.doNNPDFRW();
             gen_p = nt.gen_lep_p_vec;
             gen_m = nt.gen_lep_m_vec;
             cm = gen_p + gen_m;

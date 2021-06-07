@@ -1,3 +1,8 @@
+from utils import *
+parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
+parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
+(options, args) = parser.parse_args()
+
 
 AFB_shifts = [0.0, 0.016, 0.009, 0.005, 0.002, 0.002, -0.001, -0.001]
 AFB_shifts_unc = [0.0, 0.003, 0.002, 0.002, 0.001, 0.002, -0.001, -0.001]
@@ -21,7 +26,7 @@ def get_AFB_A0(filename):
 
 n_bins = 8
 
-chan = 'combined_'
+chan = options.chan + "_"
 fit_dir = 'fit_results/'
 ending = 'fit_results_mbin%i.txt'
 AFB_val = [0]*n_bins
@@ -51,8 +56,10 @@ for i in range(1,n_bins):
 
 print("AFB:")
 for i in range(1,n_bins):
-    print("%.3f \\pm %.3f \\pm %.3f, %.3f " %(AFB_val[i], AFB_err_stat[i], AFB_err_sys[i], AFB_err_tot[i]))
+    #print("%.3f $\\pm$ %.3f (stat) $\\pm$ %.3f (syst)" %(AFB_val[i], AFB_err_stat[i], AFB_err_sys[i]))
+    print("0.XXX $\\pm$ %.3f (stat) $\\pm$ %.3f (syst)" %(AFB_err_stat[i], AFB_err_sys[i]))
 
 print("A0:")
 for i in range(1,n_bins):
-    print("%.3f \\pm %.3f \\pm %.3f, %.3f " %(A0_val[i], A0_err_stat[i], A0_err_sys[i], A0_err_tot[i]))
+    #print("%.3f $\\pm$ %.3f (stat) $\\pm$ %.3f (syst)" %(A0_val[i], A0_err_stat[i], A0_err_sys[i]))
+    print("0.XXX $\\pm$ %.3f (stat) $\\pm$ %.3f (syst)" %(A0_err_stat[i], A0_err_sys[i]))

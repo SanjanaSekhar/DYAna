@@ -79,6 +79,7 @@ void TempMaker::setup(){
             t_in->SetBranchAddress("inc_id2", &inc_id2);
             t_in->SetBranchAddress("cost_st", &cost_st);
             t_in->SetBranchAddress("pdf_weights", &pdf_weights);
+            t_in->SetBranchAddress("nnpdf30_weight", &nnpdf30_weight);
         }
         t_in->SetBranchAddress("nJets", &nJets);
         t_in->SetBranchAddress("gen_weight", &gen_weight);
@@ -198,7 +199,9 @@ void TempMaker::setup_systematic(const string &s_label){
     }
 
     if(sys_shift !=0){
-        if(sys_label.find("BTAG") != string::npos) do_btag_sys = sys_shift;
+        if(sys_label.find("BTAGCOR") != string::npos) do_btag_sys = sys_shift;
+        else if(sys_label.find("BTAGUNCOR") != string::npos) do_btag_sys = 2*sys_shift;
+        else if(sys_label.find("BTAGLIGHT") != string::npos) do_btag_sys = 3*sys_shift;
         else if(sys_label.find("Pu") != string::npos) do_pileup_sys = sys_shift;
         else if(sys_label.find("muRC") != string::npos) do_muRC_sys = sys_shift;
         else if(sys_label.find("muHLTBAR") != string::npos) do_muHLT_barrel_sys = sys_shift;
@@ -386,7 +389,7 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_F_up->GetBinContent(mbin+1);
     else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_F_down->GetBinContent(mbin+1);
     else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
-    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 2. -  RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 1./RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
 
     if(avg != 1.){
         printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
@@ -394,7 +397,7 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     h->Scale(1./avg);
 }
 
-float TempMaker::getEvtWeight(){
+float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
     if(is_data){
         evt_weight = 1.;
         return 1.;
@@ -404,26 +407,38 @@ float TempMaker::getEvtWeight(){
     if(do_pileup_sys == -1) pu_SF = pu_SF_down;
     if(do_pileup_sys == 1) pu_SF = pu_SF_up;
     if(do_pdf_sys != 0){
-        if(sys_shift > 0) *systematic = pdf_weights[do_pdf_sys-1];
-        if(sys_shift < 0) *systematic = 2. - pdf_weights[do_pdf_sys-1];
+        float pdf_weight = pdf_weights[do_pdf_sys-1];
+        pdf_weight = std::max(std::min(pdf_weight, 3.0f), 0.333f);
+        if(sys_shift > 0) *systematic = pdf_weight;
+        if(sys_shift < 0) *systematic = 1./pdf_weight;
+        //if(counter < 20) printf("%.4f \n", *systematic);
+        //counter++;
     }
-    if(abs(*systematic) > 10.0 || abs(*systematic) < 0.01 || std::isnan(*systematic)){
+    if(std::isnan(*systematic)){
         //printf("sys is %.4f  \n", *systematic);
         *systematic = 1.;
     }
+    *systematic = std::max(std::min(*systematic, 3.0f), 0.333f);
     //top_ptrw is 1 for non-ttbar samples
     double base_weight = gen_weight * (*systematic) * pu_SF * top_ptrw;
-    if(do_btag_sys != 0){
+    if(incl_btag_SFs){
+        if(do_btag_sys != 0){
 #ifndef STAND_ALONE
-        jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys);
-        jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys);
+            jet1_btag_SF = get_btag_weight(jet1_pt, jet1_eta, (Float_t) jet1_flavour , btag_effs, b_reader, do_btag_sys, btag_mc_eff_idx);
+            jet2_btag_SF = get_btag_weight(jet2_pt, jet2_eta, (Float_t) jet2_flavour , btag_effs, b_reader, do_btag_sys, btag_mc_eff_idx);
 #endif
-    }
-    if (nJets >= 1){
-        base_weight *= jet1_btag_SF;
-    }
-    if (nJets >= 2){
-        base_weight *= jet2_btag_SF;
+        }
+        if(isnan(jet1_btag_SF) || isnan(jet2_btag_SF) || jet1_btag_SF <= 0.  || jet2_btag_SF <= 0. || jet1_btag_SF > 10. || jet2_btag_SF > 10.){
+            //printf("Jet1 SF %.3e pt %.2f eta %.2f \n", jet1_btag_SF, jet1_pt, jet1_eta);
+            //printf("Jet2 SF %.3e pt %.2f eta %.2f \n", jet2_btag_SF, jet2_pt, jet2_eta);
+            jet1_btag_SF = jet2_btag_SF = 1.;
+        }
+        if (nJets >= 1){
+            base_weight *= jet1_btag_SF;
+        }
+        if (nJets >= 2){
+            base_weight *= jet2_btag_SF;
+        }
     }
 
     if(do_ptrw){

@@ -21,6 +21,7 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "../../utils/root_files.h"
+#include "../../utils/HistUtils.C"
 
 int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F *h_xf, float m_low = 150., float m_high = 100000., 
         float pt_low = 0., float pt_high = 10000., bool phot_ind=false){
@@ -55,7 +56,7 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
         float pt = cm.Pt();
         //printf("M= %.2f \n", cm.M());
         if(cm.M() >= m_low && cm.M() < m_high && (lep1_id < 14) && (lep2_id < 14)
-            && (!phot_ind || q1_id == 22 || q2_id ==22)
+            && (!phot_ind || ((q1_id == 22 || q2_id ==22) && (q1_id == 22 || q2_id == 22)) )
            //&& ((abs(lep_pls->Eta()) < 2.5) && (abs(lep_mns->Eta()) < 2.5))
             && pt >= pt_low && pt <= pt_high
 
@@ -64,15 +65,8 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
             if(gen_weight > 0.) nSelected++;
             else nSelected--;
 
-            double mu_p_pls = (lep_pls->E()+lep_pls->Pz())/root2;
-            double mu_p_min = (lep_pls->E()-lep_pls->Pz())/root2;
-            double mu_m_pls = (lep_mns->E()+lep_mns->Pz())/root2;
-            double mu_m_min = (lep_mns->E()-lep_mns->Pz())/root2;
-            double qt2 = cm.Px()*cm.Px()+cm.Py()*cm.Py();
-            double cm_m2 = cm.M2();
-            double gen_cost = 2*(mu_m_pls*mu_p_min - mu_m_min*mu_p_pls)/sqrt(cm_m2*(cm_m2 + qt2));
             //pls and mns leptons are backwards in ttree, so flip sign
-            gen_cost = -gen_cost;
+            float gen_cost = -get_cost(*lep_pls, *lep_mns, false);
 
 
             //flip sign for reconstruction
@@ -105,31 +99,41 @@ int make_gen_cost(TTree *t1, TH1F *h_cost_st, TH1F *h_cost_r, TH1F* h_pt,  TH1F 
     return nSelected;
 }
 void fit_gen_cost(){
-    gStyle->SetOptStat(0);
-    //TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
-    TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
+    //gStyle->SetOptStat(0);
+    gStyle->SetOptFit(1);
+    gStyle->SetStatX(0.47);
+    gStyle->SetStatY(0.9);
+    TFile *f1= TFile::Open("../generator_stuff/root_files/madgraph_m100_evts.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/photInd_lux_may2.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/DY_LO_test_april1.root");
+    //TFile *f1= TFile::Open("../generator_stuff/root_files/powheg_m150_may6.root");
     TTree *t_gen1 = (TTree *)f1->Get("T_lhe");
     int m_idx=1;
 
 
-    TH1F *h_cost = new TH1F("h_mad_cost", "", 20, -1., 1.);
+    TH1F *h_cost = new TH1F("h", "NLO Photon Induced (= 1 photon); cos(#theta)", 20, -1., 1.);
     TH1F *h_cost_r = new TH1F("h_mad_cost_r", "", 20, -1., 1.);
     TH1F *h_pt = new TH1F("h_pt", "", 40, 0., 200.);
     TH1F *h_xf = new TH1F("h_xf", "", 20, 0., 1.);
 
-    float m_low = m_bins[m_idx];
-    float m_high = m_bins[m_idx+1];
+    //float m_low = m_bins[m_idx];
+    //float m_high = m_bins[m_idx+1];
+    float m_low = 170;
+    float m_high = 10000;
 
     float pt_low = 0.;
     float pt_high = 100000;
+    bool phot_ind = false;
 
-    int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high, pt_low, pt_high);
+    int nEvents = make_gen_cost(t_gen1,  h_cost, h_cost_r, h_pt, h_xf, m_low, m_high, pt_low, pt_high, phot_ind);
 
 
     //TF1 *func = new TF1("func", "(1 + x*x + [1]*(1-x*x) + (4./3.)*(2. + [1])*[0]*x) /(8./3. + 4.*[1]/3.)", -1., 1.);
     TF1 *func = new TF1("func", "3./8.*(1 + x*x + ([1]/2.)*(1-3*x*x)) + [0]*x", -1., 1.);
     func->SetParameter(0,0.6);
-    func->SetParameter(1,0.05);
+    func->SetParameter(1,0.1);
+    func->SetParName(0, "AFB");
+    func->SetParName(1, "A0");
     //func->SetParLimits(1, -1.0, 1.0);
 
     //func->FixParameter(1, 0.094);
@@ -141,9 +145,22 @@ void fit_gen_cost(){
     
     //bin size is 0.1, so 1/bin_size = 10.
     h_cost->Scale(10./h_cost->Integral());
-    h_cost->Fit(func);
+    h_cost_r->Scale(10./h_cost_r->Integral());
 
+    TCanvas *c1 = new TCanvas("c1", "", 800, 800);
+    h_cost->Fit(func);
+    h_cost->Draw();
+    h_cost->SetMaximum(1.5);
+    h_cost_r->SetLineColor(kBlue);
+    h_cost_r->Draw("hist same");
+
+    TCanvas *c2 = new TCanvas("c2", "", 800, 800);
     h_pt->Draw("hist");
+
+    TCanvas *c3 = new TCanvas("c3", "", 800, 800);
+    h_xf->Draw("hist");
+
+    //h_pt->Draw("hist");
 
     Double_t AFB = ((nF - nB))/((nF+nB));
     //Double_t dAFB = sqrt((1-AFB*AFB)/(nEvents));
