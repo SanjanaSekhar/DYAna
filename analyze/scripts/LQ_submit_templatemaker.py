@@ -14,7 +14,7 @@ labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
 njobs = 20
-ending = "sep9"
+ending = "061321"
 for mass in masses:
     for year in years:
         for j,ttype in enumerate(types):
