@@ -12,19 +12,29 @@ bin             mumuYR
 observation     -1          
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      mumuYR    mumuYR    mumuYR    mumuYR    mumuYR   mumuYR   mumuYR    mumuYR    mumuYR
-process                  alpha     fpl       fmn       top       db       gam      tautau    LQpure_d  LQint_d
-process                  -2        0         -1        1          2        5        4        -3        -4
-rate                     -1       -1         -1       -1         -1       -1       -1        -1        -1
----------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03      1.03       1.03      -          -        -       1.03       -         -
-db_xsec         lnN      -         -          -        -         1.09      -        -         -         -
-top_xsec		lnN      -         -          -       1.05        -        -        -         -         -
-gam_xsec        lnN      -         -          -        -          -       1.4       -         -         -       
+bin                      mumuYR    mumuYR    mumuYR    mumuYR    mumuYR   mumuYR   mumuYR    mumuYR    mumuYR		mumuYR
+process                  alpha     fpl       fmn       top       db       gam      tautau    LQpure_d  LQint_d		qcd
+process                  -2        0         -1        1          2        5        4        -3        -4			3
+rate                     -1       -1         -1       -1         -1       -1       -1        -1        -1			-1
+-------------------------------------------------------------------------------------------------------------------------
+dy_xsec         lnN     1.03      1.03       1.03      -          -        -       1.03       -         -			-
+db_xsec         lnN      -         -          -        -         1.09      -        -         -         -			-
+top_xsec		lnN      -         -          -       1.05        -        -        -         -         -			-
+gam_xsec        lnN      -         -          -        -          -       1.4       -         -         -       	-	
 	                                                                                              
-lumiYR           lnN    1.025    1.025      1.025      1.025      1.025    1.025   1.025      -         -
-#elFakesYR       lnN      -       -         -          -          -        -        -         -         - 
-#muFakesYR       lnN      -       -         -          -          -        -        -         -         -
+
+muFakesYR       lnN      -       -         -          -          -        -        -         -         -			1.5
+
+
+#Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
+lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     LYRV    	-		-		-
+lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     LXYV    	-		-		-
+lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     LLSV    	-		-		-  
+lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     LDBV    	-		-		-  
+lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     LBCV    	-		-		- 
+lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     LGSV    	-		-		-  
+
+lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 
