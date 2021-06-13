@@ -94,8 +94,9 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = t
 
 
 //changed
-void make_qcd_templates(int year){
+void make_qcd_templates(int year, const string &sys_label){
 
+     if(sys_label.empty() || sys_label.find("fakes")){
     int n_var1_bins = n_y_bins;
     float *var1_bins = y_bins;
     if(use_xF){
@@ -118,12 +119,11 @@ void make_qcd_templates(int year){
     bool ss_binning = false;
     float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
     printf("making ElEl fakes template \n");
-    //::tie(elel_sign_scaling, elel_err) = gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, m_low, m_high, 
-          //  FLAG_ELECTRONS, incl_ss, ss_binning, use_xF);
-    printf("making MuMu fakes template \n");
-    incl_ss = false; // muons use os only for their fakes
-    //std::tie(mumu_sign_scaling, mumu_err) = gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, m_low, m_high, FLAG_MUONS, 
-         //   incl_ss, ss_binning, use_xF);
+    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, 
+                FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_label);
+        printf("making MuMu fakes template \n");
+        gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, FLAG_MUONS, 
+                incl_ss, ss_binning, use_xF, sys_label);
    
 
 
@@ -134,11 +134,10 @@ void make_qcd_templates(int year){
 
     h1_mumu_qcd = convert3d(h_mumu_qcd);
     h1_elel_qcd = convert3d(h_elel_qcd);
-    //convert_qcd_to_param_hist(h_elel_qcd, f_log, elel_sign_scaling, elel_err, FLAG_ELECTRONS);
-    //convert_qcd_to_param_hist(h_mumu_qcd, f_log, mumu_sign_scaling, mumu_err, FLAG_MUONS);
 
     printf("Made qcd templates \n");
     delete h_elel_qcd, h_mumu_qcd;
+    }
 }
 
 //changed
@@ -159,6 +158,10 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
     else{
         do_mu = true;
         do_el = true;
+    }
+    if(sys_label.find("fakes") != string::npos){
+        do_el = false;
+        do_mu = false;
     }
     bool ss= false;
     int n_var1_bins = n_y_bins;
@@ -243,9 +246,9 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
 
 
 
-        symmetrize3d(h_mumu_gam);
+       // symmetrize3d(h_mumu_gam);
         symmetrize3d(h_mumu_top);
-        symmetrize3d(h_mumu_db);
+        //symmetrize3d(h_mumu_db);
 
         h1_mumu_sym = convert3d(h_mumu_sym);
         h1_mumu_asym = convert3d(h_mumu_asym);
@@ -330,9 +333,9 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         gen_combined_background_template(1, elel_ts, h_elel_gam, year, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
 
-        symmetrize3d(h_elel_gam);
+       // symmetrize3d(h_elel_gam);
         symmetrize3d(h_elel_top);
-        symmetrize3d(h_elel_db);
+        //symmetrize3d(h_elel_db);
         
         h1_elel_sym = convert3d(h_elel_sym);
         h1_elel_asym = convert3d(h_elel_asym);
@@ -355,10 +358,12 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
 void convert_mc_templates(int year, const string &sys_label){
     bool do_mu, do_el;
     if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
+         printf("Doing mu only \n");
         do_mu = true;
         do_el = false;
     }
     else if(sys_label.find("el") != string::npos){
+        printf("Doing el only \n");
         do_mu = false;
         do_el = true;
     }
@@ -366,12 +371,19 @@ void convert_mc_templates(int year, const string &sys_label){
         do_mu = true;
         do_el = true;
     }
+    if(sys_label.find("fakes") != string::npos){
+        do_el = false;
+        do_mu = false;
+    }
     int n_var1_bins = n_y_bins;
     float *var1_bins = y_bins;
     if(use_xF){
         n_var1_bins = n_xf_bins;
         var1_bins = xf_bins;
     }
+        //merge highest rap bin for high mass templates
+    if(m_low > 550.) n_var1_bins -= 1;
+    int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
     if(do_mu){
 
         char title[100];
@@ -416,19 +428,19 @@ void write_out_non_sys_templates(){
 
     h1_mumu_data->Write();
     h1_elel_data->Write();
-    h1_mumu_qcd->Write();
-    h1_elel_qcd->Write();
+  
 
     h1_mumu_data->Reset();
     h1_elel_data->Reset();
-    h1_mumu_qcd->Reset();
-    h1_elel_qcd->Reset();
+    
 }
 
 
 void write_out_templates(const string &sys_label){
 
     bool do_mu, do_el;
+      bool do_fakes = false;
+    if(sys_label.empty()) do_fakes = true;
 
     if(sys_label.find("mu") != string::npos && sys_label.find("emu") == string::npos){
         do_mu = true;
@@ -442,7 +454,11 @@ void write_out_templates(const string &sys_label){
         do_mu = true;
         do_el = true;
     }
-
+    if(sys_label.find("fakes") != string::npos){
+        do_el = false;
+        do_mu = false;
+        do_fakes = true;
+    }
 
     if(do_mu){
         h1_mumu_top->Write();
@@ -498,14 +514,23 @@ void write_out_templates(const string &sys_label){
         h1_elel_LQint_d->Reset();
 
     }
+     if(do_fakes){
+
+        h1_mumu_qcd->Write();
+        h1_elel_qcd->Write();
+        h1_mumu_qcd->Reset();
+        h1_elel_qcd->Reset();
+    }
 
 
 }
 
-void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_LQ=0.){
+void LQ_make_templates(int year = -1, string fout_name = "", int iJob =-1, Double_t m_LQ=0.){
  
    
    // year =2016;
+    if(fout_name == "") fout_name = string("combine/templates/test.root");
+    if(year == -1) year = 2016;
 
     bool scramble_data =false ;
     bool fake_data =true; //use mc instead of data
@@ -556,12 +581,13 @@ void LQ_make_templates(int year = 2016, int nJobs = 6, int iJob =-1, Double_t m_
         printf("\n \n Start making templates ");
 
         make_data_templates(year, scramble_data, fake_data);
-        make_qcd_templates(year);
+        
         //make_ss_data_templates(year);
         //make_ss_mc_templates(year);
         //make_ss_qcd_templates(year);
 
         string sys_label = string("");
+        make_qcd_templates(year,sys_label);
         make_mc_templates(year, m_LQ, sys_label);
         convert_mc_templates(year, sys_label);
 

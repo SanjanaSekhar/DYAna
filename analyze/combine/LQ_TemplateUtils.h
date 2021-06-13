@@ -90,6 +90,9 @@ TH1F* convert3d(TH3F *h_3d){
 }
 */
 int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
+
+      //get rid of high rap bins if needed
+    if( i > n_binsx) i -=1;
    //lose 2 bins for each row above mid-row
    int base = (k-1)*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
   
@@ -101,14 +104,24 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
 
 }
 
+int get_n_1d_bins(int n_binsx, int n_binsy){
+    //merge 2 highest cos bins in 2 larger eta bins
+    //int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
+    int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
+    return n_1d_bins;
+}
+
+
 TH1F* convert3d(TH3F *h_3d){
     int n_m_bins = h_3d->GetNbinsX();
     float n_binsx = h_3d->GetNbinsY();
     float n_binsy = h_3d->GetNbinsZ();
   //  int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
+    float n_binsx_new = n_binsx;
+    //merge highest rap bin for high mass templates
+    if(m_low > 550.) n_binsx_new = n_binsx -1;
 
-    int n_1d_bins = n_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
-   // int n_1d_bins = n_m_bins*n_binsx*n_binsy;
+    int n_1d_bins = get_n_1d_bins(n_binsx_new, n_binsy);  // int n_1d_bins = n_m_bins*n_binsx*n_binsy;
    // printf("n_1d_bins = %i\n", n_1d_bins);
    
     TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_1d_bins, 0, n_1d_bins);// 0 is the 1st numbering of the bin
