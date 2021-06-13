@@ -40,32 +40,7 @@ void write_roo_hist(TH1F *h, RooRealVar *my_var){
     delete h;
 } 
 //changed
-void symmetrize3d(TH3F *h_3d){ //this function is called in make_templates.C on 8 2D hists that we create
-    int n_m_bins = h_3d->GetNbinsX();
-    int n_xf_bins = h_3d->GetNbinsY();
-    int n_cost_bins = h_3d->GetNbinsZ();
 
-    for(int k=1; k<=n_m_bins; k++){	
-	    for(int i=1; i<=n_xf_bins; i++){
-	        for(int j=1; j<= n_cost_bins/2; j++){
-	            float content = h_3d->GetBinContent(k,i,j);
-	            float error = h_3d->GetBinError(k,i,j);
-
-	            int opp_j = (n_cost_bins + 1) -j;
-	            float content2 = h_3d->GetBinContent(k,i,opp_j);
-	            float error2 = h_3d->GetBinError(k,i,opp_j);
-
-	            float new_content = (content + content2)/2.0;
-	            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
-	            h_3d->SetBinContent(k,i,j, new_content);
-	            h_3d->SetBinContent(k,i,opp_j, new_content);
-
-	            h_3d->SetBinError(k,i,j, new_error);
-	            h_3d->SetBinError(k,i,opp_j, new_error);
-	        }
-	    }
-	}    
-}
 /*
 //changed but doubt
 TH1F* convert3d(TH3F *h_3d){
