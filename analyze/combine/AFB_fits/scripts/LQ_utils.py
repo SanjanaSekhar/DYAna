@@ -9,7 +9,7 @@ from itertools import product
 import numpy as np
 
 
-def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
+def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
     ROOT.ROOT.EnableImplicitMT()
     f2 = TFile.Open("higgsCombineTest.GoodnessOfFit.mH120.root")
 
@@ -28,14 +28,16 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     toy_max = toys.GetMaximum("limit")
     toy_min = toys.GetMinimum("limit")
 
-    my_max = max(toy_max, t_obs) + 10.
+    my_max = max(toy_max, t_obs)*1.2
     #if is an error in fit can get very large values in toys
-    my_max =  min(my_max, 2.*t_obs)
+    my_max =  min(my_max, 4.*t_obs)
 
-    my_min = min(toy_min, t_obs) - 5.
+    my_min = min(toy_min, t_obs)*0.8
 
-    h_test = TH1D("h_toys", "Goodness of fit: Mass bin %i" % mbin, 30, my_min, my_max)
+    h_test = TH1D("h_toys", "Goodness of fit (%s): Mass bin %i" % (teststat, mbin), 30, my_min, my_max)
+    np_toys = np.array([])
     for toy in toys:
+        np_toys = np.append(np_toys, toy.limit)
         h_test.Fill(toy.limit)
 
     bin_low = h_test.GetXaxis().FindBin(t_obs)
@@ -48,7 +50,16 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
 
     p_val = h_test.Integral(bin_low, bin_high) / integral
 
-    print("Data gof is %.0f. p-value is %.3f based on %.0f toys" %(t_obs, p_val, integral))
+    np_above = np_toys > t_obs
+    tot = np_toys.shape[0]
+    n_above = np_toys[np_above].shape[0]
+    np_p_val = float(n_above) / tot
+
+    print("Data gof is %f p-value (integral) is %.3f based on %.0f toys" %(t_obs, p_val, integral))
+    print("Numpy version: %i out of %i above t_obs (p-val %.3f) " % (n_above, tot, float(n_above) / tot))
+
+    p_val = np_p_val
+
 
     fout_name = "%sgof_%s_bin%i.png" % (odir, chan, mbin)
     draw_max = h_test.GetMaximum()
@@ -63,7 +74,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/"):
     latex.SetTextSize(0.025)
     latex.SetTextAlign(13)
     latex.SetNDC(True)
-    latex.DrawLatex(0.5, 0.75, "Data gof is %.0f, p-value is %.2f" % (t_obs, p_val))
+    latex.DrawLatex(0.5, 0.75, "Data gof is %.3f, p-value is %.2f" % (t_obs, p_val))
     c.Print(fout_name)
     f1.Close()
 
@@ -75,11 +86,11 @@ def print_and_do(s):
 def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fit_name = 'fit_s'
     workspace = d+'higgsCombineTest.FitDiagnostics.mH120.root'
-    fit_file = d+'fitDiagnostics.root'
+    fit_file = d+'fitDiagnosticsTest.root'
     if(mdf):
         fit_name = 'fit_mdf'
         workspace = d+'higgsCombineTest.MultiDimFit.mH120.root'
-        fit_file = d+'multidimfit.root'
+        fit_file = d+'multidimfitTest.root'
     w_f = TFile.Open(workspace)
     w = w_f.Get('w')
     fr_f = TFile.Open(fit_file)
@@ -94,13 +105,37 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
         myargs.find("A0").setVal(A0_val)
         #myargs.find("A0").setError(0.)
     # end new lines
-    importPars = w.saveSnapshot('initialFit',myargs)
+    importPars = w.saveSnapshot('initialFit',myargs, True)
     fout = TFile('initialFitWorkspace.root',"recreate")
     fout.WriteTObject(w,'w')
     fout.Close()
     return fitted_afb, fitted_a0
 
-def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 1000, year = -1):
+def do_lumi(card, year):
+        l_vals = dict()
+        l_vals['LYRV'] = [1.022, 1.02, 1.015]
+        l_vals['LXYV'] = [1.009, 1.009, 1.02]
+        l_vals['LLSV'] = [-1,1.003, 1.002] 
+        l_vals['LDBV'] = [1.004, 1.004, -1]
+        l_vals['LBCV'] = [-1, 1.003, 1.002]
+        l_vals['LGSV'] = [1.004, 1.001, -1]
+
+        idx = year - 16
+
+
+        for key,l_val in l_vals.items():
+            val = l_val[idx]
+            f_string = ""
+            if(val > 0):
+                f_string = "%.3f" % val
+            else:
+                f_string = "  -  "
+
+            print_and_do("""sed -i "s/%s/%s/g" %s""" % (key, f_string, card))
+
+        print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
+
+def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = True):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
@@ -127,8 +162,15 @@ def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 
     else: years = [16,17,18]
 
     for yr in years:
+        if(yr == 16):
+            comb_yr = 16
+        else:
+            #some systematics combined between 17 and 18
+            comb_yr = 1718
         card="cards/combined_fit_y%i_LQ.txt" % (yr)
         print_and_do("cp %s %s" % (template_card, card))
+        do_lumi(card, yr)
+        print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mLQ, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
@@ -140,4 +182,19 @@ def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
 
-    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+    if(symMCStats): extra_arg = "--symMCStats"
+    else: extra_arg = ""
+    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
+
+def make_gen_level_workspace(workspace, mbin,  year = -1):
+    print("Making workspace %s mbin %i" % (workspace, mbin))
+    template_card="card_templates/gen_level_fit_template.txt"
+
+    yr = year % 2000
+
+    card="cards/gen_level_fit_y%i_mbin%i.txt" % (yr, mbin)
+    print_and_do("cp %s %s" % (template_card, card))
+
+    print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+
+    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s" % (card, mbin, workspace))

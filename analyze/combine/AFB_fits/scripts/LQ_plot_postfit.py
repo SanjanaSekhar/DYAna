@@ -65,6 +65,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
     subs = []
     pulls = []
     logString = ''
+    leg_align_right = True
+    CMS_align_right = False
 
     # For each hist/data distribution
     for hist_index, hist in enumerate(histlist):
@@ -93,6 +95,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
         
         # Otherwise it's a TH1 hopefully
         else:
+            titleSize = 0.09
             alpha = 1
             if dataOff:
                 alpha = 0
@@ -103,11 +106,12 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
             if 'hist' in datastyle.lower():
                 hist.SetFillColorAlpha(0,0)
             
+            hist.GetXaxis().SetTitle(xtitle)
+            hist.GetYaxis().SetTitle(ytitle)
             # If there are no backgrounds, only plot the data (semilog if desired)
             if len(bkglist) == 0:
                 hist.SetMaximum(1.13*hist.GetMaximum())
-                hist.GetXaxis().SetTitle(xtitle)
-                hist.GetYaxis().SetTitle(ytitle)
+                
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
                     hist.SetTitleOffset(1.1)
@@ -125,11 +129,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     subs.append(TPad(hist.GetName()+'_sub',hist.GetName()+'_sub',0, 0, 0, 0))
 
                 leg_align_right = True
+                CMS_align_right = False
                 x_max = totlist[hist_index].GetMaximumBin()
                 nbins = totlist[hist_index].GetXaxis().GetNbins()
                 if(2 *x_max > nbins):
                     print("Found max val in bin %i, aligning legend on the left" % x_max)
                     leg_align_right = False
+                    CMS_align_right = True
                 if not logy: 
                     y_start  = 0.77
                     y_end = 0.9
@@ -143,7 +149,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 else: 
                     legends.append(TLegend(0.2,0.11,0.45,0.2+0.02*(len(bkglist[0])+len(signals))))
                 stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
-
+                legends_list.append([])
 
                 # Set margins and make these two pads primitives of the division, thisPad
                 mains[hist_index].SetBottomMargin(0.0)
@@ -174,7 +180,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     if bkgNames == []: this_bkg_name = bkg.GetName().split('_')[0]
                     elif type(bkgNames[0]) != list: this_bkg_name = bkgNames[bkg_index]
                     else: this_bkg_name = bkgNames[hist_index][bkg_index]
-                    legends[hist_index].AddEntry(bkg,this_bkg_name,'f')
+                    legends_list[hist_index].append(bkg,this_bkg_name,'f')
                     
                 # Go to main pad, set logy if needed
                 mains[hist_index].cd()
@@ -204,9 +210,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
                 hist.SetTitleOffset(1.1,"xy")
-                hist.GetYaxis().SetTitle('Events')
+                hist.GetYaxis().SetTitle('Events/bin')
                 hist.GetYaxis().SetLabelSize(mLS)
                 hist.GetYaxis().SetTitleSize(mLS)
+                hist.GetXaxis().SetLabelOffset(999)
                 if logy == True:
                     hist.SetMinimum(1e-3)
                 hist.Draw(datastyle)
@@ -220,19 +227,26 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     if logy == True:
                         signals[hist_index].SetMinimum(1e-3)
                     if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
-                    legends[hist_index].AddEntry(signals[hist_index],this_sig_name,'L')
+                    legends_list[hist_index].append(signals[hist_index],this_sig_name,'L')
                     signals[hist_index].Draw('hist same')
 
                 totlist[hist_index].SetFillColor(kBlack)
                 totlist[hist_index].SetFillStyle(3354)
+                totlist[hist_index].SetMarkerStyle(20)
+                totlist[hist_index].SetMarkerSize(0.01)
 
                 totlist[hist_index].Draw('e2 same')
-                legends[hist_index].Draw()
-
                 if not dataOff:
-                    legends[hist_index].AddEntry(hist,dataName,datastyle)
+                    legends_list[hist_index].append((hist,dataName,datastyle))
                     hist.Draw(datastyle+' same')
 
+                for entry in legends_list[hist_index][::-1]:
+                    legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
+
+
+
+                legends[hist_index].SetBorderSize(0)
+                legends[hist_index].Draw()
                 gPad.RedrawAxis()
 
                 # Draw the pull
@@ -242,6 +256,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 pulls[hist_index].SetFillColor(kGray)
                 pulls[hist_index].SetTitle(";"+hist.GetXaxis().GetTitle()+";(Data-Bkg)/Unc.")
                 pulls[hist_index].SetStats(0)
+                chi2 = 0.
+                for i in range(1, pulls[hist_index].GetNbinsX()+1):
+                    chi2 += pulls[hist_index].GetBinContent(i)**2;
+                print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pulls[hist_index].GetNbinsX()))
 
                 LS = .13
 
@@ -252,17 +270,22 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 pulls[hist_index].GetYaxis().SetLabelSize(LS)
                 pulls[hist_index].GetYaxis().SetTitleSize(LS)
                 pulls[hist_index].GetYaxis().SetNdivisions(306)
+                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/#sigma")
+
+                pulls[hist_index].GetXaxis().SetLabelOffset(0.05)
                 pulls[hist_index].GetXaxis().SetLabelSize(LS)
                 pulls[hist_index].GetXaxis().SetTitleSize(LS)
-
                 pulls[hist_index].GetXaxis().SetTitle(xtitle)
-                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/Unc.")
+
+
                 pulls[hist_index].Draw('hist')
 
                 if logy == True:
                     mains[hist_index].SetLogy()
 
-                #CMS_lumi.CMS_lumi(thisPad, year, 11)
+                if(CMS_align_right): CMS_loc = 33
+                else: CMS_loc = 11
+                CMS_lumi.CMS_lumi(thisPad, year, CMS_loc)
 
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
@@ -377,7 +400,7 @@ parser.add_option("--mLQ", "-m", type = 'int', default = 0, help="mLQ (for plot 
 parser.add_option("--q", "-q", type = 'string', default = "", help="q = u or d")
 parser.add_option("--chan", "-c", type = 'string', default = "", help="ee or mumu")
 parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
-#parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
+parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 (options, args) = parser.parse_args()
 
 mLQ = options.mLQ
@@ -406,14 +429,17 @@ label_color_map['db'] = ("WW + WZ + ZZ",  kYellow)
 label_color_map['dy'] = ("DY (miss-sign)", kRed + 1)
 label_color_map['tautau'] = ("DY #tau#tau", kMagenta)
 label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
-#label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
+label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
 if options.q=="u":
-    label_color_map['LQint_u'] = ("LQint_u", kRed - 7)
+    label_color_map['LQint_u'] = ("LQint_u", kRed + 7)
     label_color_map['LQpure_u'] = ("LQpure_u", kBlue + 7)
 if options.q=="d":
-    label_color_map['LQint_d'] = ("LQint_d", kRed - 7)
+    label_color_map['LQint_d'] = ("LQint_d", kRed + 7)
     label_color_map['LQpure_d'] = ("LQpure_d", kBlue + 7)
 
+fracs = dict()
+for name in h_names:
+    fracs[name] = 0.
 
 dirs = ["Y%i_postfit/"]
 #if(options.ss): dirs =  ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
@@ -427,6 +453,9 @@ for year in years:
         h_tot = h_tot.Clone("h_tot_c%i_y%i" %(idx, year))
         h_data = f_in.Get(dir_ + "data_obs")
         h_data = h_data.Clone("h_data_c%i_y%i" %(idx, year))
+
+        h_tot_sig = f_in.Get(dir_ + "TotalSig")
+        h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 
         #mbin_low = m_bins[options.mbin]
         #mbin_high = m_bins[options.mbin+1]
@@ -460,5 +489,13 @@ for year in years:
                 label_list.append(label_color_map[name][0])
                 color_list.append(label_color_map[name][1])
 
-        makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin" ) 
+                this_frac = h.Integral()/h_tot.Integral()
+                print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
+                fracs[name] += this_frac
 
+        makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin" ,year = year) 
+
+for key in fracs.keys():
+    fracs[key] /= (len(years)*len(dirs))
+
+    print("Average fraction for %s  is  %.3f \n" % (key, fracs[key]))
