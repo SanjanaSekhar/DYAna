@@ -315,6 +315,15 @@ bool NTupleReader::getNextFile(){
 
 
             }
+            else if(year == 2018 && add_filters){
+                tin->SetBranchAddress("Flag_HBHENoiseFilter", &Flag_HBHENoiseFilter);
+                tin->SetBranchAddress("Flag_HBHENoiseIsoFilter", &Flag_HBHENoiseIsoFilter);
+                tin->SetBranchAddress("Flag_globalSuperTightHalo2016Filter", &Flag_globalSuperTightHalo2016Filter);
+                tin->SetBranchAddress("Flag_EcalDeadCellTriggerPrimitiveFilter", &Flag_EcalDeadCellTriggerPrimitiveFilter);
+                tin->SetBranchAddress("Flag_goodVertices", &Flag_goodVertices);
+                tin->SetBranchAddress("Flag_BadPFMuonFilter", &Flag_BadPFMuonFilter);
+            }
+
 
 
 
@@ -749,6 +758,10 @@ void NTupleReader::fillEvent(){
 
     if(!is_data){
         gen_weight = evt_Gen_Weight * normalization;
+    }
+    if(is_data && year == 2018 && add_filters){
+        pass_filters = Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_globalSuperTightHalo2016Filter && 
+            Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_goodVertices && Flag_BadPFMuonFilter;
     }
 
 }
