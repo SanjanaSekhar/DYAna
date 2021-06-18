@@ -94,6 +94,7 @@ class NTupleReader{
         bool do_top_ptrw = false;
         bool is_signal_sample = false;
         bool RC_from_gen = false;
+        bool add_filters = true;
 
         unsigned int nEvents=0;
         unsigned int nSignal = 0;
@@ -190,6 +191,10 @@ class NTupleReader{
                                        el_ScaleCorrGainUp[EL_SIZE], el_ScaleCorrGainDown[EL_SIZE],
                                        el_ScaleCorrSystUp[EL_SIZE], el_ScaleCorrSystDown[EL_SIZE],
             el_ScaleSmearDown[EL_SIZE], el_ScaleSmearUp[EL_SIZE];
+
+        Int_t Flag_HBHENoiseFilter, Flag_HBHENoiseIsoFilter, Flag_globalSuperTightHalo2016Filter, Flag_EcalDeadCellTriggerPrimitiveFilter, Flag_goodVertices, Flag_BadPFMuonFilter;
+        Int_t pass_filters = 1;
+
 
 
 

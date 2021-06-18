@@ -100,5 +100,5 @@ sys_unc = compute_sys("nom1", "NoMCStat", s)
 print("Mass bin %i, Symmetrized MCStats = %r, expected = %r \n" %(options.mbin, not options.noSymMCStats, options.expected))
 print("Uncertainty is %.5f \n" % sys_unc)
 
-#print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
+print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
 

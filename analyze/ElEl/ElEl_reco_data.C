@@ -11,6 +11,9 @@ void ElEl_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
     if (year == -1) year = 2016;
     nt.year = year;
 
+
+    nt.add_filters = true;
+
     nt.nJobs = nJobs;
     nt.iJob = iJob;
     nt.do_electrons = true;
@@ -21,6 +24,7 @@ void ElEl_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
 
     int iso_el;
     nt.outTrees[1]->Branch("iso_el", &iso_el); 
+    nt.outTrees[0]->Branch("pass_filters", &nt.pass_filters); 
 
 
     while(nt.getNextFile()){
@@ -29,7 +33,9 @@ void ElEl_reco_data(int nJobs =1, int iJob = 0, string fin = "", int year=-1)
         for (int i=0; i<nt.tin_nEntries; i++) {
             nt.getEvent(i);
 
-            if(nt.good_trigger && nt.dielec_id && nt.cm_m > 70. && nt.cm_m < 130.){
+            if(nt.good_trigger && nt.dielec_id 
+                    //&& nt.cm_m > 70. && nt.cm_m < 130.){
+                    && nt.cm_m > 150.){
                 nt.fillEvent();
                 bool one_iso = nt.el_iso0 ^ nt.el_iso1;
 
