@@ -525,11 +525,11 @@ void write_out_templates(const string &sys_label){
 
 }
 
-void LQ_make_templates(int year = -1, string fout_name = "", int iJob =-1, Double_t m_LQ=0.){
+void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, Double_t m_LQ=0.){
  
    
    // year =2016;
-    if(fout_name == "") fout_name = string("combine/templates/test.root");
+    if(fout_name == "") fout_name_temp = string("combine/templates/test.root");
     if(year == -1) year = 2016;
 
     bool scramble_data =false ;
@@ -554,7 +554,7 @@ void LQ_make_templates(int year = -1, string fout_name = "", int iJob =-1, Doubl
     char templates_name[100];
     sprintf(templates_name,"output_files/LQm%i_nonsys_templates%i.root",int(m_LQ),year%2000);
     const TString fout_name(templates_name);
-    TFile * fout = TFile::Open(fout_name, "RECREATE");
+    TFile * fout = TFile::Open(fout_name.c_str(), "RECREATE");
 
     char dirname[40];
     printf("=========================\n m_LQ = %f, year = %d, fake_data = %d \n=========================\n",m_LQ,year,fake_data );
@@ -563,7 +563,7 @@ void LQ_make_templates(int year = -1, string fout_name = "", int iJob =-1, Doubl
 /*
     int i_start=0;
     int i_max = n_lq_m_bins;
-    if(iJob >0){
+    if(iJob >0){ 
         i_start =iJob;
         i_max = iJob +1;
     }
@@ -601,7 +601,7 @@ void LQ_make_templates(int year = -1, string fout_name = "", int iJob =-1, Doubl
 
 
     fout->Close();
-    printf("Templates written to %s \n", fout_name.Data());
+    printf("Templates written to %s \n", fout_name.c_str());
     }
 
 //}

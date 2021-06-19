@@ -163,7 +163,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               err = val * max_err;
               h->SetBinError(k,i,j, err);
             }
-
+          }
           }
         }
         h_copy->Delete();
@@ -248,7 +248,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 //input m_LQ in make_templates.C
         int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpure_d, TH3F *h_LQint_d,
-          int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, bool old= true, const string &sys_label = "" ){
+          int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, const string &sys_label = "" ){
 
           printf("Making mc template for sys %s \n", sys_label.c_str());
 
