@@ -135,20 +135,20 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 CMS_align_right = False
                 x_max = totlist[hist_index].GetMaximumBin()
                 nbins = totlist[hist_index].GetXaxis().GetNbins()
-                if(2 *x_max > nbins):
-                    print("Found max val in bin %i, aligning legend on the left" % x_max)
-                    leg_align_right = False
-                    CMS_align_right = True
+                #if(2 *x_max > nbins):
+                #    print("Found max val in bin %i, aligning legend on the left" % x_max)
+                #    leg_align_right = False
+                #    CMS_align_right = True
                 if not logy: 
-                    y_start  = 0.77
-                    y_end = 0.9
+                    y_end = 0.88
+                    y_size = 0.2 + 0.02*(len(bkglist[0])+len(signals))
                     x_size = 0.35
                     if(leg_align_right):
-                        x_start = 0.58
+                        x_start = 0.55
                     else:
-                        x_start = 0.18
+                        x_start = 0.2
 
-                    legends.append(TLegend(x_start,y_start-0.02*(len(bkglist[0])+len(signals)),x_start + x_size,y_end))
+                    legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
                 else: 
                     legends.append(TLegend(0.2,0.11,0.45,0.2+0.02*(len(bkglist[0])+len(signals))))
 
@@ -192,7 +192,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
                 # Set y max of all hists to be the same to accomodate the tallest
-                max_scaling = 1.5
+                max_scaling = 2.0
                 histList = [stacks[hist_index],totlist[hist_index],hist]
 
                 yMax = histList[0].GetMaximum()
@@ -222,8 +222,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 if logy == True:
                     hist.SetMinimum(1e-3)
                 hist.Draw(datastyle)
+                #print("Drawing %s %s \n" hist.GetName(), datastyle)
 
                 stacks[hist_index].Draw('same hist')
+                #print("Drawing %s same hist \n" stacks[hist_index].GetName())
 
                 # Do the signals
                 if len(signals) > 0: 
@@ -246,6 +248,11 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     legends_list[hist_index].append((hist,dataName,datastyle))
                     hist.Draw(datastyle+' same')
 
+
+            
+                legends[hist_index].SetHeader(title, "c")
+                legends[hist_index].SetNColumns(2)
+                
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
 
@@ -296,8 +303,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
     else:
-        myCan.Print(tag+'/'+name+'.png','png')
         myCan.Print(tag+'/'+name+'.pdf','pdf')
+        myCan.Print(tag+'/'+name+'.png','png')
 
 
 def reducedCorrMatrixHist(fit_result,varsOfInterest=[]):
@@ -416,7 +423,7 @@ if (__name__ == "__main__"):
         years = [2016, 2017, 2018]
     else:
         years = [options.year]
-    h_names = ["gam", "db", "qcd", "top",  "tautau", "alpha", "fpl_fmn"]
+    h_names = ["gam", "db", "qcd", "top",  "tautau", "dy"]
     h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -424,14 +431,14 @@ if (__name__ == "__main__"):
 
 
     label_color_map = dict()
-    label_color_map['fpl_fmn'] = ("DY Plus + Minus Template", kRed + 1)
-    label_color_map['alpha'] = ("DY #alpha Template", kMagenta + 4)
+    label_color_map['dy'] = ("DY Signal", kRed + 1)
     label_color_map['top'] = ("t#bar{t} + tW ", kBlue)
     label_color_map['db'] = ("WW + WZ + ZZ",  kGreen +3)
-    label_color_map['dy'] = ("DY (miss-sign)", kRed + 1)
-    label_color_map['tautau'] = ("DY #tau#tau", kMagenta)
-    label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
+    label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
+    label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", kOrange)
     label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
+
+    datastyle = "pe0x0"
 
     fracs = dict()
     for name in h_names:
@@ -454,9 +461,9 @@ if (__name__ == "__main__"):
             mbin_low = m_bins[options.mbin]
             mbin_high = m_bins[options.mbin+1]
 
-            if(idx == 0): title = "Muons %i %i-%i GeV" % (year, mbin_low, mbin_high)
-            if(idx == 1): title = "Electrons %i %i-%i GeV" % (year, mbin_low, mbin_high)
-            if(idx == 2): title = "Electrons Samesign %i %i-%i GeV" % (year, mbin_low, mbin_high)
+            if(idx == 0): title = "Muons %i-%i GeV" % (mbin_low, mbin_high)
+            if(idx == 1): title = "Electrons %i-%i GeV" % (mbin_low, mbin_high)
+            if(idx == 2): title = "Electrons Samesign %i-%i GeV" % (mbin_low, mbin_high)
             
             if(idx == 2): name_list = h_ss_names
             else: name_list = h_names
@@ -465,13 +472,8 @@ if (__name__ == "__main__"):
             label_list = []
 
             for name in name_list:
-                if(name == "fpl_fmn"):
-                    h_pl = f_in.Get(dir_ + "fpl")
-                    h_mn = f_in.Get(dir_ + "fmn")
-                    h = h_pl.Clone("h_%s_c%i_y%i" %(name, idx, year))
-                    h_mn = h_mn.Clone("h_mn")
-                    h.Add(h_mn)
-
+                if(name == "dy"):
+                    h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
                 else:
                     h = f_in.Get(dir_ + name)
                     if(h != None):
@@ -482,15 +484,18 @@ if (__name__ == "__main__"):
                     label_list.append(label_color_map[name][0])
                     color_list.append(label_color_map[name][1])
 
-                    this_frac = h.Integral()/h_tot.Integral()
-                    print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
-                    fracs[name] += this_frac
+                    if("gam" in name):
+                        this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
+                        print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
+                        fracs[name] += this_frac
 
-            makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bin", year = year ) 
+            makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, 
+                    titles = [title], xtitle = "Template Bin", year = year, datastyle=datastyle ) 
 
     for key in fracs.keys():
         fracs[key] /= (len(years)*len(dirs))
 
-        print("Average fraction for %s  is  %.3f \n" % (key, fracs[key]))
+    key_ = "gam"
+    print("Average fraction for %s  is  %.3f \n" % (key_, fracs[key_]))
 
 
