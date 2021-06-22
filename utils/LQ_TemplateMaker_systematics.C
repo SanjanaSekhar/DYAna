@@ -518,8 +518,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       return 0;
     }
 
-    int one_mc_template(TTree *t1, Double_t afb, TH3F* h_dy, 
-      int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, bool use_LQ_denom=true,
+    int one_mc_template(TTree *t1, Double_t a0, Double_t afb, TH3F* h_dy, 
+      int year, Double_t m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, 
       const string &sys_label = "" ){
 
       int n_var1_bins = n_y_bins;
@@ -553,7 +553,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
       h_LQint_d.SetDirectory(0);
     //includes m_LQ
-    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure, &h_LQint, year, m_LQ, flag1,  use_xF,sys_label);
+    gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
 
         float alpha = 2.* a0/ (2. - a0);
