@@ -525,11 +525,11 @@ void write_out_templates(const string &sys_label){
 
 }
 
-void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, Double_t m_LQ=0.){
+void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, Double_t m_LQ=1000.){
  
    
    // year =2016;
-    if(fout_name == "") fout_name_temp = string("combine/templates/test.root");
+    if(fout_name_temp == "") fout_name_temp = string("combine/templates/test.root");
     if(year == -1) year = 2016;
 
     bool scramble_data =false ;
@@ -546,14 +546,14 @@ void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, 
     
     printf("   done \n");
 
-    vector<string> sys_labels {""};
+//    vector<string> sys_labels {""};
 
     //for(int i=1;i<=4;i++){
     
     //m_LQ = 1000.;   
-    char templates_name[100];
+    char templates_name[200];
     sprintf(templates_name,"output_files/LQm%i_nonsys_templates%i.root",int(m_LQ),year%2000);
-    const TString fout_name(templates_name);
+    string fout_name = string(templates_name,200);
     TFile * fout = TFile::Open(fout_name.c_str(), "RECREATE");
 
     char dirname[40];
