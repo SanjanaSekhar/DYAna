@@ -107,6 +107,42 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH2F *h){
     }
 }
 
+void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH3F *h){
+    //2d output
+    float err_sum = 0.;
+    float hist_sum = 0.;
+    for(int i=1; i<= h_errs->GetNbinsX(); i++){
+        for(int j=1; j<= h_errs->GetNbinsY(); j++){
+            float f_err = h_fr->GetBinError(i,j);
+            float f = h_fr->GetBinContent(i,j);
+            float num = h_errs->GetBinContent(i,j);
+            //compute error on f/(1-f). Derive is 1/(1-f)^2
+            float err = f_err/(1.-f)/(1.-f);
+            err_sum += err*num;
+            hist_sum += num*f/(1.-f);
+            //printf("i,j,f,f_err,num,err: %i %i %.3f %.3f %.1f %.1f \n", i,j, f, f_err, num, err);
+        }
+    }
+    float err_frac = err_sum/h->Integral();
+
+    //printf("err_sum, sum_est, tot_evts, err_frac %.1f %.1f %.1f %.1f \n", err_sum, hist_sum, h->Integral(), err_frac);
+    for(int k=1; k<=h->GetNbinsX();k++){
+    for(int i=1; i<= h->GetNbinsY(); i++){
+        for(int j=1; j<= h->GetNbinsZ(); j++){
+            float bin_num = h->GetBinContent(k,i, j);
+            float num_err = pow(h->GetBinError(k,i,j),2);
+            float weight_err = pow(err_frac*bin_num, 2);
+            float new_err = 0.;
+            float max_err = 0.7;
+
+            new_err = std::min((float) (max_err * h->GetBinContent(k,i,j)), sqrt(num_err + weight_err));
+
+
+            h->SetBinError(k,i,j, new_err);
+        }
+        }
+    }
+}
 
 void fakes_cost_reweight(TH1 *h_fakes, TH1 *h_rw){
     int n_cost_bins = h_fakes->GetNbinsX();
