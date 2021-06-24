@@ -87,7 +87,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
             hist.GetXaxis().SetTitle(xtitle)
             hist.GetYaxis().SetTitle(ytitle)
             hist.GetXaxis().SetTitleOffset(1.5)
-            hist.GetYaxis().SetTitleOffset(2.3)
+            hist.GetYaxis().SetTitleOffset(1.0)
             hist.GetZaxis().SetTitleOffset(1.8)
             if len(titles) > 0:
                 hist.SetTitle(titles[hist_index])
@@ -210,14 +210,16 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 
                 mLS = 0.08
+                mTS = 0.06
                 # Now draw the main pad
                 data_leg_title = hist.GetTitle()
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
-                hist.SetTitleOffset(1.15,"xy")
+                hist.GetYaxis().SetTitleOffset(1.4)
+                hist.GetXaxis().SetTitleOffset(1.2)
                 hist.GetYaxis().SetTitle('Events / bin')
                 hist.GetYaxis().SetLabelSize(mLS)
-                hist.GetYaxis().SetTitleSize(mLS)
+                hist.GetYaxis().SetTitleSize(mTS)
                 hist.GetXaxis().SetLabelOffset(999)
                 if logy == True:
                     hist.SetMinimum(1e-3)
@@ -275,19 +277,21 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pulls[hist_index].GetNbinsX()))
 
                 LS = .13
+                #title size given as fraction of pad width, scale up to have same size as main pad
+                TS =  0.06 * 0.7/0.3
 
                 pulls[hist_index].GetYaxis().SetRangeUser(-2.9,2.9)
-                pulls[hist_index].GetYaxis().SetTitleOffset(0.4)
-                # pulls[hist_index].GetXaxis().SetTitleOffset(0.9)
+                pulls[hist_index].GetYaxis().SetTitleOffset(0.3)
+                pulls[hist_index].GetXaxis().SetTitleOffset(1.2)
                              
                 pulls[hist_index].GetYaxis().SetLabelSize(LS)
-                pulls[hist_index].GetYaxis().SetTitleSize(LS)
+                pulls[hist_index].GetYaxis().SetTitleSize(TS)
                 pulls[hist_index].GetYaxis().SetNdivisions(306)
                 pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/#sigma")
 
                 pulls[hist_index].GetXaxis().SetLabelOffset(0.05)
                 pulls[hist_index].GetXaxis().SetLabelSize(LS)
-                pulls[hist_index].GetXaxis().SetTitleSize(LS)
+                pulls[hist_index].GetXaxis().SetTitleSize(TS)
                 pulls[hist_index].GetXaxis().SetTitle(xtitle)
 
 

@@ -7,16 +7,16 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-#years = [2016, 2017,2018]
-years = [2018]
+years = [2016, 2017,2018]
+#years = [2018]
 #prefixes = ["EMu"]
 #scripts = ["EMu_reco_background.C"]
 #scripts = ["EMu_reco_data.C"]
-prefixes = ["ElEl", "MuMu"]
+#prefixes = ["ElEl", "MuMu"]
 #scripts = ["ElEl_reco_mc.C"]
-scripts = ["ElEl_reco_background.C", "MuMu_reco_background.C"]
-#prefixes = ["ElEl"]
-#scripts = ["ElEl_reco_data.C"]
+#scripts = ["ElEl_reco_background.C", "MuMu_reco_background.C"]
+prefixes = ["MuMu"]
+scripts = ["MuMu_reco_data.C"]
 #scripts = ["ElEl_reco_mc.C", "MuMu_reco_mc.C"]
 njobs = 20
 
@@ -33,15 +33,15 @@ njobs = 20
 #eos_files = ["WT_files.txt"]
 #labels = ["wt", "ttbar", "diboson", "dy"]
 #eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "DY_files.txt"]
-#labels = ["data_mlow"]
-#eos_files = ["SingleElectron_files.txt"]
-labels = ["ttbar"]
-eos_files = ["TTbar_files.txt"]
+labels = ["data"]
+eos_files = ["SingleMuon_files.txt"]
+#labels = ["ttbar"]
+#eos_files = ["TTbar_files.txt"]
 #labels = ["dy"]
 #eos_files = ["DY_files.txt"]
 #labels = ["phot_ind"]
 #eos_files = ["PhotInd_files.txt"]
-ending = "may26"
+ending = "June22"
 
 for i,script in enumerate(scripts):
     prefix = prefixes[i]

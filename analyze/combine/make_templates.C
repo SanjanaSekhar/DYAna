@@ -376,8 +376,6 @@ void convert_mc_templates(int year, const string &sys_label){
         sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
         h1_elel_mn->SetName(title);
 
-        h1_elel_sym->Reset();
-        h1_elel_asym->Reset();
 
     }
 }
@@ -428,6 +426,8 @@ void write_out_templates(const string &sys_label){
         h1_mumu_alpha->Write();
         h1_mumu_pl->Write();
         h1_mumu_mn->Write();
+        h1_mumu_sym->Write();
+        h1_mumu_asym->Write();
 
 
         h1_mumu_top->Reset();
@@ -437,6 +437,8 @@ void write_out_templates(const string &sys_label){
         h1_mumu_alpha->Reset();
         h1_mumu_pl->Reset();
         h1_mumu_mn->Reset();
+        //h1_elel_sym->Reset();
+        //h1_elel_asym->Reset();
     }
 
     if(do_el){
@@ -447,6 +449,8 @@ void write_out_templates(const string &sys_label){
         h1_elel_alpha->Write();
         h1_elel_pl->Write();
         h1_elel_mn->Write();
+        //h1_elel_sym->Write();
+        //h1_elel_asym->Write();
 
 
         h1_elel_top->Reset();
@@ -456,6 +460,8 @@ void write_out_templates(const string &sys_label){
         h1_elel_alpha->Reset();
         h1_elel_pl->Reset();
         h1_elel_mn->Reset();
+        h1_elel_sym->Reset();
+        h1_elel_asym->Reset();
     }
     if(do_fakes){
 
