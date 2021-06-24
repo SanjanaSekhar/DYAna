@@ -29,9 +29,9 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
+int year = 2018;
 const bool write_out = true;
-char *plot_dir = "Misc_plots/ttbar_check/";
+char *plot_dir = "Paper_plots/ttbar_check/";
 char *label = "_before_toprw_";
 bool normalize = false;
 bool do_top_pt_rw =false;

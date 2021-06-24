@@ -14,17 +14,19 @@ void sys_check(){
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
     
-        int year = 2017;
+        int year = 2016;
         bool draw_ratio = true;
         init(year);
         char *plot_dir = "Misc_plots/sys_checks";
-        char *sys = "_pdf19";
+        char *sys = "_pdf56";
         bool do_bkg = false;
         bool do_qcd = false;
         bool do_electrons = false;
         bool do_muons = true;
-        int i = 7;
+        int i = 3;
         setup_all_SFs(year);
+
+        float ratio_range = 0.005;
 
         string sys_up = string(sys) + string("Up");
         string sys_down = string(sys) + string("Down");
@@ -227,8 +229,8 @@ void sys_check(){
                 h1_ratio_mumu_sys_up->Draw("hist");
                 h1_ratio_mumu_sys_down->Draw("hist same");
 
-                h1_ratio_mumu_sys_up->SetMaximum(1.1);
-                h1_ratio_mumu_sys_up->SetMinimum(0.9);
+                h1_ratio_mumu_sys_up->SetMaximum(1 + ratio_range);
+                h1_ratio_mumu_sys_up->SetMinimum(1 - ratio_range);
 
                 h1_ratio_mumu_sys_up->GetYaxis()->SetTitle("Ratio wrt Nom.");
                 h1_ratio_mumu_sys_up->GetXaxis()->SetTitle("Template Bin");
@@ -382,8 +384,8 @@ void sys_check(){
                 h1_ratio_elel_sys_up->Draw("hist");
                 h1_ratio_elel_sys_down->Draw("hist same");
 
-                h1_ratio_elel_sys_up->SetMaximum(1.1);
-                h1_ratio_elel_sys_up->SetMinimum(0.9);
+                h1_ratio_elel_sys_up->SetMaximum(1 + ratio_range);
+                h1_ratio_elel_sys_up->SetMinimum(1 - ratio_range);
 
                 h1_ratio_elel_sys_up->GetYaxis()->SetTitle("Ratio wrt Nom.");
                 h1_ratio_elel_sys_up->GetXaxis()->SetTitle("Template Bin");

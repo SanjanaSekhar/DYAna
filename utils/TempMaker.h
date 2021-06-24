@@ -32,20 +32,18 @@
 #include "bins.h"
 
 
-Float_t bcdef_lumi16 = 3.119 + 4.035 + 4.270 +  2.615 + 5.809;
-Float_t gh_lumi16 =  8.754 + 7.655;
+Float_t bcdef_lumi16 = 5.819 + 2.617 + 4.276 + 4.066 + 3.135;
+Float_t gh_lumi16 =  7.642 + 8.723;
 Float_t mu_lumi16 = bcdef_lumi16 + gh_lumi16;
-Float_t el_lumi16 = 35.9;
+Float_t el_lumi16 = mu_lumi16;
 
-Float_t mu_lumi17 = 42.14;
-Float_t el_era1_lumi = 4.823 + 9.664;
-Float_t el_era2_lumi = 4.252 + 9.278 + 13.540;
-Float_t el_lumi17 = 41.52;
+Float_t mu_lumi17 = 41.48;
+Float_t el_lumi17 = mu_lumi17;
 
-Float_t mu_lumi18_era1 = 9.08;
-Float_t mu_lumi18_era2 = 52.23;
+Float_t mu_lumi18_era1 = 8.95;
+Float_t mu_lumi18_era2 = 50.79;
 Float_t mu_lumi18 = mu_lumi18_era1 + mu_lumi18_era2;
-Float_t el_lumi18 = 59.74;
+Float_t el_lumi18 = mu_lumi18;
 
 float met_cut = 100;
 

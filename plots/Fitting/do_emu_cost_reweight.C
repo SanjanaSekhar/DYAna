@@ -29,8 +29,8 @@
 
 
 
-const int year = 2016;
-char *out_file = "../analyze/SFs/2016/emu_cost_rw.root";
+const int year = 2018;
+char *out_file = "../analyze/SFs/2018/emu_cost_rw.root";
 const bool write_out = true;
 //char *plot_dir = "Misc_plots/emu_cost_reweights_test/";
 char *plot_dir = "Paper_plots/emu_cost_reweights/";

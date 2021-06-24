@@ -33,7 +33,8 @@ void check_template(){
         bool ss = false;
         bool emu_reweight = false;
 
-        float afb = 0.61;
+        //float afb = 0.61;
+        float afb = 0.0;
         float A0 = 0.09;
 
 

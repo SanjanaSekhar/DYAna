@@ -370,17 +370,25 @@ int one_mc_template(TTree *t1, Double_t a0, Double_t afb, TH2F* h_dy,
     double norm = 3./4./(2.+alpha);
 
     TH2F *h_pl = (TH2F *) h_sym.Clone("h_pl");
-    TH2F *h_mn = (TH2F *) h_sym.Clone("h_pl");
+    TH2F *h_mn = (TH2F *) h_sym.Clone("h_mn");
     h_pl->Reset();
     h_mn->Reset();
     make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
 
 
-    
+    h_pl->Print("range"); 
+    h_mn->Print("range"); 
+
 
     h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
+    h_dy->Print("range");
+    h_alpha.Print("range");
+    
+    printf("%.2f %.2f %.2f \n", norm + afb, norm - afb, norm * alpha);
+
     h_alpha.Scale(norm * alpha);
     h_dy->Add(&h_alpha);
+    
 
     return 1;
 }

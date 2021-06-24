@@ -39,13 +39,13 @@ void unzero_bins(TH1 *h){
     }
 }
 
-void binwidth_normalize(TH1 *h){
+void binwidth_normalize(TH1 *h, float base = 1.){
     for (int i=1; i <= h->GetNbinsX(); i++){
         float content = h->GetBinContent(i);
         float error = h->GetBinError(i);
         float width = h->GetBinWidth(i);
-        h->SetBinContent(i, content/width);
-        h->SetBinError(i, error/width);
+        h->SetBinContent(i, base*content/width);
+        h->SetBinError(i, base*error/width);
     }
 }
 

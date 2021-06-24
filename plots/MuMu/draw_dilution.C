@@ -36,10 +36,10 @@
 void draw_dilution(){
     //setTDRStyle();
     gStyle->SetOptStat(0);
-    bool use_xf = false;
+    bool use_xf = true;
 
-    const int nBins_xf = 10;
-    float xf_max = 0.3;
+    float xf_max = 0.6;
+    const int nBins_xf = std::floor(xf_max/0.05);
 
     const int nBins_y = 10;
     Float_t y_bins[] = {0., 1., 1.25, 1.5,  2.4};
@@ -134,7 +134,7 @@ void draw_dilution(){
     leg1->Draw();
     c2->Update();
 
-    Double_t dilu[nBins_y], dilu_error[nBins_y], x_center[nBins_y]; 
+    Double_t dilu[100], dilu_error[100], x_center[100]; 
 
     int nbins;
     if(!use_xf) nbins = nBins_y;
