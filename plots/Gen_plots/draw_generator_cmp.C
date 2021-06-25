@@ -30,29 +30,31 @@
 
 void draw_generator_cmp(){
     gStyle->SetOptStat(0);
-    TFile *f_mad = TFile::Open("Results/DY_gen_level_nov8.root");
+    int year = 2017;
+    TFile *f_mad = TFile::Open("../analyze/output_files/DY17_gen_level_april6.root");
     TTree *t_mad_mu = (TTree *) f_mad->Get("T_gen_mu");
     TTree *t_mad_el = (TTree *) f_mad->Get("T_gen_el");
 
-    TFile *f_pwg = TFile::Open("../generator_stuff/root_files/powheg_m700_april30.root");
+    //TFile *f_pwg = TFile::Open("../generator_stuff/root_files/powheg_m150_april30.root");
+    TFile *f_pwg = TFile::Open("../generator_stuff/root_files/powheg_m150_evts.root");
     TTree *t_pwg = (TTree *)f_pwg->Get("T_lhe");
 
     float pt_low = 0.;
     float pt_high = 10000.;
     float rap_low = -1.;
     float rap_high = 100.;
-    float m_low = 700;
-    float m_high = 14000.;
+    float m_low = 150;
+    float m_high = 200.;
     bool phot_ind = false;
 
     char title[80];
     char plt_title1[80], plt_title2[80], plt_title3[80], plt_title4[80]; 
 
-    sprintf(title, "POWHEG vs. aMC@NLO (%.0f < M < %.0f)", m_low, m_high);
-    sprintf(plt_title1, "pwg_vs_mad_m%.0f_cost_st_cmp.pdf", m_low);
-    sprintf(plt_title2, "pwg_vs_mad_m%.0f_cost_pt_cmp.pdf", m_low);
-    sprintf(plt_title3, "pwg_vs_mad_m%.0f_cost_xf_cmp.pdf", m_low);
-    sprintf(plt_title4, "pwg_vs_mad_m%.0f_cost_r_cmp.pdf", m_low);
+    sprintf(title, "POWHEG vs. aMC@NLO (2017) (%.0f < M < %.0f)", m_low, m_high);
+    sprintf(plt_title1, "pwg_vs_mad%i_m%.0f_cost_st_cmp.pdf", year - 2000, m_low);
+    sprintf(plt_title2, "pwg_vs_mad%i_m%.0f_pt_cmp.pdf", year - 2000, m_low);
+    sprintf(plt_title3, "pwg_vs_mad%i_m%.0f_xf_cmp.pdf", year - 2000, m_low);
+    sprintf(plt_title4, "pwg_vs_mad%i_m%.0f_cost_r_cmp.pdf", year - 2000, m_low);
 
     TH1F *h_mad_m = new TH1F("h_mad_m", "", 30, 150,1000);
     TH1F *h_pwg_m = new TH1F("h_pwg_m", "", 30, 150,1000);

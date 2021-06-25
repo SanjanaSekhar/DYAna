@@ -1,4 +1,3 @@
-
 #define STAND_ALONE
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +32,7 @@ const int type = FLAG_ELECTRONS;
 const int year = 2018;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
+//char *plot_label = "Electrons: With Prefire Correction";
 char *plot_label = "";
 
 
@@ -64,19 +64,18 @@ void draw_cmp(){
     TH1F *QCD_xf = new TH1F("QCD_xf", "dy signal", n_xf_bins1,  xf_bins1);
     TH1F *gg_xf = new TH1F("gg_xf", "dy signal", n_xf_bins1,  xf_bins1);
 
-    int n_m_bins = 61;
-    float m_bin_size = 30.;
-	float m_bin_low = 170.;
-	float m_bin_high = m_bin_low + n_m_bins*m_bin_size;
-    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *dy_m = new TH1F("dy_m", "dy Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *dy_tautau_m = new TH1F("dy_tautau_m", "dy no signal (qq, gluglu qbarqbar)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, m_bin_low, m_bin_high);
+    int n_m_bins = 17;
+    float mbin_base = 10.;
+    Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 450., 500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
+    TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, mbins1);
+    TH1F *dy_m = new TH1F("dy_m", "dy Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
+    TH1F *dy_tautau_m = new TH1F("dy_tautau_m", "dy no signal (qq, gluglu qbarqbar)", n_m_bins, mbins1);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "TTBar Background", n_m_bins, mbins1);
+    TH1F *diboson_m = new TH1F("diboson_m", "DiBoson (WW, WZ, ZZ)", n_m_bins, mbins1);
+    TH1F *QCD_m = new TH1F("QCD_m", "QCD", n_m_bins, mbins1);
+    TH1F *gg_m = new TH1F("gg_m", "QCD", n_m_bins, mbins1);
+    TH1F *WJets_m = new TH1F("WJets_m", "WJets", n_m_bins, mbins1);
+    TH1F *wt_m = new TH1F("wt_m", "tw + #bar{t}w", n_m_bins, mbins1);
 
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
@@ -245,6 +244,14 @@ void draw_cmp(){
     setHistError(gg_phi, gam_sys_unc);
 
 
+    binwidth_normalize(data_m, mbin_base);
+    binwidth_normalize(diboson_m, mbin_base);
+    binwidth_normalize(QCD_m, mbin_base);
+    binwidth_normalize(wt_m, mbin_base);
+    binwidth_normalize(ttbar_m, mbin_base);
+    binwidth_normalize(gg_m, mbin_base);
+    binwidth_normalize(dy_tautau_m, mbin_base);
+    binwidth_normalize(dy_m, mbin_base);
 
     
 
@@ -308,8 +315,8 @@ void draw_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    float x_size = 0.3;
-    float y_size = 0.3;
+    float x_size = 0.25;
+    float y_size = 0.35;
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(dy_m, "DY Signal", "f");
@@ -340,20 +347,26 @@ void draw_cmp(){
     bool draw_sys_uncs = true;
     float ratio_range = 0.5;
 
+    float x_start_m = 0.6;
+    float y_start_m = 0.5;
+    leg1->SetX1(x_start_m);
+    leg1->SetX2(x_start_m+x_size);
+    leg1->SetY1(y_start_m);
+    leg1->SetY2(y_start_m+y_size);
 
-    sprintf(y_ax_label, "Events/%.0f GeV", m_bin_size);
+    sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sElEl%i_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
 
     
-    float x_start = 0.45;
-    float y_start = 0.15;
-    leg2->SetX1(x_start);
-    leg2->SetX2(x_start+x_size);
-    leg2->SetY1(y_start);
-    leg2->SetY2(y_start+y_size);
+    float x_start_c = 0.45;
+    float y_start_c = 0.14;
+    leg2->SetX1(x_start_c);
+    leg2->SetX2(x_start_c+x_size);
+    leg2->SetY1(y_start_c);
+    leg2->SetY2(y_start_c+y_size);
 
     
     logy = false;

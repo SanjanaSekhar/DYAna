@@ -29,10 +29,11 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2017;
-const bool write_out = false;
+int year = 2018;
+const bool write_out = true;
 char *plot_dir = "Paper_plots/EMu_plots/";
-char *plot_label = "e#mu Control Region";
+//char *plot_label = "e#mu Control Region";
+char *plot_label = "";
 
 
 
@@ -47,17 +48,16 @@ void draw_cmp(){
     init_emu_indv_bkgs(year);
     setup_all_SFs(year);
 
-    float m_bin_size = 30.;
-	float m_bin_low = 170.;
-	int n_m_bins = 30;
-	float m_bin_high = m_bin_low + n_m_bins*m_bin_size;
+    int n_m_bins = 8;
+    float mbin_base = 10.;
+    Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 500., 700., 1000.};
 
-    TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *wt_m = new TH1F("wt_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *dy_m = new TH1F("dy_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
-    TH1F *qcd_m = new TH1F("qcd_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, m_bin_low, m_bin_high);
+    TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
+    TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
+    TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
+    TH1F *wt_m = new TH1F("wt_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
+    TH1F *dy_m = new TH1F("dy_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
+    TH1F *QCD_m = new TH1F("QCD_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
 
     float pt_bin_size  = 10.;
     TH1F *data_pt = new TH1F("data_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
@@ -65,7 +65,7 @@ void draw_cmp(){
     TH1F *diboson_pt = new TH1F("diboson_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *wt_pt = new TH1F("wt_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
     TH1F *dy_pt = new TH1F("dy_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
-    TH1F *qcd_pt = new TH1F("qcd_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "MC Signal (qqbar, qglu, qbarglu)", 30, 0, 300);
 
     int n_cost_bins = 8;
     float cost_bin_size = 2./8;
@@ -74,7 +74,7 @@ void draw_cmp(){
     TH1F *diboson_cost = new TH1F("diboson_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *wt_cost = new TH1F("wt_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
     TH1F *dy_cost = new TH1F("dy_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
-    TH1F *qcd_cost = new TH1F("qcd_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
+    TH1F *QCD_cost = new TH1F("QCD_cost", "MC Signal (qqbar, qglu, qbarglu)", n_cost_bins, -1, 1);
 
 
     int n_rap_bins = 20;
@@ -86,7 +86,7 @@ void draw_cmp(){
     TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, rap_bin_low,rap_bin_high);
     TH1F *wt_rap = new TH1F("wt_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
     TH1F *dy_rap = new TH1F("dy_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
-    TH1F *qcd_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
+    TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, rap_bin_low,rap_bin_high);
 
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
@@ -106,10 +106,10 @@ void draw_cmp(){
 
     bool fakes_reweight = true;
     bool fakes_sys_errors = false;
-    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, qcd_m,  qcd_cost, qcd_pt, qcd_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight, fakes_sys_errors);
+    Fakerate_est_emu(t_emu_WJets, t_emu_QCD, t_emu_WJets_contam, t_emu_QCD_contam, QCD_m,  QCD_cost, QCD_pt, QCD_rap, FLAG_MUONS, year, m_low, m_high, fakes_reweight, fakes_sys_errors);
 
 
-    symmetrize1d(qcd_cost);
+    symmetrize1d(QCD_cost);
     symmetrize1d(ttbar_cost);
     //symmetrize1d(diboson_cost);
     //symmetrize1d(wt_cost);
@@ -117,7 +117,7 @@ void draw_cmp(){
 
 
     Double_t data_count = data_m->Integral();
-    Double_t fake_count = qcd_m->Integral();
+    Double_t fake_count = QCD_m->Integral();
     Double_t mc_count = ttbar_m->Integral() + diboson_m->Integral() + wt_m->Integral() + dy_m->Integral();
 
 
@@ -126,6 +126,9 @@ void draw_cmp(){
 
     printf("Data count %.0f +/- %.0f \n", data_count, sqrt(data_count));
     printf("MC count %.0f +/- %0.f \n", mc_count, mc_unc);
+    printf("TTbar count %.0f  (frac %.2f) \n", ttbar_m->Integral(), ttbar_m->Integral()/(mc_count + fake_count));
+    printf("WT count %.0f  (frac %.2f) \n", wt_m->Integral(), wt_m->Integral()/(mc_count + fake_count));
+    printf("Diboson count %.0f (frac %.2f ) \n", diboson_m->Integral(), diboson_m->Integral()/(mc_count + fake_count));
     printf("Fake count %.0f +/- %.0f (frac %.2f) \n", fake_count, fake_unc, fake_count / (mc_count + fake_count));
     Double_t ratio = data_count / (mc_count + fake_count);
     Double_t unc = sqrt( (data_count/(mc_count + fake_count)/(mc_count + fake_count)) +  
@@ -133,7 +136,7 @@ void draw_cmp(){
     printf("Ratio is %1.3f +/- %1.3f \n", ratio, unc);
 
     TH1F *total_mc = (TH1F *) diboson_cost->Clone("total_mc");
-    total_mc->Add(qcd_cost);
+    total_mc->Add(QCD_cost);
     total_mc->Add(dy_cost);
     total_mc->Add(wt_cost);
     total_mc->Add(ttbar_cost);
@@ -169,10 +172,10 @@ void draw_cmp(){
     printf("Diboson AFB %.3f +/- %.3f \n", diboson_AFB, diboson_dAFB);
 
 
-    setHistError(qcd_m, qcd_sys_unc);
-    setHistError(qcd_cost, qcd_sys_unc);
-    setHistError(qcd_pt, qcd_sys_unc);
-    setHistError(qcd_rap, qcd_sys_unc);
+    setHistError(QCD_m, qcd_sys_unc);
+    setHistError(QCD_cost, qcd_sys_unc);
+    setHistError(QCD_pt, qcd_sys_unc);
+    setHistError(QCD_rap, qcd_sys_unc);
 
     setHistError(diboson_m, diboson_sys_unc);
     setHistError(diboson_cost, diboson_sys_unc);
@@ -199,36 +202,45 @@ void draw_cmp(){
     ttbar_m->SetFillColor(ttbar_c);
     wt_m->SetFillColor(wt_c); 
     diboson_m->SetFillColor(diboson_c);
-    qcd_m->SetFillColor(qcd_c);
+    QCD_m->SetFillColor(qcd_c);
 
     dy_pt->SetFillColor(DY_c);
     ttbar_pt->SetFillColor(ttbar_c);
     wt_pt->SetFillColor(wt_c); 
     diboson_pt->SetFillColor(diboson_c);
-    qcd_pt->SetFillColor(qcd_c);
+    QCD_pt->SetFillColor(qcd_c);
 
     dy_cost->SetFillColor(DY_c);
     ttbar_cost->SetFillColor(ttbar_c);
     wt_cost->SetFillColor(wt_c); 
     diboson_cost->SetFillColor(diboson_c);
-    qcd_cost->SetFillColor(qcd_c);
+    QCD_cost->SetFillColor(qcd_c);
 
     dy_rap->SetFillColor(DY_c);
     ttbar_rap->SetFillColor(ttbar_c);
     wt_rap->SetFillColor(wt_c); 
     diboson_rap->SetFillColor(diboson_c);
-    qcd_rap->SetFillColor(qcd_c);
+    QCD_rap->SetFillColor(qcd_c);
+
+
+    binwidth_normalize(data_m, mbin_base);
+    binwidth_normalize(diboson_m, mbin_base);
+    binwidth_normalize(QCD_m, mbin_base);
+    binwidth_normalize(wt_m, mbin_base);
+    binwidth_normalize(ttbar_m, mbin_base);
+    binwidth_normalize(dy_m, mbin_base);
+
 
     THStack *m_stack = new THStack("m_stack", "EMu Mass Distribution: Data vs MC ; m_{e#mu} (GeV)");
     m_stack->Add(diboson_m);
-    m_stack->Add(qcd_m);
+    m_stack->Add(QCD_m);
     m_stack->Add(dy_m);
     m_stack->Add(wt_m);
     m_stack->Add(ttbar_m);
 
     THStack *pt_stack = new THStack("pt_stack", "EMu Mass Distribution: Data vs MC ; pt_{e#mu} (GeV)");
     pt_stack->Add(diboson_pt);
-    pt_stack->Add(qcd_pt);
+    pt_stack->Add(QCD_pt);
     pt_stack->Add(dy_pt);
     pt_stack->Add(wt_pt);
     pt_stack->Add(ttbar_pt);
@@ -236,7 +248,7 @@ void draw_cmp(){
 
     THStack *cost_stack = new THStack("cost_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     cost_stack->Add(diboson_cost);
-    cost_stack->Add(qcd_cost);
+    cost_stack->Add(QCD_cost);
     cost_stack->Add(dy_cost);
     cost_stack->Add(wt_cost);
     cost_stack->Add(ttbar_cost);
@@ -247,18 +259,21 @@ void draw_cmp(){
 
     THStack *rap_stack = new THStack("rap_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     rap_stack->Add(diboson_rap);
-    rap_stack->Add(qcd_rap);
+    rap_stack->Add(QCD_rap);
     rap_stack->Add(dy_rap);
     rap_stack->Add(wt_rap);
     rap_stack->Add(ttbar_rap);
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.4,0.3);
+    float x_size = 0.25;
+    float y_size = 0.35;
+    TLegend *leg1 = new TLegend(x_size, y_size);
+    leg1->SetHeader("e#mu Control Region");
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
     leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");
     leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
-    leg1->AddEntry(qcd_m, "QCD and W+Jets", "f");
+    leg1->AddEntry(QCD_m, "QCD and W+Jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
 
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
@@ -275,12 +290,30 @@ void draw_cmp(){
     bool draw_sys_uncs = true;
     float ratio_range = 0.3;
 
+
+    float x_start_m = 0.6;
+    float y_start_m = 0.55;
+    leg1->SetX1(x_start_m);
+    leg1->SetX2(x_start_m+x_size);
+    leg1->SetY1(y_start_m);
+    leg1->SetY2(y_start_m+y_size);
+
     sprintf(plt_file, "%sEMu%i_m_cmp.pdf", plot_dir, year % 2000);
 
-    sprintf(y_ax_label, "Events/%.0f GeV", m_bin_size);
+    sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, -1, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     if(write_out) c_m->Print(plt_file);
+
+
+    float x_start_c = 0.4;
+    float y_start_c = 0.5;
+    leg2->SetX1(x_start_c);
+    leg2->SetX2(x_start_c+x_size);
+    leg2->SetY1(y_start_c);
+    leg2->SetY2(y_start_c+y_size);
+
+
 
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
