@@ -168,8 +168,8 @@ void make_limit_plot(){
     one_sig->Draw("3SAME");
     exp->Draw("LSAME");
 
+    TGraph *meas = new TGraph(i, masses, kl_limit);    
     if(inc_meas_limit){
-        TGraph *meas = new TGraph(i, masses, kl_limit);    
         meas->SetLineColor(1);
         meas->SetLineStyle(1);
         meas->SetLineWidth(4);
@@ -184,7 +184,22 @@ void make_limit_plot(){
     extraText = "Preliminary";
     int iPeriod = -1; 
     CMS_lumi( c1, iPeriod, 0 );
+
+
     c1->Print("limit.png");
     c1->Print("limit.pdf");
+
+    TFile *f_out = TFile::Open("limit.root", "RECREATE");
+    f_out->cd();
+    exp->SetName("exp_limit");
+    two_sig->SetName("sigma_band");
+    one_sig->SetName("one_band");
+    meas->SetName("obs_limit");
+    two_sig->Write();
+    one_sig->Write();
+    exp->Write();
+    meas->Write();
+    f_out->Write();
+    f_out->Close();
 
 }
