@@ -6,8 +6,8 @@ from optparse import OptionParser
 from optparse import OptionGroup
 
 years = [2016,2017,2018]
-prefixes = ["ElEl", "MuMu"]
-#prefixes = ["EMu"]
+#prefixes = ["MuMu"]
+prefixes = ["EMu"]
 #years = [2018]
 #prefixes = ["ElEl"]
 #labels = ["wt", "dy", "ttbar", "diboson"]
@@ -17,9 +17,10 @@ prefixes = ["ElEl", "MuMu"]
 #labels = ["dy_mlow", "data_mlow"]
 #labels = ["dy"]
 #labels = ["diboson", "phot_ind"]
-labels = ["phot_ind"]
+#labels = ["phot_ind"]
+labels = ["data"]
 #labels = ["data"]
-ending = "_may7"
+ending = "_June22"
 redo_fakes = False
 
 for year in years:

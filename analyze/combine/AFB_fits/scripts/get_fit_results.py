@@ -1,4 +1,5 @@
 from utils import *
+import numpy as np
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
 (options, args) = parser.parse_args()
@@ -29,14 +30,15 @@ n_bins = 8
 chan = options.chan + "_"
 fit_dir = 'fit_results/'
 ending = 'fit_results_mbin%i.txt'
-AFB_val = [0]*n_bins
-A0_val = [0]*n_bins
-AFB_err_stat = [0]*n_bins
-AFB_err_sys = [0]*n_bins
-AFB_err_tot = [0]*n_bins
-A0_err_stat = [0]*n_bins
-A0_err_sys = [0]*n_bins
-A0_err_tot = [0]*n_bins
+output_file = fit_dir + options.chan + "_results"
+AFB_val = np.array([0.]*n_bins)
+A0_val = np.array([0.]*n_bins)
+AFB_err_stat = np.array([0.]*n_bins)
+AFB_err_sys = np.array([0.]*n_bins)
+AFB_err_tot = np.array([0.]*n_bins)
+A0_err_stat = np.array([0.]*n_bins)
+A0_err_sys = np.array([0.]*n_bins)
+A0_err_tot = np.array([0.]*n_bins)
 
 for i in range(1,n_bins):
 
@@ -63,3 +65,6 @@ print("A0:")
 for i in range(1,n_bins):
     #print("%.3f $\\pm$ %.3f (stat) $\\pm$ %.3f (syst)" %(A0_val[i], A0_err_stat[i], A0_err_sys[i]))
     print("0.XXX $\\pm$ %.3f (stat) $\\pm$ %.3f (syst)" %(A0_err_stat[i], A0_err_sys[i]))
+
+np.savez(output_file, AFB_val=AFB_val, AFB_err_stat=AFB_err_stat, AFB_err_sys=AFB_err_sys, A0_val = A0_val, A0_err_stat = A0_err_stat, A0_err_sys = A0_err_sys)
+
