@@ -1322,12 +1322,14 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
         }
         else if((abs(inc_id1) <= 6) && (abs(inc_id2) <= 6) && (inc_id1 * inc_id2 >0)){ //2 quarks
             if(PRINT) sprintf(out_buff + strlen(out_buff),"QQ Event \n");
+            quark_dir_eta = gen_Eta[inc_1];
             print_out = true;
             signal_event = false;
             nQQ++;
             if(PRINT) sprintf(out_buff + strlen(out_buff), "QQ event \n");
         }
         else if((inc_id1 == 21) && (inc_id2 == 21)){ //gluglu
+            quark_dir_eta = gen_Eta[inc_1];
             signal_event = false;
             nGluGlu++;
             print_out = true;

@@ -31,7 +31,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2016;
+const int year = 2018;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
@@ -318,12 +318,13 @@ void draw_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    float x_size = 0.25;
-    float y_size = 0.35;
+    float x_size = 0.4;
+    float y_size = 0.3;
 
 
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
     TLegend *leg1 = new TLegend(x_size, y_size);
+    leg1->SetNColumns(2);
     leg1->SetHeader("Dimuon Signal Region");
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(dy_m, "DY Signal", "f");
@@ -360,8 +361,8 @@ void draw_cmp(){
 
 
 
-    float x_start_m = 0.6;
-    float y_start_m = 0.5;
+    float x_start_m = 0.5;
+    float y_start_m = 0.6;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
@@ -375,7 +376,7 @@ void draw_cmp(){
     if(write_out) c_m->Print(plt_file);
 
     
-    float x_start_c = 0.45;
+    float x_start_c = 0.57 - x_size/2;
     float y_start_c = 0.14;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
@@ -385,7 +386,7 @@ void draw_cmp(){
     
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta)",y_ax_label, plot_label,  -1., logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)",y_ax_label, plot_label,  -1., logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sMuMu%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
@@ -406,6 +407,12 @@ void draw_cmp(){
     CMS_lumi(p_phi, year, 33);
     sprintf(plt_file, "%sMuMu%i_phi_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_phi->Print(plt_file);
+
+    leg6->SetX1(x_start_c);
+    leg6->SetX2(x_start_c+x_size);
+    leg6->SetY1(y_start_c);
+    leg6->SetY2(y_start_c+y_size);
+
 
     sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dimuon Y",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);

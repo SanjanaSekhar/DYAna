@@ -11,10 +11,10 @@
 
 
 
-float dy_sys_unc = 0.1;
+float dy_sys_unc = 0.12;
 float qcd_sys_unc = 0.55;
 float diboson_sys_unc = 0.15;
-float top_sys_unc = 0.11;
+float top_sys_unc = 0.13;
 float gam_sys_unc = 0.35;
 
 float computeChi2(TH1 *h){
@@ -305,7 +305,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_data->SetMarkerColor(1);
     h_data->DrawCopy("P E0X0 same");
 
-    int axis_title_size = 25;
+    int axis_title_size = 35;
     int axis_label_size = 20;
 
     leg->Draw();

@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2018;
+int year = 2016;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/EMu_plots/";
 //char *plot_label = "e#mu Control Region";
@@ -265,9 +265,10 @@ void draw_cmp(){
     rap_stack->Add(ttbar_rap);
 
     gStyle->SetLegendBorderSize(0);
-    float x_size = 0.25;
-    float y_size = 0.35;
+    float x_size = 0.4;
+    float y_size = 0.3;
     TLegend *leg1 = new TLegend(x_size, y_size);
+    leg1->SetNColumns(2);
     leg1->SetHeader("e#mu Control Region");
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
@@ -291,8 +292,8 @@ void draw_cmp(){
     float ratio_range = 0.3;
 
 
-    float x_start_m = 0.6;
-    float y_start_m = 0.55;
+    float x_start_m = 0.5;
+    float y_start_m = 0.6;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
