@@ -138,7 +138,9 @@ def do_lumi(card, year):
 
 
 
-def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1, symMCStats = True):
+def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1, symMCStats = True, sigma2 = -1., fullCorr = False):
+
+    
     print("Making workspace %s mbin %i" % (workspace, mbin))
     template_card="card_templates/combined_fit_template.txt"
     if(no_sys): template_card = "card_templates/combined_fit_template_nosys.txt"
@@ -148,6 +150,12 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
 
     if(year > 0): years = [year % 2000]
     else: years = [16,17,18]
+
+    if(sigma2 < 0):
+        if(mbin >= 5):
+            sigma2 = 0.6
+        else:
+            sigma2 = 0.1
 
     for yr in years:
         if(yr == 16):
@@ -170,8 +178,9 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
 
-    if(symMCStats): extra_arg = "--symMCStats"
+    if(symMCStats): extra_arg = "--symMCStats --sigma %.3f" % (sigma2**0.5)
     else: extra_arg = ""
+    if(fullCorr): extra_arg += " --fullCorr"
     print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks %s" % (comb_card, mbin, workspace, extra_arg))
 
 def make_gen_level_workspace(workspace, mbin,  year = -1):
