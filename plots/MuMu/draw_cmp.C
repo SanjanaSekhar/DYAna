@@ -31,7 +31,7 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
@@ -386,7 +386,7 @@ void draw_cmp(){
     
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)",y_ax_label, plot_label,  -1., logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label,  -1., logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sMuMu%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
@@ -415,7 +415,7 @@ void draw_cmp(){
 
 
     sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dimuon Y",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dimuon rapidity",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sMuMu%i_rap_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_rap->Print(plt_file);
