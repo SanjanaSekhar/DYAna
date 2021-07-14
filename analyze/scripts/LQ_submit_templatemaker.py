@@ -10,12 +10,12 @@ def print_and_do(s):
 masses=[1000.]
 #,1500.,2000.,2500.,3000.,3500.,4000.,4500.,5000.,5500.,6000.]
 years = [2016, 2017,2018]
-types = [0, 1]
-labels = ["pdf", "sys"]
-#types = [1]
-#labels = ["sys"]
-njobs = 25
-ending = "061721"
+#types = [0, 1]
+#labels = ["pdf", "sys"]
+types = [1]
+labels = ["sys"]
+njobs = 1
+ending = "071221_testfakes"
 for mass in masses:
     for year in years:
         for j,ttype in enumerate(types):
