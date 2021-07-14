@@ -107,11 +107,11 @@ void make_qcd_templates(int year, const string &sys_label){
     char title[100];
     //titles taken care of in conversion
 
-    sprintf(title, "ee%i_qcd", year %2000);
+    sprintf(title, "ee%i_qcd%s", year %2000, sys_label.c_str());
     TH3F* h_elel_qcd = new TH3F(title, "Fakes template",
              n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_elel_qcd->SetDirectory(0);
-    sprintf(title, "mumu%i_qcd", year %2000);
+    sprintf(title, "mumu%i_qcd%s", year %2000, sys_label.c_str());
     TH3F* h_mumu_qcd = new TH3F(title, "Fakes template",
              n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
     h_mumu_qcd->SetDirectory(0);
