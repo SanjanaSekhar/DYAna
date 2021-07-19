@@ -24,8 +24,8 @@ for y in [-1]:
     extra_params=""
     options.chan="ee"
     options.q="d"
-    options.no_sys=False
-    options.fake_data=True
+    options.no_sys=True
+    options.fake_data=False
     options.year = y
     '''
     if(options.chan == "ee"):
@@ -60,7 +60,8 @@ for y in [-1]:
     print("\n fit_name = ", fit_name)
 
 
-    for mLQ in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
+    for mLQ in [1000]:
+    #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
     #mLQ = 1000.
     #for mbin in range(bin_start, bin_stop):
     #print(" \n \n Starting fit for bin %i \n\n" % mbin)
