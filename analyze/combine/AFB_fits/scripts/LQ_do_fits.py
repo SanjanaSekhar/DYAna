@@ -51,7 +51,7 @@ for y in [-1]:
     fit_name = options.chan
     if(options.no_sys): 
         fit_name +="_nosys"
-        extra_params += " --freezeParameters allConstrainedNuisances"
+        #extra_params += " --freezeParameters allConstrainedNuisances"
     if(options.noSymMCStats):
         fit_name += "_noSymMC"
     if(options.fake_data): fit_name +="_fake_data"
