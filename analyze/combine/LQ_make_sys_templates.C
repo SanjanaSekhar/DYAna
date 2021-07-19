@@ -43,15 +43,15 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
 
       
       vector<string>  sys_labels_uncorr = 
-        {// "_BTAGCOR", "_BTAGUNCOR", "_BTAGLIGHT",  "_METJER", "_METJEC", "_METHEM", "_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", 
-          //  "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  "_muIDSYS", "_muISOSYS",  
-          //  "_elHLTBARPTHIGH", "_elIDBARPTHIGH", "_elRECOBARPTHIGH", "_elHLTENDPTHIGH", "_elIDENDPTHIGH", "_elRECOENDPTHIGH",
-         //   "_elHLTBARPTLOW", "_elIDBARPTLOW", "_elRECOBARPTLOW", "_elHLTENDPTLOW", "_elIDENDPTLOW", "_elRECOENDPTLOW",
-         //   "_ptrw1b", "_ptrw2b", "_ptrw3b", "_ptrw4b", "_ptrw5b", "_ptrw6b", "_ptrw7b",
-         //   "_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b",
+        { "_BTAGCOR", "_BTAGUNCOR", "_BTAGLIGHT",  "_METJER", "_METJEC", "_METHEM", "_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", 
+            "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  "_muIDSYS", "_muISOSYS",  
+            "_elHLTBARPTHIGH", "_elIDBARPTHIGH", "_elRECOBARPTHIGH", "_elHLTENDPTHIGH", "_elIDENDPTHIGH", "_elRECOENDPTHIGH",
+            "_elHLTBARPTLOW", "_elIDBARPTLOW", "_elRECOBARPTLOW", "_elHLTENDPTLOW", "_elIDENDPTLOW", "_elRECOENDPTLOW",
+            "_ptrw1b", "_ptrw2b", "_ptrw3b", "_ptrw4b", "_ptrw5b", "_ptrw6b", "_ptrw7b",
+            "_emucostrw1b", "_emucostrw2b", "_emucostrw3b", "_emucostrw4b",
             "_elfakesrw1b", "_elfakesrw2b", "_elfakesrw3b", "_elfakesrw4b",
             "_mufakesrw1b", "_mufakesrw2b", "_mufakesrw3b", "_mufakesrw4b",
-         //   "_RENORM", "_FAC", "_REFAC","_alphaS",
+            "_RENORM", "_FAC", "_REFAC","_alphaS",
         };
 
       string yr_string; 
@@ -109,7 +109,7 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
                 */
 
                 make_mc_templates(year, m_LQ,  *iter);
-                 make_qcd_templates(year,  *iter);
+                make_qcd_templates(year,  *iter);
                 convert_mc_templates(year, *iter);
 
                 pdf_fout->cd();

@@ -661,7 +661,7 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
 
-            bool pass = tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass = (tm.m >= lq_m_bins[0]) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
             bool opp_sign = false;
             if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);

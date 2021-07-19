@@ -33,7 +33,7 @@ void LQ_merge_workspaces(){
         int mLQ = 1000;
         for(int year=16;year<=18;year++){
 
-            char *ending="071221";
+            char *ending="071921";
             char f1_s[180];
             sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ);
             char fout_s[180];
