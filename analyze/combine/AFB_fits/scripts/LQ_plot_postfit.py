@@ -428,9 +428,9 @@ if(options.year < 0):
 else:
     years = [options.year]
 if options.q == "u":
-    h_names = ["gam", "LQint_u", "LQpure_u" ,"top", "db", "tautau", "dy"]
+    h_names = ["gam", "LQint_u", "LQpure_u" ,"qcd", "top", "db", "tautau", "dy"]
 elif options.q == "d":
-    h_names = ["gam", "LQint_d", "LQpure_d" ,"top", "db", "tautau", "dy"]
+    h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
 #h_ss_names = ["bk", "dy", "qcd"]
 
 
