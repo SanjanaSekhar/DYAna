@@ -1,0 +1,354 @@
+TFile *_file0 = TFile::Open("combine/templates/templates17.root")
+       ^
+root [6] gDirectory->cd("w5")
+(bool) true
+root [7] ee17_qcd->Print("range")
+TH1.Print Name  = ee17_qcd, Entries= 32, Total sum= 105.286
+ fSumw[1]=27.6431, x=0.5, error=11.4284
+ fSumw[2]=1.6189, x=1.5, error=0.801313
+ fSumw[3]=0.376991, x=2.5, error=0.186601
+ fSumw[4]=1.24993, x=3.5, error=0.618683
+ fSumw[5]=1.24993, x=4.5, error=0.618683
+ fSumw[6]=0.376991, x=5.5, error=0.186601
+ fSumw[7]=1.6189, x=6.5, error=0.801313
+ fSumw[8]=27.6431, x=7.5, error=11.4284
+ fSumw[9]=10.65, x=8.5, error=4.62371
+ fSumw[10]=0.396424, x=9.5, error=0.19622
+ fSumw[11]=2.44913, x=10.5, error=1.21226
+ fSumw[12]=2.0851, x=11.5, error=0.988085
+ fSumw[13]=2.0851, x=12.5, error=0.988085
+ fSumw[14]=2.44913, x=13.5, error=1.21226
+ fSumw[15]=0.396424, x=14.5, error=0.19622
+ fSumw[16]=10.65, x=15.5, error=4.62371
+ fSumw[17]=2.51672, x=16.5, error=1.00233
+ fSumw[18]=0.478753, x=17.5, error=0.236971
+ fSumw[19]=1.37792, x=18.5, error=0.682036
+ fSumw[20]=1.37792, x=19.5, error=0.682036
+ fSumw[21]=0.478753, x=20.5, error=0.236971
+ fSumw[22]=2.51672, x=21.5, error=1.00233
+ fSumw[23]=0.503805, x=22.5, error=0.24937
+ fSumw[24]=1.09732, x=23.5, error=0.543144
+ fSumw[25]=0.198911, x=24.5, error=0.0984558
+ fSumw[26]=0.198911, x=25.5, error=0.0984558
+ fSumw[27]=1.09732, x=26.5, error=0.543144
+ fSumw[28]=0.503805, x=27.5, error=0.24937
+root [8] ee17_qcd_elfakesrw3bDown->Print("range")
+input_line_56:2:3: error: use of undeclared identifier 'ee17_qcd_elfakesrw3bDown'
+ (ee17_qcd_elfakesrw3bDown->Print("range"))
+  ^
+Error in <HandleInterpreterException>: Error evaluating expression (ee17_qcd_elfakesrw3bDown->Print("range")).
+Execution of your code was aborted.
+root [9] ee17_qcd_elfakesrw3b17Down->Print("range")
+TH1.Print Name  = ee17_qcd_elfakesrw3b17Down, Entries= 32, Total sum= 102.37
+ fSumw[1]=27.6431, x=0.5, error=11.4284
+ fSumw[2]=1.6189, x=1.5, error=0.801313
+ fSumw[3]=0.252123, x=2.5, error=0.124795
+ fSumw[4]=1.24993, x=3.5, error=0.618683
+ fSumw[5]=1.24993, x=4.5, error=0.618683
+ fSumw[6]=0.252123, x=5.5, error=0.124795
+ fSumw[7]=1.6189, x=6.5, error=0.801313
+ fSumw[8]=27.6431, x=7.5, error=11.4284
+ fSumw[9]=10.65, x=8.5, error=4.62371
+ fSumw[10]=0.396424, x=9.5, error=0.19622
+ fSumw[11]=1.63792, x=10.5, error=0.81073
+ fSumw[12]=2.0851, x=11.5, error=0.988085
+ fSumw[13]=2.0851, x=12.5, error=0.988085
+ fSumw[14]=1.63792, x=13.5, error=0.81073
+ fSumw[15]=0.396424, x=14.5, error=0.19622
+ fSumw[16]=10.65, x=15.5, error=4.62371
+ fSumw[17]=2.51672, x=16.5, error=1.00233
+ fSumw[18]=0.320179, x=17.5, error=0.158481
+ fSumw[19]=1.37792, x=18.5, error=0.682036
+ fSumw[20]=1.37792, x=19.5, error=0.682036
+ fSumw[21]=0.320179, x=20.5, error=0.158481
+ fSumw[22]=2.51672, x=21.5, error=1.00233
+ fSumw[23]=0.503805, x=22.5, error=0.24937
+ fSumw[24]=0.73386, x=23.5, error=0.363242
+ fSumw[25]=0.198911, x=24.5, error=0.0984558
+ fSumw[26]=0.198911, x=25.5, error=0.0984558
+ fSumw[27]=0.73386, x=26.5, error=0.363242
+ fSumw[28]=0.503805, x=27.5, error=0.24937
+root [10] ee17_qcd_elfakesrw3b17Up->Print("range")
+TH1.Print Name  = ee17_qcd_elfakesrw3b17Up, Entries= 32, Total sum= 108.202
+ fSumw[1]=27.6431, x=0.5, error=11.4284
+ fSumw[2]=1.6189, x=1.5, error=0.801313
+ fSumw[3]=0.501859, x=2.5, error=0.248408
+ fSumw[4]=1.24993, x=3.5, error=0.618683
+ fSumw[5]=1.24993, x=4.5, error=0.618683
+ fSumw[6]=0.501859, x=5.5, error=0.248408
+ fSumw[7]=1.6189, x=6.5, error=0.801313
+ fSumw[8]=27.6431, x=7.5, error=11.4284
+ fSumw[9]=10.65, x=8.5, error=4.62371
+ fSumw[10]=0.396424, x=9.5, error=0.19622
+ fSumw[11]=3.26033, x=10.5, error=1.61378
+ fSumw[12]=2.0851, x=11.5, error=0.988085
+ fSumw[13]=2.0851, x=12.5, error=0.988085
+ fSumw[14]=3.26033, x=13.5, error=1.61378
+ fSumw[15]=0.396424, x=14.5, error=0.19622
+ fSumw[16]=10.65, x=15.5, error=4.62371
+ fSumw[17]=2.51672, x=16.5, error=1.00233
+ fSumw[18]=0.637327, x=17.5, error=0.315461
+ fSumw[19]=1.37792, x=18.5, error=0.682036
+ fSumw[20]=1.37792, x=19.5, error=0.682036
+ fSumw[21]=0.637327, x=20.5, error=0.315461
+ fSumw[22]=2.51672, x=21.5, error=1.00233
+ fSumw[23]=0.503805, x=22.5, error=0.24937
+ fSumw[24]=1.46077, x=23.5, error=0.723045
+ fSumw[25]=0.198911, x=24.5, error=0.0984558
+ fSumw[26]=0.198911, x=25.5, error=0.0984558
+ fSumw[27]=1.46077, x=26.5, error=0.723045
+ fSumw[28]=0.503805, x=27.5, error=0.24937
+root [11] .q
+[ssekhar@cmslpc139 analyze]$ root -l combine/mtemps/LQm1000_merge_templates17_071221.root
+root [0]
+Attaching file combine/mtemps/LQm1000_merge_templates17_071221.root as _file0...
+(TFile *) 0x26db180
+root [1] gDirectory->cd("LQ")
+(bool) true
+root [2] ee17_qcd_elfakesrw3b17Down->Print("range")
+TH1.Print Name  = ee17_qcd_elfakesrw3b17Down, Entries= 32, Total sum= 99.7128
+ fSumw[1]=26.9194, x=0.5, error=13.3244
+ fSumw[2]=1.57856, x=1.5, error=0.781349
+ fSumw[3]=0.247557, x=2.5, error=0.122535
+ fSumw[4]=1.21861, x=3.5, error=0.603184
+ fSumw[5]=1.21861, x=4.5, error=0.603184
+ fSumw[6]=0.247557, x=5.5, error=0.122535
+ fSumw[7]=1.57856, x=6.5, error=0.781349
+ fSumw[8]=26.9194, x=7.5, error=13.3244
+ fSumw[9]=10.3713, x=8.5, error=5.13355
+ fSumw[10]=0.387272, x=9.5, error=0.19169
+ fSumw[11]=1.59576, x=10.5, error=0.78986
+ fSumw[12]=2.03096, x=11.5, error=1.00527
+ fSumw[13]=2.03096, x=12.5, error=1.00527
+ fSumw[14]=1.59576, x=13.5, error=0.78986
+ fSumw[15]=0.387272, x=14.5, error=0.19169
+ fSumw[16]=10.3713, x=15.5, error=5.13355
+ fSumw[17]=2.45225, x=16.5, error=0.976573
+ fSumw[18]=0.312386, x=17.5, error=0.154623
+ fSumw[19]=1.34269, x=18.5, error=0.664598
+ fSumw[20]=1.34269, x=19.5, error=0.664598
+ fSumw[21]=0.312386, x=20.5, error=0.154623
+ fSumw[22]=2.45225, x=21.5, error=0.976573
+ fSumw[23]=0.490726, x=22.5, error=0.242896
+ fSumw[24]=0.7149, x=23.5, error=0.353858
+ fSumw[25]=0.193924, x=24.5, error=0.0959877
+ fSumw[26]=0.193924, x=25.5, error=0.0959877
+ fSumw[27]=0.7149, x=26.5, error=0.353858
+ fSumw[28]=0.490726, x=27.5, error=0.242896
+root [3] ee17_qcd_elfakesrw3b17Up->Print("range")
+TH1.Print Name  = ee17_qcd_elfakesrw3b17Up, Entries= 32, Total sum= 105.4
+ fSumw[1]=26.9194, x=0.5, error=13.3244
+ fSumw[2]=1.57856, x=1.5, error=0.781349
+ fSumw[3]=0.492771, x=2.5, error=0.243909
+ fSumw[4]=1.21861, x=3.5, error=0.603184
+ fSumw[5]=1.21861, x=4.5, error=0.603184
+ fSumw[6]=0.492771, x=5.5, error=0.243909
+ fSumw[7]=1.57856, x=6.5, error=0.781349
+ fSumw[8]=26.9194, x=7.5, error=13.3244
+ fSumw[9]=10.3713, x=8.5, error=5.13355
+ fSumw[10]=0.387272, x=9.5, error=0.19169
+ fSumw[11]=3.17641, x=10.5, error=1.57224
+ fSumw[12]=2.03096, x=11.5, error=1.00527
+ fSumw[13]=2.03096, x=12.5, error=1.00527
+ fSumw[14]=3.17641, x=13.5, error=1.57224
+ fSumw[15]=0.387272, x=14.5, error=0.19169
+ fSumw[16]=10.3713, x=15.5, error=5.13355
+ fSumw[17]=2.45225, x=16.5, error=0.976573
+ fSumw[18]=0.621815, x=17.5, error=0.307783
+ fSumw[19]=1.34269, x=18.5, error=0.664598
+ fSumw[20]=1.34269, x=19.5, error=0.664598
+ fSumw[21]=0.621815, x=20.5, error=0.307783
+ fSumw[22]=2.45225, x=21.5, error=0.976573
+ fSumw[23]=0.490726, x=22.5, error=0.242896
+ fSumw[24]=1.42303, x=23.5, error=0.704365
+ fSumw[25]=0.193924, x=24.5, error=0.0959877
+ fSumw[26]=0.193924, x=25.5, error=0.0959877
+ fSumw[27]=1.42303, x=26.5, error=0.704365
+ fSumw[28]=0.490726, x=27.5, error=0.242896
+root [4] mumu17_qcd_mufakesrw2b17Up->Print("range")
+TH1.Print Name  = mumu17_qcd_mufakesrw2b17Up, Entries= 32, Total sum= 25.076
+ fSumw[1]=6.97657, x=0.5, error=2.88629
+ fSumw[2]=0.205043, x=1.5, error=0.101491
+ fSumw[3]=0.0643132, x=2.5, error=0.0318334
+ fSumw[4]=0.531195, x=3.5, error=0.262328
+ fSumw[5]=0.531195, x=4.5, error=0.262328
+ fSumw[6]=0.0643132, x=5.5, error=0.0318334
+ fSumw[7]=0.205043, x=6.5, error=0.101491
+ fSumw[8]=6.97657, x=7.5, error=2.88629
+ fSumw[9]=2.33369, x=8.5, error=1.05061
+ fSumw[10]=0.652196, x=9.5, error=0.322821
+ fSumw[11]=0.0837913, x=10.5, error=0.0414746
+ fSumw[12]=0.124994, x=11.5, error=0.061869
+ fSumw[13]=0.124994, x=12.5, error=0.061869
+ fSumw[14]=0.0837913, x=13.5, error=0.0414746
+ fSumw[15]=0.652196, x=14.5, error=0.322821
+ fSumw[16]=2.33369, x=15.5, error=1.05061
+ fSumw[17]=0.831399, x=16.5, error=0.346389
+ fSumw[18]=0.420229, x=17.5, error=0.208003
+ fSumw[19]=1e-06, x=18.5, error=4.94975e-07
+ fSumw[20]=1e-06, x=19.5, error=4.94975e-07
+ fSumw[21]=0.420229, x=20.5, error=0.208003
+ fSumw[22]=0.831399, x=21.5, error=0.346389
+ fSumw[23]=0.0956893, x=22.5, error=0.0396838
+ fSumw[24]=0.111372, x=23.5, error=0.0551264
+ fSumw[25]=0.107517, x=24.5, error=0.053218
+ fSumw[26]=0.107517, x=25.5, error=0.053218
+ fSumw[27]=0.111372, x=26.5, error=0.0551264
+ fSumw[28]=0.0956893, x=27.5, error=0.0396838
+root [5] mumu17_qcd_mufakesrw2b17Down->Print("range")
+TH1.Print Name  = mumu17_qcd_mufakesrw2b17Down, Entries= 32, Total sum= 23.0544
+ fSumw[1]=6.97657, x=0.5, error=2.88629
+ fSumw[2]=0.0770779, x=1.5, error=0.0381516
+ fSumw[3]=0.0643132, x=2.5, error=0.0318334
+ fSumw[4]=0.531195, x=3.5, error=0.262328
+ fSumw[5]=0.531195, x=4.5, error=0.262328
+ fSumw[6]=0.0643132, x=5.5, error=0.0318334
+ fSumw[7]=0.0770779, x=6.5, error=0.0381516
+ fSumw[8]=6.97657, x=7.5, error=2.88629
+ fSumw[9]=2.33369, x=8.5, error=1.05061
+ fSumw[10]=0.245167, x=9.5, error=0.121352
+ fSumw[11]=0.0837913, x=10.5, error=0.0414746
+ fSumw[12]=0.124994, x=11.5, error=0.061869
+ fSumw[13]=0.124994, x=12.5, error=0.061869
+ fSumw[14]=0.0837913, x=13.5, error=0.0414746
+ fSumw[15]=0.245167, x=14.5, error=0.121352
+ fSumw[16]=2.33369, x=15.5, error=1.05061
+ fSumw[17]=0.404432, x=16.5, error=0.146686
+ fSumw[18]=0.420229, x=17.5, error=0.208003
+ fSumw[19]=1e-06, x=18.5, error=4.94975e-07
+ fSumw[20]=1e-06, x=19.5, error=4.94975e-07
+ fSumw[21]=0.420229, x=20.5, error=0.208003
+ fSumw[22]=0.404432, x=21.5, error=0.146686
+ fSumw[23]=0.0468512, x=22.5, error=0.0169257
+ fSumw[24]=0.111372, x=23.5, error=0.0551264
+ fSumw[25]=0.107517, x=24.5, error=0.053218
+ fSumw[26]=0.107517, x=25.5, error=0.053218
+ fSumw[27]=0.111372, x=26.5, error=0.0551264
+ fSumw[28]=0.0468512, x=27.5, error=0.0169257
+root [6] mumu17_qcd->Print("range")
+TH1.Print Name  = mumu17_qcd, Entries= 32, Total sum= 24.0652
+ fSumw[1]=6.97657, x=0.5, error=2.88629
+ fSumw[2]=0.141061, x=1.5, error=0.0698214
+ fSumw[3]=0.0643132, x=2.5, error=0.0318334
+ fSumw[4]=0.531195, x=3.5, error=0.262328
+ fSumw[5]=0.531195, x=4.5, error=0.262328
+ fSumw[6]=0.0643132, x=5.5, error=0.0318334
+ fSumw[7]=0.141061, x=6.5, error=0.0698214
+ fSumw[8]=6.97657, x=7.5, error=2.88629
+ fSumw[9]=2.33369, x=8.5, error=1.05061
+ fSumw[10]=0.448682, x=9.5, error=0.222086
+ fSumw[11]=0.0837913, x=10.5, error=0.0414746
+ fSumw[12]=0.124994, x=11.5, error=0.061869
+ fSumw[13]=0.124994, x=12.5, error=0.061869
+ fSumw[14]=0.0837913, x=13.5, error=0.0414746
+ fSumw[15]=0.448682, x=14.5, error=0.222086
+ fSumw[16]=2.33369, x=15.5, error=1.05061
+ fSumw[17]=0.617916, x=16.5, error=0.244101
+ fSumw[18]=0.420229, x=17.5, error=0.208003
+ fSumw[19]=1e-06, x=18.5, error=4.94975e-07
+ fSumw[20]=1e-06, x=19.5, error=4.94975e-07
+ fSumw[21]=0.420229, x=20.5, error=0.208003
+ fSumw[22]=0.617916, x=21.5, error=0.244101
+ fSumw[23]=0.0712702, x=22.5, error=0.0280099
+ fSumw[24]=0.111372, x=23.5, error=0.0551264
+ fSumw[25]=0.107517, x=24.5, error=0.053218
+ fSumw[26]=0.107517, x=25.5, error=0.053218
+ fSumw[27]=0.111372, x=26.5, error=0.0551264
+ fSumw[28]=0.0712702, x=27.5, error=0.0280099
+root [7] .q
+[ssekhar@cmslpc139 analyze]$ root -l combine/templates/templates17.root
+root [0]
+Attaching file combine/templates/templates17.root as _file0...
+(TFile *) 0x3fb9b70
+root [1] gDirectory->cd("w5")
+(bool) true
+root [2] mumu17_qcd_mufakesrw2b17Up->Print("range")
+TH1.Print Name  = mumu17_qcd_mufakesrw2b17Up, Entries= 32, Total sum= 24.807
+ fSumw[1]=7.01913, x=0.5, error=2.2001
+ fSumw[2]=0.00409429, x=1.5, error=0.00202657
+ fSumw[3]=0.118234, x=2.5, error=0.058523
+ fSumw[4]=0.490565, x=3.5, error=0.204938
+ fSumw[5]=0.490565, x=4.5, error=0.204938
+ fSumw[6]=0.118234, x=5.5, error=0.058523
+ fSumw[7]=0.00409429, x=6.5, error=0.00202657
+ fSumw[8]=7.01913, x=7.5, error=2.2001
+ fSumw[9]=2.41676, x=8.5, error=0.857111
+ fSumw[10]=0.599662, x=9.5, error=0.296817
+ fSumw[11]=0.0786882, x=10.5, error=0.0389486
+ fSumw[12]=0.151147, x=11.5, error=0.0748142
+ fSumw[13]=0.151147, x=12.5, error=0.0748142
+ fSumw[14]=0.0786882, x=13.5, error=0.0389486
+ fSumw[15]=0.599662, x=14.5, error=0.296817
+ fSumw[16]=2.41676, x=15.5, error=0.857111
+ fSumw[17]=0.764288, x=16.5, error=0.317208
+ fSumw[18]=0.436726, x=17.5, error=0.198692
+ fSumw[19]=0.0418133, x=18.5, error=0.0206965
+ fSumw[20]=0.0418133, x=19.5, error=0.0206965
+ fSumw[21]=0.436726, x=20.5, error=0.198692
+ fSumw[22]=0.764288, x=21.5, error=0.317208
+ fSumw[23]=0.0866971, x=22.5, error=0.0356501
+ fSumw[24]=0.0995691, x=23.5, error=0.0492842
+ fSumw[25]=0.0961354, x=24.5, error=0.0475846
+ fSumw[26]=0.0961354, x=25.5, error=0.0475846
+ fSumw[27]=0.0995691, x=26.5, error=0.0492842
+ fSumw[28]=0.0866971, x=27.5, error=0.0356501
+root [3] mumu17_qcd_mufakesrw2b17Down->Print("range")
+TH1.Print Name  = mumu17_qcd_mufakesrw2b17Down, Entries= 32, Total sum= 23.185
+ fSumw[1]=7.01913, x=0.5, error=2.2001
+ fSumw[2]=0.00153909, x=1.5, error=0.000761809
+ fSumw[3]=0.118234, x=2.5, error=0.058523
+ fSumw[4]=0.490565, x=3.5, error=0.204938
+ fSumw[5]=0.490565, x=4.5, error=0.204938
+ fSumw[6]=0.118234, x=5.5, error=0.058523
+ fSumw[7]=0.00153909, x=6.5, error=0.000761809
+ fSumw[8]=7.01913, x=7.5, error=2.2001
+ fSumw[9]=2.41676, x=8.5, error=0.857111
+ fSumw[10]=0.225419, x=9.5, error=0.111577
+ fSumw[11]=0.0786882, x=10.5, error=0.0389486
+ fSumw[12]=0.151147, x=11.5, error=0.0748142
+ fSumw[13]=0.151147, x=12.5, error=0.0748142
+ fSumw[14]=0.0786882, x=13.5, error=0.0389486
+ fSumw[15]=0.225419, x=14.5, error=0.111577
+ fSumw[16]=2.41676, x=15.5, error=0.857111
+ fSumw[17]=0.373802, x=16.5, error=0.135129
+ fSumw[18]=0.436726, x=17.5, error=0.198692
+ fSumw[19]=0.0418133, x=18.5, error=0.0206965
+ fSumw[20]=0.0418133, x=19.5, error=0.0206965
+ fSumw[21]=0.436726, x=20.5, error=0.198692
+ fSumw[22]=0.373802, x=21.5, error=0.135129
+ fSumw[23]=0.0429601, x=22.5, error=0.0154168
+ fSumw[24]=0.0995691, x=23.5, error=0.0492842
+ fSumw[25]=0.0961354, x=24.5, error=0.0475846
+ fSumw[26]=0.0961354, x=25.5, error=0.0475846
+ fSumw[27]=0.0995691, x=26.5, error=0.0492842
+ fSumw[28]=0.0429601, x=27.5, error=0.0154168
+root [4] mumu17_qcd->Print("range")
+TH1.Print Name  = mumu17_qcd, Entries= 32, Total sum= 23.996
+ fSumw[1]=7.01913, x=0.5, error=2.2001
+ fSumw[2]=0.00281669, x=1.5, error=0.00139419
+ fSumw[3]=0.118234, x=2.5, error=0.058523
+ fSumw[4]=0.490565, x=3.5, error=0.204938
+ fSumw[5]=0.490565, x=4.5, error=0.204938
+ fSumw[6]=0.118234, x=5.5, error=0.058523
+ fSumw[7]=0.00281669, x=6.5, error=0.00139419
+ fSumw[8]=7.01913, x=7.5, error=2.2001
+ fSumw[9]=2.41676, x=8.5, error=0.857111
+ fSumw[10]=0.41254, x=9.5, error=0.204197
+ fSumw[11]=0.0786882, x=10.5, error=0.0389486
+ fSumw[12]=0.151147, x=11.5, error=0.0748142
+ fSumw[13]=0.151147, x=12.5, error=0.0748142
+ fSumw[14]=0.0786882, x=13.5, error=0.0389486
+ fSumw[15]=0.41254, x=14.5, error=0.204197
+ fSumw[16]=2.41676, x=15.5, error=0.857111
+ fSumw[17]=0.569045, x=16.5, error=0.223833
+ fSumw[18]=0.436726, x=17.5, error=0.198692
+ fSumw[19]=0.0418133, x=18.5, error=0.0206965
+ fSumw[20]=0.0418133, x=19.5, error=0.0206965
+ fSumw[21]=0.436726, x=20.5, error=0.198692
+ fSumw[22]=0.569045, x=21.5, error=0.223833
+ fSumw[23]=0.0648286, x=22.5, error=0.0252416
+ fSumw[24]=0.0995691, x=23.5, error=0.0492842
+ fSumw[25]=0.0961354, x=24.5, error=0.0475846
+ fSumw[26]=0.0961354, x=25.5, error=0.0475846
+ fSumw[27]=0.0995691, x=26.5, error=0.0492842
+ fSumw[28]=0.0648286, x=27.5, error=0.0252416
