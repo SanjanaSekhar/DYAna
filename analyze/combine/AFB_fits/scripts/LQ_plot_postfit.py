@@ -6,7 +6,7 @@ import math
 from math import sqrt
 import array
 from optparse import OptionParser
-
+import CMS_lumi, tdrstyle
 
 gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
@@ -61,6 +61,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
         colors = default_colors
     stacks = []
     legends = []
+    legends_list = []
     mains = []
     subs = []
     pulls = []
@@ -180,7 +181,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     if bkgNames == []: this_bkg_name = bkg.GetName().split('_')[0]
                     elif type(bkgNames[0]) != list: this_bkg_name = bkgNames[bkg_index]
                     else: this_bkg_name = bkgNames[hist_index][bkg_index]
-                    legends_list[hist_index].append(bkg,this_bkg_name,'f')
+                    legends_list[hist_index].append((bkg,this_bkg_name,'f'))
                     
                 # Go to main pad, set logy if needed
                 mains[hist_index].cd()

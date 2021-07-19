@@ -42,7 +42,7 @@ for y in [-1]:
             extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
     '''
     if(options.verbose > 0):
-    extra_params +=" --verbose %i" % options.verbose
+	extra_params +=" --verbose %i" % options.verbose
 
     #No analytic minimization of MC stats nuisances
     extra_params += "--X-rtd MINIMIZER_no_analytic"
@@ -68,7 +68,7 @@ for y in [-1]:
         print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
         workspace="workspaces/%s_LQ.root" % (options.chan)
-        make_workspace(workspace, options.chan, options.q, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = not (options.noSymMCStats))
+        make_workspace(workspace, options.chan, options.q, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
         plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
         print("\n plotdir = ", plotdir)
         print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
@@ -77,20 +77,20 @@ for y in [-1]:
         print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s " %(workspace, extra_params))
 
         if(not options.no_plot):
-            print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
+            print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
                     % (fit_name))
             extra_args = ""
             if(options.year > 0): extra_args = " -y %i " % options.year
             print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
             print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s " % (workspace, extra_params)) #only to get prefit, probably a better way
-            print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
+            print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
             print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
-            if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
+            if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
 
 
         print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
         print_and_do("""echo ".q" >> cmd.txt """)
-        print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
+        print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
         print_and_do("rm -f cards/sed*")
-        if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfitTest.root")
+        if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 
