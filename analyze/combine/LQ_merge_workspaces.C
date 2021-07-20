@@ -37,7 +37,7 @@ void LQ_merge_workspaces(){
             char f1_s[180];
             sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ);
             char fout_s[180];
-            sprintf(fout_s,"combine/mtemps/LQm%i_merge_templates%i_%s.root", mLQ, year,ending);
+            sprintf(fout_s,"combine/templates/LQm%i_merge_templates%i_%s.root", mLQ, year,ending);
             //const TString f1_s("root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ16_nonsys_jul27LQ");
             //const TString fout_s("combine/templates/LQm%i_merge_templates%i.root");
             TFile *f1 = TFile::Open(f1_s, "READ");

@@ -22,7 +22,7 @@ parser.add_option("--noSymMCStats", default = False, action="store_true",  help=
 for y in [-1]:
 
     extra_params=""
-    options.chan="mumu"
+    options.chan="ee"
     options.q="u"
     options.no_sys=False
     options.fake_data=True

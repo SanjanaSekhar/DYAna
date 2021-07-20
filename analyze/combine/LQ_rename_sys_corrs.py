@@ -3,6 +3,7 @@ from optparse import OptionParser
 import sys
 
 ext = "071921"
+mLQ = 1000
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)
