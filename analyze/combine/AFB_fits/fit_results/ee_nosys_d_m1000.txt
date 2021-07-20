@@ -1,28 +1,29 @@
 
 Attaching file multidimfit.root as _file0...
-(TFile *) 0x3ca8820
+(TFile *) 0x27f8470
 
-  RooFitResult: minimized FCN value: -57.9444, estimated distance to minimum: 4.73067e-05
+  RooFitResult: minimized FCN value: -69.3158, estimated distance to minimum: 3.21245e-05
                 covariance matrix quality: Full, accurate covariance matrix
                 Status : MINIMIZE=0 HESSE=0 
 
     Floating Parameter    FinalValue +/-  Error   
   --------------------  --------------------------
-                    A0    3.1343e-01 +/-  7.71e-02
-                   Afb    6.1433e-01 +/-  3.40e-02
-               db_xsec    1.1830e-01 +/-  9.88e-01
-               dy_xsec    3.2112e+00 +/-  7.76e-01
-             elFakes16   -6.8438e-01 +/-  7.24e-01
-             elFakes17   -1.1069e+00 +/-  6.54e-01
-             elFakes18   -1.5104e+00 +/-  6.10e-01
-              gam_xsec    6.5550e-01 +/-  9.97e-01
-                lumi16    8.7897e-01 +/-  8.56e-01
-                lumi17    5.1248e-01 +/-  8.76e-01
-                lumi18    6.6106e-01 +/-  9.12e-01
-                lumiBC    1.6651e-01 +/-  9.92e-01
-                lumiDB    2.6463e-01 +/-  9.88e-01
-                lumiGS    1.8649e-01 +/-  9.90e-01
-                lumiLS    1.6651e-01 +/-  9.92e-01
-                lumiXY    1.4650e+00 +/-  8.94e-01
-              top_xsec   -6.2294e-02 +/-  9.63e-01
+                    A0    1.5641e-01 +/-  8.78e-02
+                   Afb    7.5000e-01 +/-  2.00e-02
+               db_xsec   -1.9782e-01 +/-  9.77e-01
+               dy_xsec    9.9175e-01 +/-  8.16e-01
+             elFakes16   -8.1896e-01 +/-  7.24e-01
+             elFakes17   -1.3077e+00 +/-  6.59e-01
+             elFakes18   -1.5936e+00 +/-  6.08e-01
+              gam_xsec   -4.8572e-01 +/-  9.02e-01
+                lumi16    2.6359e-01 +/-  8.80e-01
+                lumi17   -8.0940e-02 +/-  8.95e-01
+                lumi18    1.5122e-01 +/-  9.25e-01
+                lumiBC    6.3648e-03 +/-  9.92e-01
+                lumiDB    3.0517e-02 +/-  9.89e-01
+                lumiGS    4.4265e-02 +/-  9.91e-01
+                lumiLS    6.3648e-03 +/-  9.92e-01
+                lumiXY    2.6760e-01 +/-  9.15e-01
+              top_xsec   -5.7579e-01 +/-  9.56e-01
+                   yLQ    6.8535e-01 +/-  3.67e-02
 

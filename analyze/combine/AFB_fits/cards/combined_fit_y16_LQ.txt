@@ -12,26 +12,26 @@ bin             ee16
 observation     -1          
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee16    ee16    ee16    ee16     ee16   ee16    ee16      ee16      
-process                  alpha   fpl     fmn     top      db     gam     tautau    qcd   
-process                  -2      0       -1      1        2      5       4        3		
-rate                     -1      -1      -1      -1       -1     -1      -1       -1	
+bin                      ee16    ee16    ee16    ee16     ee16   ee16    ee16      ee16    ee16       ee16     
+process                  alpha   fpl     fmn     top      db     gam     tautau    qcd     LQpure_d   LQint_d
+process                  -2      0       -1      1        2      5       4        3	   -3	      -4
+rate                     -1      -1      -1      -1       -1     -1      -1       -1	   -1        -1
 ---------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -       -        -      1.03     -  		
-db_xsec         lnN      -       -        -      -      1.09      -       -       -  		
-top_xsec	lnN      -       -        -    1.05      -        -       -  	  -	
-gam_xsec        lnN      -       -        -      -       -       1.4      -       -
+dy_xsec         lnN     1.03   1.03    1.03      -       -        -      1.03     -  	   -          -	
+db_xsec         lnN      -       -        -      -      1.09      -       -       -  	   -	      -
+top_xsec	lnN      -       -        -    1.05      -        -       -  	  -	   -          -
+gam_xsec        lnN      -       -        -      -       -       1.4      -       -        -          -
 
                                                                                               
-elFakes16       lnN      -       -        -      -        -      -      -        1.5        		
+elFakes16       lnN      -       -        -      -        -      -      -        1.5       -          -	
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
-lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     1.022		-    				
-lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     1.009    	-		
-lumiLS           lnN       -        -         -       -         -       -         -      	-		  
-lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     1.004    	-		  
-lumiBC           lnN       -        -         -       -         -       -         -      	-	 
-lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     1.004    	-		  
+lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     1.022		-    -	      - 			
+lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     1.009    	-    -	      - 	
+lumiLS           lnN       -        -         -       -         -       -         -      	-    -	      -	  
+lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     1.004    	-    -	      -	  
+lumiBC           lnN       -        -         -       -         -       -         -      	-    -	      -
+lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     1.004    	-    -	      -	  
 
 lumis16 group = lumi16 lumiXY lumiLS lumiDB lumiBC lumiGS      
