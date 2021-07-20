@@ -29,7 +29,7 @@ void CopyDir(TDirectory *source, TDirectory *savdir) {
 
 void LQ_merge_workspaces(){
 
-//    for(double i=1;i<=1;i+=0.5){
+  //  for(double i=1;i<=3;i+=0.5){
         int mLQ = 1000;
         for(int year=16;year<=18;year++){
 
