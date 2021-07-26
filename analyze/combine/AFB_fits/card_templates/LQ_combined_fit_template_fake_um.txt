@@ -27,12 +27,12 @@ muFakesYR       lnN      -       -        -      -        -       -       1.5		-
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
-lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	-		-		
-lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     -			LXYV    	-		-		
-lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 		LLSV    	-		-		  
-lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     -			LDBV    	-		-		  
-lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     -			LBCV    	-		-		 
-lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     -			LGSV    	-		-		  
+lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	LYRV	LYRV		
+lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     -			LXYV    	LXYV	LXYV		
+lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 		LLSV    	LLSV	LLSV		  
+lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     -			LDBV    	LDBV	LDBV		  
+lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     -			LBCV    	LBCV	LBCV	 
+lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     -			LGSV    	LGSV	LGSV	  
 
 lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS      
 
