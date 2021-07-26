@@ -23,7 +23,7 @@ for y in [-1]:
 
     extra_params=""
     options.chan="ee"
-    options.q="d"
+    options.q="u"
     options.no_sys=False
     options.fake_data=True
     options.year = y
@@ -56,7 +56,7 @@ for y in [-1]:
         fit_name += "_noSymMC"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_"+options.q
+    fit_name+="_"+options.q+"_3rap"
     print("\n fit_name = ", fit_name)
 
 
