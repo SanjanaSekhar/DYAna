@@ -83,7 +83,8 @@ mufakesrw2bYR         shape    -       -        -      -        -      -      1.
 mufakesrw3bYR         shape    -       -        -      -        -      -      1.0       -               
 mufakesrw4bYR         shape    -       -        -      -        -      -      1.0       -                  
 
-elfakesrwsYR group = elfakesrw1bYR elfakesrw2bYR elfakesrw3bYR elfakesrw4bYR
+
+mufakesrwsYR group = mufakesrw1bYR mufakesrw2bYR mufakesrw3bYR mufakesrw4bYR
 
                                                                                                                                   
                                                                                                                                           
