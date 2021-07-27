@@ -69,8 +69,8 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
       //get rid of high rap bins if needed
     if( i > n_binsx) i -=1;
    //lose 2 bins for each row above mid-row
-   int base = (k-1)*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
-  
+   //int base = (k-1)*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
+   int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
    if(i <= n_binsx/2) return base + (i-1) * n_binsy + j;
    if(j == n_binsy) {j-=1; }
    if(j>1) {j-=1; }
@@ -82,7 +82,8 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
 int get_n_1d_bins(int n_binsx, int n_binsy){
     //merge 2 highest cos bins in 2 larger eta bins
     //int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
-    int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
+    //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
+    int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
     return n_1d_bins;
 }
 
