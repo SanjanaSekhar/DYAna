@@ -49,35 +49,18 @@ BTAGLIGHTYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 
 BTAGSYR group = BTAGUNCORYR BTAGCOR BTAGLIGHTYR
                                                                                                                                           
-elScaleStatYR    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elScaleGainYR    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
+muRCYR       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muIDBARYR    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muISOBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muHLTBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muIDENDYR    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muISOENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muHLTENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
+muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      
 
-elScalesYR group = elScaleStatYR  elScaleGainYR  elScaleSyst   elSmear
-
-
-elHLTBARPTHIGHYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0         
-elHLTENDPTHIGHYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0         
-elHLTBARPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0         
-elHLTENDPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-
-elHLTsYR group = elHLTBARPTHIGHYR  elHLTENDPTHIGHYR  elHLTBARPTLOWYR   elHLTENDPTLOWYR   
-
-elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0       
-elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
-#elIDs group =  elIDENDPTHIGH elIDENDPTLOW
-
-elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0         
-elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0          
-  
-elRECOs group = elRECOBARPTHIGH elRECOENDPTHIGH elRECOBARPTLOW  elRECOENDPTLOW  
+muIDsYR group  = muIDBARYR muISOBARYR muIDENDYR muISOENDYR muIDSYS muISOSYS
+muHLTsYR group = muHLTBARYR muHLTENDYR
                                                                                                                                   
 alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0          
 RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0             
@@ -95,10 +78,10 @@ emucostrw4bYRC        shape    -       -        -     1.0      1.0     -      - 
 emucostrwsYRC group = emucostrw1bYRC emucostrw2bYRC emucostrw3bYRC emucostrw4bYRC
 
 ##fakes cost reweighting                                                                                                 
-elfakesrw1bYR          shape    -       -        -      -        -      -     1.0      -            
-elfakesrw2bYR          shape    -       -        -      -        -      -     1.0      -            
-elfakesrw3bYR          shape    -       -        -      -        -      -     1.0      -            
-elfakesrw4bYR          shape    -       -        -      -        -      -     1.0      -              
+mufakesrw1bYR         shape    -       -        -      -        -      -      1.0       -               
+mufakesrw2bYR         shape    -       -        -      -        -      -      1.0       -               
+mufakesrw3bYR         shape    -       -        -      -        -      -      1.0       -               
+mufakesrw4bYR         shape    -       -        -      -        -      -      1.0       -                  
 
 elfakesrwsYR group = elfakesrw1bYR elfakesrw2bYR elfakesrw3bYR elfakesrw4bYR
 
