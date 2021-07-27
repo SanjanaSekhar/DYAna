@@ -56,7 +56,7 @@ for y in [-1]:
         fit_name += "_noSymMC"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_"+options.q+"_noelFakeselIDBAR"
+    fit_name+="_"+options.q+"_noelIDBAR"
     print("\n fit_name = ", fit_name)
 
 
