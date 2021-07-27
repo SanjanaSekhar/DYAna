@@ -135,24 +135,29 @@ def do_lumi(card, year):
 
         print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
 
-def make_workspace(workspace, chan, q, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = True):
+def make_workspace(workspace, chan, q, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = True):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
 
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
+
     if chan=="ee" and q=="u":
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
+        if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_ee_noLQ.txt"
     if chan=="ee" and q=="d":
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
+        if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_ee_noLQ.txt"
     if chan=="mumu" and q=="u":
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
+        if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_mumu_noLQ.txt"
     if chan=="mumu" and q=="d":
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
+        if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_mumu_noLQ.txt"
    
    
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin

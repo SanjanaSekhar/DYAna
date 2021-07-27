@@ -14,7 +14,7 @@ parser.add_option("--mbin", default = -1, type='int', help="Only do fits for thi
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("-v", "--verbose", default = 0, type='int', help="Turn up verbosity on fits")
 parser.add_option("--noSymMCStats", default = False, action="store_true",  help="Don't add constraints to mcStat nuisances")
-
+parser.add_option("--no_LQ",  default=False, action="store_true", help="For sanity check purposes remove LQ temps")
 (options, args) = parser.parse_args()
 
 
@@ -26,6 +26,7 @@ for y in [-1]:
     options.q="u"
     options.no_sys=False
     options.fake_data=True
+    options.no_LQ=True
     options.year = y
     '''
     if(options.chan == "ee"):
@@ -55,8 +56,12 @@ for y in [-1]:
     if(options.noSymMCStats):
         fit_name += "_noSymMC"
     if(options.fake_data): fit_name +="_fake_data"
+
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_"+options.q+"_noelIDBAR"
+    fit_name+="_"+options.q
+
+    if(options.no_LQ): fit_name+="_noLQ"
+
     print("\n fit_name = ", fit_name)
 
 
@@ -68,7 +73,7 @@ for y in [-1]:
         print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
         workspace="workspaces/%s_LQ.root" % (options.chan)
-        make_workspace(workspace, options.chan, options.q, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
+        make_workspace(workspace, options.chan, options.q, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
         plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
         print("\n plotdir = ", plotdir)
         print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
