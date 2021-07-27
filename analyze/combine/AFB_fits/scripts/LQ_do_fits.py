@@ -23,7 +23,7 @@ for y in [-1]:
 
     extra_params=""
     options.chan="mumu"
-    options.q="u"
+    options.q="d"
     options.no_sys=False
     options.fake_data=True
     options.year = y
