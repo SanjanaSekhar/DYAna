@@ -22,8 +22,8 @@ parser.add_option("--noSymMCStats", default = False, action="store_true",  help=
 for y in [-1]:
 
     extra_params=""
-    options.chan="mumu"
-    options.q="d"
+    options.chan="ee"
+    options.q="u"
     options.no_sys=False
     options.fake_data=True
     options.year = y
@@ -56,7 +56,7 @@ for y in [-1]:
         fit_name += "_noSymMC"
     if(options.fake_data): fit_name +="_fake_data"
     if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-    fit_name+="_"+options.q+"_3rap"
+    fit_name+="_"+options.q+"_noelFakeselIDBAR"
     print("\n fit_name = ", fit_name)
 
 

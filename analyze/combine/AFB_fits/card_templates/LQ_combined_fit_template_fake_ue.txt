@@ -23,13 +23,13 @@ top_xsec	    lnN      -       -        -    1.05       -        -       -		-    
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
 
-elFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
+#elFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	LYRV	LYRV		
 lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     -			LXYV    	LXYV	LXYV		
-lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 		LLSV    	LLSV	LLSV		  
+lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 			LLSV    	LLSV	LLSV		  
 lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     -			LDBV    	LDBV	LDBV		  
 lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     -			LBCV    	LBCV	LBCV	 
 lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     -			LGSV    	LGSV	LGSV		  
@@ -64,13 +64,13 @@ elHLTENDPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -  
 
 elHLTsYR group = elHLTBARPTHIGHYR  elHLTENDPTHIGHYR  elHLTBARPTLOWYR   elHLTENDPTLOWYR   
 
-elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
-
+#elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
+elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
