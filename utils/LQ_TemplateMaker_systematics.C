@@ -287,23 +287,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         float var1 = abs(tm.cm.Rapidity());
         if(use_xF)  var1 = tm.xF;
 
-            //flag_q=1 for d-dbar, 2 for u-ubar, 0 for everything
-        int flag_q=0;
-        if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
-        if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
-        if(flag_q!=0){ 
-
-          if(flag_q==1){
-            Q_q=Q_d;
-            caq=caq_d;
-            cvq=cvq_d;
-          }
-
-          if(flag_q==2){
-            Q_q=Q_u;
-            caq=caq_u;
-            cvq=cvq_u;
-          }
+        
 
             // SM terms
           
@@ -371,6 +355,23 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
               // LQ terms: LO LQ/LO SM
             // Need to modify LQ_denom
+              //flag_q=1 for d-dbar, 2 for u-ubar, 0 for everything
+        int flag_q=0;
+        if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
+        if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
+        if(flag_q!=0){ 
+
+          if(flag_q==1){
+            Q_q=Q_d;
+            caq=caq_d;
+            cvq=cvq_d;
+          }
+
+          if(flag_q==2){
+            Q_q=Q_u;
+            caq=caq_u;
+            cvq=cvq_u;
+          }
 
           float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
             //pure Z0 term
@@ -425,16 +426,16 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               //dLQ temps
             if(flag_q==1){
               h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-              h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
+              //h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
               h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight ); 
-              h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+              //h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
             }
               //uLQ temps
             if(flag_q==2){
               h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-              h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+              //h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
               h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-              h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+              //h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
             }
 
           }
@@ -450,10 +451,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       h_sym->Scale(0.5);
       h_asym->Scale(0.5);
       h_alpha->Scale(0.5);
-      h_LQpure_u->Scale(0.5);
-      h_LQint_u->Scale(0.5);
-      h_LQpure_d->Scale(0.5);
-      h_LQint_d->Scale(0.5);
+      //h_LQpure_u->Scale(0.5);
+      //h_LQint_u->Scale(0.5);
+      //h_LQpure_d->Scale(0.5);
+      //h_LQint_d->Scale(0.5);
 
     //cleanup_template(h_sym);
       fixup_template_sum(h_sym, h_asym);
