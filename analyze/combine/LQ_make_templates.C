@@ -62,9 +62,18 @@ void make_data_templates(int year, bool scramble_data = true, bool fake_data = t
         gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
     }
     else{
-         float Afb = 0.61;
+        float Afb = 0.61;
         float A0 = 0.06;
         printf("Making fake data \n");
+        bool incl_ss = true;
+        bool ss_binning = false;
+        float elel_sign_scaling, elel_err, mumu_sign_scaling, mumu_err;
+        //printf("making ElEl fakes template \n");
+        gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_data, year, 
+            FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
+        //printf("making MuMu fakes template \n");
+        gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_data, year, 
+            FLAG_MUONS, incl_ss, ss_binning, use_xF, "");
         //one_mc_template(t_mumu_mc, A0, Afb, h_mumu_data, year, m_low, m_high, FLAG_MUONS, use_xF, "");
         //one_mc_template(t_elel_mc, A0, Afb, h_elel_data, year, m_low, m_high, FLAG_ELECTRONS, use_xF, "");
         TTree *mu_ts[3] = {t_mumu_mc, t_mumu_tautau, t_mumu_gamgam };
@@ -121,8 +130,8 @@ void make_qcd_templates(int year, const string &sys_label){
     printf("making ElEl fakes template \n");
     gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, 
                 FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_label);
-        printf("making MuMu fakes template \n");
-        gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, FLAG_MUONS, 
+    printf("making MuMu fakes template \n");
+    gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, FLAG_MUONS, 
                 incl_ss, ss_binning, use_xF, sys_label);
    
 
