@@ -22,8 +22,8 @@ parser.add_option("--no_LQ",  default=False, action="store_true", help="For sani
 for y in [-1]:
 
     extra_params=""
-    options.chan="ee"
-    options.q="d"
+    options.chan="mumu"
+    options.q="u"
     options.no_sys=False
     options.fake_data=True
     options.no_LQ=False

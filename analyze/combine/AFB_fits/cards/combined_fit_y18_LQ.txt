@@ -8,12 +8,12 @@ kmax *
 -------------------------------------------------------------------------------
 shapes * * LQm1000_merge_templates18_072821.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             ee18  
+bin             mumu18  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee18    ee18    ee18    ee18     ee18    ee18     ee18 	ee18    ee18      ee18 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+bin                      mumu18  mumu18  mumu18  mumu18   mumu18  mumu18   mumu18 	mumu18   mumu18    mumu18 	 
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ top_xsec	    lnN      -       -        -    1.05       -        -       -		-    
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
 
-elFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
+muFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
@@ -32,7 +32,7 @@ lumiXY           lnN     1.020    1.020     1.020   1.020     1.020   1.020     
 lumiLS           lnN     1.002    1.002     1.002   1.002     1.002   1.002     - 		1.002    	1.002	1.002		  
 lumiDB           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
 lumiBC           lnN     1.002    1.002     1.002   1.002     1.002   1.002     -			1.002    	1.002	1.002	 
-lumiGS           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
+lumiGS           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	  
 
 lumis18 group = lumi18 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
@@ -48,37 +48,20 @@ BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 BTAGLIGHT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
 BTAGS18 group = BTAGUNCOR18 BTAGCOR BTAGLIGHT18
-                                                                                                                                          
-elScaleStat18    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleGain18    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+                                                                                                                                           
 
-elScales18 group = elScaleStat18  elScaleGain18  elScaleSyst   elSmear
+muRC18       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDBAR18    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOBAR18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTBAR18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDEND18    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOEND18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTEND18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 
-
-elHLTBARPTHIGH18     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTHIGH18   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTBARPTLOW18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTLOW18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
-
-elHLTs18 group = elHLTBARPTHIGH18  elHLTENDPTHIGH18  elHLTBARPTLOW18   elHLTENDPTLOW18   
-
-elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
-#elIDs group =  elIDENDPTHIGH elIDENDPTLOW
-
-elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-  
-
-elRECOs group = elRECOBARPTHIGH elRECOENDPTHIGH elRECOBARPTLOW  elRECOENDPTLOW  
+muIDs18 group  = muIDBAR18 muISOBAR18 muIDEND18 muISOEND18 muIDSYS muISOSYS
+muHLTs18 group = muHLTBAR18 muHLTEND18
                                                                                                                                   
 alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
@@ -95,14 +78,12 @@ emucostrw4b1718        shape    -       -        -     1.0      1.0     -      -
 
 emucostrws1718 group = emucostrw1b1718 emucostrw2b1718 emucostrw3b1718 emucostrw4b1718
 
-##fakes cost reweighting                                                                                                 
-elfakesrw1b18          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw2b18          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw3b18          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw4b18          shape    -       -        -      -        -      -     1.0      -       -       -        
+mufakesrw1b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw2b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw3b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw4b18         shape    -       -        -      -        -      -      1.0       -       -       -         
 
-elfakesrws18 group = elfakesrw1b18 elfakesrw2b18 elfakesrw3b18 elfakesrw4b18
-
+mufakesrws18 group = mufakesrw1b18 mufakesrw2b18 mufakesrw3b18 mufakesrw4b18
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
