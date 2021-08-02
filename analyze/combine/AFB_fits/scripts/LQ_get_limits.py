@@ -53,7 +53,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limits_%s_sep17.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limits_%s_080221.png'%(channel,channel))
 
 
 
@@ -66,22 +66,22 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['eu']:
+for channel in ['ue','de','um','dm']:
 
-    if channel=='eu':
+    if channel=='ue':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
-    if channel=='ed':
+    if channel=='de':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
-    if channel=='mu':
+    if channel=='um':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
-    if channel=='md':
+    if channel=='dm':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
+    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000]:
     
         workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
         comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
@@ -91,8 +91,15 @@ for channel in ['eu']:
         else: years = [16,17,18]
 
         for yr in years:
+            if(yr == 16):
+                comb_yr = 16
+            else:
+                #some systematics combined between 17 and 18
+                comb_yr = 1718
             card="cards/combined_fit_y%i_LQ.txt" % (yr)
             print_and_do("cp %s %s" % (template_card, card))
+            do_lumi(card, yr)
+            print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
             print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
             print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
             if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
@@ -107,7 +114,7 @@ for channel in ['eu']:
         
         print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-       # print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
         print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1 --setParameters Afb=0.6,A0=0.05 -m %i -n .limit --there"%(workspace,mass))
 
