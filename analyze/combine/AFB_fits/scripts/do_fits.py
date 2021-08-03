@@ -77,7 +77,7 @@ for mbin in range(bin_start, bin_stop):
         extra_args = ""
         if(options.year > 0): extra_args = " -y %i " % options.year
         print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir, mbin, extra_args))
-        print_and_do("python scripts/plot_swaped_axis_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir_swap, mbin, extra_args))
+        #print_and_do("python scripts/plot_swaped_axis_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir_swap, mbin, extra_args))
         print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
         print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --prefit fitDiagnosticsTest.root -p Afb --skipFitB -g %s" % (plotdir))
         print_and_do("mv %s_fit_shapes_mbin%i.root %s" %(fit_name, mbin, plotdir))

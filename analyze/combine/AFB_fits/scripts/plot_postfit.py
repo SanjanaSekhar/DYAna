@@ -4,7 +4,7 @@ from contextlib import contextmanager
 import os, pickle, subprocess, time,random
 import math
 from math import sqrt
-import array
+from array import array
 from optparse import OptionParser
 import CMS_lumi, tdrstyle
 
@@ -223,6 +223,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 hist.GetXaxis().SetLabelOffset(999)
                 if logy == True:
                     hist.SetMinimum(1e-3)
+
+                hist.SetBinErrorOption(ROOT.TH1.kPoisson)
                 hist.Draw(datastyle)
                 #print("Drawing %s %s \n" hist.GetName(), datastyle)
 
@@ -267,35 +269,44 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 # Draw the pull
                 subs[hist_index].cd()
                 # Build the pull
-                pulls.append(Make_Pull_plot(hist,totlist[hist_index]))
-                pulls[hist_index].SetFillColor(kGray)
-                pulls[hist_index].SetTitle(";"+hist.GetXaxis().GetTitle()+";(Data-Bkg)/#sigma")
-                pulls[hist_index].SetStats(0)
+		ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
+                ratio.Print()
+                hist.Print("range")
                 chi2 = 0.
-                for i in range(1, pulls[hist_index].GetNbinsX()+1):
-                    chi2 += pulls[hist_index].GetBinContent(i)**2;
-                print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pulls[hist_index].GetNbinsX()))
+                #for i in range(1, pull.GetNbinsX()+1):
+                    #chi2 += pull.GetBinContent(i)**2;
+                #print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pull.GetNbinsX()))
 
                 LS = .13
                 #title size given as fraction of pad width, scale up to have same size as main pad
                 TS =  0.06 * 0.7/0.3
 
-                pulls[hist_index].GetYaxis().SetRangeUser(-2.9,2.9)
-                pulls[hist_index].GetYaxis().SetTitleOffset(0.3)
-                pulls[hist_index].GetXaxis().SetTitleOffset(1.2)
+
+
+                ratio.GetYaxis().SetRangeUser(0.0, 2.0)
+                ratio.GetYaxis().SetTitleOffset(0.3)
+                ratio.GetXaxis().SetTitleOffset(1.2)
                              
-                pulls[hist_index].GetYaxis().SetLabelSize(LS)
-                pulls[hist_index].GetYaxis().SetTitleSize(TS)
-                pulls[hist_index].GetYaxis().SetNdivisions(306)
-                pulls[hist_index].GetYaxis().SetTitle("(Data-Fit)/#sigma")
+                ratio.GetYaxis().SetLabelSize(LS)
+                ratio.GetYaxis().SetTitleSize(TS)
+                ratio.GetYaxis().SetNdivisions(306)
+                ratio.GetYaxis().SetTitle("Data/Fit")
 
-                pulls[hist_index].GetXaxis().SetLabelOffset(0.05)
-                pulls[hist_index].GetXaxis().SetLabelSize(LS)
-                pulls[hist_index].GetXaxis().SetTitleSize(TS)
-                pulls[hist_index].GetXaxis().SetTitle(xtitle)
+                ratio.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
+                ratio.GetXaxis().SetLabelOffset(0.05)
+                ratio.GetXaxis().SetLabelSize(LS)
+                ratio.GetXaxis().SetTitleSize(TS)
+                ratio.GetXaxis().SetTitle(xtitle)
 
 
-                pulls[hist_index].Draw('hist')
+                ratio_sys_unc.SetFillColor(ROOT.kBlack)
+                totlist[hist_index].SetFillStyle(3354)
+
+
+                ratio.Draw('AP')
+                line = TLine(0, 1.0, hist.GetNbinsX() - 0.08, 1.0)
+                line.Draw()
+                ratio_sys_unc.Draw("3 same")
 
                 if logy == True:
                     mains[hist_index].SetLogy()
@@ -365,36 +376,44 @@ def FindCommonString(string_list):
 
     return to_match[:-2]
         
-def Make_Pull_plot( DATA,BKG):
-    BKGUP, BKGDOWN = Make_up_down(BKG)
-    pull = DATA.Clone(DATA.GetName()+"_pull")
-    pull.Add(BKG,-1)
-    sigma = 0.0
-    FScont = 0.0
-    BKGcont = 0.0
-    for ibin in range(1,pull.GetNbinsX()+1):
-        FScont = DATA.GetBinContent(ibin)
+def makeRatio( DATA,BKG):
+
+    nbins = DATA.GetNbinsX()
+    x = array('d')
+    ratio = array('d')
+    y_err_up = array('d')
+    y_err_down = array('d')
+    sys_err_up = array('d')
+    sys_err_down = array('d')
+    x_err_low = array('d')
+    x_err_high = array('d')
+    x_err_zero = array('d', [0.]* nbins)
+    y_val1 = array('d', [1.]* nbins)
+    
+    for ibin in range(1,DATA.GetNbinsX()+1):
+        DATAcont = DATA.GetBinContent(ibin)
         BKGcont = BKG.GetBinContent(ibin)
+        BKG_errup = BKG.GetBinErrorUp(ibin)
+        BKG_errdown = BKG.GetBinErrorLow(ibin)
+        DATA_errup = DATA.GetBinErrorUp(ibin)
+        DATA_errdown = DATA.GetBinErrorLow(ibin)
+
+
+        x.append(DATA.GetXaxis().GetBinCenter(ibin))
+        x_err_low.append(DATA.GetXaxis().GetBinCenter(ibin) - DATA.GetXaxis().GetBinLowEdge(ibin))
+        x_err_high.append(-DATA.GetXaxis().GetBinCenter(ibin) + DATA.GetXaxis().GetBinUpEdge(ibin))
+
+    
+
+        ratio.append(DATAcont/BKGcont)
+        y_err_up.append(DATA_errup / BKGcont)
+        y_err_down.append(DATA_errdown / BKGcont)
+        sys_err_up.append(BKG_errup/BKGcont)
+        sys_err_down.append(BKG_errdown/BKGcont)
         
-        if FScont>=BKGcont:
-            FSerr = DATA.GetBinErrorLow(ibin)
-            BKGerr = abs(BKGUP.GetBinContent(ibin)-BKG.GetBinContent(ibin))
-        if FScont<BKGcont:
-            FSerr = DATA.GetBinErrorUp(ibin)
-            BKGerr = abs(BKGDOWN.GetBinContent(ibin)-BKG.GetBinContent(ibin))
-        if FSerr != None:
-            sigma = sqrt(FSerr*FSerr + BKGerr*BKGerr)
-        else:
-            sigma = sqrt(BKGerr*BKGerr)
-        if FScont == 0.0:
-            pull.SetBinContent(ibin, 0.0 )  
-        else:
-            if sigma != 0 :
-                pullcont = (pull.GetBinContent(ibin))/sigma
-                pull.SetBinContent(ibin, pullcont)
-            else :
-                pull.SetBinContent(ibin, 0.0 )
-    return pull
+    pull = ROOT.TGraphAsymmErrors(nbins,x,ratio, x_err_zero, x_err_zero, y_err_down, y_err_up)
+    sys_unc = ROOT.TGraphAsymmErrors(nbins, x, y_val1, x_err_low, x_err_high, sys_err_down,  sys_err_up)
+    return pull, sys_unc
 
 def Make_up_down(hist):
     hist_up = hist.Clone(hist.GetName()+'_up')
@@ -456,8 +475,12 @@ if (__name__ == "__main__"):
             dir_ = dir_name % (year % 2000, year % 2000)
             h_tot = f_in.Get(dir_ + "TotalProcs")
             h_tot = h_tot.Clone("h_tot_c%i_y%i" %(idx, year))
-            h_data = f_in.Get(dir_ + "data_obs")
-            h_data = h_data.Clone("h_data_c%i_y%i" %(idx, year))
+            h_data_orig = f_in.Get(dir_ + "data_obs")
+            #copy to new hist so poisson error bars work
+            h_data = h_data_orig.Clone("h_data_c%i_y%i" %(idx, year))
+            h_data.Reset()
+            for b in range(h_data_orig.GetXaxis().GetNbins() + 1):
+                h_data.SetBinContent(b, h_data_orig.GetBinContent(b))
 
             h_tot_sig = f_in.Get(dir_ + "TotalSig")
             h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))

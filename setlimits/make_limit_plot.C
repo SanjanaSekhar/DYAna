@@ -2,10 +2,10 @@
 #include "../plots/CMS_lumi.C"
 #include "find_kl_limit.C"
 
-Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test){
+Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test, bool print = false){
     //printf("kl_start %.3f \n", kl_start);
     Double_t kl_min = 0.05;
-    Double_t kl_max = 1.8;
+    Double_t kl_max = 2.05;
     Double_t kl_step = 0.05;
     Double_t alpha = 0.05;
     Double_t pval = 0.;
@@ -15,13 +15,13 @@ Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test)
     for(kl = kl_start; kl >= kl_min && kl <= kl_max; kl-=kl_step){
         //printf("%.2f kl \n", kl);
         pval = test_Zp(f1, M_Zp, kl, AFB_test);
-        //printf("kl, kl_start, pval = %.2f %.2f %.3f \n", kl, kl_start, pval);
+        if(print) printf("kl, kl_start, pval = %.2f %.2f %.3f \n", kl, kl_start, pval);
         if (pval > alpha && kl < kl_start){
-            //printf("return \n");
+            if(print) printf("return \n");
             return kl;
         }
         else if(pval  > alpha){
-            //printf("Started too low, changing kl start from %.2f to %.2f\n", kl_start, kl_start +2*kl_step);
+            if(print) printf("Started too low, changing kl start from %.2f to %.2f\n", kl_start, kl_start +2*kl_step);
             kl_start = kl_start + 2*kl_step;
             kl = kl_start + kl_step;
             //printf("%i %.2f \n", m, kl);
@@ -29,15 +29,20 @@ Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test)
     }
 
     //cant find limit, return minimum
-    printf("Couldn't find limit for M=%i, returning kl_min \n", M_Zp);
-    return kl_min;
+    Double_t ret_kl;
+    if( kl >= kl_max) ret_kl = kl_max;
+    if( kl <= kl_min) ret_kl = kl_min;
+    printf("Couldn't find limit for M=%i, last tried %.2f. Returning %.2f  \n", M_Zp, kl, ret_kl);
+    return ret_kl;
 }
 Double_t get_stddev(int n_vals, Double_t *vals){
     Double_t mean, var;
     int n_entries = n_vals;
+    mean = 0.;
+    var = 0.;
     for(int i =0; i< n_vals; i++){
         //printf("%.2f \n", vals[i]);
-        if(vals[i] < 0. || vals[i] > 1. || std::isnan((float)vals[i])) n_entries--;
+        if(vals[i] < 0. || std::isnan((float)vals[i])) n_entries--;
         else{
             //printf("val %.2f \n", vals[i]);
             mean += vals[i];
@@ -48,7 +53,7 @@ Double_t get_stddev(int n_vals, Double_t *vals){
     //printf("mean %.3f n_entries %i\n", mean, n_entries);
 
     for(int  i=0; i< n_vals; i++){
-        if(vals[i] < 0. || vals[i] > 1. || std::isnan((float)vals[i])) continue;
+        if(vals[i] < 0. || std::isnan((float)vals[i])) continue;
         else var += pow(vals[i] - mean, 2);
     }
     var = var/(n_entries -1);
@@ -78,12 +83,12 @@ void make_limit_plot(){
     int n_m_bins = 100;
     int n_trials = 400;
     int m_start = 1500;
-    int m_max = 4000;
+    int m_max = 4500;
     //int m_max = 2000;
     int m_step = 100;
     int m;
     int i=0;
-    bool inc_meas_limit = false;
+    bool inc_meas_limit = true;
     Double_t kl_start = 1.;
     Double_t kl_min = 0.05;
     Double_t kl_step = 0.05;
@@ -99,7 +104,7 @@ void make_limit_plot(){
     for(m = m_start; m <=m_max; m+=m_step){
         printf("trying m=%i \n", m);
         if(inc_meas_limit){
-            meas_lim = get_kl_limit(f1, m, kl_start, AFB_measured);
+            meas_lim = get_kl_limit(f1, m, kl_start, AFB_measured, true);
             if(meas_lim <= 0.04 || meas_lim >=2.){
                 printf("bad lim for m=%i meas = %.2f \n", m, meas_lim); 
                 continue;
@@ -107,7 +112,8 @@ void make_limit_plot(){
             if(i>0) meas_lim = max(meas_lim, kl_limit[i-1]);
             kl_limit[i] = meas_lim;
         }
-        Double_t exp_lim  = get_kl_limit(f1, m, kl_start, AFB_SM);
+        //Double_t exp_lim  = get_kl_limit(f1, m, kl_start, AFB_SM);
+        Double_t exp_lim  = get_kl_limit(f1, m, kl_start, AFB_exp);
         if(i>0) exp_lim = max(exp_lim, kl_expected_lim[i-1]);
         printf("EXP LIM IS %.2f \n", exp_lim);
         masses[i] = m;
@@ -120,8 +126,13 @@ void make_limit_plot(){
             }
             kl_lim_trials[i][j] = get_kl_limit(f1, m, kl_expected_lim[i]+2*kl_step, AFB_rand);
         }
-        kl_limit_stds[i] = min(exp_lim, get_stddev(n_trials, kl_lim_trials[i]));
-        kl_limit_2stds[i] = min(exp_lim, 2.*get_stddev(n_trials, kl_lim_trials[i]));
+        Double_t std_dev = get_stddev(n_trials, kl_lim_trials[i]);
+        kl_limit_stds[i] = std::min(exp_lim, std_dev);
+        kl_limit_2stds[i] = std::min(exp_lim, 2. * std_dev);
+        
+
+        //printf("std dev, std dev %.3f %.3f \n", get_stddev(n_trials, kl_lim_trials[i]), get_stddev(n_trials, kl_lim_trials[i]));
+        //printf("std dev %.3f, 1sig %.3f  2sig %.3f  \n", std_dev, kl_limit_stds[i], kl_limit_2stds[i]);
         i++;
     }
     setTDRStyle();
@@ -134,9 +145,6 @@ void make_limit_plot(){
     one_sig->SetFillColor(kGreen+1);
     two_sig->SetFillColor(kOrange);
 
-    for(int idx=0; idx <i; idx++){
-        printf("%i %.2f %.2f %.2f \n", idx, masses[idx], kl_expected_lim[idx], kl_limit_stds[idx]);
-    }
     //exp->Print();
     //one_sig->Print();
     //two_sig->Print();
@@ -174,7 +182,12 @@ void make_limit_plot(){
         meas->SetLineStyle(1);
         meas->SetLineWidth(4);
         legbb->AddEntry(meas,"Observed","l");
-        meas->Draw("Csames");
+        meas->Draw("LSAME");
+    }
+
+    printf("idx, mass, expected limit, expected std dev obs limit \n");
+    for(int idx=0; idx <i; idx++){
+        printf("%i %.2f %.2f %.2f %.2f \n", idx, masses[idx], kl_expected_lim[idx], kl_limit_stds[idx], kl_limit[idx]);
     }
 
 
@@ -186,14 +199,14 @@ void make_limit_plot(){
     CMS_lumi( c1, iPeriod, 0 );
 
 
-    c1->Print("limit.png");
-    c1->Print("limit.pdf");
+    c1->Print("limit_obs_test.png");
+    c1->Print("limit_obs_test.pdf");
 
-    TFile *f_out = TFile::Open("limit.root", "RECREATE");
+    TFile *f_out = TFile::Open("limit_obs.root", "RECREATE");
     f_out->cd();
     exp->SetName("exp_limit");
-    two_sig->SetName("sigma_band");
-    one_sig->SetName("one_band");
+    two_sig->SetName("two_sigma_band");
+    one_sig->SetName("one_sigma_band");
     meas->SetName("obs_limit");
     two_sig->Write();
     one_sig->Write();

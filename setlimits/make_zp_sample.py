@@ -1,15 +1,24 @@
 import sys, commands, os
+import numpy as np
 
-Mzp=10000
-KL=0.05
-KL_start = 0.05
+#Mzp=10000
+KL_start = 0.65
+KL_stop = 2.05
+KL_step = 0.05
+eps = 0.001
 
-for Mzp in range(2000, 2500, 100):
-#for Mzp in [4000]:
-    for KL_idx in range(3):
 
-        KL = 0.05 * (KL_idx) + KL_start
+KLs = np.linspace(KL_start,KL_stop, num = round((KL_stop - KL_start + eps ) / KL_step) + 1)
+print(KLs)
+
+for Mzp in range(4100, 4600, 100):
+    #for KL_idx in range(3):
+        #KL = 0.05 * (KL_idx) + KL_start
+    for KL in KLs:
+        
+
         print("Generating events for Mzp = %i KL = %.2f " % (Mzp, KL))
+
         cur_dir = os.getcwd()
         os.chdir("MG5_aMC_v2_6_2")
         os.system("rm -r Zp_to_mumu_temp")
