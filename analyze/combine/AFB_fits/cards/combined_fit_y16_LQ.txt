@@ -6,13 +6,13 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQmMASS_merge_templatesYR_072821.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm5000_merge_templates16_072821.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             eeYR  
+bin             ee16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      eeYR    eeYR    eeYR    eeYR     eeYR    eeYR     eeYR 	eeYR    eeYR      eeYR 	 
+bin                      ee16    ee16    ee16    ee16     ee16    ee16     ee16 	ee16    ee16      ee16 	 
 process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
@@ -23,46 +23,46 @@ top_xsec	    lnN      -       -        -    1.05       -        -       -		-    
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
 
-elFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
+elFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
-lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	LYRV	LYRV		
-lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     -			LXYV    	LXYV	LXYV		
-lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 			LLSV    	LLSV	LLSV		  
-lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     -			LDBV    	LDBV	LDBV		  
-lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     -			LBCV    	LBCV	LBCV	 
-lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     -			LGSV    	LGSV	LGSV		  
+lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     -			1.022    	1.022	1.022		
+lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     -			1.009    	1.009	1.009		
+lumiLS           lnN       -        -         -       -         -       -       - 			  -      	  -  	  -  		  
+lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
+lumiBC           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	 
+lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
 
-lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS      
+lumis16 group = lumi16 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
-#prefireYR       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
-METJECYR         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
-#METHEMYR        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+prefire16       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+METJEC16         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
+#METHEM16        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
                                                                                                                                          
-BTAGUNCORYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+BTAGUNCOR16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-BTAGLIGHTYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+BTAGLIGHT16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
-BTAGSYR group = BTAGUNCORYR BTAGCOR BTAGLIGHTYR
+BTAGS16 group = BTAGUNCOR16 BTAGCOR BTAGLIGHT16
                                                                                                                                           
-elScaleStatYR    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleGainYR    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elScaleStat16    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elScaleGain16    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elScalesYR group = elScaleStatYR  elScaleGainYR  elScaleSyst   elSmear
+elScales16 group = elScaleStat16  elScaleGain16  elScaleSyst   elSmear
 
 
-elHLTBARPTHIGHYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTHIGHYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTBARPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
+elHLTBARPTHIGH16     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPTHIGH16   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTBARPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTsYR group = elHLTBARPTHIGHYR  elHLTENDPTHIGHYR  elHLTBARPTLOWYR   elHLTENDPTLOWYR   
+elHLTs16 group = elHLTBARPTHIGH16  elHLTENDPTHIGH16  elHLTBARPTLOW16   elHLTENDPTLOW16   
 
 elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
@@ -80,41 +80,41 @@ elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -   
 
 elRECOs group = elRECOBARPTHIGH elRECOENDPTHIGH elRECOBARPTLOW  elRECOENDPTLOW  
                                                                                                                                   
-alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
-FACYRC               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
-REFACYRC             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+alphaS16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+RENORM16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
+FAC16               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
+REFAC16             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 
-RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
+RFscales16 group = alphaS16 RENORM16 FAC16 REFAC16
                                                                                                                                   
 #emu cost reweighting                                                                                                 
-emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
-emucostrw3bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
-emucostrw4bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
+emucostrw1b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
+emucostrw2b16        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw3b16        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw4b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
-emucostrwsYRC group = emucostrw1bYRC emucostrw2bYRC emucostrw3bYRC emucostrw4bYRC
+emucostrws16 group = emucostrw1b16 emucostrw2b16 emucostrw3b16 emucostrw4b16
 
 ##fakes cost reweighting                                                                                                 
-elfakesrw1bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw2bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw3bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw4bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw1b16          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw2b16          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw3b16          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw4b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-elfakesrwsYR group = elfakesrw1bYR elfakesrw2bYR elfakesrw3bYR elfakesrw4bYR
+elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw3b16 elfakesrw4b16
 
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
-ptrw1bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
-ptrw2bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw3bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-ptrw5bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-ptrw6bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
-ptrw7bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+ptrw1b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
+ptrw2b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+ptrw3b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+ptrw4b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+ptrw5b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+ptrw6b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
+ptrw7b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 
-ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw4bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC
+ptrws16 group = ptrw1b16 ptrw2b16 ptrw3b16 ptrw4b16 ptrw5b16 ptrw6b16 ptrw7b16
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
