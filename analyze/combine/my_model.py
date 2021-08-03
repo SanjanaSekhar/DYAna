@@ -8,7 +8,7 @@ class DY_AFB(PhysicsModel):
     def doParametersOfInterest(self):
         """Create POI and other parameters, and define the POI set."""
 
-        self.modelBuilder.doVar("Afb[0.6,-0.7,0.7]");
+        self.modelBuilder.doVar("Afb[0.6,-0.75,0.75]");
         self.modelBuilder.doVar("A0[0.05, -1.0, 1.0]");
         self.modelBuilder.doSet("POI","Afb,A0")
 

@@ -8,10 +8,19 @@ def print_and_do(s):
     return os.system(s)
 
 cmds = [
-"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit\n",
-#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated\n",
-#"python scripts/check_sys_uncs.py -o temp/  --mbin $3 --expected \n",
+#"python scripts/do_gof.py --nToys 1000 -o temp/  --mbin $3 --teststat saturated --prefit\n",
+#"python scripts/do_gof.py --nToys 1000 -o temp/  --mbin $3 --teststat saturated\n",
+#"python scripts/do_gof.py --nToys 500 -o temp/  --mbin $3 --teststat saturated --prefit --mask_ee \n",
+#"python scripts/do_gof.py --nToys 500 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu \n",
 #"python scripts/do_impacts.py -o temp/  --mbin $3  --nThreads 4\n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --noSymMCStats \n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_ee -y 16\n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_ee -y 17\n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_ee -y 18\n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 16\n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 17\n",
+#"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 18\n",
+"python scripts/check_sys_uncs.py -o temp/  --mbin $3 \n",
 #"python scripts/do_impacts.py -o temp/  --mbin $3 --nThreads 4 --expected \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.6 --A0 0.00 \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.6 --A0 0.1 \n",
@@ -30,10 +39,21 @@ cmds = [
 ]
 
 labels = [
-        "gof_prefit",
+        #'gof_prefit_mumu',
+        #'gof_prefit_ee',
+        #'gof_prefit_1000toys',
+        #'gof_postfit_1000toys',
+        #'gof_noSym',
+        #'gof_mumu16',
+        #'gof_mumu17',
+        #'gof_mumu18',
+        #'gof_ee16',
+        #'gof_ee17',
+        #'gof_ee18',
+        #"gof_prefit",
         #"gof_postfit", 
-        #"expected_sys_uncs",
         #"impacts",  
+        "sys_uncs",
         #"expected_impacts",  
         #"bias_test_afb6_a00", "bias_test_afb6_a01", "bias_test_afb0_a00", "bias_test_afb0_a01",
 ]
@@ -41,7 +61,7 @@ labels = [
 
 cpy_cmd = "xrdcp -f temp/* $1 \n"
 
-date = "may18"
+date = "July23"
 n_m_bins = 8
 
 

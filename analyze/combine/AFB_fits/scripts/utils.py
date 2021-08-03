@@ -136,12 +136,23 @@ def do_lumi(card, year):
 
         print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
 
+def remove_line(fname, phrase):
+    print("Removing %s phrase from %s \n" %(phrase, fname))
+    with open(fname, "r+") as f:
+        d = f.readlines()
+        f.seek(0)
+        for line in d:
+            if phrase not in line:
+                f.write(line)
+        f.truncate()
+
 
 
 def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1, symMCStats = True, sigma2 = -1., fullCorr = False):
 
     
     print("Making workspace %s mbin %i" % (workspace, mbin))
+    print("symMCStats", symMCStats)
     template_card="card_templates/combined_fit_template.txt"
     if(no_sys): template_card = "card_templates/combined_fit_template_nosys.txt"
     if(fake_data): template_card = "card_templates/combined_fit_template_fake_data.txt"
@@ -176,7 +187,9 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
     if(year < 0 ):
         print_and_do("combineCards.py Y16=cards/combined_fit_y16_mbin%i.txt Y17=cards/combined_fit_y17_mbin%i.txt Y18=cards/combined_fit_y18_mbin%i.txt > %s" % (mbin, mbin, mbin, comb_card))
     else:
+        #comb_card = "cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
+        remove_line(comb_card, "lumis%i group" % yr)
 
     if(symMCStats): extra_arg = "--symMCStats --sigma %.3f" % (sigma2**0.5)
     else: extra_arg = ""

@@ -11,7 +11,18 @@ def print_and_do(s):
 
 #labels = ["gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18", "gof_postfit", "gof_postfit_y16_mumu", "gof_postfit_y16_ee" ]
 
-labels = [ "gof_prefit",
+labels = [ 
+        'gof_prefit_mumu',
+        'gof_prefit_ee',
+        #'gof_noSym',
+        #'gof_mumu16',
+        #'gof_mumu17',
+        #'gof_mumu18',
+        #'gof_ee16',
+        #'gof_ee17',
+        #'gof_ee18',
+
+#"gof_prefit",
         #"gof_postfit", 
         #"impacts",
         #"expected_impacts",
@@ -21,9 +32,9 @@ labels = [ "gof_prefit",
 #"gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18",
 #"gof_postfit_y16_ee", "gof_postfit_y16_mumu",
 ]
-date = "may18"
+date = "July23"
 
-odir = "../plots/Misc_plots/fit_checks_may18/"
+odir = "../plots/Misc_plots/fit_checks_july23_unblind/"
 #odir = "../plots/Misc_plots/"
 print_and_do("mkdir %s" % odir)
 

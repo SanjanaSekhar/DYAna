@@ -35,8 +35,8 @@ if(options.mask_ee):
 if(options.mask_mumu):
     extra_params+="mask_Y16_mumu16=1,mask_Y17_mumu17=1,mask_Y18_mumu18=1" 
 
-extra_params += "--X-rtd MINIMIZER_no_analytic"
-afb = 0.0
+extra_params += " --X-rtd MINIMIZER_no_analytic"
+afb = 0.6
 a0 = 0.05
 
 

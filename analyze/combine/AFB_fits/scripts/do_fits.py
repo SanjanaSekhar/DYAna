@@ -35,7 +35,7 @@ if(options.verbose > 0):
     extra_params +=" --verbose %i" % options.verbose
 
 #No analytic minimization of MC stats nuisances
-extra_params += "--X-rtd MINIMIZER_no_analytic"
+extra_params += " --X-rtd MINIMIZER_no_analytic"
 
 
 
