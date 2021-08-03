@@ -25,9 +25,10 @@ def plotLimits(channel):
     pads = OnePad()
      
      # Get limit TGraphs as a dictionary
-    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limits_%s.json'%(channel,channel))
-     
-     # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
+    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s.json'%(channel,channel))
+    print(graphs)
+    del graphs['obs']    
+ # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     axis.GetXaxis().SetTitle('m_{S_{%s}} (GeV)'%(channel))
     axis.GetYaxis().SetTitle('Limits on y_{%s}'%(channel))
@@ -54,7 +55,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limits_%s_080221.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limit_plots/limits_%s_080221.png'%(channel,channel))
 
 
 
@@ -67,7 +68,7 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['ue']:
+for channel in ['de']:
 
     if channel=='ue':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
@@ -120,10 +121,10 @@ for channel in ['ue']:
         #print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
 
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-    #print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*limit* --use-dirs -o LQ_cards/%s/limits.json"%(channel,channel))
+    #print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
 
     print("\n========= making limit plot for channel %s =========\n"%(channel))
-    print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json:exp --auto-style"%(channel,channel))
+    #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
     plotLimits(channel)
 
 
