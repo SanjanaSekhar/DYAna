@@ -10,15 +10,16 @@ Double_t get_kl_limit(FILE *f1, int M_Zp, Double_t kl_start, Double_t *AFB_test,
     Double_t alpha = 0.05;
     Double_t pval = 0.;
     Double_t kl;
+    Double_t eps = 0.0001;
 
 
-    for(kl = kl_start; kl >= kl_min && kl <= kl_max; kl-=kl_step){
+    for(kl = kl_start; kl >= kl_min-eps && kl <= kl_max + eps; kl-=kl_step){
         //printf("%.2f kl \n", kl);
         pval = test_Zp(f1, M_Zp, kl, AFB_test);
         if(print) printf("kl, kl_start, pval = %.2f %.2f %.3f \n", kl, kl_start, pval);
         if (pval > alpha && kl < kl_start){
             if(print) printf("return \n");
-            return kl;
+            return kl + kl_step;
         }
         else if(pval  > alpha){
             if(print) printf("Started too low, changing kl start from %.2f to %.2f\n", kl_start, kl_start +2*kl_step);
@@ -199,8 +200,8 @@ void make_limit_plot(){
     CMS_lumi( c1, iPeriod, 0 );
 
 
-    c1->Print("limit_obs_test.png");
-    c1->Print("limit_obs_test.pdf");
+    //c1->Print("limit_obs_test.png");
+    //c1->Print("limit_obs_test.pdf");
 
     TFile *f_out = TFile::Open("limit_obs.root", "RECREATE");
     f_out->cd();
