@@ -13,7 +13,7 @@ gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
 
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
-        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1):  
+        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1):  
     # histlist is just the generic list but if bkglist is specified (non-empty)
     # then this function will stack the backgrounds and compare against histlist as if 
     # it is data. The imporant bit is that bkglist is a list of lists. The first index
@@ -210,12 +210,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 
                 mLS = 0.08
-                mTS = 0.06
+                mTS = 0.08
+                TOffset = 1.1
                 # Now draw the main pad
                 data_leg_title = hist.GetTitle()
                 if len(titles) > 0:
                     hist.SetTitle(titles[hist_index])
-                hist.GetYaxis().SetTitleOffset(1.4)
+                hist.GetYaxis().SetTitleOffset(TOffset)
                 hist.GetXaxis().SetTitleOffset(1.2)
                 hist.GetYaxis().SetTitle('Events / bin')
                 hist.GetYaxis().SetLabelSize(mLS)
@@ -260,6 +261,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
 
+                legends[hist_index].AddEntry(totlist[hist_index], "Bkg. unc.", "f")
+
 
 
                 legends[hist_index].SetBorderSize(0)
@@ -270,8 +273,6 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 subs[hist_index].cd()
                 # Build the pull
 		ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
-                ratio.Print()
-                hist.Print("range")
                 chi2 = 0.
                 #for i in range(1, pull.GetNbinsX()+1):
                     #chi2 += pull.GetBinContent(i)**2;
@@ -279,34 +280,48 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 LS = .13
                 #title size given as fraction of pad width, scale up to have same size as main pad
-                TS =  0.06 * 0.7/0.3
+                YTS =  mTS * 0.7/0.3
+                XTS =  0.06 * 0.7/0.3
+                lTOffset = TOffset * 0.3 / 0.7
+
+
+                if(mbin <= 4):
+                    ratio_range = (0.851, 1.149)
+                elif(mbin ==5):
+                    ratio_range = (0.5, 1.5)
+                elif(mbin ==6 or mbin == 7):
+                    ratio_range = (0.01, 1.99)
 
 
 
-                ratio.GetYaxis().SetRangeUser(0.0, 2.0)
-                ratio.GetYaxis().SetTitleOffset(0.3)
-                ratio.GetXaxis().SetTitleOffset(1.2)
+
+                ratio_sys_unc.GetYaxis().SetRangeUser(ratio_range[0], ratio_range[1])
+                ratio_sys_unc.GetYaxis().SetTitleOffset(lTOffset)
+                ratio_sys_unc.GetXaxis().SetTitleOffset(1.2)
                              
-                ratio.GetYaxis().SetLabelSize(LS)
-                ratio.GetYaxis().SetTitleSize(TS)
-                ratio.GetYaxis().SetNdivisions(306)
-                ratio.GetYaxis().SetTitle("Data/Fit")
+                ratio_sys_unc.GetYaxis().SetLabelSize(LS)
+                ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
+                ratio_sys_unc.GetYaxis().SetNdivisions(306)
+                ratio_sys_unc.GetYaxis().SetTitle("Data/Fit")
 
-                ratio.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
-                ratio.GetXaxis().SetLabelOffset(0.05)
-                ratio.GetXaxis().SetLabelSize(LS)
-                ratio.GetXaxis().SetTitleSize(TS)
-                ratio.GetXaxis().SetTitle(xtitle)
-
-
-                ratio_sys_unc.SetFillColor(ROOT.kBlack)
-                totlist[hist_index].SetFillStyle(3354)
+                ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
+                ratio_sys_unc.GetXaxis().SetLabelOffset(0.05)
+                ratio_sys_unc.GetXaxis().SetLabelSize(LS)
+                ratio_sys_unc.GetXaxis().SetTitleSize(XTS)
+                ratio_sys_unc.GetXaxis().SetTitle(xtitle)
 
 
-                ratio.Draw('AP')
+                #ratio_sys_unc.SetFillColor(ROOT.kBlack)
+                #ratio_sys_unc.SetFillStyle(3015)
+                ratio_sys_unc.SetFillColor(ROOT.kGray)
+                #ratio_sys_unc.SetFillStyle(3015)
+
+
+                ratio_sys_unc.Draw("A3 same")
+                ratio.Draw('P same')
                 line = TLine(0, 1.0, hist.GetNbinsX() - 0.08, 1.0)
+                line.SetLineStyle(9)
                 line.Draw()
-                ratio_sys_unc.Draw("3 same")
 
                 if logy == True:
                     mains[hist_index].SetLogy()
@@ -412,7 +427,24 @@ def makeRatio( DATA,BKG):
         sys_err_down.append(BKG_errdown/BKGcont)
         
     pull = ROOT.TGraphAsymmErrors(nbins,x,ratio, x_err_zero, x_err_zero, y_err_down, y_err_up)
-    sys_unc = ROOT.TGraphAsymmErrors(nbins, x, y_val1, x_err_low, x_err_high, sys_err_down,  sys_err_up)
+    #add extra at high-x for ratio plot
+    x.append(x[-1] + x_err_high[-1])
+    y_val1.append(1)
+    x_err_low.append(x_err_low[-1])
+    x_err_high.append(0)
+    sys_err_up.append(sys_err_up[-1])
+    sys_err_down.append(sys_err_down[-1])
+    #add extra at low-x for ratio plot
+    x.insert(0, x[0] - x_err_low[0])
+    y_val1.insert(0,1)
+    x_err_low.insert(0,0)
+    x_err_high.insert(0, x_err_high[0])
+    sys_err_up.insert(0,sys_err_up[0])
+    sys_err_down.insert(0,sys_err_down[0])
+
+
+
+    sys_unc = ROOT.TGraphAsymmErrors(nbins+2, x, y_val1, x_err_low, x_err_high, sys_err_down,  sys_err_up)
     return pull, sys_unc
 
 def Make_up_down(hist):
@@ -517,7 +549,7 @@ if (__name__ == "__main__"):
                         fracs[name] += this_frac
 
             makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, 
-                    titles = [title], xtitle = "Template Bin", year = year, datastyle=datastyle ) 
+                    titles = [title], xtitle = "Template Bin", year = year, datastyle=datastyle, mbin = options.mbin ) 
 
     for key in fracs.keys():
         fracs[key] /= (len(years)*len(dirs))
