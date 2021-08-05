@@ -27,7 +27,7 @@ def plotLimits(channel):
      # Get limit TGraphs as a dictionary
     graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s.json'%(channel,channel))
     print(graphs)
-    del graphs['obs']    
+#    del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     axis.GetXaxis().SetTitle('m_{S_{%s}} (GeV)'%(channel))
@@ -55,7 +55,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limit_plots/limits_%s_080221.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limit_plots/limits_%s_080221_withobs.png'%(channel,channel))
 
 
 
