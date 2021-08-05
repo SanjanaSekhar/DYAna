@@ -24,8 +24,8 @@ for y in [-1]:
         for options.q in ["u","d"]:
 
             extra_params=""
-            options.chan="mumu"
-            options.q="u"
+#            options.chan="mumu"
+#            options.q="u"
             options.no_sys=False
             options.fake_data=True
             options.no_LQ=False
@@ -60,7 +60,7 @@ for y in [-1]:
             if(options.fake_data): fit_name +="_fake_data"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-            fit_name+="_"+options.q
+            fit_name+="_"+options.q+"yLQfrozen"
 
             if(options.no_LQ): fit_name+="_noLQ"
 
@@ -81,7 +81,7 @@ for y in [-1]:
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
               #  print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters A0 " %(workspace, extra_params))
-                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 --freezeParameters yLQ %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
@@ -89,7 +89,7 @@ for y in [-1]:
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
-                    print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s " % (workspace, extra_params)) #only to get prefit, probably a better way
+                    print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit --freezeParameters yLQ %s " % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
