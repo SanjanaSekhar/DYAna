@@ -29,19 +29,21 @@
 #include "../../utils/Colors.h"
 
 
-
-const int type = FLAG_MUONS;
-const int year = 2016;
 const bool write_out = true;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
 
+const int type = FLAG_MUONS;
+const int year = 2018;
+char *fout_name = "MuMu/saved_hists.root";
 
 
 
-void draw_cmp(){
 
+void save_hists(){
 
+    char year_str[80];
+    sprintf(year_str, "y%i", year);
     
     setTDRStyle();
     init(year);
@@ -119,55 +121,6 @@ void draw_cmp(){
     TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
     TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
-    dy_tautau_cost->SetFillColor(tautau_c);
-    dy_tautau_m->SetFillColor(tautau_c);
-    dy_tautau_pt->SetFillColor(tautau_c);
-    dy_tautau_xf->SetFillColor(tautau_c);
-    dy_tautau_phi->SetFillColor(tautau_c);
-    dy_tautau_rap->SetFillColor(tautau_c);
-
-    dy_cost->SetFillColor(DY_c);
-    dy_m->SetFillColor(DY_c);
-    dy_pt->SetFillColor(DY_c);
-    dy_xf->SetFillColor(DY_c);
-    dy_phi->SetFillColor(DY_c);
-    dy_rap->SetFillColor(DY_c);
-
-    ttbar_cost->SetFillColor(ttbar_c);
-    ttbar_m->SetFillColor(ttbar_c);
-    ttbar_pt->SetFillColor(ttbar_c);
-    ttbar_xf->SetFillColor(ttbar_c);
-    ttbar_phi->SetFillColor(ttbar_c);
-    ttbar_rap->SetFillColor(ttbar_c);
-
-
-    wt_cost->SetFillColor(wt_c);
-    wt_m->SetFillColor(wt_c);
-    wt_pt->SetFillColor(wt_c);
-    wt_xf->SetFillColor(wt_c);
-    wt_phi->SetFillColor(wt_c);
-    wt_rap->SetFillColor(wt_c);
-
-    diboson_cost->SetFillColor(diboson_c);
-    diboson_m->SetFillColor(diboson_c);
-    diboson_pt->SetFillColor(diboson_c);
-    diboson_xf->SetFillColor(diboson_c);
-    diboson_phi->SetFillColor(diboson_c);
-    diboson_rap->SetFillColor(diboson_c);
-
-    QCD_cost->SetFillColor(qcd_c);
-    QCD_m->SetFillColor(qcd_c);
-    QCD_pt->SetFillColor(qcd_c);
-    QCD_xf->SetFillColor(qcd_c);
-    QCD_phi->SetFillColor(qcd_c);
-    QCD_rap->SetFillColor(qcd_c);
-
-    gg_cost->SetFillColor(gamgam_c);
-    gg_m->SetFillColor(gamgam_c);
-    gg_pt->SetFillColor(gamgam_c);
-    gg_xf->SetFillColor(gamgam_c);
-    gg_phi->SetFillColor(gamgam_c);
-    gg_rap->SetFillColor(gamgam_c);
 
 
 
@@ -257,169 +210,42 @@ void draw_cmp(){
     binwidth_normalize(dy_m, mbin_base);
 
 
-    THStack *m_stack = new THStack("m_stack", "MuMu Mass Distribution: Data vs MC ; m_{#mu^{+}#mu^{-}} (GeV)");
-    m_stack->Add(diboson_m);
-    m_stack->Add(QCD_m);
-    m_stack->Add(wt_m);
-    m_stack->Add(ttbar_m);
-    m_stack->Add(gg_m);
-    m_stack->Add(dy_tautau_m);
-    m_stack->Add(dy_m);
+    TFile *fout = new TFile(fout_name, "UPDATE");
+    fout->cd();
+    fout->mkdir(year_str);
+    fout->cd(year_str);
 
-
-    THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; Cos(#theta)_{r}");
-    cost_stack->Add(diboson_cost);
-    cost_stack->Add(QCD_cost);
-    cost_stack->Add(wt_cost);
-    cost_stack->Add(ttbar_cost);
-    cost_stack->Add(gg_cost);
-    cost_stack->Add(dy_tautau_cost);
-    cost_stack->Add(dy_cost);
-
-    THStack *pt_stack = new THStack("pt_stack", "ElEl Pt Distribution: Data vs dy; DiElectron Pt (GeV); Events / GeV");
-    pt_stack->Add(diboson_pt);
-    pt_stack->Add(QCD_pt);
-    pt_stack->Add(wt_pt);
-    pt_stack->Add(ttbar_pt);
-    pt_stack->Add(gg_pt);
-    pt_stack->Add(dy_tautau_pt);
-    pt_stack->Add(dy_pt);
-
-    binwidth_normalize(pt_stack);
-    binwidth_normalize(data_pt);
-
-    THStack *xf_stack = new THStack("xf_stack", "Di-electron x_F Distribution: Data vs MC; x_F");
-    xf_stack->Add(diboson_xf);
-    xf_stack->Add(QCD_xf);
-    xf_stack->Add(wt_xf);
-    xf_stack->Add(ttbar_xf);
-    xf_stack->Add(gg_xf);
-    xf_stack->Add(dy_tautau_xf);
-    xf_stack->Add(dy_xf);
-
-    THStack *phi_stack = new THStack("phi_stack", "DiElectron Phi Distribution: Data vs MC; #phi");
-    phi_stack->Add(diboson_phi);
-    phi_stack->Add(QCD_phi);
-    phi_stack->Add(wt_phi);
-    phi_stack->Add(ttbar_phi);
-    phi_stack->Add(gg_phi);
-    phi_stack->Add(dy_tautau_phi);
-    phi_stack->Add(dy_phi);
-
-    THStack *rap_stack = new THStack("rap_stack", "DiElectron Rapidity Distribution: Data vs MC; y");
-    rap_stack->Add(diboson_rap);
-    rap_stack->Add(QCD_rap);
-    rap_stack->Add(wt_rap);
-    rap_stack->Add(ttbar_rap);
-    rap_stack->Add(gg_rap);
-    rap_stack->Add(dy_tautau_rap);
-    rap_stack->Add(dy_rap);
-
-
-
-    gStyle->SetLegendBorderSize(0);
-    float x_size = 0.4;
-    float y_size = 0.3;
-
-
-    //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
-    TLegend *leg1 = new TLegend(x_size, y_size);
-    leg1->SetNColumns(2);
-    leg1->SetHeader("Dimuon Signal Region");
-    leg1->AddEntry(data_m, "data", "p");
-    leg1->AddEntry(dy_m, "DY Signal", "f");
-    leg1->AddEntry(dy_tautau_m, "DY #rightarrow #tau#tau", "f");
-    leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg1->AddEntry(ttbar_m, "t#bar{t}", "f");
-    leg1->AddEntry(wt_m, "tW + #bar{t}W", "f");
-    leg1->AddEntry(QCD_m, "QCD + WJets", "f");
-    leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
-    TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
-    TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
-    TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
-    TLegend *leg5 = (TLegend *) leg1->Clone("leg5");
-    TLegend *leg6 = (TLegend *) leg1->Clone("leg6");
-
-    leg1->SetX1NDC(0.7);
-    leg1->SetX2NDC(0.7);
-
- 
-    //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
-    TCanvas *c_m, *c_cost, *c_pt, *c_xf, *c_phi, *c_rap;
-    TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
-    int iPeriod = 4; 
-    writeExtraText = true;
-    char plt_file[100], y_ax_label[100];
-
-
-
-    bool logy = true;
-
-    bool logx = false;
-    bool draw_sys_uncs = true;
-    float ratio_range = 0.5;
-
-
-
-    float x_start_m = 0.5;
-    float y_start_m = 0.6;
-    leg1->SetX1(x_start_m);
-    leg1->SetX2(x_start_m+x_size);
-    leg1->SetY1(y_start_m);
-    leg1->SetY2(y_start_m+y_size);
-
-
-    sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_m, year, 33 );
-    sprintf(plt_file, "%sMuMu%i_m_cmp.pdf", plot_dir, year % 2000);
-    if(write_out) c_m->Print(plt_file);
-
+    data_m->Write();
+    diboson_m->Write();
+    QCD_m->Write();
+    ttbar_m->Write();
+    gg_m->Write();
+    dy_tautau_m->Write();
+    dy_m->Write();
+    wt_m->Write();
     
-    float x_start_c = 0.57 - x_size/2;
-    float y_start_c = 0.14;
-    leg2->SetX1(x_start_c);
-    leg2->SetX2(x_start_c+x_size);
-    leg2->SetY1(y_start_c);
-    leg2->SetY2(y_start_c+y_size);
-
-    
-    logy = false;
-    sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label,  -1., logy,logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_cost, year, 33);
-    sprintf(plt_file, "%sMuMu%i_cost_cmp.pdf", plot_dir, year % 2000);
-    if(write_out) c_cost->Print(plt_file);
-
-    logy = true;
-    //sprintf(y_ax_label, "Events/%.0f GeV", pt_bin_size);
-    std::tie(c_pt, p_pt) = make_stack_ratio_plot(data_pt, pt_stack, leg3, "pt", "dimuon pt (GeV)","", plot_label, -1., logy, logx, false, 0.2);
-    CMS_lumi(p_pt, year, 33);
-    sprintf(plt_file, "%sMuMu%i_pt_cmp.pdf", plot_dir, year % 2000);
-    if(write_out) c_pt->Print(plt_file);
-
-    std::tie(c_xf, p_xf) = make_stack_ratio_plot(data_xf, xf_stack, leg4, "xf", "x_F (GeV)","", plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_xf, year, 33);
-    sprintf(plt_file, "%sMuMu%i_xf_cmp.pdf", plot_dir, year % 2000);
-    if(write_out) c_xf->Print(plt_file);
-
-    std::tie(c_phi, p_phi) = make_stack_ratio_plot(data_phi, phi_stack, leg5, "phi", "dimuon #phi","", plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_phi, year, 33);
-    sprintf(plt_file, "%sMuMu%i_phi_cmp.pdf", plot_dir, year % 2000);
-    if(write_out) c_phi->Print(plt_file);
-
-    leg6->SetX1(x_start_c);
-    leg6->SetX2(x_start_c+x_size);
-    leg6->SetY1(y_start_c);
-    leg6->SetY2(y_start_c+y_size);
+    data_cost->Write();
+    diboson_cost->Write();
+    QCD_cost->Write();
+    ttbar_cost->Write();
+    gg_cost->Write();
+    dy_tautau_cost->Write();
+    dy_cost->Write();
+    wt_cost->Write();
 
 
-    sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dimuon rapidity",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_rap, year, 33);
-    sprintf(plt_file, "%sMuMu%i_rap_cmp.pdf", plot_dir, year % 2000);
-    if(write_out) c_rap->Print(plt_file);
+    data_rap->Write();
+    diboson_rap->Write();
+    QCD_rap->Write();
+    ttbar_rap->Write();
+    gg_rap->Write();
+    dy_tautau_rap->Write();
+    dy_rap->Write();
+    wt_rap->Write();
+
+
+
+
 
 
 }
