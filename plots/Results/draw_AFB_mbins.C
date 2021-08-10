@@ -22,6 +22,7 @@
 #include "Math/Functor.h"
 #include "../tdrstyle.C"
 #include "../CMS_lumi.C"
+#include "../../utils/Colors.h"
 #include "results.h"
 
 void draw_AFB_mbins(){
@@ -54,8 +55,8 @@ void draw_AFB_mbins(){
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
-    g_sm_amc->SetMarkerColor(kCyan-6);
-    g_sm_amc->SetLineColor(kCyan-6);
+    g_sm_amc->SetMarkerColor(diboson_c);
+    g_sm_amc->SetLineColor(diboson_c);
     g_sm_amc->SetLineWidth(4);
 
     g_sm_pow->SetMarkerColor(kBlue);
@@ -64,12 +65,12 @@ void draw_AFB_mbins(){
 
 
     g_comb->SetMarkerColor(kBlack);
-    g_elel->SetMarkerColor(kGreen);
-    g_mumu->SetMarkerColor(kRed-7);
+    g_elel->SetMarkerColor(ttbar_c);
+    g_mumu->SetMarkerColor(DY_c);
     
     g_comb->SetLineColor(kBlack);
-    g_elel->SetLineColor(kGreen);
-    g_mumu->SetLineColor(kRed-7);
+    g_elel->SetLineColor(ttbar_c);
+    g_mumu->SetLineColor(DY_c);
 
     g_comb->SetMarkerStyle(kFullSquare);
     g_mumu->SetMarkerStyle(kFullSquare);
@@ -82,10 +83,11 @@ void draw_AFB_mbins(){
 
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
     TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
+    pad1->SetTopMargin(0.07);
     pad1->SetBottomMargin(0.012);
     pad1->Draw();
     pad1->cd();
-    g_sm_amc->GetYaxis()->SetRangeUser(0.2, 0.75);
+    g_sm_amc->GetYaxis()->SetRangeUser(0.2, 0.8);
     g_sm_amc->GetXaxis()->SetLimits(100., 1400.);
     g_sm_amc->Draw("ALP");
     if(draw_powheg) g_sm_pow->Draw("ALP same");
@@ -93,8 +95,8 @@ void draw_AFB_mbins(){
     g_mumu->Draw("PE same");
     g_comb->Draw("PE same");
 
-    int title_size = 30;
-    int ratio_title_size = 20;
+    int title_size = 35;
+    int ratio_title_size = 35;
 
 
     g_sm_amc->GetYaxis()->SetTitle("Forward Backward Asymmetry");
@@ -109,14 +111,14 @@ void draw_AFB_mbins(){
     
     float x_size = 0.4;
     float y_size = 0.3;
-    float leg_text_size = 0.04;
+    float leg_text_size = 0.05;
 
 
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
     float x_start_m = 0.2;
-    float y_start_m = 0.3;
+    float y_start_m = 0.18;
 
 
     leg1->SetX1(x_start_m);
@@ -147,11 +149,11 @@ void draw_AFB_mbins(){
     g_ratio->Draw("APE");
 
 
-    g_ratio->GetYaxis()->SetTitle("Comb./aMC@NLO");
+    g_ratio->GetYaxis()->SetTitle("Comb./SM");
     g_ratio->GetYaxis()->SetNdivisions(505);
     g_ratio->GetYaxis()->SetTitleSize(ratio_title_size);
     g_ratio->GetYaxis()->SetTitleFont(43);
-    //g_ratio->GetYaxis()->SetTitleOffset(1.2);
+    g_ratio->GetYaxis()->SetTitleOffset(1.2);
     g_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetYaxis()->SetLabelSize(15);
     // X axis g_ratio plot settings
@@ -162,12 +164,12 @@ void draw_AFB_mbins(){
     g_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetXaxis()->SetLabelSize(20);
     int iPeriod = -1; 
-    writeExtraText = true;
+    writeExtraText = false;
     draw_CMS = true;
     CMS_lumi(pad1, iPeriod, 11 );
     c_m->Update();
 
-    c_m->Print("Paper_plots/AFB_mbins_blind.pdf");
+    c_m->Print("Paper_plots/AFB_mbins_unblind.pdf");
     
 }
 

@@ -15,7 +15,7 @@ float dy_sys_unc = 0.12;
 float qcd_sys_unc = 0.55;
 float diboson_sys_unc = 0.15;
 float top_sys_unc = 0.13;
-float gam_sys_unc = 0.35;
+float gam_sys_unc = 0.13;
 
 float computeChi2(TH1 *h){
     // only use on ratio plots, with expected value of 1
@@ -195,7 +195,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     h1->SetMinimum(1e-5);
     if(logy && hmax > 10) h1->SetMinimum(1e-1);
     h1->Draw("hist E");
-    gStyle->SetEndErrorSize(4);
+    gStyle->SetEndErrorSize(0);
     h2->Draw("hist E same");
     pad1->cd();
     TLatex latext; 
@@ -290,6 +290,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
+    pad1->SetTopMargin(0.07);
     pad1->SetBottomMargin(0);
     pad1->Draw();
     pad1->cd();
@@ -300,10 +301,10 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(logy) hmax *=2;
     h_stack->SetMaximum(hmax);
     h_stack->SetMinimum(0.1);
-    gStyle->SetEndErrorSize(4);
+    gStyle->SetEndErrorSize(0);
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
-    h_data->DrawCopy("P E0X0 same");
+    h_data->Draw("p e0x0 same");
 
     int axis_title_size = 35;
     int axis_label_size = 20;
@@ -331,12 +332,14 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     latext.DrawLatex(l + w/2, 1-2*t ,plot_label);
 
+    float y_title_offset = 1.5;
+
 
     h_stack->GetYaxis()->SetTitle(ylabel);
     h_stack->GetYaxis()->SetNdivisions(505);
     h_stack->GetYaxis()->SetTitleSize(axis_title_size);
     h_stack->GetYaxis()->SetTitleFont(43);
-    h_stack->GetYaxis()->SetTitleOffset(1.5);
+    h_stack->GetYaxis()->SetTitleOffset(y_title_offset);
     h_stack->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     h_stack->GetYaxis()->SetLabelSize(axis_label_size);
 
@@ -436,7 +439,9 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
    h_ratio->GetYaxis()->SetNdivisions(505);
    h_ratio->GetYaxis()->SetTitleSize(axis_title_size);
    h_ratio->GetYaxis()->SetTitleFont(43);
-   h_ratio->GetYaxis()->SetTitleOffset(1.2);
+
+   float pad2_y_title_offset = 1.3;
+   h_ratio->GetYaxis()->SetTitleOffset(pad2_y_title_offset);
    h_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    h_ratio->GetYaxis()->SetLabelSize(axis_label_size);
    // X axis m_ratio plot settings
