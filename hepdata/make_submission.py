@@ -50,8 +50,8 @@ for chan in channels:
     AFB_vals = dict()
     AFB_vals["AFB_err_stat"] = np_file["AFB_err_stat"][1:]
     AFB_vals["AFB_err_sys"] = np_file["AFB_err_sys"][1:]
-    AFB_vals["AFB_val"] = [0.6]*n_mass_bins
-    #raw_vals["AFB_val"] = ["AFB_val"][1:]
+    #AFB_vals["AFB_val"] = [0.6]*n_mass_bins
+    AFB_vals["AFB_val"] = np_file["AFB_val"][1:]
 
     round_value_and_uncertainty(AFB_vals, val_key='AFB_val', unc_key='AFB_err_stat', sig_digits_unc = 2)
     round_value_and_uncertainty(AFB_vals, val_key='AFB_err_sys', unc_key='AFB_err_stat', sig_digits_unc = 2)
@@ -59,8 +59,8 @@ for chan in channels:
     A0_vals = dict()
     A0_vals["A0_err_stat"] = np_file["A0_err_stat"][1:]
     A0_vals["A0_err_sys"] = np_file["A0_err_sys"][1:]
-    A0_vals["A0_val"] = [0.05]*n_mass_bins
-    #raw_vals["A0_val"] = ["A0_val"][1:]
+    #A0_vals["A0_val"] = [0.05]*n_mass_bins
+    A0_vals["A0_val"] = np_file["A0_val"][1:]
 
     round_value_and_uncertainty(A0_vals, val_key='A0_val', unc_key='A0_err_stat', sig_digits_unc = 2)
     round_value_and_uncertainty(A0_vals, val_key='A0_err_sys', unc_key='A0_err_stat', sig_digits_unc = 2)
@@ -88,10 +88,9 @@ for chan in channels:
             is_independent = False,
             is_binned = False,
             units = "")
-    A0s.values = [0.05]*n_mass_bins
-    #A0.values = np_file["A0_val"]
+    #A0s.values = [0.05]*n_mass_bins
+    A0s.values = A0_vals["A0_val"]
 
-    np_file = np.load(fname)
 
     A0_stat_uncs = Uncertainty("Statistical")
     A0_stat_uncs.values = A0_vals["A0_err_stat"]
@@ -127,9 +126,9 @@ kl_limit_var = Variable("Limit on Kappa_L",
 
 
 
-f_limit = ROOT.TFile.Open("../setlimits/limit.root", "READ")
-#obs_limit_graph = f_limit->Get("obs_limit")
-obs_limit_graph = f_limit.Get("exp_limit")
+f_limit = ROOT.TFile.Open("../setlimits/limit_obs.root", "READ")
+obs_limit_graph = f_limit.Get("obs_limit")
+#obs_limit_graph = f_limit.Get("exp_limit")
 zp_masses_ = []
 kl_limits_ = []
 

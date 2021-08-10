@@ -255,13 +255,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
             
-                legends[hist_index].SetHeader(title, "c")
+                legends[hist_index].SetHeader(titles[0], "c")
                 legends[hist_index].SetNColumns(2)
                 
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
 
-                legends[hist_index].AddEntry(totlist[hist_index], "Bkg. unc.", "f")
+                legends[hist_index].AddEntry(totlist[hist_index], "Sys. unc.", "f")
 
 
 
@@ -317,8 +317,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 #ratio_sys_unc.SetFillStyle(3015)
 
 
+                ratio.SetLineStyle(1)
                 ratio_sys_unc.Draw("A3 same")
-                ratio.Draw('P same')
+                ratio.Draw('p0e0Z same')
+                
                 line = TLine(0, 1.0, hist.GetNbinsX() - 0.08, 1.0)
                 line.SetLineStyle(9)
                 line.Draw()

@@ -33,9 +33,9 @@ sys_name_conv = dict()
 sys_name_conv['dy_xsec'] = "DY Cross Section"
 sys_name_conv['db_xsec'] = "Diboson Cross Section"
 sys_name_conv['top_xsec'] = "$\\ttbar$ Cross Section"
-sys_name_conv['gam_xsec'] = "$\\gamma\\gamma$ Cross Section"
-sys_name_conv['elFakesYR'] = "Electron Fakes Normalization"
-sys_name_conv['muFakesYR'] = "Muon Fakes Normalization"
+sys_name_conv['gam_xsec'] = "$\\PGg\\PGg$ Cross Section"
+sys_name_conv['elFakesYR'] = "Electron MisID Normalization"
+sys_name_conv['muFakesYR'] = "Muon MisID Normalization"
 sys_name_conv['Pu'] = "Pileup"
 sys_name_conv['prefireYR'] = "Trigger Prefire Correction"
 sys_name_conv['METJECYR'] = "MET Uncertainties"
@@ -51,10 +51,10 @@ sys_name_conv['elIDs'] = "Electron Identification/Isolation"
 sys_name_conv['elRECOs'] = "Electron Reconstruction"
 sys_name_conv['muIDsYR'] = "Muon Identification/Isolation"
 sys_name_conv['muHLTsYR'] = "Muon Trigger"
-sys_name_conv['elfakesrwsYR'] = "Electron Fakes Shape"
-sys_name_conv['mufakesrwsYR'] = "Muon Fakes Shape"
+sys_name_conv['elfakesrwsYR'] = "Electron MisID Shape"
+sys_name_conv['mufakesrwsYR'] = "Muon MisID Shape"
 sys_name_conv['BTAGSYR'] = "b-tagging Uncertainty"
-sys_name_conv['autoMCStats'] = "MC and Fakes Backgrounds Statistical Uncertainty"
+sys_name_conv['autoMCStats'] = "MC and MisID Backgrounds Statistical Uncertainty"
 
 
 
@@ -116,7 +116,7 @@ for indi_par in individual_pars:
     freeze_str = par_to_freezestr(indi_par)
     print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s """ 
             % (freeze_str,s, indi_par, extra_params))
-    sys_unc = compute_sys("nom1", indi_par, s)
+    sys_unc = compute_sys("nom1", indi_par, -1)
     d[indi_par] = sys_unc
     #if(n>2): break
 
@@ -125,7 +125,7 @@ for group_par in group_pars:
     freeze_str = par_to_freezestr(group_par)
     print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s """ % 
             (freeze_str, s, group_par, extra_params))
-    sys_unc = compute_sys("nom1", group_par, s)
+    sys_unc = compute_sys("nom1", group_par, -1)
     d[group_par] = sys_unc
     #if(n>4): break
 

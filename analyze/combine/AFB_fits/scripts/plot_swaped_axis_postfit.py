@@ -85,7 +85,8 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-h_names = ["gam", "db", "qcd", "top",  "tautau", "alpha", "fpl_fmn"]
+
+h_names = ["gam", "db", "qcd", "top",  "tautau", "dy"]
 h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -93,14 +94,14 @@ m_bins = [150, 170, 200,  250, 320, 510, 700, 1000, 14000]
 
 
 label_color_map = dict()
-label_color_map['fpl_fmn'] = ("DY Plus + Minus Template", kRed + 1)
-label_color_map['alpha'] = ("DY #alpha Template", kMagenta + 4)
+label_color_map['dy'] = ("DY Signal", kRed + 1)
 label_color_map['top'] = ("t#bar{t} + tW ", kBlue)
 label_color_map['db'] = ("WW + WZ + ZZ",  kGreen +3)
-label_color_map['dy'] = ("DY (miss-sign)", kRed + 1)
-label_color_map['tautau'] = ("DY #tau#tau", kMagenta)
-label_color_map['gam'] = ("\\gamma\\gamma \\to \\mathscr{ll} ", kOrange)
+label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
+label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", kOrange)
 label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
+
+datastyle = "pe0x0"
 
 dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/"]
 if(options.ss): dirs = dirs = ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
@@ -117,12 +118,18 @@ for year in years:
         h_tot_swap = swap_axes(h_tot)
         h_data_swap = swap_axes(h_data)
 
+        h_tot_sig = f_in.Get(dir_ + "TotalSig")
+        h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+
         mbin_low = m_bins[options.mbin]
         mbin_high = m_bins[options.mbin+1]
 
+        title = ""
         if(idx == 0): title = "Muons %i %i-%i GeV" % (year, mbin_low, mbin_high)
-        if(idx == 1): title = "Electrons %i %i-%i GeV" % (year, mbin_low, mbin_high)
-        if(idx == 2): title = "Electrons Samesign %i %i-%i GeV" % (year, mbin_low, mbin_high)
+        elif(idx == 1): title = "Electrons %i %i-%i GeV" % (year, mbin_low, mbin_high)
+        elif(idx == 2): title = "Electrons Samesign %i %i-%i GeV" % (year, mbin_low, mbin_high)
+        else:
+            print("Idx is %i ?" % idx)
         
         if(idx == 2): name_list = h_ss_names
         else: name_list = h_names
@@ -131,12 +138,8 @@ for year in years:
         label_list = []
 
         for name in name_list:
-            if(name == "fpl_fmn"):
-                h_pl = f_in.Get(dir_ + "fpl")
-                h_mn = f_in.Get(dir_ + "fmn")
-                h = h_pl.Clone("h_%s_c%i_y%i" %(name, idx, year))
-                h_mn = h_mn.Clone("h_mn")
-                h.Add(h_mn)
+            if(name == "dy"):
+                h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 
             else:
                 h = f_in.Get(dir_ + name)
@@ -150,7 +153,7 @@ for year in years:
                 color_list.append(label_color_map[name][1])
 
         makeCan(dir_[:-1] + "swapped_axis", options.output, [h_data_swap], bkglist=[hist_list], totlist=[h_tot_swap], 
-                colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Swapped Template Bin", year = year ) 
+                colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Swapped Template Bin", year = year, mbin = options.mbin ) 
 
 
 

@@ -39,5 +39,5 @@ with open(options.output, 'w') as f_out:
         if(frac > 0.1):
             f_out.write("%s & %.1f%% \\\\ \n" % (sys_name, frac))
         else:
-            f_out.write("%s & $<$0.1%% \\\\ \n" % (sys_name))
+            f_out.write("%s & $<$0.1\\%% \\\\ \n" % (sys_name))
 

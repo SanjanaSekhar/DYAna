@@ -12,8 +12,9 @@ def print_and_do(s):
 #labels = ["gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18", "gof_postfit", "gof_postfit_y16_mumu", "gof_postfit_y16_ee" ]
 
 labels = [ 
-        'gof_prefit_mumu',
-        'gof_prefit_ee',
+        'sys_uncs',
+        #'gof_prefit_mumu',
+        #'gof_prefit_ee',
         #'gof_noSym',
         #'gof_mumu16',
         #'gof_mumu17',

@@ -159,6 +159,9 @@ for key in year_sys_dict[0].keys():
 print("\n\nAveraged:\n")
 keys = final_sys_dict.keys()
 keys.sort()
+tot_ = 0.
 for ent in keys:
     print ent, final_sys_dict[ent]
+    tot_ += final_sys_dict[ent]**2
+print("Total ", tot_ **0.5)
 
