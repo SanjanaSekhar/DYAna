@@ -30,7 +30,7 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2018;
 const bool write_out = true;
 
 char *fout_name = "ElEl/saved_hists.root";
@@ -210,28 +210,24 @@ void save_hists(){
     setHistError(QCD_rap, qcd_sys_unc);
     setHistError(QCD_phi, qcd_sys_unc);
 
-    setHistError(dy_m, dy_sys_unc);
     setHistError(dy_cost, dy_sys_unc);
     setHistError(dy_pt, dy_sys_unc);
     setHistError(dy_xf, dy_sys_unc);
     setHistError(dy_rap, dy_sys_unc);
     setHistError(dy_phi, dy_sys_unc);
 
-    setHistError(diboson_m, diboson_sys_unc);
     setHistError(diboson_cost, diboson_sys_unc);
     setHistError(diboson_pt, diboson_sys_unc);
     setHistError(diboson_xf, diboson_sys_unc);
     setHistError(diboson_rap, diboson_sys_unc);
     setHistError(diboson_phi, diboson_sys_unc);
 
-    setHistError(ttbar_m, top_sys_unc);
     setHistError(ttbar_cost, top_sys_unc);
     setHistError(ttbar_pt, top_sys_unc);
     setHistError(ttbar_xf, top_sys_unc);
     setHistError(ttbar_rap, top_sys_unc);
     setHistError(ttbar_phi, top_sys_unc);
 
-    setHistError(wt_m, top_sys_unc);
     setHistError(wt_cost, top_sys_unc);
     setHistError(wt_pt, top_sys_unc);
     setHistError(wt_xf, top_sys_unc);
@@ -239,12 +235,20 @@ void save_hists(){
     setHistError(wt_phi, top_sys_unc);
 
 
-    setHistError(gg_m, gam_sys_unc);
     setHistError(gg_cost, gam_sys_unc);
     setHistError(gg_pt, gam_sys_unc);
     setHistError(gg_xf, gam_sys_unc);
     setHistError(gg_rap, gam_sys_unc);
     setHistError(gg_phi, gam_sys_unc);
+
+
+
+    setHistMassDepError(dy_m);
+    setHistMassDepError(diboson_m);
+    setHistMassDepError(ttbar_m);
+    setHistMassDepError(wt_m);
+    setHistMassDepError(wt_m);
+    setHistMassDepError(gg_m);
 
 
     binwidth_normalize(data_m, mbin_base);

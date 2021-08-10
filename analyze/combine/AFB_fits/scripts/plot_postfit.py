@@ -12,8 +12,30 @@ import CMS_lumi, tdrstyle
 gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
 
+
+
+# colors
+
+DY_c = 2011;
+ttbar_c = 2022;
+wt_c = 2033;
+diboson_c = 2044;
+qcd_c = 2055;
+tautau_c = 2066;
+gamgam_c = 2077;
+
+DY_co = ROOT.TColor(DY_c, 213./255.,94./255.,0., "DY_co", 1);
+ttbar_co = ROOT.TColor(ttbar_c,  0., 41./225., 186./255., "ttbar_co", 1);
+wt_co = ROOT.TColor(wt_c,  86./255., 180./255., 233./255., "wt_co", 1);
+diboson_co = ROOT.TColor(diboson_c,  0., 158./255., 115./255., "diboson_co", 1);
+qcd_co = ROOT.TColor(qcd_c,  243./255., 168./255., 87./255., "qcd_co", 1);
+tautau_co = ROOT.TColor(tautau_c,  19./255., 58./255., 54./255., "tautau_co", 1);
+gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 1);
+
+
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
         logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1):  
+
     # histlist is just the generic list but if bkglist is specified (non-empty)
     # then this function will stack the backgrounds and compare against histlist as if 
     # it is data. The imporant bit is that bkglist is a list of lists. The first index
@@ -486,12 +508,12 @@ if (__name__ == "__main__"):
 
 
     label_color_map = dict()
-    label_color_map['dy'] = ("DY Signal", kRed + 1)
-    label_color_map['top'] = ("t#bar{t} + tW ", kBlue)
-    label_color_map['db'] = ("WW + WZ + ZZ",  kGreen +3)
-    label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
-    label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", kOrange)
-    label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
+    label_color_map['dy'] = ("DY Signal", DY_c)
+    label_color_map['top'] = ("t#bar{t} + Single Top", ttbar_c)
+    label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
+    label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
+    label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", gamgam_c)
+    label_color_map['qcd'] = ("WJets + QCD", qcd_c)
 
     datastyle = "pe0x0"
 

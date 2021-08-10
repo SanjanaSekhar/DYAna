@@ -24,7 +24,7 @@ float cmsTextSize      = 1.1;
 float cmsTextOffset    = 0.1;  // only used in outOfFrame version
 
 float relPosX    = 0.045;
-float relPosY    = 0.035;
+float relPosY    = 0.045;
 float relExtraDY = 1.0;
 
 // ratio of "CMS" and extra text size
