@@ -9,18 +9,18 @@ import ROOT as rt
 cmsText     = "CMS";
 cmsTextFont   = 61  
 
-writeExtraText = True
+writeExtraText = False
 extraText   = "Preliminary"
 extraTextFont = 52 
 
 lumiTextSize     = 0.75
 lumiTextOffset   = 0.2
 
-cmsTextSize      = 0.85
+cmsTextSize      = 1.1
 cmsTextOffset    = 0.1
 
-relPosX    = 0.085
-relPosY    = 0.035
+relPosX    = 0.065
+relPosY    = 0.045
 relExtraDY = 1.0
 
 extraOverCmsTextSize  = 0.76
@@ -51,7 +51,7 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
     t = pad.GetTopMargin()
     r = pad.GetRightMargin()
     b = pad.GetBottomMargin()
-    e = 0.025
+    #e = 0.025
 
     pad.cd()
 

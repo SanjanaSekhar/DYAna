@@ -163,10 +163,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 #    CMS_align_right = True
                 if not logy: 
                     y_end = 0.88
-                    y_size = 0.2 + 0.02*(len(bkglist[0])+len(signals))
-                    x_size = 0.35
+                    y_size = 0.2 + 0.03*(len(bkglist[0])+len(signals))
+                    x_size = 0.5
                     if(leg_align_right):
-                        x_start = 0.55
+                        x_start = 0.42
                     else:
                         x_start = 0.2
 
@@ -187,7 +187,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 subs[hist_index].SetLeftMargin(0.17)
                 subs[hist_index].SetRightMargin(0.05)
                 subs[hist_index].SetTopMargin(0)
-                subs[hist_index].SetBottomMargin(0.35)
+                subs[hist_index].SetBottomMargin(0.4)
                 mains[hist_index].Draw()
                 subs[hist_index].Draw()
 
@@ -200,6 +200,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                     if colors[bkg_index] != None:
                         bkg.SetFillColor(colors[bkg_index])
+                        bkg.SetLineColor(colors[bkg_index])
                     else:
                         bkg.SetFillColor(default_colors[bkg_index])
 
@@ -214,7 +215,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
                 # Set y max of all hists to be the same to accomodate the tallest
-                max_scaling = 2.0
+                max_scaling = 2.4
                 histList = [stacks[hist_index],totlist[hist_index],hist]
 
                 yMax = histList[0].GetMaximum()
@@ -279,6 +280,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
             
                 legends[hist_index].SetHeader(titles[0], "c")
                 legends[hist_index].SetNColumns(2)
+                legends[hist_index].SetTextSize(0.05)
                 
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
@@ -294,7 +296,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 # Draw the pull
                 subs[hist_index].cd()
                 # Build the pull
-		ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
+                ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
                 chi2 = 0.
                 #for i in range(1, pull.GetNbinsX()+1):
                     #chi2 += pull.GetBinContent(i)**2;
@@ -303,7 +305,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 LS = .13
                 #title size given as fraction of pad width, scale up to have same size as main pad
                 YTS =  mTS * 0.7/0.3
-                XTS =  0.06 * 0.7/0.3
+                XTS =  0.07 * 0.7/0.3
                 lTOffset = TOffset * 0.3 / 0.7
 
 
@@ -352,7 +354,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 if(CMS_align_right): CMS_loc = 33
                 else: CMS_loc = 11
-                CMS_lumi.CMS_lumi(thisPad, year, CMS_loc)
+                CMS_lumi.CMS_lumi(mains[hist_index], year, CMS_loc)
 
     if rootfile:
         myCan.Print(tag+'/'+name+'.root','root')
@@ -502,7 +504,7 @@ if (__name__ == "__main__"):
         years = [2016, 2017, 2018]
     else:
         years = [options.year]
-    h_names = ["gam", "db", "qcd", "top",  "tautau", "dy"]
+    h_names = ["gam", "db", "qcd", "top",  "dy"]
     h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -513,7 +515,7 @@ if (__name__ == "__main__"):
     label_color_map['dy'] = ("DY Signal", DY_c)
     label_color_map['top'] = ("t#bar{t} + Single Top", ttbar_c)
     label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
-    label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
+    #label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
     label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", gamgam_c)
     label_color_map['qcd'] = ("WJets + QCD", qcd_c)
 

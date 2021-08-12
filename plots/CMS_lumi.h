@@ -12,7 +12,7 @@ bool draw_CMS = true;
 TString cmsText     = "CMS";
 float cmsTextFont   = 61;  // default is helvetic-bold
 
-bool writeExtraText = true;
+bool writeExtraText = false;
 TString extraText   = "Preliminary";
 float extraTextFont = 52;  // default is helvetica-italics
 
