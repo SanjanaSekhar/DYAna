@@ -113,7 +113,7 @@ TCanvas *draw_single_plot(TString plt_fname, TH1F *h, TString xlabel, TString yl
 }
 
 
-        
+
 
 
 
@@ -265,16 +265,16 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     ratio->GetYaxis()->SetTitle(ratio_label);
     ratio->GetYaxis()->SetNdivisions(505);
     ratio->GetYaxis()->SetTitleSize(20);
-    ratio->GetYaxis()->SetTitleFont(43);
+    //ratio->GetYaxis()->SetTitleFont(43);
     ratio->GetYaxis()->SetTitleOffset(1.2);
-    ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    //ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     ratio->GetYaxis()->SetLabelSize(15);
     // X axis ratio plot settings
     ratio->GetXaxis()->SetTitle(axis_label);
     ratio->GetXaxis()->SetTitleSize(20);
-    ratio->GetXaxis()->SetTitleFont(43);
+    //ratio->GetXaxis()->SetTitleFont(43);
     ratio->GetXaxis()->SetTitleOffset(3.);
-    ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    //ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     ratio->GetXaxis()->SetLabelSize(20);
 
     //lumi_sqrtS = "";       // used with iPeriod = 0, e.g. for simulation-only plots (default is an empty string)
@@ -288,26 +288,30 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel, TString plot_label,
         float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0, bool draw_chi2 = false){
 
+
+
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
     pad1->SetTopMargin(0.07);
     pad1->SetBottomMargin(0);
+    pad1->SetRightMargin(0.03);
     pad1->Draw();
     pad1->cd();
     if(logy) pad1->SetLogy();
     if(logx) pad1->SetLogx();
     h_stack->Draw("hist");
+
+
+
     if(hmax <= 0. ) hmax = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
     if(logy) hmax *=2;
     h_stack->SetMaximum(hmax);
     h_stack->SetMinimum(0.1);
+
     gStyle->SetEndErrorSize(0);
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
     h_data->Draw("p e0x0 same");
-
-    int axis_title_size = 35;
-    int axis_label_size = 20;
 
     leg->Draw();
 
@@ -335,20 +339,28 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     float y_title_offset = 1.5;
 
 
-    h_stack->GetYaxis()->SetTitle(ylabel);
-    h_stack->GetYaxis()->SetNdivisions(505);
-    h_stack->GetYaxis()->SetTitleSize(axis_title_size);
-    h_stack->GetYaxis()->SetTitleFont(43);
-    h_stack->GetYaxis()->SetTitleOffset(y_title_offset);
-    h_stack->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-    h_stack->GetYaxis()->SetLabelSize(axis_label_size);
+    float TS = 0.08;
+    float TOffset = 0.98;
+    float LS = 0.06;
 
+    float rTS = TS * 0.7/0.3;
+    float rLS = LS * 0.7/0.3;
+    float rTOffset = TOffset * 0.3 / 0.7 - 0.05;
+
+    h_stack->GetYaxis()->SetTitle(ylabel);
+    h_stack->GetYaxis()->SetNdivisions(305);
+    h_stack->GetYaxis()->SetTitleSize(TS);
+    h_stack->GetYaxis()->SetTitleOffset(TOffset);
+    h_stack->GetYaxis()->SetLabelSize(LS);
+
+    h_stack->GetXaxis()->SetNdivisions(808);
 
 
     c->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
     //pad2->SetTopMargin(0);
     pad2->SetBottomMargin(0.4);
+    pad2->SetRightMargin(0.03);
     pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
@@ -360,7 +372,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     sum->Reset();
 
     for (int i=0;i<stackHists->GetSize();++i) {
-      sum->Add((TH1*)stackHists->At(i));
+        sum->Add((TH1*)stackHists->At(i));
     }
     //make separate tgraph for uncertainty on 'stacked' hists
     int nbins = sum->GetNbinsX();
@@ -388,7 +400,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         y = 1.;
         if(content > 0) ey = sum->GetBinError(idx) / sum->GetBinContent(idx);
         else ey = 0.;
-        
+
         ratio_unc->SetPoint(i, x,y);
         ratio_unc->SetPointError(i, ex,ey);
 
@@ -435,52 +447,49 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     h_ratio->SetTitle("");
     // Y axis m_ratio plot settings
-   h_ratio->GetYaxis()->SetTitle("Obs/Exp");
-   h_ratio->GetYaxis()->SetNdivisions(505);
-   h_ratio->GetYaxis()->SetTitleSize(axis_title_size);
-   h_ratio->GetYaxis()->SetTitleFont(43);
+    h_ratio->GetYaxis()->SetTitle("Obs/Exp");
+    h_ratio->GetYaxis()->SetNdivisions(303);
+    h_ratio->GetYaxis()->SetTitleSize(rTS);
+    h_ratio->GetYaxis()->SetLabelSize(rLS);
+    h_ratio->GetYaxis()->SetTitleOffset(rTOffset);
 
-   float pad2_y_title_offset = 1.3;
-   h_ratio->GetYaxis()->SetTitleOffset(pad2_y_title_offset);
-   h_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetYaxis()->SetLabelSize(axis_label_size);
-   // X axis m_ratio plot settings
-   h_ratio->GetXaxis()->SetTitle(xlabel);
-   h_ratio->GetXaxis()->SetTitleSize(axis_title_size);
-   h_ratio->GetXaxis()->SetTitleFont(43);
-   h_ratio->GetXaxis()->SetTitleOffset(3.);
-   h_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-   h_ratio->GetXaxis()->SetLabelSize(axis_label_size);
+    // X axis m_ratio plot settings
+    h_ratio->GetXaxis()->SetNdivisions(808);
+    h_ratio->GetXaxis()->SetTickLength(0.06);
+    h_ratio->GetXaxis()->SetTitle(xlabel);
+    h_ratio->GetXaxis()->SetTitleSize(rTS);
+    h_ratio->GetXaxis()->SetTitleOffset(1.);
+    h_ratio->GetXaxis()->SetLabelSize(rLS);
 
-   float chi2 = computeChi2(h_ratio);
-   int n_bins = h_ratio->GetNbinsX();
+    float chi2 = computeChi2(h_ratio);
+    int n_bins = h_ratio->GetNbinsX();
 
 
-   if(draw_chi2){
-       char chi2_label[100];
-       sprintf(chi2_label, "#chi^{2} = %.1f", chi2);
+    if(draw_chi2){
+        char chi2_label[100];
+        sprintf(chi2_label, "#chi^{2} = %.1f", chi2);
 
-       TLatex latext; 
-       latext.SetNDC();
-       latext.SetTextColor(kBlack);
-       latext.SetTextAlign(32); //right
-       latext.SetTextFont(42);
-       latext.SetTextSize(0.1);    
+        TLatex latext; 
+        latext.SetNDC();
+        latext.SetTextColor(kBlack);
+        latext.SetTextAlign(32); //right
+        latext.SetTextFont(42);
+        latext.SetTextSize(0.1);    
 
 
-       float H = pad2->GetWh();
-       float W = pad2->GetWw();
-       float l = pad2->GetLeftMargin();
-       float t = pad2->GetTopMargin();
-       float r = pad2->GetRightMargin();
-       float b = pad2->GetBottomMargin();
+        float H = pad2->GetWh();
+        float W = pad2->GetWw();
+        float l = pad2->GetLeftMargin();
+        float t = pad2->GetTopMargin();
+        float r = pad2->GetRightMargin();
+        float b = pad2->GetBottomMargin();
 
-       pad2->cd();
-       latext.DrawLatex(1-1.2*r, 1-2.2*t ,chi2_label);
-   }
+        pad2->cd();
+        latext.DrawLatex(1-1.2*r, 1-2.2*t ,chi2_label);
+    }
 
-   printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
-   return std::make_pair(c, pad1);
+    printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
+    return std::make_pair(c, pad1);
 }
 
 #endif

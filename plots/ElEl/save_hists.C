@@ -30,7 +30,7 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = true;
 
 char *fout_name = "ElEl/saved_hists.root";
@@ -115,54 +115,6 @@ void save_hists(){
     TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
     TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
-    dy_tautau_cost->SetFillColor(tautau_c);
-    dy_tautau_m->SetFillColor(tautau_c);
-    dy_tautau_pt->SetFillColor(tautau_c);
-    dy_tautau_xf->SetFillColor(tautau_c);
-    dy_tautau_phi->SetFillColor(tautau_c);
-    dy_tautau_rap->SetFillColor(tautau_c);
-
-    dy_cost->SetFillColor(DY_c);
-    dy_m->SetFillColor(DY_c);
-    dy_pt->SetFillColor(DY_c);
-    dy_xf->SetFillColor(DY_c);
-    dy_phi->SetFillColor(DY_c);
-    dy_rap->SetFillColor(DY_c);
-
-    ttbar_cost->SetFillColor(ttbar_c);
-    ttbar_m->SetFillColor(ttbar_c);
-    ttbar_pt->SetFillColor(ttbar_c);
-    ttbar_xf->SetFillColor(ttbar_c);
-    ttbar_phi->SetFillColor(ttbar_c);
-    ttbar_rap->SetFillColor(ttbar_c);
-
-    wt_cost->SetFillColor(wt_c);
-    wt_m->SetFillColor(wt_c);
-    wt_pt->SetFillColor(wt_c);
-    wt_xf->SetFillColor(wt_c);
-    wt_phi->SetFillColor(wt_c);
-    wt_rap->SetFillColor(wt_c);
-
-    diboson_cost->SetFillColor(diboson_c);
-    diboson_m->SetFillColor(diboson_c);
-    diboson_pt->SetFillColor(diboson_c);
-    diboson_xf->SetFillColor(diboson_c);
-    diboson_phi->SetFillColor(diboson_c);
-    diboson_rap->SetFillColor(diboson_c);
-
-    QCD_cost->SetFillColor(qcd_c);
-    QCD_m->SetFillColor(qcd_c);
-    QCD_pt->SetFillColor(qcd_c);
-    QCD_xf->SetFillColor(qcd_c);
-    QCD_phi->SetFillColor(qcd_c);
-    QCD_rap->SetFillColor(qcd_c);
-
-    gg_cost->SetFillColor(gamgam_c);
-    gg_m->SetFillColor(gamgam_c);
-    gg_pt->SetFillColor(gamgam_c);
-    gg_xf->SetFillColor(gamgam_c);
-    gg_phi->SetFillColor(gamgam_c);
-    gg_rap->SetFillColor(gamgam_c);
 
     float m_low = 170.;
     float m_high = 10000.;
@@ -203,62 +155,6 @@ void save_hists(){
 
 
 
-    setHistError(QCD_m, qcd_sys_unc);
-    setHistError(QCD_cost, qcd_sys_unc);
-    setHistError(QCD_pt, qcd_sys_unc);
-    setHistError(QCD_xf, qcd_sys_unc);
-    setHistError(QCD_rap, qcd_sys_unc);
-    setHistError(QCD_phi, qcd_sys_unc);
-
-    setHistError(dy_cost, dy_sys_unc);
-    setHistError(dy_pt, dy_sys_unc);
-    setHistError(dy_xf, dy_sys_unc);
-    setHistError(dy_rap, dy_sys_unc);
-    setHistError(dy_phi, dy_sys_unc);
-
-    setHistError(diboson_cost, diboson_sys_unc);
-    setHistError(diboson_pt, diboson_sys_unc);
-    setHistError(diboson_xf, diboson_sys_unc);
-    setHistError(diboson_rap, diboson_sys_unc);
-    setHistError(diboson_phi, diboson_sys_unc);
-
-    setHistError(ttbar_cost, top_sys_unc);
-    setHistError(ttbar_pt, top_sys_unc);
-    setHistError(ttbar_xf, top_sys_unc);
-    setHistError(ttbar_rap, top_sys_unc);
-    setHistError(ttbar_phi, top_sys_unc);
-
-    setHistError(wt_cost, top_sys_unc);
-    setHistError(wt_pt, top_sys_unc);
-    setHistError(wt_xf, top_sys_unc);
-    setHistError(wt_rap, top_sys_unc);
-    setHistError(wt_phi, top_sys_unc);
-
-
-    setHistError(gg_cost, gam_sys_unc);
-    setHistError(gg_pt, gam_sys_unc);
-    setHistError(gg_xf, gam_sys_unc);
-    setHistError(gg_rap, gam_sys_unc);
-    setHistError(gg_phi, gam_sys_unc);
-
-
-
-    setHistMassDepError(dy_m);
-    setHistMassDepError(diboson_m);
-    setHistMassDepError(ttbar_m);
-    setHistMassDepError(wt_m);
-    setHistMassDepError(wt_m);
-    setHistMassDepError(gg_m);
-
-
-    binwidth_normalize(data_m, mbin_base);
-    binwidth_normalize(diboson_m, mbin_base);
-    binwidth_normalize(QCD_m, mbin_base);
-    binwidth_normalize(wt_m, mbin_base);
-    binwidth_normalize(ttbar_m, mbin_base);
-    binwidth_normalize(gg_m, mbin_base);
-    binwidth_normalize(dy_tautau_m, mbin_base);
-    binwidth_normalize(dy_m, mbin_base);
 
     TFile *fout = new TFile(fout_name, "UPDATE");
     fout->cd();

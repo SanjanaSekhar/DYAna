@@ -34,7 +34,7 @@ char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
 
 const int type = FLAG_MUONS;
-const int year = 2016;
+const int year = 2018;
 char *fout_name = "MuMu/saved_hists.root";
 
 
@@ -157,61 +157,6 @@ void save_hists(){
 
 
 
-    setHistError(QCD_m, qcd_sys_unc);
-    setHistError(QCD_cost, qcd_sys_unc);
-    setHistError(QCD_pt, qcd_sys_unc);
-    setHistError(QCD_xf, qcd_sys_unc);
-    setHistError(QCD_rap, qcd_sys_unc);
-    setHistError(QCD_phi, qcd_sys_unc);
-
-    setHistError(dy_cost, dy_sys_unc);
-    setHistError(dy_pt, dy_sys_unc);
-    setHistError(dy_xf, dy_sys_unc);
-    setHistError(dy_rap, dy_sys_unc);
-    setHistError(dy_phi, dy_sys_unc);
-
-    setHistError(diboson_cost, diboson_sys_unc);
-    setHistError(diboson_pt, diboson_sys_unc);
-    setHistError(diboson_xf, diboson_sys_unc);
-    setHistError(diboson_rap, diboson_sys_unc);
-    setHistError(diboson_phi, diboson_sys_unc);
-
-    setHistError(ttbar_cost, top_sys_unc);
-    setHistError(ttbar_pt, top_sys_unc);
-    setHistError(ttbar_xf, top_sys_unc);
-    setHistError(ttbar_rap, top_sys_unc);
-    setHistError(ttbar_phi, top_sys_unc);
-
-    setHistError(wt_cost, top_sys_unc);
-    setHistError(wt_pt, top_sys_unc);
-    setHistError(wt_xf, top_sys_unc);
-    setHistError(wt_rap, top_sys_unc);
-    setHistError(wt_phi, top_sys_unc);
-
-
-    setHistError(gg_cost, gam_sys_unc);
-    setHistError(gg_pt, gam_sys_unc);
-    setHistError(gg_xf, gam_sys_unc);
-    setHistError(gg_rap, gam_sys_unc);
-    setHistError(gg_phi, gam_sys_unc);
-
-
-
-    setHistMassDepError(dy_m);
-    setHistMassDepError(diboson_m);
-    setHistMassDepError(ttbar_m);
-    setHistMassDepError(wt_m);
-    setHistMassDepError(wt_m);
-    setHistMassDepError(gg_m);
-
-    binwidth_normalize(data_m, mbin_base);
-    binwidth_normalize(diboson_m, mbin_base);
-    binwidth_normalize(QCD_m, mbin_base);
-    binwidth_normalize(wt_m, mbin_base);
-    binwidth_normalize(ttbar_m, mbin_base);
-    binwidth_normalize(gg_m, mbin_base);
-    binwidth_normalize(dy_tautau_m, mbin_base);
-    binwidth_normalize(dy_m, mbin_base);
 
 
     TFile *fout = new TFile(fout_name, "UPDATE");

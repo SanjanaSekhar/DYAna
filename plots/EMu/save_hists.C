@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
+int year = 2018;
 const bool write_out = true;
 //char *plot_label = "e#mu Control Region";
 char *plot_label = "";
@@ -175,37 +175,6 @@ void save_hists(){
     printf("Diboson AFB %.3f +/- %.3f \n", diboson_AFB, diboson_dAFB);
 
 
-    setHistError(QCD_m, qcd_sys_unc);
-    setHistError(QCD_cost, qcd_sys_unc);
-    setHistError(QCD_pt, qcd_sys_unc);
-    setHistError(QCD_rap, qcd_sys_unc);
-
-    setHistError(diboson_m, diboson_sys_unc);
-    setHistError(diboson_cost, diboson_sys_unc);
-    setHistError(diboson_pt, diboson_sys_unc);
-    setHistError(diboson_rap, diboson_sys_unc);
-
-    setHistError(dy_m, dy_sys_unc);
-    setHistError(dy_cost, dy_sys_unc);
-    setHistError(dy_pt, dy_sys_unc);
-    setHistError(dy_rap, dy_sys_unc);
-
-    setHistError(ttbar_m, top_sys_unc);
-    setHistError(ttbar_cost, top_sys_unc);
-    setHistError(ttbar_pt, top_sys_unc);
-    setHistError(ttbar_rap, top_sys_unc);
-
-    setHistError(wt_m, top_sys_unc);
-    setHistError(wt_cost, top_sys_unc);
-    setHistError(wt_pt, top_sys_unc);
-    setHistError(wt_rap, top_sys_unc);
-
-    binwidth_normalize(data_m, mbin_base);
-    binwidth_normalize(diboson_m, mbin_base);
-    binwidth_normalize(QCD_m, mbin_base);
-    binwidth_normalize(wt_m, mbin_base);
-    binwidth_normalize(ttbar_m, mbin_base);
-    binwidth_normalize(dy_m, mbin_base);
 
 
     TFile *fout = new TFile(fout_name, "UPDATE");

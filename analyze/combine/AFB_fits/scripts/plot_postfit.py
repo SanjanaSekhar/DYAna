@@ -187,7 +187,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 subs[hist_index].SetLeftMargin(0.17)
                 subs[hist_index].SetRightMargin(0.05)
                 subs[hist_index].SetTopMargin(0)
-                subs[hist_index].SetBottomMargin(0.4)
+                subs[hist_index].SetBottomMargin(0.45)
                 mains[hist_index].Draw()
                 subs[hist_index].Draw()
 
@@ -232,9 +232,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                         h.SetMinimum(0.)
 
                 
-                mLS = 0.08
-                mTS = 0.08
-                TOffset = 1.1
+                mLS = 0.07
+                mTS = 0.09
+                TOffset = 1.
                 # Now draw the main pad
                 data_leg_title = hist.GetTitle()
                 if len(titles) > 0:
@@ -244,6 +244,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 hist.GetYaxis().SetTitle('Events / bin')
                 hist.GetYaxis().SetLabelSize(mLS)
                 hist.GetYaxis().SetTitleSize(mTS)
+                hist.GetYaxis().SetNdivisions(505)
                 hist.GetXaxis().SetLabelOffset(999)
                 if logy == True:
                     hist.SetMinimum(1e-3)
@@ -302,10 +303,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     #chi2 += pull.GetBinContent(i)**2;
                 #print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pull.GetNbinsX()))
 
-                LS = .13
+                LS = mLS * 0.7/0.3
                 #title size given as fraction of pad width, scale up to have same size as main pad
                 YTS =  mTS * 0.7/0.3
-                XTS =  0.07 * 0.7/0.3
+                XTS =  mTS * 0.7/0.3
                 lTOffset = TOffset * 0.3 / 0.7
 
 
@@ -322,7 +323,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 ratio_sys_unc.GetYaxis().SetRangeUser(ratio_range[0], ratio_range[1])
                 ratio_sys_unc.GetYaxis().SetTitleOffset(lTOffset)
-                ratio_sys_unc.GetXaxis().SetTitleOffset(1.2)
+                ratio_sys_unc.GetYaxis().SetTickLength(0.04)
                              
                 ratio_sys_unc.GetYaxis().SetLabelSize(LS)
                 ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
@@ -330,10 +331,12 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 ratio_sys_unc.GetYaxis().SetTitle("Data/Fit")
 
                 ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
+                ratio_sys_unc.GetXaxis().SetTitleOffset(1.)
                 ratio_sys_unc.GetXaxis().SetLabelOffset(0.05)
                 ratio_sys_unc.GetXaxis().SetLabelSize(LS)
                 ratio_sys_unc.GetXaxis().SetTitleSize(XTS)
                 ratio_sys_unc.GetXaxis().SetTitle(xtitle)
+                ratio_sys_unc.GetXaxis().SetTickLength(0.06)
 
 
                 #ratio_sys_unc.SetFillColor(ROOT.kBlack)
