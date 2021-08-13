@@ -48,6 +48,10 @@ void make_limit_plot_from_saved(){
 
     one_sig->Print();
 
+    TLine *kl_one = new TLine(1400, 1, 4700, 1);
+    kl_one->SetLineStyle(9);
+    kl_one->SetLineWidth(2);
+    kl_one->SetLineColor(kBlue);
 
 
 
@@ -63,8 +67,8 @@ void make_limit_plot_from_saved(){
     exp->SetLineColor(1);
     exp->SetLineStyle(2);
     exp->SetLineWidth(4);
-    auto legbb = new TLegend(0.2,0.6,0.6,0.9);
-	legbb->SetFillStyle(1001);
+    auto legbb = new TLegend(0.33,0.62,0.67,0.9);
+	legbb->SetFillStyle(0);
 	legbb->SetFillColor(0);    
 	legbb->SetBorderSize(0);  
 	legbb->SetTextSize(0.040);
@@ -72,27 +76,31 @@ void make_limit_plot_from_saved(){
 	legbb->AddEntry(exp,"Expected","l");
 	legbb->AddEntry(one_sig,"#pm 1 std. deviation","f");
 	legbb->AddEntry(two_sig,"#pm 2 std. deviation","f");
+    legbb->AddEntry(meas,"Observed","l");
+    legbb->AddEntry(kl_one,"#kappa_{L} = 1","l");
 
 
 
     TCanvas *c1 = new TCanvas("c1", "", 1200, 800);
+    c1->SetBottomMargin(0.15);
     two_sig->SetTitle("Z' Limits");
     two_sig->GetYaxis()->SetTitle("#kappa_{L}(g_{Z'}/g_{Z})");
     two_sig->GetYaxis()->CenterTitle();
     two_sig->GetYaxis()->SetTitleOffset(1.0);
     two_sig->GetXaxis()->SetTitle("Z' mass (GeV)");
+    two_sig->GetXaxis()->SetTitleOffset(1.1);
 
     two_sig->Draw("AL3SAME");
     one_sig->Draw("3SAME");
     exp->Draw("LSAME");
+    kl_one->Draw("LSAME");
 
-    if(inc_meas_limit){
-        meas->SetLineColor(1);
-        meas->SetLineStyle(1);
-        meas->SetLineWidth(4);
-        legbb->AddEntry(meas,"Observed","l");
-        meas->Draw("LSAME");
-    }
+    meas->SetLineColor(1);
+    meas->SetLineStyle(1);
+    meas->SetLineWidth(4);
+    meas->Draw("LSAME");
+
+    legbb->Draw("same");
 
     printf("idx, mass, expected limit, expected std dev obs limit \n");
     for(int idx=0; idx <n_pts; idx++){
@@ -100,15 +108,14 @@ void make_limit_plot_from_saved(){
     }
 
 
-    legbb->Draw();
     
     writeExtraText = false;
     extraText = "Preliminary";
     int iPeriod = -1; 
-    CMS_lumi( c1, iPeriod, 0 );
+    CMS_lumi( c1, iPeriod, 11);
 
 
-    c1->Print("limit_obs.png");
-    c1->Print("limit_obs.pdf");
+    c1->Print("../plots/Paper_plots/limit_obs.png");
+    c1->Print("../plots/Paper_plots/limit_obs.pdf");
 
 }

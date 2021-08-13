@@ -23,7 +23,7 @@ if (__name__ == "__main__"):
     label_color_map['top'] = ("t#bar{t} + Single Top", ttbar_c)
     label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
     #label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
-    label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow {\\ell}{\\ell} ", gamgam_c)
+    label_color_map['gam'] = ["\\gamma\\gamma \\rightarrow {ell}{ell} ", gamgam_c]
     label_color_map['qcd'] = ("WJets + QCD", qcd_c)
 
     datastyle = "pe0x0"
@@ -93,7 +93,15 @@ if (__name__ == "__main__"):
                     #print(hist_list)
                     if(year == 2016):
                         hist_list[h_idx] = h
-                        label_list.append(label_color_map[name][0])
+                        if(name == 'gam'):
+                            if(idx == 0): 
+                                lab = label_color_map[name][0].format(ell='\\mu')
+                            else:
+                                lab = label_color_map[name][0].format(ell='e')
+                        else:
+                            lab = label_color_map[name][0]
+
+                        label_list.append(lab)
                         color_list.append(label_color_map[name][1])
                     else:
                         hist_list[h_idx].Add(h)

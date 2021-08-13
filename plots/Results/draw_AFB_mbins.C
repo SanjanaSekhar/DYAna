@@ -79,33 +79,46 @@ void draw_AFB_mbins(){
     g_comb->SetLineWidth(2);
 
 
+    float yTOffset = 0.6;
+    float LS = 0.07;
+
+    float TS = 0.08;
+    float yTS = 0.12;
+    float rTS = 0.08 * 0.7/0.3;
+    float ryTS = 0.07 * 0.7/0.3;
+    float rLS = LS * 0.7/0.3;
+    float rTOffset = 1. * 0.3 / 0.7 - 0.05;
+
 
 
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
     TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
     pad1->SetTopMargin(0.07);
     pad1->SetBottomMargin(0.012);
+    pad1->SetRightMargin(0.04);
     pad1->Draw();
     pad1->cd();
-    g_sm_amc->GetYaxis()->SetRangeUser(0.2, 0.8);
+
+    g_sm_amc->GetYaxis()->SetRangeUser(0.22, 0.8);
     g_sm_amc->GetXaxis()->SetLimits(100., 1400.);
+
+    g_sm_amc->GetYaxis()->SetTitle("A_{FB}");
+    g_sm_amc->GetYaxis()->SetNdivisions(505);
+    g_sm_amc->GetYaxis()->SetTitleSize(yTS);
+    g_sm_amc->GetYaxis()->SetTitleOffset(yTOffset);
+    g_sm_amc->GetYaxis()->SetLabelSize(LS);
+    g_sm_amc->GetYaxis()->CenterTitle();
+
+    std::cout << g_sm_amc->GetYaxis()->GetTitleSize() << endl;
+
+
     g_sm_amc->Draw("ALP");
     if(draw_powheg) g_sm_pow->Draw("ALP same");
     g_elel->Draw("PE same");
     g_mumu->Draw("PE same");
     g_comb->Draw("PE same");
 
-    int title_size = 35;
-    int ratio_title_size = 35;
 
-
-    g_sm_amc->GetYaxis()->SetTitle("Forward Backward Asymmetry");
-    g_sm_amc->GetYaxis()->SetNdivisions(505);
-    g_sm_amc->GetYaxis()->SetTitleSize(title_size);
-    g_sm_amc->GetYaxis()->SetTitleFont(43);
-    g_sm_amc->GetYaxis()->SetTitleOffset(1.2);
-    g_sm_amc->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-    g_sm_amc->GetYaxis()->SetLabelSize(15);
 
     gStyle->SetLegendBorderSize(0);
     
@@ -118,7 +131,7 @@ void draw_AFB_mbins(){
     TLegend *leg1 = new TLegend(x_size, y_size);
 
     float x_start_m = 0.2;
-    float y_start_m = 0.18;
+    float y_start_m = 0.16;
 
 
     leg1->SetX1(x_start_m);
@@ -139,7 +152,8 @@ void draw_AFB_mbins(){
     c_m->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
     //pad2->SetTopMargin(0);
-    pad2->SetBottomMargin(0.3);
+    pad2->SetBottomMargin(0.5);
+    pad2->SetRightMargin(0.04);
     pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
@@ -150,19 +164,16 @@ void draw_AFB_mbins(){
 
 
     g_ratio->GetYaxis()->SetTitle("Comb./SM");
-    g_ratio->GetYaxis()->SetNdivisions(505);
-    g_ratio->GetYaxis()->SetTitleSize(ratio_title_size);
-    g_ratio->GetYaxis()->SetTitleFont(43);
-    g_ratio->GetYaxis()->SetTitleOffset(1.2);
-    g_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-    g_ratio->GetYaxis()->SetLabelSize(15);
+    g_ratio->GetYaxis()->SetNdivisions(503);
+    g_ratio->GetYaxis()->SetTitleSize(ryTS);
+    g_ratio->GetYaxis()->SetTitleOffset(rTOffset);
+    g_ratio->GetYaxis()->SetLabelSize(rLS);
     // X axis g_ratio plot settings
     g_ratio->GetXaxis()->SetTitle("M (GeV)");
-    g_ratio->GetXaxis()->SetTitleSize(title_size);
-    g_ratio->GetXaxis()->SetTitleFont(43);
-    g_ratio->GetXaxis()->SetTitleOffset(3.);
-    g_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-    g_ratio->GetXaxis()->SetLabelSize(20);
+    g_ratio->GetXaxis()->SetTitleSize(rTS);
+    g_ratio->GetXaxis()->SetTitleOffset(1.);
+    g_ratio->GetXaxis()->SetLabelSize(rLS);
+    g_ratio->GetXaxis()->SetTickLength(0.04);
     int iPeriod = -1; 
     writeExtraText = false;
     draw_CMS = true;
