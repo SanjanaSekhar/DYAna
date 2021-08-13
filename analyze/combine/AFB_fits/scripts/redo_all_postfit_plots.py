@@ -27,6 +27,7 @@ for mbin in mbins:
     output_dir = options.output + mbin_dirname
     os.system("mkdir %s" % output_dir)
     os.system("python scripts/plot_postfit.py -i %s -o %s --mbin %i" % (options.input + mbin_dirname + root_filename, output_dir, mbin))
+    os.system("python scripts/plot_comb_postfit.py -i %s -o %s -m %i" % (options.input + mbin_dirname + root_filename,  output_dir, mbin))
     #os.system("python scripts/plot_swaped_axis_postfit.py -i %s -o %s --mbin %i" % (options.input + mbin_dirname + root_filename, output_dir, mbin))
 
 

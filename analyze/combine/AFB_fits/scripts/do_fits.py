@@ -72,11 +72,14 @@ for mbin in range(bin_start, bin_stop):
     print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s" %(workspace, extra_params))
 
     if(not options.no_plot ):
-        print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --sampling --samples 100"
+        print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_mbin%i.root --samples 100"
+                % (fit_name, mbin))
+        print_and_do("python scripts/sample_comb_postfit.py -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf -o %s_fit_shapes_mbin%i.root -n 100"
                 % (fit_name, mbin))
         extra_args = ""
         if(options.year > 0): extra_args = " -y %i " % options.year
         print_and_do("python scripts/plot_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir, mbin, extra_args))
+        print_and_do("python scripts/plot_comb_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i" % (fit_name, mbin, plotdir, mbin))
         #print_and_do("python scripts/plot_swaped_axis_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir_swap, mbin, extra_args))
         print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
         print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --prefit fitDiagnosticsTest.root -p Afb --skipFitB -g %s" % (plotdir))

@@ -34,7 +34,7 @@ gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 
 
 
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
-        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1):  
+        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1, ratio_range = None):  
 
     # histlist is just the generic list but if bkglist is specified (non-empty)
     # then this function will stack the backgrounds and compare against histlist as if 
@@ -309,12 +309,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 lTOffset = TOffset * 0.3 / 0.7
 
 
-                if(mbin <= 4):
-                    ratio_range = (0.851, 1.149)
-                elif(mbin ==5):
-                    ratio_range = (0.5, 1.5)
-                elif(mbin ==6 or mbin == 7):
-                    ratio_range = (0.01, 1.99)
+                if(ratio_range == None):
+                    if(mbin <= 4):
+                        ratio_range = (0.851, 1.149)
+                    elif(mbin ==5):
+                        ratio_range = (0.5, 1.5)
+                    elif(mbin ==6 or mbin == 7):
+                        ratio_range = (0.01, 1.99)
 
 
 
