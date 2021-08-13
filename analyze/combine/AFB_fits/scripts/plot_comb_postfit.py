@@ -23,7 +23,7 @@ if (__name__ == "__main__"):
     label_color_map['top'] = ("t#bar{t} + Single Top", ttbar_c)
     label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
     #label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
-    label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", gamgam_c)
+    label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow {\\ell}{\\ell} ", gamgam_c)
     label_color_map['qcd'] = ("WJets + QCD", qcd_c)
 
     datastyle = "pe0x0"
@@ -47,10 +47,12 @@ if (__name__ == "__main__"):
         mbin_high = m_bins[options.mbin+1]
 
         if(idx == 0): 
-            title = "Muons %i-%i GeV" % (mbin_low, mbin_high)
+            if(mbin_low < 1000): title = "Muons %i-%i GeV" % (mbin_low, mbin_high)
+            else: title = "Muons %i+ GeV" % (mbin_low)
             outname = "Run2_mumu_postfit"
         if(idx == 1): 
-            title = "Electrons %i-%i GeV" % (mbin_low, mbin_high)
+            if(mbin_low < 1000): title = "Electrons %i-%i GeV" % (mbin_low, mbin_high)
+            else: title = "Electrons %i+ GeV" % (mbin_low)
             outname = "Run2_ee_postfit"
 
         f_in.cd()
