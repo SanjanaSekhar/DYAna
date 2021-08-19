@@ -127,12 +127,15 @@ if (__name__ == "__main__"):
         elif(options.mbin <=4):
             ratio_range = (0.851, 1.149)
             NDiv = 205
+        elif(options.mbin <=5):
+            ratio_range = (0.7, 1.3)
+            NDiv = 205
         elif(options.mbin <=6):
-            ratio_range = (0.6, 1.4)
-            NDiv = 203
+            ratio_range = (0.5, 1.5)
+            NDiv = 205
         elif(options.mbin == 7):
             ratio_range = (0.2, 1.8)
-            NDiv = 203
+            NDiv = 205
 
         makeCan(outname, options.output, [h_data], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, 
                 titles = [title], xtitle = "Template Bin", year = -1, datastyle=datastyle, mbin = options.mbin, ratio_range = ratio_range, NDiv = NDiv) 

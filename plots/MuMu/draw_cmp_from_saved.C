@@ -300,7 +300,7 @@ void draw_cmp_from_saved(){
     leg1->SetHeader("Dimuon Signal Region");
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(dy_m, "DY Signal", "f");
-    leg1->AddEntry(top_m, "t#bar{t} + tW + #bar{t}W", "f");
+    leg1->AddEntry(top_m, "t#bar{t} + Single Top", "f");
     leg1->AddEntry(QCD_m, "QCD + WJets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
