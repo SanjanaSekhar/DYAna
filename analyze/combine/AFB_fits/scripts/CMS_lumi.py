@@ -94,7 +94,7 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
     elif(iPeriod==2018):
         lumiText += "2018 (59 fb^{-1})"
     elif(iPeriod==-1):
-      lumiText += "2016-2018 (138 fb^{-1})"
+      lumiText += "138 fb^{-1} (13 TeV)"
             
     print iPeriod, lumiText
 

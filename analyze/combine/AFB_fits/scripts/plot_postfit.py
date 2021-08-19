@@ -34,7 +34,7 @@ gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 
 
 
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
-        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1, ratio_range = None):  
+        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1, ratio_range = None, NDiv = 205):  
 
     # histlist is just the generic list but if bkglist is specified (non-empty)
     # then this function will stack the backgrounds and compare against histlist as if 
@@ -286,7 +286,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
 
-                legends[hist_index].AddEntry(totlist[hist_index], "Sys. unc.", "f")
+                legends[hist_index].AddEntry(totlist[hist_index], "Sys. Unc.", "f")
 
 
 
@@ -312,11 +312,14 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 if(ratio_range == None):
                     if(mbin <= 4):
-                        ratio_range = (0.851, 1.149)
+                        ratio_range = (0.86, 1.14)
+                        NDiv = 205
                     elif(mbin ==5):
-                        ratio_range = (0.5, 1.5)
+                        ratio_range = (0.45, 1.55)
+                        NDiv = 203
                     elif(mbin ==6 or mbin == 7):
-                        ratio_range = (0.01, 1.99)
+                        ratio_range = (0.1, 1.9)
+                        NDiv = 303
 
 
 
@@ -327,7 +330,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                              
                 ratio_sys_unc.GetYaxis().SetLabelSize(LS)
                 ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
-                ratio_sys_unc.GetYaxis().SetNdivisions(306)
+                ratio_sys_unc.GetYaxis().SetNdivisions(NDiv)
                 ratio_sys_unc.GetYaxis().SetTitle("Data/Fit")
 
                 ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
