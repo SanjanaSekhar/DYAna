@@ -94,10 +94,10 @@ void NTupleReader::setupSFs(){
     else if(!do_top_ptrw) btag_mc_eff_idx =2; //diboson
     else btag_mc_eff_idx = 0; //ttbar
 
+    setup_prefire_SFs(&prefire_rates, year);
     printf("Btag mc eff idx is %i \n", btag_mc_eff_idx);
     setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics);
 
-    if(year < 2018) setup_prefire_SFs(&prefire_rates, year);
 
     if(do_muons || do_emu){
         printf("getting muon SFs \n");
@@ -770,51 +770,30 @@ void NTupleReader::fillEvent(){
 }
 
 void NTupleReader::prefireCorrs(){
-    prefire_SF = 1.0;
-    prefire_SF_up = 1.0;
-    prefire_SF_down = 1.0;
-    for(int i=0; i<jet_size; i++){
-        prefire_SF *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 0);
-        prefire_SF_up *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 1);
-        prefire_SF_down *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, -1);
-    }
-    for(int i=0; i<el_size; i++){
-        prefire_SF *= 1.- get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 0);
-        prefire_SF_up *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 1);
-        prefire_SF_down *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, -1);
+    prefire_SF = prefire_SF_down = prefire_SF_up = mu_prefire_SF = mu_prefire_SF_down = mu_prefire_SF_up =  1.0;
+    if(year < 2018){
+        for(int i=0; i<jet_size; i++){
+            prefire_SF *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 0);
+            prefire_SF_up *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 1);
+            prefire_SF_down *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, -1);
+        }
+        for(int i=0; i<el_size; i++){
+            prefire_SF *= 1.- get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 0);
+            prefire_SF_up *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 1);
+            prefire_SF_down *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, -1);
+        }
     }
     for(int i=0; i<mu_size; i++){
-        float nom_rate1 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper1, 0);
-        float nom_rate2 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper2, 0);
+        float nom_rate = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], prefire_rates.mu_era1_helper, year, 0);
+        float up_rate = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], prefire_rates.mu_era1_helper, year, 1);
+        float down_rate = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], prefire_rates.mu_era1_helper, year, -1);
 
-        float up_rate1 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper1, 1);
-        float up_rate2 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper2, 1);
 
-        float down_rate1 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper1, -1);
-        float down_rate2 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper2, -1);
-
-        float nom_rate_avg, up_rate_avg, down_rate_avg;
-
-        if(year == 2016){
-
-            Float_t bg_lumi16 = 5.819 + 2.617 + 4.276 + 4.066 + 3.135 + 7.642;
-            Float_t h_lumi16 =  8.723;
-            nom_rate_avg = (bg_lumi16 * nom_rate1 + h_lumi * nom_rate2) / (bg_lumi16 + h_lumi);
-            up_rate_avg = (bg_lumi16 * up_rate1 + h_lumi * up_rate2) / (bg_lumi16 + h_lumi);
-            down_rate_avg = (bg_lumi16 * down_rate1 + h_lumi * down_rate2) / (bg_lumi16 + h_lumi);
-        }
-        else{
-
-            nom_rate_avg = nom_rate1;
-            up_rate_avg = up_rate1;
-            down_rate_avg = down_rate1;
-        }
-            
-        mu_prefire_SF *= nom_rate_avg;
-        mu_prefire_SF_up *= up_rate_avg;
-        mu_prefire_SF_down *= nom_rate_avg;
+        mu_prefire_SF *= nom_rate;
+        mu_prefire_SF_up *= up_rate;
+        mu_prefire_SF_down *= down_rate;
     }
-    //printf("Overall prefire rates (nom, up, down): %.3f, %.3f, %.3f \n", prefire_SF, prefire_SF_up, prefire_SF_down);
+    //printf("Overall mu prefire rates (nom, up, down): %.3f, %.3f, %.3f \n", mu_prefire_SF, mu_prefire_SF_up, mu_prefire_SF_down);
 }
 
 
@@ -871,7 +850,7 @@ void NTupleReader::fillEventSFs(){
     
 
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
-    if(year < 2018) prefireCorrs(); 
+    prefireCorrs(); 
 
     if(scale_size > 0){
         mu_F_up = std::max(std::min(scale_Weights[0], sys_max), sys_min);

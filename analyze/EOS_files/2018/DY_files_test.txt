@@ -2,18 +2,21 @@
 ##DY M100-200 
 !idx=1 xsec=226.6
 #################
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210304_235926/0000/B2GTTreeNtupleExtra_1.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210304_235926/0000/B2GTTreeNtupleExtra_10.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210304_235926/0000/B2GTTreeNtupleExtra_100.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210304_235926/0000/B2GTTreeNtupleExtra_101.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210304_235926/0000/B2GTTreeNtupleExtra_102.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210304_235926/0000/B2GTTreeNtupleExtra_103.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_1.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_10.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_100.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_101.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_102.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_103.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-100to200_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/210329_161205/0000/B2GTTreeNtupleExtra_104.root
 
-##DY M500-700 
-!idx = 4 xsec = 0.2334
+##DY M400-500 
+#!idx = 3 xsec = 0.410
+!idx = 3 xsec = 0.4205
 #################
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-500to700_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210305_000351/0000/B2GTTreeNtupleExtra_1.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-500to700_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210305_000351/0000/B2GTTreeNtupleExtra_10.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-500to700_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210305_000351/0000/B2GTTreeNtupleExtra_2.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-500to700_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210305_000351/0000/B2GTTreeNtupleExtra_3.root
-root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar4/DYJetsToLL_M-500to700_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210305_000351/0000/B2GTTreeNtupleExtra_4.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-400to500_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_161519/0000/B2GTTreeNtupleExtra_1.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-400to500_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_161519/0000/B2GTTreeNtupleExtra_10.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-400to500_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_161519/0000/B2GTTreeNtupleExtra_11.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-400to500_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_161519/0000/B2GTTreeNtupleExtra_12.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-400to500_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_161519/0000/B2GTTreeNtupleExtra_2.root
+root://cmseos.fnal.gov//store/user/oamram/NTuples/2018/Mar29/DYJetsToLL_M-400to500_TuneCP5_13TeV-amcatnloFXFX-pythia8/B2GAnaFW_10_2_X_RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/210329_161519/0000/B2GTTreeNtupleExtra_3.root

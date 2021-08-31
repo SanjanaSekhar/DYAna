@@ -50,6 +50,7 @@ typedef struct{
 
 
 typedef struct{
+  TFile *f_;
   TF1* parametrization0p0To0p2_;
   TF1* parametrization0p2To0p3_;
   TF1* parametrization0p3To0p55_;
@@ -68,8 +69,7 @@ typedef struct{
 typedef struct{
     TH2F *jet_rate;
     TH2F *el_rate;
-    MuPrefireRateHelper mu_era1_helper;
-    MuPrefireRateHelper mu_era2_helper;
+    MuPrefireHelper mu_era1_helper;
 } prefire_SFs;
 
 typedef struct{
@@ -352,11 +352,11 @@ Float_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
     return prefire_prob;
 }
 
-Float_t get_mu_prefire_rate(float pt, float eta, float phi, MuPrefireHelper helper, int systematic = 0){
+Float_t get_mu_prefire_rate(float pt, float eta, float phi, MuPrefireHelper helper, int year, int systematic = 0){
     //https://github.com/cms-sw/cmssw/blob/master/PhysicsTools/PatUtils/plugins/L1PrefiringWeightProducer.cc#L373-L440
   float prefrate;
   float statuncty;
-  if ((dataeraMuon_.find("2016") != std::string::npos) && (eta > 1.24 && eta < 1.6) &&
+  if (year == 2016 && (eta > 1.24 && eta < 1.6) &&
       (phi > 2.44346 && phi < 2.79253)) {
     prefrate = helper.parametrizationHotSpot_->Eval(pt);
     statuncty = helper.parametrizationHotSpot_->GetParError(2);
@@ -399,7 +399,7 @@ Float_t get_mu_prefire_rate(float pt, float eta, float phi, MuPrefireHelper help
   }
   
   float prefiringRateSysUnc = 0.11;
-  double systuncty = prefiringRateSysUnc * prefrate;
+  float systuncty = prefiringRateSysUnc * prefrate;
 
   if (systematic == 1)
     prefrate = std::min(1., prefrate + sqrt(pow(statuncty, 2) + pow(systuncty, 2)));
@@ -407,7 +407,7 @@ Float_t get_mu_prefire_rate(float pt, float eta, float phi, MuPrefireHelper help
     prefrate = std::max(0., prefrate - sqrt(pow(statuncty, 2) + pow(systuncty, 2)));
 
   if (prefrate > 1.) {
-    edm::LogWarning("L1PrefireWeightProducer") << "Found a prefiring probability > 1. Setting to 1." << std::endl;
+      std::cout << "Found a prefiring probability > 1. Setting to 1." << std::endl;
     return 1.;
   }
   return prefrate;
@@ -808,31 +808,47 @@ void setup_fakes_costrw_helper(fakes_costrw_helper *h, int year){
     h->mu_rw->SetDirectory(0);
 }
 
-void setup_mu_prefire_helper(TFile *f_, TString era_name, MuPrefireHelper era_helper){
+void setup_mu_prefire_helper(TFile *f_, TString era_name_, MuPrefireHelper &era_helper){
     //https://github.com/cms-sw/cmssw/blob/master/PhysicsTools/PatUtils/plugins/L1PrefiringWeightProducer.cc#L373-L440
-    TString paramName = "L1prefiring_muonparam_0.0To0.2_" + era_name_;
-    era_helper.parametrization0p0To0p2_ = f_->Get<TF1>(paramName);
+    era_helper.f_ = f_;
+    TString paramName = "L1prefiring_muonparam_HotSpot_" + era_name_;
+    era_helper.parametrizationHotSpot_ = (TF1 * ) f_->Get(paramName);
+
+    paramName = "L1prefiring_muonparam_0.0To0.2_" + era_name_;
+    era_helper.parametrization0p0To0p2_ = (TF1 *) f_->Get(paramName);
     paramName = "L1prefiring_muonparam_0.2To0.3_" + era_name_;
-    era_helper.parametrization0p2To0p3_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization0p2To0p3_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_0.3To0.55_" + era_name_;
-    era_helper.parametrization0p3To0p55_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization0p3To0p55_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_0.55To0.83_" + era_name_;
-    era_helper.parametrization0p55To0p83_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization0p55To0p83_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_0.83To1.24_" + era_name_;
-    era_helper.parametrization0p83To1p24_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization0p83To1p24_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_1.24To1.4_" + era_name_;
-    era_helper.parametrization1p24To1p4_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization1p24To1p4_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_1.4To1.6_" + era_name_;
-    era_helper.parametrization1p4To1p6_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization1p4To1p6_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_1.6To1.8_" + era_name_;
-    era_helper.parametrization1p6To1p8_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization1p6To1p8_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_1.8To2.1_" + era_name_;
-    era_helper.parametrization1p8To2p1_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization1p8To2p1_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_2.1To2.25_" + era_name_;
-    era_helper.parametrization2p1To2p25_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization2p1To2p25_ = (TF1 *)f_->Get(paramName);
     paramName = "L1prefiring_muonparam_2.25To2.4_" + era_name_;
-    era_helper.parametrization2p25To2p4_ = f_->Get<TF1>(paramName);
+    era_helper.parametrization2p25To2p4_ = (TF1 *)f_->Get(paramName);
+ 
+
+    if(era_helper.parametrizationHotSpot_ == nullptr)
+        era_helper.parametrizationHotSpot_ = era_helper.parametrization1p4To1p6_ ;
+
+
+    //printf("Finish setting up era %s \n", era_name_.Data());
+
+
+
 }
+
+
 
 void setup_prefire_SFs(prefire_SFs *pre_SF,  int year){
 
@@ -842,11 +858,10 @@ void setup_prefire_SFs(prefire_SFs *pre_SF,  int year){
 
     if(year == 2016){
 
-        TString era1_name = "2016BG";
-        TString era2_name = "2016H";
+        TString era1_name = "2016";
 
         setup_mu_prefire_helper(f_mu_prefire, era1_name, pre_SF->mu_era1_helper);
-        setup_mu_prefire_helper(f_mu_prefire, era2_name, pre_SF->mu_era2_helper);
+        pre_SF->mu_era1_helper.f_->Print();
 
         TFile *f_el = TFile::Open("../analyze/SFs/2016/L1prefiring_photonpt_2016BtoH.root");
         TH2F *h1 = (TH2F *) f_el->Get("L1prefiring_photonpt_2016BtoH")->Clone();
@@ -863,10 +878,8 @@ void setup_prefire_SFs(prefire_SFs *pre_SF,  int year){
     else if(year == 2017 || year == 2018){
 
         TString era1_name = "20172018";
-        TString era2_name = "20172018";
 
         setup_mu_prefire_helper(f_mu_prefire, era1_name, pre_SF->mu_era1_helper);
-        setup_mu_prefire_helper(f_mu_prefire, era2_name, pre_SF->mu_era2_helper);
 
         TFile * f_el = TFile::Open("../analyze/SFs/2017/L1prefiring_photonpt_2017BtoF.root");
         TH2F *h1 = (TH2F *) f_el->Get("L1prefiring_photonpt_2017BtoF")->Clone();
@@ -880,6 +893,9 @@ void setup_prefire_SFs(prefire_SFs *pre_SF,  int year){
         pre_SF->jet_rate= h2;
         f_jet->Close();
     }
+    //f_mu_prefire->Close();
+    f_mu_prefire->Print();
+    pre_SF->mu_era1_helper.parametrization0p0To0p2_->Print();
 
 }
 
