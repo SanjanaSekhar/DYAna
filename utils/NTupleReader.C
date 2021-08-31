@@ -444,6 +444,9 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("prefire_SF", &prefire_SF);
         outTrees[idx]->Branch("prefire_SF_up", &prefire_SF_up);
         outTrees[idx]->Branch("prefire_SF_down", &prefire_SF_down);
+        outTrees[idx]->Branch("mu_prefire_SF", &mu_prefire_SF);
+        outTrees[idx]->Branch("mu_prefire_SF_up", &mu_prefire_SF_up);
+        outTrees[idx]->Branch("mu_prefire_SF_down", &mu_prefire_SF_down);
         outTrees[idx]->Branch("jet1_flavour", &jet1_flavour, "jet1_flavour/I");
         outTrees[idx]->Branch("jet2_flavour", &jet2_flavour, "jet2_flavour/I");
         outTrees[idx]->Branch("jet1_btag_SF", &jet1_btag_SF);
@@ -779,6 +782,37 @@ void NTupleReader::prefireCorrs(){
         prefire_SF *= 1.- get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 0);
         prefire_SF_up *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 1);
         prefire_SF_down *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, -1);
+    }
+    for(int i=0; i<mu_size; i++){
+        float nom_rate1 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper1, 0);
+        float nom_rate2 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper2, 0);
+
+        float up_rate1 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper1, 1);
+        float up_rate2 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper2, 1);
+
+        float down_rate1 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper1, -1);
+        float down_rate2 = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], mu_prefire_helper2, -1);
+
+        float nom_rate_avg, up_rate_avg, down_rate_avg;
+
+        if(year == 2016){
+
+            Float_t bg_lumi16 = 5.819 + 2.617 + 4.276 + 4.066 + 3.135 + 7.642;
+            Float_t h_lumi16 =  8.723;
+            nom_rate_avg = (bg_lumi16 * nom_rate1 + h_lumi * nom_rate2) / (bg_lumi16 + h_lumi);
+            up_rate_avg = (bg_lumi16 * up_rate1 + h_lumi * up_rate2) / (bg_lumi16 + h_lumi);
+            down_rate_avg = (bg_lumi16 * down_rate1 + h_lumi * down_rate2) / (bg_lumi16 + h_lumi);
+        }
+        else{
+
+            nom_rate_avg = nom_rate1;
+            up_rate_avg = up_rate1;
+            down_rate_avg = down_rate1;
+        }
+            
+        mu_prefire_SF *= nom_rate_avg;
+        mu_prefire_SF_up *= up_rate_avg;
+        mu_prefire_SF_down *= nom_rate_avg;
     }
     //printf("Overall prefire rates (nom, up, down): %.3f, %.3f, %.3f \n", prefire_SF, prefire_SF_up, prefire_SF_down);
 }

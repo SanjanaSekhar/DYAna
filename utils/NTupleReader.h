@@ -133,6 +133,10 @@ class NTupleReader{
         float prefire_SF_up = 1.0;
         float prefire_SF_down = 1.0;
 
+        float mu_prefire_SF = 1.0;
+        float mu_prefire_SF_up = 1.0;
+        float mu_prefire_SF_down = 1.0;
+
         float nnpdf30_weight = 1.0;
 
         BTag_readers b_reader;
