@@ -97,6 +97,7 @@ class TempMaker{
         Float_t mu_p_SF, mu_m_SF, mu_p_SF_up, mu_m_SF_up, mu_p_SF_down, mu_m_SF_down, alphaS_up, alphaS_down;
         Float_t cost_pt, met_pt, el1_charge, el2_charge, mu1_charge, mu2_charge;
         Float_t prefire_SF, prefire_SF_up, prefire_SF_down;
+        Float_t mu_prefire_SF, mu_prefire_SF_up, mu_prefire_SF_down;
         Float_t top_ptrw;
         Float_t dummy;
         Float_t jet1_btag_SF = 1.0;

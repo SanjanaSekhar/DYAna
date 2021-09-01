@@ -30,7 +30,7 @@
 
 const int type = FLAG_MUONS;
 const bool write_out = true;
-char *plot_dir = "Paper_plots/prefit_kinematics/";
+char *plot_dir = "Misc_plots/mu_prefire_check_after/";
 char *fin_name = "MuMu/saved_hists.root";
 char *plot_label = "";
 
@@ -44,7 +44,10 @@ void draw_cmp_from_saved(){
 
     TFile *fin = new TFile(fin_name, "READ");
 
-    for(int year = 2016; year <= 2018; year++){
+    int year_start = 2018;
+    int year_stop = 2018;
+
+    for(int year = year_start; year <= year_stop; year++){
 
         char year_str[80];
         sprintf(year_str, "y%i", year);
@@ -88,7 +91,7 @@ void draw_cmp_from_saved(){
         top_m_->Add(wt_m_);
         top_rap_->Add(wt_rap_);
 
-        if(year == 2016){
+        if(year == year_start){
             printf("%i \n", year);
             data_m = data_m_; diboson_m = diboson_m_; QCD_m = QCD_m_; top_m = top_m_; dy_m = dy_m_; wt_m = wt_m_; gg_m = gg_m_;
             data_cost = data_cost_; diboson_cost = diboson_cost_; QCD_cost = QCD_cost_; top_cost = top_cost_; dy_cost = dy_cost_; wt_cost = wt_cost_; gg_cost = gg_cost_;
@@ -322,6 +325,24 @@ void draw_cmp_from_saved(){
     writeExtraText = false;
     char plt_file[100], y_ax_label[100];
 
+    char file_label[20];
+    int year = -1;
+    if(year_start == 2016 && year_stop == 2018){
+        sprintf(file_label, "%s", "Comb");
+    }
+    else if(year_stop == 2016){
+        sprintf(file_label, "%s", "16");
+        year = 2016;
+    }
+    else if(year_stop == 2017){
+        sprintf(file_label, "%s", "17");
+        year = 2017;
+    }
+    else if(year_stop == 2018){
+        sprintf(file_label, "%s", "18");
+        year = 2018;
+    }
+
 
 
     bool logy = true;
@@ -339,20 +360,21 @@ void draw_cmp_from_saved(){
     leg1->SetY1(y_start_m);
     leg1->SetY2(y_start_m+y_size);
 
-    int year = -1;
 
     float hmax = 100000;
     if(year == 2016)
-        hmax *= 0.625;
+        hmax *= 0.25;
     if(year == 2017)
-        hmax *= 0.75;
+        hmax *= 0.3;
+    if(year == 2018)
+        hmax *= 0.4;
 
     sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 11 );
-    sprintf(plt_file, "%sMuMuComb_m_cmp.png", plot_dir );
+    sprintf(plt_file, "%sMuMu%s_m_cmp.png", plot_dir, file_label );
     if(write_out) c_m->Print(plt_file);
-    sprintf(plt_file, "%sMuMuComb_m_cmp.pdf", plot_dir );
+    sprintf(plt_file, "%sMuMu%s_m_cmp.pdf", plot_dir, file_label );
     if(write_out) c_m->Print(plt_file);
 
     
@@ -372,16 +394,20 @@ void draw_cmp_from_saved(){
     hmax = 100000;
 
     if(year == 2016)
-        hmax *= 0.625;
+        hmax *= 0.25;
     if(year == 2017)
-        hmax *= 0.75;
+        hmax *= 0.3;
+    if(year == 2018)
+        hmax *= 0.4;
+
+    ratio_range = 0.2;
 
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
-    sprintf(plt_file, "%sMuMuComb_cost_cmp.png", plot_dir);
+    sprintf(plt_file, "%sMuMu%s_cost_cmp.png", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
-    sprintf(plt_file, "%sMuMuComb_cost_cmp.pdf", plot_dir);
+    sprintf(plt_file, "%sMuMu%s_cost_cmp.pdf", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
 
 
@@ -395,15 +421,18 @@ void draw_cmp_from_saved(){
 
     hmax = 65000;
     if(year == 2016)
-        hmax *= 0.625;
+        hmax *= 0.25;
     if(year == 2017)
-        hmax *= 0.75;
+        hmax *= 0.3;
+    if(year == 2018)
+        hmax *= 0.4;
 
+    ratio_range = 0.2;
     sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
-    sprintf(plt_file, "%sMuMuComb_rap_cmp.png", plot_dir);
+    sprintf(plt_file, "%sMuMu%s_rap_cmp.png", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
-    sprintf(plt_file, "%sMuMuComb_rap_cmp.pdf", plot_dir);
+    sprintf(plt_file, "%sMuMu%s_rap_cmp.pdf", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
 }

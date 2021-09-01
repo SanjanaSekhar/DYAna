@@ -29,12 +29,12 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
 const bool write_out = true;
-char *plot_dir = "Paper_plots/EMu_plots/";
+//char *plot_dir = "Paper_plots/EMu_plots/";
+char *plot_dir = "Misc_plots/mu_prefire_check_before/";
 //char *plot_label = "e#mu Control Region";
 char *plot_label = "";
-char *fin_name = "EMu/saved_hists.root";
+char *fin_name = "EMu/saved_hists_no_pref.root";
 
 
 
@@ -50,8 +50,10 @@ void draw_cmp_from_saved(){
     TFile *fin = new TFile(fin_name, "READ");
 
 
+    int year_start = 2018;
+    int year_stop = 2018;
 
-    for(int year = 2016; year <= 2018; year++){
+    for(int year = year_start; year <= year_stop; year++){
 
         char year_str[80];
         sprintf(year_str, "y%i", year);
@@ -92,7 +94,7 @@ void draw_cmp_from_saved(){
         top_m_->Add(wt_m_);
         top_rap_->Add(wt_rap_);
 
-        if(year == 2016){
+        if(year == year_start){
             printf("%i \n", year);
             data_m = data_m_; diboson_m = diboson_m_; QCD_m = QCD_m_; top_m = top_m_; dy_m = dy_m_; wt_m = wt_m_;
             data_cost = data_cost_; diboson_cost = diboson_cost_; QCD_cost = QCD_cost_; top_cost = top_cost_; dy_cost = dy_cost_; wt_cost = wt_cost_;
@@ -290,6 +292,27 @@ void draw_cmp_from_saved(){
     float ratio_range = 0.3;
 
 
+    char file_label[20];
+    int year = -1;
+    if(year_start == 2016 && year_stop == 2018){
+        sprintf(file_label, "%s", "Comb");
+    }
+    else if(year_stop == 2016){
+        sprintf(file_label, "%s", "16");
+        year = 2016;
+    }
+    else if(year_stop == 2017){
+        sprintf(file_label, "%s", "17");
+        year = 2017;
+    }
+    else if(year_stop == 2018){
+        sprintf(file_label, "%s", "18");
+        year = 2018;
+    }
+
+
+
+
     float x_start_m = 0.4;
     float y_start_m = 0.6;
     leg1->SetX1(x_start_m);
@@ -297,9 +320,7 @@ void draw_cmp_from_saved(){
     leg1->SetY1(y_start_m);
     leg1->SetY2(y_start_m+y_size);
 
-    sprintf(plt_file, "%sEMuComb_m_cmp.pdf", plot_dir);
 
-    int year = -1;
 
     float hmax = 200000;
     /*
@@ -312,6 +333,9 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 11 );
+    sprintf(plt_file, "%sEMu%s_m_cmp.pdf", plot_dir, file_label);
+    if(write_out) c_m->Print(plt_file);
+    sprintf(plt_file, "%sEMu%s_m_cmp.png", plot_dir, file_label);
     if(write_out) c_m->Print(plt_file);
 
 
@@ -335,7 +359,9 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta_{r})", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
-    sprintf(plt_file, "%sEMuComb_cost_cmp.pdf", plot_dir);
+    sprintf(plt_file, "%sEMu%s_cost_cmp.pdf", plot_dir, file_label);
+    if(write_out) c_cost->Print(plt_file);
+    sprintf(plt_file, "%sEMu%s_cost_cmp.png", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
 
     hmax = 25000;
@@ -355,7 +381,9 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events/%.1f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
-    sprintf(plt_file, "%sEMuComb_rap_cmp.pdf", plot_dir);
+    sprintf(plt_file, "%sEMu%s_rap_cmp.pdf", plot_dir, file_label);
+    if(write_out) c_rap->Print(plt_file);
+    sprintf(plt_file, "%sEMu%s_rap_cmp.png", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
 
 

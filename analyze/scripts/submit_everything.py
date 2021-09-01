@@ -9,16 +9,17 @@ def print_and_do(s):
 
 years = [2016, 2017,2018]
 #years = [2018]
-#prefixes = ["EMu"]
-#scripts = ["EMu_reco_background.C"]
+prefixes = ["EMu"]
+scripts = ["EMu_reco_background.C"]
 #scripts = ["EMu_reco_data.C"]
 #prefixes = ["ElEl", "MuMu"]
-#scripts = ["ElEl_reco_mc.C"]
+#prefixes = ["MuMu"]
+#scripts = ["MuMu_reco_background.C"]
+#scripts = ["MuMu_reco_mc.C"]
 #scripts = ["ElEl_reco_background.C", "MuMu_reco_background.C"]
-prefixes = ["MuMu"]
-scripts = ["MuMu_reco_data.C"]
+#scripts = ["MuMu_reco_data.C"]
 #scripts = ["ElEl_reco_mc.C", "MuMu_reco_mc.C"]
-njobs = 20
+njobs = 10
 
 #labels = ["wt", "ttbar", "diboson", "phot_ind"]
 #eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "PhotInd_files.txt" ]
@@ -31,17 +32,17 @@ njobs = 20
 
 #labels = ["wt"]
 #eos_files = ["WT_files.txt"]
-#labels = ["wt", "ttbar", "diboson", "dy"]
-#eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "DY_files.txt"]
-labels = ["data"]
-eos_files = ["SingleMuon_files.txt"]
+labels = ["wt", "ttbar", "diboson", "dy"]
+eos_files = ["WT_files.txt", "TTbar_files.txt", "diboson_files.txt", "DY_files.txt"]
+#labels = ["data"]
+#eos_files = ["SingleMuon_files.txt"]
 #labels = ["ttbar"]
 #eos_files = ["TTbar_files.txt"]
 #labels = ["dy"]
 #eos_files = ["DY_files.txt"]
 #labels = ["phot_ind"]
 #eos_files = ["PhotInd_files.txt"]
-ending = "June22"
+ending = "aug31"
 
 for i,script in enumerate(scripts):
     prefix = prefixes[i]

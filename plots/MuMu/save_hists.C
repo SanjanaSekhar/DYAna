@@ -35,7 +35,7 @@ char *plot_label = "";
 
 const int type = FLAG_MUONS;
 const int year = 2018;
-char *fout_name = "MuMu/saved_hists.root";
+char *fout_name = "MuMu/saved_hists_nopref.root";
 
 
 

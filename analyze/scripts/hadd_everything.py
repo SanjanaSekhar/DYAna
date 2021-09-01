@@ -10,25 +10,25 @@ years = [2016,2017,2018]
 prefixes = ["EMu"]
 #years = [2018]
 #prefixes = ["ElEl"]
-#labels = ["wt", "dy", "ttbar", "diboson"]
+labels = ["wt", "dy", "ttbar", "diboson"]
 #labels = ["phot_ind"]
 
-#labels = ["wt", "ttbar", "diboson", "dy"]
+#labels = ["wt", "ttbar", "diboson", "dy", "phot_ind"]
 #labels = ["dy_mlow", "data_mlow"]
 #labels = ["dy"]
 #labels = ["diboson", "phot_ind"]
 #labels = ["phot_ind"]
-labels = ["data"]
 #labels = ["data"]
-ending = "_June22"
-redo_fakes = False
+#labels = ["data"]
+ending = "_aug31"
+redo_fakes = True
 
 for year in years:
     for prefix in prefixes:
         f_names = []
         for label in labels:
-            os.system("rm output_files/" + str(year) +"/" + prefix + str(year % 2000) + "_" + label + "*.root") 
-            os.system("python doCondor.py -e -o output_files/" + str(year) +"/ -n " + prefix + str(year % 2000) + "_" + label + ending) 
+            #os.system("rm output_files/" + str(year) +"/" + prefix + str(year % 2000) + "_" + label + "*.root") 
+            #os.system("python doCondor.py -e -o output_files/" + str(year) +"/ -n " + prefix + str(year % 2000) + "_" + label + ending) 
             f_names.append("output_files/" + str(year) +"/" + prefix + str(year % 2000) + "_" + label + ending + ".root") 
 
         if(redo_fakes):
