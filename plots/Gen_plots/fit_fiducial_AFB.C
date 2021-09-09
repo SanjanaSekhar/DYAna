@@ -59,7 +59,7 @@ double fit_fcn(double *x, double *par){
 }
 
 
-std::tuple<float,float,float,float,float,float> get_afb_fid(float m_low, float m_high, int year, string sys){
+std::tuple<float,float,float,float,float,float,float,float> get_afb_fid(float m_low, float m_high, int year, string sys){
 
     static bool init = false;
 
@@ -73,7 +73,7 @@ std::tuple<float,float,float,float,float,float> get_afb_fid(float m_low, float m
 
     if(!init){
 
-        f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_april11.root");
+        f_gen = TFile::Open("../analyze/output_files/DY17_gen_level_april6.root");
         gROOT->SetBatch(1);
 
         t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -157,6 +157,8 @@ std::tuple<float,float,float,float,float,float> get_afb_fid(float m_low, float m
 
     float afb_full = func.GetParameter(0);
     float a0_full = func.GetParameter(1);
+    float afb_unc = func.GetParError(0);
+    float a0_unc = func.GetParError(0);
 
     float afb_fid = my_func.GetParameter(0);
     float a0_fid = my_func.GetParameter(1);
@@ -165,7 +167,7 @@ std::tuple<float,float,float,float,float,float> get_afb_fid(float m_low, float m
     float a0_fid_unc = max(my_func.GetParError(1), func.GetParError(0));
 
 
-    return std::make_tuple(afb_full, a0_full, afb_fid, a0_fid, afb_fid_unc, a0_fid_unc);
+    return std::make_tuple(afb_full, a0_full, afb_fid, a0_fid, afb_unc, a0_unc, afb_fid_unc, a0_fid_unc);
 }
 
 
@@ -196,8 +198,9 @@ void fit_fiducial_AFB(){
           sys_labels.push_back(cpy.append("Down"));
       }
         
-    float afb_full, a0_full, afb_fid, a0_fid, afb_fid_unc, a0_fid_unc;
+    float afb_full, a0_full, afb_fid, a0_fid, afb_unc, a0_unc, afb_fid_unc, a0_fid_unc;
     float afb_shift[8], a0_shift[8], afb_shift_stat_unc[8], afb_shift_sys_unc[8], a0_shift_stat_unc[8], a0_shift_sys_unc[8];
+    float afb_val[8], a0_val[8], afb_val_stat_unc[8], afb_val_sys_unc[8], a0_val_stat_unc[8], a0_val_sys_unc[8];
     
 
     for(int i=i_start; i<i_max; i++){
@@ -214,7 +217,10 @@ void fit_fiducial_AFB(){
         afb_shift_sys_unc[i] =0;
         a0_shift_sys_unc[i] =0;
 
-        std::tie(afb_full, a0_full, afb_fid, a0_fid, afb_fid_unc, a0_fid_unc) = get_afb_fid(m_low, m_high, year, sys);
+        afb_val_sys_unc[i] =0;
+        a0_val_sys_unc[i] =0;
+
+        std::tie(afb_full, a0_full, afb_fid, a0_fid, afb_unc, a0_unc, afb_fid_unc, a0_fid_unc) = get_afb_fid(m_low, m_high, year, sys);
 
         afb_shift[i] = afb_full - afb_fid;
         a0_shift[i] = a0_full - a0_fid;
@@ -222,7 +228,15 @@ void fit_fiducial_AFB(){
         a0_shift_stat_unc[i] = a0_fid_unc;
 
 
+        afb_val[i] = afb_full;
+        a0_val[i] = a0_full ;
+        afb_val_stat_unc[i] = afb_unc;
+        a0_val_stat_unc[i] = a0_unc;
+
+
+
         printf("Nominal: \n");
+        printf("AFB fiducial %.3f +/- %.3f A0 %.3f +/- %.3f \n", afb_fid, afb_fid_unc, a0_fid, a0_fid_unc);
         printf("AFB shift is: %.3f +/- %.3f \n", afb_shift[i], afb_shift_stat_unc[i]);
         printf("A0 shift is: %.3f +/- %.3f \n", a0_shift[i], a0_shift_stat_unc[i]);
 
@@ -230,20 +244,27 @@ void fit_fiducial_AFB(){
 
         for(auto iter = sys_labels.begin(); iter !=sys_labels.end(); iter++){
 
-            std::tie(afb_full, a0_full, afb_fid, a0_fid, afb_fid_unc, a0_fid_unc) = get_afb_fid(m_low, m_high, year, *iter);
+            std::tie(afb_full, a0_full, afb_fid, a0_fid, afb_unc, a0_unc, afb_fid_unc, a0_fid_unc) = get_afb_fid(m_low, m_high, year, *iter);
             float afb_shift_temp = afb_full - afb_fid;
             float a0_shift_temp = a0_full - a0_fid;
 
             printf("Sys %s: \n", iter->c_str());
+            printf("AFB fiducial %.3f +/- %.3f A0 %.3f +/- %.3f \n", afb_fid, afb_fid_unc, a0_fid, a0_fid_unc);
             printf("Shift diff is: %.3f, %.3f \n", afb_shift[i] - afb_shift_temp, a0_shift[i] - a0_shift_temp);
 
             afb_shift_sys_unc[i] += pow(afb_shift[i] - afb_shift_temp, 2); 
             a0_shift_sys_unc[i] += pow(a0_shift[i] - a0_shift_temp, 2); 
 
+            afb_val_sys_unc[i] += pow(afb_val[i] - afb_full, 2); 
+            a0_val_sys_unc[i] += pow(a0_val[i] - a0_full, 2); 
+
         }
 
         afb_shift_sys_unc[i] = sqrt(afb_shift_sys_unc[i]);
         a0_shift_sys_unc[i] = sqrt(a0_shift_sys_unc[i]);
+
+        afb_val_sys_unc[i] = sqrt(afb_val_sys_unc[i]);
+        a0_val_sys_unc[i] = sqrt(a0_val_sys_unc[i]);
 
     }
     for(int i=i_start; i<i_max; i++){
@@ -251,6 +272,8 @@ void fit_fiducial_AFB(){
         printf("\n\n Final for bin %i: \n", i);
         printf("AFB shift: %.3f +/- %.3f (stat) +/- %.3f (sys) \n", afb_shift[i], afb_shift_stat_unc[i], afb_shift_sys_unc[i]);
         printf("A0 shift: %.3f +/- %.3f (stat) +/- %.3f (sys) \n", a0_shift[i], a0_shift_stat_unc[i], a0_shift_sys_unc[i]);
+        printf("AFB val: %.3f +/- %.3f (stat) +/- %.3f (sys) \n", afb_val[i], afb_val_stat_unc[i], afb_val_sys_unc[i]);
+        printf("A0 val: %.3f +/- %.3f (stat) +/- %.3f (sys) \n", a0_val[i], a0_val_stat_unc[i], a0_val_sys_unc[i]);
     }
 
 

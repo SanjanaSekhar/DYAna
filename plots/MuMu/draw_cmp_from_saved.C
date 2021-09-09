@@ -30,7 +30,8 @@
 
 const int type = FLAG_MUONS;
 const bool write_out = true;
-char *plot_dir = "Misc_plots/mu_prefire_check_after/";
+char *plot_dir = "Paper_plots/prefit_kinematics/";
+//char *plot_dir = "Misc_plots/mu_prefire_check_after/";
 char *fin_name = "MuMu/saved_hists.root";
 char *plot_label = "";
 
@@ -44,7 +45,7 @@ void draw_cmp_from_saved(){
 
     TFile *fin = new TFile(fin_name, "READ");
 
-    int year_start = 2018;
+    int year_start = 2016;
     int year_stop = 2018;
 
     for(int year = year_start; year <= year_stop; year++){
@@ -400,7 +401,7 @@ void draw_cmp_from_saved(){
     if(year == 2018)
         hmax *= 0.4;
 
-    ratio_range = 0.2;
+    //ratio_range = 0.2;
 
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
@@ -427,7 +428,7 @@ void draw_cmp_from_saved(){
     if(year == 2018)
         hmax *= 0.4;
 
-    ratio_range = 0.2;
+    //ratio_range = 0.2;
     sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);

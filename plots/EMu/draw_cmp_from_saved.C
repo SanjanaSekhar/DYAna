@@ -30,11 +30,11 @@
 #include "../../utils/Colors.h"
 
 const bool write_out = true;
-//char *plot_dir = "Paper_plots/EMu_plots/";
-char *plot_dir = "Misc_plots/mu_prefire_check_before/";
+char *plot_dir = "Paper_plots/EMu_plots/";
+//char *plot_dir = "Misc_plots/mu_prefire_check_before/";
 //char *plot_label = "e#mu Control Region";
 char *plot_label = "";
-char *fin_name = "EMu/saved_hists_no_pref.root";
+char *fin_name = "EMu/saved_hists.root";
 
 
 
@@ -50,7 +50,7 @@ void draw_cmp_from_saved(){
     TFile *fin = new TFile(fin_name, "READ");
 
 
-    int year_start = 2018;
+    int year_start = 2016;
     int year_stop = 2018;
 
     for(int year = year_start; year <= year_stop; year++){

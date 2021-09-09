@@ -25,7 +25,7 @@
 #include "../../utils/Colors.h"
 #include "results.h"
 
-void draw_AFB_mbins(){
+void draw_AFB(){
     setTDRStyle();
 
     bool draw_powheg = false;
@@ -109,7 +109,6 @@ void draw_AFB_mbins(){
     g_sm_amc->GetYaxis()->SetLabelSize(LS);
     g_sm_amc->GetYaxis()->CenterTitle();
 
-    std::cout << g_sm_amc->GetYaxis()->GetTitleSize() << endl;
 
 
     g_sm_amc->Draw("ALP");

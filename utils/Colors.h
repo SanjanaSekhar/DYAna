@@ -22,6 +22,8 @@ Color_t qcd_c = 2055;
 Color_t tautau_c = 2066;
 Color_t gamgam_c = 2077;
 
+Color_t light_blue = 2088;
+
 // https://stackoverflow.com/questions/57153428/r-plot-color-combinations-that-are-colorblind-accessible
 //
 TColor *DY_co = new TColor(DY_c, 213./255.,94./255.,0.);
@@ -31,6 +33,7 @@ TColor *diboson_co = new TColor(diboson_c,  0., 158./255., 115./255.);
 TColor *qcd_co = new TColor(qcd_c,  243./255., 168./255., 87./255.);
 TColor *tautau_co = new TColor(tautau_c,  19./255., 58./255., 54./255.);
 TColor *gamgam_co = new TColor(gamgam_c,  240./255., 228./255., 66./255.);
+TColor *light_blue_co = new TColor(light_blue,  145./255., 173./255., 235./255.);
 
 
 int DY_style = 1001;
