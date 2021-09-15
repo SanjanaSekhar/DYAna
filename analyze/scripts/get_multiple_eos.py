@@ -12,7 +12,11 @@ def print_and_do(s):
 #labels = ["gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18", "gof_postfit", "gof_postfit_y16_mumu", "gof_postfit_y16_ee" ]
 
 labels = [ 
-        'sys_uncs',
+        "gof_prefit",
+        "sys_uncs",
+        "impacts",  
+        "sys_uncs_diff",
+        "impacts_diff",  
         #'gof_prefit_mumu',
         #'gof_prefit_ee',
         #'gof_noSym',
@@ -33,9 +37,9 @@ labels = [
 #"gof_postfit_y16", "gof_postfit_y17","gof_postfit_y18",
 #"gof_postfit_y16_ee", "gof_postfit_y16_mumu",
 ]
-date = "July23"
+date = "Sep01"
 
-odir = "../plots/Misc_plots/fit_checks_july23_unblind/"
+odir = "../plots/Misc_plots/fit_checks_sep01_unblind/"
 #odir = "../plots/Misc_plots/"
 print_and_do("mkdir %s" % odir)
 

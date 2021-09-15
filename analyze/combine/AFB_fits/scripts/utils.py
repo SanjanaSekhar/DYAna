@@ -147,14 +147,77 @@ def remove_line(fname, phrase):
         f.truncate()
 
 
+def make_all_mbins_workspace(workspace,  year = -1, symMCStats = True, 
+        fullCorr = False, diff = False, ratio = False ):
 
-def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1, symMCStats = True, sigma2 = -1., fullCorr = False):
+    
+    print("Making workspace %s all mbins" % (workspace))
+    print("symMCStats", symMCStats)
+    template_card="card_templates/combined_fit_template.txt"
+    #comb_card="cards/combined_fit_mbin%i.txt" % mbin
+    comb_card = "cards/combined_fit_all_mbins.txt" 
+
+    if(year > 0): years = [year % 2000]
+    else: years = [16,17,18]
+
+    combine_cmd = "combineCards.py "
+
+    #if(sigma2 < 0):
+    #    if(mbin >= 5):
+    #        sigma = 0.6 **0.5
+    #    else:
+    #        sigma = 0.1 **0.5
+    #else:
+    #    sigma = sigma2**0.5
+
+    #sigma2 = 0.1
+
+    sigma = -1.0
+
+    mbins = [i for i in range(1,8)]
+
+    for mbin in mbins:
+        for yr in years:
+            if(yr == 16):
+                comb_yr = 16
+            else:
+                #some systematics combined between 17 and 18
+                comb_yr = 1718
+            card="cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
+            print_and_do("cp %s %s" % (template_card, card))
+            do_lumi(card, yr)
+
+            print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
+            print_and_do("""sed -i "s/mM/m%i/g" %s""" % (mbin, card))
+            print_and_do("""sed -i "s/M_BIN/%i/g" %s""" % (mbin, card))
+            print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+            if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
+            if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
+
+
+        if(year < 0 ):
+            combine_cmd += " m{mb}_Y16=cards/combined_fit_y16_mbin{mb}.txt m{mb}_Y17=cards/combined_fit_y17_mbin{mb}.txt m{mb}_Y18=cards/combined_fit_y18_mbin{mb}.txt".format(mb = mbin)
+        else:
+            #comb_card = "cards/combined_fit_y%i_mbin%i.txt" % (yr, mbin)
+            combine_cmd += " m%i_Y%i=cards/combined_fit_y%i_mbin%i.txt" % (mbin, yr,yr, mbin, comb_card)
+
+    combine_cmd += " > %s" % comb_card
+    print_and_do(combine_cmd)
+    if(symMCStats): extra_arg = "--symMCStats --sigma %.3f" % (sigma)
+    else: extra_arg = ""
+    if(fullCorr): extra_arg += " --fullCorr"
+    model_name = 'dy_AFB'
+    if(diff): model_name = 'dy_AFB_diff'
+    elif(ratio): model_name = 'dy_AFB_ratio'
+    print_and_do("text2workspace.py %s -P Analysis.DYAna.my_model:%s -o %s --channel-masks %s" % (comb_card,  model_name, workspace, extra_arg))
+
+def make_workspace(workspace, mbin, fake_data = False, year = -1, symMCStats = True, sigma2 = -1., 
+        fullCorr = False, diff = False, ratio = False ):
 
     
     print("Making workspace %s mbin %i" % (workspace, mbin))
     print("symMCStats", symMCStats)
     template_card="card_templates/combined_fit_template.txt"
-    if(no_sys): template_card = "card_templates/combined_fit_template_nosys.txt"
     if(fake_data): template_card = "card_templates/combined_fit_template_fake_data.txt"
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_mbin%i.txt" % (mbin)
@@ -164,9 +227,11 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
 
     if(sigma2 < 0):
         if(mbin >= 5):
-            sigma2 = 0.6
+            sigma = 0.6 **0.5
         else:
-            sigma2 = 0.1
+            sigma = 0.1 **0.5
+    else:
+        sigma = sigma2**0.5
 
     for yr in years:
         if(yr == 16):
@@ -179,6 +244,8 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
         do_lumi(card, yr)
 
         print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
+        print_and_do("""sed -i "s/mM/m%i/g" %s""" % (mbin, card))
+        print_and_do("""sed -i "s/M_BIN/%i/g" %s""" % (mbin, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
         if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
@@ -191,10 +258,13 @@ def make_workspace(workspace, mbin, no_sys = False, fake_data = False, year = -1
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_mbin%i.txt > %s" % (yr,yr, mbin, comb_card))
         remove_line(comb_card, "lumis%i group" % yr)
 
-    if(symMCStats): extra_arg = "--symMCStats --sigma %.3f" % (sigma2**0.5)
+    if(symMCStats): extra_arg = "--symMCStats --sigma %.3f" % (sigma)
     else: extra_arg = ""
     if(fullCorr): extra_arg += " --fullCorr"
-    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s --channel-masks %s" % (comb_card, mbin, workspace, extra_arg))
+    model_name = 'dy_AFB'
+    if(diff): model_name = 'dy_AFB_diff'
+    elif(ratio): model_name = 'dy_AFB_ratio'
+    print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:%s -o %s --channel-masks %s" % (comb_card, mbin, model_name, workspace, extra_arg))
 
 def make_gen_level_workspace(workspace, mbin,  year = -1):
     print("Making workspace %s mbin %i" % (workspace, mbin))

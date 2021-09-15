@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * templatesYR.root  w$M_BIN/$CHANNEL_$PROCESS w$M_BIN/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * templatesYR.root  wM_BIN/$CHANNEL_$PROCESS wM_BIN/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             eeYR  mumuYR  
 observation     -1      -1    
@@ -40,6 +40,7 @@ lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS
 ## prefire only for 16,17, hem only 18                                                                                
 Pu                          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #prefireYR                  shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
+muPrefYRC                   shape     -       -       -       -        -      -     -      1.0     1.0     1.0    1.0      1.0    1.0      -       -      1.0   
 METJECYR                    shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
 #METHEMYR                   shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0    1.0      1.0    1.0      -      1.0     1.0   
                                                                                                                                           
@@ -100,13 +101,13 @@ REFACYRC                    shape    1.0     1.0     1.0      -        -      - 
 
 RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
                                                                                                                                   
-#emu cost reweighting                                                                                                 
-emucostrw1bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
-emucostrw2bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
-emucostrw3bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
-emucostrw4bYRC              shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+#emu cost reweighting, separated per mass bin                                                                                                 
+emucostrw1bYRCmM            shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw2bYRCmM            shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw3bYRCmM            shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
+emucostrw4bYRCmM            shape    -       -        -     1.0      1.0     -      -       -       -       -     1.0      1.0     -       -       -       -    
 
-emucostrwsYRC group = emucostrw1bYRC emucostrw2bYRC emucostrw3bYRC emucostrw4bYRC
+emucostrwsYRC group = emucostrw1bYRCmM emucostrw2bYRCmM emucostrw3bYRCmM emucostrw4bYRCmM
 
 ##fakes cost reweighting                                                                                                 
 elfakesrw1bYR               shape    -       -        -      -        -      -     1.0      -       -       -      -        -      -       -       -       -    
@@ -124,16 +125,16 @@ mufakesrw4bYR               shape    -       -        -      -        -      -  
 mufakesrwsYR group = mufakesrw1bYR mufakesrw2bYR mufakesrw3bYR mufakesrw4bYR
                                                                                                                                   
                                                                                                                                           
-#pt reweighting                                                                                                                   
-ptrw1bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw2bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw3bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw4bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw5bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw6bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
-ptrw7bYRC                   shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+#pt reweighting, separated mass bin                                                                                                                   
+ptrw1bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw2bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw3bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw4bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw5bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw6bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
+ptrw7bYRCmM                 shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -      1.0     1.0   
 
-ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw4bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC
+ptrwsYRC group = ptrw1bYRCmM ptrw2bYRCmM ptrw3bYRCmM ptrw4bYRCmM ptrw5bYRCmM ptrw6bYRCmM ptrw7bYRCmM
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                        shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     -        -      -       -       -       -     

@@ -234,6 +234,7 @@ void TempMaker::setup_systematic(const string &s_label){
 
 
 
+        else if(sys_label.find("muPref") != string::npos) do_mu_prefire_sys = sys_shift;
         else if(sys_label.find("prefire") != string::npos) do_prefire_sys = sys_shift;
 
 
@@ -455,8 +456,8 @@ float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
         else base_weight *= prefire_SF;
     }
     if(do_muons || do_emu){
-        if(do_prefire_sys == -1) base_weight *= mu_prefire_SF_down;
-        else if(do_prefire_sys == 1) base_weight *= mu_prefire_SF_up;
+        if(do_mu_prefire_sys == -1) base_weight *= mu_prefire_SF_down;
+        else if(do_mu_prefire_sys == 1) base_weight *= mu_prefire_SF_up;
         else base_weight *= mu_prefire_SF;
     }
 

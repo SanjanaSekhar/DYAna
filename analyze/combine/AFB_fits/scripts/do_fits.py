@@ -12,11 +12,18 @@ parser.add_option("--mbin", default = -1, type='int', help="Only do fits for thi
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("-v", "--verbose", default = 0, type='int', help="Turn up verbosity on fits")
 parser.add_option("--noSymMCStats", default = False, action="store_true",  help="Don't add constraints to mcStat nuisances")
+parser.add_option("--diff", default = False, action="store_true",  help="Measure difference between electron and muon AFB's")
+parser.add_option("--ratio", default = False, action="store_true",  help="Measure ratio between electron and muon AFB's")
+parser.add_option("--all_mbins", default = False, action="store_true",  help="All da mbins")
 
 (options, args) = parser.parse_args()
 
 
 extra_params = ""
+
+if(options.diff and not (options.chan == "combined")):
+    print("invalid options. Selected diff but channel is %s " % options.chan)
+    sys.exit(1)
 
 if(options.chan == "ee"):
     print("Chan is ee, will mask mumu channels")
@@ -43,6 +50,8 @@ bin_start = 1
 bin_stop = 8
 
 fit_name = options.chan
+if(options.diff): fit_name += "_diff"
+if(options.ratio): fit_name += "_ratio"
 if(options.no_sys): 
     fit_name +="_nosys"
     extra_params += " --freezeParameters allConstrainedNuisances"
@@ -51,16 +60,30 @@ if(options.noSymMCStats):
 if(options.fake_data): fit_name +="_fake_data"
 if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
 
+
 if(options.mbin >= 0):
     print("Will only do fit for bin %i " % options.mbin)
     bin_start = options.mbin
     bin_stop = bin_start + 1
 
-for mbin in range(bin_start, bin_stop):
+mbins = [i for i in range(bin_start, bin_stop)]
+
+if(options.all_mbins):
+    extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
+    mbins = [9]
+
+
+
+
+for mbin in mbins:
     print(" \n \n Starting fit for bin %i \n\n" % mbin)
 
-    workspace="workspaces/%s_fit_%i.root" % (options.chan, mbin)
-    make_workspace(workspace, mbin, fake_data = options.fake_data, year = options.year, symMCStats = not (options.noSymMCStats) )
+    workspace="workspaces/%s_fit_%i.root" % (fit_name, mbin)
+
+    if(options.all_mbins):
+        make_all_mbins_workspace(workspace, year = options.year, symMCStats = not (options.noSymMCStats), diff = options.diff , ratio = options.ratio)
+    else:
+        make_workspace(workspace, mbin, fake_data = options.fake_data, year = options.year, symMCStats = not (options.noSymMCStats), diff = options.diff , ratio = options.ratio)
 
     plotdir="postfit_plots/%s_mbin%i" % (fit_name, mbin)
     print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
@@ -82,7 +105,8 @@ for mbin in range(bin_start, bin_stop):
         print_and_do("python scripts/plot_comb_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i" % (fit_name, mbin, plotdir, mbin))
         #print_and_do("python scripts/plot_swaped_axis_postfit.py -i %s_fit_shapes_mbin%i.root -o %s -m %i %s" % (fit_name, mbin, plotdir_swap, mbin, extra_args))
         print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s" % (workspace, extra_params)) #only to get prefit, probably a better way
-        print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --prefit fitDiagnosticsTest.root -p Afb --skipFitB -g %s" % (plotdir))
+        if(not options.diff and not options.ratio): 
+            print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --prefit fitDiagnosticsTest.root -p Afb --skipFitB -g %s" % (plotdir))
         print_and_do("mv %s_fit_shapes_mbin%i.root %s" %(fit_name, mbin, plotdir))
         if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 

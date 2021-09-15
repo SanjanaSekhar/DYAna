@@ -13,6 +13,7 @@ parser.add_option("--Afb",  default=0.6, type='float', help="Afb value to inject
 parser.add_option("--A0",  default=0.05, type='float', help="A0 value to inject if expected")
 parser.add_option("-o", "--odir", default="sys_uncs/", help = "output directory")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
+parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 (options, args) = parser.parse_args()
 
@@ -24,7 +25,7 @@ s = 123456
 extra_params += " -s %i" % s
 
 
-individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "muFakesYR", "Pu", "prefireYR", "METJECYR", "muRCYR"]
+individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "muFakesYR", "Pu", "prefireYR", "METJECYR", "muRCYR", "muPrefYRC"]
 group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",   "muIDsYR", "muHLTsYR", 
                 "elfakesrwsYR","mufakesrwsYR", "BTAGSYR", "autoMCStats"] 
 
@@ -37,7 +38,8 @@ sys_name_conv['gam_xsec'] = "$\\PGg\\PGg$ Cross Section"
 sys_name_conv['elFakesYR'] = "Electron MisID Normalization"
 sys_name_conv['muFakesYR'] = "Muon MisID Normalization"
 sys_name_conv['Pu'] = "Pileup"
-sys_name_conv['prefireYR'] = "Trigger Prefire Correction"
+sys_name_conv['prefireYR'] = "Electron Trigger Prefire Correction"
+sys_name_conv['muPrefYRC'] = "Muon Trigger Prefire Correction"
 sys_name_conv['METJECYR'] = "MET Uncertainties"
 sys_name_conv['muRCYR'] = "Muon Momentum Scale"
 sys_name_conv['RFscalesYRC'] = "$\\alpha_s$ + Renormalization/Factorization Scales"
@@ -84,7 +86,7 @@ def par_to_freezestr(par):
 workspace = "workspaces/%s_sys_uncs_%i.root" % (chan, options.mbin)
 
 if(not options.reuse_fit):
-    make_workspace(workspace, options.mbin)
+    make_workspace(workspace, options.mbin, diff = options.diff)
     print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s" % (workspace, extra_params))
 
 

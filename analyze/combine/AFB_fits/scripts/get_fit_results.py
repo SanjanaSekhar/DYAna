@@ -6,8 +6,16 @@ parser.add_option("--chan",  default="all", type="string", help="What channels t
 (options, args) = parser.parse_args()
 
 
-AFB_shifts = [0.0, 0.016, 0.009, 0.005, 0.002, 0.002, -0.001, -0.001]
-AFB_shifts_unc = [0.0, 0.003, 0.002, 0.002, 0.001, 0.002, -0.001, -0.001]
+AFB_shifts = [0.0, 0.016, 0.009, 0.005, 0.002, 0.002, -0.001, -0.001, 0.]
+AFB_shifts_unc = [0.0, 0.003, 0.002, 0.002, 0.001, 0.002, -0.001, -0.001, 0.]
+
+A0_str = 'A0'
+Afb_str = 'Afb'
+n_bins = 8
+if('diff' in options.chan):
+    A0_str = 'dA0'
+    Afb_str = 'dAfb'
+    n_bins =9
 
 
 def get_AFB_A0(filename):
@@ -15,11 +23,11 @@ def get_AFB_A0(filename):
     with open(filename) as f:
         lines = f.readlines()
         for line in lines:
-            if 'A0' in line:
+            if A0_str in line:
                 res = line.split()
                 A0_val, A0_err = float(res[1]), float(res[3])
                 #print('A0', A0_val, A0_err)
-            if 'Afb' in line:
+            if Afb_str in line:
                 res = line.split()
                 AFB_val, AFB_err = float(res[1]), float(res[3])
                 #print('AFB', AFB_val, AFB_err)
@@ -31,9 +39,8 @@ def get_AFB_A0(filename):
 
 
 
-n_bins = 8
 
-mbin_str =  [ "150-170", "170-200", "200-250", "250-320", "320-510", "510-700", "700-1000", "$\\geq$ 1000"]
+mbin_str =  [ "150-170", "170-200", "200-250", "250-320", "320-510", "510-700", "700-1000", "$\\geq$ 1000", "Inclusive"]
 
 
 AFB_err_stat = np.array([[0.]*n_bins]*3)
@@ -62,10 +69,14 @@ for c_idx, chan in enumerate(chans):
 
     for i in range(1,n_bins):
 
+        if('diff' in options.chan):
+            AFB_shifts[i] = AFB_shifts_unc[i] = 0.
+
         fit_name = fit_dir + chan + (ending % i)
         stat_name = fit_dir + chan + 'nosys_' + (ending % i)
         AFB_fit, A0_fit, AFB_err_fit, A0_err_fit = get_AFB_A0(fit_name)
         _,_, AFB_err_stat[c_idx][i], A0_err_stat[c_idx][i] = get_AFB_A0(stat_name)
+
 
         AFB_err_sys[c_idx][i] = (AFB_err_fit**2 - AFB_err_stat[c_idx][i]**2 + AFB_shifts_unc[i]**2)**0.5
         A0_err_sys[c_idx][i] = (A0_err_fit**2 - A0_err_stat[c_idx][i]**2)**0.5
@@ -76,7 +87,8 @@ for c_idx, chan in enumerate(chans):
         AFB_err_tot[c_idx][i] = (AFB_err_fit**2 + AFB_shifts_unc[i]**2)**0.5
         A0_err_tot[c_idx][i] = A0_err_fit
 
-        AFB_val[c_idx][i] = AFB_fit + AFB_shifts[i]
+        AFB_val[c_idx][i] = AFB_fit 
+        if('diff' not in options.chan): AFB_val[c_idx][i] += AFB_shifts[i]
         A0_val[c_idx][i] = A0_fit
 
         

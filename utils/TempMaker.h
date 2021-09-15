@@ -170,6 +170,7 @@ class TempMaker{
         int el_SF_pt_range = 0;
 
         int do_prefire_sys = 0;
+        int do_mu_prefire_sys = 0;
 
         int do_elScale_sys = 0;
         int do_elSmear_sys = 0;

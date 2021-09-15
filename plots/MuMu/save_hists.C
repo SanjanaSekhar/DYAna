@@ -34,8 +34,8 @@ char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
 
 const int type = FLAG_MUONS;
-const int year = 2018;
-char *fout_name = "MuMu/saved_hists_nopref.root";
+const int year = 2016;
+char *fout_name = "MuMu/saved_hists.root";
 
 
 
@@ -50,17 +50,19 @@ void save_hists(){
     init_indv_bkgs(year);
     setup_all_SFs(year);
 
-    int n_pt_bins1 = 7;
+    int n_pt_bins1 = 1000;
+    float pt_low = 0.;
+    float pt_high = 1000.;
     Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
 
-    TH1F *dy_pt = new TH1F("dy_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *dy_tautau_pt = new TH1F("dy_tautau_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *data_pt = new TH1F("data_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *ttbar_pt = new TH1F("ttbar_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *diboson_pt = new TH1F("diboson_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *wt_pt = new TH1F("wt_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *QCD_pt = new TH1F("QCD_pt", "dy signal", n_pt_bins1, pt_bins1);
-    TH1F *gg_pt = new TH1F("gg_pt", "dy signal", n_pt_bins1, pt_bins1);
+    TH1F *dy_pt = new TH1F("dy_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *dy_tautau_pt = new TH1F("dy_tautau_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *data_pt = new TH1F("data_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *ttbar_pt = new TH1F("ttbar_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *diboson_pt = new TH1F("diboson_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *wt_pt = new TH1F("wt_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *QCD_pt = new TH1F("QCD_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
+    TH1F *gg_pt = new TH1F("gg_pt", "dy signal", n_pt_bins1, pt_low, pt_high);
 
     int n_xf_bins1 = 5;
     float xf_bins1[] = {0.,0.04, 0.07, 0.1, 0.2, 0.5};
@@ -193,6 +195,14 @@ void save_hists(){
     wt_rap->Write();
 
 
+    data_pt->Write();
+    diboson_pt->Write();
+    QCD_pt->Write();
+    ttbar_pt->Write();
+    gg_pt->Write();
+    dy_tautau_pt->Write();
+    dy_pt->Write();
+    wt_pt->Write();
 
 
 

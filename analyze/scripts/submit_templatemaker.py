@@ -15,7 +15,7 @@ labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
 njobs = 25
-ending = "july12_unblinded"
+ending = "sep1_unblinded"
 
 for year in years:
 
