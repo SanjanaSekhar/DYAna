@@ -47,13 +47,13 @@ void draw_dAFB(){
     weighted_avg /= sum_weights;
     weighted_avg_unc = pow(1./sum_weights, 0.5);
     */
-    weighted_avg = -0.0304;
-    weighted_avg_unc = -0.0116;
+    weighted_avg = -0.026;
+    weighted_avg_unc = -0.0106;
 
     Double_t sigma = weighted_avg / weighted_avg_unc;
     printf("Weighted avg is %.3f +/- %.3f. Sigma is %.2f \n", weighted_avg, weighted_avg_unc, sigma);
 
-    TLine *l_zero = new TLine(150, 0, 1200, 0);
+    TLine *l_zero = new TLine(150, 0, 1300, 0);
     l_zero->SetLineStyle(9);
     l_zero->SetLineWidth(4);
     l_zero->SetLineColor(diboson_c);
@@ -85,7 +85,7 @@ void draw_dAFB(){
     l_avg->SetLineColor(ttbar_c);
     l_avg_unc->SetFillColor(light_blue);
 
-    float yTOffset = 0.6;
+    float yTOffset = 0.63;
     float LS = 0.05;
     float yTS = 0.1;
     float xTS = 0.06;
@@ -99,7 +99,7 @@ void draw_dAFB(){
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
     c_m->SetRightMargin(0.05);
 
-    l_avg_unc->GetYaxis()->SetRangeUser(-0.4, 0.4);
+    l_avg_unc->GetYaxis()->SetRangeUser(-0.3, 0.5);
     l_avg_unc->GetXaxis()->SetLimits(100., 1400.);
 
     l_avg_unc->GetYaxis()->SetTitle("#DeltaA_{FB}");
@@ -131,15 +131,15 @@ void draw_dAFB(){
     gStyle->SetLegendBorderSize(0);
     
     float x_size = 0.32;
-    float y_size = 0.24;
-    float leg_text_size = 0.04;
+    float y_size = 0.2;
+    float leg_text_size = 0.035;
 
 
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.42;
-    float y_start_m = 0.67;
+    float x_start_m = 0.25;
+    float y_start_m = 0.63;
 
 
     leg1->SetX1(x_start_m);
@@ -148,13 +148,31 @@ void draw_dAFB(){
     leg1->SetY2(y_start_m+y_size);
 
 
-    leg1->AddEntry(g_comb, " #Delta A_{FB} = A_{FB,#mu#mu} #minus A_{FB,ee}", "p");
-    leg1->AddEntry(l_zero, "#Delta A_{FB} = 0", "l");
-    leg1->AddEntry(l_avg, "Weighted Avg.", "l");
-    leg1->AddEntry(l_avg_unc, "Uncertainty on Weighted Avg. ", "f");
+    //leg1->SetHeader("#Delta A_{FB} = A_{FB,#mu#mu} #minus A_{FB,ee}", "C");
+
+
+
+    leg1->AddEntry(l_zero, " #Delta A_{FB} = 0", "l");
+    leg1->AddEntry(g_comb, " Mass Binned Measurements ", "pe");
+    leg1->AddEntry(l_avg, " Inclusive Measurement", "l");
+    leg1->AddEntry(l_avg_unc, " Uncertainty on Inclusive Measurement ", "f");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
+
+    TLatex latext; 
+    latext.SetNDC();
+    latext.SetTextColor(kBlack);
+    latext.SetTextAlign(22); //centered
+    latext.SetTextFont(42);
+    latext.SetTextSize(0.05);    
+
+
+
+    latext.DrawLatex(0.75, 0.88, "#Delta A_{FB} = A_{FB,#mu#mu} #minus A_{FB,ee}");
+
+
+
 
     c_m->cd();
     int iPeriod = -1; 

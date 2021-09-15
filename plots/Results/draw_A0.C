@@ -142,12 +142,12 @@ void draw_A0(){
     leg1->SetY2(y_start_m+y_size);
 
 
-    leg1->AddEntry(g_sm_amc, "Standard Model A_{0} from aMC@NLO", "l");
-    leg1->AddEntry(g_sm_amc_unc, "Uncertainty on aMC@NLO", "f");
-    if(draw_powheg) leg1->AddEntry(g_sm_pow, "Standard Model A_{0} from POWHEG", "l");
-    leg1->AddEntry(g_mumu, "#mu#mu Measurement", "p");
-    leg1->AddEntry(g_elel, "ee Measurement", "p");
-    leg1->AddEntry(g_comb, "Combined Measurement", "p");
+    leg1->AddEntry(g_sm_amc, " Standard Model A_{0} from aMC@NLO", "l");
+    leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
+    if(draw_powheg) leg1->AddEntry(g_sm_pow, " Standard Model A_{0} from POWHEG", "l");
+    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pe");
+    leg1->AddEntry(g_elel, " ee Measurement", "pe");
+    leg1->AddEntry(g_comb, " Combined Measurement", "pe");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();

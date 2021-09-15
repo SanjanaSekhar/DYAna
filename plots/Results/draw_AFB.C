@@ -50,11 +50,13 @@ void draw_AFB(){
 
     TGraph *g_sm_pow = new TGraphErrors(n_m_bins, m, y_powheg);
     TGraph *g_sm_amc = new TGraphErrors(n_m_bins, m, y_amc);
+    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_bins, m, y_amc, nullptr, y_amc_errs);
     TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_comb, m_err, y_comb_errs);
     TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_mumu, m_err, y_mumu_errs);
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
+    g_sm_amc_unc->SetFillColor(light_blue);
     g_sm_amc->SetMarkerColor(diboson_c);
     g_sm_amc->SetLineColor(diboson_c);
     g_sm_amc->SetLineWidth(4);
@@ -99,20 +101,21 @@ void draw_AFB(){
     pad1->Draw();
     pad1->cd();
 
-    g_sm_amc->GetYaxis()->SetRangeUser(0.22, 0.8);
-    g_sm_amc->GetXaxis()->SetLimits(100., 1400.);
+    g_sm_amc_unc->GetYaxis()->SetRangeUser(0.22, 0.8);
+    g_sm_amc_unc->GetXaxis()->SetLimits(100., 1400.);
 
-    g_sm_amc->GetYaxis()->SetTitle("A_{FB}");
-    g_sm_amc->GetYaxis()->SetNdivisions(505);
-    g_sm_amc->GetYaxis()->SetTitleSize(yTS);
-    g_sm_amc->GetYaxis()->SetTitleOffset(yTOffset);
-    g_sm_amc->GetYaxis()->SetLabelSize(LS);
-    g_sm_amc->GetYaxis()->CenterTitle();
+    g_sm_amc_unc->GetYaxis()->SetTitle("A_{FB}");
+    g_sm_amc_unc->GetYaxis()->SetNdivisions(505);
+    g_sm_amc_unc->GetYaxis()->SetTitleSize(yTS);
+    g_sm_amc_unc->GetYaxis()->SetTitleOffset(yTOffset);
+    g_sm_amc_unc->GetYaxis()->SetLabelSize(LS);
+    g_sm_amc_unc->GetYaxis()->CenterTitle();
 
 
 
-    g_sm_amc->Draw("ALP");
-    if(draw_powheg) g_sm_pow->Draw("ALP same");
+    g_sm_amc_unc->Draw("A3");
+    g_sm_amc->Draw("L same");
+    //if(draw_powheg) g_sm_pow->Draw("L same");
     g_elel->Draw("PE same");
     g_mumu->Draw("PE same");
     g_comb->Draw("PE same");
@@ -123,7 +126,7 @@ void draw_AFB(){
     
     float x_size = 0.4;
     float y_size = 0.3;
-    float leg_text_size = 0.05;
+    float leg_text_size = 0.045;
 
 
 
@@ -139,11 +142,12 @@ void draw_AFB(){
     leg1->SetY2(y_start_m+y_size);
 
 
-    leg1->AddEntry(g_sm_amc, "Standard Model A_{FB} from aMC@NLO", "l");
-    if(draw_powheg) leg1->AddEntry(g_sm_pow, "Standard Model A_{FB} from POWHEG", "l");
-    leg1->AddEntry(g_mumu, "#mu#mu Measurement", "p");
-    leg1->AddEntry(g_elel, "ee Measurement", "p");
-    leg1->AddEntry(g_comb, "Combined Measurement", "p");
+    leg1->AddEntry(g_sm_amc, " Standard Model A_{FB} from aMC@NLO", "l");
+    leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
+    if(draw_powheg) leg1->AddEntry(g_sm_pow, " Standard Model A_{FB} from POWHEG", "l");
+    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pe");
+    leg1->AddEntry(g_elel, " ee Measurement", "pe");
+    leg1->AddEntry(g_comb, " Combined Measurement", "pe");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
