@@ -229,7 +229,7 @@ void draw_cmp_from_saved(){
 
     setTDRStyle();
     gStyle->SetLegendBorderSize(0);
-    gStyle->SetErrorX(0);
+    //gStyle->SetErrorX(0);
 
 
 
@@ -245,14 +245,16 @@ void draw_cmp_from_saved(){
     m_stack->Add(diboson_m);
     m_stack->Add(QCD_m);
     m_stack->Add(top_m);
-    m_stack->Add(dy_m);
+    //m_stack->Add(dy_m);
+    //
 
 
     THStack *cost_stack = new THStack("cost_stack", "EMu Cos(theta) Distribution: Data vs MC ; cos(#theta)");
     cost_stack->Add(diboson_cost);
     cost_stack->Add(QCD_cost);
     cost_stack->Add(top_cost);
-    cost_stack->Add(dy_cost);
+
+    //cost_stack->Add(dy_cost);
 
 
 
@@ -262,7 +264,7 @@ void draw_cmp_from_saved(){
     rap_stack->Add(diboson_rap);
     rap_stack->Add(QCD_rap);
     rap_stack->Add(top_rap);
-    rap_stack->Add(dy_rap);
+    //rap_stack->Add(dy_rap);
 
     gStyle->SetLegendBorderSize(0);
     float x_size = 0.5;
@@ -270,8 +272,8 @@ void draw_cmp_from_saved(){
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
     leg1->SetHeader("e#mu Control Region");
-    leg1->AddEntry(data_m, "data", "p");
-    leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
+    leg1->AddEntry(data_m, "data", "pe");
+    //leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
     leg1->AddEntry(top_m, "t#bar{t} + Single Top", "f");
     leg1->AddEntry(QCD_m, "QCD and W+Jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
@@ -289,7 +291,7 @@ void draw_cmp_from_saved(){
     bool logy = true;
     bool logx = false;
     bool draw_sys_uncs = true;
-    float ratio_range = 0.3;
+    float ratio_range = 0.4;
 
 
     char file_label[20];
@@ -331,7 +333,7 @@ void draw_cmp_from_saved(){
         */
 
     sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack,  leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 11 );
     sprintf(plt_file, "%sEMu%s_m_cmp.pdf", plot_dir, file_label);
     if(write_out) c_m->Print(plt_file);
@@ -357,7 +359,7 @@ void draw_cmp_from_saved(){
 
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta_{r})", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost,  cost_stack, leg2, "cost", "cos(#theta_{r})", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
     sprintf(plt_file, "%sEMu%s_cost_cmp.pdf", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
@@ -379,7 +381,7 @@ void draw_cmp_from_saved(){
 
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dilepton rapidity", y_ax_label,  plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack,  leg3, "rap", "dilepton rapidity", y_ax_label,  plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
     sprintf(plt_file, "%sEMu%s_rap_cmp.pdf", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);

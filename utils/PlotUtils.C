@@ -289,6 +289,52 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0, bool draw_chi2 = false){
 
 
+    TList *stackHists = h_stack->GetHists();
+    TH1* sum = (TH1*)stackHists->At(0)->Clone();
+    sum->Reset();
+
+    for (int i=0;i<stackHists->GetSize();++i) {
+        sum->Add((TH1*)stackHists->At(i));
+    }
+    //make separate tgraph for uncertainty on 'stacked' hists
+    int nbins = sum->GetNbinsX();
+    TGraphErrors *ratio_unc = new TGraphErrors(nbins+2);
+    for(int i= 0; i<= nbins+1; i++){
+        float x,y,ex,ey,content;
+        int idx = i;
+        float eps = 0.001;
+
+        if(i ==0){
+            idx = i+1; 
+            x = sum->GetXaxis()->GetBinLowEdge(idx) + eps;
+            ex = 0;
+        }
+        else if(i==nbins+1){
+            idx = i-1;
+            x = sum->GetXaxis()->GetBinUpEdge(idx) - eps;
+            ex = 0;
+        }
+        else{
+            x = sum->GetXaxis()->GetBinCenter(idx);
+            ex = sum->GetXaxis()->GetBinWidth(idx);
+        }
+
+        content = sum->GetBinContent(idx);
+        y = 1.;
+        if(content > 0) ey = sum->GetBinError(idx) / sum->GetBinContent(idx);
+        else ey = 0.;
+
+        ratio_unc->SetPoint(i, x,y);
+        ratio_unc->SetPointError(i, ex,ey);
+
+    }
+
+    TH1* h_stack_err = (TH1F *) sum->Clone();
+
+
+    for(int i= 1; i<= nbins; i++) sum->SetBinError(i, 0.);
+
+    unzero_bins(sum);
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
@@ -308,10 +354,34 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_stack->SetMaximum(hmax);
     h_stack->SetMinimum(0.1);
 
+    //gStyle->SetHatchesLineWidth(1);
+    //gStyle->SetHatchesSpacing(1);
+    h_stack_err->SetLineColor(kWhite);
+    h_stack_err->SetFillColor(kBlack);
+    h_stack_err->SetFillStyle(3353);
+    h_stack_err->SetMarkerStyle(0);
+    h_stack_err->SetMarkerSize(0.001);
+    h_stack_err->Draw("e2 same");
+    h_stack_err->Print("range");
+
+    leg->AddEntry(h_stack_err, "Sys. Unc.", "f");
+
+
+    bool const_size = h_data->GetXaxis()->GetBinWidth(1) == h_data->GetXaxis()->GetBinWidth(h_data->GetXaxis()->GetNbins());
+
     gStyle->SetEndErrorSize(0);
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
-    h_data->Draw("p e0x0 same");
+    if(const_size){
+        //gStyle->SetErrorX(0);
+        h_data->Draw("p e0x0 same");
+        printf("const size\n");
+    }
+    else{
+        //gStyle->SetErrorX(1);
+        h_data->Draw("p e0 same");
+        printf("not const size\n");
+    }
 
     leg->Draw();
 
@@ -361,56 +431,15 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     //pad2->SetTopMargin(0);
     pad2->SetBottomMargin(0.4);
     pad2->SetRightMargin(0.03);
-    pad2->SetGridy();
+    //pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
     if(logx) pad2->SetLogx();
 
 
-    TList *stackHists = h_stack->GetHists();
-    TH1* sum = (TH1*)stackHists->At(0)->Clone();
-    sum->Reset();
 
-    for (int i=0;i<stackHists->GetSize();++i) {
-        sum->Add((TH1*)stackHists->At(i));
-    }
-    //make separate tgraph for uncertainty on 'stacked' hists
-    int nbins = sum->GetNbinsX();
-    TGraphErrors *ratio_unc = new TGraphErrors(nbins+2);
-    for(int i= 0; i<= nbins+1; i++){
-        float x,y,ex,ey,content;
-        int idx = i;
-
-        if(i ==0){
-            idx = i+1; 
-            x = sum->GetXaxis()->GetBinLowEdge(idx);
-            ex = 0;
-        }
-        else if(i==nbins+1){
-            idx = i-1;
-            x = sum->GetXaxis()->GetBinUpEdge(idx);
-            ex = 0;
-        }
-        else{
-            x = sum->GetXaxis()->GetBinCenter(idx);
-            ex = sum->GetXaxis()->GetBinWidth(idx);
-        }
-
-        content = sum->GetBinContent(idx);
-        y = 1.;
-        if(content > 0) ey = sum->GetBinError(idx) / sum->GetBinContent(idx);
-        else ey = 0.;
-
-        ratio_unc->SetPoint(i, x,y);
-        ratio_unc->SetPointError(i, ex,ey);
-
-    }
-    for(int i= 1; i<= nbins; i++) sum->SetBinError(i, 0.);
-
-    unzero_bins(sum);
-
-    ratio_unc->SetFillColor(kBlack);
-    ratio_unc->SetFillStyle(3010);
+    ratio_unc->SetFillColor(kGray);
+    //ratio_unc->SetFillStyle(3010);
     //ratio_unc->Print("all");
 
 
@@ -431,10 +460,28 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     float ratio_min = center - ratio_range;
     float ratio_max = center + ratio_range;
-    h_ratio->SetMinimum(ratio_min);
-    h_ratio->SetMaximum(ratio_max);
+    h_ratio->GetYaxis()->SetRangeUser(ratio_min, ratio_max);
+
+    h_ratio->SetTitle("");
+    h_ratio->GetYaxis()->SetTitle("Obs/Exp");
+    h_ratio->GetYaxis()->SetNdivisions(205);
+    h_ratio->GetYaxis()->SetTitleSize(rTS);
+    h_ratio->GetYaxis()->SetLabelSize(rLS);
+    h_ratio->GetYaxis()->SetTitleOffset(rTOffset);
+
+    h_ratio->GetXaxis()->SetNdivisions(808);
+    h_ratio->GetXaxis()->SetTickLength(0.06);
+    h_ratio->GetXaxis()->SetTitle(xlabel);
+    h_ratio->GetXaxis()->SetTitleSize(rTS);
+    h_ratio->GetXaxis()->SetTitleOffset(1.);
+    h_ratio->GetXaxis()->SetLabelSize(rLS);
+
+
+
+
     //h_ratio->SetMarkerStyle(21);
-    h_ratio->Draw("EPX0");
+    if(const_size) h_ratio->Draw("EPX0 same");
+    else h_ratio->Draw("EP same");
     if(draw_sys_unc){
         ratio_unc->Draw("3 same");
         float line_start = h_ratio->GetXaxis()->GetXmin();
@@ -444,22 +491,9 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         l1->SetLineWidth(2);
         l1->Draw();
     }
-
-    h_ratio->SetTitle("");
-    // Y axis m_ratio plot settings
-    h_ratio->GetYaxis()->SetTitle("Obs/Exp");
-    h_ratio->GetYaxis()->SetNdivisions(303);
-    h_ratio->GetYaxis()->SetTitleSize(rTS);
-    h_ratio->GetYaxis()->SetLabelSize(rLS);
-    h_ratio->GetYaxis()->SetTitleOffset(rTOffset);
-
-    // X axis m_ratio plot settings
-    h_ratio->GetXaxis()->SetNdivisions(808);
-    h_ratio->GetXaxis()->SetTickLength(0.06);
-    h_ratio->GetXaxis()->SetTitle(xlabel);
-    h_ratio->GetXaxis()->SetTitleSize(rTS);
-    h_ratio->GetXaxis()->SetTitleOffset(1.);
-    h_ratio->GetXaxis()->SetLabelSize(rLS);
+    if(const_size) h_ratio->Draw("EPX0 same");
+    else h_ratio->Draw("EP same");
+    gPad->RedrawAxis();
 
     float chi2 = computeChi2(h_ratio);
     int n_bins = h_ratio->GetNbinsX();

@@ -266,6 +266,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
                     signals[hist_index].Draw('hist same')
 
+                totlist[hist_index].SetLineColor(kWhite)
                 totlist[hist_index].SetFillColor(kBlack)
                 totlist[hist_index].SetFillStyle(3354)
                 totlist[hist_index].SetMarkerStyle(20)
