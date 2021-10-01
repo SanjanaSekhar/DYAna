@@ -27,6 +27,8 @@
 
 void draw_AFB(){
     setTDRStyle();
+    char *fout  = "PAS_plots/AFB_mbins_unblind.pdf";
+    bool prelim = true;
 
     bool draw_powheg = false;
 
@@ -56,9 +58,12 @@ void draw_AFB(){
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
-    g_sm_amc_unc->SetFillColor(light_blue);
+    int fill_col = kGreen -10;
     g_sm_amc->SetMarkerColor(diboson_c);
+    g_sm_amc_unc->SetFillColor(fill_col);
+    g_sm_amc_unc->SetLineColor(fill_col);
     g_sm_amc->SetLineColor(diboson_c);
+    g_sm_amc->SetFillColor(fill_col);
     g_sm_amc->SetLineWidth(4);
 
     g_sm_pow->SetMarkerColor(kBlue);
@@ -75,8 +80,8 @@ void draw_AFB(){
     g_mumu->SetLineColor(DY_c);
 
     g_comb->SetMarkerStyle(kFullSquare);
-    g_mumu->SetMarkerStyle(kFullSquare);
-    g_elel->SetMarkerStyle(kFullSquare);
+    g_mumu->SetMarkerStyle(kOpenTriangleUp);
+    g_elel->SetMarkerStyle(kOpenTriangleUp);
 
     g_comb->SetLineWidth(2);
 
@@ -96,12 +101,12 @@ void draw_AFB(){
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
     TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
     pad1->SetTopMargin(0.07);
-    pad1->SetBottomMargin(0.012);
-    pad1->SetRightMargin(0.04);
+    pad1->SetBottomMargin(0.010);
+    pad1->SetRightMargin(0.042);
     pad1->Draw();
     pad1->cd();
 
-    g_sm_amc_unc->GetYaxis()->SetRangeUser(0.22, 0.8);
+    g_sm_amc_unc->GetYaxis()->SetRangeUser(0.45, 0.9);
     g_sm_amc_unc->GetXaxis()->SetLimits(100., 1400.);
 
     g_sm_amc_unc->GetYaxis()->SetTitle("A_{FB}");
@@ -112,6 +117,7 @@ void draw_AFB(){
     g_sm_amc_unc->GetYaxis()->CenterTitle();
 
 
+    gStyle->SetEndErrorSize(0);
 
     g_sm_amc_unc->Draw("A3");
     g_sm_amc->Draw("L same");
@@ -132,8 +138,8 @@ void draw_AFB(){
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.2;
-    float y_start_m = 0.16;
+    float x_start_m = 0.33;
+    float y_start_m = 0.56;
 
 
     leg1->SetX1(x_start_m);
@@ -142,19 +148,19 @@ void draw_AFB(){
     leg1->SetY2(y_start_m+y_size);
 
 
-    leg1->AddEntry(g_sm_amc, " Standard Model A_{FB} from aMC@NLO", "l");
-    leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
+    leg1->AddEntry(g_sm_amc, " Standard Model A_{FB} from aMC@NLO", "fl");
+    //leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
     if(draw_powheg) leg1->AddEntry(g_sm_pow, " Standard Model A_{FB} from POWHEG", "l");
-    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pe");
-    leg1->AddEntry(g_elel, " ee Measurement", "pe");
-    leg1->AddEntry(g_comb, " Combined Measurement", "pe");
+    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pel");
+    leg1->AddEntry(g_elel, " ee Measurement", "pel");
+    leg1->AddEntry(g_comb, " Combined Measurement", "pel");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
 
     c_m->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
-    //pad2->SetTopMargin(0);
+    pad2->SetTopMargin(0.08);
     pad2->SetBottomMargin(0.5);
     pad2->SetRightMargin(0.04);
     pad2->SetGridy();
@@ -172,18 +178,19 @@ void draw_AFB(){
     g_ratio->GetYaxis()->SetTitleOffset(rTOffset);
     g_ratio->GetYaxis()->SetLabelSize(rLS);
     // X axis g_ratio plot settings
-    g_ratio->GetXaxis()->SetTitle("M (GeV)");
+    g_ratio->GetXaxis()->SetTitle("m (GeV)");
     g_ratio->GetXaxis()->SetTitleSize(rTS);
     g_ratio->GetXaxis()->SetTitleOffset(1.);
     g_ratio->GetXaxis()->SetLabelSize(rLS);
     g_ratio->GetXaxis()->SetTickLength(0.04);
     int iPeriod = -1; 
-    writeExtraText = false;
+    if(prelim) writeExtraText = true;
+    else writeExtraText = false;
     draw_CMS = true;
     CMS_lumi(pad1, iPeriod, 11 );
     c_m->Update();
 
-    c_m->Print("Paper_plots/AFB_mbins_unblind.pdf");
+    c_m->Print(fout);
     
 }
 

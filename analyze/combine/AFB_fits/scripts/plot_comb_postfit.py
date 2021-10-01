@@ -6,6 +6,7 @@ if (__name__ == "__main__"):
     parser.add_option("--input", "-i", default = "", help="Input file")
     parser.add_option("--output", "-o", default = "", help="Input directory")
     parser.add_option("--mbin", "-m", type = 'int', default = 0, help="Mass bin (for plot label)")
+    parser.add_option("--prelim", default = False, action = "store_true", help = "Add 'Preliminary' label to plots")
     (options, args) = parser.parse_args()
 
 
@@ -138,5 +139,6 @@ if (__name__ == "__main__"):
             NDiv = 405
 
         makeCan(outname, options.output, [h_data], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, 
-                titles = [title], xtitle = "Template Bin", year = -1, datastyle=datastyle, mbin = options.mbin, ratio_range = ratio_range, NDiv = NDiv) 
+                titles = [title], xtitle = "Template Bin", year = -1, datastyle=datastyle, mbin = options.mbin, ratio_range = ratio_range, 
+                NDiv = NDiv, prelim = options.prelim) 
 

@@ -27,6 +27,8 @@
 
 void draw_dAFB(){
     setTDRStyle();
+    char *fout = "PAS_plots/delta_AFB.pdf";
+    bool prelim = true;
 
 
 
@@ -83,6 +85,7 @@ void draw_dAFB(){
     //l_avg->SetLineStyle(9);
     l_avg->SetLineWidth(4);
     l_avg->SetLineColor(ttbar_c);
+    l_avg->SetFillColor(light_blue);
     l_avg_unc->SetFillColor(light_blue);
 
     float yTOffset = 0.63;
@@ -109,13 +112,14 @@ void draw_dAFB(){
     l_avg_unc->GetYaxis()->SetLabelSize(LS);
     l_avg_unc->GetYaxis()->CenterTitle();
 
-    l_avg_unc->GetXaxis()->SetTitle("M (GeV)");
+    l_avg_unc->GetXaxis()->SetTitle("m (GeV)");
     l_avg_unc->GetXaxis()->SetTitleSize(xTS);
     l_avg_unc->GetXaxis()->SetTitleOffset(1.);
     l_avg_unc->GetXaxis()->SetLabelSize(LS);
     l_avg_unc->GetXaxis()->SetTickLength(0.04);
 
 
+    gStyle->SetEndErrorSize(0);
 
 
     l_avg_unc->Draw("A3");
@@ -138,8 +142,8 @@ void draw_dAFB(){
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.25;
-    float y_start_m = 0.63;
+    float x_start_m = 0.22;
+    float y_start_m = 0.59;
 
 
     leg1->SetX1(x_start_m);
@@ -153,9 +157,9 @@ void draw_dAFB(){
 
 
     leg1->AddEntry(l_zero, " #Delta A_{FB} = 0", "l");
-    leg1->AddEntry(g_comb, " Mass Binned Measurements ", "pe");
-    leg1->AddEntry(l_avg, " Inclusive Measurement", "l");
-    leg1->AddEntry(l_avg_unc, " Uncertainty on Inclusive Measurement ", "f");
+    leg1->AddEntry(g_comb, " Mass Binned Measurements ", "lep");
+    leg1->AddEntry(l_avg, " Inclusive Measurement", "lf");
+    //leg1->AddEntry(l_avg_unc, " Uncertainty on Inclusive Measurement ", "f");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
@@ -176,13 +180,14 @@ void draw_dAFB(){
 
     c_m->cd();
     int iPeriod = -1; 
-    writeExtraText = false;
+    if(prelim) writeExtraText = true;
+    else writeExtraText = false;
     draw_CMS = true;
     CMS_lumi(c_m, iPeriod, 11 );
     c_m->Update();
 
-    c_m->Print("Paper_plots/delta_AFB.pdf");
-    c_m->Print("Paper_plots/delta_AFB.png");
+    c_m->Print(fout);
+    //c_m->Print("Paper_plots/delta_AFB.png");
     
 }
 

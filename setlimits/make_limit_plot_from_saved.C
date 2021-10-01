@@ -7,6 +7,8 @@ void make_limit_plot_from_saved(){
     bool inc_meas_limit = true;
     bool smooth_exp_bands = true;
     float smooth_const = 2.;
+    char *fout = "../plots/PAS_plots/limit_obs.pdf";
+    bool prelim = true;
     TFile *f_in = TFile::Open("limit_obs.root");
 
     setTDRStyle();
@@ -67,7 +69,7 @@ void make_limit_plot_from_saved(){
     exp->SetLineColor(1);
     exp->SetLineStyle(2);
     exp->SetLineWidth(4);
-    auto legbb = new TLegend(0.33,0.62,0.67,0.9);
+    auto legbb = new TLegend(0.36,0.62,0.70,0.9);
 	legbb->SetFillStyle(0);
 	legbb->SetFillColor(0);    
 	legbb->SetBorderSize(0);  
@@ -109,13 +111,13 @@ void make_limit_plot_from_saved(){
 
 
     
-    writeExtraText = false;
-    extraText = "Preliminary";
+    if(prelim) writeExtraText = true;
+    else writeExtraText = false;
     int iPeriod = -1; 
     CMS_lumi( c1, iPeriod, 11);
 
 
-    c1->Print("../plots/Paper_plots/limit_obs.png");
-    c1->Print("../plots/Paper_plots/limit_obs.pdf");
+    //c1->Print("../plots/Paper_plots/limit_obs.png");
+    c1->Print(fout);
 
 }

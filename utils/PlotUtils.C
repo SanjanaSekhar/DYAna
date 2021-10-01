@@ -373,14 +373,15 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
     if(const_size){
-        //gStyle->SetErrorX(0);
-        h_data->Draw("p e0x0 same");
         printf("const size\n");
+        //gStyle->SetErrorX(0);
+        h_data->Draw("PEX0 same");
+        //gStyle->SetErrorX(1);
+
     }
     else{
-        //gStyle->SetErrorX(1);
-        h_data->Draw("p e0 same");
         printf("not const size\n");
+        h_data->Draw("P E0 same");
     }
 
     leg->Draw();
@@ -480,8 +481,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
 
     //h_ratio->SetMarkerStyle(21);
-    if(const_size) h_ratio->Draw("EPX0 same");
-    else h_ratio->Draw("EP same");
+    if(const_size) h_ratio->Draw("PE0X0 same");
+    else h_ratio->Draw("PE0 same");
     if(draw_sys_unc){
         ratio_unc->Draw("3 same");
         float line_start = h_ratio->GetXaxis()->GetXmin();

@@ -34,7 +34,7 @@ gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 
 
 
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
-        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1, ratio_range = None, NDiv = 205):  
+        logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1, ratio_range = None, NDiv = 205, prelim = False):  
 
     # histlist is just the generic list but if bkglist is specified (non-empty)
     # then this function will stack the backgrounds and compare against histlist as if 
@@ -360,6 +360,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 if logy == True:
                     mains[hist_index].SetLogy()
 
+                if(prelim): 
+                    print("Prelim")
+                    CMS_lumi.writeExtraText = True
+                else: CMS_lumi.writeExtraText = False
                 if(CMS_align_right): CMS_loc = 33
                 else: CMS_loc = 11
                 CMS_lumi.CMS_lumi(mains[hist_index], year, CMS_loc)

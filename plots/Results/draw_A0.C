@@ -56,9 +56,12 @@ void draw_A0(){
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, A0_elel, m_err, A0_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
+    int fill_col = kGreen -10;
     g_sm_amc->SetMarkerColor(diboson_c);
-    g_sm_amc_unc->SetFillColor(light_blue);
+    g_sm_amc_unc->SetFillColor(fill_col);
+    g_sm_amc_unc->SetLineColor(fill_col);
     g_sm_amc->SetLineColor(diboson_c);
+    g_sm_amc->SetFillColor(fill_col);
     g_sm_amc->SetLineWidth(4);
 
     g_sm_pow->SetMarkerColor(kBlue);
@@ -75,8 +78,8 @@ void draw_A0(){
     g_mumu->SetLineColor(DY_c);
 
     g_comb->SetMarkerStyle(kFullSquare);
-    g_mumu->SetMarkerStyle(kFullSquare);
-    g_elel->SetMarkerStyle(kFullSquare);
+    g_mumu->SetMarkerStyle(kOpenTriangleUp);
+    g_elel->SetMarkerStyle(kOpenTriangleUp);
 
     g_comb->SetLineWidth(2);
 
@@ -130,6 +133,8 @@ void draw_A0(){
 
 
 
+    gStyle->SetEndErrorSize(0);
+
     TLegend *leg1 = new TLegend(x_size, y_size);
 
     float x_start_m = 0.175;
@@ -142,12 +147,12 @@ void draw_A0(){
     leg1->SetY2(y_start_m+y_size);
 
 
-    leg1->AddEntry(g_sm_amc, " Standard Model A_{0} from aMC@NLO", "l");
-    leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
+    leg1->AddEntry(g_sm_amc, " Standard Model A_{0} from aMC@NLO", "lf");
+    //leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
     if(draw_powheg) leg1->AddEntry(g_sm_pow, " Standard Model A_{0} from POWHEG", "l");
-    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pe");
-    leg1->AddEntry(g_elel, " ee Measurement", "pe");
-    leg1->AddEntry(g_comb, " Combined Measurement", "pe");
+    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pel");
+    leg1->AddEntry(g_elel, " ee Measurement", "pel");
+    leg1->AddEntry(g_comb, " Combined Measurement", "pel");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
@@ -172,7 +177,7 @@ void draw_A0(){
     g_ratio->GetYaxis()->SetTitleOffset(rTOffset);
     g_ratio->GetYaxis()->SetLabelSize(rLS);
     // X axis g_ratio plot settings
-    g_ratio->GetXaxis()->SetTitle("M (GeV)");
+    g_ratio->GetXaxis()->SetTitle("m (GeV)");
     g_ratio->GetXaxis()->SetTitleSize(rTS);
     g_ratio->GetXaxis()->SetTitleOffset(1.);
     g_ratio->GetXaxis()->SetLabelSize(rLS);

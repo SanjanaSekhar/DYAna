@@ -30,7 +30,8 @@
 #include "../../utils/Colors.h"
 
 const bool write_out = true;
-char *plot_dir = "Paper_plots/EMu_plots/";
+bool prelim = true;
+char *plot_dir = "PAS_plots/EMu_plots/";
 //char *plot_dir = "Misc_plots/mu_prefire_check_before/";
 //char *plot_label = "e#mu Control Region";
 char *plot_label = "";
@@ -285,7 +286,9 @@ void draw_cmp_from_saved(){
     TCanvas *c_m, *c_cost,  *c_xf, *c_phi, *c_rap;
     TPad *p_m, *p_cost, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
-    writeExtraText = false;
+    
+    if(prelim) writeExtraText = true;
+    else writeExtraText = false;
     char plt_file[100], y_ax_label[100];
     
     bool logy = true;
@@ -332,8 +335,8 @@ void draw_cmp_from_saved(){
         hmax *= 0.75;
         */
 
-    sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack,  leg1, "m", "M_{e#mu} (GeV)", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
+    sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack,  leg1, "m", "m_{e#mu} (GeV)", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 11 );
     sprintf(plt_file, "%sEMu%s_m_cmp.pdf", plot_dir, file_label);
     if(write_out) c_m->Print(plt_file);
@@ -358,7 +361,7 @@ void draw_cmp_from_saved(){
 
 
     logy = false;
-    sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
+    sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost,  cost_stack, leg2, "cost", "cos(#theta_{r})", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
     sprintf(plt_file, "%sEMu%s_cost_cmp.pdf", plot_dir, file_label);
@@ -380,7 +383,7 @@ void draw_cmp_from_saved(){
     leg3->SetY2(y_start_c+y_size);
 
     logy = false;
-    sprintf(y_ax_label, "Events/%.1f", rap_bin_size);
+    sprintf(y_ax_label, "Events / %.1f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack,  leg3, "rap", "dilepton rapidity", y_ax_label,  plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
     sprintf(plt_file, "%sEMu%s_rap_cmp.pdf", plot_dir, file_label);

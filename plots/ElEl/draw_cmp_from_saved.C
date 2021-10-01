@@ -30,7 +30,8 @@
 
 const int type = FLAG_ELECTRONS;
 const bool write_out = true;
-char *plot_dir = "Paper_plots/prefit_kinematics/";
+bool prelim = true;
+char *plot_dir = "PAS_plots/prefit_kinematics/";
 char *fin_name = "ElEl/saved_hists.root";
 char *plot_label = "";
 
@@ -126,7 +127,6 @@ void draw_cmp_from_saved(){
 
     setTDRStyle();
     gStyle->SetLegendBorderSize(0);
-    gStyle->SetErrorX(0);
 
 
     setHistError(QCD_cost, qcd_sys_unc);
@@ -300,7 +300,7 @@ void draw_cmp_from_saved(){
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
     leg1->SetHeader("Dielectron Signal Region");
-    leg1->AddEntry(data_m, "data", "p");
+    leg1->AddEntry(data_m, "data", "pe");
     leg1->AddEntry(dy_m, "DY Signal", "f");
     leg1->AddEntry(top_m, "t#bar{t} + Single Top", "f");
     leg1->AddEntry(QCD_m, "QCD + WJets", "f");
@@ -321,7 +321,8 @@ void draw_cmp_from_saved(){
     TCanvas *c_m, *c_cost, *c_rap;
     TPad *p_m, *p_cost, *p_rap;
     int iPeriod = 4; 
-    writeExtraText = false;
+    if(prelim) writeExtraText = true;
+    else writeExtraText = false;
     char plt_file[100], y_ax_label[100];
 
 
@@ -349,8 +350,8 @@ void draw_cmp_from_saved(){
     if(year == 2017)
         hmax *= 0.75;
 
-    sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
+    sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 11 );
     sprintf(plt_file, "%sElElComb_m_cmp.png", plot_dir);
     if(write_out) c_m->Print(plt_file);
@@ -381,7 +382,7 @@ void draw_cmp_from_saved(){
 
 
 
-    sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
+    sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
     sprintf(plt_file, "%sElElComb_cost_cmp.png", plot_dir);
@@ -407,7 +408,7 @@ void draw_cmp_from_saved(){
 
 
 
-    sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
+    sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dielectron rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
     sprintf(plt_file, "%sElElComb_rap_cmp.png", plot_dir);
