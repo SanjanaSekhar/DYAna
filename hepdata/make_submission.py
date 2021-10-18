@@ -3,6 +3,87 @@ import ROOT
 from hepdata_lib import *
 from hepdata_lib.helpers import *
 
+
+def round_to_precision(vals, sigfigs):
+    for i,v in enumerate(vals):
+        v_new = round(v, sigfigs)
+        vals[i] = v_new
+
+
+def add_AFB(table_AFB, fname, chan, name): 
+    np_file = np.load(fname)
+
+    AFB_vals = dict()
+    AFB_vals["AFB_err_stat"] = np_file["AFB_err_stat"][1:]
+    AFB_vals["AFB_err_sys"] = np_file["AFB_err_sys"][1:]
+    #AFB_vals["AFB_val"] = [0.6]*n_mass_bins
+    AFB_vals["AFB_val"] = np_file["AFB_val"][1:]
+
+    #This doesn't work b/c uncertainty changes place (from 0.009 to 0.011)
+    #round_value_and_uncertainty(AFB_vals, val_key='AFB_val', unc_key='AFB_err_stat', sig_digits_unc = 2)
+    #round_value_and_uncertainty(AFB_vals, val_key='AFB_err_sys', unc_key='AFB_err_stat', sig_digits_unc = 2)
+
+    print("val", AFB_vals['AFB_val'])
+    print("stat_unc", AFB_vals['AFB_err_stat'])
+    print("sys unc", AFB_vals['AFB_err_sys'])
+
+    round_to_precision(AFB_vals['AFB_val'], 3)
+    round_to_precision(AFB_vals['AFB_err_stat'], 3)
+    round_to_precision(AFB_vals['AFB_err_sys'], 3)
+
+    print("val", AFB_vals['AFB_val'])
+    print("stat_unc", AFB_vals['AFB_err_stat'])
+    print("sys unc", AFB_vals['AFB_err_sys'])
+
+    AFBs = Variable(name,
+            is_independent = False,
+            is_binned = False,
+            units = "")
+    AFBs.values = AFB_vals["AFB_val"]
+
+
+
+    AFB_stat_uncs = Uncertainty("Statistical")
+    AFB_stat_uncs.values = AFB_vals["AFB_err_stat"]
+    AFBs.add_uncertainty(AFB_stat_uncs)
+
+    AFB_sys_uncs = Uncertainty("Systematic")
+    AFB_sys_uncs.values = AFB_vals["AFB_err_sys"]
+    AFBs.add_uncertainty(AFB_sys_uncs)
+
+    table_AFB.add_variable(AFBs) 
+
+def add_A0(table_A0, fname, chan, name):
+    np_file = np.load(fname)
+    A0_vals = dict()
+    A0_vals["A0_err_stat"] = np_file["A0_err_stat"][1:]
+    A0_vals["A0_err_sys"] = np_file["A0_err_sys"][1:]
+    
+    A0_vals["A0_val"] = np_file["A0_val"][1:]
+
+    round_value_and_uncertainty(A0_vals, val_key='A0_val', unc_key='A0_err_stat', sig_digits_unc = 2)
+    round_value_and_uncertainty(A0_vals, val_key='A0_err_sys', unc_key='A0_err_stat', sig_digits_unc = 2)
+
+
+    A0s = Variable(name,
+            is_independent = False,
+            is_binned = False,
+            units = "")
+    #A0s.values = [0.05]*n_mass_bins
+    A0s.values = A0_vals["A0_val"]
+
+
+    A0_stat_uncs = Uncertainty("Statistical")
+    A0_stat_uncs.values = A0_vals["A0_err_stat"]
+    A0s.add_uncertainty(A0_stat_uncs)
+
+    A0_sys_uncs = Uncertainty("Systematic")
+    A0_sys_uncs.values = A0_vals["A0_err_sys"]
+    A0s.add_uncertainty(A0_sys_uncs)
+
+    table_A0.add_variable(A0s)
+
+
 sub = Submission()
 
 #main results
@@ -11,7 +92,7 @@ table_AFB.keywords["observables"] = ["ASYM"]
 table_AFB.keywords["phrases"] = ["Drell Yan", "Asymmetry Measurement", "Angular Coefficient"]
 table_AFB.keywords["reactions"] = ["P P --> Z0/GAMMA* --> MU+ MU-", "P P --> Z0/GAMMA* --> E+ E-"]
 table_AFB.description = """Measurement of the Drell-Yan forward-backward asymmetry as a function of dilepton mass."""
-table_AFB.location = "Data from Table 1 located on page 15"
+table_AFB.location = "Data from Table 1 located on page 14"
 
 
 
@@ -19,7 +100,16 @@ table_A0 = Table("Table 2")
 table_A0.keywords["phrases"] = ["Drell Yan", "Angular Coefficient"]
 table_A0.keywords["reactions"] = ["P P --> Z0/GAMMA* --> MU+ MU-", "P P --> Z0/GAMMA* --> E+ E-"]
 table_A0.description = """Measurement of the Drell-Yan angular coefficient, A0, as a function of dilepton mass."""
-table_A0.location = "Data from Table 2 located on page 15"
+table_A0.location = "Data from Table 2 located on page 14"
+
+
+table_delta = Table("Table 3")
+table_delta.keywords["phrases"] = ["Drell Yan", "Angular Coefficient"]
+table_delta.keywords["reactions"] = ["P P --> Z0/GAMMA* --> MU+ MU-", "P P --> Z0/GAMMA* --> E+ E-"]
+table_delta.description = """Measurement of difference between electron and muon AFB's and A0's as a function of dilepton mass."""
+table_delta.location = "Data from Table 3 located on page 14"
+
+
 
 n_mass_bins = 7
 mass_bins = Variable("Mass Bins",
@@ -45,67 +135,54 @@ file_dir = "../analyze/combine/AFB_fits/fit_results/"
 for chan in channels:
 
     fname = file_dir + chan + "_results.npz"
-    np_file = np.load(fname)
-
-    AFB_vals = dict()
-    AFB_vals["AFB_err_stat"] = np_file["AFB_err_stat"][1:]
-    AFB_vals["AFB_err_sys"] = np_file["AFB_err_sys"][1:]
-    #AFB_vals["AFB_val"] = [0.6]*n_mass_bins
-    AFB_vals["AFB_val"] = np_file["AFB_val"][1:]
-
-    round_value_and_uncertainty(AFB_vals, val_key='AFB_val', unc_key='AFB_err_stat', sig_digits_unc = 2)
-    round_value_and_uncertainty(AFB_vals, val_key='AFB_err_sys', unc_key='AFB_err_stat', sig_digits_unc = 2)
-
-    A0_vals = dict()
-    A0_vals["A0_err_stat"] = np_file["A0_err_stat"][1:]
-    A0_vals["A0_err_sys"] = np_file["A0_err_sys"][1:]
-    #A0_vals["A0_val"] = [0.05]*n_mass_bins
-    A0_vals["A0_val"] = np_file["A0_val"][1:]
-
-    round_value_and_uncertainty(A0_vals, val_key='A0_val', unc_key='A0_err_stat', sig_digits_unc = 2)
-    round_value_and_uncertainty(A0_vals, val_key='A0_err_sys', unc_key='A0_err_stat', sig_digits_unc = 2)
-
-    AFBs = Variable("AFB (%s)"  % chan,
-            is_independent = False,
-            is_binned = False,
-            units = "")
-    AFBs.values = AFB_vals["AFB_val"]
+    AFB_name = "AFB (%s)"  % chan
+    A0_name = "A0 (%s)"  % chan
+    add_AFB(table_AFB, fname, chan,AFB_name)
+    add_A0(table_A0, fname, chan, A0_name)
 
 
-
-    AFB_stat_uncs = Uncertainty("Statistical")
-    AFB_stat_uncs.values = AFB_vals["AFB_err_stat"]
-    AFBs.add_uncertainty(AFB_stat_uncs)
-
-    AFB_sys_uncs = Uncertainty("Systematic")
-    AFB_sys_uncs.values = AFB_vals["AFB_err_sys"]
-    AFBs.add_uncertainty(AFB_sys_uncs)
-
-    table_AFB.add_variable(AFBs)
-
-
-    A0s = Variable("A0 (%s)"  % chan,
-            is_independent = False,
-            is_binned = False,
-            units = "")
-    #A0s.values = [0.05]*n_mass_bins
-    A0s.values = A0_vals["A0_val"]
-
-
-    A0_stat_uncs = Uncertainty("Statistical")
-    A0_stat_uncs.values = A0_vals["A0_err_stat"]
-    A0s.add_uncertainty(A0_stat_uncs)
-
-    A0_sys_uncs = Uncertainty("Systematic")
-    A0_sys_uncs.values = A0_vals["A0_err_sys"]
-    A0s.add_uncertainty(A0_sys_uncs)
-
-    table_A0.add_variable(A0s)
-
+#hardcoded values for avg pts
+avg_pts = Variable("Avg Pt", is_independent = False, is_binned = False, units = "GeV")
+avg_pts.values = [38., 43., 48., 55., 65., 73., 88.] 
+table_A0.add_variable(avg_pts)
 
 
 sub.add_table(table_AFB)
 sub.add_table(table_A0)
+
+#Delta AFB/A0
+table_delta = Table("Table 3")
+table_delta.keywords["phrases"] = ["Drell Yan", "Angular Coefficient"]
+table_delta.keywords["reactions"] = ["P P --> Z0/GAMMA* --> MU+ MU-", "P P --> Z0/GAMMA* --> E+ E-"]
+table_delta.description = """Measurement of difference between electron and muon AFB's and A0's as a function of dilepton mass."""
+table_delta.location = "Data from Table 3 located on page 14"
+
+
+n_mass_bins_ext = 8
+mass_bins_ext = Variable("Mass Bins",
+        is_independent = True,
+        is_binned = True,
+        units = "GeV")
+
+mass_bins_ext.values = [(170., 200.), 
+                    (200., 250.), 
+                    (250., 320.),
+                    (320., 510.),
+                    (510., 700.), 
+                    (700., 1000.), 
+                    (1000., 13000.),
+                    (170., 13000.),
+                    ]
+table_delta.add_variable(mass_bins_ext)
+
+chan = "combined_diff"
+fname = file_dir + chan + "_results.npz"
+dAFB_name = "Delta AFB"
+dA0_name = "Delta A0"
+add_AFB(table_delta, fname, chan, dAFB_name)
+add_A0(table_delta, fname, chan, dA0_name)
+sub.add_table(table_delta)
+
 
 #limit
 table_zprime = Table("Figure 12")

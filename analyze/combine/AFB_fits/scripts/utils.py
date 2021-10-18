@@ -174,7 +174,7 @@ def make_all_mbins_workspace(workspace,  year = -1, symMCStats = True,
 
     sigma = -1.0
 
-    mbins = [i for i in range(1,8)]
+    mbins = [i for i in range(4,8)]
 
     for mbin in mbins:
         for yr in years:
