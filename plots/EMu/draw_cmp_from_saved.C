@@ -272,10 +272,10 @@ void draw_cmp_from_saved(){
     float y_size = 0.3;
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
-    leg1->SetHeader("e#mu Control Region");
+    leg1->SetHeader("e#mu control region");
     leg1->AddEntry(data_m, "data", "pe");
     //leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
-    leg1->AddEntry(top_m, "t#bar{t} + Single Top", "f");
+    leg1->AddEntry(top_m, "t#bar{t} + single top", "f");
     leg1->AddEntry(QCD_m, "QCD and W+Jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
     leg1->SetTextSize(0.05);

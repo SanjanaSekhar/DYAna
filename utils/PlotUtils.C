@@ -293,6 +293,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     TH1* sum = (TH1*)stackHists->At(0)->Clone();
     sum->Reset();
 
+    h_data->Print("range");
+
     for (int i=0;i<stackHists->GetSize();++i) {
         sum->Add((TH1*)stackHists->At(i));
     }
@@ -364,7 +366,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_stack_err->Draw("e2 same");
     h_stack_err->Print("range");
 
-    leg->AddEntry(h_stack_err, "Sys. Unc.", "f");
+    leg->AddEntry(h_stack_err, "Sys. unc.", "f");
 
 
     bool const_size = h_data->GetXaxis()->GetBinWidth(1) == h_data->GetXaxis()->GetBinWidth(h_data->GetXaxis()->GetNbins());
@@ -375,7 +377,18 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(const_size){
         printf("const size\n");
         //gStyle->SetErrorX(0);
-        h_data->Draw("PEX0 same");
+        //
+        //
+        char cname[100];
+        sprintf(cname, "clone_%s", h_data->GetName());
+        TH1F *h_data_pois = (TH1F *) h_data->Clone(cname);
+        h_data_pois->Reset();
+        for (int b =0;  b <= h_data->GetXaxis()->GetNbins() + 1; b++){
+            h_data_pois->SetBinContent(b, h_data->GetBinContent(b));
+        }
+        h_data_pois->SetBinErrorOption(::TH1::kPoisson);
+        h_data_pois->Draw("PEX0 same");
+        h_data = h_data_pois;
         //gStyle->SetErrorX(1);
 
     }
@@ -464,7 +477,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_ratio->GetYaxis()->SetRangeUser(ratio_min, ratio_max);
 
     h_ratio->SetTitle("");
-    h_ratio->GetYaxis()->SetTitle("Obs/Exp");
+    h_ratio->GetYaxis()->SetTitle("Obs/exp");
     h_ratio->GetYaxis()->SetNdivisions(205);
     h_ratio->GetYaxis()->SetTitleSize(rTS);
     h_ratio->GetYaxis()->SetLabelSize(rLS);

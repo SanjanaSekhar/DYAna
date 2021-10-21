@@ -29,9 +29,9 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_MUONS;
-const bool write_out = true;
-bool prelim = true;
-char *plot_dir = "PAS_plots/prefit_kinematics/";
+const bool write_out = false;
+bool prelim = false;
+char *plot_dir = "Paper_plots/prefit_kinematics/";
 //char *plot_dir = "Misc_plots/mu_prefire_check_after/";
 char *fin_name = "MuMu/saved_hists.root";
 char *plot_label = "";
@@ -302,10 +302,10 @@ void draw_cmp_from_saved(){
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
-    leg1->SetHeader("Dimuon Signal Region");
+    leg1->SetHeader("Dimuon signal region");
     leg1->AddEntry(data_m, "data", "pe");
-    leg1->AddEntry(dy_m, "DY Signal", "f");
-    leg1->AddEntry(top_m, "t#bar{t} + Single Top", "f");
+    leg1->AddEntry(dy_m, "DY signal", "f");
+    leg1->AddEntry(top_m, "t#bar{t} + single top", "f");
     leg1->AddEntry(QCD_m, "QCD + WJets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");

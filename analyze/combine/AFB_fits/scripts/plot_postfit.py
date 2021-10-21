@@ -44,6 +44,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
     #   histlist = [data1, data2]
     #   bkglist = [[bkg1_1,bkg2_1],[bkg1_2,bkg2_2]]
 
+
     if len(histlist) == 1:
         width = 800
         height = 700
@@ -188,6 +189,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 subs[hist_index].SetRightMargin(0.05)
                 subs[hist_index].SetTopMargin(0.01)
                 subs[hist_index].SetBottomMargin(0.45)
+                mains[hist_index].SetFillColorAlpha(0,1)
+                subs[hist_index].SetFillColorAlpha(0,1)
+                mains[hist_index].SetLineColorAlpha(0,1)
+                subs[hist_index].SetLineColorAlpha(0,1)
                 mains[hist_index].Draw()
                 subs[hist_index].Draw()
 
@@ -203,6 +208,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                         bkg.SetLineColor(colors[bkg_index])
                     else:
                         bkg.SetFillColor(default_colors[bkg_index])
+                        bkg.Print()
 
                     stacks[hist_index].Add(bkg)
                     if bkgNames == []: this_bkg_name = bkg.GetName().split('_')[0]
@@ -215,7 +221,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
                 # Set y max of all hists to be the same to accomodate the tallest
-                max_scaling = 2.4
+                max_scaling = 3.0
                 histList = [stacks[hist_index],totlist[hist_index],hist]
 
                 yMax = histList[0].GetMaximum()
@@ -279,7 +285,54 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     hist.Draw(datastyle+' same')
 
 
-            
+                #Draw helpful lines
+                if(mbin <=5):
+                    line_vals = [8, 16, 22]
+                    text_center_bins = [4, 12, 19, 25]
+                    text_strs = ["|y| #epsilon [0, 0.6]", "|y| #epsilon [0.6, 1.0]", "|y| #epsilon [1.0, 1.5]", "|y| #epsilon [1.5, 2.4]"]
+                else:
+                    line_vals = [8, 16]
+                    text_center_bins = [4, 12, 19]
+                    text_strs = ["|y| #epsilon [0, 0.6]", "|y| #epsilon [0.6, 1.0]", "|y| #epsilon [1.0, 2.4]"]
+
+
+                lstyle = 7
+                line_eps = 0.05
+
+                #line_max = gPad.GetY2()
+                line_max = yMax * 1.5
+                lines = []
+                texts = []
+
+                for idx in range(len(line_vals)):
+                    line_x = line_vals[idx] + line_eps
+                    l = TLine(line_x, 0, line_x, line_max)
+                    l.SetLineColor(ROOT.kBlack)
+                    l.SetLineStyle(lstyle)
+                    l.SetLineWidth(2)
+                    l.Draw()
+                    lines.append(l)
+
+
+
+                #text labels
+                latext = TLatex()
+                latext.SetNDC();
+                latext.SetTextColor(kBlack);
+                latext.SetTextAlign(22); #center
+                latext.SetTextFont(42);
+                latext.SetTextSize(0.04);    
+                text_y = 0.4
+
+                l_margin = gPad.GetLeftMargin();
+                r_margin = gPad.GetRightMargin();
+                nbins = float(hist.GetNbinsX())
+
+                for idx,text_str in enumerate(text_strs):
+                    text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
+                    latext.DrawLatex(text_center, text_y, text_str)
+
+
                 legends[hist_index].SetHeader(titles[0], "c")
                 legends[hist_index].SetNColumns(2)
                 legends[hist_index].SetTextSize(0.05)
@@ -287,7 +340,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 for entry in legends_list[hist_index][::-1]:
                     legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
 
-                legends[hist_index].AddEntry(totlist[hist_index], "Sys. Unc.", "f")
+                legends[hist_index].AddEntry(totlist[hist_index], "Sys. unc.", "f")
 
 
 
@@ -308,7 +361,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 #title size given as fraction of pad width, scale up to have same size as main pad
                 YTS =  mTS * 0.7/0.3
                 XTS =  mTS * 0.7/0.3
-                lTOffset = TOffset * 0.3 / 0.7
+                lTOffset = TOffset * 0.27 / 0.7
 
 
                 if(ratio_range == None):
@@ -332,7 +385,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 ratio_sys_unc.GetYaxis().SetLabelSize(LS)
                 ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
                 ratio_sys_unc.GetYaxis().SetNdivisions(NDiv)
-                ratio_sys_unc.GetYaxis().SetTitle("Data/Fit")
+                ratio_sys_unc.GetYaxis().SetTitle("Data / fit")
 
                 ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
                 ratio_sys_unc.GetXaxis().SetTitleOffset(1.)
@@ -356,6 +409,15 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 line = TLine(0, 1.0, hist.GetNbinsX() - 0.08, 1.0)
                 line.SetLineStyle(9)
                 line.Draw()
+
+                for idx in range(len(line_vals)):
+                    line_x = line_vals[idx] + line_eps
+                    l = TLine(line_x, ratio_range[0], line_x, ratio_range[1])
+                    l.SetLineColor(ROOT.kBlack)
+                    l.SetLineStyle(lstyle)
+                    l.SetLineWidth(2)
+                    l.Draw()
+                    lines.append(l)
 
                 if logy == True:
                     mains[hist_index].SetLogy()
@@ -587,7 +649,7 @@ if (__name__ == "__main__"):
                         fracs[name] += this_frac
 
             makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, 
-                    titles = [title], xtitle = "Template Bin", year = year, datastyle=datastyle, mbin = options.mbin ) 
+                    titles = [title], xtitle = "Unrolled cos#theta_{r} bin", year = year, datastyle=datastyle, mbin = options.mbin ) 
 
     for key in fracs.keys():
         fracs[key] /= (len(years)*len(dirs))

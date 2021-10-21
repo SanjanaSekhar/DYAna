@@ -27,8 +27,8 @@
 
 void draw_AFB(){
     setTDRStyle();
-    char *fout  = "PAS_plots/AFB_mbins_unblind.pdf";
-    bool prelim = true;
+    char *fout  = "Paper_plots/AFB_mbins_unblind.pdf";
+    bool prelim = false;
 
     bool draw_powheg = false;
 
@@ -50,9 +50,10 @@ void draw_AFB(){
 
 
 
-    TGraph *g_sm_pow = new TGraphErrors(n_m_bins, m, y_powheg);
-    TGraph *g_sm_amc = new TGraphErrors(n_m_bins, m, y_amc);
-    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_bins, m, y_amc, nullptr, y_amc_errs);
+    TGraph *g_sm_pow = new TGraphErrors(n_m_ext_bins, m_ext, y_powheg);
+    TGraph *g_sm_amc = new TGraphErrors(n_m_ext_bins, m_ext, y_amc);
+    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_bins, m_ext, y_amc, nullptr, y_amc_errs);
+
     TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_comb, m_err, y_comb_errs);
     TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, y_mumu, m_err, y_mumu_errs);
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
@@ -138,8 +139,8 @@ void draw_AFB(){
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.33;
-    float y_start_m = 0.56;
+    float x_start_m = 0.4;
+    float y_start_m = 0.58;
 
 
     leg1->SetX1(x_start_m);
@@ -148,12 +149,12 @@ void draw_AFB(){
     leg1->SetY2(y_start_m+y_size);
 
 
-    leg1->AddEntry(g_sm_amc, " Standard Model A_{FB} from aMC@NLO", "fl");
+    leg1->AddEntry(g_sm_amc, " Standard model A_{FB} from aMC@NLO", "fl");
     //leg1->AddEntry(g_sm_amc_unc, " Uncertainty on aMC@NLO", "f");
-    if(draw_powheg) leg1->AddEntry(g_sm_pow, " Standard Model A_{FB} from POWHEG", "l");
-    leg1->AddEntry(g_mumu, " #mu#mu Measurement", "pel");
-    leg1->AddEntry(g_elel, " ee Measurement", "pel");
-    leg1->AddEntry(g_comb, " Combined Measurement", "pel");
+    if(draw_powheg) leg1->AddEntry(g_sm_pow, " Standard model A_{FB} from POWHEG", "l");
+    leg1->AddEntry(g_mumu, " #mu#mu measurement", "pel");
+    leg1->AddEntry(g_elel, " ee measurement", "pel");
+    leg1->AddEntry(g_comb, " Combined measurement", "pel");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();

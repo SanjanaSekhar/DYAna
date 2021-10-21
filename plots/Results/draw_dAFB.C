@@ -27,8 +27,8 @@
 
 void draw_dAFB(){
     setTDRStyle();
-    char *fout = "PAS_plots/delta_AFB.pdf";
-    bool prelim = true;
+    char *fout = "Paper_plots/delta_AFB.pdf";
+    bool prelim = false;
 
 
 
@@ -55,16 +55,16 @@ void draw_dAFB(){
     Double_t sigma = weighted_avg / weighted_avg_unc;
     printf("Weighted avg is %.3f +/- %.3f. Sigma is %.2f \n", weighted_avg, weighted_avg_unc, sigma);
 
-    TLine *l_zero = new TLine(150, 0, 1300, 0);
+    TLine *l_zero = new TLine(150, 0, 1350, 0);
     l_zero->SetLineStyle(9);
     l_zero->SetLineWidth(4);
     l_zero->SetLineColor(diboson_c);
 
 
-    Double_t l_avg_vals[7];
-    Double_t l_avg_unc_vals[7];
+    Double_t l_avg_vals[n_m_ext_bins];
+    Double_t l_avg_unc_vals[n_m_ext_bins];
     
-    for(int i=0; i< n_m_bins; i++){
+    for(int i=0; i< n_m_ext_bins; i++){
         l_avg_vals[i] = weighted_avg;
         l_avg_unc_vals[i] = weighted_avg_unc;
     }
@@ -72,8 +72,9 @@ void draw_dAFB(){
 
 
 
-    TGraphErrors *l_avg = new TGraphErrors(n_m_bins, m, l_avg_vals, nullptr, nullptr);
-    TGraphErrors *l_avg_unc = new TGraphErrors(n_m_bins, m, l_avg_vals, nullptr, l_avg_unc_vals);
+    TGraphErrors *l_avg = new TGraphErrors(n_m_ext_bins, m_ext, l_avg_vals, nullptr, nullptr);
+    TGraphErrors *l_avg_unc = new TGraphErrors(n_m_ext_bins, m_ext, l_avg_vals, nullptr, l_avg_unc_vals);
+
     TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, y_diff, m_err, y_diff_errs);
 
     g_comb->SetMarkerColor(kBlack);
@@ -142,8 +143,8 @@ void draw_dAFB(){
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.22;
-    float y_start_m = 0.59;
+    float x_start_m = 0.47;
+    float y_start_m = 0.62;
 
 
     leg1->SetX1(x_start_m);
@@ -157,9 +158,9 @@ void draw_dAFB(){
 
 
     leg1->AddEntry(l_zero, " #Delta A_{FB} = 0", "l");
-    leg1->AddEntry(g_comb, " Mass Binned Measurements ", "lep");
-    leg1->AddEntry(l_avg, " Inclusive Measurement", "lf");
-    //leg1->AddEntry(l_avg_unc, " Uncertainty on Inclusive Measurement ", "f");
+    leg1->AddEntry(g_comb, " Mass binned measurements ", "lep");
+    leg1->AddEntry(l_avg, " Inclusive measurement", "lf");
+    //leg1->AddEntry(l_avg_unc, " Uncertainty on inclusive measurement ", "f");
 
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
