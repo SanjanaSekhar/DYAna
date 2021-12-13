@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -27,13 +26,11 @@
 void draw_AFB_mbins(){
     setTDRStyle();
 
-    bool draw_powheg = false;
-
 
     Double_t ratio[n_m_bins], ratio_errs[n_m_bins];
     for(int i=0; i<n_m_bins; i++){
-        ratio[i] = y_comb[i]/y_amc[i];
-        ratio_errs[i] = y_comb_errs[i]/y_amc[i];
+        ratio[i] = y_comb[i]/y_powheg[i];
+        ratio_errs[i] = y_comb_errs[i]/y_powheg[i];
         printf("%f ", ratio_errs[i]);
     }
     float chi2_sep(0.), chi2_comb(0.);
@@ -85,27 +82,27 @@ void draw_AFB_mbins(){
     pad1->SetBottomMargin(0.012);
     pad1->Draw();
     pad1->cd();
-    g_sm_amc->GetYaxis()->SetRangeUser(0.2, 0.75);
-    g_sm_amc->GetXaxis()->SetLimits(100., 1400.);
-    g_sm_amc->Draw("ALP");
-    if(draw_powheg) g_sm_pow->Draw("ALP same");
-    g_elel->Draw("PE same");
+    g_sm_pow->GetYaxis()->SetRangeUser(0.2, 0.75);
+    g_sm_pow->GetXaxis()->SetLimits(100., 1400.);
+    g_sm_pow->Draw("ALP");
+    g_sm_amc->Draw("LP same");
     g_mumu->Draw("PE same");
+    g_elel->Draw("PE same");
     g_comb->Draw("PE same");
 
 
-    g_sm_amc->GetYaxis()->SetTitle("Forward Backward Asymmetry");
-    g_sm_amc->GetYaxis()->SetNdivisions(505);
-    g_sm_amc->GetYaxis()->SetTitleSize(20);
-    g_sm_amc->GetYaxis()->SetTitleFont(43);
-    g_sm_amc->GetYaxis()->SetTitleOffset(1.2);
-    g_sm_amc->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
-    g_sm_amc->GetYaxis()->SetLabelSize(15);
+    g_sm_pow->GetYaxis()->SetTitle("Forward Backward Asymmetry");
+    g_sm_pow->GetYaxis()->SetNdivisions(505);
+    g_sm_pow->GetYaxis()->SetTitleSize(20);
+    g_sm_pow->GetYaxis()->SetTitleFont(43);
+    g_sm_pow->GetYaxis()->SetTitleOffset(1.2);
+    g_sm_pow->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
+    g_sm_pow->GetYaxis()->SetLabelSize(15);
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.5, 0.65, 0.75, 0.8);
+    leg1->AddEntry(g_sm_pow, "Standard Model A_{FB} from POWHEG", "l");
     leg1->AddEntry(g_sm_amc, "Standard Model A_{FB} from aMC@NLO", "l");
-    if(draw_powheg) leg1->AddEntry(g_sm_pow, "Standard Model A_{FB} from POWHEG", "l");
     leg1->AddEntry(g_mumu, "#mu#mu Measurement", "p");
     leg1->AddEntry(g_elel, "ee Measurement", "p");
     leg1->AddEntry(g_comb, "Combined Measurement", "p");
@@ -124,7 +121,7 @@ void draw_AFB_mbins(){
     g_ratio->Draw("APE");
 
 
-    g_ratio->GetYaxis()->SetTitle("Comb./aMC@NLO");
+    g_ratio->GetYaxis()->SetTitle("Comb./POWHEG");
     g_ratio->GetYaxis()->SetNdivisions(505);
     g_ratio->GetYaxis()->SetTitleSize(20);
     g_ratio->GetYaxis()->SetTitleFont(43);
@@ -132,7 +129,7 @@ void draw_AFB_mbins(){
     g_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     g_ratio->GetYaxis()->SetLabelSize(15);
     // X axis g_ratio plot settings
-    g_ratio->GetXaxis()->SetTitle("M (GeV)");
+    g_ratio->GetXaxis()->SetTitle("M_{ll} (GeV)");
     g_ratio->GetXaxis()->SetTitleSize(20);
     g_ratio->GetXaxis()->SetTitleFont(43);
     g_ratio->GetXaxis()->SetTitleOffset(3.);

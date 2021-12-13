@@ -9,21 +9,21 @@ import ROOT as rt
 cmsText     = "CMS";
 cmsTextFont   = 61  
 
-writeExtraText = True
+writeExtraText = False
 extraText   = "Preliminary"
 extraTextFont = 52 
 
 lumiTextSize     = 0.75
 lumiTextOffset   = 0.2
 
-cmsTextSize      = 0.85
+cmsTextSize      = 1.1
 cmsTextOffset    = 0.1
 
-relPosX    = 0.085
-relPosY    = 0.035
+relPosX    = 0.065
+relPosY    = 0.045
 relExtraDY = 1.0
 
-extraOverCmsTextSize  = 0.76
+extraOverCmsTextSize  = 0.7
 
 lumi_13TeV = "35.9 fb^{-1}"
 lumi_8TeV  = "19.7 fb^{-1}" 
@@ -51,7 +51,7 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
     t = pad.GetTopMargin()
     r = pad.GetRightMargin()
     b = pad.GetBottomMargin()
-    e = 0.025
+    #e = 0.025
 
     pad.cd()
 
@@ -94,7 +94,7 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
     elif(iPeriod==2018):
         lumiText += "2018 (59 fb^{-1})"
     elif(iPeriod==-1):
-      lumiText += "2016-2018 (137 fb^{-1})"
+      lumiText += "138 fb^{-1} (13 TeV)"
             
     print iPeriod, lumiText
 

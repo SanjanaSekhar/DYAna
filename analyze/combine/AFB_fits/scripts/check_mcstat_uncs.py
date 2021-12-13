@@ -17,6 +17,8 @@ parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits f
 parser.add_option("--expected",  default=False, action="store_true", help="Compute expected impacts based on toys with AFB=0.6 A0=0.05")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("--noSymMCStats", default = False, action="store_true",  help="Don't add constraints to mcStat nuisances")
+parser.add_option("--sigma2", default = 0.1, type='float',  help="Sigma squared of gaussian constraint")
+parser.add_option("--fullCorr", default = False , action="store_true",  help="Fully correlate the symmetric mcstat nuisances")
 
 (options, args) = parser.parse_args()
 
@@ -68,7 +70,7 @@ s = 123456
 workspace = "workspaces/%s_fit_expected_unc_%i.root" % (options.chan, options.mbin)
 
 if(not options.reuse_fit):
-    make_workspace(workspace, options.mbin, year = options.year, symMCStats = not options.noSymMCStats)
+    make_workspace(workspace, options.mbin, year = options.year, symMCStats = not options.noSymMCStats, sigma2 = options.sigma2, fullCorr = options.fullCorr)
     print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s" % (workspace, extra_params))
 
 
@@ -97,7 +99,7 @@ print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups autoMCStats -d 
 if(not options.expected): s = -1
 sys_unc = compute_sys("nom1", "NoMCStat", s)
 
-print("Mass bin %i, Symmetrized MCStats = %r, expected = %r \n" %(options.mbin, not options.noSymMCStats, options.expected))
+print("Mass bin %i, Symmetrized MCStats = %r, expected = %r, sigma2 = %.2f, fullCorr = %r \n" %(options.mbin, not options.noSymMCStats, options.expected, options.sigma2, options.fullCorr))
 print("Uncertainty is %.5f \n" % sys_unc)
 
 print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")

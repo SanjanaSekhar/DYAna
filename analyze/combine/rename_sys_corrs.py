@@ -15,7 +15,7 @@ f = ROOT.TFile.Open(fin, "UPDATE")
 n_bins = 8
 
 """
-{"_METJEC", "_METHEM", "_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", "_BTAGCOR", "_BTAGUNCOR", "_BTAGLIGHT",
+{"_METJEC", "_METHEM", "_prefire", "_muPref",  "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", "_BTAGCOR", "_BTAGUNCOR", "_BTAGLIGHT",
 "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  "_muIDSYS", "_muISOSYS",  
 "_elHLTBARPTHIGH", "_elIDBARPTHIGH", "_elRECOBARPTHIGH", "_elHLTENDPTHIGH", "_elIDENDPTHIGH", "_elRECOENDPTHIGH",
 "_elHLTBARPTLOW", "_elIDBARPTLOW", "_elRECOBARPTLOW", "_elHLTENDPTLOW", "_elIDENDPTLOW", "_elRECOENDPTLOW",
@@ -30,7 +30,9 @@ correlate_all = ["elScaleSyst", "elSmear", "Pu", "muIDSYS", "muISOSYS", "elRECOB
 
 correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                     "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                    "RENORM", "FAC", "REFAC", "alphaS" ]
+                    "RENORM", "FAC", "REFAC", "alphaS", "muPref" ]
+separate_mbins = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
+                    "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b"]
 
 for i in range(n_bins):
     f.cd("w%i" % i)
@@ -58,6 +60,27 @@ for i in range(n_bins):
                     h_clone = h.Clone(new_name)
                     h_clone.Write()
                     break
+
+    keys = ROOT.gDirectory.GetListOfKeys().Clone()
+    for k in keys:
+        name = k.GetName()
+        for sys_m in separate_mbins:
+            if(sys_m in name):
+                h = ROOT.gDirectory.Get(name)
+                if("Up" in name):
+                    new_name = name.replace("Up", "m%iUp" % i)
+                elif("Down" in name):
+                    new_name = name.replace("Down", "m%iDown" % i)
+                else:
+                    print("Issue with sys %s" % name )
+                
+                if(new_name in keys): break
+                print("copying %s to %s" % (name, new_name))
+                h_clone = h.Clone(new_name)
+                h_clone.Write()
+                break
+
+
 
             
 
