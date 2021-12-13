@@ -355,10 +355,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
               // LQ terms: LO LQ/LO SM
             // Need to modify LQ_denom
-              //flag_q=1 for d-dbar, 2 for u-ubar, 0 for everything
+              //flag_q=1 for d-dbar, 2 for u-ubar, 3 for s-sbar, 4 for c-cbar, 0 for everything
         int flag_q=0;
-        if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
-        if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
+       // if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
+       // if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
+        if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
+        if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
         if(flag_q!=0){ 
 
           if(flag_q==1){
