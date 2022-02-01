@@ -94,10 +94,10 @@ void NTupleReader::setupSFs(){
     else if(!do_top_ptrw) btag_mc_eff_idx =2; //diboson
     else btag_mc_eff_idx = 0; //ttbar
 
+    setup_prefire_SFs(&prefire_rates, year);
     printf("Btag mc eff idx is %i \n", btag_mc_eff_idx);
     setup_btag_SFs(&b_reader, &btag_effs, year, setup_btag_systematics);
 
-    if(year < 2018) setup_prefire_SFs(&prefire_rates, year);
 
     if(do_muons || do_emu){
         printf("getting muon SFs \n");
@@ -444,6 +444,9 @@ void NTupleReader::setupOutputTree(char treeName[100]){
         outTrees[idx]->Branch("prefire_SF", &prefire_SF);
         outTrees[idx]->Branch("prefire_SF_up", &prefire_SF_up);
         outTrees[idx]->Branch("prefire_SF_down", &prefire_SF_down);
+        outTrees[idx]->Branch("mu_prefire_SF", &mu_prefire_SF);
+        outTrees[idx]->Branch("mu_prefire_SF_up", &mu_prefire_SF_up);
+        outTrees[idx]->Branch("mu_prefire_SF_down", &mu_prefire_SF_down);
         outTrees[idx]->Branch("jet1_flavour", &jet1_flavour, "jet1_flavour/I");
         outTrees[idx]->Branch("jet2_flavour", &jet2_flavour, "jet2_flavour/I");
         outTrees[idx]->Branch("jet1_btag_SF", &jet1_btag_SF);
@@ -767,20 +770,30 @@ void NTupleReader::fillEvent(){
 }
 
 void NTupleReader::prefireCorrs(){
-    prefire_SF = 1.0;
-    prefire_SF_up = 1.0;
-    prefire_SF_down = 1.0;
-    for(int i=0; i<jet_size; i++){
-        prefire_SF *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 0);
-        prefire_SF_up *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 1);
-        prefire_SF_down *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, -1);
+    prefire_SF = prefire_SF_down = prefire_SF_up = mu_prefire_SF = mu_prefire_SF_down = mu_prefire_SF_up =  1.0;
+    if(year < 2018){
+        for(int i=0; i<jet_size; i++){
+            prefire_SF *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 0);
+            prefire_SF_up *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, 1);
+            prefire_SF_down *= 1. - get_prefire_rate(jet_Pt[i], jet_Eta[i], prefire_rates.jet_rate, -1);
+        }
+        for(int i=0; i<el_size; i++){
+            prefire_SF *= 1.- get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 0);
+            prefire_SF_up *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 1);
+            prefire_SF_down *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, -1);
+        }
     }
-    for(int i=0; i<el_size; i++){
-        prefire_SF *= 1.- get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 0);
-        prefire_SF_up *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, 1);
-        prefire_SF_down *= 1. - get_prefire_rate(el_Pt[i], el_Eta[i], prefire_rates.el_rate, -1);
+    for(int i=0; i<mu_size; i++){
+        float nom_rate = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], prefire_rates.mu_era1_helper, year, 0);
+        float up_rate = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], prefire_rates.mu_era1_helper, year, 1);
+        float down_rate = 1.- get_mu_prefire_rate(mu_Pt[i], mu_Eta[i], mu_Phi[i], prefire_rates.mu_era1_helper, year, -1);
+
+
+        mu_prefire_SF *= nom_rate;
+        mu_prefire_SF_up *= up_rate;
+        mu_prefire_SF_down *= down_rate;
     }
-    //printf("Overall prefire rates (nom, up, down): %.3f, %.3f, %.3f \n", prefire_SF, prefire_SF_up, prefire_SF_down);
+    //printf("Overall mu prefire rates (nom, up, down): %.3f, %.3f, %.3f \n", mu_prefire_SF, mu_prefire_SF_up, mu_prefire_SF_down);
 }
 
 
@@ -837,7 +850,7 @@ void NTupleReader::fillEventSFs(){
     
 
     //printf("pu, pu_up, pu_down: %.2f %.2f %.2f \n", pu_SF, pu_SF_up, pu_SF_down);
-    if(year < 2018) prefireCorrs(); 
+    prefireCorrs(); 
 
     if(scale_size > 0){
         mu_F_up = std::max(std::min(scale_Weights[0], sys_max), sys_min);
@@ -1322,12 +1335,14 @@ int NTupleReader::selectAnyGenParts(bool PRINT = false){
         }
         else if((abs(inc_id1) <= 6) && (abs(inc_id2) <= 6) && (inc_id1 * inc_id2 >0)){ //2 quarks
             if(PRINT) sprintf(out_buff + strlen(out_buff),"QQ Event \n");
+            quark_dir_eta = gen_Eta[inc_1];
             print_out = true;
             signal_event = false;
             nQQ++;
             if(PRINT) sprintf(out_buff + strlen(out_buff), "QQ event \n");
         }
         else if((inc_id1 == 21) && (inc_id2 == 21)){ //gluglu
+            quark_dir_eta = gen_Eta[inc_1];
             signal_event = false;
             nGluGlu++;
             print_out = true;

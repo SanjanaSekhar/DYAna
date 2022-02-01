@@ -48,6 +48,29 @@ void setHistError(TH1 *h, float e, bool add_err = true){
 }
 
 
+void setHistMassDepError(TH1 *h, bool add_err = true){
+    int nBins = h->GetNbinsX();
+    for(int i=1; i<= nBins; i++){
+        float val = h->GetBinContent(i);
+        float m = h->GetXaxis()->GetBinCenter(i);
+
+        float e = 0.;
+
+        if(m<200) e = 0.1;
+        else if(m > 200 && m < 320) e = 0.13; 
+        else if(m > 320 && m < 510) e = 0.15; 
+        else if(m > 510 && m < 700) e = 0.20; 
+        else if(m > 700 && m < 1000) e = 0.20; 
+        else if( m > 1000) e = 0.26; 
+
+        float err = h->GetBinError(i);
+        float new_err = val*e;
+        if(add_err) new_err = pow(err*err + new_err*new_err, 0.5);
+        h->SetBinError(i, new_err);
+    }
+}
+
+
 
 void symmetrize1d(TH1F *h){
     int n_cost_bins = h->GetNbinsX();

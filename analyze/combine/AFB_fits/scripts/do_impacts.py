@@ -13,6 +13,7 @@ parser.add_option("--Afb",  default=0.6, type='float', help="Afb value to inject
 parser.add_option("--A0",  default=0.05, type='float', help="A0 value to inject if expected")
 parser.add_option("-o", "--odir", default="impacts/", help = "output directory")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
+parser.add_option("--diff", default = False, action="store_true",  help="Measure difference between electron and muon AFB's")
 
 (options, args) = parser.parse_args()
 
@@ -33,6 +34,7 @@ all_sys = ["METJEC", "elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "muR
             "RENORM", "FAC", "REFAC", "alphaS", 
             "dy_xsec","db_xsec","top_xsec","gam_xsec" ,"elFakes", "muFakes", 
             "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC", "lumiGS" ,"lumi", 
+            "muPref",
             ]
 
 correlate_all = ["elScaleSyst", "elSmear", "Pu", "muIDSYS", "muISOSYS", "elRECOBARPTHIGH", "elRECOENDPTHIGH", "elRECOBARPTLOW", "elRECOENDPTLOW",
@@ -44,7 +46,7 @@ correlate_all = ["elScaleSyst", "elSmear", "Pu", "muIDSYS", "muISOSYS", "elRECOB
 
 correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                     "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                    "RENORM", "FAC", "REFAC", "alphaS" ]
+                    "RENORM", "FAC", "REFAC", "alphaS" , "muPref"]
 
 
 pars16 = []
@@ -84,6 +86,12 @@ par_str=par_str[:-1]
 
 ws_label = "%s_impacts_mbin%i" % (chan, options.mbin)
 
+A0_str = 'A0'
+Afb_str = 'Afb'
+if(options.diff):
+    A0_str = 'dA0'
+    Afb_str = 'dAfb'
+
 if(options.expected):
     ws_label = "%s_expected_impacts_mbin%i" % (chan, options.mbin)
 
@@ -91,7 +99,7 @@ if(options.expected):
 
 
 workspace = "workspaces/%s.root" % (ws_label)
-make_workspace(workspace, options.mbin)
+make_workspace(workspace, options.mbin, diff = options.diff)
 
 
 print("Num pars = %i " % (len(pars16) + len(pars17) + len(pars18) + len(pars_comb)))
@@ -123,8 +131,8 @@ if(options.expected):
     for par in (pars16 + pars17 + pars18 + pars_comb):
         os.system("cp higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.%i.root higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.root" % (par, s, par))
 print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/%s.json --named %s" % (workspace, options.odir, ws_label, par_str))
-print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_afb --POI Afb --blind" % (options.odir, ws_label, options.odir, ws_label))
-print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_a0 --POI A0 --blind" % (options.odir, ws_label, options.odir, ws_label))
+print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_afb --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, Afb_str))
+print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_a0 --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, A0_str))
 #print_and_do("rm higgsCombine_*")
 
 

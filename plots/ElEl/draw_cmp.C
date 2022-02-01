@@ -315,9 +315,12 @@ void draw_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    float x_size = 0.25;
-    float y_size = 0.35;
+    float x_size = 0.4;
+    float y_size = 0.3;
+
     TLegend *leg1 = new TLegend(x_size, y_size);
+    leg1->SetNColumns(2);
+    leg1->SetHeader("Dielectron Signal Region");
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(dy_m, "DY Signal", "f");
     leg1->AddEntry(dy_tautau_m, "DY #rightarrow #tau#tau", "f");
@@ -347,8 +350,9 @@ void draw_cmp(){
     bool draw_sys_uncs = true;
     float ratio_range = 0.5;
 
-    float x_start_m = 0.6;
-    float y_start_m = 0.5;
+    float x_start_m = 0.45;
+    float y_start_m = 0.6;
+
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
@@ -361,8 +365,8 @@ void draw_cmp(){
     if(write_out) c_m->Print(plt_file);
 
     
-    float x_start_c = 0.45;
-    float y_start_c = 0.14;
+    float x_start_c = 0.57 - x_size/2;
+    float y_start_c = 0.17;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
     leg2->SetY1(y_start_c);
@@ -371,7 +375,7 @@ void draw_cmp(){
     
     logy = false;
     sprintf(y_ax_label, "Events/%.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "Cos(#theta)",y_ax_label, plot_label, -1., logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label, -1., logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 33);
     sprintf(plt_file, "%sElEl%i_cost_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_cost->Print(plt_file);
@@ -393,8 +397,14 @@ void draw_cmp(){
     sprintf(plt_file, "%sElEl%i_phi_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_phi->Print(plt_file);
 
+
+    leg6->SetX1(x_start_c);
+    leg6->SetX2(x_start_c+x_size);
+    leg6->SetY1(y_start_c);
+    leg6->SetY2(y_start_c+y_size);
+
     sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dielectron Y",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dielectron rapidity",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sElEl%i_rap_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_rap->Print(plt_file);

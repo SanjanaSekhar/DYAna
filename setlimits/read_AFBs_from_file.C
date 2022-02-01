@@ -9,10 +9,11 @@
 
 
 const int n_bins = 3;
-Double_t AFB_SM[n_bins] = {0.570, 0.575, 0.590};
-Double_t AFB_unc[n_bins] = {0.023, 0.033, 0.052};
-//Double_t AFB_measured[n_bins] = {0.644, 0.593, 0.571};
-Double_t AFB_measured[n_bins] = {0.570, 0.575, 0.590};
+Double_t AFB_SM[n_bins] = {0.570, 0.575, 0.590}; //same generator as Z'
+Double_t AFB_exp[n_bins] = {0.608, 0.610, 0.612}; //amc@NLO values
+Double_t AFB_measured[n_bins] = {0.617, 0.595, 0.639};
+//Double_t AFB_unc[n_bins] = {0.022, 0.033, 0.054}; //measurement uncertainties
+Double_t AFB_unc[n_bins] = {0.029, 0.04, 0.058}; //Total uncertainty, adding 0.02 theory uncertainty
 
 void read_AFBs(FILE *f1, Double_t *AFBs, int M_Zp, Double_t kL){
     rewind(f1);

@@ -48,9 +48,28 @@ typedef struct{
     TH2D *HLT_MC_EFF;
 } el_SFs;
 
+
+typedef struct{
+  TFile *f_;
+  TF1* parametrization0p0To0p2_;
+  TF1* parametrization0p2To0p3_;
+  TF1* parametrization0p3To0p55_;
+  TF1* parametrization0p55To0p83_;
+  TF1* parametrization0p83To1p24_;
+  TF1* parametrization1p24To1p4_;
+  TF1* parametrization1p4To1p6_;
+  TF1* parametrization1p6To1p8_;
+  TF1* parametrization1p8To2p1_;
+  TF1* parametrization2p1To2p25_;
+  TF1* parametrization2p25To2p4_;
+  TF1* parametrizationHotSpot_;
+} MuPrefireHelper;
+
+
 typedef struct{
     TH2F *jet_rate;
     TH2F *el_rate;
+    MuPrefireHelper mu_era1_helper;
 } prefire_SFs;
 
 typedef struct{
@@ -91,6 +110,8 @@ typedef struct{
     TProfile *h_RF_down;
     TProfile *h_pdfs[60];
 } RF_pdf_norm_helper;
+
+
 
     
 
@@ -330,6 +351,68 @@ Float_t get_prefire_rate(float pt, float eta, TH2F *map, int systematic = 0){
     //printf("pt %.0f eta %.2f, prob %.3f \n", pt, eta, prefire_prob);
     return prefire_prob;
 }
+
+Float_t get_mu_prefire_rate(float pt, float eta, float phi, MuPrefireHelper helper, int year, int systematic = 0){
+    //https://github.com/cms-sw/cmssw/blob/master/PhysicsTools/PatUtils/plugins/L1PrefiringWeightProducer.cc#L373-L440
+  float prefrate;
+  float statuncty;
+  if (year == 2016 && (eta > 1.24 && eta < 1.6) &&
+      (phi > 2.44346 && phi < 2.79253)) {
+    prefrate = helper.parametrizationHotSpot_->Eval(pt);
+    statuncty = helper.parametrizationHotSpot_->GetParError(2);
+  } else if (std::abs(eta) < 0.2) {
+    prefrate = helper.parametrization0p0To0p2_->Eval(pt);
+    statuncty = helper.parametrization0p0To0p2_->GetParError(2);
+  } else if (std::abs(eta) < 0.3) {
+    prefrate = helper.parametrization0p2To0p3_->Eval(pt);
+    statuncty = helper.parametrization0p2To0p3_->GetParError(2);
+  } else if (std::abs(eta) < 0.55) {
+    prefrate = helper.parametrization0p3To0p55_->Eval(pt);
+    statuncty = helper.parametrization0p3To0p55_->GetParError(2);
+  } else if (std::abs(eta) < 0.83) {
+    prefrate = helper.parametrization0p55To0p83_->Eval(pt);
+    statuncty = helper.parametrization0p55To0p83_->GetParError(2);
+  } else if (std::abs(eta) < 1.24) {
+    prefrate = helper.parametrization0p83To1p24_->Eval(pt);
+    statuncty = helper.parametrization0p83To1p24_->GetParError(2);
+  } else if (std::abs(eta) < 1.4) {
+    prefrate = helper.parametrization1p24To1p4_->Eval(pt);
+    statuncty = helper.parametrization1p24To1p4_->GetParError(2);
+  } else if (std::abs(eta) < 1.6) {
+    prefrate = helper.parametrization1p4To1p6_->Eval(pt);
+    statuncty = helper.parametrization1p4To1p6_->GetParError(2);
+  } else if (std::abs(eta) < 1.8) {
+    prefrate = helper.parametrization1p6To1p8_->Eval(pt);
+    statuncty = helper.parametrization1p6To1p8_->GetParError(2);
+  } else if (std::abs(eta) < 2.1) {
+    prefrate = helper.parametrization1p8To2p1_->Eval(pt);
+    statuncty = helper.parametrization1p8To2p1_->GetParError(2);
+  } else if (std::abs(eta) < 2.25) {
+    prefrate = helper.parametrization2p1To2p25_->Eval(pt);
+    statuncty = helper.parametrization2p1To2p25_->GetParError(2);
+  } else if (std::abs(eta) < 2.4) {
+    prefrate = helper.parametrization2p25To2p4_->Eval(pt);
+    statuncty = helper.parametrization2p25To2p4_->GetParError(2);
+  } else {
+      std::cout << "Muon outside of |eta| <= 2.4. Prefiring weight set to 0." << std::endl;
+    return 0.;
+  }
+  
+  float prefiringRateSysUnc = 0.11;
+  float systuncty = prefiringRateSysUnc * prefrate;
+
+  if (systematic == 1)
+    prefrate = std::min(1., prefrate + sqrt(pow(statuncty, 2) + pow(systuncty, 2)));
+  else if (systematic == -1)
+    prefrate = std::max(0., prefrate - sqrt(pow(statuncty, 2) + pow(systuncty, 2)));
+
+  if (prefrate > 1.) {
+      std::cout << "Found a prefiring probability > 1. Setting to 1." << std::endl;
+    return 1.;
+  }
+  return prefrate;
+}
+
 
 
 
@@ -725,10 +808,60 @@ void setup_fakes_costrw_helper(fakes_costrw_helper *h, int year){
     h->mu_rw->SetDirectory(0);
 }
 
+void setup_mu_prefire_helper(TFile *f_, TString era_name_, MuPrefireHelper &era_helper){
+    //https://github.com/cms-sw/cmssw/blob/master/PhysicsTools/PatUtils/plugins/L1PrefiringWeightProducer.cc#L373-L440
+    era_helper.f_ = f_;
+    TString paramName = "L1prefiring_muonparam_HotSpot_" + era_name_;
+    era_helper.parametrizationHotSpot_ = (TF1 * ) f_->Get(paramName);
 
-void setup_prefire_SFs(prefire_SFs *pre_SF, int year){
+    paramName = "L1prefiring_muonparam_0.0To0.2_" + era_name_;
+    era_helper.parametrization0p0To0p2_ = (TF1 *) f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_0.2To0.3_" + era_name_;
+    era_helper.parametrization0p2To0p3_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_0.3To0.55_" + era_name_;
+    era_helper.parametrization0p3To0p55_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_0.55To0.83_" + era_name_;
+    era_helper.parametrization0p55To0p83_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_0.83To1.24_" + era_name_;
+    era_helper.parametrization0p83To1p24_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_1.24To1.4_" + era_name_;
+    era_helper.parametrization1p24To1p4_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_1.4To1.6_" + era_name_;
+    era_helper.parametrization1p4To1p6_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_1.6To1.8_" + era_name_;
+    era_helper.parametrization1p6To1p8_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_1.8To2.1_" + era_name_;
+    era_helper.parametrization1p8To2p1_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_2.1To2.25_" + era_name_;
+    era_helper.parametrization2p1To2p25_ = (TF1 *)f_->Get(paramName);
+    paramName = "L1prefiring_muonparam_2.25To2.4_" + era_name_;
+    era_helper.parametrization2p25To2p4_ = (TF1 *)f_->Get(paramName);
+ 
+
+    if(era_helper.parametrizationHotSpot_ == nullptr)
+        era_helper.parametrizationHotSpot_ = era_helper.parametrization1p4To1p6_ ;
+
+
+    //printf("Finish setting up era %s \n", era_name_.Data());
+
+
+
+}
+
+
+
+void setup_prefire_SFs(prefire_SFs *pre_SF,  int year){
+
+
+    TFile *f_mu_prefire = TFile::Open("../analyze/SFs/2016/L1MuonPrefiringParametriations.root");
+
 
     if(year == 2016){
+
+        TString era1_name = "2016";
+
+        setup_mu_prefire_helper(f_mu_prefire, era1_name, pre_SF->mu_era1_helper);
+        pre_SF->mu_era1_helper.f_->Print();
 
         TFile *f_el = TFile::Open("../analyze/SFs/2016/L1prefiring_photonpt_2016BtoH.root");
         TH2F *h1 = (TH2F *) f_el->Get("L1prefiring_photonpt_2016BtoH")->Clone();
@@ -742,7 +875,11 @@ void setup_prefire_SFs(prefire_SFs *pre_SF, int year){
         pre_SF->jet_rate= h2;
         f_jet->Close();
     }
-    else if(year == 2017){
+    else if(year == 2017 || year == 2018){
+
+        TString era1_name = "20172018";
+
+        setup_mu_prefire_helper(f_mu_prefire, era1_name, pre_SF->mu_era1_helper);
 
         TFile * f_el = TFile::Open("../analyze/SFs/2017/L1prefiring_photonpt_2017BtoF.root");
         TH2F *h1 = (TH2F *) f_el->Get("L1prefiring_photonpt_2017BtoF")->Clone();
@@ -756,6 +893,9 @@ void setup_prefire_SFs(prefire_SFs *pre_SF, int year){
         pre_SF->jet_rate= h2;
         f_jet->Close();
     }
+    //f_mu_prefire->Close();
+    f_mu_prefire->Print();
+    pre_SF->mu_era1_helper.parametrization0p0To0p2_->Print();
 
 }
 

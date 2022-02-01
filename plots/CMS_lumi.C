@@ -85,7 +85,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       lumiText += "2018 (59 fb^{-1})";
   }
   else if(iPeriod == -1){
-      lumiText += "2016-2018 (137 fb^{-1})";
+      lumiText += "138 fb^{-1} (13 TeV)";
   }
 
 

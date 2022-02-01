@@ -29,7 +29,7 @@ TH1F *h1_mumu_asym, *h1_mumu_sym;
 TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_top, *h1_elel_db,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_top, *h1_mumu_db,  *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 
-bool scramble_data = true;
+bool scramble_data = false;
 
 
 
@@ -480,7 +480,7 @@ void make_templates(int year = -1, string fout_name = "", int iJob =-1){
     if(fout_name == "") fout_name = string("combine/templates/test.root");
     if(year == -1) year = 2016;
     
-    scramble_data = true; //randomly flip sign of cos(theta)
+    scramble_data = false; //randomly flip sign of cos(theta)
     bool fake_data = false; //use mc instead of data
     use_xF = false;
 
