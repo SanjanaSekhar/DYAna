@@ -30,8 +30,9 @@
 #include "../../utils/Colors.h"
 
 const bool write_out = true;
-bool prelim = true;
-char *plot_dir = "PAS_plots/EMu_plots/";
+bool prelim = false;
+char *plot_dir = "Paper_plots/EMu_plots/";
+//char *plot_dir = "PAS_plots/EMu_plots/";
 //char *plot_dir = "Misc_plots/mu_prefire_check_before/";
 //char *plot_label = "e#mu Control Region";
 char *plot_label = "";
@@ -268,20 +269,32 @@ void draw_cmp_from_saved(){
     //rap_stack->Add(dy_rap);
 
     gStyle->SetLegendBorderSize(0);
-    float x_size = 0.5;
-    float y_size = 0.3;
+    float x_size = 0.6;
+    float y_size = 0.4;
     TLegend *leg1 = new TLegend(x_size, y_size);
+
+    data_m->SetLineWidth(2);
     leg1->SetNColumns(2);
     leg1->SetHeader("e#mu control region");
-    leg1->AddEntry(data_m, "data", "pe");
-    //leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
-    leg1->AddEntry(top_m, "t#bar{t} + single top", "f");
-    leg1->AddEntry(QCD_m, "QCD and W+Jets", "f");
-    leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
-    leg1->SetTextSize(0.05);
-
+    //different data error bars
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
-    TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
+
+    leg1->AddEntry(data_m, "Data", "lpe");
+    leg2->AddEntry(data_m, "Data", "pe");
+
+    //leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
+    leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
+    leg1->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
+    leg1->SetTextSize(0.058);
+
+
+    leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
+    leg2->AddEntry(diboson_m, "WW + WZ + ZZ", "f");
+    leg2->SetTextSize(0.058);
+
+    TLegend *leg3 = (TLegend *) leg2->Clone("leg3");
 
     TCanvas *c_m, *c_cost,  *c_xf, *c_phi, *c_rap;
     TPad *p_m, *p_cost, *p_xf, *p_phi, *p_rap;
@@ -318,8 +331,8 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_start_m = 0.4;
-    float y_start_m = 0.6;
+    float x_start_m = 0.34;
+    float y_start_m = 0.5;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
@@ -327,7 +340,7 @@ void draw_cmp_from_saved(){
 
 
 
-    float hmax = 200000;
+    float hmax = 400000;
     /*
     if(year == 2016)
         hmax *= 0.625;
@@ -344,14 +357,14 @@ void draw_cmp_from_saved(){
     if(write_out) c_m->Print(plt_file);
 
 
-    float x_start_c = 0.4;
-    float y_start_c = 0.6;
+    float x_start_c = 0.34;
+    float y_start_c = 0.5;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
     leg2->SetY1(y_start_c);
     leg2->SetY2(y_start_c+y_size);
 
-    hmax = 40000;
+    hmax = 60000;
     /*
     if(year == 2016)
         hmax *= 0.625;
@@ -369,7 +382,7 @@ void draw_cmp_from_saved(){
     sprintf(plt_file, "%sEMu%s_cost_cmp.png", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
 
-    hmax = 25000;
+    hmax = 35000;
     /*
     if(year == 2016)
         hmax *= 0.625;

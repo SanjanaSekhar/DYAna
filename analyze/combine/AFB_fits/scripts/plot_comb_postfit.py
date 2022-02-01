@@ -25,7 +25,7 @@ if (__name__ == "__main__"):
     label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
     #label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
     label_color_map['gam'] = ["\\gamma\\gamma \\rightarrow {ell}{ell} ", gamgam_c]
-    label_color_map['qcd'] = ("WJets + QCD", qcd_c)
+    label_color_map['qcd'] = ("QCD and W+jets", qcd_c)
 
     datastyle = "pe0x0"
 

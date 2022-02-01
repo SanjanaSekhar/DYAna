@@ -29,7 +29,7 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_MUONS;
-const bool write_out = false;
+const bool write_out = true;
 bool prelim = false;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 //char *plot_dir = "Misc_plots/mu_prefire_check_after/";
@@ -295,26 +295,45 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_size = 0.5;
-    float y_size = 0.3;
+    float x_size = 0.6;
+    float y_size = 0.4;
 
 
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
     leg1->SetHeader("Dimuon signal region");
-    leg1->AddEntry(data_m, "data", "pe");
-    leg1->AddEntry(dy_m, "DY signal", "f");
-    leg1->AddEntry(top_m, "t#bar{t} + single top", "f");
-    leg1->AddEntry(QCD_m, "QCD + WJets", "f");
-    leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg1->SetTextSize(0.05);
-
-
 
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
     TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
+
+    leg1->AddEntry(data_m, "Data", "lpe");
+    leg2->AddEntry(data_m, "Data", "pe");
+    leg3->AddEntry(data_m, "Data", "pe");
+
+    leg1->AddEntry(dy_m, "DY signal", "f");
+    leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
+    leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
+    leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
+    leg1->SetTextSize(0.058);
+
+
+    leg2->AddEntry(dy_m, "DY signal", "f");
+    leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
+    leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
+    leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
+    leg2->SetTextSize(0.058);
+
+
+    leg3->AddEntry(dy_m, "DY signal", "f");
+    leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
+    leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
+    leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
+    leg3->SetTextSize(0.058);
+
 
     leg1->SetX1NDC(0.7);
     leg1->SetX2NDC(0.7);
@@ -356,15 +375,16 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_start_m = 0.4;
-    float y_start_m = 0.6;
+    float x_start_m = 0.325;
+    float y_start_m = 0.5;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
     leg1->SetY2(y_start_m+y_size);
 
 
-    float hmax = 100000;
+    float hmax = 3000000;
+    float hmin = 0.1;
     if(year == 2016)
         hmax *= 0.25;
     if(year == 2017)
@@ -373,7 +393,7 @@ void draw_cmp_from_saved(){
         hmax *= 0.4;
 
     sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     CMS_lumi(p_m, year, 11 );
     sprintf(plt_file, "%sMuMu%s_m_cmp.png", plot_dir, file_label );
     if(write_out) c_m->Print(plt_file);
@@ -383,8 +403,8 @@ void draw_cmp_from_saved(){
     
     //float x_start_c = 0.57 - x_size/2;
     //float y_start_c = 0.14;
-    float x_start_c = 0.4;
-    float y_start_c = 0.6;
+    float x_start_c = 0.325;
+    float y_start_c = 0.5;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
     leg2->SetY1(y_start_c);
@@ -394,7 +414,7 @@ void draw_cmp_from_saved(){
     logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
-    hmax = 100000;
+    hmax = 120000;
 
     if(year == 2016)
         hmax *= 0.25;
@@ -406,7 +426,7 @@ void draw_cmp_from_saved(){
     //ratio_range = 0.2;
 
     sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{r}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos#theta_{R}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
     sprintf(plt_file, "%sMuMu%s_cost_cmp.png", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
@@ -422,7 +442,7 @@ void draw_cmp_from_saved(){
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 65000;
+    hmax = 80000;
     if(year == 2016)
         hmax *= 0.25;
     if(year == 2017)
@@ -432,7 +452,7 @@ void draw_cmp_from_saved(){
 
     //ratio_range = 0.2;
     sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
-    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
+    std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "Dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
     sprintf(plt_file, "%sMuMu%s_rap_cmp.png", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);

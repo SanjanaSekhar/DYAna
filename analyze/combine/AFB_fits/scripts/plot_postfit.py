@@ -25,7 +25,7 @@ tautau_c = 2066;
 gamgam_c = 2077;
 
 DY_co = ROOT.TColor(DY_c, 213./255.,94./255.,0., "DY_co", 1);
-ttbar_co = ROOT.TColor(ttbar_c,  0., 41./225., 186./255., "ttbar_co", 1);
+ttbar_co = ROOT.TColor(ttbar_c,  123./255., 202./255., 255./255., "ttbar_co", 1);
 wt_co = ROOT.TColor(wt_c,  86./255., 180./255., 233./255., "wt_co", 1);
 diboson_co = ROOT.TColor(diboson_c,  0., 158./255., 115./255., "diboson_co", 1);
 qcd_co = ROOT.TColor(qcd_c,  243./255., 168./255., 87./255., "qcd_co", 1);
@@ -33,7 +33,7 @@ tautau_co = ROOT.TColor(tautau_c,  19./255., 58./255., 54./255., "tautau_co", 1)
 gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 1);
 
 
-def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
+def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='Data',bkgNames=[],signalNames=[],
         logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 1, ratio_range = None, NDiv = 205, prelim = False):  
 
     # histlist is just the generic list but if bkglist is specified (non-empty)
