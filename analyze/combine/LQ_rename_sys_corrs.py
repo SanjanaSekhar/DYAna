@@ -2,7 +2,7 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "072821"
+ext = "012821_cs"
 mLQ = 5000
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")

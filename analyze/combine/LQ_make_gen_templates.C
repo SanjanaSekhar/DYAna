@@ -48,34 +48,34 @@ void LQ_make_gen_templates(){
 
     string sys = "";
     
-    TH3F* h_data = new TH3F(title, "Data template for gen level",
+    TH3F* h_data = new TH3F("h_data", "Data template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_data->SetDirectory(0);
-    TH3F* h_sym = new TH3F(title, "sym template for gen level",
+    TH3F* h_sym = new TH3F("h_sym", "sym template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_sym->SetDirectory(0);
-    TH3F* h_asym = new TH3F(title, "asym template for gen level",
+    TH3F* h_asym = new TH3F("h_asym", "asym template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_asym->SetDirectory(0);
-    TH3F* h_pl = new TH3F(title, "pl template for gen level",
+    TH3F* h_pl = new TH3F("h_pl", "pl template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_pl->SetDirectory(0);
-    TH3F* h_mn = new TH3F(title, "mn template for gen level",
+    TH3F* h_mn = new TH3F("h_mn", "mn template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_mn->SetDirectory(0);
-    TH3F* h_alpha = new TH3F(title, "alpha template for gen level",
+    TH3F* h_alpha = new TH3F("h_alpha", "alpha template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_alpha->SetDirectory(0);
-    TH3F* h_LQpure_u = new TH3F(title, "LQpure_u template for gen level",
+    TH3F* h_LQpure_u = new TH3F("h_LQpure_u", "LQpure_u template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_LQpure_u->SetDirectory(0);
-    TH3F* h_LQpure_d = new TH3F(title, "LQpure_d template for gen level",
+    TH3F* h_LQpure_d = new TH3F("h_LQpure_d", "LQpure_d template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_LQpure_d->SetDirectory(0);
-    TH3F* h_LQint_u = new TH3F(title, "LQint_u template for gen level",
+    TH3F* h_LQint_u = new TH3F("h_LQint_u", "LQint_u template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_LQint_u->SetDirectory(0);
-    TH3F* h_LQint_d = new TH3F(title, "LQint_d template for gen level",
+    TH3F* h_LQint_d = new TH3F("h_LQint_d", "LQint_d template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_LQint_d->SetDirectory(0);
 
