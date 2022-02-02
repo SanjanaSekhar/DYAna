@@ -19,3 +19,4 @@ analyze/condor_jobs/
 *.pdf
 *.png
 *.gz
+*.lhe
