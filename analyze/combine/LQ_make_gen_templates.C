@@ -57,12 +57,6 @@ void LQ_make_gen_templates(){
     TH3F* h_asym = new TH3F("h_asym", "asym template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_asym->SetDirectory(0);
-    TH3F* h_pl = new TH3F("h_pl", "pl template for gen level",
-            n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
-    h_pl->SetDirectory(0);
-    TH3F* h_mn = new TH3F("h_mn", "mn template for gen level",
-            n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
-    h_mn->SetDirectory(0);
     TH3F* h_alpha = new TH3F("h_alpha", "alpha template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_alpha->SetDirectory(0);
@@ -78,6 +72,8 @@ void LQ_make_gen_templates(){
     TH3F* h_LQint_d = new TH3F("h_LQint_d", "LQint_d template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_LQint_d->SetDirectory(0);
+
+    TH1F *h1_asym, *h1_sym, *h1_pl, *h1_mn, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
 
     
         printf("\n \n Start making gen level templates for LQ+DY");
@@ -99,7 +95,16 @@ void LQ_make_gen_templates(){
        // h_LQint_u->Scale(0.5);
        // h_LQint_d->Scale(0.5);
 
-        make_pl_mn_templates(h_sym, h_asym, h_pl, h_mn); 
+        h1_sym = convert3d(h_sym);
+        h1_asym = convert3d(h_asym);
+        h1_alpha = convert3d(h_alpha);
+        h1_LQpure_u = convert3d(h_LQpure_u);
+        h1_LQint_u = convert3d(h_LQint_u);
+        h1_LQpure_d = convert3d(h_LQpure_d);
+        h1_LQint_d = convert3d(h_LQint_d);
+    
+
+        make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
         /*
         float scale_ = nEvents / h_raw->Integral();
 
@@ -116,27 +121,27 @@ void LQ_make_gen_templates(){
         //h_uncut->Write();
         //h_raw->Write();
 
-        h_pl->Write();
-        h_mn->Write();
-        h_alpha->Write();
-        h_sym->Write();
-        h_asym->Write();
-        h_LQpure_u->Write();
-        h_LQpure_d->Write();
-        h_LQint_u->Write();
-        h_LQint_d->Write();
+        h1_pl->Write();
+        h1_mn->Write();
+        h1_alpha->Write();
+        h1_sym->Write();
+        h1_asym->Write();
+        h1_LQpure_u->Write();
+        h1_LQpure_d->Write();
+        h1_LQint_u->Write();
+        h1_LQint_d->Write();
 
         //h_uncut->Reset();
         //h_raw->Reset();
-        h_pl->Reset();
-        h_mn->Reset();
-        h_alpha->Reset();
-        h_asym->Reset();
-        h_sym->Reset();
-        h_LQpure_u->Reset();
-        h_LQpure_d->Reset();
-        h_LQint_u->Reset();
-        h_LQint_d->Reset();
+        h1_pl->Reset();
+        h1_mn->Reset();
+        h1_alpha->Reset();
+        h1_asym->Reset();
+        h1_sym->Reset();
+        h1_LQpure_u->Reset();
+        h1_LQpure_d->Reset();
+        h1_LQint_u->Reset();
+        h1_LQint_d->Reset();
 
     
 
