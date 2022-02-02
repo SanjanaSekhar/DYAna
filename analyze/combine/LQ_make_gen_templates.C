@@ -76,7 +76,7 @@ void LQ_make_gen_templates(){
     TH3F* h_raw = new TH3F("h_raw", "sym template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_raw->SetDirectory(0);
-    TH1F *h1_raw, *h1_asym, *h1_sym, *h1_pl, *h1_mn, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
+    TH1F *h1_raw, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
 
     
         printf("\n \n Start making gen level templates for LQ+DY\n");
@@ -113,6 +113,15 @@ void LQ_make_gen_templates(){
         //h1_sym->Print("range");
 	//h1_asym->Print("range");
 
+     n_y_bins -= 1;
+    int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
+   
+        h1_pl = new TH1F("h_pl", "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+        h1_pl->SetDirectory(0);
+        h1_mn = new TH1F("h_mn", "Minus template of DY", n_1d_bins, 0, n_1d_bins);
+        h1_mn->SetDirectory(0);
+
+
 	make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
         
         float scale_ = nEvents / h1_raw->Integral();
@@ -121,7 +130,10 @@ void LQ_make_gen_templates(){
         h1_pl->Scale(scale_);
         h1_mn->Scale(scale_);
         h1_alpha->Scale(scale_);
-
+        h1_LQpure_u->Scale(scale_);
+        h1_LQpure_d->Scale(scale_);
+        h1_LQint_u->Scale(scale_);
+        h1_LQint_d->Scale(scale_);
         
 	printf("Finished make_pl_mn\n");
         fout->cd();
