@@ -24,7 +24,8 @@
 #include "../../utils/HistUtils.C"
 #include "../../utils/ScaleFactors.C"
 #include "../../utils/PlotUtils.C"
-#include "../../utils/LQ_TemplateMaker_systematics.C"
+//#include "../../utils/LQ_TemplateMaker_systematics.C"
+#include "LQ_TemplateUtils.h"
 
 
 
@@ -72,19 +73,21 @@ void LQ_make_gen_templates(){
     TH3F* h_LQint_d = new TH3F("h_LQint_d", "LQint_d template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
     h_LQint_d->SetDirectory(0);
-
-    TH1F *h1_asym, *h1_sym, *h1_pl, *h1_mn, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
+    TH3F* h_raw = new TH3F("h_raw", "sym template for gen level",
+            n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
+    h_raw->SetDirectory(0);
+    TH1F *h1_raw, *h1_asym, *h1_sym, *h1_pl, *h1_mn, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
 
     
-        printf("\n \n Start making gen level templates for LQ+DY");
+        printf("\n \n Start making gen level templates for LQ+DY\n");
 
 
         int nEvents = 0;
 
 
 //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
-        nEvents += make_gen_temps(t_gen_el, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
-
+        nEvents += make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
+	printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
 
 
         h_sym->Scale(0.5);
@@ -94,7 +97,9 @@ void LQ_make_gen_templates(){
        // h_LQpure_d->Scale(0.5);
        // h_LQint_u->Scale(0.5);
        // h_LQint_d->Scale(0.5);
+	printf("Starting convert3d\n");
 
+	h1_raw = convert3d(h_raw);
         h1_sym = convert3d(h_sym);
         h1_asym = convert3d(h_asym);
         h1_alpha = convert3d(h_alpha);
@@ -102,17 +107,23 @@ void LQ_make_gen_templates(){
         h1_LQint_u = convert3d(h_LQint_u);
         h1_LQpure_d = convert3d(h_LQpure_d);
         h1_LQint_d = convert3d(h_LQint_d);
-    
+    	delete h_sym,h_asym,h_alpha,h_LQpure_u,h_LQpure_d,h_LQint_u,h_LQint_d;
 
-        make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
-        /*
-        float scale_ = nEvents / h_raw->Integral();
+	printf("Starting make_pl_mn\n");
+        //h1_sym->Print("range");
+	//h1_asym->Print("range");
 
-        h_raw->Scale(scale_);
-        h_pl->Scale(scale_);
-        h_mn->Scale(scale_);
-        h_alpha->Scale(scale_);
-        */
+	make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
+        
+        float scale_ = nEvents / h1_raw->Integral();
+
+        h1_raw->Scale(scale_);
+        h1_pl->Scale(scale_);
+        h1_mn->Scale(scale_);
+        h1_alpha->Scale(scale_);
+
+        
+	printf("Finished make_pl_mn\n");
         fout->cd();
         snprintf(dirname, 10, "LQ");
         gDirectory->mkdir(dirname);
