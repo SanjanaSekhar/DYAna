@@ -823,6 +823,7 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
 int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
         float m_LQ, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
+    printf("Making LQ+DY generator level templates\n")
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
@@ -1031,3 +1032,69 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
     return nEvents;
 
 }
+
+int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016){
+
+    printf("Making data generator level templates\n")
+    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
+    float gen_weight, m, cost, cost_st;
+    int inc_id1, inc_id2;
+   
+    float evt_weight;
+  
+    Bool_t sig_event(1);
+
+    t_gen->SetBranchAddress("lep_pls", &gen_lep_p);
+    t_gen->SetBranchAddress("lep_mns", &gen_lep_m);
+    //t_gen->SetBranchAddress("gen_mu_p", &gen_lep_p);
+    //t_gen->SetBranchAddress("gen_mu_m", &gen_lep_m);
+    //t_gen->SetBranchAddress("m", &m);
+    //t_gen->SetBranchAddress("cost", &cost);
+    //t_gen->SetBranchAddress("cost_st", &cost_st);
+    t_gen->SetBranchAddress("gen_weight", &gen_weight);
+   
+    //t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
+  //  t_gen->SetBranchAddress("inc_id1", &inc_id1);
+   // t_gen->SetBranchAddress("inc_id2", &inc_id2);
+
+    A0_helpers A0_helper; 
+    setup_A0_helper(&A0_helper, year);
+    
+    //float pt_cut = 26.;
+    float pt_cut = 30.;
+
+
+    int nEvents=0;
+
+    for (int i=0; i<t_gen->GetEntries(); i++) {
+        t_gen->GetEntry(i);
+    
+
+        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
+            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+        //bool pass = abs(cm.Rapidity()) < 2.4;
+        
+            evt_weight = gen_weight;
+            cm = *gen_lep_p + *gen_lep_m;
+            float m = cm.M();
+            float pt = cm.Pt();
+            float rap = abs(cm.Rapidity());
+            float gen_cost = get_cost(gen_lep_p, gen_lep_m, false);
+
+            if(pass){
+
+              if(evt_weight >0) nEvents++;
+              else  nEvents--;
+
+              h_data->Fill(m, rap, gen_cost, evt_weight);
+            }
+          }
+          printf("selected %i events \n", nEvents);
+
+    //cleanup_template(h_sym);
+    //fixup_template_sum(h_sym, h_asym);
+
+    return nEvents;
+
+}
+
