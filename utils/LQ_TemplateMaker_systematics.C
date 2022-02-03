@@ -181,8 +181,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
     h_mn->Add(h_sym, h_asym, 1., -1.);
     h_pl->Scale(0.5);
     h_mn->Scale(0.5);
-    set_frac_error(h_sym, h_pl);
-    set_frac_error(h_sym, h_mn);
+    //set_frac_error(h_sym, h_pl);
+    //set_frac_error(h_sym, h_mn);
   }
 //changed
   void print_hist(TH3 *h){
@@ -808,8 +808,8 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
     if(flag1 == FLAG_MUONS) fakes_cost_reweight(h, h_rw.mu_rw, shape_sys);
     else fakes_cost_reweight(h, h_rw.el_rw, shape_sys);
     
-    float err;
-    float integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), 1, h->GetNbinsZ(), err);
+    Double_t err;
+    Double_t integ = h->IntegralAndError(1, h->GetNbinsX(), 1, h->GetNbinsY(), 1, h->GetNbinsZ(), err);
 
 
     //printf("After Scale: \n");
@@ -820,7 +820,7 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
 
 //make templates based on generator level samples (used for assessing impact of
 //fiducial cuts on AFB
-int make_gen_temps(TTree *t_gen,  TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
+int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
         float m_LQ, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
@@ -847,7 +847,7 @@ int make_gen_temps(TTree *t_gen,  TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3
     t_gen->SetBranchAddress("mu_F_down", &mu_F_down);
     t_gen->SetBranchAddress("mu_RF_up", &mu_RF_up);
     t_gen->SetBranchAddress("mu_RF_down", &mu_RF_down);
-    t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
+    //t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
     t_gen->SetBranchAddress("inc_id1", &inc_id1);
     t_gen->SetBranchAddress("inc_id2", &inc_id2);
 
@@ -939,7 +939,7 @@ int make_gen_temps(TTree *t_gen,  TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3
 
 
 
-             //   h_raw->Fill(gen_cost, evt_weight);
+                h_raw->Fill(m, rap, gen_cost, evt_weight);
 
                 h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight); 
                 h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight); 
@@ -1021,7 +1021,7 @@ int make_gen_temps(TTree *t_gen,  TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3
               //h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
             }
             }
-        
+	}        
     }
     printf("selected %i events \n", nEvents);
 
