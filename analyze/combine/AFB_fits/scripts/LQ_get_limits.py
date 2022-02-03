@@ -55,7 +55,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limit_plots/limits_%s_083121_withobs.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limit_plots/limits_%s_020322_withobs.png'%(channel,channel))
 
 
 
@@ -68,18 +68,18 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['ue','de','um','dm']:
-
-    if channel=='ue':
+#for channel in ['ue','de','um','dm']:
+for channel in ['ce','se','cm','sm']:
+    if channel=='ce':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
-    if channel=='de':
+    if channel=='se':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
-    if channel=='um':
+    if channel=='cm':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
-    if channel=='dm':
+    if channel=='sm':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
@@ -116,15 +116,15 @@ for channel in ['ue','de','um','dm']:
         
         print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-        #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
-        #print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
 	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
     print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
 
     print("\n========= making limit plot for channel %s =========\n"%(channel))
-    print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
+    #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
     plotLimits(channel)
 
 
