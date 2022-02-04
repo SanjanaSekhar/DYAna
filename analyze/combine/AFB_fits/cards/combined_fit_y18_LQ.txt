@@ -6,159 +6,29 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm5000_merge_templates18_012821_cs.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm1000_gen_templates18_020222.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             mumu18  
+bin             ee18  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      mumu18  mumu18  mumu18  mumu18   mumu18  mumu18   mumu18 	mumu18   mumu18    mumu18 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
-process                  -2      0       -1      1        4       5        3		2        -3        -4		
-rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
+bin                      ee18    ee18    ee18    ee18      ee18 	 
+process                  alpha   fpl     fmn     LQpure_d  LQint_d	
+process                  2      3       1      -1        -2		
+rate                     -1      -1      -1      -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
-db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
-gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
+dy_xsec         lnN      1.03   1.03    1.03      -       -			
 
-
-muFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
-lumi18           lnN     1.015    1.015     1.015   1.015     1.015   1.015     -			1.015    	1.015	1.015		
-lumiXY           lnN     1.020    1.020     1.020   1.020     1.020   1.020     -			1.020    	1.020	1.020		
-lumiLS           lnN     1.002    1.002     1.002   1.002     1.002   1.002     - 		1.002    	1.002	1.002		  
-lumiDB           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
-lumiBC           lnN     1.002    1.002     1.002   1.002     1.002   1.002     -			1.002    	1.002	1.002	 
-lumiGS           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	  
+lumi18           lnN     1.015    1.015     1.015   1.015	1.015		
+lumiXY           lnN     1.020    1.020     1.020   1.020	1.020		
+lumiLS           lnN     1.002    1.002     1.002   1.002	1.002		  
+lumiDB           lnN       -        -         -       -  	  -  		  
+lumiBC           lnN     1.002    1.002     1.002   1.002	1.002	 
+lumiGS           lnN       -        -         -       -  	  -  		  
 
 lumis18 group = lumi18 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
-## prefire only for 16,17, hem only 18                                                                                
-Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
-#prefire18       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
-METJEC18         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
-METHEM18        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
-                                                                                                                                         
-BTAGUNCOR18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-BTAGLIGHT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-
-BTAGS18 group = BTAGUNCOR18 BTAGCOR BTAGLIGHT18
-                                                                                                                                           
-
-muRC18       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muIDBAR18    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muISOBAR18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muHLTBAR18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muIDEND18    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muISOEND18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muHLTEND18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-
-muIDs18 group  = muIDBAR18 muISOBAR18 muIDEND18 muISOEND18 muIDSYS muISOSYS
-muHLTs18 group = muHLTBAR18 muHLTEND18
-                                                                                                                                  
-alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
-FAC1718               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
-REFAC1718             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-
-RFscales1718 group = alphaS1718 RENORM1718 FAC1718 REFAC1718
-                                                                                                                                  
-#emu cost reweighting                                                                                                 
-emucostrw1b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-emucostrw2b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -         
-emucostrw3b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -         
-emucostrw4b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-
-emucostrws1718 group = emucostrw1b1718 emucostrw2b1718 emucostrw3b1718 emucostrw4b1718
-
-mufakesrw1b18         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw2b18         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw3b18         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw4b18         shape    -       -        -      -        -      -      1.0       -       -       -         
-
-mufakesrws18 group = mufakesrw1b18 mufakesrw2b18 mufakesrw3b18 mufakesrw4b18
-                                                                                                                                  
-                                                                                                                                          
-#pt reweighting                                                                                                                   
-ptrw1b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
-ptrw2b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw3b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw4b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-ptrw5b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-ptrw6b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
-ptrw7b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-
-ptrws1718 group = ptrw1b1718 ptrw2b1718 ptrw3b1718 ptrw4b1718 ptrw5b1718 ptrw6b1718 ptrw7b1718
-                                                                                                                                   
-#pdf unc                                                                                                                           
-pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
-pdf2                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf3                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf4                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
-pdf5                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf6                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf7                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf8                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf9                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf10                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf11                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf12                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf13                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf14                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf15                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf16                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
-pdf17                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
-pdf18                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf19                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf20                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf21                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf22                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf23                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf24                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf25                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf26                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf27                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf28                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf29                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf30                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0   
-pdf31                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf32                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf33                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
-pdf34                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf35                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf36                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf37                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf38                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf39                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf40                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf41                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf42                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf43                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf44                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf45                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf46                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
-pdf47                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
-pdf48                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf49                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf50                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf51                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf52                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf53                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf54                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-pdf55                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
-pdf56                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf57                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf58                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf59                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
-pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
-
-* autoMCStats 0 1
-
-pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60

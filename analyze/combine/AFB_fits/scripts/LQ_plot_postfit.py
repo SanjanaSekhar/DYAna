@@ -450,11 +450,11 @@ label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
 label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", kOrange)
 label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
 if options.q=="u":
-    label_color_map['LQint_u'] = ("LQint_u", kRed + 7)
-    label_color_map['LQpure_u'] = ("LQpure_u", kBlue + 7)
+    label_color_map['LQint_u'] = ("LQint_u", kGreen)
+    label_color_map['LQpure_u'] = ("LQpure_u", kBlue)
 if options.q=="d":
-    label_color_map['LQint_d'] = ("LQint_d", kRed + 7)
-    label_color_map['LQpure_d'] = ("LQpure_d", kBlue + 7)
+    label_color_map['LQint_d'] = ("LQint_d", kGreen)
+    label_color_map['LQpure_d'] = ("LQpure_d", kBlue)
 
 datastyle = "pe0x0"
 
