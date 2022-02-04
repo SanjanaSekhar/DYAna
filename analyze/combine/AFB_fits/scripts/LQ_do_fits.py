@@ -15,13 +15,17 @@ parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits f
 parser.add_option("-v", "--verbose", default = 0, type='int', help="Turn up verbosity on fits")
 parser.add_option("--noSymMCStats", default = False, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--no_LQ",  default=False, action="store_true", help="For sanity check purposes remove LQ temps")
+parser.add_option("--gen_level",  default=False, action="store_true", help="gen level fits")
 (options, args) = parser.parse_args()
 
 
 
 for y in [-1]:
-    for options.chan in ["mumu","ee"]:
+    #for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee"]:
         for options.q in ["u","d"]:
+
+            
 
             extra_params=""
 #            options.chan="mumu"
@@ -64,6 +68,8 @@ for y in [-1]:
 
             if(options.no_LQ): fit_name+="_noLQ"
 
+            if options.chan="ee" and options.gen_level : fit_name+="_gen_level"
+
             print("\n fit_name = ", fit_name)
 
 
@@ -75,20 +81,20 @@ for y in [-1]:
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
                 workspace="workspaces/%s_LQ.root" % (options.chan)
-                make_workspace(workspace, options.chan, options.q, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
+                make_workspace(workspace, options.gen_level, options.chan, options.q, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
               #  print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters A0 " %(workspace, extra_params))
-                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 --freezeParameters yLQ %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
                             % (fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
-                    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
+                    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s --gen_level %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,options.gen_level))
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit --freezeParameters yLQ %s " % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))

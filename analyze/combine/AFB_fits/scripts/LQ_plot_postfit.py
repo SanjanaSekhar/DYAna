@@ -417,6 +417,7 @@ parser.add_option("--q", "-q", type = 'string', default = "", help="q = u or d")
 parser.add_option("--chan", "-c", type = 'string', default = "", help="ee or mumu")
 parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
+parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 (options, args) = parser.parse_args()
 
 mLQ = options.mLQ
@@ -431,6 +432,10 @@ if options.q == "u":
     h_names = ["gam", "LQint_u", "LQpure_u" ,"qcd", "top", "db", "tautau", "dy"]
 elif options.q == "d":
     h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
+if options.gen_level and options.q == "u":
+    h_names = ["LQint_u", "LQpure_u", "dy"]
+if options.gen_level and options.q == "d":
+    h_names = ["LQint_d", "LQpure_d", "dy"]
 #h_ss_names = ["bk", "dy", "qcd"]
 
 
@@ -510,5 +515,5 @@ for year in years:
 for key in fracs.keys():
     fracs[key] /= (len(years)*len(dirs))
 
-key_ = "gam"
-print("Average fraction for %s  is  %.3f \n" % (key_, fracs[key_]))
+#key_ = "gam"
+#print("Average fraction for %s  is  %.3f \n" % (key_, fracs[key_]))

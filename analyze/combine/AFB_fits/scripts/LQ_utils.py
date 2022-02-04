@@ -135,13 +135,16 @@ def do_lumi(card, year):
 
         print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
 
-def make_workspace(workspace, chan, q, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = True):
+def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = True):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
 
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
-
+    if gen_level and q=="u":
+        template_card = "card_templates/LQ_combined_fit_template_genlevel_ue.txt"
+    if gen_level and q=="d":
+        template_card = "card_templates/LQ_combined_fit_template_genlevel_de.txt"
     if chan=="ee" and q=="u":
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
@@ -162,6 +165,7 @@ def make_workspace(workspace, chan, q, no_LQ = False, no_sys = False, fake_data 
    
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_LQ.txt" 
+    if gen_level: comb_card = "cards/combined_fit_genlevel_LQ.txt" 
 
     if(year > 0): years = [year % 2000]
     else: years = [16,17,18]
