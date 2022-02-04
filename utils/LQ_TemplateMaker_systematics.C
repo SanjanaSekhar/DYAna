@@ -6,7 +6,7 @@
 #include <cmath>
 #include "TempMaker.C"
 //#include "ScaleFactors.C"
-
+//#include "HistUtils.C"
 using namespace std;
 
 //define constants
@@ -823,7 +823,7 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
 int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
         float m_LQ, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
-    printf("Making LQ+DY generator level templates\n")
+    printf("Making LQ+DY generator level templates\n");
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
@@ -1035,7 +1035,7 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
 
 int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016){
 
-    printf("Making data generator level templates\n")
+    printf("Making data generator level templates\n");
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
@@ -1079,7 +1079,7 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016){
             float m = cm.M();
             float pt = cm.Pt();
             float rap = abs(cm.Rapidity());
-            float gen_cost = get_cost(gen_lep_p, gen_lep_m, false);
+            float gen_cost = get_cost(*gen_lep_p, *gen_lep_m, false);
 
             if(pass){
 

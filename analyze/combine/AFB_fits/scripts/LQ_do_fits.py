@@ -31,7 +31,7 @@ for y in [-1]:
 #            options.chan="mumu"
 #            options.q="u"
             options.no_sys=False
-            options.fake_data=True
+            options.fake_data=False
             options.no_LQ=False
             options.year = y
             '''
@@ -52,7 +52,7 @@ for y in [-1]:
         	extra_params +=" --verbose %i" % options.verbose
 
             #No analytic minimization of MC stats nuisances
-            extra_params += "--X-rtd MINIMIZER_no_analytic"
+            #extra_params += "--X-rtd MINIMIZER_no_analytic"
 
             
             fit_name = options.chan
@@ -64,11 +64,11 @@ for y in [-1]:
             if(options.fake_data): fit_name +="_fake_data"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
-            fit_name+="_"+options.q+"yLQfrozen"
+            fit_name+="_"+options.q
 
             if(options.no_LQ): fit_name+="_noLQ"
 
-            if options.chan="ee" and options.gen_level : fit_name+="_gen_level"
+            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level"
 
             print("\n fit_name = ", fit_name)
 
@@ -95,7 +95,7 @@ for y in [-1]:
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s --gen_level %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,options.gen_level))
-                    print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit --freezeParameters yLQ %s " % (workspace, extra_params)) #only to get prefit, probably a better way
+                    print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s " % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p Afb --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")

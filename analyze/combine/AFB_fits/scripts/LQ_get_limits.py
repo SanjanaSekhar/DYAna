@@ -69,7 +69,7 @@ print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
 #for channel in ['ue','de','um','dm']:
-for channel in ['ce','se','cm','sm']:
+for channel in ['se','cm','sm']:
     if channel=='ce':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
@@ -118,8 +118,10 @@ for channel in ['ce','se','cm','sm']:
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
         print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
-        print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
+        #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
 	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
+	print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
+	print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
     print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
 

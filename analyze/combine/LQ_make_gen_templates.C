@@ -21,7 +21,7 @@
 #include "TFitter.h"
 #include "TSystem.h"
 #include "../../utils/root_files.h"
-#include "../../utils/HistUtils.C"
+//#include "../../utils/HistUtils.C"
 #include "../../utils/ScaleFactors.C"
 #include "../../utils/PlotUtils.C"
 //#include "../../utils/LQ_TemplateMaker_systematics.C"
@@ -33,26 +33,29 @@
 
 void LQ_make_gen_templates(){
 
-    for(int year=2016,year<=2018;year++){
+    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         float m_LQ = 1000.;
 
         char fout_name[200];
         sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
+	string fout_n = string(fout_name, 200);
+
         char genfile_name[200];
         sprintf(genfile_name,"../analyze/output_files/DY%i_gen_level_aug4.root",year%2000);
-        TFile *f_gen = TFile::Open(genfile_name.c_str());
+        string genfile_n = string(genfile_name,200);
+	TFile *f_gen = TFile::Open(genfile_n.c_str());
 
         TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
         gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
         TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
-        TTree *t_gen_data = (TTree *) f_gen->Get("T_lhe");
+        TTree *t_gen_data = (TTree *) f_gen_data->Get("T_lhe");
 
-        TFile * fout = TFile::Open(fout_name.c_str(), "RECREATE");
+        TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
-        char dirname[40];
+        char dirname[40], title[300];
 
         string sys = "";
         printf("Starting year %i",year);
@@ -92,12 +95,12 @@ void LQ_make_gen_templates(){
         h_LQint_u->SetDirectory(0);
 
         sprintf(title, "ee%i_LQint_d", year %2000);
-        TH3F* h_LQint_d = new TH3F("h_LQint_d", "LQint_d template for gen level",
+        TH3F* h_LQint_d = new TH3F(title, "LQint_d template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_LQint_d->SetDirectory(0);
 
         sprintf(title, "ee%i_raw", year %2000);
-        TH3F* h_raw = new TH3F(title, "sym template for gen level",
+        TH3F* h_raw = new TH3F(title, "raw template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_raw->SetDirectory(0);
 
@@ -114,7 +117,7 @@ void LQ_make_gen_templates(){
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
         nEvents += make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
-        nEvents_data += make_gen_data_temps(t_gen_data, h_data, year)
+        nEvents_data += make_gen_data_temps(t_gen_data, h_data, year);
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
@@ -142,10 +145,11 @@ void LQ_make_gen_templates(){
 
         // n_y_bins -= 1;
         int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
-
-        h1_pl = new TH1F("h_pl", "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+	sprintf(title, "ee%i_fpl", year %2000);
+        h1_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_pl->SetDirectory(0);
-        h1_mn = new TH1F("h_mn", "Minus template of DY", n_1d_bins, 0, n_1d_bins);
+	sprintf(title, "ee%i_fmn", year %2000);
+        h1_mn = new TH1F(title, "Minus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mn->SetDirectory(0);
 
 
@@ -202,7 +206,7 @@ void LQ_make_gen_templates(){
 
 
         fout->Close();
-        printf("Templates written to %s \n", fout_name.c_str());
+        printf("Templates written to %s \n", fout_n.c_str());
 
     }
 }
