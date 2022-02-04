@@ -155,7 +155,7 @@ void LQ_make_gen_templates(){
 
         make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
         printf("Finished make_pl_mn\n");
-
+        /*
         float scale_ = nEvents / h1_raw->Integral();
 
         h1_raw->Scale(scale_);
@@ -170,7 +170,7 @@ void LQ_make_gen_templates(){
 
         scale_ = nEvents_data / h1_data->Integral();
         h1_data->Scale(scale_);
-
+        */
         fout->cd();
         snprintf(dirname, 10, "LQ");
         gDirectory->mkdir(dirname);

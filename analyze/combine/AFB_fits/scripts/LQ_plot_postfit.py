@@ -443,7 +443,7 @@ if options.gen_level and options.q == "d":
 
 
 label_color_map = dict()
-label_color_map['dy'] = ("DY Signal", kRed + 1)
+label_color_map['dy'] = ("DY", kRed + 1)
 label_color_map['top'] = ("t#bar{t} + tW ", kBlue)
 label_color_map['db'] = ("WW + WZ + ZZ",  kGreen +3)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
@@ -492,24 +492,39 @@ for year in years:
         color_list = []
         label_list = []
 
-        for name in name_list:
-            if(name == "dy"):
-                h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
-            else:
-                h = f_in.Get(dir_ + name)
+        if(!options.gen_level):
+            for name in name_list:
+                if(name == "dy"):
+                    h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
+                else:
+                    h = f_in.Get(dir_ + name)
+                    if(h != None):
+                        h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
                 if(h != None):
-                    h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
-            if(h != None):
-                h.Print()
-                hist_list.append(h)
-                label_list.append(label_color_map[name][0])
-                color_list.append(label_color_map[name][1])
+                    h.Print()
+                    hist_list.append(h)
+                    label_list.append(label_color_map[name][0])
+                    color_list.append(label_color_map[name][1])
 
-                if("gam" in name):
-                    this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
-                    print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
-                    fracs[name] += this_frac
+                    if("gam" in name):
+                        this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
+                        print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
+                        fracs[name] += this_frac
+        else:
+            for name in name_list:
+                if(name != "dy"):
+                    h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
+                else:
+                    h = f_in.Get(dir_ + name)
+                    if(h != None):
+                        h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
+                if(h != None):
+                    h.Print()
+                    hist_list.append(h)
+                    label_list.append(label_color_map[name][0])
+                    color_list.append(label_color_map[name][1])
 
+                   
         makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle) 
 
 for key in fracs.keys():
