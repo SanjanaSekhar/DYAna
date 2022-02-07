@@ -1065,7 +1065,13 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016){
 
 
     int nEvents=0;
+    float sum_weights = 0.;
 
+    for(int i=0; i<t_gen->GetEntries();i++){
+      t_gen->GetEntry(i);
+      sum_weights+=gen_weight;
+    }
+    printf("sum_weights = %f",sum_weights)
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
     
