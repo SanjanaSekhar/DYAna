@@ -53,6 +53,14 @@ void LQ_make_gen_templates(){
         TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
         TTree *t_gen_data = (TTree *) f_gen_data->Get("T_lhe");
 
+        //calculate the total gen_weights to scale the data temps 
+        float gen_weight, sum_weights;
+        t_gen_el->SetBranchAddress("gen_weight", &gen_weight);
+        for(int i=0; i<t_gen->GetEntries();i++){
+      t_gen->GetEntry(i);
+      sum_weights+=gen_weight;
+    }
+
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
         char dirname[40], title[300];
@@ -117,7 +125,7 @@ void LQ_make_gen_templates(){
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
         nEvents += make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
-        nEvents_data += make_gen_data_temps(t_gen_data, h_data, year);
+        nEvents_data += make_gen_data_temps(t_gen_data, h_data, year, sum_weights);
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
