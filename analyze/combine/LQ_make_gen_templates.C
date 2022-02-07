@@ -54,10 +54,10 @@ void LQ_make_gen_templates(){
         TTree *t_gen_data = (TTree *) f_gen_data->Get("T_lhe");
 
         //calculate the total gen_weights to scale the data temps 
-        float gen_weight, sum_weights;
+        float gen_weight, sum_weights=0.;
         t_gen_el->SetBranchAddress("gen_weight", &gen_weight);
-        for(int i=0; i<t_gen->GetEntries();i++){
-      t_gen->GetEntry(i);
+        for(int i=0; i<t_gen_el->GetEntries();i++){
+      t_gen_el->GetEntry(i);
       sum_weights+=gen_weight;
     }
 

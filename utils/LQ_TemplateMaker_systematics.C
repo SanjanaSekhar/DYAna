@@ -1033,7 +1033,7 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
 
 }
 
-int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_weights){
+int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_weights = 1.){
 
     printf("Making data generator level templates\n");
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
