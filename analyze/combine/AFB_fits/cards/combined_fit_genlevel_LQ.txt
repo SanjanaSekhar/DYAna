@@ -1,7 +1,7 @@
 Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
 imax 3 number of bins
 jmax 4 number of processes minus 1
-kmax 9 number of nuisance parameters
+kmax 0 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *    Y16  cards/LQm1000_gen_templates16_020222.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
 shapes *    Y17  cards/LQm1000_gen_templates17_020222.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
@@ -10,20 +10,8 @@ shapes *    Y18  cards/LQm1000_gen_templates18_020222.root LQ/ee18_$PROCESS LQ/e
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                             Y16       Y16       Y16       Y16       Y16       Y17       Y17       Y17       Y17       Y17       Y18       Y18       Y18       Y18       Y18     
-process                         LQint_d   LQpure_d  fmn       alpha     fpl       LQint_d   LQpure_d  fmn       alpha     fpl       LQint_d   LQpure_d  fmn       alpha     fpl     
-process                         -1        0         1         2         3         -1        0         1         2         3         -1        0         1         2         3       
-rate                            -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1      
+bin          Y16       Y16       Y16       Y16       Y16       Y17       Y17       Y17       Y17       Y17       Y18       Y18       Y18       Y18       Y18     
+process      LQint_d   LQpure_d  fmn       alpha     fpl       LQint_d   LQpure_d  fmn       alpha     fpl       LQint_d   LQpure_d  fmn       alpha     fpl     
+process      -1        0         1         2         3         -1        0         1         2         3         -1        0         1         2         3       
+rate         -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
-dy_xsec                 lnN     -         -         1.03      1.03      1.03      -         -         1.03      1.03      1.03      -         -         1.03      1.03      1.03    
-lumi16                  lnN     1.022     1.022     1.022     1.022     1.022     -         -         -         -         -         -         -         -         -         -       
-lumi17                  lnN     -         -         -         -         -         1.02      1.02      1.02      1.02      1.02      -         -         -         -         -       
-lumi18                  lnN     -         -         -         -         -         -         -         -         -         -         1.015     1.015     1.015     1.015     1.015   
-lumiBC                  lnN     -         -         -         -         -         1.003     1.003     1.003     1.003     1.003     1.002     1.002     1.002     1.002     1.002   
-lumiDB                  lnN     1.004     1.004     1.004     1.004     1.004     1.004     1.004     1.004     1.004     1.004     -         -         -         -         -       
-lumiGS                  lnN     1.004     1.004     1.004     1.004     1.004     1.001     1.001     1.001     1.001     1.001     -         -         -         -         -       
-lumiLS                  lnN     -         -         -         -         -         1.003     1.003     1.003     1.003     1.003     1.002     1.002     1.002     1.002     1.002   
-lumiXY                  lnN     1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.02      1.02      1.02      1.02      1.02    
-lumis18 group = lumiDB lumiBC lumi18 lumiLS lumiXY lumiGS
-lumis16 group = lumiDB lumiBC lumi16 lumiLS lumiXY lumiGS
-lumis17 group = lumiDB lumiBC lumi17 lumiLS lumiXY lumiGS

@@ -492,7 +492,7 @@ for year in years:
         color_list = []
         label_list = []
 
-        if(!options.gen_level):
+        if not options.gen_level:
             for name in name_list:
                 if(name == "dy"):
                     h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))

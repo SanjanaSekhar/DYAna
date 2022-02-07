@@ -17,18 +17,18 @@ process                  alpha   fpl     fmn     LQpure_d  LQint_d
 process                  2      3       1      -1        -2		
 rate                     -1      -1      -1      -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN      1.03   1.03    1.03      -       -			
+#dy_xsec         lnN      1.03   1.03    1.03      -       -			
 
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
-lumi18           lnN     1.015    1.015     1.015   1.015	1.015		
-lumiXY           lnN     1.020    1.020     1.020   1.020	1.020		
-lumiLS           lnN     1.002    1.002     1.002   1.002	1.002		  
-lumiDB           lnN       -        -         -       -  	  -  		  
-lumiBC           lnN     1.002    1.002     1.002   1.002	1.002	 
-lumiGS           lnN       -        -         -       -  	  -  		  
+#lumi18           lnN     1.015    1.015     1.015   1.015	1.015		
+#lumiXY           lnN     1.020    1.020     1.020   1.020	1.020		
+#lumiLS           lnN     1.002    1.002     1.002   1.002	1.002		  
+#lumiDB           lnN       -        -         -       -  	  -  		  
+#lumiBC           lnN     1.002    1.002     1.002   1.002	1.002	 
+#lumiGS           lnN       -        -         -       -  	  -  		  
 
-lumis18 group = lumi18 lumiXY lumiLS lumiDB lumiBC lumiGS      
+#lumis18 group = lumi18 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
