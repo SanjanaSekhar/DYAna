@@ -882,15 +882,17 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
         t_gen->GetEntry(i);
       //  if(sys_label.find("ptcutUp") != string::npos) pt_cut = 38.;
       //  if(sys_label.find("ptcutdown") != string::npos) pt_cut = 26.;
-
-        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
-            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
-        //bool pass = abs(cm.Rapidity()) < 2.4;
+            
         
             evt_weight = gen_weight;
             cm = *gen_lep_p + *gen_lep_m;
             float pt = cm.Pt();
             float rap = abs(cm.Rapidity());
+
+            bool pass = m > lq_m_bins[0] && abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+
+          //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+        //bool pass = abs(cm.Rapidity()) < 2.4;
             /*
             if(sys_label == string("RENORMUp")) evt_weight *= mu_R_up;
             else if(sys_label == string ("RENORMDown")) evt_weight *= mu_R_down;
@@ -1076,9 +1078,6 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
         t_gen->GetEntry(i);
     
 
-        bool pass = abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 
-            && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
-        //bool pass = abs(cm.Rapidity()) < 2.4;
         
             evt_weight = gen_weight;
             cm = *gen_lep_p + *gen_lep_m;
@@ -1086,6 +1085,11 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
             float pt = cm.Pt();
             float rap = abs(cm.Rapidity());
             float gen_cost = get_cost(*gen_lep_p, *gen_lep_m, false);
+
+            bool pass = m > lq_m_bins[0] && abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+         //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
+        //bool pass = abs(cm.Rapidity()) < 2.4;
+        
 
             if(pass){
 
