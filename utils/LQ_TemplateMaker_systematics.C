@@ -246,7 +246,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           return nEvents;
         }
 
-float get_LQ_denom(float gen_cost,float s){
+float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
    float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
             //pure Z0 term
           float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
@@ -390,7 +390,7 @@ float get_LQ_denom(float gen_cost,float s){
           }
 
          
-            float LQ_denom = get_LQ_denom(gen_cost,s);
+            float LQ_denom = get_LQ_denom(gen_cost,s,Q_q,caq,cvq);
 
               //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
             float reweight_LQpure_norm = (1/(128*M_PI*s));
@@ -971,7 +971,7 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
           }
 
           
-            float LQ_denom = get_LQ_denom(gen_cost,s);
+            float LQ_denom = get_LQ_denom(gen_cost,s,Q_q,caq,cvq);
 
 
               //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
