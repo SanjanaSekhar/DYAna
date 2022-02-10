@@ -208,11 +208,36 @@ void LQ_make_gen_templates(){
         h1_pl->Scale(norm+afb);
         h1_mn->Scale(norm-afb);
         TH1F *h1_total = (TH1F *) h1_alpha->Clone("clone");
-        h1_total->Add(h1_pl);
+        h1_total->SetDirectory(0);
+	h1_total->Add(h1_pl);
         h1_total->Add(h1_mn);
         h1_total->Add(h1_LQpure_u);
         h1_total->Add(h1_LQint_u);
         h1_total->Write();
+
+
+ 	TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
+           h1_data->SetLineColor(kBlue);
+	   h1_total->SetLineColor(kRed);
+	   h1_data->SetLineWidth(2);
+	   h1_total->SetLineWidth(2); 
+           h1_data->Draw("hist");
+           h1_total->Draw("hist same ");
+          // h1_mumu_pl->Draw("hist");
+          //           //  h1_mumu_alpha->Draw("hist same");
+          //                       //h1_mumu_mn->Draw("hist same");
+          //                                   
+          //
+          //                                               TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
+          //                                                           leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
+          //                                                                       leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
+          //                                                                                  //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
+          //                                                                                             //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
+          //                                                                                                         //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
+          //                                                                                                                     leg1->Draw();
+          sprintf(title, "data_vs_total_%i.png", year %2000);
+          c_mumu1->Print(title);
+          delete c_mumu1;
 
             //h_uncut->Reset();
             //h_raw->Reset();
