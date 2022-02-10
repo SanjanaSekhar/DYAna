@@ -189,7 +189,7 @@ void LQ_make_gen_templates(){
         gDirectory->cd(dirname);
 
             //h_uncut->Write();
-            //h_raw->Write();
+        h1_data->Scale(.5);
         h1_data->Write();
         h1_pl->Write();
         h1_mn->Write();
@@ -235,7 +235,7 @@ void LQ_make_gen_templates(){
           //                                                                                             //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
           //                                                                                                         //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
           //                                                                                                                     leg1->Draw();
-          sprintf(title, "data_vs_total_%i.png", year %2000);
+          sprintf(title, "data_vs_total_datascaled0.5_%i.png", year %2000);
           c_mumu1->Print(title);
           delete c_mumu1;
 
