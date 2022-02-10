@@ -179,6 +179,10 @@ void LQ_make_gen_templates(){
         scale_ = nEvents_data / h1_data->Integral();
         h1_data->Scale(scale_);
         */
+
+        
+        
+
         fout->cd();
         snprintf(dirname, 10, "LQ");
         gDirectory->mkdir(dirname);
@@ -197,6 +201,19 @@ void LQ_make_gen_templates(){
         h1_LQint_u->Write();
         h1_LQint_d->Write();
 
+        float a0 = 0.05, afb = 0.62;
+        float alph = 2.*a0/(2.- a0);
+        float norm = 3./(4.*2.+alph);
+        h1_alpha->Scale(alph*norm);
+        h1_pl->Scale(norm+afb);
+        h1_mn->Scale(norm-afb);
+        TH1F *h1_total = (TH1F *) h1_alpha->Clone("clone");
+        h1_total->Add(h1_pl);
+        h1_total->Add(h1_mn);
+        h1_total->Add(h1_LQpure_u);
+        h1_total->Add(h1_LQint_u);
+        h1_total->Write();
+
             //h_uncut->Reset();
             //h_raw->Reset();
         h1_data->Reset();
@@ -209,7 +226,7 @@ void LQ_make_gen_templates(){
         h1_LQpure_d->Reset();
         h1_LQint_u->Reset();
         h1_LQint_d->Reset();
-
+        h1_total->Reset();
         
 
 
