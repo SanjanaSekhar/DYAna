@@ -25,7 +25,7 @@ tautau_c = 2066;
 gamgam_c = 2077;
 
 DY_co = ROOT.TColor(DY_c, 213./255.,94./255.,0., "DY_co", 1);
-ttbar_co = ROOT.TColor(ttbar_c,  0., 41./225., 186./255., "ttbar_co", 1);
+ttbar_co = ROOT.TColor(ttbar_c,  123./255., 202/255., 255./255., "ttbar_co", 1);
 wt_co = ROOT.TColor(wt_c,  86./255., 180./255., 233./255., "wt_co", 1);
 diboson_co = ROOT.TColor(diboson_c,  0., 158./255., 115./255., "diboson_co", 1);
 qcd_co = ROOT.TColor(qcd_c,  243./255., 168./255., 87./255., "qcd_co", 1);
@@ -104,20 +104,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
         # If this is a TH2, just draw the lego
         if hist.ClassName().find('TH2') != -1:
-            if logy == True:
-                gPad.SetLogy()
-            gPad.SetLeftMargin(0.2)
-            hist.GetXaxis().SetTitle(xtitle)
-            hist.GetYaxis().SetTitle(ytitle)
-            hist.GetXaxis().SetTitleOffset(1.5)
-            hist.GetYaxis().SetTitleOffset(1.0)
-            hist.GetZaxis().SetTitleOffset(1.8)
-            if len(titles) > 0:
-                hist.SetTitle(titles[hist_index])
-
-            hist.Draw('lego')
-            if len(bkglist) > 0:
-                print 'ERROR: It seems you are trying to plot backgrounds with data on a 2D plot. This is not supported since there is no good way to view this type of distribution.'
+            print 'ERROR: It seems you are trying to plot backgrounds with data on a 2D plot. This is not supported since there is no good way to view this type of distribution.'
         
         # Otherwise it's a TH1 hopefully
         else:
@@ -181,14 +168,14 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 # Set margins and make these two pads primitives of the division, thisPad
                 mains[hist_index].SetBottomMargin(0.04)
-                mains[hist_index].SetLeftMargin(0.17)
+                mains[hist_index].SetLeftMargin(0.2)
                 mains[hist_index].SetRightMargin(0.05)
                 mains[hist_index].SetTopMargin(0.08)
 
-                subs[hist_index].SetLeftMargin(0.17)
+                subs[hist_index].SetLeftMargin(0.2)
                 subs[hist_index].SetRightMargin(0.05)
                 subs[hist_index].SetTopMargin(0.01)
-                subs[hist_index].SetBottomMargin(0.45)
+                subs[hist_index].SetBottomMargin(0.5)
                 mains[hist_index].SetFillColorAlpha(0,1)
                 subs[hist_index].SetFillColorAlpha(0,1)
                 mains[hist_index].SetLineColorAlpha(0,1)
@@ -239,8 +226,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 
                 mLS = 0.07
-                mTS = 0.09
+                mTS = 0.1
                 TOffset = 1.
+                if(mbin > 5):
+                    TOffset = 0.9
                 # Now draw the main pad
                 data_leg_title = hist.GetTitle()
                 if len(titles) > 0:
@@ -252,6 +241,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 hist.GetYaxis().SetTitleSize(mTS)
                 hist.GetYaxis().SetNdivisions(505)
                 hist.GetXaxis().SetLabelOffset(999)
+                hist.SetLineWidth(2)
+
+
                 if logy == True:
                     hist.SetMinimum(1e-3)
 
@@ -272,6 +264,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
                     signals[hist_index].Draw('hist same')
 
+                gStyle.SetHatchesLineWidth(2)
                 totlist[hist_index].SetLineColor(kWhite)
                 totlist[hist_index].SetFillColor(kBlack)
                 totlist[hist_index].SetFillStyle(3354)
@@ -289,14 +282,16 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 if(mbin <=5):
                     line_vals = [8, 16, 22]
                     text_center_bins = [4, 12, 19, 25]
-                    text_strs = ["|y| #epsilon [0, 0.6]", "|y| #epsilon [0.6, 1.0]", "|y| #epsilon [1.0, 1.5]", "|y| #epsilon [1.5, 2.4]"]
+                    text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "   #splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 1.5]}}", 
+                            "#splitline{   #bf{|y| #epsilon}}{#bf{[1.5, 2.4]}}"]
                 else:
                     line_vals = [8, 16]
                     text_center_bins = [4, 12, 19]
-                    text_strs = ["|y| #epsilon [0, 0.6]", "|y| #epsilon [0.6, 1.0]", "|y| #epsilon [1.0, 2.4]"]
+                    text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
 
 
                 lstyle = 7
+                lwidth = 1
                 line_eps = 0.05
 
                 #line_max = gPad.GetY2()
@@ -309,7 +304,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     l = TLine(line_x, 0, line_x, line_max)
                     l.SetLineColor(ROOT.kBlack)
                     l.SetLineStyle(lstyle)
-                    l.SetLineWidth(2)
+                    l.SetLineWidth(lwidth)
                     l.Draw()
                     lines.append(l)
 
@@ -321,8 +316,11 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 latext.SetTextColor(kBlack);
                 latext.SetTextAlign(22); #center
                 latext.SetTextFont(42);
-                latext.SetTextSize(0.04);    
-                text_y = 0.4
+                if(mbin <= 5):
+                    latext.SetTextSize(0.050);    
+                else:
+                    latext.SetTextSize(0.06);    
+                text_y = 0.43
 
                 l_margin = gPad.GetLeftMargin();
                 r_margin = gPad.GetRightMargin();
@@ -343,6 +341,15 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 legends[hist_index].AddEntry(totlist[hist_index], "Sys. unc.", "f")
 
 
+                ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
+                chi2 = 0.
+                #for i in range(1, pull.GetNbinsX()+1):
+                    #chi2 += pull.GetBinContent(i)**2;
+                #print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pull.GetNbinsX()))
+
+                legends[hist_index].AddEntry(ratio_sys_unc, "Total fit. unc.", "f")
+
+
 
                 legends[hist_index].SetBorderSize(0)
                 legends[hist_index].Draw()
@@ -351,11 +358,6 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                 # Draw the pull
                 subs[hist_index].cd()
                 # Build the pull
-                ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
-                chi2 = 0.
-                #for i in range(1, pull.GetNbinsX()+1):
-                    #chi2 += pull.GetBinContent(i)**2;
-                #print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pull.GetNbinsX()))
 
                 LS = mLS * 0.7/0.3
                 #title size given as fraction of pad width, scale up to have same size as main pad
@@ -398,11 +400,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
                 #ratio_sys_unc.SetFillColor(ROOT.kBlack)
                 #ratio_sys_unc.SetFillStyle(3015)
+                ratio_sys_unc.SetLineColor(ROOT.kGray)
                 ratio_sys_unc.SetFillColor(ROOT.kGray)
                 #ratio_sys_unc.SetFillStyle(3015)
 
 
                 ratio.SetLineStyle(1)
+                ratio.SetLineWidth(2)
                 ratio_sys_unc.Draw("A3 same")
                 ratio.Draw('p0e0Z same')
                 
@@ -415,7 +419,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                     l = TLine(line_x, ratio_range[0], line_x, ratio_range[1])
                     l.SetLineColor(ROOT.kBlack)
                     l.SetLineStyle(lstyle)
-                    l.SetLineWidth(2)
+                    l.SetLineWidth(lwidth)
                     l.Draw()
                     lines.append(l)
 
@@ -649,7 +653,7 @@ if (__name__ == "__main__"):
                         fracs[name] += this_frac
 
             makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, 
-                    titles = [title], xtitle = "Unrolled cos#theta_{r} bin", year = year, datastyle=datastyle, mbin = options.mbin ) 
+                    titles = [title], xtitle = "Template bin", year = year, datastyle=datastyle, mbin = options.mbin ) 
 
     for key in fracs.keys():
         fracs[key] /= (len(years)*len(dirs))

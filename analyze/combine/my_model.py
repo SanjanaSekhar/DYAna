@@ -1,5 +1,51 @@
 from HiggsAnalysis.CombinedLimit.PhysicsModel import *
 
+#simulanious measurement of separate muon and electron AFB's  (allows common systematics)
+class DY_AFB_sep(PhysicsModel):
+    def __init__(self):
+        return
+
+    def doParametersOfInterest(self):
+        """Create POI and other parameters, and define the POI set."""
+
+        self.modelBuilder.doVar("eAfb[0.6,-0.75,0.75]");
+        self.modelBuilder.doVar("eA0[0.05, -1.0, 1.0]");
+        self.modelBuilder.doVar("mAfb[0.6,-0.75,0.75]");
+        self.modelBuilder.doVar("mA0[0.05, -1.0, 1.0]");
+        self.modelBuilder.doSet("POI","eAfb,mAfb")
+
+      
+        self.modelBuilder.factory_('expr::eAlph("2.0*@0/(2.0-@0)",eA0)')
+        self.modelBuilder.factory_('expr::eNorm("3.0/4.0/(2.0+@0)",eAlph)')
+        self.modelBuilder.factory_('expr::eRAlph("@0*@1",eAlph,eNorm)')
+        self.modelBuilder.factory_('expr::eRpl("(@0+@1)",eNorm,eAfb)')
+        self.modelBuilder.factory_('expr::eRmn("(@0-@1)",eNorm,eAfb)')
+
+        self.modelBuilder.factory_('expr::mAlph("2.0*@0/(2.0-@0)",mA0)')
+        self.modelBuilder.factory_('expr::mNorm("3.0/4.0/(2.0+@0)",mAlph)')
+        self.modelBuilder.factory_('expr::mRAlph("@0*@1",mAlph,mNorm)')
+        self.modelBuilder.factory_('expr::mRpl("(@0+@1)",mNorm,mAfb)')
+        self.modelBuilder.factory_('expr::mRmn("(@0-@1)",mNorm,mAfb)')
+
+
+
+ 
+ 
+ 
+ 
+    def getYieldScale(self,bin,process):
+        if 'alpha' in process and 'ee' in bin: return "eRAlph"
+        if 'alpha' in process and 'mumu' in bin: return "mRAlph"
+        elif 'pl' in process and 'ee' in bin: return "eRpl"
+        elif 'pl' in process and 'mumu' in bin: return "mRpl"
+        elif 'mn' in process and 'ee' in bin: return "eRmn"
+        elif 'mn' in process and 'mumu' in bin: return "mRmn"
+
+        else:
+            #print("Didnt find process %s bin %s in specifications \n" % (process, bin))
+            return 1
+
+
 
 #this version measures the ratio between electron and muon AFBs
 class DY_AFB_ratio(PhysicsModel):
@@ -296,3 +342,4 @@ dy_AFB_diff = DY_AFB_diff()
 dy_AFB_ratio = DY_AFB_ratio() 
 dy_AFB_LO = DY_AFB_LO() 
 dy_AFB_dilu = DY_AFB_dilu() 
+dy_AFB_sep = DY_AFB_sep()

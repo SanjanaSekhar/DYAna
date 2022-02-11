@@ -148,7 +148,7 @@ def remove_line(fname, phrase):
 
 
 def make_all_mbins_workspace(workspace,  year = -1, symMCStats = True, 
-        fullCorr = False, diff = False, ratio = False ):
+        fullCorr = False, diff = False, ratio = False, sep = False ):
 
     
     print("Making workspace %s all mbins" % (workspace))
@@ -174,7 +174,7 @@ def make_all_mbins_workspace(workspace,  year = -1, symMCStats = True,
 
     sigma = -1.0
 
-    mbins = [i for i in range(4,8)]
+    mbins = [i for i in range(1,8)]
 
     for mbin in mbins:
         for yr in years:
@@ -209,10 +209,11 @@ def make_all_mbins_workspace(workspace,  year = -1, symMCStats = True,
     model_name = 'dy_AFB'
     if(diff): model_name = 'dy_AFB_diff'
     elif(ratio): model_name = 'dy_AFB_ratio'
+    elif(sep): model_name = 'dy_AFB_sep'
     print_and_do("text2workspace.py %s -P Analysis.DYAna.my_model:%s -o %s --channel-masks %s" % (comb_card,  model_name, workspace, extra_arg))
 
 def make_workspace(workspace, mbin, fake_data = False, year = -1, symMCStats = True, sigma2 = -1., 
-        fullCorr = False, diff = False, ratio = False ):
+        fullCorr = False, diff = False, sep = False, ratio = False ):
 
     
     print("Making workspace %s mbin %i" % (workspace, mbin))
@@ -264,6 +265,8 @@ def make_workspace(workspace, mbin, fake_data = False, year = -1, symMCStats = T
     model_name = 'dy_AFB'
     if(diff): model_name = 'dy_AFB_diff'
     elif(ratio): model_name = 'dy_AFB_ratio'
+    elif(sep): model_name = 'dy_AFB_sep'
+
     print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:%s -o %s --channel-masks %s" % (comb_card, mbin, model_name, workspace, extra_arg))
 
 def make_gen_level_workspace(workspace, mbin,  year = -1):
