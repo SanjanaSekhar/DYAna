@@ -168,7 +168,9 @@ void make_limit_plot(){
 
     TCanvas *c1 = new TCanvas("c1", "", 1200, 800);
     two_sig->SetTitle("Z' Limits");
-    two_sig->GetYaxis()->SetTitle("#kappa_{L}(g_{Z'}/g_{Z})");
+    two_sig->GetYaxis()->SetTitle("#kappa_{L}");
+    two_sig->GetYaxis()->SetTitleSize(0.1);
+    
     two_sig->GetYaxis()->CenterTitle();
     two_sig->GetYaxis()->SetTitleOffset(1.0);
     two_sig->GetXaxis()->SetTitle("Z' mass (GeV)");

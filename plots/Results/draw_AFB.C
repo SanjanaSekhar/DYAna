@@ -48,6 +48,37 @@ void draw_AFB(){
     printf("Combined chisq is %.2f, p-value is %.3f \n", chi2_comb, ROOT::Math::chisquared_cdf_c(chi2_comb, n_m_bins));
     printf("sep chisq is %.2f, p-value is %.3f \n", chi2_sep, ROOT::Math::chisquared_cdf_c(chi2_comb, 12));
 
+    TGraphErrors *ratio_unc = new TGraphErrors(n_m_bins+2);
+
+    for(int i= 0; i<= n_m_bins+1; i++){
+        float x,y,ex,ey,content;
+        int idx = i - 1;
+        float eps = 0.001;
+
+        if(i ==0){
+            idx = 0;
+            x = m[idx] - eps;
+            ex = 0;
+        }
+        else if(i==n_m_bins+1){
+            idx = i-2;
+            x = m[idx] + eps;
+            ex = 0;
+        }
+        else{
+            x = m[idx];
+            ex = 0;
+        }
+
+        y = 1.;
+        ey = y_amc_errs[idx] / y_amc[idx];
+
+        ratio_unc->SetPoint(i, x,y);
+        ratio_unc->SetPointError(i, ex,ey);
+
+    }
+
+
 
 
     TGraph *g_sm_pow = new TGraphErrors(n_m_ext_bins, m_ext, y_powheg);
@@ -59,48 +90,69 @@ void draw_AFB(){
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, y_elel, m_err, y_elel_errs);
     TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
 
+
     int fill_col = kGreen -10;
     g_sm_amc->SetMarkerColor(diboson_c);
     g_sm_amc_unc->SetFillColor(fill_col);
     g_sm_amc_unc->SetLineColor(fill_col);
     g_sm_amc->SetLineColor(diboson_c);
     g_sm_amc->SetFillColor(fill_col);
-    g_sm_amc->SetLineWidth(4);
+    g_sm_amc->SetLineWidth(3);
+
+    ratio_unc->SetFillColor(fill_col);
 
     g_sm_pow->SetMarkerColor(kBlue);
     g_sm_pow->SetLineColor(kBlue);
-    g_sm_pow->SetLineWidth(4);
+    g_sm_pow->SetLineWidth(2);
 
 
     g_comb->SetMarkerColor(kBlack);
-    g_elel->SetMarkerColor(ttbar_c);
+    g_ratio->SetMarkerColor(kBlack);
+
+    g_elel->SetMarkerColor(navy_c);
     g_mumu->SetMarkerColor(DY_c);
     
     g_comb->SetLineColor(kBlack);
-    g_elel->SetLineColor(ttbar_c);
+    g_ratio->SetLineColor(kBlack);
+    g_elel->SetLineColor(navy_c);
     g_mumu->SetLineColor(DY_c);
 
     g_comb->SetMarkerStyle(kFullSquare);
+    g_ratio->SetMarkerStyle(kFullSquare);
     g_mumu->SetMarkerStyle(kOpenTriangleUp);
     g_elel->SetMarkerStyle(kOpenTriangleUp);
 
+
+    g_comb->SetMarkerSize(1.5);
+    g_ratio->SetMarkerSize(1.3);
+    g_mumu->SetMarkerSize(1.5);
+    g_elel->SetMarkerSize(1.5);
+
     g_comb->SetLineWidth(2);
+    g_ratio->SetLineWidth(2);
+    g_mumu->SetLineWidth(2);
+    g_elel->SetLineWidth(2);
+
+    g_comb->SetLineWidth(2);
+    g_ratio->SetLineWidth(2);
 
 
     float yTOffset = 0.6;
     float LS = 0.07;
 
     float TS = 0.08;
-    float yTS = 0.12;
-    float rTS = 0.08 * 0.7/0.3;
+    float yTS = 0.11;
+    float rTS = 0.09 * 0.7/0.3;
     float ryTS = 0.07 * 0.7/0.3;
-    float rLS = LS * 0.7/0.3;
+    float rLS = 0.06 * 0.7/0.3;
     float rTOffset = 1. * 0.3 / 0.7 - 0.05;
+
+    float pad2_height = 0.35;
 
 
 
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
-    TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
+    TPad *pad1 = new TPad("pad1", "pad1", 0.,pad2_height,0.98,1.);
     pad1->SetTopMargin(0.07);
     pad1->SetBottomMargin(0.010);
     pad1->SetRightMargin(0.042);
@@ -160,17 +212,29 @@ void draw_AFB(){
     leg1->Draw();
 
     c_m->cd();
-    TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
+    TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98, pad2_height);
     pad2->SetTopMargin(0.08);
     pad2->SetBottomMargin(0.5);
     pad2->SetRightMargin(0.04);
-    pad2->SetGridy();
+    //pad2->SetGridy();
     pad2->Draw();
     pad2->cd();
+
     g_ratio->Draw("APE");
+    ratio_unc->Draw("3 same");
+    ratio_unc->Print();
+    float line_start = 100.;
+    float line_stop = 1400.;
+    TLine *l1 = new TLine(line_start,1,line_stop,1);
+    l1->SetLineStyle(7);
+    l1->SetLineWidth(2);
+    l1->Draw();
+    
+
+
     g_ratio->GetYaxis()->SetRangeUser(0.8, 1.20);
-    g_ratio->GetXaxis()->SetLimits(100., 1400.);
-    g_ratio->Draw("APE");
+    g_ratio->GetXaxis()->SetLimits(line_start, line_stop);
+    g_ratio->Draw("PE same");
 
 
     g_ratio->GetYaxis()->SetTitle("Comb./SM");
@@ -181,7 +245,7 @@ void draw_AFB(){
     // X axis g_ratio plot settings
     g_ratio->GetXaxis()->SetTitle("m (GeV)");
     g_ratio->GetXaxis()->SetTitleSize(rTS);
-    g_ratio->GetXaxis()->SetTitleOffset(1.);
+    g_ratio->GetXaxis()->SetTitleOffset(0.8);
     g_ratio->GetXaxis()->SetLabelSize(rLS);
     g_ratio->GetXaxis()->SetTickLength(0.04);
     int iPeriod = -1; 

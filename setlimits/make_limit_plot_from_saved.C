@@ -7,8 +7,9 @@ void make_limit_plot_from_saved(){
     bool inc_meas_limit = true;
     bool smooth_exp_bands = true;
     float smooth_const = 2.;
-    char *fout = "../plots/PAS_plots/limit_obs.pdf";
-    bool prelim = true;
+    //char *fout = "../plots/PAS_plots/limit_obs.pdf";
+    char *fout = "../plots/Paper_plots/limit_obs.pdf";
+    bool prelim = false;
     TFile *f_in = TFile::Open("limit_obs.root");
 
     setTDRStyle();
@@ -50,7 +51,11 @@ void make_limit_plot_from_saved(){
 
     one_sig->Print();
 
-    TLine *kl_one = new TLine(1400, 1, 4700, 1);
+    float xlow = 1400;
+    float xhigh = 4600;
+    two_sig->GetXaxis()->SetRangeUser(xlow, xhigh);
+
+    TLine *kl_one = new TLine(xlow + 50, 1, xhigh - 50, 1);
     kl_one->SetLineStyle(9);
     kl_one->SetLineWidth(2);
     kl_one->SetLineColor(kBlue);
@@ -61,6 +66,14 @@ void make_limit_plot_from_saved(){
     one_sig->SetFillColor(kGreen+1);
     two_sig->SetFillColor(kOrange);
 
+    one_sig->SetLineColor(1);
+    one_sig->SetLineStyle(2);
+    one_sig->SetLineWidth(4);
+
+    two_sig->SetLineColor(1);
+    two_sig->SetLineStyle(2);
+    two_sig->SetLineWidth(4);
+
     //exp->Print();
     //one_sig->Print();
     //two_sig->Print();
@@ -69,28 +82,34 @@ void make_limit_plot_from_saved(){
     exp->SetLineColor(1);
     exp->SetLineStyle(2);
     exp->SetLineWidth(4);
-    auto legbb = new TLegend(0.36,0.62,0.70,0.9);
+    auto legbb = new TLegend(0.163,0.56,0.52,0.83);
 	legbb->SetFillStyle(0);
 	legbb->SetFillColor(0);    
 	legbb->SetBorderSize(0);  
-	legbb->SetTextSize(0.040);
+	legbb->SetTextSize(0.055);
 	legbb->SetTextFont(42);
-	legbb->AddEntry(exp,"Expected","l");
-	legbb->AddEntry(one_sig,"#pm 1 std. deviation","f");
-	legbb->AddEntry(two_sig,"#pm 2 std. deviation","f");
+	//legbb->AddEntry(exp,"Expected","l");
+	legbb->AddEntry(one_sig,"Expected #pm 1 std. deviation","fl");
+	legbb->AddEntry(two_sig,"Expected #pm 2 std. deviation","fl");
     legbb->AddEntry(meas,"Observed","l");
     legbb->AddEntry(kl_one,"#kappa_{L} = 1","l");
 
 
 
     TCanvas *c1 = new TCanvas("c1", "", 1200, 800);
+    c1->SetLeftMargin(0.135);
     c1->SetBottomMargin(0.15);
     two_sig->SetTitle("Z' Limits");
     two_sig->GetYaxis()->SetTitle("#kappa_{L}");
+    two_sig->GetYaxis()->SetTitleSize(0.12);
     two_sig->GetYaxis()->CenterTitle();
-    two_sig->GetYaxis()->SetTitleOffset(1.0);
+    two_sig->GetYaxis()->SetTitleOffset(0.5);
+    two_sig->GetXaxis()->SetTitleSize(0.08);
     two_sig->GetXaxis()->SetTitle("Z' mass (GeV)");
-    two_sig->GetXaxis()->SetTitleOffset(1.1);
+    two_sig->GetXaxis()->SetTitleOffset(0.8);
+
+
+
 
     two_sig->Draw("AL3SAME");
     one_sig->Draw("3SAME");
