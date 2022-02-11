@@ -44,11 +44,14 @@ void draw_A0(){
 
 
     TGraph *g_sm_pow = new TGraphErrors(n_m_bins, m, A0_powheg);
-    TGraph *g_sm_amc = new TGraphErrors(n_m_bins, m, A0_amc);
-    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_bins, m, A0_amc, nullptr, A0_amc_errs);
+
+    TGraph *g_sm_amc = new TGraphErrors(n_m_ext_bins, m_ext, A0_amc);
+    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_ext_bins, m_ext, A0_amc, nullptr, A0_amc_errs);
     TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, A0_comb, m_err, A0_comb_errs);
     TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, A0_mumu, m_err, A0_mumu_errs);
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, A0_elel, m_err, A0_elel_errs);
+
+    g_sm_amc->Print();
 
 
 

@@ -273,13 +273,14 @@ void draw_cmp_from_saved(){
     float y_size = 0.4;
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    data_m->SetLineWidth(2);
     leg1->SetNColumns(2);
     leg1->SetHeader("e#mu control region");
     //different data error bars
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
 
+    data_m->SetLineWidth(2);
     leg1->AddEntry(data_m, "Data", "lpe");
+    data_m->SetLineWidth(2);
     leg2->AddEntry(data_m, "Data", "pe");
 
     //leg1->AddEntry(dy_m, "DY #rightarrow #tau#tau", "f");
@@ -364,7 +365,7 @@ void draw_cmp_from_saved(){
     leg2->SetY1(y_start_c);
     leg2->SetY2(y_start_c+y_size);
 
-    hmax = 60000;
+    hmax = 50000;
     /*
     if(year == 2016)
         hmax *= 0.625;
@@ -375,7 +376,7 @@ void draw_cmp_from_saved(){
 
     logy = false;
     sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
-    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost,  cost_stack, leg2, "cost", "cos(#theta_{r})", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
+    std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost,  cost_stack, leg2, "cost", "cos #theta_{R}", y_ax_label, plot_label, hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
     sprintf(plt_file, "%sEMu%s_cost_cmp.pdf", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
