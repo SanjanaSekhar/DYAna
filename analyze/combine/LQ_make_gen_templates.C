@@ -197,19 +197,23 @@ void LQ_make_gen_templates(){
         h1_LQint_u->Write();
         h1_LQint_d->Write();
 
+         fout->Close();
+
         float a0 = 0.05, afb = 0.62;
-        float alph = 2.*a0/(2.- a0);
-        float norm = 3./(4.*(2.+alph));
-        h1_alpha->Scale(alph*norm);
-        h1_pl->Scale(norm+afb);
-        h1_mn->Scale(norm-afb);
+        float alph = 2.*a0/(2.- a0);//alph=2/39
+        float norm = 3./(4.*(2.+alph));//norm=0.365625
         TH1F *h1_total = (TH1F *) h1_alpha->Clone("h1_total");
-        h1_total->SetDirectory(0);
-	h1_total->Add(h1_pl);
+         h1_total->SetDirectory(0);
+        h1_total->Scale(alph*norm);//0.01875
+        h1_pl->Scale(norm+afb);//0.965625
+        h1_mn->Scale(norm-afb);//-.234375
+       
+       
+	   h1_total->Add(h1_pl);
         h1_total->Add(h1_mn);
         h1_total->Add(h1_LQpure_u);
         h1_total->Add(h1_LQint_u);
-        h1_total->Write();
+       // h1_total->Write();
 
 
  	TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
@@ -240,7 +244,7 @@ void LQ_make_gen_templates(){
         
 
 
-        fout->Close();
+       
         printf("Templates written to %s \n", fout_n.c_str());
 
     }
