@@ -820,7 +820,7 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
 
 //make templates based on generator level samples (used for assessing impact of
 //fiducial cuts on AFB
-int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
+float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
         float m_LQ, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
     printf("Making LQ+DY generator level templates\n");
@@ -1074,6 +1074,8 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
 
     for(int i=0; i<t_gen->GetEntries();i++){
       t_gen->GetEntry(i);
+	cm = *gen_lep_p + *gen_lep_m;
+            float m = cm.M();
       if(m > lq_m_bins[0] && gen_weight>0.)
       sum_weights_data+=gen_weight;
     }
@@ -1085,7 +1087,7 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
         
             evt_weight = gen_weight;
             cm = *gen_lep_p + *gen_lep_m;
-            float m = cm.M();
+             m = cm.M();
             float pt = cm.Pt();
             float rap = abs(cm.Rapidity());
             float gen_cost = get_cost(*gen_lep_p, *gen_lep_m, false);
