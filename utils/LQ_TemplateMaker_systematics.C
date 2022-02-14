@@ -874,7 +874,7 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
   */
     //float pt_cut = 26.;
     float pt_cut = 30.;
-
+    float sum_weights = 0.;
 
     int nEvents=0;
 
@@ -932,6 +932,9 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
 
                 if(evt_weight >0) nEvents++;
                 else  nEvents--;
+
+                sum_weights+=gen_weight;
+                
 
                 float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
 
@@ -1026,12 +1029,12 @@ int make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h
             }
 	}        
     }
-    printf("selected %i events \n", nEvents);
+    printf("selected %i events; total evt_weight = %f \n", nEvents,sum_weights);
 
     //cleanup_template(h_sym);
     //fixup_template_sum(h_sym, h_asym);
 
-    return nEvents;
+    return sum_weights;
 
 }
 
@@ -1071,6 +1074,7 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
 
     for(int i=0; i<t_gen->GetEntries();i++){
       t_gen->GetEntry(i);
+      if(m > lq_m_bins[0] && gen_weight>0.)
       sum_weights_data+=gen_weight;
     }
     printf("sum_weights = %f",sum_weights);
