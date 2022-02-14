@@ -217,8 +217,8 @@ void LQ_make_gen_templates(){
 	   h1_total->SetLineColor(kRed);
 	   h1_data->SetLineWidth(2);
 	   h1_total->SetLineWidth(2); 
-           h1_data->Draw("hist");
-           h1_total->Draw("hist same ");
+           h1_total->Draw("hist");
+           h1_data->Draw("hist same ");
         
           sprintf(title, "data_vs_total_%i.png", year %2000);
           c_mumu1->Print(title);
