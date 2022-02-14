@@ -1079,7 +1079,7 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
       if(m > lq_m_bins[0] && gen_weight>0.)
       sum_weights_data+=gen_weight;
     }
-    printf("sum_weights = %f",sum_weights);
+    printf("sum_weights_data = %f\n",sum_weights_data);
     for (int i=0; i<t_gen->GetEntries(); i++) {
         t_gen->GetEntry(i);
     

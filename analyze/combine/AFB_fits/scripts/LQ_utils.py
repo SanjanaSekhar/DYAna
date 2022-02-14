@@ -141,10 +141,7 @@ def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False,
     print("nosys =%s"%(no_sys))
 
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
-    if gen_level and q=="u":
-        template_card = "card_templates/LQ_combined_fit_template_genlevel_ue.txt"
-    if gen_level and q=="d":
-        template_card = "card_templates/LQ_combined_fit_template_genlevel_de.txt"
+    
     if chan=="ee" and q=="u":
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
@@ -161,7 +158,10 @@ def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False,
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_mumu_noLQ.txt"
-   
+    if gen_level and q=="u":
+        template_card = "card_templates/LQ_combined_fit_template_genlevel_ue.txt"
+    if gen_level and q=="d":
+        template_card = "card_templates/LQ_combined_fit_template_genlevel_de.txt"
    
     #comb_card="cards/combined_fit_mbin%i.txt" % mbin
     comb_card = "cards/combined_fit_LQ.txt" 

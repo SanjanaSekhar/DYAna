@@ -185,7 +185,7 @@ void LQ_make_gen_templates(){
         gDirectory->cd(dirname);
 
             //h_uncut->Write();
-        h1_data->Scale(.5);
+       // h1_data->Scale(.5);
         h1_data->Write();
         h1_pl->Write();
         h1_mn->Write();
@@ -199,11 +199,11 @@ void LQ_make_gen_templates(){
 
         float a0 = 0.05, afb = 0.62;
         float alph = 2.*a0/(2.- a0);
-        float norm = 3./(4.*2.+alph);
+        float norm = 3./(4.*(2.+alph));
         h1_alpha->Scale(alph*norm);
         h1_pl->Scale(norm+afb);
         h1_mn->Scale(norm-afb);
-        TH1F *h1_total = (TH1F *) h1_alpha->Clone("clone");
+        TH1F *h1_total = (TH1F *) h1_alpha->Clone("h1_total");
         h1_total->SetDirectory(0);
 	h1_total->Add(h1_pl);
         h1_total->Add(h1_mn);
@@ -219,19 +219,8 @@ void LQ_make_gen_templates(){
 	   h1_total->SetLineWidth(2); 
            h1_data->Draw("hist");
            h1_total->Draw("hist same ");
-          // h1_mumu_pl->Draw("hist");
-          //           //  h1_mumu_alpha->Draw("hist same");
-          //                       //h1_mumu_mn->Draw("hist same");
-          //                                   
-          //
-          //                                               TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-          //                                                           leg1->AddEntry(h1_mumu_asym, "Asym Template", "l");
-          //                                                                       leg1->AddEntry(h1_mumu_sym, "Sym Template", "l");
-          //                                                                                  //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
-          //                                                                                             //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
-          //                                                                                                         //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
-          //                                                                                                                     leg1->Draw();
-          sprintf(title, "data_vs_total_datascaled0.5_%i.png", year %2000);
+        
+          sprintf(title, "data_vs_total_%i.png", year %2000);
           c_mumu1->Print(title);
           delete c_mumu1;
 
