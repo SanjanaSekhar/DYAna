@@ -931,7 +931,10 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
                 float s = m*m;
 
                 if(evt_weight >0) nEvents++;
-                else  nEvents--;
+                else if(evt_weight<0.)  {
+                  nEvents--;
+                  printf("gen_weight in templates is negative = %f\n",evt_weight);
+                }
 
                 sum_weights+=gen_weight;
                 
@@ -1078,6 +1081,7 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
             float m = cm.M();
       if(m > lq_m_bins[0] && gen_weight>0.)
       sum_weights_data+=gen_weight;
+      else if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }
     printf("sum_weights_data = %f\n",sum_weights_data);
     for (int i=0; i<t_gen->GetEntries(); i++) {
