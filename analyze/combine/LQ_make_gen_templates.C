@@ -224,7 +224,7 @@ void LQ_make_gen_templates(){
            h1_total->Draw("hist");
            h1_data->Draw("hist same ");
         
-          sprintf(title, "data_vs_total_signflip_%i.png", year %2000);
+          sprintf(title, "data_vs_total_negwts_%i.png", year %2000);
           c_mumu1->Print(title);
           delete c_mumu1;
 

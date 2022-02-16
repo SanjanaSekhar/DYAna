@@ -889,7 +889,7 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
             float pt = cm.Pt();
             float rap = abs(cm.Rapidity());
 
-            bool pass = gen_weight>0. && m > lq_m_bins[0] && abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+            bool pass =  m > lq_m_bins[0] && abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
 
           //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
@@ -931,7 +931,7 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
                 float s = m*m;
 
                 if(evt_weight >0) nEvents++;
-                else if(evt_weight<0.)  {
+                else if(evt_weight<-0.000001)  {
                   nEvents--;
                   printf("gen_weight in templates is negative = %f\n",evt_weight);
                 }
