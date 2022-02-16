@@ -950,14 +950,14 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
 
                 h_raw->Fill(m, rap, gen_cost, evt_weight);
 
-                h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight *5000); 
-                h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight *5000); 
+                h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight *1e4); 
+                h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight *1e4); 
 
-                h_asym->Fill(m, rap, gen_cost, reweight_a * evt_weight *5000);
-                h_asym->Fill(m, rap, -gen_cost, -reweight_a * evt_weight *5000);
+                h_asym->Fill(m, rap, gen_cost, reweight_a * evt_weight *1e4);
+                h_asym->Fill(m, rap, -gen_cost, -reweight_a * evt_weight *1e4);
 
-                h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *5000); 
-                h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *5000); 
+                h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *1e4); 
+                h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *1e4); 
 
                 int flag_q=0;
                 if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
@@ -1017,16 +1017,16 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
             reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
 
             if(flag_q==1){
-              h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight * 5000 ); 
+              h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight * 1e4 ); 
               //h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
-              h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight * 5000); 
+              h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight * 1e4); 
               //h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
             }
               //uLQ temps
             if(flag_q==2){
-              h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight * 5000); 
+              h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight * 1e4); 
               //h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-              h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight * 5000); 
+              h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight * 1e4); 
               //h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
             }
             }
@@ -1044,7 +1044,7 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
 int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_weights = 1.){
 
     printf("Making data generator level templates\n");
-    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), *gen_q1(0), *gen_q2(0), cm;
+    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), *gen_q1(0), *gen_q2(0), q,cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
    
@@ -1096,8 +1096,10 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
             float rap = abs(cm.Rapidity());
             float gen_cost = get_cost(*gen_lep_p, *gen_lep_m, false);
             //flip the sign of cost based on eta of quark - currently it is assumed that quark is moving in +z direction
-            if(inc_id1 > 0 && gen_q1.Eta() < 0. ) gen_cost*=-1.;
-            else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
+            if(inc_id1 > 0) q = *gen_q1;
+	    else if(inc_id2 > 0) q = *gen_q2;
+ 	    if(q.Eta() < 0. ) gen_cost*=-1.;
+            //else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
 
             bool pass = m > lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
          //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
@@ -1109,7 +1111,7 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-              h_data->Fill(m, rap, gen_cost, evt_weight*5000*(sum_weights/sum_weights_data));
+              h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(sum_weights/sum_weights_data));
             }
           }
           printf("selected %i events \n", nEvents);
