@@ -1044,7 +1044,7 @@ float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F 
 int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_weights = 1.){
 
     printf("Making data generator level templates\n");
-    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
+    TLorentzVector *gen_lep_p(0), *gen_lep_m(0), *gen_q1(0), *gen_q2(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
    
@@ -1054,16 +1054,16 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
 
     t_gen->SetBranchAddress("lep_pls", &gen_lep_p);
     t_gen->SetBranchAddress("lep_mns", &gen_lep_m);
-    //t_gen->SetBranchAddress("gen_mu_p", &gen_lep_p);
-    //t_gen->SetBranchAddress("gen_mu_m", &gen_lep_m);
+    t_gen->SetBranchAddress("q1", &gen_q1);
+    t_gen->SetBranchAddress("q2", &gen_q2);
     //t_gen->SetBranchAddress("m", &m);
     //t_gen->SetBranchAddress("cost", &cost);
     //t_gen->SetBranchAddress("cost_st", &cost_st);
     t_gen->SetBranchAddress("gen_weight", &gen_weight);
    
     //t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
-  //  t_gen->SetBranchAddress("inc_id1", &inc_id1);
-   // t_gen->SetBranchAddress("inc_id2", &inc_id2);
+    t_gen->SetBranchAddress("q1_id", &inc_id1);
+    t_gen->SetBranchAddress("q2_id", &inc_id2);
 
     A0_helpers A0_helper; 
     setup_A0_helper(&A0_helper, year);
@@ -1095,6 +1095,9 @@ int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_w
             float pt = cm.Pt();
             float rap = abs(cm.Rapidity());
             float gen_cost = get_cost(*gen_lep_p, *gen_lep_m, false);
+            //flip the sign of cost based on eta of quark - currently it is assumed that quark is moving in +z direction
+            if(inc_id1 > 0 && gen_q1.Eta() < 0. ) gen_cost*=-1.;
+            else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
 
             bool pass = m > lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
          //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
