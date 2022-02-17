@@ -145,7 +145,7 @@ void LQ_make_gen_templates(){
         printf("Starting convert3d\n");
 
         h1_data = convert3d(h_data);
-        h1_data_SM = convert3d(h1_data_SM);
+        h1_data_SM = convert3d(h_data_SM);
         h1_raw = convert3d(h_raw);
         h1_sym = convert3d(h_sym);
         h1_asym = convert3d(h_asym);
