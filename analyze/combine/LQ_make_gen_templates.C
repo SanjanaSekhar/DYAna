@@ -33,6 +33,9 @@
 
 void LQ_make_gen_templates(){
 
+    gStyle->SetOptStat(0);
+    gROOT->SetBatch(1);
+
     for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         float m_LQ = 1000.;
@@ -223,9 +226,9 @@ void LQ_make_gen_templates(){
         h1_total->SetLineColor(kRed);
         h1_data->SetLineWidth(2);
         h1_total->SetLineWidth(2); 
-        h1_total->SetTitle("Fake data (SM) vs DY templates (AFB=0.6,A0=0.05)");
-        h1_total->Draw("hist");
-        h1_data->Draw("hist same ");
+        h1_data->SetTitle("Fake data (SM) vs DY templates (AFB=0.6,A0=0.05)");
+        h1_data->Draw("hist");
+        h1_total->Draw("hist same ");
         TLegend *leg1 = new TLegend(0.75, 0.75, 0.9, 0.9);
         leg1->AddEntry(h1_total, "DY templates", "l");
         leg1->AddEntry(h1_data, "Fake data", "l");
