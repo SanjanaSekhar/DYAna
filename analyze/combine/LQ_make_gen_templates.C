@@ -255,9 +255,9 @@ void LQ_make_gen_templates(){
         h1_LQpure_u->SetLineColor(kRed);
         h1_data->SetLineWidth(2);
         h1_LQpure_u->SetLineWidth(2); 
-        h1_data->SetTitle("Fake data minus SM vs LQ templates (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
-        h1_data->Draw("hist");
-        h1_LQpure_u->Draw("hist same ");
+        h1_LQpure_u->SetTitle("Fake data minus SM vs LQ templates (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
+        h1_LQpure_u->Draw("hist");
+        h1_data->Draw("hist same ");
         TLegend *leg2 = new TLegend(0.75, 0.75, 0.9, 0.9);
         leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
         leg2->AddEntry(h1_data, "Fake data minus SM (y_ue=1.0)", "l");
