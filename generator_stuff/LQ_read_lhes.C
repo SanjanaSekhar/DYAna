@@ -10,9 +10,9 @@
 
 
 void LQ_read_lhes(){
-    TTree *t1 = new TTree("T_lhe", "Lhe event info for LQ m1000");
+    TTree *t1 = new TTree("T_lhe", "Lhe event info for SM");
     t1->SetDirectory(0);
-    string f1("/uscms/home/ssekhar/nobackup/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/tag_1_pythia8_BasicReco_m1000.lhe");
+    string f1("/uscms/home/ssekhar/nobackup/CMSSW_10_5_0/src/LQ_Analysis/DYAna/analyze/tag_1_pythia8_BasicReco_SM.lhe");
     //string f1("/home/ozamram/Documents/Research/Generators/MG5_aMC_v2_6_2/PhotInd_mar29/Events/run_01/unweighted_events.lhe");
     //string f1("/home/ozamram/Documents/Research/Generators/POWHEG-BOX-V2/Z_ew-BMNNPV/DY_m250_april25/pwgevents.lhe");
     //string f1("/home/ozamram/Documents/Research/B2GTTrees/generator_stuff/DY_M700_events.lhe");
@@ -24,7 +24,7 @@ void LQ_read_lhes(){
     //fill_tree(f2, t1, true);
     //fill_tree(f3, t1, true);
 
-    TFile *fout1 = TFile::Open("root_files/LQ_m1000_test_020122.root", "RECREATE");
+    TFile *fout1 = TFile::Open("root_files/LQ_SM_test_020122.root", "RECREATE");
     fout1->cd();
     t1->Write();
     fout1->Close();
