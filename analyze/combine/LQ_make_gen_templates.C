@@ -41,8 +41,8 @@ void LQ_make_gen_templates(){
         float m_LQ = 1000.;
 
         char fout_name[200];
-        //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-        sprintf(fout_name,"combine/templates/LQ_SM_gen_templates%i_020222.root",year%2000);
+        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        //sprintf(fout_name,"combine/templates/LQ_SM_gen_templates%i_020222.root",year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -50,8 +50,8 @@ void LQ_make_gen_templates(){
         string genfile_n = string(genfile_name,200);
         TFile *f_gen = TFile::Open(genfile_n.c_str());
 
-        //TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
-        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_SM_test_020122.root");
+        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
+        //TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_SM_test_020122.root");
         gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -216,8 +216,8 @@ void LQ_make_gen_templates(){
 
         h1_total->Add(h1_pl);
         h1_total->Add(h1_mn);
-       // h1_total->Add(h1_LQpure_u);
-       // h1_total->Add(h1_LQint_u);
+        h1_total->Add(h1_LQpure_u);
+        h1_total->Add(h1_LQint_u);
        // h1_total->Write();
 
 
@@ -226,14 +226,14 @@ void LQ_make_gen_templates(){
         h1_total->SetLineColor(kRed);
         h1_data->SetLineWidth(2);
         h1_total->SetLineWidth(2); 
-        h1_data->SetTitle("Fake data (SM) vs DY templates (AFB=0.6,A0=0.05)");
+        h1_data->SetTitle("Fake data (SM+LQ) vs DY+LQ templates (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
         h1_data->Draw("hist");
         h1_total->Draw("hist same ");
         TLegend *leg1 = new TLegend(0.75, 0.75, 0.9, 0.9);
-        leg1->AddEntry(h1_total, "DY templates", "l");
-        leg1->AddEntry(h1_data, "Fake data", "l");
+        leg1->AddEntry(h1_total, "DY+LQ_ue templates", "l");
+        leg1->AddEntry(h1_data, "Fake data (y_ue=1.0)", "l");
         leg1->Draw();
-        sprintf(title, "../generator_stuff/plots/data_vs_total_SM_negcos_%i.png", year %2000);
+        sprintf(title, "../generator_stuff/plots/data_vs_total_%i.png", year %2000);
         c_mumu1->Print(title);
         delete c_mumu1;
 
