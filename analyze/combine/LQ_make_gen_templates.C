@@ -233,7 +233,7 @@ void LQ_make_gen_templates(){
         leg1->AddEntry(h1_total, "DY templates", "l");
         leg1->AddEntry(h1_data, "Fake data", "l");
         leg1->Draw();
-        sprintf(title, "../generator_stuff/plots/data_vs_total_SM_noflip_%i.png", year %2000);
+        sprintf(title, "../generator_stuff/plots/data_vs_total_SM_negcos_%i.png", year %2000);
         c_mumu1->Print(title);
         delete c_mumu1;
 

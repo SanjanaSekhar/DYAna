@@ -1094,11 +1094,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       m = cm.M();
       float pt = cm.Pt();
       float rap = abs(cm.Rapidity());
-      float gen_cost = get_cost(*gen_lep_p, *gen_lep_m, false);
+      float gen_cost = -1.*get_cost(*gen_lep_p, *gen_lep_m, false);
             //flip the sign of cost based on eta of quark - currently it is assumed that quark is moving in +z direction
       if(inc_id1 > 0) q = *gen_q1;
       else if(inc_id2 > 0) q = *gen_q2;
-      //if(q.Eta() < 0. ) gen_cost*=-1.;
+      if(q.Eta() < 0. ) gen_cost*=-1.;
             //else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
 
             bool pass = m > lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
