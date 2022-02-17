@@ -38,15 +38,17 @@ void LQ_make_gen_templates(){
         float m_LQ = 1000.;
 
         char fout_name[200];
-        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-	string fout_n = string(fout_name, 200);
+        //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        sprintf(fout_name,"combine/templates/LQ_SM_gen_templates%i_020222.root",year%2000);
+        string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
         sprintf(genfile_name,"../analyze/output_files/DY%i_gen_level_aug4.root",year%2000);
         string genfile_n = string(genfile_name,200);
-	TFile *f_gen = TFile::Open(genfile_n.c_str());
+        TFile *f_gen = TFile::Open(genfile_n.c_str());
 
-        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
+        //TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
+        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_SM_test_020122.root");
         gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -149,10 +151,10 @@ void LQ_make_gen_templates(){
 
         // n_y_bins -= 1;
         int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
-	sprintf(title, "ee%i_fpl", year %2000);
+        sprintf(title, "ee%i_fpl", year %2000);
         h1_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_pl->SetDirectory(0);
-	sprintf(title, "ee%i_fmn", year %2000);
+        sprintf(title, "ee%i_fmn", year %2000);
         h1_mn = new TH1F(title, "Minus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mn->SetDirectory(0);
 
@@ -197,36 +199,40 @@ void LQ_make_gen_templates(){
         h1_LQint_u->Write();
         h1_LQint_d->Write();
 
-         fout->Close();
+        fout->Close();
 
         float a0 = 0.05, afb = 0.62;
         float alph = 2.*a0/(2.- a0);//alph=2/39
         float norm = 3./(4.*(2.+alph));//norm=0.365625
         TH1F *h1_total = (TH1F *) h1_alpha->Clone("h1_total");
-         h1_total->SetDirectory(0);
+        h1_total->SetDirectory(0);
         h1_total->Scale(alph*norm);//0.01875
         h1_pl->Scale(norm+afb);//0.965625
         h1_mn->Scale(norm-afb);//-.234375
-       
-       
-	   h1_total->Add(h1_pl);
+
+
+        h1_total->Add(h1_pl);
         h1_total->Add(h1_mn);
-        h1_total->Add(h1_LQpure_u);
-        h1_total->Add(h1_LQint_u);
+       // h1_total->Add(h1_LQpure_u);
+       // h1_total->Add(h1_LQint_u);
        // h1_total->Write();
 
 
- 	TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-           h1_data->SetLineColor(kBlue);
-	   h1_total->SetLineColor(kRed);
-	   h1_data->SetLineWidth(2);
-	   h1_total->SetLineWidth(2); 
-           h1_total->Draw("hist");
-           h1_data->Draw("hist same ");
-        
-          sprintf(title, "data_vs_total_negwts_%i.png", year %2000);
-          c_mumu1->Print(title);
-          delete c_mumu1;
+        TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
+        h1_data->SetLineColor(kBlue);
+        h1_total->SetLineColor(kRed);
+        h1_data->SetLineWidth(2);
+        h1_total->SetLineWidth(2); 
+        h1_total->SetTitle("Fake data (SM) vs DY templates (AFB=0.6,A0=0.05)")
+        h1_total->Draw("hist");
+        h1_data->Draw("hist same ");
+        TLegend *leg1 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg1->AddEntry(h1_total, "DY templates", "l");
+        leg1->AddEntry(h1_data, "Fake data", "l");
+        leg1->Draw();
+        sprintf(title, "data_vs_total_SM_%i.png", year %2000);
+        c_mumu1->Print(title);
+        delete c_mumu1;
 
             //h_uncut->Reset();
             //h_raw->Reset();
@@ -244,7 +250,7 @@ void LQ_make_gen_templates(){
         
 
 
-       
+
         printf("Templates written to %s \n", fout_n.c_str());
 
     }
