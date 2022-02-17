@@ -304,7 +304,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         
 
             // SM terms
-        
+
             //(1./2.56819)*1e9 -> conversion of GeV^-2 to pb
             // jacobian for conversion = 2sqrt(x1x2/s); x1x2s=gen_m^2; sqrt(s) = CM energy -> 13 TeV
         float s = tm.gen_m*tm.gen_m;
@@ -389,7 +389,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
             cvq=cvq_u;
           }
 
-          
+
           float LQ_denom = get_LQ_denom(gen_cost,s,Q_q,caq,cvq);
 
               //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
@@ -574,7 +574,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
 
 
-      
+
 
       h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
       h_alpha.Scale(norm * alpha);
@@ -607,7 +607,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         }
         if(sys_label.find("fakesrw") != string::npos){
           int foo;
-          
+
           if(sys_shift > 0){
             if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iUp", &shape_sys, &foo);
             else sscanf(sys_label.c_str(), "_elfakesrw%ib%iUp", &shape_sys, &foo);
@@ -621,7 +621,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           printf("Doing fakes costrw sys %i \n", shape_sys);
         }
       }
-      
+
       float eta1,eta2,pt1,pt2;
 
 
@@ -882,8 +882,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       t_gen->GetEntry(i);
       //  if(sys_label.find("ptcutUp") != string::npos) pt_cut = 38.;
       //  if(sys_label.find("ptcutdown") != string::npos) pt_cut = 26.;
-      
-      
+
+
       evt_weight = gen_weight;
       cm = *gen_lep_p + *gen_lep_m;
       float pt = cm.Pt();
@@ -937,7 +937,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         }
 
         sum_weights+=gen_weight;
-        
+
 
         float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
 
@@ -1047,9 +1047,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), *gen_q1(0), *gen_q2(0), q,cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
-    
+
     float evt_weight;
-    
+
     Bool_t sig_event(1);
 
     t_gen->SetBranchAddress("lep_pls", &gen_lep_p);
@@ -1060,7 +1060,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
     //t_gen->SetBranchAddress("cost", &cost);
     //t_gen->SetBranchAddress("cost_st", &cost_st);
     t_gen->SetBranchAddress("gen_weight", &gen_weight);
-    
+
     //t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
     t_gen->SetBranchAddress("q1_id", &inc_id1);
     t_gen->SetBranchAddress("q2_id", &inc_id2);
@@ -1079,16 +1079,16 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       t_gen->GetEntry(i);
       cm = *gen_lep_p + *gen_lep_m;
       float m = cm.M();
-      if(m > lq_m_bins[0] && gen_weight>0.)
+      if(m > lq_m_bins[0])
         sum_weights_data+=gen_weight;
       else if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }
     printf("sum_weights_data = %f\n",sum_weights_data);
     for (int i=0; i<t_gen->GetEntries(); i++) {
       t_gen->GetEntry(i);
-      
 
-      
+
+
       evt_weight = gen_weight;
       cm = *gen_lep_p + *gen_lep_m;
       m = cm.M();
@@ -1098,13 +1098,13 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
             //flip the sign of cost based on eta of quark - currently it is assumed that quark is moving in +z direction
       if(inc_id1 > 0) q = *gen_q1;
       else if(inc_id2 > 0) q = *gen_q2;
-      if(q.Eta() < 0. ) gen_cost*=-1.;
+      //if(q.Eta() < 0. ) gen_cost*=-1.;
             //else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
 
             bool pass = m > lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
          //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
         //bool pass = abs(cm.Rapidity()) < 2.4;
-            
+
 
             if(pass){
 
