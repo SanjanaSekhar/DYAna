@@ -51,13 +51,13 @@ void LQ_make_gen_templates(){
         TFile *f_gen = TFile::Open(genfile_n.c_str());
 
         TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
-        //TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_SM_test_020122.root");
+        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test_020122.root");
         gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
         TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
         TTree *t_gen_data = (TTree *) f_gen_data->Get("T_lhe");
-
+        TTree *t_gen_data_SM = (TTree *) f_gen_data_SM->Get("T_lhe");
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
         
@@ -67,12 +67,18 @@ void LQ_make_gen_templates(){
         char dirname[40], title[300];
 
         string sys = "";
-        printf("Starting year %i",year);
+        printf("Starting year %i\n",year);
         
         sprintf(title, "ee%i_data_obs", year %2000);
         TH3F* h_data = new TH3F(title, "Data template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_data->SetDirectory(0);
+
+
+        sprintf(title, "ee%i_data_SM_obs", year %2000);
+        TH3F* h_data_SM = new TH3F(title, "Data template for gen level",
+            n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
+        h_data_SM->SetDirectory(0);
 
         sprintf(title, "ee%i_sym", year %2000);
         TH3F* h_sym = new TH3F(title, "sym template for gen level",
@@ -113,7 +119,7 @@ void LQ_make_gen_templates(){
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_raw->SetDirectory(0);
 
-        TH1F *h1_raw, *h1_data, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
+        TH1F *h1_raw, *h1_data, *h1_data_SM, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
 
 
         
@@ -127,6 +133,7 @@ void LQ_make_gen_templates(){
         sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, year, sum_weights);
+        nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, year, sum_weights);
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
@@ -138,6 +145,7 @@ void LQ_make_gen_templates(){
         printf("Starting convert3d\n");
 
         h1_data = convert3d(h_data);
+        h1_data_SM = convert3d(h1_data_SM);
         h1_raw = convert3d(h_raw);
         h1_sym = convert3d(h_sym);
         h1_asym = convert3d(h_asym);
@@ -146,7 +154,7 @@ void LQ_make_gen_templates(){
         h1_LQint_u = convert3d(h_LQint_u);
         h1_LQpure_d = convert3d(h_LQpure_d);
         h1_LQint_d = convert3d(h_LQint_d);
-        delete h_sym,h_asym,h_alpha,h_LQpure_u,h_LQpure_d,h_LQint_u,h_LQint_d;
+        delete h_sym,h_asym,h_alpha,h_LQpure_u,h_LQpure_d,h_LQint_u,h_LQint_d,h_data,h_data_SM;
 
         printf("Starting make_pl_mn\n");
             //h1_sym->Print("range");
@@ -237,9 +245,31 @@ void LQ_make_gen_templates(){
         c_mumu1->Print(title);
         delete c_mumu1;
 
+        //checking LQ temps vs fake data minus SM
+        h1_data_SM->Scale(-1.);
+        h1_data->Add(h1_data_SM);
+        h1_LQpure_u->Add(h1_LQint_u);
+
+        TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
+        h1_data->SetLineColor(kBlue);
+        h1_LQpure_u->SetLineColor(kRed);
+        h1_data->SetLineWidth(2);
+        h1_LQpure_u->SetLineWidth(2); 
+        h1_data->SetTitle("Fake data minus SM vs LQ templates (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
+        h1_data->Draw("hist");
+        h1_LQpure_u->Draw("hist same ");
+        TLegend *leg2 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
+        leg2->AddEntry(h1_data, "Fake data minus SM (y_ue=1.0)", "l");
+        leg2->Draw();
+        sprintf(title, "../generator_stuff/plots/LQdata_vs_LQtemp_%i.png", year %2000);
+        c_mumu2->Print(title);
+        delete c_mumu2;
+
             //h_uncut->Reset();
             //h_raw->Reset();
         h1_data->Reset();
+        h1_data_SM->Reset();
         h1_pl->Reset();
         h1_mn->Reset();
         h1_alpha->Reset();
