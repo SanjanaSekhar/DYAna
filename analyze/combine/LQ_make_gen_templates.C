@@ -250,20 +250,21 @@ void LQ_make_gen_templates(){
         h1_data_SM->SetLineColor(kRed);
         h1_data->SetLineWidth(2);
         h1_data_SM->SetLineWidth(2); 
-        h1_data->SetTitle("Fake data (SM+LQ) vs DY+LQ templates (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
-        h1_data->Draw("hist");
-        h1_data_SM->Draw("hist same ");
+        h1_data_SM->SetTitle("Fake data (SM+LQ) vs Fake data (SM) (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
+        h1_data_SM->Draw("hist");
+        h1_data->Draw("hist same ");
         TLegend *leg3 = new TLegend(0.75, 0.75, 0.9, 0.9);
-        leg3->AddEntry(h1_data_SM, "Fake data minus SM", "l");
+        leg3->AddEntry(h1_data_SM, "Fake data only SM", "l");
         leg3->AddEntry(h1_data, "Fake data (y_ue=1.0)", "l");
         leg3->Draw();
-        sprintf(title, "../generator_stuff/plots/data_vs_noSM_%i.png", year %2000);
+        sprintf(title, "../generator_stuff/plots/data_vs_noLQ_%i.png", year %2000);
         c_mumu3->Print(title);
         delete c_mumu3;
 
         //checking LQ temps vs fake data minus SM
         h1_data_SM->Scale(-1.);
         h1_data->Add(h1_data_SM);
+        h1_LQint_u->Scale(-1.);
         h1_LQpure_u->Add(h1_LQint_u);
 
         TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
