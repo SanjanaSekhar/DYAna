@@ -889,7 +889,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       float pt = cm.Pt();
       float rap = abs(cm.Rapidity());
 
-      bool pass =  m > lq_m_bins[0] && abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+      bool pass =  m >= lq_m_bins[0] && abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
 
           //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
@@ -1104,7 +1104,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 
 
-            bool pass = m > lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+            bool pass = m >= lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
          //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
         //bool pass = abs(cm.Rapidity()) < 2.4;
 
