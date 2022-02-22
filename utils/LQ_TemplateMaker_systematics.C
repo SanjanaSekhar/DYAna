@@ -1074,7 +1074,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
     int nEvents=0;
     float sum_weights_data = 0.;
-    int N_f = 0, N_b = 0; float Afb = 0.;
+    float N_f = 0., N_b = 0., Afb = 0.;
 
     for(int i=0; i<t_gen->GetEntries();i++){
       t_gen->GetEntry(i);
