@@ -933,7 +933,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         if(evt_weight >0) nEvents++;
         else if(evt_weight<-0.000001)  {
           nEvents--;
-          printf("gen_weight in templates is negative = %f\n",evt_weight);
+         // printf("gen_weight in templates is negative = %f\n",evt_weight);
         }
 
         sum_weights+=gen_weight;
@@ -1074,6 +1074,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
     int nEvents=0;
     float sum_weights_data = 0.;
+    int N_f = 0, N_b = 0; float Afb = 0.;
 
     for(int i=0; i<t_gen->GetEntries();i++){
       t_gen->GetEntry(i);
@@ -1094,12 +1095,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       m = cm.M();
       float pt = cm.Pt();
       float rap = abs(cm.Rapidity());
-      float gen_cost = -1.*get_cost(*gen_lep_p, *gen_lep_m, false);
+      float gen_cost = get_cost(*gen_lep_m, *gen_lep_p, false); //backwards pl and mn definitions in the input file
             //flip the sign of cost based on eta of quark - currently it is assumed that quark is moving in +z direction
-      if(inc_id1 > 0) q = *gen_q1;
-      else if(inc_id2 > 0) q = *gen_q2;
+      if(inc_id1 > 0 && inc_id1 < 5) q = *gen_q1;
+      else if(inc_id2 > 0 && inc_id2 < 5) q = *gen_q2;
       if(q.Eta() < 0. ) gen_cost*=-1.;
             //else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
+
+
 
             bool pass = m > lq_m_bins[0]; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
          //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
@@ -1108,12 +1111,16 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
             if(pass){
 
+              if(gen_cost>0.) N_f++;
+              else N_b++;
+
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
               h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(sum_weights/sum_weights_data));
             }
           }
+          printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));
           printf("selected %i events \n", nEvents);
 
     //cleanup_template(h_sym);
