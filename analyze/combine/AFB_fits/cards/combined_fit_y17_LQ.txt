@@ -14,7 +14,7 @@ observation     -1
 # Add the processes contributing to the data expectation
 bin                      ee17    ee17    ee17    ee17      ee17 	 
 process                  alpha   fpl     fmn     LQpure_u  LQint_u	
-process                  2      3       1      -3        -4		
+process                  -2      -3       -1      3        4		
 rate                     -1      -1      -1      -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 norm17 rateParam ee17 *  1

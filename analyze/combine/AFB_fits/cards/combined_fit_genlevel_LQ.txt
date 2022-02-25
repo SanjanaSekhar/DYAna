@@ -11,8 +11,8 @@ bin          Y16    Y17    Y18
 observation  -1     -1     -1   
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16       Y16       Y16       Y16       Y16       Y17       Y17       Y17       Y17       Y17       Y18       Y18       Y18       Y18       Y18     
-process      LQpure_u  LQint_u   fmn       alpha     fpl       LQpure_u  LQint_u   fmn       alpha     fpl       LQpure_u  LQint_u   fmn       alpha     fpl     
-process      -1        0         1         2         3         -1        0         1         2         3         -1        0         1         2         3       
+process      fmn       alpha     fpl       LQpure_u  LQint_u   fmn       alpha     fpl       LQpure_u  LQint_u   fmn       alpha     fpl       LQpure_u  LQint_u 
+process      -2        -1        0         1         2         -2        -1        0         1         2         -2        -1        0         1         2       
 rate         -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
 norm17        rateParam Y17 LQint_u 1  
