@@ -1,0 +1,6 @@
+Madgraph5_aMC@NLO R2 LQ -> ee with RL couplings
+
+LQ Mass  Y_ue  cross section(pb)  N_events  int Lum(fb-1) 
+1 TeV    1.0   0.1866+-0.00072    41859       224.3      
+2 TeV    1.0   0.08006+-0.00027   48939       611.3
+2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)

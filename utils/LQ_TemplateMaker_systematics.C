@@ -1080,7 +1080,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       t_gen->GetEntry(i);
       cm = *gen_lep_p + *gen_lep_m;
       float m = cm.M();
-      if(m > lq_m_bins[0])
+      if(m >= 170)
         sum_weights_data+=gen_weight;
       else if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }

@@ -42,7 +42,7 @@ void LQ_make_gen_templates(){
 
         char fout_name[200];
         sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-        //sprintf(fout_name,"combine/templates/LQ_SM_gen_templates%i_020222.root",year%2000);
+       // sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -75,7 +75,7 @@ void LQ_make_gen_templates(){
         h_data->SetDirectory(0);
 
 
-        sprintf(title, "ee%i_data_SM_obs", year %2000);
+        sprintf(title, "ee%i_data_obs", year %2000);
         TH3F* h_data_SM = new TH3F(title, "Data template for gen level",
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_data_SM->SetDirectory(0);

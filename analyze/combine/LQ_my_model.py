@@ -11,8 +11,8 @@ class DY_AFB(PhysicsModel):
 
         self.modelBuilder.doVar("Afb[0.6, -0.75., 0.75]");
         self.modelBuilder.doVar("A0[0.05, -2.0, 2.0]");
-        self.modelBuilder.doVar("yLQ[0.00001, -5.0, 5.0]");
-        self.modelBuilder.doSet("POI","yLQ")
+        self.modelBuilder.doVar("yLQ2[0.00001, -5.0, 5.0]");
+        self.modelBuilder.doSet("POI","yLQ2")
 
       
         self.modelBuilder.factory_('expr::Alph("2.0*@0/(2.0-@0)",A0)')
@@ -20,9 +20,9 @@ class DY_AFB(PhysicsModel):
         self.modelBuilder.factory_('expr::RAlph("@0*@1",Alph,Norm)')
         self.modelBuilder.factory_('expr::Rpl("(@0+@1)",Norm,Afb)')
         self.modelBuilder.factory_('expr::Rmn("(@0-@1)",Norm,Afb)')
-        self.modelBuilder.factory_('expr::yLQ2("(@0*@0)",yLQ)')
-        self.modelBuilder.factory_('expr::yLQ4("(@0*@0*@0*@0)",yLQ)')
-
+        #self.modelBuilder.factory_('expr::yLQ2("(@0*@0)",yLQ)')
+        #self.modelBuilder.factory_('expr::yLQ4("(@0*@0*@0*@0)",yLQ)')
+	self.modelBuilder.factory_('expr::yLQ4("(@0*@0)",yLQ2)')
 
  
  
