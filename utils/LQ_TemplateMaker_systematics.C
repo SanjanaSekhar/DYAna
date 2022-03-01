@@ -889,7 +889,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       float pt = cm.Pt();
       float rap = abs(cm.Rapidity());
 
-      bool pass =  m >= 170 && abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+      bool pass = (gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
 
           //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
@@ -1041,7 +1041,20 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
   }
 
-  int make_gen_data_temps(TTree *t_gen, TH3F *h_data, int year = 2016, float sum_weights = 1.){
+  int make_gen_data_temps(TTree *t_gen, TH3F *h_data, float xsec; int year = 2016, float sum_weights = 1.){
+
+    /*
+     1 Madgraph5_aMC@NLO R2 LQ -> ee with RL couplings
+  2
+  3 LQ Mass  Y_ue  cross section(pb)  N_events  int Lum(fb-1)
+  4 1 TeV    1.0   0.1866+-0.00072    41859       224.3
+  5 2 TeV    1.0   0.08006+-0.00027   48939       611.3
+  6 2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)
+  */
+    float lumi;
+    if(year==2016) lumi = 35.92;
+    else if(year==2017) lumi = 41.9;
+    else lumi =  59.0;
 
     printf("Making data generator level templates\n");
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), *gen_q1(0), *gen_q2(0), q,cm;
@@ -1080,11 +1093,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       t_gen->GetEntry(i);
       cm = *gen_lep_p + *gen_lep_m;
       float m = cm.M();
-      if(m >= 170)
+      //if(m >= 170)
         sum_weights_data+=gen_weight;
-      else if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
+      if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }
     printf("sum_weights_data = %f\n",sum_weights_data);
+    printf("ratio = %f\n",(xsec*lumi)/sum_weights_data);
     for (int i=0; i<t_gen->GetEntries(); i++) {
       t_gen->GetEntry(i);
 
@@ -1100,16 +1114,15 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       if(inc_id1 > 0 && inc_id1 < 5) q = *gen_q1;
       else if(inc_id2 > 0 && inc_id2 < 5) q = *gen_q2;
       if(q.Eta() < 0. ) gen_cost*=-1.;
-            //else if(inc_id2 > 0 && gen_q2.Eta() < 0.) gen_cost*=-1.;
+        
 
 
-
-            bool pass = m >= 170; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+           // bool pass = m >= 170; //&& abs(gen_lep_p->Eta()) < 2.4 && abs(gen_lep_m->Eta()) < 2.4 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
          //   && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut 
         //bool pass = abs(cm.Rapidity()) < 2.4;
 
 
-            if(pass){
+            //if(pass){
 
               if(gen_cost>0.) N_f++;
               else N_b++;
@@ -1117,8 +1130,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-              h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(sum_weights/sum_weights_data));
-            }
+              h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(xsec*lumi/sum_weights_data));
+            //}
           }
           printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));
           printf("selected %i events \n", nEvents);

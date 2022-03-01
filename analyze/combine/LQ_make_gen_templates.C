@@ -36,6 +36,15 @@ void LQ_make_gen_templates(){
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
 
+        /*
+     1 Madgraph5_aMC@NLO R2 LQ -> ee with RL couplings
+  2
+  3 LQ Mass  Y_ue  cross section(pb)  N_events  int Lum(fb-1)
+  4 1 TeV    1.0   0.1866+-0.00072    41859       224.3
+  5 2 TeV    1.0   0.08006+-0.00027   48939       611.3
+  6 2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)
+  */
+
     for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         float m_LQ = 1000.;
@@ -50,8 +59,8 @@ void LQ_make_gen_templates(){
         string genfile_n = string(genfile_name,200);
         TFile *f_gen = TFile::Open(genfile_n.c_str());
 
-        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test_020122.root");
-        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test_020122.root");
+        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test2_020122.root");
+        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test2_020122.root");
         gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -60,7 +69,7 @@ void LQ_make_gen_templates(){
         TTree *t_gen_data_SM = (TTree *) f_gen_data_SM->Get("T_lhe");
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
-        
+        float xsec = 0.1866, xsec_SM = 0.08006;
 
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
@@ -132,8 +141,8 @@ void LQ_make_gen_templates(){
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
         sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
-        nEvents_data += make_gen_data_temps(t_gen_data, h_data, year, sum_weights);
-        nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, year, sum_weights);
+        nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, year, sum_weights);
+        nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, year, sum_weights);
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
