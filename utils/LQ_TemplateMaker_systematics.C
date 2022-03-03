@@ -1041,7 +1041,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
   }
 
-  int make_gen_data_temps(TTree *t_gen, TH3F *h_data, float xsec; int year = 2016, float sum_weights = 1.){
+  int make_gen_data_temps(TTree *t_gen, TH3F *h_data, float xsec,int nevents, int year = 2016, float sum_weights = 1.){
 
     /*
      1 Madgraph5_aMC@NLO R2 LQ -> ee with RL couplings
@@ -1098,7 +1098,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }
     printf("sum_weights_data = %f\n",sum_weights_data);
-    printf("ratio = %f\n",(xsec*lumi)/sum_weights_data);
+    printf("ratio = %f\n",(xsec*lumi)/nevents);
     for (int i=0; i<t_gen->GetEntries(); i++) {
       t_gen->GetEntry(i);
 
@@ -1130,7 +1130,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-              h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(xsec*lumi/sum_weights_data));
+              h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(xsec*lumi/nevents));
             //}
           }
           printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));

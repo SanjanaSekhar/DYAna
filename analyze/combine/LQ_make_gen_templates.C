@@ -69,8 +69,8 @@ void LQ_make_gen_templates(){
         TTree *t_gen_data_SM = (TTree *) f_gen_data_SM->Get("T_lhe");
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
-        float xsec = 0.1866, xsec_SM = 0.08006;
-
+        float xsec = 0.1866, xsec_SM = 0.06132;
+	int nevents = 41859, nevents_SM = 50617;
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
         char dirname[40], title[300];
@@ -141,8 +141,8 @@ void LQ_make_gen_templates(){
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
         sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
-        nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, year, sum_weights);
-        nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, year, sum_weights);
+        nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
+        nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
