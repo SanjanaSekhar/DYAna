@@ -1130,7 +1130,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-              h_data->Fill(m, rap, gen_cost, evt_weight*1e7*(xsec*lumi/sum_weights_data));
+              h_data->Fill(m, rap, gen_cost, evt_weight*(xsec*lumi/sum_weights_data));
             //}
           }
           printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));

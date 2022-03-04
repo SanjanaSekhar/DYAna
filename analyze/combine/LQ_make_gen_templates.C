@@ -226,7 +226,10 @@ void LQ_make_gen_templates(){
         float norm = 3./(4.*(2.+alph));//norm=0.365625
         TH1F *h1_total = (TH1F *) h1_alpha->Clone("h1_total");
         h1_total->SetDirectory(0);
+        TH1F *h1_total_SM_NLO = (TH1F *) h1_alpha->Clone("h1_total_SM_NLO");
+        h1_total_SM_NLO->SetDirectory(0);
         h1_total->Scale(alph*norm);//0.01875
+        h1_total_SM_NLO->Scale(alph*norm);//0.01875
         h1_pl->Scale(norm+afb);//0.965625
         h1_mn->Scale(norm-afb);//-.234375
 
@@ -235,6 +238,8 @@ void LQ_make_gen_templates(){
         h1_total->Add(h1_mn);
         h1_total->Add(h1_LQpure_u);
         h1_total->Add(h1_LQint_u);
+        h1_total_SM_NLO->Add(h1_pl);
+        h1_total_SM_NLO->Add(h1_mn);
        // h1_total->Write();
 
 
@@ -270,7 +275,28 @@ void LQ_make_gen_templates(){
         c_mumu3->Print(title);
         delete c_mumu3;
 
+        //checking NLO vs LO
+
+
+        TCanvas *c_mumu4 = new TCanvas("c_mumu4", "Histograms", 200, 10, 900, 700);
+        h1_data_SM->SetLineColor(kBlue);
+        h1_total_SM_NLO->SetLineColor(kRed);
+        h1_data_SM->SetLineWidth(2);
+        h1_total_SM_NLO->SetLineWidth(2); 
+        h1_data_SM->SetTitle("Fake SM@NLO vs Fake SM (AFB=0.6,A0=0.05)");
+        h1_data_SM->Draw("hist");
+        h1_total_SM_NLO->Draw("hist same ");
+        TLegend *leg4 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        //leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
+        leg4->AddEntry(h1_data_SM, "Fake SM ", "l");
+        leg4->AddEntry(h1_total_SM_NLO, "Fake SM@NLO ", "l");
+        leg4->Draw();
+        sprintf(title, "../generator_stuff/plots/SM_vs_SM@NLO_%i.png", year %2000);
+        c_mumu4->Print(title);
+        delete c_mumu4;
+
         //checking LQ temps vs fake data minus SM
+
         h1_data_SM->Scale(-1.);
         h1_data->Add(h1_data_SM);
         //h1_LQint_u->Scale(-1.);
