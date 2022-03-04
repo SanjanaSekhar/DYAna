@@ -1098,7 +1098,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }
     printf("sum_weights_data = %f\n",sum_weights_data);
-    printf("ratio = %f\n",(xsec*lumi)/nevents);
+    printf("ratio = %f\n",(xsec*lumi*1e3)/sum_weights_data);
     for (int i=0; i<t_gen->GetEntries(); i++) {
       t_gen->GetEntry(i);
 
@@ -1130,7 +1130,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-              h_data->Fill(m, rap, gen_cost, evt_weight*1e4*(xsec*lumi/nevents));
+              h_data->Fill(m, rap, gen_cost, evt_weight*1e7*(xsec*lumi/sum_weights_data));
             //}
           }
           printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));
