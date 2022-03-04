@@ -950,14 +950,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
         h_raw->Fill(m, rap, gen_cost, evt_weight);
 
-        h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight *1e4); 
-        h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight *1e4); 
+        h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight); 
+        h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight ); 
 
-        h_asym->Fill(m, rap, gen_cost, reweight_a * evt_weight *1e4);
-        h_asym->Fill(m, rap, -gen_cost, -reweight_a * evt_weight *1e4);
+        h_asym->Fill(m, rap, gen_cost, reweight_a * evt_weight );
+        h_asym->Fill(m, rap, -gen_cost, -reweight_a * evt_weight );
 
-        h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *1e4); 
-        h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *1e4); 
+        h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight ); 
+        h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight ); 
 
         int flag_q=0;
         if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
@@ -1017,16 +1017,16 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
 
           if(flag_q==1){
-            h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight * 1e4 ); 
+            h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight  ); 
               //h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
-            h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight * 1e4); 
+            h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight); 
               //h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
               //uLQ temps
           if(flag_q==2){
-            h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight * 1e4); 
+            h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight); 
               //h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-            h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight * 1e4); 
+            h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight ); 
               //h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
         }
