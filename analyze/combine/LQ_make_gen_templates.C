@@ -284,9 +284,9 @@ void LQ_make_gen_templates(){
         h1_data_SM->SetLineWidth(2);
         h1_total_SM_NLO->SetLineWidth(2); 
         h1_data_SM->SetTitle("Fake SM@NLO vs Fake SM (AFB=0.6,A0=0.05)");
-        h1_total_SM_NLO->Draw("hist");
-	h1_data_SM->Draw("hist same");
-        //h1_total_SM_NLO->Draw("hist same ");
+        //h1_total_SM_NLO->Draw("hist");
+	h1_data_SM->Draw("hist ");
+        h1_total_SM_NLO->Draw("hist same ");
         TLegend *leg4 = new TLegend(0.75, 0.75, 0.9, 0.9);
         //leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
         leg4->AddEntry(h1_data_SM, "Fake SM ", "l");
