@@ -17,7 +17,7 @@ process                  alpha   fpl     fmn     LQpure_u  LQint_u
 process                  2      3       1      -3        -4		
 rate                     -1      -1      -1      -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-#normYR rateParam eeYR *  1
+normYR rateParam eeYR *  1
 #norm rateParam eeYR alpha 1
 #lq_norm rateParam eeYR LQ* 1 
 
