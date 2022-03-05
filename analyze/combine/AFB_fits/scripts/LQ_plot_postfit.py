@@ -433,7 +433,7 @@ if options.q == "u":
 elif options.q == "d":
     h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
 if options.gen_level and options.q == "u":
-    h_names = ["LQ", "alpha","fpl","fmn"]
+    h_names = ["LQ", "dy"]
 #if options.gen_level and options.q == "d":
 #    h_names = ["LQint_d", "LQpure_d", "dy"]
 #h_ss_names = ["bk", "dy", "qcd"]
@@ -449,7 +449,10 @@ label_color_map['db'] = ("WW + WZ + ZZ",  kGreen +3)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
 label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", kOrange)
 label_color_map['qcd'] = ("WJets + QCD", kRed - 7)
-label_color_map['LQ'] = ("LQpure+int", kRed - 7)
+label_color_map['LQ'] = ("LQpure+int", kBlue)
+label_color_map['alpha'] = ("alpha", kGreen)
+label_color_map['fmn'] = ("DY minus", kBlue)
+label_color_map['fpl'] = ("DY plus", kRed)
 if options.q=="u":
     label_color_map['LQint_u'] = ("LQint_u", kGreen)
     label_color_map['LQpure_u'] = ("LQpure_u", kBlue)
