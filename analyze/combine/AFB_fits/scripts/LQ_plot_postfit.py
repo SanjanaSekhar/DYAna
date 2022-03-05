@@ -460,6 +460,7 @@ if options.q=="d":
     label_color_map['LQint_d'] = ("LQint_d", kGreen)
     label_color_map['LQpure_d'] = ("LQpure_d", kBlue)
 
+
 datastyle = "pe0x0"
 
 fracs = dict()
@@ -516,18 +517,28 @@ for year in years:
                         fracs[name] += this_frac
         
         else:
-            for name in name_list:
-                if(name == "LQ"):
-                    h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
-                else:
-                    h = f_in.Get(dir_ + name)
-                    if(h != None):
-                        h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
-                if(h != None):
-                    h.Print()
-                    hist_list.append(h)
-                    label_list.append(label_color_map[name][0])
-                    color_list.append(label_color_map[name][1])
+            
+            h_sig = h_tot_sig.Clone("h_LQ_c%i_y%i" %(idx, year))
+            h_dy = f_in.Get(dir_ + "fpl")
+            if(h_dy != None):
+                h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
+            h = f_in.Get(dir_ + "fmn")
+            if(h != None):
+                h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
+                h_dy.Add(h)
+            h = f_in.Get(dir_ + "alpha")
+            if(h != None):
+                h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
+                h_dy.Add(h)
+
+            h_sig.Print()
+            hist_list.append(h_sig)
+            label_list.append(label_color_map["LQ"][0])
+            color_list.append(label_color_map["LQ"][1])
+            h_dy.Print()
+            hist_list.append(h_dy)
+            label_list.append(label_color_map["dy"][0])
+            color_list.append(label_color_map["dy"][1])
 
                 
         makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle) 
