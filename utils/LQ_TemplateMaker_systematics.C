@@ -823,7 +823,15 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
   float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
     float m_LQ, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
+
+
     printf("Making LQ+DY generator level templates\n");
+
+    float lumi;
+    if(year==2016) lumi = 35.92;
+    else if(year==2017) lumi = 41.9;
+    else lumi =  59.0;
+    
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
@@ -950,14 +958,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
         h_raw->Fill(m, rap, gen_cost, evt_weight);
 
-        h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight *1e4); 
-        h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight *1e4 ); 
+        h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight *1e3); 
+        h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight *1e3 ); 
 
-        h_asym->Fill(m, rap, gen_cost, reweight_a * evt_weight *1e4);
-        h_asym->Fill(m, rap, -gen_cost, -reweight_a * evt_weight *1e4);
+        h_asym->Fill(m, rap, gen_cost, reweight_a * evt_weight *1e3);
+        h_asym->Fill(m, rap, -gen_cost, -reweight_a * evt_weight *1e3);
 
-        h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *1e4); 
-        h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *1e4); 
+        h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *1e3); 
+        h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *1e3); 
 
         int flag_q=0;
         if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
@@ -1017,22 +1025,22 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           reweight_LQint_neg = (reweight_LQint_norm*reweight_LQint_num/LQ_denom);
 
           if(flag_q==1){
-            h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e4 ); 
+            h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3 ); 
               //h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
-            h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e4); 
+            h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
               //h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
               //uLQ temps
           if(flag_q==2){
-            h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e4); 
+            h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3); 
               //h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-            h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e4); 
+            h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
               //h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
         }
       }        
     }
-    printf("selected %i events; total evt_weight = %f \n", nEvents,sum_weights);
+    printf("selected %i events; total evt_weight = %f , xsec * lumi = %f\n", nEvents,sum_weights,61.3*lumi );
 
     //cleanup_template(h_sym);
     //fixup_template_sum(h_sym, h_asym);
@@ -1130,8 +1138,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-            //  h_data->Fill(m, rap, gen_cost, evt_weight*(xsec*1e4*lumi/nevents));
-            h_data->Fill(m, rap, gen_cost, evt_weight*(1e3*sum_weights/sum_weights_data));    
+              h_data->Fill(m, rap, gen_cost, evt_weight*(xsec*1e3*lumi/nevents));
+            //h_data->Fill(m, rap, gen_cost, evt_weight*(1e3*sum_weights/sum_weights_data));    
 	//}
           }
           printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));
