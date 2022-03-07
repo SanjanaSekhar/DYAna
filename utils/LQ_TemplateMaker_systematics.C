@@ -956,7 +956,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 
 
-        h_raw->Fill(m, rap, gen_cost, evt_weight);
+        h_raw->Fill(m, rap, gen_cost, evt_weight*1e3);
 
         h_sym->Fill(m, rap, gen_cost, reweight_s * evt_weight *1e3); 
         h_sym->Fill(m, rap, -gen_cost, reweight_s * evt_weight *1e3 ); 
@@ -1044,7 +1044,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
     //cleanup_template(h_sym);
     //fixup_template_sum(h_sym, h_asym);
-
+    printf("h_raw Integral = %f, h_sym Integral = %f\n",h_raw->Integral(),h_sym->Integral());
     return sum_weights;
 
   }
@@ -1138,7 +1138,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
               if(evt_weight >0) nEvents++;
               else  nEvents--;
 
-              h_data->Fill(m, rap, gen_cost, evt_weight*(xsec*1e3*lumi/nevents));
+              h_data->Fill(m, rap, gen_cost, evt_weight*(xsec*1e3*lumi/sum_weights_data));
+	     // h_data->Fill(m, rap, gen_cost, evt_weight*(xsec*1e3*lumi/nevents));
             //h_data->Fill(m, rap, gen_cost, evt_weight*(1e3*sum_weights/sum_weights_data));    
 	//}
           }

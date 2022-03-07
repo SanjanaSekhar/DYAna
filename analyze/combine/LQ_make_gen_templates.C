@@ -241,7 +241,7 @@ void LQ_make_gen_templates(){
         h1_total_SM_NLO->Add(h1_pl);
         h1_total_SM_NLO->Add(h1_mn);
        // h1_total->Write();
-
+	printf("h1_total_SM_NLO Integral = %f\n",h1_total_SM_NLO->Integral());
 
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
         h1_data->SetLineColor(kBlue);
