@@ -249,8 +249,8 @@ void LQ_make_gen_templates(){
         h1_data->SetLineWidth(2);
         h1_total->SetLineWidth(2); 
         h1_total->SetTitle("Fake data (SM+LQ) vs DY+LQ templates (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
-        h1_total->Draw("hist");
-        h1_data->Draw("hist same ");
+        h1_data->Draw("hist");
+        h1_total->Draw("hist same ");
         TLegend *leg1 = new TLegend(0.75, 0.75, 0.9, 0.9);
         leg1->AddEntry(h1_total, "DY+LQ_ue templates", "l");
         leg1->AddEntry(h1_data, "Fake data (y_ue=1.0)", "l");
