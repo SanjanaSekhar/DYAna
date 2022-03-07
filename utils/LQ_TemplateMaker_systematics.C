@@ -891,7 +891,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       //  if(sys_label.find("ptcutUp") != string::npos) pt_cut = 38.;
       //  if(sys_label.find("ptcutdown") != string::npos) pt_cut = 26.;
 
-
+      sum_weights+=gen_weight;
       evt_weight = gen_weight;
       cm = *gen_lep_p + *gen_lep_m;
       float pt = cm.Pt();
@@ -944,7 +944,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
          // printf("gen_weight in templates is negative = %f\n",evt_weight);
         }
 
-        sum_weights+=gen_weight;
+    //    sum_weights+=gen_weight;
 
 
         float denom = get_reweighting_denom(A0_helper, gen_cost, m, pt, rap);
@@ -1040,7 +1040,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         }
       }        
     }
-    printf("selected %i events; total evt_weight = %f , xsec * lumi = %f\n", nEvents,sum_weights,61.3*lumi );
+    printf("selected %i events; total evt_weight = %f , xsec * lumi = %f\n", nEvents,sum_weights*1e3,61.3*lumi );
 
     //cleanup_template(h_sym);
     //fixup_template_sum(h_sym, h_asym);
