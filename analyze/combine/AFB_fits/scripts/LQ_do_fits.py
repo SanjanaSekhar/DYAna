@@ -68,7 +68,7 @@ for y in [-1]:
 
             if(options.no_LQ): fit_name+="_noLQ"
 
-            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_plotfix"
+            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level"
 
             print("\n fit_name = ", fit_name)
 
