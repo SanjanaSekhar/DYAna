@@ -892,12 +892,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       //  if(sys_label.find("ptcutdown") != string::npos) pt_cut = 26.;
 
       sum_weights+=gen_weight;
-      evt_weight = gen_weight;
+      evt_weight = gen_weight * lumi;
       cm = *gen_lep_p + *gen_lep_m;
       float pt = cm.Pt();
       float rap = abs(cm.Rapidity());
 
-      bool pass = (gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+      bool pass = abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
 
           //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
