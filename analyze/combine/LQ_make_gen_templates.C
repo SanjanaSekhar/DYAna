@@ -47,6 +47,7 @@ void LQ_make_gen_templates(){
 
     for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
+        //float m_LQ = 1000.;
         float m_LQ = 1000.;
 
         char fout_name[200];
@@ -58,8 +59,10 @@ void LQ_make_gen_templates(){
         sprintf(genfile_name,"../analyze/output_files/DY%i_gen_level_aug4.root",year%2000);
         string genfile_n = string(genfile_name,200);
         TFile *f_gen = TFile::Open(genfile_n.c_str());
-
-        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test2_020122.root");
+	char lhe_name[200];
+	sprintf(lhe_name,"../analyze/root_files/LQ_m%i_test2_020122.root",int(m_LQ));
+	string lhe_n = string(lhe_name,200);
+        TFile *f_gen_data = TFile::Open(lhe_n.c_str());
         TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test2_020122.root");
         gROOT->SetBatch(1);
 
@@ -69,6 +72,7 @@ void LQ_make_gen_templates(){
         TTree *t_gen_data_SM = (TTree *) f_gen_data_SM->Get("T_lhe");
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
+        //float xsec = 0.1866, xsec_SM = 0.06132;
         float xsec = 0.1866, xsec_SM = 0.06132;
 	int nevents = 41859, nevents_SM = 50617;
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
@@ -143,6 +147,15 @@ void LQ_make_gen_templates(){
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
+
+        //ratio of NLO SM to LO SM
+        
+        float k_factor = h_raw->Integral() / h_data_SM->Integral();
+
+        printf("k-factor is %.3f \n", k_factor);
+        h_data->Scale(k_factor);
+        printf("h_data integral %.2f, h_raw interal %.2f \n", h_data->Integral(), h_raw->Integral());
+        printf("h_LQpure_u %.2f h_LQint_u %.2f \n", h_LQpure_u->Integral(), h_LQint_u->Integral());
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
@@ -249,10 +262,10 @@ void LQ_make_gen_templates(){
         for(int i = 1; i <= h1_data->GetNbinsX(); i++){
         float SM_NLO_content = h1_total_SM_NLO->GetBinContent(i);
         float SM_content = h1_data_SM->GetBinContent(i);
-        printf("Bin %i, ratio of SM@NLO to SM = %f\n",i,SM_NLO_content/SM_content);
+        printf("Bin %i, ratio of SM@NLO to SM = %f\n",i, SM_NLO_content/SM_content);
         h1_divide->SetBinContent(i,SM_NLO_content/SM_content);
         float SMLQ_content = h1_data->GetBinContent(i);
-        h1_data->SetBinContent(i,SMLQ_content*SM_NLO_content/SM_content);
+        h1_data->SetBinContent(i, SMLQ_content*SM_NLO_content/SM_content);
     }
 
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
