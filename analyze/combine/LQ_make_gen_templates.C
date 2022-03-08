@@ -246,13 +246,13 @@ void LQ_make_gen_templates(){
     // scale SM+LQ data to NLO SM content
     TH1F *h1_divide = (TH1F *) h1_data_SM->Clone("h1_divide");
     h1_divide->SetDirectory(0);
-        for(int i = 1; i <= h1_data->GetNBinsX(); i++){
+        for(int i = 1; i <= h1_data->GetNbinsX(); i++){
         float SM_NLO_content = h1_total_SM_NLO->GetBinContent(i);
         float SM_content = h1_data_SM->GetBinContent(i);
-        printf("Bin %i, ratio of SM@NLO to SM = %f\n",SM_NLO_content/SM_content);
+        printf("Bin %i, ratio of SM@NLO to SM = %f\n",i,SM_NLO_content/SM_content);
         h1_divide->SetBinContent(i,SM_NLO_content/SM_content);
         float SMLQ_content = h1_data->GetBinContent(i);
-        h1_data->SetBinContent(SMLQ_content*SM_NLO_content/SM_content);
+        h1_data->SetBinContent(i,SMLQ_content*SM_NLO_content/SM_content);
     }
 
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
