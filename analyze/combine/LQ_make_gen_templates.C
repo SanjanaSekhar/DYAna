@@ -48,7 +48,7 @@ void LQ_make_gen_templates(){
     for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         //float m_LQ = 1000.;
-        float m_LQ = 1000.;
+        float m_LQ = 2000.;
 
         char fout_name[200];
         sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
