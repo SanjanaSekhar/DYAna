@@ -73,8 +73,8 @@ void LQ_make_gen_templates(){
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
         //float xsec = 0.1866, xsec_SM = 0.06132;
-        float xsec = 0.1866, xsec_SM = 0.06132;
-	int nevents = 41859, nevents_SM = 50617;
+        float xsec = 0.08, xsec_SM = 0.06132;
+	int nevents = 48939, nevents_SM = 50617;
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
         char dirname[40], title[300];
