@@ -51,8 +51,8 @@ void LQ_make_gen_templates(){
         float m_LQ = 2000.;
 
         char fout_name[200];
-        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-       // sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -154,6 +154,7 @@ void LQ_make_gen_templates(){
 
         printf("k-factor is %.3f \n", k_factor);
         h_data->Scale(k_factor);
+        h_data_SM->Scale(k_factor);
         printf("h_data integral %.2f, h_raw interal %.2f \n", h_data->Integral(), h_raw->Integral());
         printf("h_LQpure_u %.2f h_LQint_u %.2f \n", h_LQpure_u->Integral(), h_LQint_u->Integral());
 
@@ -221,7 +222,7 @@ void LQ_make_gen_templates(){
 
             //h_uncut->Write();
        // h1_data->Scale(.5);
-        h1_data->Write();
+        h1_data_SM->Write();
         h1_pl->Write();
         h1_mn->Write();
         h1_alpha->Write();
