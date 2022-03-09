@@ -27,7 +27,7 @@
 //#include "../../utils/LQ_TemplateMaker_systematics.C"
 #include "LQ_TemplateUtils.h"
 
-
+#include "THStack.h"
 
 
 
@@ -344,6 +344,38 @@ void LQ_make_gen_templates(){
         sprintf(title, "../generator_stuff/plots/data_minus_SM_%i.png", year %2000);
         c_mumu2->Print(title);
         delete c_mumu2;
+
+        THStack *hs = new THStack("hs","");
+        THStack->SetDirectory(0);
+        h1_pl->SetLineColor(kBlue);
+        h1_pl->SetFillColor(kBlue);
+        *hs->Add(h1_pl);
+        h1_mn->SetLineColor(kRed);
+        h1_mn->SetFillColor(kRed);
+        *hs->Add(h1_mn);
+        h1_alpha->SetLineColor(kGreen);
+        h1_alpha->SetFillColor(kGreen);
+        *hs->Add(h1_alpha);
+
+         TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
+        //h1_data->SetLineColor(kBlue);
+        //h1_LQpure_u->SetLineColor(kRed);
+        //h1_data->SetLineWidth(2);
+        //h1_LQpure_u->SetLineWidth(2); 
+        hs->SetTitle("testing THStack");
+        hs->Draw();
+        //h1_LQpure_u->Draw("hist same ");
+        TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        //leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
+        leg5->AddEntry(h1_pl, "Plus template", "l");
+        leg5->AddEntry(h1_mn, "Minus template", "l");
+        leg5->AddEntry(h1_alpha, "Alpha template", "l");
+        leg5->Draw();
+        sprintf(title, "testing_for_Tamas.png");
+        c_mumu5->Print(title);
+        delete c_mumu5;
+
+        
 
             //h_uncut->Reset();
             //h_raw->Reset();
