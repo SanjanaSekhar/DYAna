@@ -1,17 +1,15 @@
-Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
-imax 3 number of bins
+Combination of Y17=cards/combined_fit_y17_LQ.txt
+imax 1 number of bins
 jmax 4 number of processes minus 1
 kmax 0 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm2000_SM_gen_templates16_020222.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
 shapes *    Y17  cards/LQm2000_SM_gen_templates17_020222.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm2000_SM_gen_templates18_020222.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          Y16    Y17    Y18  
-observation  -1     -1     -1   
+bin          Y17  
+observation  -1   
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          Y16       Y16       Y16       Y16       Y16       Y17       Y17       Y17       Y17       Y17       Y18       Y18       Y18       Y18       Y18     
-process      LQpure_u  LQint_u   fmn       alpha     fpl       LQpure_u  LQint_u   fmn       alpha     fpl       LQpure_u  LQint_u   fmn       alpha     fpl     
-process      -1        0         1         2         3         -1        0         1         2         3         -1        0         1         2         3       
-rate         -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1      
+bin          Y17       Y17       Y17       Y17       Y17     
+process      LQpure_u  LQint_u   fmn       alpha     fpl     
+process      -1        0         1         2         3       
+rate         -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
