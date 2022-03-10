@@ -898,6 +898,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       float rap = abs(cm.Rapidity());
 
       bool pass = abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+      pass = pass and (abs(inc_id1)==1 or abs(inc_id1)==2 or abs(inc_id1)==21)
+      pass = pass and (abs(inc_id2)==1 or abs(inc_id2)==2 or abs(inc_id2)==21)
 
           //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
@@ -932,10 +934,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
             */
            // h_uncut->Fill(cost_st, evt_weight);
-      int flag_q=0;
-        if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
-        if((inc_id1 == 2 && inc_id2 == -2)||(inc_id1 == -2 && inc_id2 == 2)) flag_q=2;
-        if(flag_q!=0 and pass){
+      if(pass){
 
 
         float gen_cost = cost_st;
@@ -970,7 +969,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *1e3); 
         h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *1e3); 
 
-        
+        int flag_q=0;
+        if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
+        if((inc_id1 == 2 && inc_id2 == -2)||(inc_id1 == -2 && inc_id2 == 2)) flag_q=2;
+        if(flag_q!=0){ 
 
           if(flag_q==1){
             Q_q=Q_d;
