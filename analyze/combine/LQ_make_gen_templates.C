@@ -220,23 +220,7 @@ void LQ_make_gen_templates(){
 
         make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
         printf("Finished make_pl_mn\n");
-        /*
-        float scale_ = nEvents / h1_raw->Integral();
-
-        h1_raw->Scale(scale_);
-        h1_pl->Scale(scale_);
-        h1_mn->Scale(scale_);
-        h1_alpha->Scale(scale_);
-        h1_LQpure_u->Scale(scale_);
-        h1_LQpure_d->Scale(scale_);
-        h1_LQint_u->Scale(scale_);
-        h1_LQint_d->Scale(scale_);
-
-
-        scale_ = nEvents_data / h1_data->Integral();
-        h1_data->Scale(scale_);
-        */
-
+      
         
         
 
@@ -280,21 +264,7 @@ void LQ_make_gen_templates(){
         h1_total_SM_NLO->Add(h1_pl);
         h1_total_SM_NLO->Add(h1_mn);
        // h1_total->Write();
-	//printf("h1_total_SM_NLO Integral = %f\n",h1_total_SM_NLO->Integral());
-
-    // scale SM+LQ data to NLO SM content
-        /*
-    TH1F *h1_divide = (TH1F *) h1_data_SM->Clone("h1_divide");
-    h1_divide->SetDirectory(0);
-        for(int i = 1; i <= h1_data->GetNbinsX(); i++){
-        float SM_NLO_content = h1_total_SM_NLO->GetBinContent(i);
-        float SM_content = h1_data_SM->GetBinContent(i);
-      //  printf("Bin %i, ratio of SM@NLO to SM = %f\n",i, SM_NLO_content/SM_content);
-        h1_divide->SetBinContent(i,SM_NLO_content/SM_content);
-        float SMLQ_content = h1_data->GetBinContent(i);
-        h1_data->SetBinContent(i, SMLQ_content*SM_NLO_content/SM_content);
-    }
-*/
+	
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
         h1_data->SetLineColor(kBlue);
         h1_total->SetLineColor(kRed);

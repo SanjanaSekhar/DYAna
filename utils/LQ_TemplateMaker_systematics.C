@@ -932,7 +932,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
             */
            // h_uncut->Fill(cost_st, evt_weight);
-      if(pass){
+      int flag_q=0;
+        if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
+        if((inc_id1 == 2 && inc_id2 == -2)||(inc_id1 == -2 && inc_id2 == 2)) flag_q=2;
+        if(flag_q!=0 and pass){
 
 
         float gen_cost = cost_st;
@@ -967,10 +970,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         h_alpha->Fill(m, rap, gen_cost, reweight_alpha * evt_weight *1e3); 
         h_alpha->Fill(m, rap, -gen_cost, reweight_alpha * evt_weight *1e3); 
 
-        int flag_q=0;
-        if((inc_id1 == 1 && inc_id2 == -1)||(inc_id1 == -1 && inc_id2 == 1)) flag_q=1;
-        if((inc_id1 == 2 && inc_id2 == -2)||(inc_id1 == -2 && inc_id2 == 2)) flag_q=2;
-        if(flag_q!=0){ 
+        
 
           if(flag_q==1){
             Q_q=Q_d;
