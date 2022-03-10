@@ -45,11 +45,11 @@ void LQ_make_gen_templates(){
   6 2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)
   */
 
-    for(int year=2016;year<=2018;year++){
+//    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         //float m_LQ = 1000.;
         float m_LQ = 2000.;
-
+        int year = 2017;
         char fout_name[200];
         //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
         sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
@@ -64,7 +64,7 @@ void LQ_make_gen_templates(){
 	string lhe_n = string(lhe_name,200);
         TFile *f_gen_data = TFile::Open(lhe_n.c_str());
         TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test2_020122.root");
-        gROOT->SetBatch(1);
+        //gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
         TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
@@ -155,8 +155,33 @@ void LQ_make_gen_templates(){
         printf("k-factor is %.3f \n", k_factor);
         h_data->Scale(k_factor);
         h_data_SM->Scale(k_factor);
+
+        //float k_factor_arr[9] = {0.,0.,0.,0.,0.,0.,0.,0.,0.};
+        for(int i = 1; i <= h_raw->GetNbinsX(); i++){
+            for( int j = 1; j <= h_raw->GetNbinsY(); j++){
+
+                float sum_bins_LO = 0., sum_bins_NLO = 0.;
+                for(int k = 1; k <= h_raw->GetNbinsZ(); k++){
+
+                    sum_bins_LO+=h_data_SM->GetBinContent(i,j,k);
+                    sum_bins_NLO+=h_raw->GetBinContent(i,j,k);
+                }
+                //extract k_factor for each mass and rap bin
+                k_factor = sum_bins_NLO/sum_bins_LO;
+                printf("k-factor %i = %f\n",i*n_lq_m_bins+j,k_factor);
+                for(k = 1; k <= h_data->GetNbinsZ(); k++){
+                    float SM_content = h_data_SM->GetBinContent(i,j,k);
+                    float SMLQ_content = h_data->GetBinContent(i,j,k);
+                    h_data->SetBinContent(i,j,k SMLQ_content*k_factor);
+                    h_data_SM->SetBinContent(i,j,k,SM_content*k_factor);
+                }
+            }
+        }
+
         printf("h_data integral %.2f, h_raw interal %.2f \n", h_data->Integral(), h_raw->Integral());
         printf("h_LQpure_u %.2f h_LQint_u %.2f \n", h_LQpure_u->Integral(), h_LQint_u->Integral());
+
+
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
@@ -255,20 +280,21 @@ void LQ_make_gen_templates(){
         h1_total_SM_NLO->Add(h1_pl);
         h1_total_SM_NLO->Add(h1_mn);
        // h1_total->Write();
-	printf("h1_total_SM_NLO Integral = %f\n",h1_total_SM_NLO->Integral());
+	//printf("h1_total_SM_NLO Integral = %f\n",h1_total_SM_NLO->Integral());
 
     // scale SM+LQ data to NLO SM content
+        /*
     TH1F *h1_divide = (TH1F *) h1_data_SM->Clone("h1_divide");
     h1_divide->SetDirectory(0);
         for(int i = 1; i <= h1_data->GetNbinsX(); i++){
         float SM_NLO_content = h1_total_SM_NLO->GetBinContent(i);
         float SM_content = h1_data_SM->GetBinContent(i);
-        printf("Bin %i, ratio of SM@NLO to SM = %f\n",i, SM_NLO_content/SM_content);
+      //  printf("Bin %i, ratio of SM@NLO to SM = %f\n",i, SM_NLO_content/SM_content);
         h1_divide->SetBinContent(i,SM_NLO_content/SM_content);
         float SMLQ_content = h1_data->GetBinContent(i);
         h1_data->SetBinContent(i, SMLQ_content*SM_NLO_content/SM_content);
     }
-
+*/
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
         h1_data->SetLineColor(kBlue);
         h1_total->SetLineColor(kRed);
@@ -344,7 +370,7 @@ void LQ_make_gen_templates(){
         sprintf(title, "../generator_stuff/plots/data_minus_SM_%i.png", year %2000);
         c_mumu2->Print(title);
         delete c_mumu2;
-
+/*
         THStack *hs = new THStack("hs","");
         THStack->SetDirectory(0);
         h1_pl->SetLineColor(kBlue);
@@ -374,7 +400,7 @@ void LQ_make_gen_templates(){
         sprintf(title, "testing_for_Tamas.png");
         c_mumu5->Print(title);
         delete c_mumu5;
-
+*/
         
 
             //h_uncut->Reset();
@@ -398,4 +424,4 @@ void LQ_make_gen_templates(){
         printf("Templates written to %s \n", fout_n.c_str());
 
     }
-}
+//}
