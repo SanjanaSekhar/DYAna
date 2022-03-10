@@ -898,8 +898,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
       float rap = abs(cm.Rapidity());
 
       bool pass = abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
-      pass = pass and (abs(inc_id1)==1 or abs(inc_id1)==2 or abs(inc_id1)==21)
-      pass = pass and (abs(inc_id2)==1 or abs(inc_id2)==2 or abs(inc_id2)==21)
+      pass = pass and (abs(inc_id1)==1 or abs(inc_id1)==2 or abs(inc_id1)==21);
+      pass = pass and (abs(inc_id2)==1 or abs(inc_id2)==2 or abs(inc_id2)==21);
 
           //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
         //bool pass = abs(cm.Rapidity()) < 2.4;
