@@ -13,3 +13,8 @@ process      LQpure_u  LQint_u   fmn       alpha     fpl
 process      -1        0         1         2         3       
 rate         -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
+norm17        rateParam Y17 LQint_u 1  
+norm17        rateParam Y17 alpha 1  
+norm17        rateParam Y17 LQpure_u 1  
+norm17        rateParam Y17 fmn 1  
+norm17        rateParam Y17 fpl 1  
