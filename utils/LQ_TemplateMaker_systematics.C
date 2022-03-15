@@ -1039,16 +1039,16 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
           if(flag_q==1){
             h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3 ); 
-            if(only_sym) h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
+            if(only_sym) h_LQpure_d->Fill(m, rap, -gen_cost, reweight_LQpure_neg * evt_weight*1e3 );
             h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
-            if(only_sym) h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            if(only_sym) h_LQint_d->Fill(m, rap, -gen_cost, reweight_LQint_neg * evt_weight*1e3);
           }
               //uLQ temps
           if(flag_q==2){
             h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3); 
-            if(only_sym) h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+            if(only_sym) h_LQpure_u->Fill(m, rap, -gen_cost, reweight_LQpure_neg * evt_weight *1e3);
             h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
-            if(only_sym) h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            if(only_sym) h_LQint_u->Fill(m, rap, -gen_cost, reweight_LQint_neg * evt_weight*1e3);
           }
         }
       }        
