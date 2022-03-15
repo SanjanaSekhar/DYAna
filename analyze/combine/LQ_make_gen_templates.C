@@ -204,6 +204,26 @@ void LQ_make_gen_templates(){
         h1_LQpure_d = convert3d(h_LQpure_d);
         h1_LQint_d = convert3d(h_LQint_d);
         //==============================================================================================================================
+
+        TF1 *lq_check = new TF1("LQ shape",check_analytical(cost, m_LQ, 1.0, 500.*500. , Q_u, caq_u, cvq_u), -1.,1.);
+
+        TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
+        //h1_LQint_test_u->SetLineColor(kBlue);
+        //h1_LQint_u->SetLineColor(kRed);
+        //h1_LQint_test_u->SetLineWidth(2);
+        //h1_LQint_u->SetLineWidth(2); 
+        lq_check->SetTitle("LQpure_u+LQint_u, m_ll = 500, y_ue=1.0");
+        lq_check->Draw();
+        //h1_LQint_u->Draw("hist same ");
+        //TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        //leg6->AddEntry(h1_LQint_u, "asym denom", "l");
+        //leg6->AddEntry(h1_LQint_test_u, "sym denom", "l");
+        //leg6->Draw();
+        sprintf(title, "../generator_stuff/plots/LQ_shapecheck.png");
+        c_mumu6->Print(title);
+        delete c_mumu6;
+
+
         // testing the symmetric denominator
         /*
 	bool only_sym = true;
@@ -246,21 +266,7 @@ void LQ_make_gen_templates(){
         c_mumu5->Print(title);
         delete c_mumu5;
 
-        TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
-        h1_LQint_test_u->SetLineColor(kBlue);
-        h1_LQint_u->SetLineColor(kRed);
-        h1_LQint_test_u->SetLineWidth(2);
-        h1_LQint_u->SetLineWidth(2); 
-        h1_LQint_test_u->SetTitle("LQint_u");
-        h1_LQint_test_u->Draw("hist");
-        h1_LQint_u->Draw("hist same ");
-        TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
-        leg6->AddEntry(h1_LQint_u, "asym denom", "l");
-        leg6->AddEntry(h1_LQint_test_u, "sym denom", "l");
-        leg6->Draw();
-        sprintf(title, "../generator_stuff/plots/LQint_u_symd_vs_asymd.png");
-        c_mumu6->Print(title);
-        delete c_mumu6;
+        
 
 
 */        

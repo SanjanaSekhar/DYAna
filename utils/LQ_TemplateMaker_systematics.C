@@ -828,8 +828,20 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     return;
   }
 
-//make templates based on generator level samples (used for assessing impact of
-//fiducial cuts on AFB
+  float check_analytical(float cost, float m_LQ, float y_lq, float s, float Q_q, float caq, float cvq){
+        //pure LQ term
+        float XS3 = (pow((cost-1),2)*s*pow(y_lq,4))/(128*pi*(pow(2*pow(m_LQ,2)+ s*(1-cost),2)));
+        //LQ gamma interference
+        float XS67 = (alpha*Q_q*pow(y_lq,2)*pow((cost-1),2))/(16*(2*pow(m_LQ,2)+s*(1-cost)));
+        //LQ Z0 interference
+        float XS89_num = (G_F*pow(m_Z0,2)*s*pow(y_lq,2)*(cal+cvl)*(caq-cvq)*pow((cost-1),2)*(pow(m_Z0,2)-s));
+        float XS89_denom = (128*sqrt(2)*M_PI*(2*pow(m_LQ,2)+s*(1-cost))*(pow((pow(m_Z0,2)-s),2)+pow(g_z*m_Z0,2)));
+        float XS89 = XS89_num / XS89_denom;
+        return XS3+XS67+XS89;
+  }
+
+//make templates based on generator level samples 
+
   float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
     float m_LQ, bool only_sym = false, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
@@ -845,11 +857,8 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     TLorentzVector *gen_lep_p(0), *gen_lep_m(0), cm;
     float gen_weight, m, cost, cost_st;
     int inc_id1, inc_id2;
-    float mu_R_up, mu_R_down, mu_F_up, mu_F_down, mu_RF_up, mu_RF_down;
     float evt_weight;
-    float pdf_weights[60];
-    int  do_ptrw_sys = 0;
-    Bool_t sig_event(1);
+ 
 
     t_gen->SetBranchAddress("gen_p", &gen_lep_p);
     t_gen->SetBranchAddress("gen_m", &gen_lep_m);
@@ -859,37 +868,13 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     t_gen->SetBranchAddress("cost", &cost);
     t_gen->SetBranchAddress("cost_st", &cost_st);
     t_gen->SetBranchAddress("gen_weight", &gen_weight);
-    t_gen->SetBranchAddress("sig_event", &sig_event);
-    t_gen->SetBranchAddress("mu_R_up", &mu_R_up);
-    t_gen->SetBranchAddress("mu_R_down", &mu_R_down);
-    t_gen->SetBranchAddress("mu_F_up", &mu_F_up);
-    t_gen->SetBranchAddress("mu_F_down", &mu_F_down);
-    t_gen->SetBranchAddress("mu_RF_up", &mu_RF_up);
-    t_gen->SetBranchAddress("mu_RF_down", &mu_RF_down);
-    //t_gen->SetBranchAddress("pdf_weights", &pdf_weights);
+
     t_gen->SetBranchAddress("inc_id1", &inc_id1);
     t_gen->SetBranchAddress("inc_id2", &inc_id2);
 
     A0_helpers A0_helper; 
     setup_A0_helper(&A0_helper, year);
-    /*
-    ptrw_helper ptrw_SFs; 
-    setup_ptrw_helper(&ptrw_SFs, year);
-
-
-    if(sys_label.find("ptrw") != string::npos){
-        int foo;
-        if(  sys_label.find("Up") != string::npos){
-            sscanf(sys_label.c_str(), "ptrw%ibUp", &do_ptrw_sys);
-        }
-        else{
-            sscanf(sys_label.c_str(), "ptrw%ibDown", &do_ptrw_sys);
-            do_ptrw_sys *= -1;
-        }
-    printf("ptrw sys %i \n", do_ptrw_sys);
-    }
-
-  */
+ 
     //float pt_cut = 26.;
     float pt_cut = 30.;
     float sum_weights = 0.;
@@ -911,39 +896,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
       pass = pass and (abs(inc_id1)==1 or abs(inc_id1)==2 or abs(inc_id1)==21);
       pass = pass and (abs(inc_id2)==1 or abs(inc_id2)==2 or abs(inc_id2)==21);
 
-          //  && max(gen_lep_m->Pt(), gen_lep_p->Pt()) > pt_cut && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
-        //bool pass = abs(cm.Rapidity()) < 2.4;
-            /*
-            if(sys_label == string("RENORMUp")) evt_weight *= mu_R_up;
-            else if(sys_label == string ("RENORMDown")) evt_weight *= mu_R_down;
-            else if(sys_label == string ("FACUp")) evt_weight *= mu_F_down;
-            else if(sys_label == string ("FACDown")) evt_weight *= mu_F_down;
-            else if(sys_label == string ("REFACUp")) evt_weight *= mu_RF_down;
-            else if(sys_label == string ("REFACDown"))  evt_weight *= mu_RF_down;
-            else if(sys_label.find("pdf") != string::npos){
-                int n_pdf = 60;
-                float comb = 0.;
-                for(int j=0; j<n_pdf; j++){
-                    float diff = abs(1 - pdf_weights[j]);
-                    if(diff >= 1.) diff = 0.9;
-                    comb += pow(diff,2);
-                }
-                comb = sqrt(comb);
-                if(sys_label.find("Up") != string::npos) evt_weight *= abs((1+comb));
-                if(sys_label.find("Down") != string::npos) evt_weight *= abs((1-comb));
-            }
-            else if (sys_label.find("ptrw") == string::npos && sys_label.find("ptcut") == string::npos && sys_label != string("")){
-                printf("Can't find sys %s \n", sys_label.c_str());
-            }
-
-            if(do_ptrw){
-                float ptrw = get_ptrw_SF(ptrw_SFs, m, pt, do_ptrw_sys); 
-                evt_weight *= ptrw;
-            }
-
-
-            */
-           // h_uncut->Fill(cost_st, evt_weight);
+ 
       if(pass){
 
 
@@ -1061,6 +1014,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     return sum_weights;
 
   }
+
 
   int make_gen_data_temps(TTree *t_gen, TH3F *h_data, float xsec,int nevents, int year = 2016, float sum_weights = 1.){
 
