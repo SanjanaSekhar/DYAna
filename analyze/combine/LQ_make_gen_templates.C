@@ -51,8 +51,8 @@ void LQ_make_gen_templates(){
         float m_LQ = 2000.;
         int year = 2017;
         char fout_name[200];
-        //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-        sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        //sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -143,7 +143,7 @@ void LQ_make_gen_templates(){
         int nEvents_data = 0;
 
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
-        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ,false, do_ptrw, year, sys);
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, true, do_ptrw, year, sys);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
@@ -187,7 +187,10 @@ void LQ_make_gen_templates(){
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
         h_alpha->Scale(0.5);
-        
+        h_LQpure_u->Scale(0.5);
+        h_LQpure_d->Scale(0.5);
+        h_LQint_u->Scale(0.5);
+        h_LQint_d->Scale(0.5);
         printf("Starting convert3d\n");
 
         h1_data = convert3d(h_data);
@@ -202,7 +205,8 @@ void LQ_make_gen_templates(){
         h1_LQint_d = convert3d(h_LQint_d);
         //==============================================================================================================================
         // testing the symmetric denominator
-        bool only_sym = true;
+        /*
+	bool only_sym = true;
 
         h_LQpure_u->Reset();
         h_LQpure_d->Reset();
@@ -259,7 +263,7 @@ void LQ_make_gen_templates(){
         delete c_mumu6;
 
 
-        
+*/        
         //===================================================================================================================================
         printf("Starting make_pl_mn\n");
             //h1_sym->Print("range");
@@ -288,7 +292,7 @@ void LQ_make_gen_templates(){
 
             //h_uncut->Write();
        // h1_data->Scale(.5);
-        h1_data_SM->Write();
+        h1_data->Write();
         h1_pl->Write();
         h1_mn->Write();
         h1_alpha->Write();
