@@ -232,8 +232,8 @@ void LQ_make_gen_templates(){
         h1_LQpure_test_u->SetLineWidth(2);
         h1_LQpure_u->SetLineWidth(2); 
         h1_LQpure_u->SetTitle("LQpure_u");
-        h1_LQpure_u->Draw("hist");
-        h1_LQpure_test_u->Draw("hist same ");
+        h1_LQpure_test_u->Draw("hist");
+        h1_LQpure_u->Draw("hist same ");
         TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
         leg5->AddEntry(h1_LQpure_u, "asym denom", "l");
         leg5->AddEntry(h1_LQpure_test_u, "sym denom", "l");
@@ -248,8 +248,8 @@ void LQ_make_gen_templates(){
         h1_LQint_test_u->SetLineWidth(2);
         h1_LQint_u->SetLineWidth(2); 
         h1_LQint_u->SetTitle("LQint_u");
-        h1_LQint_u->Draw("hist");
-        h1_LQint_test_u->Draw("hist same ");
+        h1_LQint_test_u->Draw("hist");
+        h1_LQint_u->Draw("hist same ");
         TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
         leg6->AddEntry(h1_LQint_u, "asym denom", "l");
         leg6->AddEntry(h1_LQint_test_u, "sym denom", "l");
