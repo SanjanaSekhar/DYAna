@@ -486,10 +486,10 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
-      //h_LQpure_u->Scale(0.5);
-      //h_LQint_u->Scale(0.5);
-      //h_LQpure_d->Scale(0.5);
-      //h_LQint_d->Scale(0.5);
+      h_LQpure_u->Scale(0.5);
+      h_LQint_u->Scale(0.5);
+      h_LQpure_d->Scale(0.5);
+      h_LQint_d->Scale(0.5);
 
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
@@ -981,8 +981,8 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
           //testing LQ shapes
           if(test_shapes and flag_q==2 and m >= 500. and m <= 525. ){
-            h1_LQpure_test->Fill(gen_cost,reweight_LQpure_pos);
-            h1_LQint_test->Fill(gen_cost,reweight_LQint_pos);
+            h1_LQpure_test->Fill(gen_cost,reweight_LQpure_pos * evt_weight);
+            h1_LQint_test->Fill(gen_cost,reweight_LQint_pos * evt_weight);
           }
 
 
