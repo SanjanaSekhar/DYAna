@@ -830,7 +830,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
   float check_analytical(float cost, float m_LQ, float y_lq, float s, float Q_q, float caq, float cvq){
         //pure LQ term
-        float XS3 = (pow((cost-1),2)*s*pow(y_lq,4))/(128*pi*(pow(2*pow(m_LQ,2)+ s*(1-cost),2)));
+        float XS3 = (pow((cost-1),2)*s*pow(y_lq,4))/(128*M_PI*(pow(2*pow(m_LQ,2)+ s*(1-cost),2)));
         //LQ gamma interference
         float XS67 = (alpha*Q_q*pow(y_lq,2)*pow((cost-1),2))/(16*(2*pow(m_LQ,2)+s*(1-cost)));
         //LQ Z0 interference

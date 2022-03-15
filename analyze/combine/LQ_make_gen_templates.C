@@ -205,8 +205,13 @@ void LQ_make_gen_templates(){
         h1_LQint_d = convert3d(h_LQint_d);
         //==============================================================================================================================
 
-        TF1 *lq_check = new TF1("LQ shape",check_analytical(cost, m_LQ, 1.0, 500.*500. , Q_u, caq_u, cvq_u), -1.,1.);
-
+        TF1 *lq_check = new TF1("LQ shape","check_analytical(x, [0], [1], [2], [3], [4], [5])", -1.,1.);
+	lq_check->SetParameter(0,m_LQ);
+	lq_check->SetParameter(1,1.0);
+	lq_check->SetParameter(2,500.*500.);
+	lq_check->SetParameter(3,Q_u);
+	lq_check->SetParameter(4,caq_u);
+	lq_check->SetParameter(5,cvq_u);
         TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
         //h1_LQint_test_u->SetLineColor(kBlue);
         //h1_LQint_u->SetLineColor(kRed);
