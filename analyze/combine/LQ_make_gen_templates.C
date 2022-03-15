@@ -149,14 +149,15 @@ void LQ_make_gen_templates(){
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
 
         //ratio of NLO SM to LO SM
-        
+        // k factor extracted for all m, rap
         float k_factor = h_raw->Integral() / h_data_SM->Integral();
 
         printf("k-factor is %.3f \n", k_factor);
-        h_data->Scale(k_factor);
-        h_data_SM->Scale(k_factor);
+       // h_data->Scale(k_factor);
+       // h_data_SM->Scale(k_factor);
 
-        //float k_factor_arr[9] = {0.,0.,0.,0.,0.,0.,0.,0.,0.};
+        // k factor extracted for 3*3 mass*rap bins
+       
         for(int i = 1; i <= h_raw->GetNbinsX(); i++){
             for( int j = 1; j <= h_raw->GetNbinsY(); j++){
 
