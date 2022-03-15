@@ -246,7 +246,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           return nEvents;
         }
 
-float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=true){
+float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=false){
  float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
     //pure Z0 term
  float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
@@ -981,8 +981,8 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
           //testing LQ shapes
           if(test_shapes and flag_q==2 and m >= 500. and m <= 525. ){
-            h1_LQpure_test->Fill(gen_cost,reweight_LQpure_pos*LQ_denom);
-            h1_LQint_test->Fill(gen_cost,reweight_LQint_pos*LQ_denom);
+            h1_LQpure_test->Fill(gen_cost,reweight_LQpure_pos);
+            h1_LQint_test->Fill(gen_cost,reweight_LQint_pos);
           }
 
 

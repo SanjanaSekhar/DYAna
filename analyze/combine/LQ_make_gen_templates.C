@@ -133,10 +133,10 @@ void LQ_make_gen_templates(){
         h_raw->SetDirectory(0);
 
         sprintf(title, "ee%i_LQpure_test", year %2000);
-        TH1F* h1_LQpure_test = new TH1F(title, "LQ test template", n_cost_bins, cost_bins);
+        TH1F* h1_LQpure_test = new TH1F(title, "LQ test template", -1.,1.,25);
         h1_LQpure_test->SetDirectory(0);
         sprintf(title, "ee%i_LQint_test", year %2000);
-        TH1F* h1_LQint_test = new TH1F(title, "LQ test template", n_cost_bins, cost_bins);
+        TH1F* h1_LQint_test = new TH1F(title, "LQ test template", -1.,1.,25);
         h1_LQint_test->SetDirectory(0);
 
         TH1F *h1_raw, *h1_data, *h1_data_SM, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d, *h1_LQpure_test_u, *h1_LQint_test_u,*h1_LQpure_test_d, *h1_LQint_test_d;
