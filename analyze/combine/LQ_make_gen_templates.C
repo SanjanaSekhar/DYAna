@@ -132,7 +132,7 @@ void LQ_make_gen_templates(){
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_raw->SetDirectory(0);
 
-        TH1F *h1_raw, *h1_data, *h1_data_SM, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
+        TH1F *h1_raw, *h1_data, *h1_data_SM, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d, *h1_LQpure_test_u, *h1_LQint_test_u,*h1_LQpure_test_d, *h1_LQint_test_d;
 
 
         
@@ -182,15 +182,12 @@ void LQ_make_gen_templates(){
         printf("h_data integral %.2f, h_raw interal %.2f \n", h_data->Integral(), h_raw->Integral());
         printf("h_LQpure_u %.2f h_LQint_u %.2f \n", h_LQpure_u->Integral(), h_LQint_u->Integral());
 
-
+        
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
         h_alpha->Scale(0.5);
-           // h_LQpure_u->Scale(0.5);
-           // h_LQpure_d->Scale(0.5);
-           // h_LQint_u->Scale(0.5);
-           // h_LQint_d->Scale(0.5);
+        
         printf("Starting convert3d\n");
 
         h1_data = convert3d(h_data);
@@ -203,8 +200,67 @@ void LQ_make_gen_templates(){
         h1_LQint_u = convert3d(h_LQint_u);
         h1_LQpure_d = convert3d(h_LQpure_d);
         h1_LQint_d = convert3d(h_LQint_d);
+        //==============================================================================================================================
+        // testing the symmetric denominator
+        bool only_sym = true;
+
+        h_LQpure_u->Reset();
+        h_LQpure_d->Reset();
+        h_LQint_u->Reset();
+        h_LQint_d->Reset();
+
+
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, only_sym, do_ptrw, year, sys);
+
+        
+        h_LQpure_u->Scale(0.5);
+        h_LQpure_d->Scale(0.5);
+        h_LQint_u->Scale(0.5);
+        h_LQint_d->Scale(0.5);   
+        
+
+        h1_LQpure_test_u = convert3d(h_LQpure_u);
+        h1_LQint_test_u = convert3d(h_LQint_u);
+        h1_LQpure_test_d = convert3d(h_LQpure_d);
+        h1_LQint_test_d = convert3d(h_LQint_d);
+
         delete h_sym,h_asym,h_alpha,h_LQpure_u,h_LQpure_d,h_LQint_u,h_LQint_d,h_data,h_data_SM;
 
+        TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
+        h1_LQpure_test_u->SetLineColor(kBlue);
+        h1_LQpure_u->SetLineColor(kRed);
+        h1_LQpure_test_u->SetLineWidth(2);
+        h1_LQpure_u->SetLineWidth(2); 
+        h1_LQpure_u->SetTitle("LQpure_u")
+        h1_LQpure_u->Draw("hist");
+        h1_LQpure_test_u->Draw("hist same ");
+        TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg5->AddEntry(h1_LQpure_u, "asym denom", "l");
+        leg5->AddEntry(h1_LQpure_test_u, "sym denom", "l");
+        leg5->Draw();
+        sprintf(title, "../generator_stuff/plots/LQpure_u_symd_vs_asymd.png");
+        c_mumu5->Print(title);
+        delete c_mumu5;
+
+        TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
+        h1_LQint_test_u->SetLineColor(kBlue);
+        h1_LQint_u->SetLineColor(kRed);
+        h1_LQint_test_u->SetLineWidth(2);
+        h1_LQint_u->SetLineWidth(2); 
+        h1_LQint_u->SetTitle("LQint_u")
+        h1_LQint_u->Draw("hist");
+        h1_LQint_test_u->Draw("hist same ");
+        TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg6->AddEntry(h1_LQint_u, "asym denom", "l");
+        leg6->AddEntry(h1_LQint_test_u, "sym denom", "l");
+        leg6->Draw();
+        sprintf(title, "../generator_stuff/plots/LQint_u_symd_vs_asymd.png");
+        c_mumu6->Print(title);
+        delete c_mumu6;
+
+
+        
+        //===================================================================================================================================
         printf("Starting make_pl_mn\n");
             //h1_sym->Print("range");
     	//h1_asym->Print("range");
@@ -354,23 +410,7 @@ void LQ_make_gen_templates(){
         h1_alpha->SetFillColor(kGreen);
         *hs->Add(h1_alpha);
 
-         TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
-        //h1_data->SetLineColor(kBlue);
-        //h1_LQpure_u->SetLineColor(kRed);
-        //h1_data->SetLineWidth(2);
-        //h1_LQpure_u->SetLineWidth(2); 
-        hs->SetTitle("testing THStack");
-        hs->Draw();
-        //h1_LQpure_u->Draw("hist same ");
-        TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
-        //leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
-        leg5->AddEntry(h1_pl, "Plus template", "l");
-        leg5->AddEntry(h1_mn, "Minus template", "l");
-        leg5->AddEntry(h1_alpha, "Alpha template", "l");
-        leg5->Draw();
-        sprintf(title, "testing_for_Tamas.png");
-        c_mumu5->Print(title);
-        delete c_mumu5;
+         
 */
         
 

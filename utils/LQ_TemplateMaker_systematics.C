@@ -246,19 +246,29 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           return nEvents;
         }
 
-        float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
-         float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
-            //pure Z0 term
-         float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
-         float XS2_denom = (256*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
-         float XS2 = XS2_num/ XS2_denom;
-            //Z0 gamma interference
-         float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-         float XS45_denom = (8*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
-         float XS45 = XS45_num/XS45_denom;
-            float LQ_denom = (XS1 + XS2 + XS45); //new LQdenom is basically just LO SM
-            return LQ_denom;
-          }
+float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=true){
+ float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
+    //pure Z0 term
+ float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
+ float XS2_denom = (256*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
+ float XS2 = XS2_num/ XS2_denom;
+    //Z0 gamma interference
+ float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+ float XS45_denom = (8*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
+ float XS45 = XS45_num/XS45_denom;
+    
+
+//use events twice and make denom symmetric only
+    if(only_sym){
+      XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F,2)*pow(m_Z0,4)*s;
+      XS2 = XS2_num/XS2_denom;
+      XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+      XS45 = XS45_num/XS45_denom;
+    }
+
+    float LQ_denom = (XS1 + XS2 + XS45); //new LQdenom is basically just LO SM
+    return LQ_denom;
+  }
 
 //input m_LQ in make_templates.C
           int gen_mc_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpure_d, TH3F *h_LQint_d,
@@ -821,7 +831,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 //make templates based on generator level samples (used for assessing impact of
 //fiducial cuts on AFB
   float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
-    float m_LQ, bool do_ptrw = false, int year = 2016, string sys_label = ""){
+    float m_LQ, bool only_sym = false, bool do_ptrw = false, int year = 2016, string sys_label = ""){
 
 
 
@@ -987,7 +997,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           }
 
           
-          float LQ_denom = get_LQ_denom(gen_cost,s,Q_q,caq,cvq);
+          float LQ_denom = get_LQ_denom(gen_cost,s,Q_q,caq,cvq,only_sym);
+          
 
 
               //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
@@ -1028,16 +1039,16 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
           if(flag_q==1){
             h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3 ); 
-              //h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
+            if(only_sym) h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
             h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
-              //h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            if(only_sym) h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
               //uLQ temps
           if(flag_q==2){
             h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3); 
-              //h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+            if(only_sym) h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
             h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
-              //h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            if(only_sym) h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
         }
       }        
