@@ -231,7 +231,7 @@ void LQ_make_gen_templates(){
         h1_LQpure_u->SetLineColor(kRed);
         h1_LQpure_test_u->SetLineWidth(2);
         h1_LQpure_u->SetLineWidth(2); 
-        h1_LQpure_u->SetTitle("LQpure_u");
+        h1_LQpure_test_u->SetTitle("LQpure_u");
         h1_LQpure_test_u->Draw("hist");
         h1_LQpure_u->Draw("hist same ");
         TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
@@ -247,7 +247,7 @@ void LQ_make_gen_templates(){
         h1_LQint_u->SetLineColor(kRed);
         h1_LQint_test_u->SetLineWidth(2);
         h1_LQint_u->SetLineWidth(2); 
-        h1_LQint_u->SetTitle("LQint_u");
+        h1_LQint_test_u->SetTitle("LQint_u");
         h1_LQint_test_u->Draw("hist");
         h1_LQint_u->Draw("hist same ");
         TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
