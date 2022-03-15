@@ -247,9 +247,9 @@ void LQ_make_gen_templates(){
         //h1_LQint_u->SetLineColor(kRed);
         //h1_LQint_test_u->SetLineWidth(2);
         //h1_LQint_u->SetLineWidth(2); 
-        lq_check1->SetTitle("LQpure_u+LQint_u, m_ll = 500-525, y_ue=1.0");
-        lq_check1->Draw("same");
-        lq_check2->Draw("same");
+        //lq_check1->SetTitle("LQpure_u+LQint_u, m_ll = 500-525, y_ue=1.0");
+        //lq_check1->Draw("same");
+        //lq_check2->Draw("same");
         h1_LQpure_test->Add(h1_LQint_test);
         h1_LQpure_test->Draw("hist same");
 
