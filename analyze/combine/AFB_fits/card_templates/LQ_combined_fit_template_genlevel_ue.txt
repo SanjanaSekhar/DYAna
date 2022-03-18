@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQmMASS_gen_templatesYR_020222.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQmMASS_SM_gen_templatesYR_020222.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             eeYR  
 observation     -1         
@@ -17,7 +17,7 @@ process                  alpha   fpl     fmn     LQpure_u  LQint_u
 process                  2      3       1      -3        -4		
 rate                     -1      -1      -1      -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-normYR rateParam eeYR *  1
+#normYR rateParam eeYR *  1
 #norm rateParam eeYR alpha 1
 #lq_norm rateParam eeYR LQ* 1 
 
