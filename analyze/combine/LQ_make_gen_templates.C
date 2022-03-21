@@ -45,14 +45,14 @@ void LQ_make_gen_templates(){
   6 2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)
   */
 
-//    for(int year=2016;year<=2018;year++){
+    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         //float m_LQ = 1000.;
-        float m_LQ = 2000.;
-        int year = 2017;
+        float m_LQ = 1000.;
+//        int year = 2017;
         char fout_name[200];
-        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-        //sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -339,7 +339,7 @@ void LQ_make_gen_templates(){
 
             //h_uncut->Write();
        // h1_data->Scale(.5);
-        h1_data->Write();
+        h1_data_SM->Write();
         h1_pl->Write();
         h1_mn->Write();
         h1_alpha->Write();
@@ -486,4 +486,4 @@ void LQ_make_gen_templates(){
         printf("Templates written to %s \n", fout_n.c_str());
 
     }
-//}
+}

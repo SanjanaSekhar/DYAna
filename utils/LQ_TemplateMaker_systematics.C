@@ -968,7 +968,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
           }
 
           
-          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq);
+          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, true);
 
            
           float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
