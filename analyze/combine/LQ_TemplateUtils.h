@@ -113,10 +113,12 @@ TH1F* convert3d(TH3F *h_3d){
             
             
             //add in case previous bin filled
-            float content_1d = h_1d->GetBinContent(gbin); 
-            float error_1d = h_1d->GetBinError(gbin); 
-            h_1d->SetBinContent(gbin, content_1d + content);
-            h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
+            //ifloat content_1d = h_1d->GetBinContent(gbin); 
+            //float error_1d = h_1d->GetBinError(gbin); 
+            //h_1d->SetBinContent(gbin, content_1d + content);
+            //h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
+            h_1d->SetBinContent(gbin, content);
+            h_1d->SetBinError(gbin, error);
             }
         }
     }
