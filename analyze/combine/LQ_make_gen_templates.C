@@ -73,8 +73,8 @@ void LQ_make_gen_templates(){
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
         //float xsec = 0.1866, xsec_SM = 0.06132;
-        float xsec = 0.08, xsec_SM = 0.06132;
-	int nevents = 48939, nevents_SM = 50617;
+        float xsec = 0.1866, xsec_SM = 0.06132;
+	int nevents = 41859, nevents_SM = 50617;
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
         char dirname[40], title[300];
@@ -317,8 +317,9 @@ void LQ_make_gen_templates(){
     	//h1_asym->Print("range");
 
         // n_y_bins -= 1;
-        int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
-        sprintf(title, "ee%i_fpl", year %2000);
+        //int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
+        int n_1d_bins = n_lq_m_bins*n_y_bins*n_cost_bins;
+	sprintf(title, "ee%i_fpl", year %2000);
         h1_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_pl->SetDirectory(0);
         sprintf(title, "ee%i_fmn", year %2000);
@@ -349,7 +350,31 @@ void LQ_make_gen_templates(){
         h1_LQpure_d->Write();
         h1_LQint_u->Write();
         h1_LQint_d->Write();
-
+	
+	TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 1100, 900);
+        c_mumu2->Divide(2,1);
+	c_mumu2->cd(1);
+	h1_pl->SetLineColor(kBlue);
+        h1_mn->SetLineColor(kRed);
+	h1_alpha->SetLineColor(kGreen+2);
+        h1_pl->SetLineWidth(2);
+        h1_mn->SetLineWidth(2);
+	h1_alpha->SetLineWidth(2);
+        //h1_data->SetTitle("Fake data minus Fake SM (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
+        h1_pl->Draw("hist");
+        h1_alpha->Draw("hist same ");
+	h1_mn->Draw("hist same");
+	
+	c_mumu2->cd(2);
+	h1_LQpure_u->SetLineColor(kRed);
+        h1_LQint_u->SetLineColor(kGreen+2);
+        h1_LQpure_u->SetLineWidth(2);
+        h1_LQint_u->SetLineWidth(2);
+	h1_LQpure_u->Draw("hist");
+        h1_LQint_u->Draw("hist same ");
+        sprintf(title, "../generator_stuff/plots/SM_LQ_templates_%i.png", year %2000);
+        c_mumu2->Print(title);
+        delete c_mumu2;
         fout->Close();
 
         float a0 = 0.05, afb = 0.62;
@@ -427,7 +452,7 @@ void LQ_make_gen_templates(){
         delete c_mumu4;
 
         //checking LQ temps vs fake data minus SM
-
+/*
         h1_data_SM->Scale(-1.);
         h1_data->Add(h1_data_SM);
         //h1_LQint_u->Scale(-1.);
@@ -448,7 +473,7 @@ void LQ_make_gen_templates(){
         sprintf(title, "../generator_stuff/plots/data_minus_SM_%i.png", year %2000);
         c_mumu2->Print(title);
         delete c_mumu2;
-/*
+
         THStack *hs = new THStack("hs","");
         THStack->SetDirectory(0);
         h1_pl->SetLineColor(kBlue);
