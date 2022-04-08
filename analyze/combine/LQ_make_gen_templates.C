@@ -45,11 +45,11 @@ void LQ_make_gen_templates(){
   6 2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)
   */
 
-    for(int year=2016;year<=2018;year++){
+//    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         //float m_LQ = 1000.;
         float m_LQ = 1000.;
-//        int year = 2017;
+        int year = 2017;
         char fout_name[200];
         //sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
         sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
@@ -512,5 +512,5 @@ void LQ_make_gen_templates(){
 
         printf("Templates written to %s \n", fout_n.c_str());
 
-    }
+//    }
 }

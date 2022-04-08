@@ -1066,7 +1066,9 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     int nEvents=0;
     float sum_weights_data = 0.;
     float N_f = 0., N_b = 0., Afb = 0.;
-
+    
+    h_data->Sumw2();
+    
     for(int i=0; i<t_gen->GetEntries();i++){
       t_gen->GetEntry(i);
       cm = *gen_lep_p + *gen_lep_m;
@@ -1075,8 +1077,8 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
         sum_weights_data+=gen_weight;
       if(gen_weight<0.) printf("gen_weight is negative = %f\n",gen_weight);
     }
-    printf("sum_weights_data = %f\n",sum_weights_data);
-    printf("ratio = %f\n",(xsec*lumi*1e3)/sum_weights_data);
+    //printf("sum_weights_data = %f\n",sum_weights_data);
+    //printf("ratio = %f\n",(xsec*lumi*1e3)/sum_weights_data);
     for (int i=0; i<t_gen->GetEntries(); i++) {
       t_gen->GetEntry(i);
 
@@ -1113,8 +1115,8 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
             //h_data->Fill(m, rap, gen_cost, evt_weight*(1e3*sum_weights/sum_weights_data));    
 	//}
           }
-          printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));
-          printf("selected %i events \n", nEvents);
+     //     printf("Afb = %f\n",(N_f-N_b)/(N_f+N_b));
+       //   printf("selected %i events \n", nEvents);
 
     //cleanup_template(h_sym);
     //fixup_template_sum(h_sym, h_asym);

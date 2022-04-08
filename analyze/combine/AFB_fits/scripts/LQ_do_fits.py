@@ -20,7 +20,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [-1]:
+for y in [2017]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["ee"]:
         for options.q in ["u"]:
@@ -96,7 +96,7 @@ for y in [-1]:
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s --gen_level %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,options.gen_level))
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  " % (workspace, extra_params)) #only to get prefit, probably a better way
-                    #print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p yLQ --skipFitB -g %s" % (mLQ, plotdir))
+                    print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p yLQ --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
 
