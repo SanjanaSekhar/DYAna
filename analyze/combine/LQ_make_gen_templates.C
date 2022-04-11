@@ -29,12 +29,22 @@
 
 #include "THStack.h"
 
+/*
+    int n_y_bins = 3;
+    Float_t y_bins[] = {0.,0.6,1.,2.4};
+    int n_cost_bins = 3;
+    Float_t cost_bins[] = {-1.0,-0.5,-0.1,1.0};
+    int n_lq_m_bins = 4;
+    Float_t lq_m_bins[] = { 400., 550., 700., 900.,14000.};
 
+*/
 
 void LQ_make_gen_templates(){
 
+
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
+
 
         /*
      1 Madgraph5_aMC@NLO R2 LQ -> ee with RL couplings
@@ -198,6 +208,13 @@ void LQ_make_gen_templates(){
         h_LQpure_d->Scale(0.5);
         h_LQint_u->Scale(0.5);
         h_LQint_d->Scale(0.5);
+
+
+
+
+        //int n_1d_bins = n_lq_m_bins*(n_y_bins-1)*(n_cost_bins-1);
+        int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);  
+
         printf("Starting convert3d\n");
 
         h1_data = convert3d(h_data);
@@ -261,7 +278,7 @@ void LQ_make_gen_templates(){
         //leg6->AddEntry(h1_LQint_test_u, "sym denom", "l");
         //leg6->Draw();
         //sprintf(title, "../generator_stuff/plots/LQ_shapecheck.png");
-        c_mumu6->Print(title);
+        //c_mumu6->Print(title);
         delete c_mumu6;
 
 
@@ -318,7 +335,7 @@ void LQ_make_gen_templates(){
 
         // n_y_bins -= 1;
         //int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
-        int n_1d_bins = n_lq_m_bins*n_y_bins*n_cost_bins;
+       
         sprintf(title, "ee%i_fpl", year %2000);
         h1_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_pl->SetDirectory(0);
