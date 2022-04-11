@@ -85,7 +85,7 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
     //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
     //int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
 
-    int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx)*(n_binsy-2); // for mass > 700, merge last 2  rap bins
+    int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx)*(n_binsy-2) + (n_binsx-1)*(n_binsy-2) ; // for mass > 700, merge last 2  rap bins
     return n_1d_bins;
 }
 
@@ -109,6 +109,7 @@ TH1F* convert3d(TH3F *h_3d){
           //  n_binsx--;
             n_binsy-=2;
         }
+	if(h_3d->GetXaxis()->GetBinLowEdge(k) == 800.){ n_binsx--; }
         for(int i=1; i<=n_binsx; i++){
             for(int j=1; j<= n_binsy; j++){
 
@@ -135,16 +136,16 @@ TH1F* convert3d(TH3F *h_3d){
                 h_1d->SetBinError(gbin, std::pow(error_next*error_next + error_1d*error_1d, 0.5));
                 
             }
-            //else if(h_3d->GetXaxis()->GetBinLowEdge(k) > 650. and i == n_binsx){
-            //    content_next = h_3d->GetBinContent(k,i+1,j);
-            //    error_next = h_3d->GetBinError(k,i+1,j);
-            //    content_1d = h_1d->GetBinContent(gbin);
+            else if(h_3d->GetXaxis()->GetBinLowEdge(k) >= 800. and i == n_binsx){
+                content_next = h_3d->GetBinContent(k,i+1,j);
+                error_next = h_3d->GetBinError(k,i+1,j);
+                content_1d = h_1d->GetBinContent(gbin);
 		//error_1d = h_1d->GetBinError(gbin);
-	//	h_1d->SetBinContent(gbin, content_next + content + content_1d);
-	//	h_1d->SetBinError(gbin, std::pow(error_next*error_next + error*error, 0.5));
-	//	error_1d = h_1d->GetBinError(gbin);
-	//	h_1d->SetBinError(gbin, std::pow(error*error + error_1d*error_1d, 0.5)); 
-          //  }
+		h_1d->SetBinContent(gbin, content_next + content + content_1d);
+		h_1d->SetBinError(gbin, std::pow(error_next*error_next + error*error, 0.5));
+		error_1d = h_1d->GetBinError(gbin);
+		h_1d->SetBinError(gbin, std::pow(error*error + error_1d*error_1d, 0.5)); 
+           }
             else{
             //int gbin = (k-1)*n_binsx*n_binsy+ (i-1) * n_binsy + j;
             h_1d->SetBinContent(gbin, content);
