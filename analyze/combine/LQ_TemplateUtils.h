@@ -107,6 +107,7 @@ TH1F* convert3d(TH3F *h_3d){
     for(int k=1; k<=n_m_bins; k++){    
         if(h_3d->GetXaxis()->GetBinLowEdge(k) == 700.){
             n_binsx--;
+            n_binsy--;
         }
         for(int i=1; i<=n_binsx; i++){
             for(int j=1; j<= n_binsy; j++){
@@ -114,11 +115,22 @@ TH1F* convert3d(TH3F *h_3d){
             float content = h_3d->GetBinContent(k,i,j);
             float error = h_3d->GetBinError(k,i,j);
            // int gbin = one_idx(i,j, k, n_binsx, n_binsy);
-            if(h_3d->GetXaxis()->GetBinLowEdge(k) > 700. and i == n_binsx){
-                float content_next = h_3d->GetBinContent(k,i+1,j);
-                float error_next = h_3d->GetBinError(k,i+1,j);
-                h_1d->SetBinContent(gbin, content_next + content);
-                h_1d->SetBinError(gbin, std::pow(error_next*error_next + error*error, 0.5));
+            float content_next, error_next, content_1d, error_1d;
+            if(h_3d->GetXaxis()->GetBinLowEdge(k) > 700. and j == n_binsy){
+                content_next = h_3d->GetBinContent(k,i,j+1);
+                error_next = h_3d->GetBinError(k,i,j+1);
+                content_1d = h_1d->GetBinContent(gbin); 
+                error_1d = h_1d->GetBinError(gbin); 
+                h_1d->SetBinContent(gbin, content_next + content + content_1d);
+                h_1d->SetBinError(gbin, std::pow(error_next*error_next + error*error + error_1d*error_1d, 0.5));
+            }
+            else if(h_3d->GetXaxis()->GetBinLowEdge(k) > 700. and i == n_binsx){
+                content_next = h_3d->GetBinContent(k,i+1,j);
+                error_next = h_3d->GetBinError(k,i+1,j);
+                content_1d = h_1d->GetBinContent(gbin); 
+                error_1d = h_1d->GetBinError(gbin); 
+                h_1d->SetBinContent(gbin, content_next + content + content_1d);
+                h_1d->SetBinError(gbin, std::pow(error_next*error_next + error*error + error_1d*error_1d, 0.5));
             }
             else{
             //int gbin = (k-1)*n_binsx*n_binsy+ (i-1) * n_binsy + j;
