@@ -85,7 +85,7 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
     //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
     //int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
 
-    int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx)*(n_binsy-2) + (n_binsx-1)*(n_binsy-2) ; // for mass > 700, merge last 2  rap bins
+    int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_binsx)*(n_binsy-2) + (n_lq_m_bins/2)*(n_binsx-1)*(n_binsy-2) ; // for mass > 700, merge last 2  rap bins
     return n_1d_bins;
 }
 
