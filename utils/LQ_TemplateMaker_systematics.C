@@ -867,7 +867,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
 //make templates based on generator level samples 
 
-  float make_gen_temps(TTree *t_gen, TH1F *h1_LQpure_test, TH1F *h1_LQint_test, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
+  float make_gen_temps(TTree *t_gen, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
     float m_LQ, bool only_sym = false, bool test_sign = true,int year = 2016){
     
     h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
