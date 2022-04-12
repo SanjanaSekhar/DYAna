@@ -57,6 +57,8 @@ void LQ_make_gen_templates(){
 
 //    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
+        bool only_sym = false;
+        bool test_sign = false;
         //float m_LQ = 1000.;
         float m_LQ = 1000.;
         int year = 2017;
@@ -160,7 +162,7 @@ void LQ_make_gen_templates(){
         int nEvents_data = 0;
 
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
-        sum_weights = make_gen_temps(t_gen_el, h1_LQpure_test, h1_LQint_test, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, true, false, year);
+        sum_weights = make_gen_temps(t_gen_el, h1_LQpure_test, h1_LQint_test, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, only_sym, test_sign, year);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
@@ -204,10 +206,10 @@ void LQ_make_gen_templates(){
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
         h_alpha->Scale(0.5);
-        h_LQpure_u->Scale(0.5);
-        h_LQpure_d->Scale(0.5);
-        h_LQint_u->Scale(0.5);
-        h_LQint_d->Scale(0.5);
+      //  h_LQpure_u->Scale(0.5);
+      //  h_LQpure_d->Scale(0.5);
+      //  h_LQint_u->Scale(0.5);
+      //  h_LQint_d->Scale(0.5);
 
 
 
@@ -227,64 +229,11 @@ void LQ_make_gen_templates(){
         h1_LQint_u = convert3d(h_LQint_u);
         h1_LQpure_d = convert3d(h_LQpure_d);
         h1_LQint_d = convert3d(h_LQint_d);
-        //==============================================================================================================================
+      
 
-        TF1 *lq_check1 = new TF1("LQ shape","check_analytical(x, [0], [1], [2], [3], [4], [5])", -1.,1.);
-        lq_check1->SetParameter(0,m_LQ);
-        lq_check1->SetParameter(1,1.0);
-        lq_check1->SetParameter(2,500.*500.);
-        lq_check1->SetParameter(3,Q_u);
-        lq_check1->SetParameter(4,caq_u);
-        lq_check1->SetParameter(5,cvq_u);
-        TF1 *lq_check2 = new TF1("LQ shape","check_analytical(x, [0], [1], [2], [3], [4], [5])", -1.,1.);
-        lq_check2->SetParameter(0,m_LQ);
-        lq_check2->SetParameter(1,1.0);
-        lq_check2->SetParameter(2,525.*525.);
-        lq_check2->SetParameter(3,Q_u);
-        lq_check2->SetParameter(4,caq_u);
-        lq_check2->SetParameter(5,cvq_u);
-        /*
-        TF1 *lq_check3 = new TF1("LQ shape","check_analytical(x, [0], [1], [2], [3], [4], [5])", -1.,1.);
-        lq_check3->SetParameter(0,m_LQ);
-        lq_check3->SetParameter(1,1.0);
-        lq_check3->SetParameter(2,550.*550.);
-        lq_check3->SetParameter(3,Q_u);
-        lq_check3->SetParameter(4,caq_u);
-        lq_check3->SetParameter(5,cvq_u);
-        TF1 *lq_check4 = new TF1("LQ shape","check_analytical(x, [0], [1], [2], [3], [4], [5])", -1.,1.);
-        lq_check4->SetParameter(0,m_LQ);
-        lq_check4->SetParameter(1,1.0);
-        lq_check4->SetParameter(2,575.*575.);
-        lq_check4->SetParameter(3,Q_u);
-        lq_check4->SetParameter(4,caq_u);
-        lq_check4->SetParameter(5,cvq_u);
-        */
-        TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
-        //h1_LQint_test_u->SetLineColor(kBlue);
-        //h1_LQint_u->SetLineColor(kRed);
-        //h1_LQint_test_u->SetLineWidth(2);
-        //h1_LQint_u->SetLineWidth(2); 
-        //lq_check1->SetTitle("LQpure_u+LQint_u, m_ll = 500-525, y_ue=1.0");
-        //lq_check1->Draw("same");
-        //lq_check2->Draw("same");
-        h1_LQpure_test->Add(h1_LQint_test);
-        h1_LQpure_test->Draw("hist same");
-
-        //lq_check3->Draw("same");
-        //lq_check4->Draw("same");
-        //h1_LQint_u->Draw("hist same ");
-        //TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
-        //leg6->AddEntry(h1_LQint_u, "asym denom", "l");
-        //leg6->AddEntry(h1_LQint_test_u, "sym denom", "l");
-        //leg6->Draw();
-        //sprintf(title, "../generator_stuff/plots/LQ_shapecheck.png");
-        //c_mumu6->Print(title);
-        delete c_mumu6;
-
-
-        // testing the symmetric denominator
-        /*
-	bool only_sym = true;
+        // testing the sign changes in xsec gamma z and gamma LQ terms
+        
+	    test_sign = true;
 
         h_LQpure_u->Reset();
         h_LQpure_d->Reset();
@@ -292,13 +241,7 @@ void LQ_make_gen_templates(){
         h_LQint_d->Reset();
 
 
-        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, only_sym, do_ptrw, year, sys);
-
-        
-        h_LQpure_u->Scale(0.5);
-        h_LQpure_d->Scale(0.5);
-        h_LQint_u->Scale(0.5);
-        h_LQint_d->Scale(0.5);   
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, only_sym, test_sign, do_ptrw, year, sys);
         
 
         h1_LQpure_test_u = convert3d(h_LQpure_u);
@@ -313,21 +256,35 @@ void LQ_make_gen_templates(){
         h1_LQpure_u->SetLineColor(kRed);
         h1_LQpure_test_u->SetLineWidth(2);
         h1_LQpure_u->SetLineWidth(2); 
-        h1_LQpure_test_u->SetTitle("LQpure_u");
+        h1_LQpure_test_u->SetTitle("LQpure_u made with new vs old reweighting");
         h1_LQpure_test_u->Draw("hist");
         h1_LQpure_u->Draw("hist same ");
         TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
-        leg5->AddEntry(h1_LQpure_u, "asym denom", "l");
-        leg5->AddEntry(h1_LQpure_test_u, "sym denom", "l");
+        leg5->AddEntry(h1_LQpure_u, "old xsec", "l");
+        leg5->AddEntry(h1_LQpure_test_u, "new xsec", "l");
         leg5->Draw();
-        sprintf(title, "../generator_stuff/plots/LQpure_u_symd_vs_asymd.png");
+        sprintf(title, "../generator_stuff/plots/LQpure_u_test_sign.png");
         c_mumu5->Print(title);
         delete c_mumu5;
 
-        
+        TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
+        h1_LQint_test_u->SetLineColor(kBlue);
+        h1_LQint_u->SetLineColor(kRed);
+        h1_LQint_test_u->SetLineWidth(2);
+        h1_LQint_u->SetLineWidth(2); 
+        h1_LQint_test_u->SetTitle("LQint_u made with new vs old reweighting");
+        h1_LQint_test_u->Draw("hist");
+        h1_LQint_u->Draw("hist same ");
+        TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg6->AddEntry(h1_LQint_u, "old xsec", "l");
+        leg6->AddEntry(h1_LQint_test_u, "new xsec", "l");
+        leg6->Draw();
+        sprintf(title, "../generator_stuff/plots/LQint_u_test_sign.png");
+        c_mumu6->Print(title);
+        delete c_mumu6;
 
 
-*/        
+       
         //===================================================================================================================================
         printf("Starting make_pl_mn\n");
             //h1_sym->Print("range");

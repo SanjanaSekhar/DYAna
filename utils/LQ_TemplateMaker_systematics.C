@@ -246,7 +246,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           return nEvents;
         }
 
-float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=false){
+float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=false, bool test_sign=false){
  float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*s);
     //pure Z0 term
  float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
@@ -256,8 +256,12 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
  float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
  float XS45_denom = (8*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
  float XS45 = XS45_num/XS45_denom;
-    
 
+// sign flip (m_z^2 -s)
+    if(test_sign){
+      XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (s-m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
+      XS45 = XS45_num/XS45_denom;
+    }
 //use events twice and make denom symmetric only
     if(only_sym){
       XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F,2)*pow(m_Z0,4)*s;
@@ -270,13 +274,16 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     return LQ_denom;
   }
 
-  float get_LQ_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos){
+  float get_LQ_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos, bool test_sign=false){
 
          //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
           float reweight_LQpure_norm = (1/(128*M_PI*s));
 
           float reweight_LQint_norm1 = ((alpha*Q_q)/(16*s));
           float reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
+          // sign flip (m_z^2 -s)
+          if (test_sign) reweight_LQint_norm2_num = ((s - m_Z0*m_Z0)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
+          
           float reweight_LQint_norm2_denom = (128*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
           float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
              // float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*n_conv*LQ_jacobian;
@@ -426,10 +433,10 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
             // Need to modify LQ_denom
               //flag_q=1 for d-dbar, 2 for u-ubar, 3 for s-sbar, 4 for c-cbar, 0 for everything
         int flag_q=0;
-       // if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
-       // if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
-        if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
-        if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
+        if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
+        if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
+       // if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
+       // if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
         if(flag_q!=0){ 
 
           if(flag_q==1){
@@ -861,7 +868,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 //make templates based on generator level samples 
 
   float make_gen_temps(TTree *t_gen, TH1F *h1_LQpure_test, TH1F *h1_LQint_test, TH3F *h_raw, TH3F *h_sym, TH3F *h_asym, TH3F *h_alpha,  TH3F *h_LQpure_u, TH3F *h_LQpure_d,  TH3F *h_LQint_u, TH3F *h_LQint_d,
-    float m_LQ, bool only_sym = false, bool test_shapes = false, int year = 2016){
+    float m_LQ, bool only_sym = false, bool test_sign = true,int year = 2016){
     
     h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
     h_asym->Sumw2();
@@ -975,22 +982,22 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
           }
 
           
-          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, true);
+          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, only_sym, test_sign);
 
            
-          float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
+          float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false, test_sign)/LQ_denom;
           
-          float reweight_LQpure_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+          float reweight_LQpure_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true, test_sign)/LQ_denom;
 
-          float reweight_LQint_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+          float reweight_LQint_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false, test_sign)/LQ_denom;
           
-          float reweight_LQint_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
+          float reweight_LQint_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true, test_sign)/LQ_denom;
 
           //testing LQ shapes
-          if(test_shapes and flag_q==2 and m >= 500. and m <= 525. ){
-            h1_LQpure_test->Fill(gen_cost,reweight_LQpure_pos * evt_weight);
-            h1_LQint_test->Fill(gen_cost,reweight_LQint_pos * evt_weight);
-          }
+          //if(test_shapes and flag_q==2 and m >= 500. and m <= 525. ){
+          //  h1_LQpure_test->Fill(gen_cost,reweight_LQpure_pos * evt_weight);
+          //  h1_LQint_test->Fill(gen_cost,reweight_LQint_pos * evt_weight);
+          //}
 
 
           if(flag_q==1){
