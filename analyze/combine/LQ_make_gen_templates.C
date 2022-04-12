@@ -58,7 +58,7 @@ void LQ_make_gen_templates(){
 //    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
         bool only_sym = false;
-        bool test_sign = false;
+        bool test_sign = true;
         //float m_LQ = 1000.;
         float m_LQ = 1000.;
         int year = 2017;
@@ -232,7 +232,7 @@ void LQ_make_gen_templates(){
       
 
         // testing the sign changes in xsec gamma z and gamma LQ terms
-        
+  /*      
 	test_sign = true;
         only_sym = false;
 
@@ -283,7 +283,7 @@ void LQ_make_gen_templates(){
         sprintf(title, "../generator_stuff/plots/LQint_u_test_sign_flipcal.png");
         c_mumu6->Print(title);
         delete c_mumu6;
-
+*/
 
        
         //===================================================================================================================================
