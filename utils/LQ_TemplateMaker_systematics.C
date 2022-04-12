@@ -23,7 +23,7 @@ float cll = 2 * sin2_thetaw - 1;
 
 float cvl = crl + cll;
 float cal = cll - crl;
-
+//float cal = crl - cll;
 //up quark
 float Q_u = 2./3. ;
 float I3_u = 1./2. ;
@@ -247,7 +247,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
         }
 
 float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=false, bool test_sign=false){
- 
+ if(test_sign)cal = crl - cll;
  float color_factor = 3.;
  float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
     //pure Z0 term
@@ -277,7 +277,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
   }
 
   float get_LQ_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos, bool test_sign=false){
-
+	  if (test_sign) cal = crl - cll;
          //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
           float color_factor = 3.;
           float reweight_LQpure_norm = (1/(128*color_factor*M_PI*s));
