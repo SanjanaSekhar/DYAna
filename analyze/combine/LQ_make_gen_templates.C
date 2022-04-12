@@ -57,8 +57,8 @@ void LQ_make_gen_templates(){
 
 //    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
-        bool only_sym = true;
-        bool test_sign = false;
+        bool only_sym = false;
+        bool test_sign = true;
         //float m_LQ = 1000.;
         float m_LQ = 1000.;
         int year = 2017;
@@ -206,10 +206,10 @@ void LQ_make_gen_templates(){
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
         h_alpha->Scale(0.5);
-        h_LQpure_u->Scale(0.5);
-        h_LQpure_d->Scale(0.5);
-        h_LQint_u->Scale(0.5);
-        h_LQint_d->Scale(0.5);
+//        h_LQpure_u->Scale(0.5);
+//        h_LQpure_d->Scale(0.5);
+//        h_LQint_u->Scale(0.5);
+//        h_LQint_d->Scale(0.5);
 
 
 
@@ -232,8 +232,8 @@ void LQ_make_gen_templates(){
       
 
         // testing the sign changes in xsec gamma z and gamma LQ terms
-        
-	    test_sign = true;
+       /* 
+	test_sign = true;
         only_sym = false;
 
         h_LQpure_u->Reset();
@@ -264,7 +264,7 @@ void LQ_make_gen_templates(){
         leg5->AddEntry(h1_LQpure_u, "old xsec", "l");
         leg5->AddEntry(h1_LQpure_test_u, "new xsec", "l");
         leg5->Draw();
-        sprintf(title, "../generator_stuff/plots/LQpure_u_test_sign_only_sym.png");
+        sprintf(title, "../generator_stuff/plots/LQpure_u_test_sign.png");
         c_mumu5->Print(title);
         delete c_mumu5;
 
@@ -280,11 +280,11 @@ void LQ_make_gen_templates(){
         leg6->AddEntry(h1_LQint_u, "old xsec", "l");
         leg6->AddEntry(h1_LQint_test_u, "new xsec", "l");
         leg6->Draw();
-        sprintf(title, "../generator_stuff/plots/LQint_u_test_sign_only_sym.png");
+        sprintf(title, "../generator_stuff/plots/LQint_u_test_sign.png");
         c_mumu6->Print(title);
         delete c_mumu6;
 
-
+*/
        
         //===================================================================================================================================
         printf("Starting make_pl_mn\n");
