@@ -60,11 +60,11 @@ void LQ_make_gen_templates(){
         bool only_sym = false;
         bool test_sign = true;
         //float m_LQ = 1000.;
-        float m_LQ = 1000.;
+        float m_LQ = 2500.;
         int year = 2017;
         char fout_name[200];
-        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-        //sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_041222.root",int(m_LQ),year%2000);
+        //sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -72,10 +72,10 @@ void LQ_make_gen_templates(){
         string genfile_n = string(genfile_name,200);
         TFile *f_gen = TFile::Open(genfile_n.c_str());
         char lhe_name[200];
-        sprintf(lhe_name,"../analyze/root_files/LQ_m%i_test2_020122.root",int(m_LQ));
+        sprintf(lhe_name,"../analyze/root_files/LQ_m%i_MGevents_ylq0.5_041222.root",int(m_LQ));
         string lhe_n = string(lhe_name,200);
         TFile *f_gen_data = TFile::Open(lhe_n.c_str());
-        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test2_020122.root");
+        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_MGevents_ylq0_041222.root");
         //gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
@@ -85,7 +85,7 @@ void LQ_make_gen_templates(){
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
         //float xsec = 0.1866, xsec_SM = 0.06132;
-        float xsec = 0.1866, xsec_SM = 0.06132;
+        float xsec = 0.06846, xsec_SM = 0.06626;
         int nevents = 41859, nevents_SM = 50617;
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
