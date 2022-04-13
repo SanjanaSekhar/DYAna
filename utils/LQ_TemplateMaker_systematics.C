@@ -331,6 +331,9 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
             printf("Making mc template for sys %s \n", sys_label.c_str());
 
+    bool only_sym = false;
+    bool test_sign = true;
+
     h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
     h_asym->Sumw2();
     h_alpha->Sumw2();
@@ -455,32 +458,32 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
           }
 
 
-          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, true);
+          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, only_sym, test_sign);
 
            
-          float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
+          float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false, test_sign)/LQ_denom;
           
-          float reweight_LQpure_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+          float reweight_LQpure_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true, test_sign)/LQ_denom;
 
-          float reweight_LQint_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+          float reweight_LQint_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false, test_sign)/LQ_denom;
           
-          float reweight_LQint_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
+          float reweight_LQint_neg = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true, test_sign)/LQ_denom;
 
               //printf("%f\n",reweight_LQpure_pos);
 
               //dLQ temps
           if(flag_q==1){
             h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-            h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
+            if(only_sym) h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
             h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight ); 
-            h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            if(only_sym) h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
               //uLQ temps
           if(flag_q==2){
             h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-            h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+            if(only_sym) h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
             h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-            h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+            if(only_sym) h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
           }
 
         }
@@ -496,10 +499,10 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
     h_sym->Scale(0.5);
     h_asym->Scale(0.5);
     h_alpha->Scale(0.5);
-      h_LQpure_u->Scale(0.5);
-      h_LQint_u->Scale(0.5);
-      h_LQpure_d->Scale(0.5);
-      h_LQint_d->Scale(0.5);
+    //  h_LQpure_u->Scale(0.5);
+    //  h_LQint_u->Scale(0.5);
+    //  h_LQpure_d->Scale(0.5);
+    //  h_LQint_d->Scale(0.5);
 
     //cleanup_template(h_sym);
     fixup_template_sum(h_sym, h_asym);
