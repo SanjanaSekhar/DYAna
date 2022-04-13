@@ -109,7 +109,7 @@ TH1F* convert3d(TH3F *h_3d){
           //  n_binsx--;
             n_binsy-=2;
         }
-	if(h_3d->GetXaxis()->GetBinLowEdge(k) == 800.){ n_binsx--; }
+//	if(h_3d->GetXaxis()->GetBinLowEdge(k) == 800.){ n_binsx--; }
         for(int i=1; i<=n_binsx; i++){
             for(int j=1; j<= n_binsy; j++){
 

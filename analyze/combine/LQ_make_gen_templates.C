@@ -185,10 +185,10 @@ void LQ_make_gen_templates(){
 
                     sum_bins_LO+=h_data_SM->GetBinContent(i,j,k);
                     sum_bins_NLO+=h_raw->GetBinContent(i,j,k);
-                }
+        	}        
                 //extract k_factor for each mass and rap bin
                 k_factor = sum_bins_NLO/sum_bins_LO;
-                printf("k-factor %i = %f\n",i*n_lq_m_bins+j,k_factor);
+                printf("k-factor %i = %f\n",(i-1)*n_lq_m_bins+j,k_factor);
                 for(int k = 1; k <= h_data->GetNbinsZ(); k++){
                     float SM_content = h_data_SM->GetBinContent(i,j,k);
                     float SMLQ_content = h_data->GetBinContent(i,j,k);
