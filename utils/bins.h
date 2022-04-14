@@ -13,8 +13,8 @@ Float_t y_bins[] = {0.,0.6,1.1,2.4};
 //could merge last 2 cost bins
 //const int n_cost_bins = 8;
 //Float_t cost_bins[] = {-1.0, -.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.0};
-const int n_cost_bins = 5;
-Float_t cost_bins[] =  {-1.0,-0.5,-0.25,0.0,0.4,1.0};
+const int n_cost_bins = 6;
+Float_t cost_bins[] =  {-1.0,-0.5,-0.25,0.0,0.25, 0.5,1.0};
 const int n_cost_ss_bins = n_cost_bins/2;
 Float_t cost_ss_bins[] = {-1.0, -0.5, -0.3, -0.1, 0.0};
 
@@ -22,9 +22,9 @@ const int n_m_bins = 8;
 Float_t m_bins[] = {150, 170, 200,  250, 320, 510, 700, 1000, 14000};
 
 
-const int n_lq_m_bins = 5;
+const int n_lq_m_bins = 4;
 //Float_t lq_m_bins[] = { 400., 550., 650., 850.,14000.};
-Float_t lq_m_bins[] = { 450., 550., 650., 800., 1000., 14000.};
+Float_t lq_m_bins[] = { 550., 650., 800., 1000., 14000.};
 
 //
 const int n_pt_bins = 7;

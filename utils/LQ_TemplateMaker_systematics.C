@@ -22,8 +22,8 @@ float crl = 2 * sin2_thetaw;
 float cll = 2 * sin2_thetaw - 1;
 
 float cvl = crl + cll;
-float cal = cll - crl;
-//float cal = crl - cll;
+//float cal = cll - crl;
+float cal = crl - cll;
 //up quark
 float Q_u = 2./3. ;
 float I3_u = 1./2. ;
@@ -246,38 +246,41 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
           return nEvents;
         }
 
-float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool only_sym=false, bool test_sign=false){
- if(test_sign)cal = crl - cll;
+float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool test_sign=false){
+// if(test_sign)cal = crl - cll;
  float color_factor = 3.;
  float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
     //pure Z0 term
- float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
+// float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
+ float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F,2)*pow(m_Z0,4)*s;
  float XS2_denom = (256*color_factor*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
  float XS2 = XS2_num/ XS2_denom;
     //Z0 gamma interference
- float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+ //float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+ float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q; 
  float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
  float XS45 = XS45_num/XS45_denom;
 
 // sign flip (m_z^2 -s)
     if(test_sign){
-      XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (s-m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
-      XS45 = XS45_num/XS45_denom;
+   //   XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (s-m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
+     	XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
+	 XS45 = XS45_num/XS45_denom;
     }
 //use events twice and make denom symmetric only
-    if(only_sym){
-      XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F,2)*pow(m_Z0,4)*s;
-      XS2 = XS2_num/XS2_denom;
-      XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-      XS45 = XS45_num/XS45_denom;
-    }
+ //   if(only_sym){
+ //     XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F,2)*pow(m_Z0,4)*s;
+ //     XS2 = XS2_num/XS2_denom;
+ //     XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+ //     XS45 = XS45_num/XS45_denom;
+ //   }
 
     float LQ_denom = (XS1 + XS2 + XS45); //new LQdenom is basically just LO SM
     return LQ_denom;
   }
 
   float get_LQ_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos, bool test_sign=false){
-	  if (test_sign) cal = crl - cll;
+//	  if (test_sign) cal = crl - cll;
          //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
           float color_factor = 3.;
           float reweight_LQpure_norm = (1/(128*color_factor*M_PI*s));
@@ -458,7 +461,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
           }
 
 
-          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, only_sym, test_sign);
+          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq,  test_sign);
 
            
           float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false, test_sign)/LQ_denom;
@@ -988,7 +991,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
           }
 
           
-          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, only_sym, test_sign);
+          float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq, test_sign);
 
            
           float reweight_LQpure_pos = get_LQ_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false, test_sign)/LQ_denom;
@@ -1008,16 +1011,16 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq, bool 
 
           if(flag_q==1){
             h_LQpure_d->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3 ); 
-            if(only_sym) h_LQpure_d->Fill(m, rap, -gen_cost, reweight_LQpure_neg * evt_weight*1e3 );
+            h_LQpure_d->Fill(m, rap, -gen_cost, reweight_LQpure_neg * evt_weight*1e3 );
             h_LQint_d->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
-            if(only_sym) h_LQint_d->Fill(m, rap, -gen_cost, reweight_LQint_neg * evt_weight*1e3);
+            h_LQint_d->Fill(m, rap, -gen_cost, reweight_LQint_neg * evt_weight*1e3);
           }
               //uLQ temps
           if(flag_q==2){
             h_LQpure_u->Fill(m, rap, gen_cost, reweight_LQpure_pos * evt_weight *1e3); 
-            if(only_sym) h_LQpure_u->Fill(m, rap, -gen_cost, reweight_LQpure_neg * evt_weight *1e3);
+            h_LQpure_u->Fill(m, rap, -gen_cost, reweight_LQpure_neg * evt_weight *1e3);
             h_LQint_u->Fill(m, rap, gen_cost, reweight_LQint_pos * evt_weight *1e3); 
-            if(only_sym) h_LQint_u->Fill(m, rap, -gen_cost, reweight_LQint_neg * evt_weight*1e3);
+            h_LQint_u->Fill(m, rap, -gen_cost, reweight_LQint_neg * evt_weight*1e3);
           }
         }
       }        

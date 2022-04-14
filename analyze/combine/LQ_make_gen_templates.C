@@ -57,14 +57,14 @@ void LQ_make_gen_templates(){
 
 //    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
-        bool only_sym = false;
+        //bool only_sym = true;
         bool test_sign = true;
         //float m_LQ = 1000.;
         float m_LQ = 2500.;
         int year = 2017;
         char fout_name[200];
         sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_041222.root",int(m_LQ),year%2000);
-        //sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
+       // sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
@@ -162,7 +162,7 @@ void LQ_make_gen_templates(){
         int nEvents_data = 0;
 
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
-        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, only_sym, test_sign, year);
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, test_sign, year);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
@@ -206,10 +206,10 @@ void LQ_make_gen_templates(){
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
         h_alpha->Scale(0.5);
-//        h_LQpure_u->Scale(0.5);
-//        h_LQpure_d->Scale(0.5);
-//        h_LQint_u->Scale(0.5);
-//        h_LQint_d->Scale(0.5);
+        h_LQpure_u->Scale(0.5);
+        h_LQpure_d->Scale(0.5);
+        h_LQint_u->Scale(0.5);
+        h_LQint_d->Scale(0.5);
 
 
 
