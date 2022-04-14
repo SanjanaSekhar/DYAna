@@ -68,12 +68,12 @@ for y in [2017]:
 
             if(options.no_LQ): fit_name+="_noLQ"
 
-            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_SMdata"
+            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level"
 
             print("\n fit_name = ", fit_name)
 
 
-            for mLQ in [1000]:
+            for mLQ in [1500]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
             #for mbin in range(bin_start, bin_stop):
