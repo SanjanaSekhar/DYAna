@@ -3,7 +3,7 @@ imax 1 number of bins
 jmax 4 number of processes minus 1
 kmax 1 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y17  cards/LQm2500_gen_templates17_041222.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm1000_SM_gen_templates17_041222.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y17  
 observation  -1   
