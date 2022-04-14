@@ -391,7 +391,7 @@ void convert_mc_templates(int year, const string &sys_label){
         var1_bins = xf_bins;
     }
         //merge highest rap bin for high mass templates
-    if(m_low > 550.) n_var1_bins -= 1;
+    //if(m_low > 550.) n_var1_bins -= 1;
     int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
     if(do_mu){
 

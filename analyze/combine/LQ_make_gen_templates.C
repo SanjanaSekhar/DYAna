@@ -27,14 +27,24 @@
 //#include "../../utils/LQ_TemplateMaker_systematics.C"
 #include "LQ_TemplateUtils.h"
 
+#include "THStack.h"
 
+/*
+    int n_y_bins = 3;
+    Float_t y_bins[] = {0.,0.6,1.,2.4};
+    int n_cost_bins = 3;
+    Float_t cost_bins[] = {-1.0,-0.5,-0.1,1.0};
+    int n_lq_m_bins = 4;
+    Float_t lq_m_bins[] = { 400., 550., 700., 900.,14000.};
 
-
+*/
 
 void LQ_make_gen_templates(){
 
+
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
+
 
         /*
      1 Madgraph5_aMC@NLO R2 LQ -> ee with RL couplings
@@ -45,24 +55,28 @@ void LQ_make_gen_templates(){
   6 2 TeV    0.0   0.06132+-0.00020   50617       825.5 (SM events)
   */
 
-    for(int year=2016;year<=2018;year++){
+//    for(int year=2016;year<=2018;year++){
         bool do_ptrw = false;
+        //bool only_sym = true;
+        bool test_sign = true;
         //float m_LQ = 1000.;
-        float m_LQ = 2000.;
-
+        float m_LQ = 2500.;
+        int year = 2017;
         char fout_name[200];
-        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_020222.root",int(m_LQ),year%2000);
-       // sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_020222.root",int(m_LQ),year%2000);
+        sprintf(fout_name,"combine/templates/LQm%i_gen_templates%i_041222.root",int(m_LQ),year%2000);
+       // sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
         sprintf(genfile_name,"../analyze/output_files/DY%i_gen_level_aug4.root",year%2000);
         string genfile_n = string(genfile_name,200);
         TFile *f_gen = TFile::Open(genfile_n.c_str());
-
-        TFile *f_gen_data = TFile::Open("../analyze/root_files/LQ_m1000_test2_020122.root");
-        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_test2_020122.root");
-        gROOT->SetBatch(1);
+        char lhe_name[200];
+        sprintf(lhe_name,"../analyze/root_files/LQ_m%i_MGevents_ylq0.5_041222.root",int(m_LQ));
+        string lhe_n = string(lhe_name,200);
+        TFile *f_gen_data = TFile::Open(lhe_n.c_str());
+        TFile *f_gen_data_SM = TFile::Open("../analyze/root_files/LQ_SM_MGevents_ylq0_041222.root");
+        //gROOT->SetBatch(1);
 
         //TTree *t_gen_mu = (TTree *) f_gen->Get("T_gen_mu");
         TTree *t_gen_el = (TTree *) f_gen->Get("T_gen_el");
@@ -71,8 +85,8 @@ void LQ_make_gen_templates(){
         //calculate the total gen_weights to scale the data temps 
         float gen_weight, sum_weights;
         //float xsec = 0.1866, xsec_SM = 0.06132;
-        float xsec = 0.08, xsec_SM = 0.06132;
-	int nevents = 41859, nevents_SM = 50617;
+        float xsec = 0.06846, xsec_SM = 0.06626;
+        int nevents = 41859, nevents_SM = 50617;
         TFile * fout = TFile::Open(fout_n.c_str(), "RECREATE");
 
         char dirname[40], title[300];
@@ -130,7 +144,14 @@ void LQ_make_gen_templates(){
             n_lq_m_bins, lq_m_bins,n_y_bins, y_bins, n_cost_bins, cost_bins);
         h_raw->SetDirectory(0);
 
-        TH1F *h1_raw, *h1_data, *h1_data_SM, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d;
+        sprintf(title, "ee%i_LQpure_test", year %2000);
+        TH1F* h1_LQpure_test = new TH1F(title, "LQ test template", 25,-1.,1.);
+        h1_LQpure_test->SetDirectory(0);
+        sprintf(title, "ee%i_LQint_test", year %2000);
+        TH1F* h1_LQint_test = new TH1F(title, "LQ test template",25, -1.,1.);
+        h1_LQint_test->SetDirectory(0);
+
+        TH1F *h1_raw, *h1_data, *h1_data_SM, *h1_pl, *h1_mn, *h1_asym, *h1_sym, *h1_alpha, *h1_LQpure_u, *h1_LQint_u,*h1_LQpure_d, *h1_LQint_d, *h1_LQpure_test_u, *h1_LQint_test_u,*h1_LQpure_test_d, *h1_LQint_test_d;
 
 
         
@@ -141,27 +162,61 @@ void LQ_make_gen_templates(){
         int nEvents_data = 0;
 
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
-        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, do_ptrw, year, sys);
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, test_sign, year);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);
 
         //ratio of NLO SM to LO SM
-        
+        // k factor extracted for all m, rap
         float k_factor = h_raw->Integral() / h_data_SM->Integral();
 
         printf("k-factor is %.3f \n", k_factor);
-        h_data->Scale(k_factor);
+       // h_data->Scale(k_factor);
+       // h_data_SM->Scale(k_factor);
+
+        // k factor extracted for 3*3 mass*rap bins
+
+        for(int i = 1; i <= h_raw->GetNbinsX(); i++){
+            for( int j = 1; j <= h_raw->GetNbinsY(); j++){
+
+                float sum_bins_LO = 0., sum_bins_NLO = 0.;
+                for(int k = 1; k <= h_raw->GetNbinsZ(); k++){
+
+                    sum_bins_LO+=h_data_SM->GetBinContent(i,j,k);
+                    sum_bins_NLO+=h_raw->GetBinContent(i,j,k);
+        	}        
+                //extract k_factor for each mass and rap bin
+                k_factor = sum_bins_NLO/sum_bins_LO;
+                printf("k-factor %i = %f\n",(i-1)*n_lq_m_bins+j,k_factor);
+                for(int k = 1; k <= h_data->GetNbinsZ(); k++){
+                    float SM_content = h_data_SM->GetBinContent(i,j,k);
+                    float SMLQ_content = h_data->GetBinContent(i,j,k);
+                    h_data->SetBinContent(i,j,k, SMLQ_content*k_factor);
+                    h_data_SM->SetBinContent(i,j,k,SM_content*k_factor);
+                }
+            }
+        }
+
         printf("h_data integral %.2f, h_raw interal %.2f \n", h_data->Integral(), h_raw->Integral());
         printf("h_LQpure_u %.2f h_LQint_u %.2f \n", h_LQpure_u->Integral(), h_LQint_u->Integral());
+
+        
 
         h_sym->Scale(0.5);
         h_asym->Scale(0.5);
         h_alpha->Scale(0.5);
-           // h_LQpure_u->Scale(0.5);
-           // h_LQpure_d->Scale(0.5);
-           // h_LQint_u->Scale(0.5);
-           // h_LQint_d->Scale(0.5);
+        h_LQpure_u->Scale(0.5);
+        h_LQpure_d->Scale(0.5);
+        h_LQint_u->Scale(0.5);
+        h_LQint_d->Scale(0.5);
+
+
+
+
+        //int n_1d_bins = n_lq_m_bins*(n_y_bins-1)*(n_cost_bins-1);
+        int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);  
+
         printf("Starting convert3d\n");
 
         h1_data = convert3d(h_data);
@@ -174,14 +229,71 @@ void LQ_make_gen_templates(){
         h1_LQint_u = convert3d(h_LQint_u);
         h1_LQpure_d = convert3d(h_LQpure_d);
         h1_LQint_d = convert3d(h_LQint_d);
+      
+
+        // testing the sign changes in xsec gamma z and gamma LQ terms
+  /*      
+	test_sign = true;
+        only_sym = false;
+
+        h_LQpure_u->Reset();
+        h_LQpure_d->Reset();
+        h_LQint_u->Reset();
+        h_LQint_d->Reset();
+
+
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, only_sym, test_sign, year);
+        
+
+        h1_LQpure_test_u = convert3d(h_LQpure_u);
+        h1_LQint_test_u = convert3d(h_LQint_u);
+        h1_LQpure_test_d = convert3d(h_LQpure_d);
+        h1_LQint_test_d = convert3d(h_LQint_d);
+
         delete h_sym,h_asym,h_alpha,h_LQpure_u,h_LQpure_d,h_LQint_u,h_LQint_d,h_data,h_data_SM;
 
+        TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
+        h1_LQpure_test_u->SetLineColor(kBlue);
+        h1_LQpure_u->SetLineColor(kRed);
+        h1_LQpure_test_u->SetLineWidth(2);
+        h1_LQpure_u->SetLineWidth(2); 
+        h1_LQpure_test_u->SetTitle("LQpure_u made with new vs old reweighting");
+        h1_LQpure_test_u->Draw("hist");
+        h1_LQpure_u->Draw("hist same ");
+        TLegend *leg5 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg5->AddEntry(h1_LQpure_u, "old xsec", "l");
+        leg5->AddEntry(h1_LQpure_test_u, "new xsec", "l");
+        leg5->Draw();
+        sprintf(title, "../generator_stuff/plots/LQpure_u_test_sign_flipcal.png");
+        c_mumu5->Print(title);
+        delete c_mumu5;
+
+        TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
+        h1_LQint_test_u->SetLineColor(kBlue);
+        h1_LQint_u->SetLineColor(kRed);
+        h1_LQint_test_u->SetLineWidth(2);
+        h1_LQint_u->SetLineWidth(2); 
+        h1_LQint_test_u->SetTitle("LQint_u made with new vs old reweighting");
+        h1_LQint_test_u->Draw("hist");
+        h1_LQint_u->Draw("hist same ");
+        TLegend *leg6 = new TLegend(0.75, 0.75, 0.9, 0.9);
+        leg6->AddEntry(h1_LQint_u, "old xsec", "l");
+        leg6->AddEntry(h1_LQint_test_u, "new xsec", "l");
+        leg6->Draw();
+        sprintf(title, "../generator_stuff/plots/LQint_u_test_sign_flipcal.png");
+        c_mumu6->Print(title);
+        delete c_mumu6;
+*/
+
+       
+        //===================================================================================================================================
         printf("Starting make_pl_mn\n");
             //h1_sym->Print("range");
     	//h1_asym->Print("range");
 
         // n_y_bins -= 1;
-        int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
+        //int n_1d_bins = get_n_1d_bins(n_y_bins, n_cost_bins);
+       
         sprintf(title, "ee%i_fpl", year %2000);
         h1_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_pl->SetDirectory(0);
@@ -192,22 +304,6 @@ void LQ_make_gen_templates(){
 
         make_pl_mn_templates(h1_sym, h1_asym, h1_pl, h1_mn); 
         printf("Finished make_pl_mn\n");
-        /*
-        float scale_ = nEvents / h1_raw->Integral();
-
-        h1_raw->Scale(scale_);
-        h1_pl->Scale(scale_);
-        h1_mn->Scale(scale_);
-        h1_alpha->Scale(scale_);
-        h1_LQpure_u->Scale(scale_);
-        h1_LQpure_d->Scale(scale_);
-        h1_LQint_u->Scale(scale_);
-        h1_LQint_d->Scale(scale_);
-
-
-        scale_ = nEvents_data / h1_data->Integral();
-        h1_data->Scale(scale_);
-        */
 
         
         
@@ -230,6 +326,30 @@ void LQ_make_gen_templates(){
         h1_LQint_u->Write();
         h1_LQint_d->Write();
 
+        TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 1100, 1100);
+        c_mumu2->Divide(2,1);
+        c_mumu2->cd(1);
+        h1_pl->SetLineColor(kBlue);
+        h1_mn->SetLineColor(kRed);
+        h1_alpha->SetLineColor(kGreen+2);
+        h1_pl->SetLineWidth(2);
+        h1_mn->SetLineWidth(2);
+        h1_alpha->SetLineWidth(2);
+        //h1_data->SetTitle("Fake data minus Fake SM (AFB=0.6,A0=0.05,y_ue=1.0,mLQ=1000)");
+        h1_pl->Draw("hist");
+        h1_alpha->Draw("hist same ");
+        h1_mn->Draw("hist same");
+
+        c_mumu2->cd(2);
+        h1_LQpure_u->SetLineColor(kRed);
+        h1_LQint_u->SetLineColor(kGreen+2);
+        h1_LQpure_u->SetLineWidth(2);
+        h1_LQint_u->SetLineWidth(2);
+        h1_LQpure_u->Draw("hist");
+        h1_LQint_u->Draw("hist same ");
+        sprintf(title, "../generator_stuff/plots/SM_LQ_templates_%i.png", year %2000);
+        c_mumu2->Print(title);
+        delete c_mumu2;
         fout->Close();
 
         float a0 = 0.05, afb = 0.62;
@@ -252,19 +372,6 @@ void LQ_make_gen_templates(){
         h1_total_SM_NLO->Add(h1_pl);
         h1_total_SM_NLO->Add(h1_mn);
        // h1_total->Write();
-	printf("h1_total_SM_NLO Integral = %f\n",h1_total_SM_NLO->Integral());
-
-    // scale SM+LQ data to NLO SM content
-    TH1F *h1_divide = (TH1F *) h1_data_SM->Clone("h1_divide");
-    h1_divide->SetDirectory(0);
-        for(int i = 1; i <= h1_data->GetNbinsX(); i++){
-        float SM_NLO_content = h1_total_SM_NLO->GetBinContent(i);
-        float SM_content = h1_data_SM->GetBinContent(i);
-        printf("Bin %i, ratio of SM@NLO to SM = %f\n",i, SM_NLO_content/SM_content);
-        h1_divide->SetBinContent(i,SM_NLO_content/SM_content);
-        float SMLQ_content = h1_data->GetBinContent(i);
-        h1_data->SetBinContent(i, SMLQ_content*SM_NLO_content/SM_content);
-    }
 
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
         h1_data->SetLineColor(kBlue);
@@ -308,7 +415,7 @@ void LQ_make_gen_templates(){
         h1_total_SM_NLO->SetLineWidth(2); 
         h1_data_SM->SetTitle("Fake SM@NLO vs Fake SM (AFB=0.6,A0=0.05)");
         //h1_total_SM_NLO->Draw("hist");
-	h1_data_SM->Draw("hist ");
+        h1_data_SM->Draw("hist ");
         h1_total_SM_NLO->Draw("hist same ");
         TLegend *leg4 = new TLegend(0.75, 0.75, 0.9, 0.9);
         //leg2->AddEntry(h1_LQpure_u, "LQ_ue templates", "l");
@@ -320,7 +427,7 @@ void LQ_make_gen_templates(){
         delete c_mumu4;
 
         //checking LQ temps vs fake data minus SM
-
+/*
         h1_data_SM->Scale(-1.);
         h1_data->Add(h1_data_SM);
         //h1_LQint_u->Scale(-1.);
@@ -342,6 +449,22 @@ void LQ_make_gen_templates(){
         c_mumu2->Print(title);
         delete c_mumu2;
 
+        THStack *hs = new THStack("hs","");
+        THStack->SetDirectory(0);
+        h1_pl->SetLineColor(kBlue);
+        h1_pl->SetFillColor(kBlue);
+        *hs->Add(h1_pl);
+        h1_mn->SetLineColor(kRed);
+        h1_mn->SetFillColor(kRed);
+        *hs->Add(h1_mn);
+        h1_alpha->SetLineColor(kGreen);
+        h1_alpha->SetFillColor(kGreen);
+        *hs->Add(h1_alpha);
+
+         
+*/
+        
+
             //h_uncut->Reset();
             //h_raw->Reset();
         h1_data->Reset();
@@ -356,11 +479,13 @@ void LQ_make_gen_templates(){
         h1_LQint_u->Reset();
         h1_LQint_d->Reset();
         h1_total->Reset();
+        h1_LQpure_test->Reset();
+        h1_LQint_test->Reset();
         
 
 
 
         printf("Templates written to %s \n", fout_n.c_str());
 
-    }
+//    }
 }
