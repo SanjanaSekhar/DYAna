@@ -193,7 +193,8 @@ def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False,
 
     if(symMCStats): extra_arg = "--symMCStats"
     else: extra_arg = ""
-    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
+    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
+    #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
 
 def make_gen_level_workspace(workspace, mbin,  year = -1):
     print("Making workspace %s mbin %i" % (workspace, mbin))
