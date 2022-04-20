@@ -27,11 +27,11 @@
 
 TH1F *h1_elel_asym, *h1_elel_sym; 
 TH1F *h1_mumu_asym, *h1_mumu_sym; 
-TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure_u, *h1_elel_LQint_u,*h1_elel_LQpure_d, *h1_elel_LQint_d, *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
-TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure_u, *h1_mumu_LQint_u,*h1_mumu_LQpure_d, *h1_mumu_LQint_d, *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
+TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure_u, *h1_elel_LQint_u,*h1_elel_LQpure_d, *h1_elel_LQint_d,*h1_elel_LQpure_u_vec, *h1_elel_LQint_u_vec,*h1_elel_LQpure_d_vec, *h1_elel_LQint_d_vec, *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
+TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure_u, *h1_mumu_LQint_u,*h1_mumu_LQpure_d, *h1_mumu_LQint_d, *h1_mumu_LQpure_u_vec, *h1_mumu_LQint_u_vec ,*h1_mumu_LQpure_d_vec, *h1_mumu_LQint_d_vec ,*h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
 //Double_t m_LQ;
-
+bool make_ud = true;
 
 //take m_LQ from command line
 
@@ -213,6 +213,24 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         auto h_mumu_LQint_d = new TH3F(title, "LQint template of mc",
                  n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_LQint_d->SetDirectory(0);
+        //u LQ vec
+        sprintf(title, "mumu%i_LQpure_u_vec%s", year %2000, sys_label.c_str());
+        auto h_mumu_LQpure_u_vec = new TH3F(title, "LQpure template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_LQpure_u_vec->SetDirectory(0);
+        sprintf(title, "mumu%i_LQint_u_vec%s", year %2000, sys_label.c_str());
+        auto h_mumu_LQint_u_vec = new TH3F(title, "LQint template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_LQint_u_vec->SetDirectory(0);
+        //d LQ vec
+        sprintf(title, "mumu%i_LQpure_d_vec%s", year %2000, sys_label.c_str());
+        auto h_mumu_LQpure_d_vec = new TH3F(title, "LQpure template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_LQpure_d_vec->SetDirectory(0);
+        sprintf(title, "mumu%i_LQint_d_vec%s", year %2000, sys_label.c_str());
+        auto h_mumu_LQint_d_vec = new TH3F(title, "LQint template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_LQint_d_vec->SetDirectory(0);
 
         sprintf(title, "mumu%i_top%s", year %2000, sys_label.c_str());
         auto h_mumu_top = new TH3F(title, "Combined background template",
@@ -233,8 +251,9 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
 
         printf("Making mumu mc \n");
         //gen_mc_template includes m_LQ
-        gen_mc_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, year, m_LQ, FLAG_MUONS, use_xF, sys_label );
-       
+        gen_mc_SM_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, FLAG_MUONS, use_xF, sys_label );
+        gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, use_xF, sys_label );
+
         TTree *mumu_ts[2] = {t_mumu_ttbar, t_mumu_wt};
         printf("Making mumu back \n");
         bool emu_costrw = true;
@@ -270,6 +289,10 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
         h1_mumu_LQpure_d = convert3d(h_mumu_LQpure_d);
         h1_mumu_LQint_d = convert3d(h_mumu_LQint_d);
+        h1_mumu_LQpure_u_vec = convert3d(h_mumu_LQpure_u_vec);
+        h1_mumu_LQint_u_vec = convert3d(h_mumu_LQint_u_vec);
+        h1_mumu_LQpure_d_vec = convert3d(h_mumu_LQpure_d_vec);
+        h1_mumu_LQint_d_vec = convert3d(h_mumu_LQint_d_vec);
         delete h_mumu_alpha, h_mumu_top, h_mumu_db, h_mumu_tautau, h_mumu_gam;
 
     }
@@ -305,6 +328,24 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         auto h_elel_LQint_d = new TH3F(title, "LQint template of mc",
                  n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_elel_LQint_d->SetDirectory(0);
+        // LQ vec u quark
+        sprintf(title, "ee%i_LQpure_u_vec%s", year %2000, sys_label.c_str());
+        auto h_elel_LQpure_u_vec = new TH3F(title, "LQpure template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_LQpure_u_vec->SetDirectory(0);
+        sprintf(title, "ee%i_LQint_u_vec%s", year %2000, sys_label.c_str());
+        auto h_elel_LQint_u_vec = new TH3F(title, "LQint template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_LQint_u_vec->SetDirectory(0);
+        // LQ vec d quark
+        sprintf(title, "ee%i_LQpure_d_vec%s", year %2000, sys_label.c_str());
+        auto h_elel_LQpure_d_vec = new TH3F(title, "LQpure template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_LQpure_d_vec->SetDirectory(0);
+        sprintf(title, "ee%i_LQint_d_vec%s", year %2000, sys_label.c_str());
+        auto h_elel_LQint_d_vec = new TH3F(title, "LQint template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_LQint_d_vec->SetDirectory(0);
 
         sprintf(title, "ee%i_top%s", year %2000, sys_label.c_str());
         auto h_elel_top = new TH3F(title, "Combined background template",
@@ -325,7 +366,9 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
 
         printf("starting elel dy \n");
         //gen_mc_template includes m_LQ
-        gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha, h_elel_LQpure_u, h_elel_LQint_u,h_elel_LQpure_d, h_elel_LQint_d, year, m_LQ, FLAG_ELECTRONS,  use_xF, sys_label);
+        gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
+        gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, use_xF, sys_label );
+
         TTree *elel_ts[2] = {t_elel_ttbar, t_elel_wt};
         bool emu_costrw = true;
         gen_combined_background_template(2, elel_ts, h_elel_top, year, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
@@ -357,6 +400,10 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         h1_elel_LQint_u = convert3d(h_elel_LQint_u);
         h1_elel_LQpure_d = convert3d(h_elel_LQpure_d);
         h1_elel_LQint_d = convert3d(h_elel_LQint_d);
+        h1_elel_LQpure_u_vec = convert3d(h_elel_LQpure_u_vec);
+        h1_elel_LQint_u_vec = convert3d(h_elel_LQint_u_vec);
+        h1_elel_LQpure_d_vec = convert3d(h_elel_LQpure_d_vec);
+        h1_elel_LQint_d_vec = convert3d(h_elel_LQint_d_vec);
         delete h_elel_alpha, h_elel_top, h_elel_db, h_elel_tautau, h_elel_gam;
     }
 
@@ -481,6 +528,10 @@ void write_out_templates(const string &sys_label){
         h1_mumu_LQint_u->Write();
         h1_mumu_LQpure_d->Write();
         h1_mumu_LQint_d->Write();
+        h1_mumu_LQpure_u_vec->Write();
+        h1_mumu_LQint_u_vec->Write();
+        h1_mumu_LQpure_d_vec->Write();
+        h1_mumu_LQint_d_vec->Write();
 
 
         h1_mumu_top->Reset();
@@ -494,6 +545,10 @@ void write_out_templates(const string &sys_label){
         h1_mumu_LQint_u->Reset();
         h1_mumu_LQpure_d->Reset();
         h1_mumu_LQint_d->Reset();
+        h1_mumu_LQpure_u_vec->Reset();
+        h1_mumu_LQint_u_vec->Reset();
+        h1_mumu_LQpure_d_vec->Reset();
+        h1_mumu_LQint_d_vec->Reset();
     }
 
     if(do_el){
@@ -508,6 +563,10 @@ void write_out_templates(const string &sys_label){
         h1_elel_LQint_u->Write();
         h1_elel_LQpure_d->Write();
         h1_elel_LQint_d->Write();
+        h1_elel_LQpure_u_vec->Write();
+        h1_elel_LQint_u_vec->Write();
+        h1_elel_LQpure_d_vec->Write();
+        h1_elel_LQint_d_vec->Write();
 
 
         h1_elel_top->Reset();
@@ -521,6 +580,10 @@ void write_out_templates(const string &sys_label){
         h1_elel_LQint_u->Reset();
         h1_elel_LQpure_d->Reset();
         h1_elel_LQint_d->Reset();
+        h1_elel_LQpure_u_vec->Reset();
+        h1_elel_LQint_u_vec->Reset();
+        h1_elel_LQpure_d_vec->Reset();
+        h1_elel_LQint_d_vec->Reset();
 
     }
      if(do_fakes){

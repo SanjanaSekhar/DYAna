@@ -162,7 +162,7 @@ void LQ_make_gen_templates(){
         int nEvents_data = 0;
 
     //nEvents += make_gen_temps(t_gen_mu, h_uncut, h_raw, h_sym, h_asym, h_alpha, m_low, m_high, do_ptrw, year, sys);
-        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, test_sign, year);
+        sum_weights = make_gen_temps(t_gen_el, h_raw, h_sym, h_asym, h_alpha, h_LQpure_u, h_LQpure_d, h_LQint_u, h_LQint_d,  m_LQ, year);
     	//printf("Finished make_gen_temps, nEvents = %i\n",nEvents);
         nEvents_data += make_gen_data_temps(t_gen_data, h_data, xsec, nevents, year, sum_weights);
         nEvents_data+= make_gen_data_temps(t_gen_data_SM, h_data_SM, xsec_SM, nevents_SM, year, sum_weights);

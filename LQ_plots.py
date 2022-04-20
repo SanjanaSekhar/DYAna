@@ -33,7 +33,7 @@ def constants(flag):
     caq = -(clq - crq)
 
     cvl = crl + cll
-    cal = cll - crl
+    cal = crl - cll
 
     return cvl,cal,cvq,caq,Q_q
 
@@ -49,13 +49,29 @@ def LQ_cost(flag, cost, s, prnt = False):
         #LQ gamma interference
         XS67 = (alpha*Q_q*y_lq**2*(cost-1)**2)/(16*(2*m_lq**2+s*(1-cost)))
         #LQ Z0 interference
-        XS89_num = (G_F*m_Z0**2*s*y_lq**2*(cal+cvl)*(caq-cvq)*(cost-1)**2*(m_Z0**2-s))
+        XS89_num = (G_F*m_Z0**2*s*y_lq**2*(cal+cvl)*(caq-cvq)*(cost-1)**2*(s-m_Z0**2))
         XS89_denom = (128*sqrt(2)*pi*(2*m_lq**2+s*(1-cost))*((m_Z0**2-s)**2+g_z**2*m_Z0**2))
         XS89 = XS89_num / XS89_denom
         #if(prnt): print("LQ terms: ", SM_part, XS3, XS67, XS89)
         
         return SM_part + XS3 + XS67 + XS89
         #return XS3 + XS67 + XS89
+
+def LQ_vec_cost(flag, cost, s, prnt = False):
+        cvl,cal,cvq,caq,Q_q = constants(flag)
+        SM_part = SM_cost(flag,cost, s)
+
+        #pure LQ term
+        XS3 = ((cost+1)**2*s*g_lq**4)/(32*pi*(2*m_lq**2+ s*(1-cost))**2)
+        #LQ gamma interference
+        XS67 = (alpha*Q_q*g_lq**2*(cost+1)**2)/(8*(2*m_lq**2+s*(1-cost)))
+        #LQ Z0 interference
+        XS89_num = -(G_F*m_Z0**2*s*g_lq**2*(cal-cvl)*(caq-cvq)*(cost+1)**2*(s-m_Z0**2))
+        XS89_denom = (64*sqrt(2)*pi*(2*m_lq**2+s*(1-cost))*((m_Z0**2-s)**2+g_z**2*m_Z0**2))
+        XS89 = XS89_num / XS89_denom
+        #if(prnt): print("LQ terms: ", SM_part, XS3, XS67, XS89)
+        
+        return SM_part + XS3 + XS67 + XS89
 
 
 def SM_cost(flag, cost, s, prnt = False):
@@ -68,7 +84,7 @@ def SM_cost(flag, cost, s, prnt = False):
         XS2_denom = (256*pi*((m_Z0**2-s)**2 + g_z**2*m_Z0**2))
         XS2 = XS2_num/ XS2_denom
         #Z0 gamma interference
-        XS45_num =  - ((cost**2+1)*cvl*cvq + 2*cal*caq*cost) * (m_Z0**2-s) * alpha*G_F*m_Z0**2*Q_q
+        XS45_num =  - ((cost**2+1)*cvl*cvq + 2*cal*caq*cost) * (s-m_Z0**2) * alpha*G_F*m_Z0**2*Q_q
         XS45_denom = (8*sqrt(2)*((m_Z0**2-s)**2+(g_z*m_Z0)**2))
         XS45 = XS45_num/XS45_denom
         if(prnt): print("SM Terms: ", XS1, XS2, XS45)
@@ -113,7 +129,7 @@ pylab.close()
 '''
 x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
-for m_ll in [1000]:
+for m_ll in [500]:
 
     flag = 2
     s = m_ll*m_ll
@@ -129,22 +145,22 @@ for m_ll in [1000]:
     m_lq = 2000.
    
 
-    y_lq = .8
-    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_cost(flag,x_axis,s)/LQ_norm
+    g_lq = .8
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$y_{ue}=0.8$')
 
-    y_lq = 1.6
-    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_cost(flag,x_axis,s)/LQ_norm
+    g_lq = 1.6
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.6$')
 
 
-    y_lq = 2.4
-    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_cost(flag,x_axis,s)/LQ_norm
+    g_lq = 2.4
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.4$')
 
@@ -157,7 +173,7 @@ for m_ll in [1000]:
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
     pylab.legend()
-    pylab.show()
+    pylab.savefig("vLQ_ElectroUp_gLQ.png")
     pylab.close()
 
     SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
@@ -168,24 +184,24 @@ for m_ll in [1000]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    y_lq = 2
+    g_lq = 2
     m_lq = 2000.
-    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_cost(flag,x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
 
 
     m_lq = 3000.
-    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_cost(flag,x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=3$ TeV')
 
 
     m_lq = 4000.
-    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_cost(flag,x_axis,s)/LQ_norm
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
     #print F
     pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=4$ TeV')
 
@@ -195,7 +211,7 @@ for m_ll in [1000]:
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
     pylab.legend()
-    pylab.show()
+    pylab.savefig("vLQ_ElectroUp_mLQ.png")
     pylab.close()
 
     flag = 1
@@ -208,7 +224,7 @@ for m_ll in [1000]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    m_lq = 2000.
+    m_lq = 1000.
     y_lq = .8
     LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
     F = LQ_cost(flag,x_axis,s)/LQ_norm
@@ -236,7 +252,7 @@ for m_ll in [1000]:
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
     pylab.legend()
-    pylab.show()
+    pylab.savefig("sLQ_ElectroUp_gLQ.png")
     pylab.close()
 
     SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
@@ -274,7 +290,7 @@ for m_ll in [1000]:
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
     pylab.legend()
-    pylab.show()
+    pylab.savefig("sLQ_ElectroUp_mLQ.png")
     pylab.close()
 
 
