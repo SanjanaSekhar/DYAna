@@ -68,7 +68,7 @@ for y in [2017]:
 
             if(options.no_LQ): fit_name+="_noLQ"
 
-            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_nojets"
+            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_nojets_run"
 
             print("\n fit_name = ", fit_name)
 
