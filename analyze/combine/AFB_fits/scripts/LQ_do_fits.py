@@ -88,7 +88,7 @@ for y in [2017]:
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
                 #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters Afb " %(workspace, extra_params))
-                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1 -v 3 --freezeParameters yLQ2 %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"

@@ -19,8 +19,8 @@ float G_F = 1.166e-5;
 float g_z = 2.4952; //width of Z0
 
 // testing running couplings
-b1 = 41/6;
-b2 = -19/6;
+float b1 = 41/6;
+float b2 = -19/6;
 float gW_Z = sqrt(8*m_W*m_W*G_F/sqrt(2));
 
 //use coupling definitions from Quigg edition 1
