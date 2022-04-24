@@ -24,7 +24,7 @@ Float_t m_bins[] = {150, 170, 200,  250, 320, 510, 700, 1000, 14000};
 
 const int n_lq_m_bins = 4;
 //Float_t lq_m_bins[] = { 400., 550., 650., 850.,14000.};
-Float_t lq_m_bins[] = { 550., 650., 800., 1000., 14000.};
+Float_t lq_m_bins[] = { 500., 650., 800., 1000., 14000.};
 
 //
 const int n_pt_bins = 7;

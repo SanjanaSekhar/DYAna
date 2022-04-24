@@ -1101,7 +1101,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 			float pt = cm.Pt();
 			float rap = abs(cm.Rapidity());
 
-			bool pass = abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
+			bool pass = m>=lq_m_bins[0] and abs(gen_lep_p->Eta()) < 2.5 && abs(gen_lep_m->Eta()) < 2.5 && min(gen_lep_m->Pt(), gen_lep_p->Pt()) > 15.;
 			pass = pass and (abs(inc_id1)==1 or abs(inc_id1)==2 or abs(inc_id1)==21);
 			pass = pass and (abs(inc_id2)==1 or abs(inc_id2)==2 or abs(inc_id2)==21);
 
