@@ -13,9 +13,15 @@ using namespace std;
 
 float alpha = 1/127.9;
 float m_Z0 = 91.1875;
+float m_W = 80.379;
 float sin2_thetaw = 0.231; //sin^2(theta_W) (weak mixing angle)
 float G_F = 1.166e-5;
 float g_z = 2.4952; //width of Z0
+
+// testing running couplings
+b1 = 41/6;
+b2 = -19/6;
+float gW_Z = sqrt(8*m_W*m_W*G_F/sqrt(2));
 
 //use coupling definitions from Quigg edition 1
 float crl = 2 * sin2_thetaw;
@@ -248,16 +254,23 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 				float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
 // if(test_sign)cal = crl - cll;
+
+				 // testing running couplings
+
+					float alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/sqrt(s))),-1);
+					float gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/sqrt(s))),-1);
+					float G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
+
 				 float color_factor = 3.;
-				 float XS1 = (M_PI*pow(alpha,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
+				 float XS1 = (M_PI*pow(alpha_run,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
 		//pure Z0 term
 // float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
-				 float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F,2)*pow(m_Z0,4)*s;
+				 float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F_run,2)*pow(m_Z0,4)*s;
 				 float XS2_denom = (256*color_factor*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
 				 float XS2 = XS2_num/ XS2_denom;
 		//Z0 gamma interference
  //float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-				 float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
+				 float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha_run*G_F_run*m_Z0*m_Z0*Q_q;
 				 float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
 				 float XS45 = XS45_num/XS45_denom;
 
@@ -274,16 +287,21 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		return LQ_denom;
 	}
 
-	float get_LQ_scalar_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos, bool test_sign=false){
+	float get_LQ_scalar_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos){
 //	  if (test_sign) cal = crl - cll;
 				 //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
+		// testing running couplings
+
+					float alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/sqrt(s))),-1);
+					float gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/sqrt(s))),-1);
+					float G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
+
+
 		float color_factor = 3.;
 		float reweight_LQpure_norm = (1/(128*color_factor*M_PI*s));
 
-		float reweight_LQint_norm1 = ((alpha*Q_q)/(16*color_factor*s));
-		float reweight_LQint_norm2_num = ((m_Z0*m_Z0-s)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
-					// sign flip (m_z^2 -s)
-		if (test_sign) reweight_LQint_norm2_num = ((s - m_Z0*m_Z0)*(cal+cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
+		float reweight_LQint_norm1 = ((alpha_run*Q_q)/(16*color_factor*s));
+		float  reweight_LQint_norm2_num = ((s - m_Z0*m_Z0)*(cal+cvl)*(caq-cvq)*G_F_run*m_Z0*m_Z0);
 		
 		float reweight_LQint_norm2_denom = (128*color_factor*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
 		float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
@@ -326,12 +344,18 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
  float get_LQ_vec_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos){
 //    if (test_sign) cal = crl - cll;
 				 //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
+ 	// testing running couplings
+
+					float alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/sqrt(s))),-1);
+					float gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/sqrt(s))),-1);
+					float G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
+
 	float color_factor = 3.;
 	float reweight_LQpure_norm = (1/(32*color_factor*M_PI*s));
 
-	float reweight_LQint_norm1 = ((alpha*Q_q)/(8*color_factor*s));
+	float reweight_LQint_norm1 = ((alpha_run*Q_q)/(8*color_factor*s));
 	
-	float reweight_LQint_norm2_num = -((s - m_Z0*m_Z0)*(cal-cvl)*(caq-cvq)*G_F*m_Z0*m_Z0);
+	float reweight_LQint_norm2_num = -((s - m_Z0*m_Z0)*(cal-cvl)*(caq-cvq)*G_F_run*m_Z0*m_Z0);
 	float reweight_LQint_norm2_denom = (64*color_factor*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
 	
 	float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
