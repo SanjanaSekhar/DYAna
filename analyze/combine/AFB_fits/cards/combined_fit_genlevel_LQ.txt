@@ -1,16 +1,15 @@
 Combination of Y17=cards/combined_fit_y17_LQ.txt
 imax 1 number of bins
 jmax 4 number of processes minus 1
-kmax 1 number of nuisance parameters
+kmax 0 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
 shapes *    Y17  cards/LQm1000_gen_nojets_templates17_041222.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y17  
 observation  -1   
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                             Y17       Y17       Y17       Y17       Y17     
-process                         LQpure_u  LQint_u   fmn       alpha     fpl     
-process                         -1        0         1         2         3       
-rate                            -1        -1        -1        -1        -1      
+bin          Y17       Y17       Y17       Y17       Y17     
+process      LQpure_u  LQint_u   fmn       alpha     fpl     
+process      -1        0         1         2         3       
+rate         -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
-nlo_sys                 lnN     1.1       1.1       -         -         -       

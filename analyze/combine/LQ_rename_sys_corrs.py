@@ -2,15 +2,16 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "012821_cs"
-mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000]
+ext = "042022_ud"
+mLQ_list = [1000]
+#,1500,2000,2500,3000,3500,4000,4500,5000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)
 for mLQ in mLQ_list:
     for year in [2016,2017,2018]:
 
-        fin = "templates/LQm%i_merge_templates%i_%s.root"%(mLQ,year-2000,ext)
+        fin = "combine/templates/LQm%i_merge_templates%i_%s.root"%(mLQ,year-2000,ext)
     #    fin = sys.argv[1]
     #    year = int(sys.argv[2])
         print("year is %i" % year)

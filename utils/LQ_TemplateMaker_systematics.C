@@ -257,7 +257,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				 float XS2 = XS2_num/ XS2_denom;
 		//Z0 gamma interference
  //float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-				 XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
+				 float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha*G_F*m_Z0*m_Z0*Q_q;
 				 float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
 				 float XS45 = XS45_num/XS45_denom;
 
@@ -652,9 +652,9 @@ int gen_mc_SM_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
 
 
 		//cleanup_template(h_sym);
-	fixup_template_sum(h_sym, h_asym);
+//	fixup_template_sum(h_sym, h_asym);
 	t1->ResetBranchAddresses();
-	printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); 
+	printf("MC templates generated from %i events. LQpure_u_vec integral is %.1f \n \n", n, h_LQpure_u_vec->Integral()); 
 
 	return 0;
 }
@@ -749,7 +749,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 			h_LQint_d.SetDirectory(0);
 		//includes m_LQ
-			gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
+			//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
 
 			float alpha = 2.* a0/ (2. - a0);
