@@ -40,6 +40,7 @@ for mLQ in mLQ_list:
         #for i in range(n_bins):
         f.cd("LQ")
         keys = ROOT.gDirectory.GetListOfKeys().Clone()
+        '''
         for k in keys:
             #print(h.GetName())
             name = k.GetName()
@@ -63,6 +64,16 @@ for mLQ in mLQ_list:
                         h_clone = h.Clone(new_name)
                         h_clone.Write()
                         break
+        '''
+        for k in keys:
 
+            name = k.GetName()
+            if ("LQint_d" in name):
+                print("Flipping ",name)
+                h = ROOT.gDirectory.Get(name)
+                h_clone = h.Clone(name)
+                h_clone.Scale(-1)
+                h_clone.Write()
+                
                     
 
