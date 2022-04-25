@@ -22,35 +22,65 @@ float g_z = 2.4952; //width of Z0
 float b1 = 41/6;
 float b2 = -19/6;
 float gW_Z = sqrt(8*m_W*m_W*G_F/sqrt(2));
+float e = gW_Z*sqrt(sin2_thetaw);
 
-//use coupling definitions from Quigg edition 1
-float crl = 2 * sin2_thetaw;
-float cll = 2 * sin2_thetaw - 1;
 
-float cvl = crl + cll;
-//float cal = cll - crl;
-float cal = crl - cll;
 //up quark
 float Q_u = 2./3. ;
 float I3_u = 1./2. ;
-
-float crq_u = -2 *Q_u * sin2_thetaw;
-float clq_u = 2*I3_u- 2. *Q_u * sin2_thetaw;
-
-float cvq_u = crq_u + clq_u;
-float caq_u = -(clq_u - crq_u);
 
 //down quark
 float Q_d = -1./3. ;
 float I3_d = -1./2. ;
 
-float crq_d = -2 *Q_d * sin2_thetaw;
-float clq_d = 2*I3_d- 2. *Q_d * sin2_thetaw;
 
-float cvq_d = crq_d + clq_d;
-float caq_d = -(clq_d - crq_d);
+float alpha_run, gW_Z_run, G_F_run, sin2_thetaw_run, Q_q, caq, cvq, cvl, cal;
 
-float Q_q, caq, cvq;
+void set_running_couplings(float s, int quark_id){
+
+	float m_ll = sqrt(s);
+
+	 // testing running couplings
+
+	alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/m_ll)),-1);
+	gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
+	G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
+	sin2_thetaw_run = pow((e/gW_Z_run),2);
+
+			//use coupling definitions from Quigg edition 1
+	float crl = 2 * sin2_thetaw_run;
+	float cll = 2 * sin2_thetaw_run - 1;
+
+	cvl = crl + cll;
+	cal = crl - cll;
+//up quark
+
+	float crq_u = -2 *Q_u * sin2_thetaw_run;
+	float clq_u = 2*I3_u- 2. *Q_u * sin2_thetaw_run;
+
+	float cvq_u = crq_u + clq_u;
+	float caq_u = -(clq_u - crq_u);
+
+//down quark
+
+	float crq_d = -2 *Q_d * sin2_thetaw_run;
+	float clq_d = 2*I3_d- 2. *Q_d * sin2_thetaw_run;
+
+	float cvq_d = crq_d + clq_d;
+	float caq_d = -(clq_d - crq_d);
+
+	if(quark_id==1){
+		Q_q=Q_d;
+		caq=caq_d;
+		cvq=cvq_d;
+	}
+
+	if(quark_id==2){
+		Q_q=Q_u;
+		caq=caq_u;
+		cvq=cvq_u;
+	}
+}
 
 void symmetrize3d(TH3F *h_3d){ //this function is called in make_templates.C on 8 2D hists that we create
 	int n_m_bins = h_3d->GetNbinsX();
@@ -255,24 +285,20 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
 // if(test_sign)cal = crl - cll;
 
-				 // testing running couplings
 
-					float alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/sqrt(s))),-1);
-					float gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/sqrt(s))),-1);
-					float G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
 
-				 float color_factor = 3.;
-				 float XS1 = (M_PI*pow(alpha_run,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
+					float color_factor = 3.;
+					float XS1 = (M_PI*pow(alpha_run,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
 		//pure Z0 term
 // float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
-				 float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F_run,2)*pow(m_Z0,4)*s;
-				 float XS2_denom = (256*color_factor*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
-				 float XS2 = XS2_num/ XS2_denom;
+					float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F_run,2)*pow(m_Z0,4)*s;
+					float XS2_denom = (256*color_factor*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
+					float XS2 = XS2_num/ XS2_denom;
 		//Z0 gamma interference
  //float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-				 float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha_run*G_F_run*m_Z0*m_Z0*Q_q;
-				 float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
-				 float XS45 = XS45_num/XS45_denom;
+					float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha_run*G_F_run*m_Z0*m_Z0*Q_q;
+					float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
+					float XS45 = XS45_num/XS45_denom;
 
 
 //use events twice and make denom symmetric only
@@ -290,11 +316,6 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 	float get_LQ_scalar_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos){
 //	  if (test_sign) cal = crl - cll;
 				 //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
-		// testing running couplings
-
-					float alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/sqrt(s))),-1);
-					float gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/sqrt(s))),-1);
-					float G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
 
 
 		float color_factor = 3.;
@@ -312,97 +333,94 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		if(!interference and !negcos){
 			
 							//weight(cost)
-		 reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
-		 reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
-		 reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-		 reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
-	 }
-	 else if(!interference and negcos){
+			reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
+			reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
+			reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+			reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
+		}
+		else if(!interference and negcos){
 							//weight(-cost)
-		 reweight_LQpure_num1 = ((1 + gen_cost)*(1 + gen_cost));
-		 reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1+gen_cost)* ((2*m_LQ*m_LQ/s)+1+gen_cost));
-		 reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-		 reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
-	 }
-	 else if(interference and !negcos){
+			reweight_LQpure_num1 = ((1 + gen_cost)*(1 + gen_cost));
+			reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1+gen_cost)* ((2*m_LQ*m_LQ/s)+1+gen_cost));
+			reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+			reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
+		}
+		else if(interference and !negcos){
 					//weight(cost)
-		 reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
-		 reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
-		 reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-		 reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
-	 }
-	 else{
+			reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
+			reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
+			reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+			reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
+		}
+		else{
 							//weight(-cost)
-		 reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
-		 reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
-		 reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-		 reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
-	 }
-	 return reweight_LQ_num;
- }
+			reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
+			reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
+			reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+			reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
+		}
+		return reweight_LQ_num;
+	}
 
- float get_LQ_vec_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos){
+	float get_LQ_vec_num(float gen_cost,float s,float Q_q, float caq, float cvq, float m_LQ, bool interference, bool negcos){
 //    if (test_sign) cal = crl - cll;
 				 //float reweight_LQpure_norm = (n_conv*LQ_jacobian/(128*M_PI*s));
  	// testing running couplings
 
-					float alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/sqrt(s))),-1);
-					float gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/sqrt(s))),-1);
-					float G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
 
-	float color_factor = 3.;
-	float reweight_LQpure_norm = (1/(32*color_factor*M_PI*s));
+		float color_factor = 3.;
+		float reweight_LQpure_norm = (1/(32*color_factor*M_PI*s));
 
-	float reweight_LQint_norm1 = ((alpha_run*Q_q)/(8*color_factor*s));
-	
-	float reweight_LQint_norm2_num = -((s - m_Z0*m_Z0)*(cal-cvl)*(caq-cvq)*G_F_run*m_Z0*m_Z0);
-	float reweight_LQint_norm2_denom = (64*color_factor*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
-	
-	float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
+		float reweight_LQint_norm1 = ((alpha_run*Q_q)/(8*color_factor*s));
+
+		float reweight_LQint_norm2_num = -((s - m_Z0*m_Z0)*(cal-cvl)*(caq-cvq)*G_F_run*m_Z0*m_Z0);
+		float reweight_LQint_norm2_denom = (64*color_factor*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
+
+		float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
 						 // float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*n_conv*LQ_jacobian;
-	float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2);
-	float reweight_LQ_num, reweight_LQpure_num1, reweight_LQpure_denom1, reweight_LQpure_num, reweight_LQint_num1, reweight_LQint_denom1, reweight_LQint_num;
+		float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2);
+		float reweight_LQ_num, reweight_LQpure_num1, reweight_LQpure_denom1, reweight_LQpure_num, reweight_LQint_num1, reweight_LQint_denom1, reweight_LQint_num;
 
-	if(!interference and !negcos){
-		
+		if(!interference and !negcos){
+
 							//weight(cost)
-	 reweight_LQpure_num1 = ((1 + gen_cost)*(1 + gen_cost));
-	 reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
-	 reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-	 reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
- }
- else if(!interference and negcos){
+			reweight_LQpure_num1 = ((1 + gen_cost)*(1 + gen_cost));
+			reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1-gen_cost)* ((2*m_LQ*m_LQ/s)+1-gen_cost));
+			reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+			reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
+		}
+		else if(!interference and negcos){
 							//weight(-cost)
-	 reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
-	 reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1+gen_cost)* ((2*m_LQ*m_LQ/s)+1+gen_cost));
-	 reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
-	 reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
- }
- else if(interference and !negcos){
+			reweight_LQpure_num1 = ((1 - gen_cost)*(1 - gen_cost));
+			reweight_LQpure_denom1 = (((2*m_LQ*m_LQ/s)+1+gen_cost)* ((2*m_LQ*m_LQ/s)+1+gen_cost));
+			reweight_LQpure_num =(reweight_LQpure_num1/reweight_LQpure_denom1);
+			reweight_LQ_num = reweight_LQpure_norm*reweight_LQpure_num;
+		}
+		else if(interference and !negcos){
 					//weight(cost)
-	 reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
-	 reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
-	 reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-	 reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
- }
- else{
+			reweight_LQint_num1 = ((1 + gen_cost)*(1 + gen_cost));
+			reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1-gen_cost);
+			reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+			reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
+		}
+		else{
 							//weight(-cost)
-	 reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
-	 reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
-	 reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
-	 reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
- }
- return reweight_LQ_num;
-}
+			reweight_LQint_num1 = ((1 - gen_cost)*(1 - gen_cost));
+			reweight_LQint_denom1 =  ((2*m_LQ*m_LQ/s)+1+gen_cost);
+			reweight_LQint_num = (reweight_LQint_num1/reweight_LQint_denom1);
+			reweight_LQ_num = reweight_LQint_norm*reweight_LQint_num;
+		}
+		return reweight_LQ_num;
+	}
 
 
 //input m_LQ in make_templates.C
-int gen_mc_SM_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, 
-	int year, int flag1 = FLAG_MUONS, bool use_xF = false, const string &sys_label = "" ){
+	int gen_mc_SM_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha, 
+		int year, int flag1 = FLAG_MUONS, bool use_xF = false, const string &sys_label = "" ){
 
-	printf("Making SM mc template for sys %s \n", sys_label.c_str());
+		printf("Making SM mc template for sys %s \n", sys_label.c_str());
 
-	
+
 
 		h_sym->Sumw2(); //what is sumw2 -> create structure to store the sum of the squares of weights
 		h_asym->Sumw2();
@@ -588,119 +606,108 @@ int gen_mc_SM_template(TTree *t1, TH3F* h_sym, TH3F *h_asym, TH3F *h_alpha,
 					if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)) flag_q=2;
 				}
 				else{
-				 if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
-				 if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
-			 }
-			 if(flag_q!=0){ 
-
-				if(flag_q==1){
-					Q_q=Q_d;
-					caq=caq_d;
-					cvq=cvq_d;
+					if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
+					if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
 				}
+					if(flag_q!=0){ 
+						
+					set_running_couplings(s,flag_q);
 
-				if(flag_q==2){
-					Q_q=Q_u;
-					caq=caq_u;
-					cvq=cvq_u;
-				}
-
-
-				float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq);
+					float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq);
 
 				// scalar
-				float reweight_LQpure_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
-				
-				float reweight_LQpure_neg = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+					float reweight_LQpure_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
 
-				float reweight_LQint_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
-				
-				float reweight_LQint_neg = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
+					float reweight_LQpure_neg = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+
+					float reweight_LQint_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+
+					float reweight_LQint_neg = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
 				// vector
-				float reweight_LQpure_pos_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
-				
-				float reweight_LQpure_neg_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+					float reweight_LQpure_pos_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
 
-				float reweight_LQint_pos_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
-				
-				float reweight_LQint_neg_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
+					float reweight_LQpure_neg_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+
+					float reweight_LQint_pos_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+
+					float reweight_LQint_neg_vec = get_LQ_vec_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
 
 
 							//printf("%f\n",reweight_LQpure_pos);
 
 							//dLQ temps
-				if(flag_q==1){
+					if(flag_q==1){
 					//scalar
-					h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-					h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
-					h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight ); 
-					h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+						h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
+						h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
+						h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight ); 
+						h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
 					//vector
-					h_LQpure_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight ); 
-					h_LQpure_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight );
-					h_LQint_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight ); 
-					h_LQint_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight);
-				}
+						h_LQpure_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight ); 
+						h_LQpure_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight );
+						h_LQint_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight ); 
+						h_LQint_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight);
+					}
 							//uLQ temps
-				if(flag_q==2){
+					if(flag_q==2){
 					//scalar
-					h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-					h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-					h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-					h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+						h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
+						h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
+						h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
+						h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
 					//vector
-					h_LQpure_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight ); 
-					h_LQpure_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight );
-					h_LQint_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight ); 
-					h_LQint_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight);
-				}
+						h_LQpure_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight ); 
+						h_LQpure_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight );
+						h_LQint_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight ); 
+						h_LQint_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight);
+					}
 
+				}
 			}
 		}
-	}
-	tm.finish();
+		tm.finish();
 		//int mbin = find_bin(m_bins, m_low + 0.1);
 	 // tm.fixRFNorm(h_sym, mbin); //not done for LQ
 		//tm.fixRFNorm(h_asym, mbin);
 	 // tm.fixRFNorm(h_alpha, mbin,year);
 
 
-		 h_LQpure_u->Scale(0.5);
-		 h_LQint_u->Scale(0.5);
-		 h_LQpure_d->Scale(0.5);
-		 h_LQint_d->Scale(0.5);
-		 h_LQpure_u_vec->Scale(0.5);
-		 h_LQint_u_vec->Scale(0.5);
-		 h_LQpure_d_vec->Scale(0.5);
-		 h_LQint_d_vec->Scale(0.5);
+		h_LQpure_u->Scale(0.5);
+		h_LQint_u->Scale(0.5);
+		h_LQpure_d->Scale(0.5);
+		h_LQint_d->Scale(0.5);
+		h_LQpure_u_vec->Scale(0.5);
+		h_LQint_u_vec->Scale(0.5);
+		h_LQpure_d_vec->Scale(0.5);
+		h_LQint_d_vec->Scale(0.5);
 
 
 		//cleanup_template(h_sym);
 //	fixup_template_sum(h_sym, h_asym);
-	t1->ResetBranchAddresses();
-	printf("MC templates generated from %i events. LQpure_u_vec integral is %.1f \n \n", n, h_LQpure_u_vec->Integral()); 
+		t1->ResetBranchAddresses();
+		printf("MC templates generated from %i events. LQpure_u_vec integral is %.1f \n \n", n, h_LQpure_u_vec->Integral()); 
 
-	return 0;
-}
+		return 0;
+	}
 
-int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
-	int year,  int flag1 = FLAG_MUONS, 
-	bool ss =false, bool use_xF = false,  bool emu_reweight = false, const string &sys_label = ""){
-	h->Sumw2();
+	int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
+		int year,  int flag1 = FLAG_MUONS, 
+		bool ss =false, bool use_xF = false,  bool emu_reweight = false, const string &sys_label = ""){
+		h->Sumw2();
 
-	int nEvents = 0;
+		int nEvents = 0;
 
-	for(int i=0; i<nTrees; i++){
-		printf("Tree %i \n", i);
-		TTree *t1 = ts[i];
+		for(int i=0; i<nTrees; i++){
+			printf("Tree %i \n", i);
+			TTree *t1 = ts[i];
 
-		TempMaker tm(t1, false, year);
-		if(flag1 == FLAG_MUONS) tm.do_muons = true;
-		else tm.do_electrons = true;
-		tm.is_gen_level = false;
-		tm.do_emu_costrw = emu_reweight;
+			TempMaker tm(t1, false, year);
+			if(flag1 == FLAG_MUONS) tm.do_muons = true;
+			else tm.do_electrons = true;
+			tm.is_gen_level = false;
+			tm.do_emu_costrw = emu_reweight;
 
-		auto hname = h->GetName();
+			auto hname = h->GetName();
 				if(string(hname).find("top") != string::npos) tm.btag_mc_eff_idx = 0; //idx for ttbar MC btag effs
 				else if(string(hname).find("gam") != string::npos) tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
 				else tm.btag_mc_eff_idx = 2; //idx for diboson MC btag effs
@@ -1146,18 +1153,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 				if((inc_id1 == 2 && inc_id2 == -2)||(inc_id1 == -2 && inc_id2 == 2)) flag_q=2;
 				if(flag_q!=0){ 
 
-					if(flag_q==1){
-						Q_q=Q_d;
-						caq=caq_d;
-						cvq=cvq_d;
-					}
-
-					if(flag_q==2){
-						Q_q=Q_u;
-						caq=caq_u;
-						cvq=cvq_u;
-					}
-
+					set_running_couplings(s,flag_q);
 					
 					float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq);
 
