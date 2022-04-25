@@ -142,27 +142,27 @@ for m_ll in [500]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    m_lq = 2000.
+    m_lq = 1000.
    
 
-    g_lq = .8
+    g_lq = .6
     LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
     F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'r',label=r'$y_{ue}=0.8$')
+    pylab.plot(x_axis,F,'r',label=r'$g_{ue}=0.6$')
 
     g_lq = 1.6
     LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
     F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'black',label=r'$y_{ue}=1.6$')
+    pylab.plot(x_axis,F,'black',label=r'$g_{ue}=1.6$')
 
 
-    g_lq = 2.4
+    g_lq = 3.0
     LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
     F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'g',label=r'$y_{ue}=2.4$')
+    pylab.plot(x_axis,F,'g',label=r'$g_{ue}=3.0$')
 
 
     
@@ -185,28 +185,28 @@ for m_ll in [500]:
 #pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
     g_lq = 2
+    m_lq = 1000.
+    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=1$ TeV')
+
+
     m_lq = 2000.
     LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
     F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
    # print F
-    pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
+    pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=2$ TeV')
 
 
     m_lq = 3000.
     LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
     F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
-   # print F
-    pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=3$ TeV')
-
-
-    m_lq = 4000.
-    LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
-    F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
     #print F
-    pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=4$ TeV')
+    pylab.plot(x_axis,F,'g',label=r'$m_{LQ}=3$ TeV')
 
 
-    pylab.title(r"ElectroUp, $m_{ee}$ = "+str(m_ll)+ r" GeV, $y_{ue}$ = "+("%.1f " % (y_lq)) )
+    pylab.title(r"ElectroUp, $m_{ee}$ = "+str(m_ll)+ r" GeV, $g_{ue}$ = "+("%.1f " % (g_lq)) )
     pylab.xlabel(r'$cos \theta$')
     pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
     pylab.ylim([0., 1.4])
@@ -264,21 +264,21 @@ for m_ll in [500]:
 #pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
     y_lq = 2
-    m_lq = 2000.
+    m_lq = 1000.
     LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
     F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'r',label=r'$m_{LQ}=2$ TeV')
 
 
-    m_lq = 3000.
+    m_lq = 2000.
     LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
     F = LQ_cost(flag,x_axis,s)/LQ_norm
    # print F
     pylab.plot(x_axis,F,'black',label=r'$m_{LQ}=3$ TeV')
 
 
-    m_lq = 4000.
+    m_lq = 3000.
     LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
     F = LQ_cost(flag,x_axis,s)/LQ_norm
     #print F

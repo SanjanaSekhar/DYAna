@@ -22,6 +22,7 @@ float g_z = 2.4952; //width of Z0
 float b1 = 41./6.;
 float b2 = -19./6.;
 float gW_Z = sqrt(8*m_W*m_W*G_F/sqrt(2));
+float alphaW = gW_Z*gW_Z/(4*M_PI);
 float e = gW_Z*sqrt(sin2_thetaw);
 
 
@@ -34,7 +35,7 @@ float Q_d = -1./3. ;
 float I3_d = -1./2. ;
 
 
-float alpha_run, gW_Z_run, G_F_run, sin2_thetaw_run, Q_q, caq, cvq, cvl, cal;
+float alpha_run, alphaW_run, gW_Z_run, G_F_run, sin2_thetaw_run, Q_q, caq, cvq, cvl, cal;
 
 void set_running_couplings(float s, int quark_id){
 
@@ -45,10 +46,12 @@ void set_running_couplings(float s, int quark_id){
 	 // testing running couplings
 
 	alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/m_ll)),-1);
-	gW_Z_run = pow((1/gW_Z)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
+	//alpha_run = alpha;
+	alphaW_run = pow((1/alphaW)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
+	gW_Z_run = sqrt(4*M_PI*alphaW_run);
 	G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
 	sin2_thetaw_run = pow((e/gW_Z_run),2);
-
+	//sin2_thetaw_run = sin2_thetaw;
 			//use coupling definitions from Quigg edition 1
 	float crl = 2 * sin2_thetaw_run;
 	float cll = 2 * sin2_thetaw_run - 1;
@@ -446,7 +449,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			bool pass = (tm.m >= lq_m_bins[0]) && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
+			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;
+// && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
 			if(pass){
 
 				tm.doCorrections();
@@ -544,7 +548,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			bool pass = (tm.m >= lq_m_bins[0]) && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
+			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;
+//&& (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
 			if(pass){
 
 				tm.doCorrections();
