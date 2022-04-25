@@ -42,6 +42,13 @@
 void LQ_make_gen_templates(){
 
 
+    for(int m_ll = 90; m_ll < 1000 ; m_ll+=100){
+
+        set_running_coupling(m_ll*m_ll,2);
+        printf("alpha = %f, G_F = %f, sin2theta = %f, cal = %f, cvl = %f, caq = %f, cvq = %f\n",alpha_run,G_F_run,sin2_thetaw_run, cal,cvl,caq,cvq);
+    }
+
+
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
 
