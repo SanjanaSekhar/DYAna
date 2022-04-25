@@ -26,11 +26,12 @@ for y in [-1]:
         for options.q in ["u"]:
 
             
-
+	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
 #            options.q="u"
-            options.no_sys=False
+            print("options.gen_level = ",options.gen_level);
+	    options.no_sys=False
             if not options.gen_level: options.fake_data=True
             options.no_LQ=False
             options.year = y
@@ -95,9 +96,9 @@ for y in [-1]:
                             % (fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
-                    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s --gen_level %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,options.gen_level))
+                    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s " % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1" % (workspace, extra_params)) #only to get prefit, probably a better way
-                    print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p yLQ --skipFitB -g %s" % (mLQ, plotdir))
+                    print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
 
