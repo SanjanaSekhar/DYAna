@@ -429,9 +429,9 @@ if(options.year < 0):
 else:
     years = [options.year]
 if options.q == "u":
-    h_names = ["gam", "LQint_u_vec", "LQpure_u_vec" ,"qcd", "top", "db", "tautau", "dy"]
+    h_names = ["gam", "LQint_u", "LQpure_u" ,"qcd", "top", "db", "tautau", "dy"]
 elif options.q == "d":
-    h_names = ["gam", "LQint_d_vec", "LQpure_d_vec" ,"qcd", "top", "db", "tautau", "dy"]
+    h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
 if options.gen_level and options.q == "u":
     h_names = ["LQ", "dy"]
 #if options.gen_level and options.q == "d":
@@ -454,11 +454,11 @@ label_color_map['alpha'] = ("alpha", kGreen)
 label_color_map['fmn'] = ("DY minus", kBlue)
 label_color_map['fpl'] = ("DY plus", kRed)
 if options.q=="u":
-    label_color_map['LQint_u_vec'] = ("LQint_u_vec", kGreen)
-    label_color_map['LQpure_u_vec'] = ("LQpure_u_vec", kBlue+7)
+    label_color_map['LQint_u'] = ("LQint_u", kGreen)
+    label_color_map['LQpure_u'] = ("LQpure_u", kBlue+7)
 if options.q=="d":
-    label_color_map['LQint_d_vec'] = ("LQint_d_vec", kGreen)
-    label_color_map['LQpure_d_vec'] = ("LQpure_d_vec", kBlue+7)
+    label_color_map['LQint_d'] = ("LQint_d", kGreen)
+    label_color_map['LQpure_d'] = ("LQpure_d", kBlue+7)
 
 
 datastyle = "pe0x0"
