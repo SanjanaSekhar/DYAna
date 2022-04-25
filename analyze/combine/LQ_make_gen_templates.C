@@ -64,7 +64,7 @@ void LQ_make_gen_templates(){
         int year = 2017;
         char fout_name[200];
         sprintf(fout_name,"combine/templates/LQm%i_gen_nojets_templates%i_041222.root",int(m_LQ),year%2000);
-        //sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
+    //    sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];

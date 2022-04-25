@@ -19,8 +19,8 @@ float G_F = 1.166e-5;
 float g_z = 2.4952; //width of Z0
 
 // testing running couplings
-float b1 = 41/6;
-float b2 = -19/6;
+float b1 = 41./6.;
+float b2 = -19./6.;
 float gW_Z = sqrt(8*m_W*m_W*G_F/sqrt(2));
 float e = gW_Z*sqrt(sin2_thetaw);
 
@@ -37,6 +37,8 @@ float I3_d = -1./2. ;
 float alpha_run, gW_Z_run, G_F_run, sin2_thetaw_run, Q_q, caq, cvq, cvl, cal;
 
 void set_running_couplings(float s, int quark_id){
+
+	//printf("b1 = %f, b2 = %f\n",b1,b2);
 
 	float m_ll = sqrt(s);
 
