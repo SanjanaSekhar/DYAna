@@ -31,7 +31,7 @@ TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha, *h1_elel_LQpure_u, *h1_elel_LQint
 TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha, *h1_mumu_LQpure_u, *h1_mumu_LQint_u,*h1_mumu_LQpure_d, *h1_mumu_LQint_d, *h1_mumu_LQpure_u_vec, *h1_mumu_LQint_u_vec ,*h1_mumu_LQpure_d_vec, *h1_mumu_LQint_d_vec ,*h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_y_bins/2.) * n_cost_bins + std::floor(n_y_bins/2.) * (n_cost_bins-2)));
 //Double_t m_LQ;
-bool make_ud = true;
+bool make_ud = false;
 
 //take m_LQ from command line
 

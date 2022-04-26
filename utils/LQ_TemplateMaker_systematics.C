@@ -449,8 +449,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;
-// && (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
+			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets ;
 			if(pass){
 
 				tm.doCorrections();
@@ -548,8 +547,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;
-//&& (tm.met_pt < met_cut)  && tm.has_no_bjets && tm.not_cosmic;
+			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
 			if(pass){
 
 				tm.doCorrections();

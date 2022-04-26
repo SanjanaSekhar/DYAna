@@ -2,7 +2,7 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "042422_ud"
+ext = "042422_ud_nometcut"
 mLQ_list = [1000,1500,2000,2500,3000,3500,4000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")

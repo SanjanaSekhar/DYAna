@@ -56,7 +56,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limit_plots/limits_%s_042522.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limit_plots/limits_%s_042522_nometcut.png'%(channel,channel))
 
 
 
@@ -69,7 +69,8 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['de','um','dm']:
+for channel in ['um']:
+#'de','um','dm']:
 #for channel in ['se','cm','sm']:
     if channel=='ue':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"

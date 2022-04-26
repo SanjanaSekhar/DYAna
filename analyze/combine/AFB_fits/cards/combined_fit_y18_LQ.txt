@@ -6,20 +6,20 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm4000_merge_templates18_042422_ud.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm1000_merge_templates18_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             mumu18  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      mumu18  mumu18  mumu18  mumu18   mumu18  mumu18   mumu18 	mumu18   mumu18    mumu18 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
 
