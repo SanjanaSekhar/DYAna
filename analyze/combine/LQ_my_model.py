@@ -11,7 +11,7 @@ class LQ_YLQ_SQ(PhysicsModel):
 
         self.modelBuilder.doVar("A4[1.6, -2.0, 2.0]");
         self.modelBuilder.doVar("A0[0.05, -2.0, 2.0]");
-        self.modelBuilder.doVar("yLQ2[1.0, -5.0, 5.0]");
+        self.modelBuilder.doVar("yLQ2[0.05, -5.0, 5.0]");
         self.modelBuilder.doSet("POI","yLQ2")
         self.modelBuilder.doVar('expr::yLQ("((TMath::Abs(@0))**(0.5))",yLQ2)')
         #self.modelBuilder.doSet("POI","yLQ")
@@ -24,14 +24,15 @@ class LQ_YLQ_SQ(PhysicsModel):
         self.modelBuilder.factory_('expr::Rpl("(@0+@1)",Norm,Afb)')
         self.modelBuilder.factory_('expr::Rmn("(@0-@1)",Norm,Afb)')
         self.modelBuilder.factory_('expr::yLQ4("(@0*@0)",yLQ2)')
-
+	self.modelBuilder.factory_('expr::minusyLQ2("(-1.0*@0)",yLQ2)')
  
  
  
  
     def getYieldScale(self,bin,process):
         if 'LQpure' in process: return "yLQ4"
-        elif 'LQint' in process: return "yLQ2"
+        elif 'LQint_u' in process: return "yLQ2"
+	elif 'LQint_d' in process: return "minusyLQ2"
         elif 'alpha' in process: return "RAlph"
         elif 'pl' in process: return "Rpl"
         elif 'mn' in process : return "Rmn"

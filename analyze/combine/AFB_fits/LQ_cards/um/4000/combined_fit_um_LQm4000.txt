@@ -3,9 +3,9 @@ imax 3 number of bins
 jmax 9 number of processes minus 1
 kmax 154 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm4000_merge_templates16_072821.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm4000_merge_templates17_072821.root LQ/mumu17_$PROCESS LQ/mumu17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm4000_merge_templates18_072821.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm4000_merge_templates16_042422_ud.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm4000_merge_templates17_042422_ud.root LQ/mumu17_$PROCESS LQ/mumu17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm4000_merge_templates18_042422_ud.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   

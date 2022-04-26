@@ -10,7 +10,7 @@ from optparse import OptionGroup
 from itertools import product
 import numpy as np
 import json
-
+from math import sqrt
 from CombineHarvester.CombineTools.plotting import *
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
@@ -28,7 +28,7 @@ def plotLimits(channel):
      # Get limit TGraphs as a dictionary
     graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s.json'%(channel,channel))
     print(graphs)
-#    del graphs['obs']    
+    del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     axis.GetXaxis().SetTitle('m_{S_{%s}} (GeV)'%(channel))
@@ -69,8 +69,7 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-for channel in ['ue']:
-#'de','um','dm']:
+for channel in ['de','um','dm']:
 #for channel in ['se','cm','sm']:
     if channel=='ue':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
@@ -118,7 +117,7 @@ for channel in ['ue']:
         
         print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:dy_AFB -o %s --channel-masks" % (comb_card, workspace))
+        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
         #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
 	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))

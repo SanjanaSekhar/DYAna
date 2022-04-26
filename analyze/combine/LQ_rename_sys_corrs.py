@@ -3,8 +3,7 @@ from optparse import OptionParser
 import sys
 
 ext = "042422_ud"
-mLQ_list = [1000]
-#,1500,2000,2500,3000,3500,4000,4500,5000]
+mLQ_list = [1000,1500,2000,2500,3000,3500,4000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)
@@ -40,7 +39,9 @@ for mLQ in mLQ_list:
         #for i in range(n_bins):
         f.cd("LQ")
         keys = ROOT.gDirectory.GetListOfKeys().Clone()
-        '''
+
+
+        
         for k in keys:
             #print(h.GetName())
             name = k.GetName()
@@ -64,16 +65,16 @@ for mLQ in mLQ_list:
                         h_clone = h.Clone(new_name)
                         h_clone.Write()
                         break
-        '''
+        keys = ROOT.gDirectory.GetListOfKeys().Clone()
         for k in keys:
 
             name = k.GetName()
             if ("LQint_d" in name):
                 print("Flipping ",name)
                 h = ROOT.gDirectory.Get(name)
-                h_clone = h.Clone(name)
-                h_clone.Scale(-1)
-                h_clone.Write()
+                #h_clone = h.Clone(name)
+                h.Scale(-1)
+                h.Write("",ROOT.TObject.kOverwrite)
                 
                     
 
