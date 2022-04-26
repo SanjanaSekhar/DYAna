@@ -10,11 +10,23 @@
 int find_bin(const float * bins, float val){
     int bin =0;
     int max_bin = 10000;
+    if(val < bins[0]){
+        printf("WARNING in find_bin: Value (%.2f) less than minimum bin (%0.2f), something went wrong. Returning bin 0 \n", val, bins[0]);
+        return 0;
+    }
     while(bin < max_bin){
         if( val >= bins[bin] && val <= bins[bin+1]) break;
         bin++;
     }
-    if(bin == max_bin) printf("Something went wrong find bin for val %.f \n", val);
+    if(bin == max_bin){ 
+        printf("Something went wrong find bin for val %.f \n", val);
+        printf("First 5 bins: ");
+        for(int i =0; i< 5; i++) printf("%.3f ", bins[i]);
+        printf("\n");
+        bin = 1;
+        exit(1);
+    }
+    
     return bin;
 }
 
