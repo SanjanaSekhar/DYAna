@@ -9,6 +9,7 @@ from optparse import OptionParser
 from optparse import OptionGroup
 from itertools import product
 import numpy as np
+import json
 
 from CombineHarvester.CombineTools.plotting import *
 ROOT.PyConfig.IgnoreCommandLineOptions = True
@@ -55,7 +56,7 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limit_plots/limits_%s_020322_withobs.png'%(channel,channel))
+    canv.Print('LQ_cards/%s/limit_plots/limits_%s_042522.png'%(channel,channel))
 
 
 
@@ -68,22 +69,23 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
     
-#for channel in ['ue','de','um','dm']:
-for channel in ['se','cm','sm']:
-    if channel=='ce':
+for channel in ['ue']:
+#'de','um','dm']:
+#for channel in ['se','cm','sm']:
+    if channel=='ue':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
-    if channel=='se':
+    if channel=='de':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
-    if channel=='cm':
+    if channel=='um':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
-    if channel=='sm':
+    if channel=='dm':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000]:
+    for mass in [1000,1500,2000,2500,3000,3500,4000]:
     
         workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
         comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
@@ -124,6 +126,16 @@ for channel in ['se','cm','sm']:
 	print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
     print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
+
+    with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
+        data = json.load(f)
+        for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0']:
+            for lim in data[mass]:
+                yLQ2 = data[mass][lim]
+                data[mass][lim] = sqrt(yLQ2)
+        f.seek(0)        # <--- should reset file position to the beginning.
+        json.dump(data, f, indent=4)
+        f.truncate()     # remove remaining part
 
     print("\n========= making limit plot for channel %s =========\n"%(channel))
     #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
