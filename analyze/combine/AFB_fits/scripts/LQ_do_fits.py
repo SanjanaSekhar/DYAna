@@ -22,8 +22,8 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
-    for options.chan in ["ee","mumu"]:
-        for options.q in ["d"]:
+    for options.chan in ["mumu"]:
+        for options.q in ["u"]:
 
             
 	    #options.gen_level = False
@@ -62,7 +62,7 @@ for y in [-1]:
                 #extra_params += " --freezeParameters allConstrainedNuisances"
             if(options.noSymMCStats):
                 fit_name += "_noSymMC"
-            if(options.fake_data): fit_name +="_fake_data"
+            if(options.fake_data): fit_name +="_fake_data_vec"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
             fit_name+="_"+options.q
@@ -89,7 +89,7 @@ for y in [-1]:
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
                 #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters Afb " %(workspace, extra_params))
-                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1 %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1 -v 2 %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
