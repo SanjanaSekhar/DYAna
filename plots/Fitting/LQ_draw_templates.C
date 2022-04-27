@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = true;
+        bool draw_electrons = false;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -80,7 +80,7 @@ void LQ_draw_templates(){
             char mu_fname1[100], mu_fname2[100], mu_fname3[100], el_fname1[100], el_fname2[100], el_fname3[100];
 
             sprintf(mu_title, "Muons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
-            sprintf(el_title, "Electrons, m_LQ=%0.1f TeV, year=%i",m_LQ/1000,year);
+            sprintf(el_title, "Electrons, m_LQ=%0.1f TeV, %i",m_LQ/1000,year);
 
             if(draw_muons){
 
@@ -112,11 +112,7 @@ void LQ_draw_templates(){
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_LQint_d->SetDirectory(0);
             
-            
-
-            gen_mc_template(t_mumu_mc, h_mumu_sym, h_mumu_asym, h_mumu_alpha,h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, 
-                year, m_LQ, FLAG_MUONS, use_xF,"");
-
+           
             sprintf(mu_fname1, "%s/Mu%i_NLO_SM_m%i.png", plot_dir, year%2000, int(m_LQ));
             sprintf(mu_fname2, "%s/Mu%i_LO_LQpure_m%i.png", plot_dir, year%2000, int(m_LQ));
             sprintf(mu_fname3, "%s/Mu%i_LO_LQint_m%i.png", plot_dir, year%2000, int(m_LQ));
@@ -263,14 +259,34 @@ void LQ_draw_templates(){
             auto h_elel_LQint_d = new TH3F(title, "LQint template of mc",
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_LQint_d->SetDirectory(0);
+
+            sprintf(title, "elel%i_LQpure_u_vec%s", year %2000, sys_label.c_str());
+            auto h_elel_LQpure_u_vec = new TH3F(title, "LQpure template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_elel_LQpure_u_vec->SetDirectory(0);
+            sprintf(title, "elel%i_LQint_u_vec%s", year %2000, sys_label.c_str());
+            auto h_elel_LQint_u_vec = new TH3F(title, "LQint template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_elel_LQint_u_vec->SetDirectory(0);
+            sprintf(title, "elel%i_LQpure_d_vec%s", year %2000, sys_label.c_str());
+            auto h_elel_LQpure_d_vec = new TH3F(title, "LQpure template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_elel_LQpure_d_vec->SetDirectory(0);
+            sprintf(title, "elel%i_LQint_d_vec%s", year %2000, sys_label.c_str());
+            auto h_elel_LQint_d_vec = new TH3F(title, "LQint template of mc",
+                    n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_elel_LQint_d_vec->SetDirectory(0);
             
+            bool make_ud = false;
 
-            gen_mc_template(t_elel_mc, h_elel_sym, h_elel_asym, h_elel_alpha,h_elel_LQpure_u, h_elel_LQint_u,h_elel_LQpure_d, h_elel_LQint_d, 
-                year, m_LQ, FLAG_ELECTRONS, use_xF, "");
+            gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
+            gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, use_xF, sys_label );
 
+
+            
             sprintf(el_fname1, "%s/El%i_NLO_SM_m%i.png", plot_dir, year%2000,int(m_LQ));
             sprintf(el_fname2, "%s/El%i_LO_LQpure_m%i.png", plot_dir, year%2000,int(m_LQ));
-            sprintf(el_fname3, "%s/El%i_LO_LQint_m%i.png", plot_dir, year%2000,int(m_LQ));
+            sprintf(el_fname3, "%s/El%i_LO_LQpure_vec_m%i.png", plot_dir, year%2000,int(m_LQ));
 
             auto h_elel_pl = *h_elel_sym + *h_elel_asym;
             auto h_elel_mn = *h_elel_sym - *h_elel_asym;
@@ -290,6 +306,10 @@ void LQ_draw_templates(){
             auto h1_elel_LQint_u = convert3d(h_elel_LQint_u);
             auto h1_elel_LQpure_d = convert3d(h_elel_LQpure_d);
             auto h1_elel_LQint_d = convert3d(h_elel_LQint_d);
+            auto h1_elel_LQpure_u_vec = convert3d(h_elel_LQpure_u_vec);
+            auto h1_elel_LQint_u_vec = convert3d(h_elel_LQint_u_vec);
+            auto h1_elel_LQpure_d_vec = convert3d(h_elel_LQpure_d_vec);
+            auto h1_elel_LQint_d_vec = convert3d(h_elel_LQint_d_vec);
 
             h1_elel_alpha->SetLineColor(kGreen +3);
             h1_elel_sym->SetLineColor(kBlue);
@@ -300,6 +320,10 @@ void LQ_draw_templates(){
             h1_elel_LQint_u->SetLineColor(kGreen +3);
             h1_elel_LQpure_d->SetLineColor(kBlue);
             h1_elel_LQint_d->SetLineColor(kRed);
+            h1_elel_LQpure_u_vec->SetLineColor(kOrange +9);
+            h1_elel_LQint_u_vec->SetLineColor(kGreen +3);
+            h1_elel_LQpure_d_vec->SetLineColor(kBlue);
+            h1_elel_LQint_d_vec->SetLineColor(kRed);
 
             h1_elel_alpha->SetLineWidth(2);
             h1_elel_sym->SetLineWidth(2);
@@ -310,6 +334,10 @@ void LQ_draw_templates(){
             h1_elel_LQint_u->SetLineWidth(2);
             h1_elel_LQpure_d->SetLineWidth(2);
             h1_elel_LQint_d->SetLineWidth(2);
+            h1_elel_LQpure_u_vec->SetLineWidth(2);
+            h1_elel_LQint_u_vec->SetLineWidth(2);
+            h1_elel_LQpure_d_vec->SetLineWidth(2);
+            h1_elel_LQint_d_vec->SetLineWidth(2);
             /*
             if(year==2016)
             {
@@ -360,21 +388,21 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-            leg2->AddEntry(h1_elel_LQpure_u,"u-LQpure Template","l");
-            leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure Template","l");
+            leg2->AddEntry(h1_elel_LQpure_u,"u-LQpure S_eu Template","l");
+            leg2->AddEntry(h1_elel_LQpure_d,"d-LQpure S_eu Template","l");
             leg2->Draw();
 
             c_elel2->Print(el_fname2);
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQint_d->SetTitle(el_title);
-            h1_elel_LQint_d->Draw("hist");
-            h1_elel_LQint_u->Draw("hist same");
+            h1_elel_LQpure_u_vec->SetTitle(el_title);
+            h1_elel_LQpure_u_vec->Draw("hist");
+            h1_elel_LQpure_d_vec->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-            leg3->AddEntry(h1_elel_LQint_u,"u-LQint Template","l");
-            leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
+            leg3->AddEntry(h1_elel_LQpure_u_vec,"u-LQpure V_eu Template","l");
+            leg3->AddEntry(h1_elel_LQpure_d_vec,"d-LQpure V_eu Template","l");
             leg3->Draw();
             
             c_elel3->Print(el_fname3);
