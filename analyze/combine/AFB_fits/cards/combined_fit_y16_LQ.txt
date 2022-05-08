@@ -6,20 +6,20 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1000_merge_templates16_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm4000_merge_templates16_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             mumu16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      mumu16  mumu16  mumu16  mumu16   mumu16  mumu16   mumu16 	mumu16   mumu16    mumu16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
 
@@ -40,28 +40,28 @@ lumis16 group = lumi16 lumiXY lumiLS lumiDB lumiBC lumiGS
 ## prefire only for 16,17, hem only 18                                                                                
 Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
 prefire16       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
-METJEC16         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
+#METJEC16         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
 #METHEM16        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
                                                                                                                                          
-BTAGUNCOR16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-BTAGLIGHT16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGUNCOR16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGLIGHT16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
-BTAGS16 group = BTAGUNCOR16 BTAGCOR BTAGLIGHT16
+#BTAGS16 group = BTAGUNCOR16 BTAGCOR BTAGLIGHT16
                                                                                                                                            
 
-muRC16       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+#muRC16       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muIDBAR16    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muISOBAR16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muHLTBAR16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muIDEND16    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muISOEND16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muHLTEND16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+#muHLTEND16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 
 muIDs16 group  = muIDBAR16 muISOBAR16 muIDEND16 muISOEND16 muIDSYS muISOSYS
-muHLTs16 group = muHLTBAR16 muHLTEND16
+muHLTs16 group = muHLTBAR16 #muHLTEND16
                                                                                                                                   
 alphaS16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
@@ -72,30 +72,30 @@ RFscales16 group = alphaS16 RENORM16 FAC16 REFAC16
                                                                                                                                   
 #emu cost reweighting                                                                                                 
 emucostrw1b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-emucostrw2b16        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+#emucostrw2b16        shape    -       -        -     1.0      1.0     -      -       -       -       -         
 emucostrw3b16        shape    -       -        -     1.0      1.0     -      -       -       -       -         
 emucostrw4b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
-emucostrws16 group = emucostrw1b16 emucostrw2b16 emucostrw3b16 emucostrw4b16
+emucostrws16 group = emucostrw1b16 emucostrw3b16 emucostrw4b16 #emucostrw2b16
 
 mufakesrw1b16         shape    -       -        -      -        -      -      1.0       -       -       -         
 mufakesrw2b16         shape    -       -        -      -        -      -      1.0       -       -       -         
 mufakesrw3b16         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw4b16         shape    -       -        -      -        -      -      1.0       -       -       -         
+#mufakesrw4b16         shape    -       -        -      -        -      -      1.0       -       -       -         
 
-mufakesrws16 group = mufakesrw1b16 mufakesrw2b16 mufakesrw3b16 mufakesrw4b16
+mufakesrws16 group = mufakesrw1b16 mufakesrw2b16 mufakesrw3b16 #mufakesrw4b16
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
 ptrw1b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
 ptrw2b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 ptrw3b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw4b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw4b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
 ptrw5b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
 ptrw6b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
 ptrw7b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 
-ptrws16 group = ptrw1b16 ptrw2b16 ptrw3b16 ptrw4b16 ptrw5b16 ptrw6b16 ptrw7b16
+ptrws16 group = ptrw1b16 ptrw2b16 ptrw3b16 ptrw5b16 ptrw6b16 ptrw7b16 #ptrw4b16
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          

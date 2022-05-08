@@ -12,8 +12,8 @@ void LQ_draw_templates(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = true;
-        bool draw_electrons = false;
+        bool draw_muons = false;
+        bool draw_electrons = true;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -55,7 +55,7 @@ void LQ_draw_templates(){
 
      // for(int i=i_start;i<=i_end;i++)
       // {
-        Double_t m_LQ=1500.;
+        Double_t m_LQ=1000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -68,7 +68,7 @@ void LQ_draw_templates(){
 
         
         //int year = 2017;
-        for (int year = 2016; year<=2018; year++)
+        for (int year = 2018; year<=2018; year++)
         {
 
         init(year);
@@ -383,9 +383,9 @@ void LQ_draw_templates(){
             delete c_elel1;
         
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQpure_u->SetTitle(el_title);
-            h1_elel_LQpure_u->Draw("hist");
-            h1_elel_LQpure_d->Draw("hist same");
+            h1_elel_LQpure_d->SetTitle(el_title);
+            h1_elel_LQpure_d->Draw("hist");
+            h1_elel_LQpure_u->Draw("hist same");
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_u,"u-LQpure S_eu Template","l");
@@ -396,9 +396,9 @@ void LQ_draw_templates(){
             delete c_elel2;
 
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
-            h1_elel_LQpure_u_vec->SetTitle(el_title);
-            h1_elel_LQpure_u_vec->Draw("hist");
-            h1_elel_LQpure_d_vec->Draw("hist same");
+            h1_elel_LQpure_d_vec->SetTitle(el_title);
+            h1_elel_LQpure_d_vec->Draw("hist");
+            h1_elel_LQpure_u_vec->Draw("hist same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQpure_u_vec,"u-LQpure V_eu Template","l");

@@ -7,7 +7,7 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-masses=[2500.,3000.]#,3500.,4000.]
+masses=[1000.,1500.,2000.,2500.,3000.,3500.,4000.]
 years = [2016, 2017,2018]
 types = [0, 1]
 labels = ["pdf", "sys"]
