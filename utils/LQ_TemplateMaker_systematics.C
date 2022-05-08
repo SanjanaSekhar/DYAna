@@ -21,9 +21,9 @@ float g_z = 2.4952; //width of Z0
 // testing running couplings
 float b1 = 41./6.;
 float b2 = -19./6.;
-float gW_Z = sqrt(8*m_W*m_W*G_F/sqrt(2));
-float alphaW = gW_Z*gW_Z/(4*M_PI);
-float e = gW_Z*sqrt(sin2_thetaw);
+// g1 and g2 are SM electroweak couplings
+float g1_Z = sqrt((4*M_PI*alpha)/sin2_thetaw);
+float g2_Z = sqrt(8*G_F*m_Z0*m_Z0*sin2_thetaw/sqrt(2));
 
 
 //up quark
@@ -45,13 +45,13 @@ void set_running_couplings(float s, int quark_id){
 
 	 // testing running couplings
 
-	alpha_run = pow((1/alpha)+((1/(2*M_PI))*b1*log(m_Z0/m_ll)),-1);
-	//alpha_run = alpha;
-	alphaW_run = pow((1/alphaW)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
-	gW_Z_run = sqrt(4*M_PI*alphaW_run);
-	G_F_run = sqrt(2)*gW_Z_run*gW_Z_run/(8*m_W*m_W);
-	sin2_thetaw_run = pow((e/gW_Z_run),2);
-	//sin2_thetaw_run = sin2_thetaw;
+	g1_run = pow((1/g1_Z)+((1/(2*M_PI))*b1*log(m_Z0/m_ll)),-1);
+	g2_run = pow((1/g2_Z)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
+
+
+	sin2_thetaw_run = (g2_run*g2_run)/((g1_run*g1_run) + (g2_run*g2_run));
+	alpha_run = (g1_run*g1_run)*sin2_thetaw_run/(4*M_PI);
+	G_F_run = (sqrt(2)*(g2_run*g2_run))/(8*m_Z0*m_Z0*sin2_thetaw_run);
 			//use coupling definitions from Quigg edition 1
 	float crl = 2 * sin2_thetaw_run;
 	float cll = 2 * sin2_thetaw_run - 1;
