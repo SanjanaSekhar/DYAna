@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQmMASS_merge_templatesYR_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQmMASS_merge_templatesYR_042422_ud.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 
 bin             eeYR  
@@ -58,27 +58,27 @@ elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 elScalesYR group = elScaleStatYR  elScaleGainYR  elScaleSyst   elSmear
 
 
-#elHLTBARPTHIGHYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTBARPTHIGHYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTENDPTHIGHYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTBARPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTENDPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTsYR group = elHLTENDPTHIGHYR  elHLTBARPTLOWYR   elHLTENDPTLOWYR #elHLTBARPTHIGHYR
+elHLTsYR group = elHLTENDPTHIGHYR  elHLTBARPTLOWYR   elHLTENDPTLOWYR elHLTBARPTHIGHYR
 
 elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH #elIDENDPTLOW
+elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW #elRECOENDPTHIGH 
+elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
 
 alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
@@ -89,15 +89,15 @@ RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
                                                                                                                                   
 #emu cost reweighting                                                                                                 
 emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-#emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
 emucostrw3bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
 emucostrw4bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
-emucostrwsYRC group = emucostrw1bYRC emucostrw3bYRC emucostrw4bYRC #emucostrw2bYRC
+emucostrwsYRC group = emucostrw1bYRC emucostrw3bYRC emucostrw4bYRC emucostrw2bYRC
 ##fakes cost reweighting                                                                                                 
 elfakesrw1bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw2bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
-#elfakesrw3bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw3bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw4bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
 
 elfakesrwsYR group = elfakesrw1bYR elfakesrw2bYR elfakesrw4bYR #elfakesrw3bYR
@@ -107,12 +107,12 @@ elfakesrwsYR group = elfakesrw1bYR elfakesrw2bYR elfakesrw4bYR #elfakesrw3bYR
 ptrw1bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
 ptrw2bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 ptrw3bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-#ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
 ptrw5bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
 ptrw6bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
 ptrw7bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 
-ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC #ptrw4bYRC
+ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC ptrw4bYRC
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          

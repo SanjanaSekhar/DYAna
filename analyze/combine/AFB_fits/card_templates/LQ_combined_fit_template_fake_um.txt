@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQmMASS_merge_templatesYR_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQmMASS_merge_templatesYR_042422_ud.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             mumuYR  
 observation     -1         
@@ -56,12 +56,12 @@ muISOBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       
 muHLTBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muIDENDYR    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muISOENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-#muHLTENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 
 muIDsYR group  = muIDBARYR muISOBARYR muIDENDYR muISOENDYR muIDSYS muISOSYS
-muHLTsYR group = muHLTBARYR #muHLTENDYR
+muHLTsYR group = muHLTBARYR muHLTENDYR
                                                                                                                                   
 alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
@@ -72,30 +72,30 @@ RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
                                                                                                                                   
 #emu cost reweighting                                                                                                 
 emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-#emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
 emucostrw3bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
 emucostrw4bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
-emucostrwsYRC group = emucostrw1bYRC emucostrw3bYRC emucostrw4bYRC #emucostrw2bYRC
+emucostrwsYRC group = emucostrw1bYRC emucostrw3bYRC emucostrw4bYRC emucostrw2bYRC
 
 mufakesrw1bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
 mufakesrw2bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
 mufakesrw3bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
-#mufakesrw4bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw4bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
 
-mufakesrwsYR group = mufakesrw1bYR mufakesrw2bYR mufakesrw3bYR #mufakesrw4bYR
+mufakesrwsYR group = mufakesrw1bYR mufakesrw2bYR mufakesrw3bYR mufakesrw4bYR
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
 ptrw1bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
 ptrw2bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 ptrw3bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-#ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
 ptrw5bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
 ptrw6bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
 ptrw7bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 
-ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC #ptrw4bYRC
+ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC ptrw4bYRC
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
