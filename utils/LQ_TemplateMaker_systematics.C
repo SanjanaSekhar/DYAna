@@ -35,7 +35,7 @@ float Q_d = -1./3. ;
 float I3_d = -1./2. ;
 
 
-float alpha_run, alphaW_run, gW_Z_run, G_F_run, sin2_thetaw_run, Q_q, caq, cvq, cvl, cal;
+float alpha_run, g1_run, g2_run, G_F_run, sin2_thetaw_run, Q_q, caq, cvq, cvl, cal;
 
 void set_running_couplings(float s, int quark_id){
 
@@ -45,8 +45,8 @@ void set_running_couplings(float s, int quark_id){
 
 	 // testing running couplings
 
-	g1_run = pow((1/g1_Z)+((1/(2*M_PI))*b1*log(m_Z0/m_ll)),-1);
-	g2_run = pow((1/g2_Z)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
+	g1_run = pow((1/g1_Z)+((1/(2*M_PI))*b2*log(m_Z0/m_ll)),-1);
+	g2_run = pow((1/g2_Z)+((1/(2*M_PI))*b1*log(m_Z0/m_ll)),-1);
 
 
 	sin2_thetaw_run = (g2_run*g2_run)/((g1_run*g1_run) + (g2_run*g2_run));

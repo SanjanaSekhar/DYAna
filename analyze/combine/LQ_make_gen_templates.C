@@ -45,7 +45,7 @@ void LQ_make_gen_templates(){
     for(int m_ll = 90; m_ll < 1000 ; m_ll+=100){
 
         set_running_couplings(m_ll*m_ll,2);
-        printf("alpha = %f, G_F = %f, gW = %f, sin2theta = %f, e = %f, cal = %f, cvl = %f, caq = %f, cvq = %f\n",alpha_run,G_F_run, gW_Z_run,sin2_thetaw_run, e, cal,cvl,caq,cvq);
+        printf("alpha = %f, G_F = %f, sin2theta = %f, cal = %f, cvl = %f, caq = %f, cvq = %f\n",alpha_run,G_F_run,sin2_thetaw_run, cal,cvl,caq,cvq);
     }
 
 
@@ -71,7 +71,7 @@ void LQ_make_gen_templates(){
         int year = 2017;
         char fout_name[200];
         sprintf(fout_name,"combine/templates/LQm%i_gen_nojets_templates%i_041222.root",int(m_LQ),year%2000);
-    //    sprintf(fout_name,"combine/templates/LQm%i_SM_gen_templates%i_041222.root",int(m_LQ),year%2000);
+    //    sprintf(fout_name,"combine/templates/LQm%i_SM_gen_nojets_templates%i_041222.root",int(m_LQ),year%2000);
         string fout_n = string(fout_name, 200);
 
         char genfile_name[200];
