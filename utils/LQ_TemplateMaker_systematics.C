@@ -259,7 +259,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
 
-			if( tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
+			if( (tm.m >= lq_m_bins[0]) && tm.not_cosmic){ //tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
 				tm.doCorrections();
 				float var1 = abs(tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
@@ -442,8 +442,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		tm.is_gen_level = true;
 		tm.do_ptrw = true;
 
-		tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
-
+		//tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
+		tm.btag_mc_eff_idx = 0; //no btags applied
 		tm.setup_systematic(sys_label);
 		tm.setup();
 
@@ -451,11 +451,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets ;
+			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets ;
 			if(pass){
 
 				tm.doCorrections();
-				tm.getEvtWeight();
+				tm.getEvtWeight(false);//incl_btag_SFs = false
 				n++;
 				float gen_cost = tm.cost_st;
 				float var1 = abs(tm.cm.Rapidity());
@@ -540,7 +540,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		tm.is_gen_level = true;
 		tm.do_ptrw = true;
 
-		tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
+		//tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
+		tm.btag_mc_eff_idx = 0;
 
 		tm.setup_systematic(sys_label);
 		tm.setup();
@@ -549,11 +550,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
+			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets;
 			if(pass){
 
 				tm.doCorrections();
-				tm.getEvtWeight();
+				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
 				float gen_cost = tm.cost_st;
 				float var1 = abs(tm.cm.Rapidity());
@@ -715,23 +716,25 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			tm.do_emu_costrw = emu_reweight;
 
 			auto hname = h->GetName();
+			tm.btag_mc_eff_idx = 0;
+				/*
 				if(string(hname).find("top") != string::npos) tm.btag_mc_eff_idx = 0; //idx for ttbar MC btag effs
 				else if(string(hname).find("gam") != string::npos) tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
 				else tm.btag_mc_eff_idx = 2; //idx for diboson MC btag effs
 
 				printf("h %s : btag mc idx %i \n", h->GetName(), tm.btag_mc_eff_idx);
-
+				*/
 				tm.setup_systematic(sys_label);
 				tm.setup();
 
 
 				for (int i=0; i<tm.nEntries; i++) {
 					tm.getEvent(i);
-					bool pass =  tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+					bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
 					if(pass){
 						tm.doCorrections();
-						tm.getEvtWeight();
+						tm.getEvtWeight(false);//incl_btag_SFs=false
 
 						float var1 = abs(tm.cm.Rapidity());
 						if(use_xF)  var1 = tm.xF;
@@ -891,11 +894,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				if(flag1 == FLAG_MUONS) tm.do_muons = true;
 				else tm.do_electrons = true;
 				tm.setup();
-
+				bool incl_btag_SFs = false;
 				for (int i=0; i<tm.nEntries; i++) {
 					tm.getEvent(i);
 
-					bool pass = (tm.m >= lq_m_bins[0]) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+					bool pass = (tm.m >= lq_m_bins[0]) &&  tm.not_cosmic ;//tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
 					bool opp_sign = false;
 					if(flag1 == FLAG_MUONS) opp_sign = ((abs(tm.mu1_charge - tm.mu2_charge)) > 0.01);
@@ -930,15 +933,15 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 								if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
 								evt_reweight = -(mu1_fakerate )/(1-mu1_fakerate);
 
-								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight());
-								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight());
+								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
+								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
 							}
 							if(l==3){
 								mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
 								mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
 								evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
-								h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight() * (mu2_fakerate/(1-mu2_fakerate)));
-								h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight() * (mu1_fakerate/(1-mu1_fakerate)));
+								h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight(incl_btag_SFs) * (mu2_fakerate/(1-mu2_fakerate)));
+								h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight(incl_btag_SFs) * (mu1_fakerate/(1-mu1_fakerate)));
 							}
 						}
 						else{
@@ -967,8 +970,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 								evt_reweight = -(el1_fakerate )/(1-el1_fakerate);
 
 
-								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight());
-								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight());
+								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
+								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
 							}
 							if(l==3){
 
@@ -976,14 +979,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 								el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
 								evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
 
-								h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight() * (el2_fakerate/(1-el2_fakerate)));
-								h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight() * (el1_fakerate/(1-el1_fakerate)));
+								h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight(incl_btag_SFs) * (el2_fakerate/(1-el2_fakerate)));
+								h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight(incl_btag_SFs) * (el1_fakerate/(1-el1_fakerate)));
 							}
 						}
 						double tot_evt_weight = 0.;
 						if(is_data) tot_evt_weight = evt_reweight; 
 						else{
-							tot_evt_weight = evt_reweight * tm.getEvtWeight();
+							tot_evt_weight = evt_reweight * tm.getEvtWeight(incl_btag_SFs);
 						}
 
 						float var1 = abs(tm.cm.Rapidity());

@@ -32,7 +32,8 @@ class LQ_YLQ_SQ(PhysicsModel):
     def getYieldScale(self,bin,process):
         if 'LQpure' in process: return "yLQ4"
         elif 'LQint_u' in process: return "yLQ2"
-	elif 'LQint_d' in process: return "minusyLQ2"
+	elif 'LQint_d' in process: return "yLQ2"
+	elif 'LQint_d_vec' in process: return "minusyLQ2"
         elif 'alpha' in process: return "RAlph"
         elif 'pl' in process: return "Rpl"
         elif 'mn' in process : return "Rmn"
