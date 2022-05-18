@@ -183,7 +183,7 @@ def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False,
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mLQ, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
-        if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
+        #if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 
 
     if(year < 0 ):

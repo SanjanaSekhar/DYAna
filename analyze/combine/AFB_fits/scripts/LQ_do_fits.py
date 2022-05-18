@@ -23,7 +23,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 for y in [-1]:
     for options.chan in ["mumu","ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u"]:
+        for options.q in ["u","d"]:
 
             
 	    #options.gen_level = False
@@ -54,7 +54,7 @@ for y in [-1]:
 
             #No analytic minimization of MC stats nuisances
             #extra_params += "--X-rtd MINIMIZER_no_analytic"
-
+	    #extra_params += " --freezeParameters allConstrainedNuisances"
             
             fit_name = options.chan
             if(options.no_sys): 
@@ -62,7 +62,7 @@ for y in [-1]:
                 #extra_params += " --freezeParameters allConstrainedNuisances"
             if(options.noSymMCStats):
                 fit_name += "_noSymMC"
-            if(options.fake_data): fit_name +="_fake_data_cs"
+            if(options.fake_data): fit_name +="_fake_data"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
             fit_name+="_"+options.q

@@ -6,24 +6,25 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm4000_merge_templates17_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2000_merge_templates17_042422_ud_nometcut.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-bin             mumu17  
+
+bin             ee17  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      mumu17  mumu17  mumu17  mumu17   mumu17  mumu17   mumu17 	mumu17   mumu17    mumu17 	 
+bin                      ee17    ee17    ee17    ee17     ee17    ee17     ee17 	ee17    ee17      ee17 	 
 process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
 
-muFakes17       lnN      -       -        -      -        -       -       1.5		-         -       -		
+elFakes17       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
@@ -32,7 +33,7 @@ lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     
 lumiLS           lnN     1.003    1.003     1.003   1.003     1.003   1.003     - 		1.003    	1.003	1.003		  
 lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
 lumiBC           lnN     1.003    1.003     1.003   1.003     1.003   1.003     -			1.003    	1.003	1.003	 
-lumiGS           lnN     1.001    1.001     1.001   1.001     1.001   1.001     -			1.001    	1.001	1.001	  
+lumiGS           lnN     1.001    1.001     1.001   1.001     1.001   1.001     -			1.001    	1.001	1.001		  
 
 lumis17 group = lumi17 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
@@ -48,21 +49,37 @@ prefire17       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1
 #BTAGLIGHT17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
 #BTAGS17 group = BTAGUNCOR17 BTAGCOR BTAGLIGHT17
-                                                                                                                                           
+                                                                                                                                          
+elScaleStat17    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elScaleGain17    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-#muRC17       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muIDBAR17    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muISOBAR17   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muHLTBAR17   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muIDEND17    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muISOEND17   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muHLTEND17   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
-muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+elScales17 group = elScaleStat17  elScaleGain17  elScaleSyst   elSmear
 
-muIDs17 group  = muIDBAR17 muISOBAR17 muIDEND17 muISOEND17 muIDSYS muISOSYS
-muHLTs17 group = muHLTBAR17 muHLTEND17
-                                                                                                                                  
+
+elHLTBARPTHIGH17     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPTHIGH17   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTBARPTLOW17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPTLOW17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
+
+elHLTs17 group = elHLTENDPTHIGH17  elHLTBARPTLOW17   elHLTENDPTLOW17 elHLTBARPTHIGH17
+
+elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+
+elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
+#elIDs group =  elIDENDPTHIGH elIDENDPTLOW
+
+elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+
+elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
+
 alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC1718               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -77,13 +94,13 @@ emucostrw3b1718        shape    -       -        -     1.0      1.0     -      -
 emucostrw4b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws1718 group = emucostrw1b1718 emucostrw3b1718 emucostrw4b1718 emucostrw2b1718
+##fakes cost reweighting                                                                                                 
+elfakesrw1b17          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw2b17          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw3b17          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw4b17          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-mufakesrw1b17         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw2b17         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw3b17         shape    -       -        -      -        -      -      1.0       -       -       -         
-mufakesrw4b17         shape    -       -        -      -        -      -      1.0       -       -       -         
-
-mufakesrws17 group = mufakesrw1b17 mufakesrw2b17 mufakesrw3b17 mufakesrw4b17
+elfakesrws17 group = elfakesrw1b17 elfakesrw2b17 elfakesrw4b17 #elfakesrw3b17
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
