@@ -50,7 +50,7 @@ prefireYR       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1
 #BTAGSYR group = BTAGUNCORYR BTAGCOR BTAGLIGHTYR
                                                                                                                                            
 
-#muRCYR       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muRCYR       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muIDBARYR    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muISOBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 muHLTBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0

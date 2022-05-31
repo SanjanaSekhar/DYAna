@@ -17,13 +17,19 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 
 (options, args) = parser.parse_args()
 
-chan = "ee"
-q = "u"
+chan = "mumu"
+q = "d"
 
 options.mLQ = 1000
-options.fake_data = True
+fake_data = True
+no_sys = False
+gen_level = False
+no_LQ = False
+year = -1
 
 #extra_params = "--X-rtd MINIMIZER_no_analytic        
+extra_params = ""
+
 if chan=="ee":
 #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
     all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
@@ -125,7 +131,7 @@ if(options.expected):
 
 workspace = "workspaces/%s.root" % (ws_label)
 #make_workspace(workspace, options.mbin, diff = options.diff)
-make_workspace(workspace, False, options.chan, options.q, options.fake_data, options.mLQ)
+make_workspace(workspace, gen_level, chan, q, no_LQ , no_sys, fake_data, options.mLQ, year,False)
 
 print("Num pars = %i " % (len(pars16) + len(pars17) + len(pars18) + len(pars_comb)))
 print(par_str)

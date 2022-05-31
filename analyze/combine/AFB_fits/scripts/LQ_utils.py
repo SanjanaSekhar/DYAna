@@ -135,7 +135,7 @@ def do_lumi(card, year):
 
         print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
 
-def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = True):
+def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = False):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
