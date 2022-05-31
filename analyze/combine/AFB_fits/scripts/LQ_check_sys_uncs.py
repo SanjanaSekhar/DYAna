@@ -1,7 +1,7 @@
 import operator
 import ROOT
 from ROOT import *
-from utils import *
+from LQ_utils import *
 from add_group_impact import *
 
 gROOT.SetBatch(True)
@@ -17,7 +17,7 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 (options, args) = parser.parse_args()
 
-chan = "ee"
+chan = "mumu"
 q = "u"
 options.mLQ = 1000
 fake_data = True
@@ -28,7 +28,7 @@ year = -1
 #extra_params = "--X-rtd MINIMIZER_no_analytic"
 
 s = 123456
-extra_params += " -s %i" % s
+extra_params = " -s %i" % s
 
 if chan == "ee":
     individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
@@ -100,7 +100,7 @@ def par_to_freezestr(par):
 
 
 
-#workspace = "workspaces/%s_sys_uncs_%i.root" % (chan, options.mbin)
+workspace = "workspaces/%s_%s_sys_uncs.root" % (chan, q)
 
 
 make_workspace(workspace, gen_level, chan, q, no_LQ , no_sys, fake_data, options.mLQ, year,False)
