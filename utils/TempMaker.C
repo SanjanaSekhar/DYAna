@@ -401,6 +401,27 @@ void TempMaker::fixRFNorm(TH2 *h, int mbin, int year){
     h->Scale(1./avg);
 }
 
+float TempMaker::fixRFNorm(int mbin, int year){
+    double avg = 1.;
+
+    double *h_RF_up, *h_RF_down, *h_R_up, *h_R_down, *h_F_up, *h_F_down;
+
+
+    if(sys_label.find("REFAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_RF_up->GetBinContent(mbin+1);
+    else if(sys_label.find("REFAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_RF_down->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_R_up->GetBinContent(mbin+1);
+    else if(sys_label.find("RENORM") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_R_down->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_F_up->GetBinContent(mbin+1);
+    else if(sys_label.find("FAC") != string::npos && sys_shift < 0) avg = RF_pdf_helper.h_F_down->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift > 0) avg = RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+    else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 1./RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
+
+    if(avg != 1.){
+        printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
+    }
+    return 1./avg;
+}
+
 float TempMaker::getEvtWeight(bool incl_btag_SFs = true){
     if(is_data){
         evt_weight = 1.;

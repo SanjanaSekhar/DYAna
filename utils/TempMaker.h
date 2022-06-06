@@ -60,6 +60,7 @@ class TempMaker{
         void doCorrections();
         float getEvtWeight(bool add_btag_SF);
         void fixRFNorm(TH2 *h, int mbin, int year);
+        float fixRFNorm(int mbin, int year);
         void finish();
         float getReweightingDenom();
         float getLQReweightingDenom(int flag);

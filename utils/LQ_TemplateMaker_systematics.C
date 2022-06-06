@@ -457,6 +457,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				tm.doCorrections();
 				tm.getEvtWeight(false);//incl_btag_SFs = false
 				n++;
+
+				int bin_i = find_bin(m_bins, tm.m);
+				float RFfactor = fixRFNorm(bin_i, year); 
+
 				float gen_cost = tm.cost_st;
 				float var1 = abs(tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
@@ -484,14 +488,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 						//fill SM temps
 
-				h_sym->Fill(tm.m, var1, tm.cost, reweight_s* tm.evt_weight ); 
-				h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight ); 
+				h_sym->Fill(tm.m, var1, tm.cost, reweight_s* tm.evt_weight * RFfactor); 
+				h_sym->Fill(tm.m, var1, -tm.cost, reweight_s * tm.evt_weight * RFfactor); 
 
-				h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight );
-				h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight );
+				h_asym->Fill(tm.m, var1, tm.cost, reweight_a * tm.evt_weight * RFfactor );
+				h_asym->Fill(tm.m, var1, -tm.cost, -reweight_a * tm.evt_weight * RFfactor );
 
-				h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight ); 
-				h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight ); 
+				h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight * RFfactor); 
+				h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight * RFfactor); 
 
 			}
 		}
@@ -556,6 +560,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				tm.doCorrections();
 				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
+
+				//fix RF norm per mass point
+
+				int bin_i = find_bin(m_bins, tm.m);
+				float RFfactor = fixRFNorm(bin_i, year); 
+
 				float gen_cost = tm.cost_st;
 				float var1 = abs(tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
@@ -608,6 +618,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 							// LQ terms: LO LQ/LO SM
 						// Need to modify LQ_denom
 							//flag_q=1 for d-dbar, 2 for u-ubar, 3 for s-sbar, 4 for c-cbar, 0 for everything
+
 				int flag_q=0;
 				if(make_ud){
 					if((tm.inc_id1 == 1 && tm.inc_id2 == -1)||(tm.inc_id1 == -1 && tm.inc_id2 == 1)) flag_q=1;
@@ -646,28 +657,28 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 							//dLQ temps
 					if(flag_q==1){
 					//scalar
-						h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-						h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight );
-						h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight ); 
-						h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+						h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+						h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight * RFfactor );
+						h_LQint_d->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight * RFfactor ); 
+						h_LQint_d->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight * RFfactor);
 					//vector
-						h_LQpure_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight ); 
-						h_LQpure_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight );
-						h_LQint_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight ); 
-						h_LQint_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight);
+						h_LQpure_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+						h_LQpure_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight * RFfactor );
+						h_LQint_d_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+						h_LQint_d_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight * RFfactor);
 					}
 							//uLQ temps
 					if(flag_q==2){
 					//scalar
-						h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight ); 
-						h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight);
-						h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight); 
-						h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight);
+						h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * RFfactor ); 
+						h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight * RFfactor);
+						h_LQint_u->Fill(tm.m, var1, tm.cost, reweight_LQint_pos * tm.evt_weight * RFfactor); 
+						h_LQint_u->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg * tm.evt_weight * RFfactor);
 					//vector
-						h_LQpure_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight ); 
-						h_LQpure_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight );
-						h_LQint_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight ); 
-						h_LQint_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight);
+						h_LQpure_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+						h_LQpure_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg_vec * tm.evt_weight * RFfactor);
+						h_LQint_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+						h_LQint_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight * RFfactor);
 					}
 
 				}
