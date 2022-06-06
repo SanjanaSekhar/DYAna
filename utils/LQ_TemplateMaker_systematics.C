@@ -756,7 +756,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		}
 
 		int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy, 
-			int year, float m_LQ, int flag1 = FLAG_MUONS, bool use_xF = false, 
+			int year, float m_LQ, float yLQ = 1.0, int flag_q = 2, bool vec = false, int flag1 = FLAG_MUONS, bool use_xF = false, 
 			const string &sys_label = "" ){
 
 			int n_var1_bins = n_y_bins;
@@ -782,22 +782,36 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			TH3F h_LQint_u = TH3F("h_LQint_u", "LQint template of mc",
 				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 			h_LQint_u.SetDirectory(0);
+			TH3F h_LQpure_u_vec = TH3F("h_LQpure_u_vec", "LQpure template of mc",
+				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+			h_LQpure_u_vec.SetDirectory(0);
+			TH3F h_LQint_u_vec = TH3F("h_LQint_u_vec", "LQint template of mc",
+				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+			h_LQint_u_vec.SetDirectory(0);
 		//dLQ
-			TH3F h_LQpure_d = TH3F("h_LQpure_d", "LQpure template of mc",
+			TH3F h_LQpure_d = TH3F("h_LQpure_d_vec", "LQpure template of mc",
 				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 			h_LQpure_d.SetDirectory(0);
-			TH3F h_LQint_d = TH3F("h_LQint_d", "LQint template of mc",
+			TH3F h_LQint_d = TH3F("h_LQint_d_vec", "LQint template of mc",
 				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 			h_LQint_d.SetDirectory(0);
+			TH3F h_LQpure_d_vec = TH3F("h_LQpure_d_vec", "LQpure template of mc",
+				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+			h_LQpure_d_vec.SetDirectory(0);
+			TH3F h_LQint_d_vec = TH3F("h_LQint_d_vec", "LQint template of mc",
+				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+			h_LQint_d_vec.SetDirectory(0);
 		//includes m_LQ
 			//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
+			gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
+			gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, true, false, sys_label )
 
 			float alpha = 2.* a0/ (2. - a0);
 			double norm = 3./4./(2.+alpha);
 
 			TH3F *h_pl = (TH3F *) h_sym.Clone("h_pl");
-			TH3F *h_mn = (TH3F *) h_sym.Clone("h_pl");
+			TH3F *h_mn = (TH3F *) h_sym.Clone("h_mn");
 			h_pl->Reset();
 			h_mn->Reset();
 			make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
@@ -808,10 +822,46 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
 			h_alpha.Scale(norm * alpha);
 			h_dy->Add(&h_alpha);
-		//fix this if running syscheck
-			h_dy->Add(&h_LQpure_u);
-			h_dy->Add(&h_LQint_u);
 
+			if(flag_q == 1){	
+
+				if(vec){
+						h_LQpure_d_vec->Scale(pow(yLQ,4));
+						h_LQint_d_vec->Scale(pow(yLQ,2));
+
+						h_dy->Add(&h_LQpure_d_vec);
+						h_dy->Add(&h_LQint_d_vec);
+					}
+				else{	
+						h_LQpure_d->Scale(pow(yLQ,4));
+						h_LQint_d->Scale(pow(yLQ,2));
+
+						h_dy->Add(&h_LQpure_d);
+						h_dy->Add(&h_LQint_d);
+				}
+			}
+			
+			if(flag_q == 2){		
+				
+				if(vec){
+					h_LQpure_u_vec->Scale(pow(yLQ,4));
+					h_LQint_u_vec->Scale(pow(yLQ,2));
+
+					h_dy->Add(&h_LQpure_u_vec);
+					h_dy->Add(&h_LQint_u_vec);
+				}
+				else{
+					h_LQpure_u->Scale(pow(yLQ,4));
+					h_LQint_u->Scale(pow(yLQ,2));
+
+					h_dy->Add(&h_LQpure_u);
+					h_dy->Add(&h_LQint_u);
+				}
+				
+
+			}
+
+			
 			return 1;
 		}
 

@@ -8,28 +8,35 @@ TH3F *h_elel_asym, *h_elel_sym, *h_elel_alpha, *h_elel_LQpure,*h_elel_LQint,*h_e
 TH3F *h_elel_mc_count, *h_elel_sym_count;
 TH3F *h_mumu_asym, *h_mumu_sym, *h_mumu_alpha, *h_mumu_LQpure,*h_mumu_LQint,*h_mumu_back,  *h_mumu_dy_gg, *h_mumu_data, *h_mumu_mc, *h_mumu_qcd, *h_mumu_gam;
 
-Double_t m_LQ;
+
 
 void LQ_sys_check(){
-        std::cout << "enter m_LQ:";        
-        std::cin >> m_LQ;
-        gStyle->SetOptStat(0);
-        gROOT->SetBatch(1);
+
+
+
+
+    gStyle->SetOptStat(0);
+    gROOT->SetBatch(1);
     
-        int year = 2018;
+    for(int year = 2016; year < 2018; year++){
         init(year);
+
+        float m_LQ = 1000.;
         char *plot_dir = "Misc_plots";
         char *sys = "_REFAC";
         bool do_bkg = true;
         bool do_electrons = true;
         bool do_muons = false;
-        int i = 5;
+        bool vec = false;
+        int flag_q = 2;
+        float yLQ = 1.0;
+
         setup_all_SFs(year);
 
         string sys_up = string(sys) + string("Up");
         string sys_down = string(sys) + string("Down");
 
-        Double_t alpha_denom = amc_alpha[i];
+        Double_t alpha_denom = (amc_alpha[5]+amc_alpha[6]+amc_alpha[7])/3.;
         double m_low = m_bins[i];
         double m_high = m_bins[i+1];
         double afb = 0.6;
@@ -37,8 +44,8 @@ void LQ_sys_check(){
 
         char mu_fname1[100],  el_fname1[100];
 
-        sprintf(mu_fname1, "%s/MuMu%i_LQ%s_chk.png", plot_dir, year, sys);
-        sprintf(el_fname1, "%s/ElEl%i_LQ%s_chk.png", plot_dir, year, sys);
+        sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk.png", plot_dir, year, yLQ, sys);
+        sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk.png", plot_dir, year, yLQ, sys);
 
         bool use_xf = false;
 
@@ -78,9 +85,9 @@ void LQ_sys_check(){
 
         if(do_muons){
             printf("Making mumu temps \n");
-            one_mc_template(t_mumu_mc, afb, h_mumu_plain, year, m_LQ, FLAG_MUONS, use_xf, "");
-            one_mc_template(t_mumu_mc, afb, h_mumu_sys_up, year, m_LQ, FLAG_MUONS, use_xf, sys_up);
-            one_mc_template(t_mumu_mc,  afb, h_mumu_sys_down, year, m_LQ, FLAG_MUONS, use_xf, sys_down);
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, "");
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, sys_up);
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, sys_down);
             TH1F *h1_mumu_plain = convert3d(h_mumu_plain);
             TH1F *h1_mumu_sys_up = convert3d(h_mumu_sys_up);
             TH1F *h1_mumu_sys_down = convert3d(h_mumu_sys_down);
@@ -115,7 +122,7 @@ void LQ_sys_check(){
 
 
 
-            sprintf(mu_title, "Muons: %s", sys);
+            sprintf(mu_title, "SM DY + LQ_um  %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             h1_mumu_plain->SetTitle(mu_title);
             h1_mumu_plain->Draw("hist");
@@ -145,9 +152,9 @@ void LQ_sys_check(){
         if(do_electrons){
             printf("Making elel temps \n");
 
-            one_mc_template(t_elel_mc,  afb, h_elel_plain, year, m_LQ, FLAG_ELECTRONS, use_xf, "");
-            one_mc_template(t_elel_mc, afb, h_elel_sys_up, year, m_LQ, FLAG_ELECTRONS, use_xf, sys_up);
-            one_mc_template(t_elel_mc, afb, h_elel_sys_down, year, m_LQ, FLAG_ELECTRONS, use_xf, sys_down);
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, use_xf, "");
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, use_xf, sys_up);
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, use_xf, sys_down);
             TH1F *h1_elel_plain = convert3d(h_elel_plain);
             TH1F *h1_elel_sys_up = convert3d(h_elel_sys_up);
             TH1F *h1_elel_sys_down = convert3d(h_elel_sys_down);
@@ -182,7 +189,7 @@ void LQ_sys_check(){
 
 
 
-            sprintf(el_title, "Electrons: %s", sys);
+            sprintf(mu_title, "SM DY + LQ_ue  %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
             h1_elel_plain->SetTitle(el_title);
             h1_elel_plain->Draw("hist");
@@ -206,10 +213,10 @@ void LQ_sys_check(){
             leg1->Draw();
 
             c_elel1->Print(el_fname1);
-        
+
         }
 
-
+    }
 
 
 
