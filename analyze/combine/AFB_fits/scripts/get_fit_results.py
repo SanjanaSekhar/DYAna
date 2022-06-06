@@ -3,6 +3,8 @@ import numpy as np
 import sys
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="all", type="string", help="What channels to run the fit over (all, combined, ee, or mumu)")
+parser.add_option("--sep",  default=False, action = 'store_true', help="Get indiv channels from combined_sep fit")
+
 (options, args) = parser.parse_args()
 
 
@@ -11,11 +13,18 @@ AFB_shifts_unc = [0.0, 0.003, 0.002, 0.002, 0.001, 0.002, -0.001, -0.001, 0.]
 
 A0_str = 'A0'
 Afb_str = 'Afb'
-n_bins = 8
+n_bins = 9
 if('diff' in options.chan):
     A0_str = 'dA0'
     Afb_str = 'dAfb'
     n_bins =9
+if(options.sep):
+    if('ee' in options.chan):
+        A0_str = 'eA0'
+        Afb_str = 'eAfb'
+    if('mumu' in options.chan):
+        A0_str = 'mA0'
+        Afb_str = 'mAfb'
 
 
 def get_AFB_A0(filename):
@@ -55,6 +64,8 @@ A0_val = np.array([[0.]*n_bins]*3)
 
 if(options.chan == "all"):
     chans = ["ee_", "mumu_", "combined_"]
+elif(options.sep):
+    chans = ["combined_sep_"]
 else:
     chans = [options.chan + "_"]
 
@@ -93,6 +104,7 @@ for c_idx, chan in enumerate(chans):
 
         
 
+    print("saving results to npz %s.npz" % output_file)
     np.savez(output_file, AFB_val=AFB_val[c_idx], AFB_err_stat=AFB_err_stat[c_idx], AFB_err_sys=AFB_err_sys[c_idx], 
             A0_val = A0_val[c_idx], A0_err_stat = A0_err_stat[c_idx], A0_err_sys = A0_err_sys[c_idx])
 

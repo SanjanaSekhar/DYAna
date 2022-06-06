@@ -21,11 +21,11 @@ if (__name__ == "__main__"):
 
     label_color_map = dict()
     label_color_map['dy'] = ("DY signal", DY_c)
-    label_color_map['top'] = ("t#bar{t} + single top", ttbar_c)
+    label_color_map['top'] = ("t#bar{t} + single t", ttbar_c)
     label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
     #label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_c)
     label_color_map['gam'] = ["\\gamma\\gamma \\rightarrow {ell}{ell} ", gamgam_c]
-    label_color_map['qcd'] = ("WJets + QCD", qcd_c)
+    label_color_map['qcd'] = ("QCD and W+jets", qcd_c)
 
     datastyle = "pe0x0"
 
@@ -49,11 +49,11 @@ if (__name__ == "__main__"):
 
         if(idx == 0): 
             if(mbin_low < 1000): title = "#mu#mu channel, %i < m < %i GeV" % (mbin_low, mbin_high)
-            else: title = "#mu#mu channel, m #geq %i GeV" % (mbin_low)
+            else: title = "#mu#mu channel, m > %i GeV" % (mbin_low)
             outname = "Run2_mumu_postfit"
         if(idx == 1): 
             if(mbin_low < 1000): title = "ee channel, %i < m < %i GeV" % (mbin_low, mbin_high)
-            else: title = "ee channel, m #geq %i GeV" % (mbin_low)
+            else: title = "ee channel, m > %i GeV" % (mbin_low)
             outname = "Run2_ee_postfit"
 
         f_in.cd()
@@ -139,6 +139,6 @@ if (__name__ == "__main__"):
             NDiv = 405
 
         makeCan(outname, options.output, [h_data], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, 
-                titles = [title], xtitle = "Unrolled cos#theta_{r} bin", year = -1, datastyle=datastyle, mbin = options.mbin, ratio_range = ratio_range, 
+                titles = [title], xtitle = "Template bin", year = -1, datastyle=datastyle, mbin = options.mbin, ratio_range = ratio_range, 
                 NDiv = NDiv, prelim = options.prelim) 
 

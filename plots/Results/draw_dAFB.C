@@ -80,28 +80,28 @@ void draw_dAFB(){
     g_comb->SetMarkerColor(kBlack);
     g_comb->SetLineColor(kBlack);
     g_comb->SetMarkerStyle(kFullSquare);
-    g_comb->SetLineWidth(2);
+    g_comb->SetLineWidth(3);
+
+    g_comb->SetMarkerSize(1.5);
 
     //TLine *l_avg = new TLine(150, weighted_avg, 1200, weighted_avg);
     //l_avg->SetLineStyle(9);
     l_avg->SetLineWidth(4);
-    l_avg->SetLineColor(ttbar_c);
+    l_avg->SetLineColor(navy_c);
     l_avg->SetFillColor(light_blue);
     l_avg_unc->SetFillColor(light_blue);
 
-    float yTOffset = 0.63;
+    float yTOffset = 0.68;
     float LS = 0.05;
     float yTS = 0.1;
-    float xTS = 0.06;
+    float xTS = 0.075;
 
-    float rTS = 0.08 * 0.7/0.3;
-    float ryTS = 0.07 * 0.7/0.3;
-    float rLS = LS * 0.7/0.3;
 
 
 
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
     c_m->SetRightMargin(0.05);
+    c_m->SetBottomMargin(0.15);
 
     l_avg_unc->GetYaxis()->SetRangeUser(-0.3, 0.5);
     l_avg_unc->GetXaxis()->SetLimits(100., 1400.);
@@ -115,7 +115,7 @@ void draw_dAFB(){
 
     l_avg_unc->GetXaxis()->SetTitle("m (GeV)");
     l_avg_unc->GetXaxis()->SetTitleSize(xTS);
-    l_avg_unc->GetXaxis()->SetTitleOffset(1.);
+    l_avg_unc->GetXaxis()->SetTitleOffset(0.8);
     l_avg_unc->GetXaxis()->SetLabelSize(LS);
     l_avg_unc->GetXaxis()->SetTickLength(0.04);
 
@@ -137,14 +137,14 @@ void draw_dAFB(){
     
     float x_size = 0.32;
     float y_size = 0.2;
-    float leg_text_size = 0.035;
+    float leg_text_size = 0.045;
 
 
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.47;
-    float y_start_m = 0.62;
+    float x_start_m = 0.27;
+    float y_start_m = 0.60;
 
 
     leg1->SetX1(x_start_m);
@@ -157,9 +157,9 @@ void draw_dAFB(){
 
 
 
-    leg1->AddEntry(l_zero, " #Delta A_{FB} = 0", "l");
     leg1->AddEntry(g_comb, " Mass binned measurements ", "lep");
     leg1->AddEntry(l_avg, " Inclusive measurement", "lf");
+    leg1->AddEntry(l_zero, " #Delta A_{FB} = 0", "l");
     //leg1->AddEntry(l_avg_unc, " Uncertainty on inclusive measurement ", "f");
 
     leg1->SetTextSize(leg_text_size);
@@ -170,11 +170,11 @@ void draw_dAFB(){
     latext.SetTextColor(kBlack);
     latext.SetTextAlign(22); //centered
     latext.SetTextFont(42);
-    latext.SetTextSize(0.05);    
+    latext.SetTextSize(0.06);    
 
 
 
-    latext.DrawLatex(0.75, 0.88, "#Delta A_{FB} = A_{FB,#mu#mu} #minus A_{FB,ee}");
+    latext.DrawLatex(0.70, 0.88, "#Delta A_{FB} = A_{FB,#mu#mu} #minus A_{FB,ee}");
 
 
 

@@ -31,12 +31,6 @@ void draw_A0(){
     bool draw_powheg = false;
 
 
-    Double_t ratio[n_m_bins], ratio_errs[n_m_bins];
-    for(int i=0; i<n_m_bins; i++){
-        ratio[i] = y_comb[i]/y_amc[i];
-        ratio_errs[i] = y_comb_errs[i]/y_amc[i];
-        printf("%f ", ratio_errs[i]);
-    }
     float chi2_sep(0.), chi2_comb(0.);
     for(int i=0; i<n_m_bins; i++){
         chi2_comb += pow((y_powheg[i] - y_comb[i])/y_comb_errs[i],2);
@@ -48,13 +42,18 @@ void draw_A0(){
 
 
 
+
     TGraph *g_sm_pow = new TGraphErrors(n_m_bins, m, A0_powheg);
-    TGraph *g_sm_amc = new TGraphErrors(n_m_bins, m, A0_amc);
-    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_bins, m, A0_amc, nullptr, A0_amc_errs);
+
+    TGraph *g_sm_amc = new TGraphErrors(n_m_ext_bins, m_ext, A0_amc);
+    TGraph *g_sm_amc_unc = new TGraphErrors(n_m_ext_bins, m_ext, A0_amc, nullptr, A0_amc_errs);
     TGraphErrors *g_comb = new TGraphErrors(n_m_bins, m, A0_comb, m_err, A0_comb_errs);
     TGraphErrors *g_mumu = new TGraphErrors(n_m_bins, m, A0_mumu, m_err, A0_mumu_errs);
     TGraphErrors *g_elel = new TGraphErrors(n_m_bins, m, A0_elel, m_err, A0_elel_errs);
-    TGraphErrors *g_ratio = new TGraphErrors(n_m_bins, m, ratio, m_err, ratio_errs);
+
+    g_sm_amc->Print();
+
+
 
     int fill_col = kGreen -10;
     g_sm_amc->SetMarkerColor(diboson_c);
@@ -62,47 +61,50 @@ void draw_A0(){
     g_sm_amc_unc->SetLineColor(fill_col);
     g_sm_amc->SetLineColor(diboson_c);
     g_sm_amc->SetFillColor(fill_col);
-    g_sm_amc->SetLineWidth(4);
+    g_sm_amc->SetLineWidth(3);
+
 
     g_sm_pow->SetMarkerColor(kBlue);
     g_sm_pow->SetLineColor(kBlue);
-    g_sm_pow->SetLineWidth(4);
+    g_sm_pow->SetLineWidth(2);
 
 
     g_comb->SetMarkerColor(kBlack);
-    g_elel->SetMarkerColor(ttbar_c);
+
+    g_elel->SetMarkerColor(navy_c);
     g_mumu->SetMarkerColor(DY_c);
     
     g_comb->SetLineColor(kBlack);
-    g_elel->SetLineColor(ttbar_c);
+    g_elel->SetLineColor(navy_c);
     g_mumu->SetLineColor(DY_c);
 
     g_comb->SetMarkerStyle(kFullSquare);
     g_mumu->SetMarkerStyle(kOpenTriangleUp);
     g_elel->SetMarkerStyle(kOpenTriangleUp);
 
+    g_comb->SetMarkerSize(1.5);
+    g_mumu->SetMarkerSize(1.5);
+    g_elel->SetMarkerSize(1.5);
+
+    g_comb->SetLineWidth(2);
+    g_mumu->SetLineWidth(2);
+    g_elel->SetLineWidth(2);
+
     g_comb->SetLineWidth(2);
 
 
     float yTOffset = 0.6;
-    float LS = 0.07;
+    float LS = 0.05;
 
-    float TS = 0.08;
-    float yTS = 0.12;
-    float rTS = 0.08 * 0.7/0.3;
-    float ryTS = 0.07 * 0.7/0.3;
-    float rLS = LS * 0.7/0.3;
-    float rTOffset = 1. * 0.3 / 0.7 - 0.05;
-
+    float xTS = 0.085;
+    float yTS = 0.11;
 
 
     TCanvas *c_m = new TCanvas("c_m", "Histograms", 200, 10, 1000, 800);
-    TPad *pad1 = new TPad("pad1", "pad1", 0.,0.3,0.98,1.);
-    pad1->SetTopMargin(0.07);
-    pad1->SetBottomMargin(0.012);
-    pad1->SetRightMargin(0.04);
-    pad1->Draw();
-    pad1->cd();
+    //TPad *pad1 = new TPad("pad1", "pad1", 0.,0.,1.,1.);
+    //pad1->SetTopMargin(0.07);
+    c_m->SetBottomMargin(0.2);
+    c_m->SetRightMargin(0.05);
 
     g_sm_amc_unc->GetYaxis()->SetRangeUser(-0.55, 0.3);
     g_sm_amc_unc->GetXaxis()->SetLimits(100., 1400.);
@@ -113,6 +115,11 @@ void draw_A0(){
     g_sm_amc_unc->GetYaxis()->SetTitleOffset(yTOffset);
     g_sm_amc_unc->GetYaxis()->SetLabelSize(LS);
     g_sm_amc_unc->GetYaxis()->CenterTitle();
+
+    g_sm_amc_unc->GetXaxis()->SetTitle("m (GeV)");
+    g_sm_amc_unc->GetXaxis()->SetTitleSize(xTS);
+    g_sm_amc_unc->GetXaxis()->SetTitleOffset(0.8);
+    g_sm_amc_unc->GetXaxis()->SetLabelSize(LS);
 
 
 
@@ -127,9 +134,9 @@ void draw_A0(){
 
     gStyle->SetLegendBorderSize(0);
     
-    float x_size = 0.4;
-    float y_size = 0.3;
-    float leg_text_size = 0.045;
+    float x_size = 0.3;
+    float y_size = 0.22;
+    float leg_text_size = 0.035;
 
 
 
@@ -137,8 +144,8 @@ void draw_A0(){
 
     TLegend *leg1 = new TLegend(x_size, y_size);
 
-    float x_start_m = 0.175;
-    float y_start_m = 0.05;
+    float x_start_m = 0.19;
+    float y_start_m = 0.317;
 
 
     leg1->SetX1(x_start_m);
@@ -157,35 +164,11 @@ void draw_A0(){
     leg1->SetTextSize(leg_text_size);
     leg1->Draw();
 
-    c_m->cd();
-    TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
-    //pad2->SetTopMargin(0);
-    pad2->SetBottomMargin(0.5);
-    pad2->SetRightMargin(0.04);
-    pad2->SetGridy();
-    pad2->Draw();
-    pad2->cd();
-    g_ratio->Draw("APE");
-    g_ratio->GetYaxis()->SetRangeUser(0.8, 1.20);
-    g_ratio->GetXaxis()->SetLimits(100., 1400.);
-    g_ratio->Draw("APE");
 
-
-    g_ratio->GetYaxis()->SetTitle("Comb./aMC");
-    g_ratio->GetYaxis()->SetNdivisions(503);
-    g_ratio->GetYaxis()->SetTitleSize(ryTS);
-    g_ratio->GetYaxis()->SetTitleOffset(rTOffset);
-    g_ratio->GetYaxis()->SetLabelSize(rLS);
-    // X axis g_ratio plot settings
-    g_ratio->GetXaxis()->SetTitle("m (GeV)");
-    g_ratio->GetXaxis()->SetTitleSize(rTS);
-    g_ratio->GetXaxis()->SetTitleOffset(1.);
-    g_ratio->GetXaxis()->SetLabelSize(rLS);
-    g_ratio->GetXaxis()->SetTickLength(0.04);
     int iPeriod = -1; 
     writeExtraText = false;
     draw_CMS = true;
-    CMS_lumi(pad1, iPeriod, 11 );
+    CMS_lumi(c_m, iPeriod, 11 );
     c_m->Update();
 
     c_m->Print("Paper_plots/A0_mbins_unblind.pdf");

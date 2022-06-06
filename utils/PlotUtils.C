@@ -150,14 +150,14 @@ TCanvas *draw_ratio_plot(std::string title, TH1F *h, TH1F *ratio, char axis_labe
     // Y axis ratio plot settings
     ratio->GetYaxis()->SetTitle(ratio_label);
     ratio->GetYaxis()->SetNdivisions(505);
-    ratio->GetYaxis()->SetTitleSize(20);
+    ratio->GetYaxis()->SetTitleSize(25);
     ratio->GetYaxis()->SetTitleFont(43);
     ratio->GetYaxis()->SetTitleOffset(1.2);
     ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     ratio->GetYaxis()->SetLabelSize(15);
     // X axis ratio plot settings
     ratio->GetXaxis()->SetTitle(axis_label);
-    ratio->GetXaxis()->SetTitleSize(20);
+    ratio->GetXaxis()->SetTitleSize(25);
     ratio->GetXaxis()->SetTitleFont(43);
     ratio->GetXaxis()->SetTitleOffset(3.);
     ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
@@ -264,14 +264,14 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
     // Y axis ratio plot settings
     ratio->GetYaxis()->SetTitle(ratio_label);
     ratio->GetYaxis()->SetNdivisions(505);
-    ratio->GetYaxis()->SetTitleSize(20);
+    ratio->GetYaxis()->SetTitleSize(25);
     //ratio->GetYaxis()->SetTitleFont(43);
     ratio->GetYaxis()->SetTitleOffset(1.2);
     //ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
     ratio->GetYaxis()->SetLabelSize(15);
     // X axis ratio plot settings
     ratio->GetXaxis()->SetTitle(axis_label);
-    ratio->GetXaxis()->SetTitleSize(20);
+    ratio->GetXaxis()->SetTitleSize(25);
     //ratio->GetXaxis()->SetTitleFont(43);
     ratio->GetXaxis()->SetTitleOffset(3.);
     //ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
@@ -286,7 +286,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 
 
 std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel, TString plot_label,
-        float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0, bool draw_chi2 = false){
+        float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0, bool draw_chi2 = false, float hmin = -1.){
 
 
     TList *stackHists = h_stack->GetHists();
@@ -351,12 +351,16 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
 
 
+    if(hmin < 0){
+        hmin = 0.1;
+        if(logy && h_stack->GetMinimum() > 0.1) hmin = 10.;
+    }
     if(hmax <= 0. ) hmax = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
     if(logy) hmax *=2;
     h_stack->SetMaximum(hmax);
-    h_stack->SetMinimum(0.1);
+    h_stack->SetMinimum(hmin);
 
-    //gStyle->SetHatchesLineWidth(1);
+    gStyle->SetHatchesLineWidth(2);
     //gStyle->SetHatchesSpacing(1);
     h_stack_err->SetLineColor(kWhite);
     h_stack_err->SetFillColor(kBlack);
@@ -374,6 +378,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     gStyle->SetEndErrorSize(0);
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
+    h_data->SetMarkerSize(1.3);
+    h_data->SetLineWidth(2.5);
     if(const_size){
         printf("const size\n");
         //gStyle->SetErrorX(0);
@@ -423,8 +429,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     float y_title_offset = 1.5;
 
 
-    float TS = 0.08;
-    float TOffset = 0.98;
+    float TS = 0.1;
+    float TOffset = 0.8;
     float LS = 0.06;
 
     float rTS = TS * 0.7/0.3;
@@ -487,7 +493,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_ratio->GetXaxis()->SetTickLength(0.06);
     h_ratio->GetXaxis()->SetTitle(xlabel);
     h_ratio->GetXaxis()->SetTitleSize(rTS);
-    h_ratio->GetXaxis()->SetTitleOffset(1.);
+    h_ratio->GetXaxis()->SetTitleOffset(rTOffset + 0.45);
     h_ratio->GetXaxis()->SetLabelSize(rLS);
 
 
@@ -501,7 +507,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         float line_start = h_ratio->GetXaxis()->GetXmin();
         float line_stop = h_ratio->GetXaxis()->GetXmax();
         TLine *l1 = new TLine(line_start,1,line_stop,1);
-        l1->SetLineStyle(9);
+        l1->SetLineStyle(7);
         l1->SetLineWidth(2);
         l1->Draw();
     }
