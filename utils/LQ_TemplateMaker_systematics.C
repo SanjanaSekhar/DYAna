@@ -804,8 +804,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		//includes m_LQ
 			//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
-			gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
-			gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, true, false, sys_label )
+			gen_mc_SM_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
+			gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, true, false, sys_label );
 
 			float alpha = 2.* a0/ (2. - a0);
 			double norm = 3./4./(2.+alpha);
@@ -826,15 +826,15 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			if(flag_q == 1){	
 
 				if(vec){
-						h_LQpure_d_vec->Scale(pow(yLQ,4));
-						h_LQint_d_vec->Scale(pow(yLQ,2));
+						h_LQpure_d_vec.Scale(pow(yLQ,4));
+						h_LQint_d_vec.Scale(pow(yLQ,2));
 
 						h_dy->Add(&h_LQpure_d_vec);
 						h_dy->Add(&h_LQint_d_vec);
 					}
 				else{	
-						h_LQpure_d->Scale(pow(yLQ,4));
-						h_LQint_d->Scale(pow(yLQ,2));
+						h_LQpure_d.Scale(pow(yLQ,4));
+						h_LQint_d.Scale(pow(yLQ,2));
 
 						h_dy->Add(&h_LQpure_d);
 						h_dy->Add(&h_LQint_d);
@@ -844,15 +844,15 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			if(flag_q == 2){		
 				
 				if(vec){
-					h_LQpure_u_vec->Scale(pow(yLQ,4));
-					h_LQint_u_vec->Scale(pow(yLQ,2));
+					h_LQpure_u_vec.Scale(pow(yLQ,4));
+					h_LQint_u_vec.Scale(pow(yLQ,2));
 
 					h_dy->Add(&h_LQpure_u_vec);
 					h_dy->Add(&h_LQint_u_vec);
 				}
 				else{
-					h_LQpure_u->Scale(pow(yLQ,4));
-					h_LQint_u->Scale(pow(yLQ,2));
+					h_LQpure_u.Scale(pow(yLQ,4));
+					h_LQint_u.Scale(pow(yLQ,2));
 
 					h_dy->Add(&h_LQpure_u);
 					h_dy->Add(&h_LQint_u);
