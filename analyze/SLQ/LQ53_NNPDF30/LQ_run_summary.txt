@@ -7,7 +7,11 @@ LQ Mass  Y_ue  cross section(pb)  N_events  int L(fb-1) Run
 2 TeV    0.0   0.06626+-0.00021   51598       778.7  Run 10 [SM] 
 1.5 TeV  0.5   0.07343+-0.00024   50655       689.8  Run 11
 2.5 TeV  0.5   0.06846+-0.00022   51546       752.9  Run 12
+1 TeV    1.0   0.1734+-0.00023    50000              Run 15 no jets
 
 Madgraph5_aMC@NLO R2 Q=-2/3 LQ -> ee with LR couplings
 1 TeV    1.0   0.1329+-0.00048    45781       344.5  Run 13
 2 TeV    1.0   0.0739+-0.00024    50464       682.9  Run 14
+
+Madgraph5_aMC@NLO R2T Q=-2/3 LQ -> ee with RL couplings
+1 TeV    1.0   0.1028+-0.00009   100000              Run 16 no jets
