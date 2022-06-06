@@ -54,7 +54,7 @@ if chan=="ee":
                         "RENORM", "FAC", "REFAC", "alphaS" ]
 
 else:
-    all_sys =   [ "muRC", "Pu",
+    all_sys =   [ "muPref","muRC", "Pu",
                 "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
                 "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",

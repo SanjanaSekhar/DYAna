@@ -39,7 +39,7 @@ lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
-prefireYR       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+muPrefYRC       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
 #METJECYR         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
 #METHEMYR        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
                                                                                                                                          

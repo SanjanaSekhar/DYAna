@@ -53,7 +53,6 @@ sys_name_conv['pdfs'] = "PDFs"
 sys_name_conv['lumisYR'] = "Luminosity"
 sys_name_conv['autoMCStats'] = "MC and MisID Backgrounds Statistical Uncertainty"
 sys_name_conv['Pu'] = "Pileup"
-sys_name_conv['prefireYR'] = "Electron Trigger Prefire Correction"
 
 if chan == "ee": 
     sys_name_conv['elFakesYR'] = "Electron MisID Normalization"
@@ -62,6 +61,8 @@ if chan == "ee":
     sys_name_conv['elIDs'] = "Electron Identification/Isolation"
     sys_name_conv['elRECOs'] = "Electron Reconstruction"
     sys_name_conv['elfakesrwsYR'] = "Electron MisID Shape"
+    sys_name_conv['prefireYR'] = "Electron Trigger Prefire Correction"
+
 if chan== "mumu": 
     sys_name_conv['muFakesYR'] = "Muon MisID Normalization"
     sys_name_conv['muRCYR'] = "Muon Momentum Scale"
@@ -69,6 +70,7 @@ if chan== "mumu":
     sys_name_conv['muHLTsYR'] = "Muon Trigger"
     sys_name_conv['muPrefYRC'] = "Muon Trigger Prefire Correction"
     sys_name_conv['mufakesrwsYR'] = "Muon MisID Shape"
+    sys_name_conv['muPrefYRC'] = "Muon Trigger Prefire Correction"
 
 
 #sys_name_conv['METJECYR'] = "MET Uncertainties"

@@ -44,7 +44,7 @@ void LQ_make_sys_templates(int nJobs = 1, int iJob =0, int year = 2016, int type
       
       vector<string>  sys_labels_uncorr = 
        // { "_BTAGCOR", "_BTAGUNCOR", "_BTAGLIGHT",  "_METJER", "_METJEC", "_METHEM", 
-       { "_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", 
+       { "_muPref","_prefire", "_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear", "_muRC", "_Pu", 
             "_muHLTBAR", "_muIDBAR", "_muISOBAR",  "_muHLTEND", "_muIDEND", "_muISOEND",  "_muIDSYS", "_muISOSYS",  
             "_elHLTBARPTHIGH", "_elIDBARPTHIGH", "_elRECOBARPTHIGH", "_elHLTENDPTHIGH", "_elIDENDPTHIGH", "_elRECOENDPTHIGH",
             "_elHLTBARPTLOW", "_elIDBARPTLOW", "_elRECOBARPTLOW", "_elHLTENDPTLOW", "_elIDENDPTLOW", "_elRECOENDPTLOW",
