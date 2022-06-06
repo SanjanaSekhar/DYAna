@@ -459,7 +459,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				n++;
 
 				int bin_i = find_bin(m_bins, tm.m);
-				float RFfactor = fixRFNorm(bin_i, year); 
+				float RFfactor = tm.fixRFNorm(bin_i, year); 
 
 				float gen_cost = tm.cost_st;
 				float var1 = abs(tm.cm.Rapidity());
@@ -564,7 +564,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				//fix RF norm per mass point
 
 				int bin_i = find_bin(m_bins, tm.m);
-				float RFfactor = fixRFNorm(bin_i, year); 
+				float RFfactor = tm.fixRFNorm(bin_i, year); 
 
 				float gen_cost = tm.cost_st;
 				float var1 = abs(tm.cm.Rapidity());

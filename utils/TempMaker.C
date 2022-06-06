@@ -417,7 +417,7 @@ float TempMaker::fixRFNorm(int mbin, int year){
     else if(sys_label.find("pdf") != string::npos && sys_shift < 0) avg = 1./RF_pdf_helper.h_pdfs[do_pdf_sys-1]->GetBinContent(mbin+1);
 
     if(avg != 1.){
-        printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
+ //       printf("Sys label was %s, mbin %i correcting average weight by %.5f \n", sys_label.c_str(), mbin, 1./avg);
     }
     return 1./avg;
 }

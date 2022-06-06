@@ -18,13 +18,14 @@ void LQ_sys_check(){
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
     
-    for(int year = 2016; year < 2018; year++){
+    for(int year = 2016; year <= 2018; year++){
         init(year);
 
         float m_LQ = 1000.;
         char *plot_dir = "Misc_plots";
-        char *sys = "_REFAC";
+        char *sys = "_FAC";
         bool do_bkg = true;
+	bool do_qcd = true;
         bool do_electrons = true;
         bool do_muons = false;
         bool vec = false;
@@ -37,15 +38,15 @@ void LQ_sys_check(){
         string sys_down = string(sys) + string("Down");
 
         Double_t alpha_denom = (amc_alpha[5]+amc_alpha[6]+amc_alpha[7])/3.;
-        double m_low = m_bins[i];
-        double m_high = m_bins[i+1];
+        //double m_low = m_bins[i];
+        //double m_high = m_bins[i+1];
         double afb = 0.6;
 
 
         char mu_fname1[100],  el_fname1[100];
 
-        sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk.png", plot_dir, year, yLQ, sys);
-        sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk.png", plot_dir, year, yLQ, sys);
+        sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk_fix.png", plot_dir, year, yLQ, sys);
+        sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk_fix.png", plot_dir, year, yLQ, sys);
 
         bool use_xf = false;
 
@@ -62,9 +63,9 @@ void LQ_sys_check(){
         TH3F * h_elel_plain = new TH3F("elel_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH3F * h_elel_sys_up = new TH3F("elel_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH3F * h_elel_sys_down = new TH3F("elel_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        TH3F * h_elel_qcd = new TH2F("elel_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        TH3F * h_elel_qcd_up = new TH2F("elel_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        TH3F * h_elel_qcd_down = new TH2F("elel_qcd_down", "",n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH3F * h_elel_qcd = new TH3F("elel_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH3F * h_elel_qcd_up = new TH3F("elel_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH3F * h_elel_qcd_down = new TH3F("elel_qcd_down", "",n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 
         TH3F * h_mumu_bkg = new TH3F("mumu_bkg", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH3F * h_mumu_bkg_up = new TH3F("mumu_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -72,9 +73,9 @@ void LQ_sys_check(){
         TH3F * h_mumu_plain = new TH3F("mumu_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH3F * h_mumu_sys_up = new TH3F("mumu_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         TH3F * h_mumu_sys_down = new TH3F("mumu_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        TH3F * h_mumu_qcd = new TH2F("mumu_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        TH3F * h_mumu_qcd_up = new TH2F("mumu_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-        TH3F * h_mumu_qcd_down = new TH2F("mumu_qcd_down", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH3F * h_mumu_qcd = new TH3F("mumu_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH3F * h_mumu_qcd_up = new TH3F("mumu_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        TH3F * h_mumu_qcd_down = new TH3F("mumu_qcd_down", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 
 
         bool ss = false;
@@ -87,7 +88,7 @@ void LQ_sys_check(){
         char mu_title[100], el_title[100];
 
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
-
+	TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         if(do_muons){
             printf("Making mumu temps \n");
             one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, "");
@@ -216,14 +217,14 @@ void LQ_sys_check(){
             printf("elel: nom %.0f, up %.0f, down %.0f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
 
             if(do_bkg){
-                bool emu_reweight = false
+                bool emu_reweight = false;
                 gen_combined_background_template(3, elel_ts, h_elel_bkg, year, FLAG_ELECTRONS,  ss, use_xf,  emu_reweight,"");
                 gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, FLAG_ELECTRONS,  ss, use_xf, emu_reweight, sys_up);
                 gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, FLAG_ELECTRONS,  ss, use_xf,emu_reweight, sys_down);
                 
-                symmetrize2d(h_elel_bkg);
-                symmetrize2d(h_elel_bkg_up);
-                symmetrize2d(h_elel_bkg_down);
+                symmetrize3d(h_elel_bkg);
+                symmetrize3d(h_elel_bkg_up);
+                symmetrize3d(h_elel_bkg_down);
                 h1_elel_bkg = convert3d(h_elel_bkg);
                 h1_elel_bkg_up = convert3d(h_elel_bkg_up);
                 h1_elel_bkg_down = convert3d(h_elel_bkg_down);
@@ -265,7 +266,7 @@ void LQ_sys_check(){
             }
 
 
-            sprintf(mu_title, "SM DY + LQ_ue + all bkgs %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
+            sprintf(el_title, "SM DY + LQ_ue + all bkgs %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
             h1_elel_plain->SetTitle(el_title);
             h1_elel_plain->Draw("hist");
