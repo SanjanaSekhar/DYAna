@@ -1,18 +1,18 @@
 Systematic uncertainties (values x1000) for bin 0 
-$\alpha_s$ + Renormalization/Factorization Scales & 32.00 \\ 
-DY $p_{T}$ Correction & 21.86 \\ 
-DY Cross Section & 17.20 \\ 
-MC and MisID Backgrounds Statistical Uncertainty & 16.38 \\ 
-PDFs & 13.11 \\ 
-Luminosity & 13.07 \\ 
-Muon Momentum Scale & 10.25 \\ 
-$\ttbar$ Cross Section & 9.97 \\ 
-Muon Identification/Isolation & 8.11 \\ 
-$e\mu$ Shape Corrections & 4.73 \\ 
-Muon Trigger & 2.81 \\ 
-Pileup & 2.70 \\ 
-Muon MisID Shape & 2.41 \\ 
-Muon MisID Normalization & 1.34 \\ 
-Diboson Cross Section & 1.31 \\ 
-$\PGg\PGg$ Cross Section & 0.76 \\ 
-Electron Trigger Prefire Correction & 0.05 \\ 
+DY $p_{T}$ Correction & 26.13 \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 15.97 \\ 
+MC and MisID Backgrounds Statistical Uncertainty & 15.53 \\ 
+DY Cross Section & 13.52 \\ 
+Muon MisID Normalization & 11.35 \\ 
+Luminosity & 9.58 \\ 
+$\ttbar$ Cross Section & 9.56 \\ 
+Muon Momentum Scale & 6.85 \\ 
+PDFs & 6.10 \\ 
+Muon Identification/Isolation & 5.65 \\ 
+$e\mu$ Shape Corrections & 3.90 \\ 
+Muon MisID Shape & 2.60 \\ 
+Pileup & 2.10 \\ 
+Diboson Cross Section & 1.12 \\ 
+Muon Trigger & 1.05 \\ 
+$\PGg\PGg$ Cross Section & 0.69 \\ 
+Muon Trigger Prefire Correction & 0.57 \\ 
