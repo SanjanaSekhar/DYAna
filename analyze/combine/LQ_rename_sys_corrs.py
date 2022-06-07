@@ -2,8 +2,8 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "042422_ud_nometcut"
-mLQ_list = [1000,1500,2000,2500,3000,3500,4000]
+ext = "060622_ud"
+mLQ_list = [1000]#,1500,2000,2500,3000,3500,4000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)
@@ -34,7 +34,7 @@ for mLQ in mLQ_list:
 
         correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                             "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                            "RENORM", "FAC", "REFAC", "alphaS" ]
+                            "RENORM", "FAC", "REFAC", "alphaS", "muPref" ]
 
         #for i in range(n_bins):
         f.cd("LQ")

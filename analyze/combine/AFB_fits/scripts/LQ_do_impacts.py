@@ -17,7 +17,7 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 
 (options, args) = parser.parse_args()
 
-for chan in ["mumu","ee"]:
+for chan in ["mumu"]:
     for q in ["u","d"]:
 
         options.mLQ = 1000
@@ -69,7 +69,7 @@ for chan in ["mumu","ee"]:
                              "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                              ] 
 
-            correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
+            correlate_1718 = ["muPref","ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                                 "RENORM", "FAC", "REFAC", "alphaS" ]
 
@@ -96,8 +96,8 @@ for chan in ["mumu","ee"]:
 
 
 
-        pars16.append("prefire16")
-        pars17.append("prefire17")
+	if chan=="ee":        pars16.append("prefire16")
+	if chan=="ee":        pars17.append("prefire17")
         #pars18.append("METHEM18")
 
 
