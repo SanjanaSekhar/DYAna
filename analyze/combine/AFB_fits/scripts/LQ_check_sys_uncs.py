@@ -36,7 +36,7 @@ for chan in ["mumu","ee"]:
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
         else:
-            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "prefireYR",  "muRCYR", ]
+            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
                             "mufakesrwsYR",  "autoMCStats"] 
 
@@ -86,13 +86,14 @@ for chan in ["mumu","ee"]:
                 par1718 = par.replace("YRC", "1718")
                 return par16 + "," + par1718
             elif("YR" in par):
-                if("prefire" not in par):
+    
+		if  "prefire" not in par:
                     par16 = par.replace("YR", "16")
                     par17 = par.replace("YR", "17")
                     par18 = par.replace("YR", "18")
                     return par16 + "," + par17 + "," + par18
                 else: #prefire only sys with no 18
-                    return "prefire16,prefire17"
+                    if chan=="ee":   return "prefire16,prefire17"
             else:
                 return par
 
