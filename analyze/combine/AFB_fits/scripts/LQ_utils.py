@@ -135,26 +135,26 @@ def do_lumi(card, year):
 
         print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
 
-def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = False):
+def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = False):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
 
     #template_card="card_templates/LQ_combined_fit_template_nosys_fake.txt"
     
-    if chan=="ee" and q=="u":
+    if chan=="ee" and (q=="u" or q=="c"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_ee_noLQ.txt"
-    if chan=="ee" and q=="d":
+    if chan=="ee" and (q=="d" or q=="s"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_ee_noLQ.txt"
-    if chan=="mumu" and q=="u":
+    if chan=="mumu" and (q=="u" or q=="c"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_mumu_noLQ.txt"
-    if chan=="mumu" and q=="d":
+    if chan=="mumu" and (q=="d" or q=="s"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_mumu_noLQ.txt"
@@ -182,6 +182,8 @@ def make_workspace(workspace, gen_level, chan, q, no_LQ = False, no_sys = False,
         print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mLQ, card))
+        print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (q, card))
+        if(is_vec): print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (q, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
         #if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 

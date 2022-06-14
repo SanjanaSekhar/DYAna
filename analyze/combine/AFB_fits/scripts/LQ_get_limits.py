@@ -56,7 +56,8 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    canv.Print('LQ_cards/%s/limit_plots/limits_%s_nometcut_051322.png'%(channel,channel))
+    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_061322.png'%(channel,channel))
+    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_061322.png'%(channel,channel))
 
 
 
@@ -65,27 +66,28 @@ extra_params=""
 no_sys=False
 fake_data=True
 year = -1
+is_vec = False
 
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
 
-for channel in ['de','dm']:   
+for channel in ['ue','de','um','dm','ce','cm','se','sm']:   
 #for channel in ['ce','se','cm','sm']:
 #for channel in ['se','cm','sm']:
-    if channel=='ue':
+    if channel=='ue' or channel=='ce':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
-    if channel=='de':
+    if channel=='de' or channel=='se':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
-    if channel=='um':
+    if channel=='um' or channel=='cm':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
-    if channel=='dm':
+    if channel=='dm' or channel=='sm':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    for mass in [1000,1500,2000,2500,3000,3500,4000]:
+    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000]:
     
         workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
         comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
@@ -106,6 +108,8 @@ for channel in ['de','dm']:
             print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
             print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
             print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
+            print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
+            if(is_vec): print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
             if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
            # if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 
@@ -129,7 +133,7 @@ for channel in ['de','dm']:
     
     with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
         data = json.load(f)
-        for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0']:
+        for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0']:
             for lim in data[mass]:
                 yLQ2 = data[mass][lim]
                 data[mass][lim] = sqrt(yLQ2)
