@@ -17,7 +17,7 @@ void LQ_draw_templates(){
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
-        char *plot_dir = "AN_plots/LQ_templates/";
+        char *plot_dir = "AN_plots/LQ_templates";
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.75;
@@ -55,7 +55,7 @@ void LQ_draw_templates(){
 
      // for(int i=i_start;i<=i_end;i++)
       // {
-        Double_t m_LQ=1000.;
+        Double_t m_LQ=2000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;

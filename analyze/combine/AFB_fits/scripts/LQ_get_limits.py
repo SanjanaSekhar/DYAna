@@ -66,7 +66,7 @@ extra_params=""
 no_sys=False
 fake_data=True
 year = -1
-is_vec = False
+is_vec = True
 
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500

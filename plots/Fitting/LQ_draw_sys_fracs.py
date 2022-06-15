@@ -43,7 +43,7 @@ def get_frac_diffs(h_sys, h_nom, h_tot):
         c_sys = h_sys.GetBinContent(ibin)
         c_nom = h_nom.GetBinContent(ibin)
         c_tot = h_tot.GetBinContent(ibin)
-
+	#print("bin ", ibin, ": ",c_sys, c_nom, c_tot)
         diff2 = ((c_sys - c_nom)/c_tot)**2
         fracs[ibin -1] = diff2
     return fracs
@@ -111,7 +111,7 @@ def get_sys_dict(year, chan, q, mLQ):
 
     f_tot.cd(prefit_dir)
     h_tot= gDirectory.Get('TotalProcs')
-
+    print("h_tot Integral ",h_tot.Integral())
 
     f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_061322.root" % (mLQ, year)
 
@@ -119,6 +119,7 @@ def get_sys_dict(year, chan, q, mLQ):
     gDirectory.cd("LQ")
     h = gDirectory.Get("ee%i_fpl" % year)
     nBins = h.GetNbinsX()
+    #print(nBins)
     keys = gDirectory.GetListOfKeys()
 
 
@@ -131,7 +132,7 @@ def get_sys_dict(year, chan, q, mLQ):
     #combine these names into a single systematic
     removes = ['Up', 'Down', 'PTHIGH', 'PTLOW', 'BAR', 'END']
     #plus template gets factor of 3/4s in norm
-    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4]
+    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4, 0., 0.]
     lumi_unc = 0.025
     mumu_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'mumu_fakes_xsec', 'gamgam_xsec']
     ee_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'ee_fakes_xsec', 'gamgam_xsec']
@@ -164,7 +165,8 @@ def get_sys_dict(year, chan, q, mLQ):
             if (base in key_name):
                 #print("Adding key %s" % key_name)
                 h = gDirectory.Get(key_name)
-                fracs = get_frac_diffs(h, h_base, h_tot)
+                #print("%s Integral "%key_name,h.Integral())
+		fracs = get_frac_diffs(h, h_base, h_tot)
                 #plus templates get normalization factor of 0.75 in fit
                 if('fpl' in base):
                     fracs = fracs * (0.75**2)
@@ -209,7 +211,7 @@ gStyle.SetOptStat(0)
 
 
 q = "u"
-mLQ = 2000
+mLQ = 1000
 
 for idx,chan in enumerate(chans):
     year = years[idx]
