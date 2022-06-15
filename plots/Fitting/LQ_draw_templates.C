@@ -20,8 +20,8 @@ void LQ_draw_templates(){
         char *plot_dir = "AN_plots/LQ_templates";
         int i_start = 1; 
         int i_end = 4;
-        float x_start = 0.75;
-        float x_end = 0.9;
+        float x_start = 0.1;
+        float x_end = 0.3;
         float y_start = 0.75;
         float y_end = 0.9;
        
