@@ -1,0 +1,15 @@
+
+Attaching file multidimfit.root as _file0...
+(TFile *) 0x225b580
+
+  RooFitResult: minimized FCN value: -0.846177, estimated distance to minimum: 3.16152e-07
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Floating Parameter    FinalValue +/-  Error   
+  --------------------  --------------------------
+                    A0    1.8695e-02 +/-  5.14e-02
+                    A4    1.5634e+00 +/-  5.43e-02
+               nlo_sys    4.8605e-04 +/-  9.94e-01
+                  yLQ2    4.4790e-03 +/-  2.62e-01
+

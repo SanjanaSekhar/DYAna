@@ -23,7 +23,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 for y in [2017]:
     for options.chan in ["ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["d"]:
+        for options.q in ["u"]:
 
             is_vec = False
 	    #options.gen_level = False
@@ -69,13 +69,13 @@ for y in [2017]:
 
             if(options.no_LQ): fit_name+="_noLQ"
 
-            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_nojets_run"
+            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_SMdata_run"
 
             print("\n fit_name = ", fit_name)
 
 
             #for mLQ in [1500]:
-            for mLQ in [1500,2000,2500]:
+            for mLQ in [2500]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
             #for mbin in range(bin_start, bin_stop):
