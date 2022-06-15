@@ -120,14 +120,14 @@ void LQ_draw_templates(){
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_LQint_d_vec->SetDirectory(0);
 
-            sprintf(mu_fname1, "%s/%i/Mu%i_Sum_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(mu_fname2, "%s/%i/Mu%i_Sdm_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(mu_fname3, "%s/%i/Mu%i_Vum_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(mu_fname4, "%s/%i/Mu%i_Vum_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
-            sprintf(mu_fname5, "%s/%i/Mu%i_Vdm_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(mu_fname6, "%s/%i/Mu%i_Vdm_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname1, "%s/%i/Mu%i_Scm_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname2, "%s/%i/Mu%i_Ssm_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname3, "%s/%i/Mu%i_Vcm_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname4, "%s/%i/Mu%i_Vcm_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
+            sprintf(mu_fname5, "%s/%i/Mu%i_Vsm_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname6, "%s/%i/Mu%i_Vsm_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
 
-            bool make_ud = true;
+            bool make_ud = false;
 
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, use_xF, sys_label );
@@ -163,7 +163,7 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_d_vec->SetLineWidth(2);
             h1_mumu_LQint_d_vec->SetLineWidth(2);
          
-            sprintf(mu_title, "Channel : Muons, %i TeV S_mu",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %i TeV S_mc",m_LQ/1000,year);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u->SetTitle(mu_title); 
            h1_mumu_LQpure_u->Draw("hist");
@@ -183,7 +183,7 @@ void LQ_draw_templates(){
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
             
-            sprintf(mu_title, "Channel : Muons, %i TeV S_md",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %i TeV S_ms",m_LQ/1000,year);
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_d->SetTitle(mu_title);
             h1_mumu_LQpure_d->Draw("hist");
@@ -197,7 +197,7 @@ void LQ_draw_templates(){
             c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_mu",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %i TeV V_mc",m_LQ/1000,year);
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u_vec->SetTitle(mu_title);
             h1_mumu_LQpure_u_vec->Draw("hist");
@@ -211,7 +211,7 @@ void LQ_draw_templates(){
             c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_mu",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %i TeV V_mc",m_LQ/1000,year);
             TCanvas *c_mumu4 = new TCanvas("c_mumu4", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQint_u_vec->SetTitle(mu_title);
             h1_mumu_LQint_u_vec->Draw("hist");
@@ -225,7 +225,7 @@ void LQ_draw_templates(){
             c_mumu4->Print(mu_fname4);
             delete c_mumu4;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_md",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %i TeV V_ms",m_LQ/1000,year);
             TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_d_vec->SetTitle(mu_title);
             h1_mumu_LQpure_d_vec->Draw("hist");
@@ -239,7 +239,7 @@ void LQ_draw_templates(){
             c_mumu5->Print(mu_fname5);
             delete c_mumu5;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_md",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %i TeV V_ms",m_LQ/1000,year);
             TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQint_d_vec->SetTitle(mu_title);
             h1_mumu_LQint_d_vec->Draw("hist");
@@ -294,14 +294,14 @@ void LQ_draw_templates(){
                     n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_LQint_d_vec->SetDirectory(0);
 
-            sprintf(el_fname1, "%s/%i/El%i_Sum_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(el_fname2, "%s/%i/El%i_Sdm_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(el_fname3, "%s/%i/El%i_Vum_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(el_fname4, "%s/%i/El%i_Vum_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
-            sprintf(el_fname5, "%s/%i/El%i_Vdm_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            sprintf(el_fname6, "%s/%i/El%i_Vdm_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(el_fname1, "%s/%i/El%i_Sce_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(el_fname2, "%s/%i/El%i_Sse_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(el_fname3, "%s/%i/El%i_Vce_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(el_fname4, "%s/%i/El%i_Vce_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
+            sprintf(el_fname5, "%s/%i/El%i_Vse_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(el_fname6, "%s/%i/El%i_Vse_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
 
-            bool make_ud = true;
+            bool make_ud = false;
 
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, use_xF, sys_label );
@@ -337,7 +337,7 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d_vec->SetLineWidth(2);
             h1_elel_LQint_d_vec->SetLineWidth(2);
          
-            sprintf(el_title, "Channel : Electrons, %i TeV S_eu",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %i TeV S_ec",m_LQ/1000,year);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_u->SetTitle(el_title); 
            h1_elel_LQpure_u->Draw("hist");
@@ -357,7 +357,7 @@ void LQ_draw_templates(){
             c_elel1->Print(el_fname1);
             delete c_elel1;
             
-            sprintf(el_title, "Channel : Electrons, %i TeV S_ed",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %i TeV S_es",m_LQ/1000,year);
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_d->SetTitle(el_title);
             h1_elel_LQpure_d->Draw("hist");
@@ -371,7 +371,7 @@ void LQ_draw_templates(){
             c_elel2->Print(el_fname2);
             delete c_elel2;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_eu",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %i TeV V_ec",m_LQ/1000,year);
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_u_vec->SetTitle(el_title);
             h1_elel_LQpure_u_vec->Draw("hist");
@@ -385,7 +385,7 @@ void LQ_draw_templates(){
             c_elel3->Print(el_fname3);
             delete c_elel3;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_eu",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %i TeV V_ec",m_LQ/1000,year);
             TCanvas *c_elel4 = new TCanvas("c_elel4", "Histograms", 200, 10, 900, 700);
             h1_elel_LQint_u_vec->SetTitle(el_title);
             h1_elel_LQint_u_vec->Draw("hist");
@@ -399,7 +399,7 @@ void LQ_draw_templates(){
             c_elel4->Print(el_fname4);
             delete c_elel4;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_ed",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %i TeV V_es",m_LQ/1000,year);
             TCanvas *c_elel5 = new TCanvas("c_elel5", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_d_vec->SetTitle(el_title);
             h1_elel_LQpure_d_vec->Draw("hist");
@@ -413,7 +413,7 @@ void LQ_draw_templates(){
             c_elel5->Print(el_fname5);
             delete c_elel5;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_ed",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %i TeV V_es",m_LQ/1000,year);
             TCanvas *c_elel6 = new TCanvas("c_elel6", "Histograms", 200, 10, 900, 700);
             h1_elel_LQint_d_vec->SetTitle(el_title);
             h1_elel_LQint_d_vec->Draw("hist");
