@@ -77,7 +77,7 @@ for mLQ in mLQ_list:
 	    #	if h.GetBinContent(xbin) < 0.:
 	    #		print("Negative or zero bins in %s"%name)
 	    #		break
-            if ("LQint_d_vec" in name):
+            if ("LQint_d_vec" in name or "LQint_s_vec" in name):
                 print("Flipping ",name)
                 h = ROOT.gDirectory.Get(name)
                 #h_clone = h.Clone(name)

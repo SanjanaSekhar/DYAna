@@ -71,9 +71,9 @@ is_vec = True
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
 
-for channel in ['ue','de','um','dm','ce','cm','se','sm']:   
+#for channel in ['ue','de','um','dm','ce','cm','se','sm']:   
 #for channel in ['ce','se','cm','sm']:
-#for channel in ['se','cm','sm']:
+for channel in ['se','sm']:
     if channel=='ue' or channel=='ce':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
@@ -108,8 +108,8 @@ for channel in ['ue','de','um','dm','ce','cm','se','sm']:
             print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
             print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
             print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
-            print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
-            if(is_vec): print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
+            if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
+            else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
             if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
            # if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 
