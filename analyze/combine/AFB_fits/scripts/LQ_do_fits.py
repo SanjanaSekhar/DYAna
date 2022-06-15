@@ -20,12 +20,12 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [-1]:
-    for options.chan in ["mumu","ee"]:
+for y in [2017]:
+    for options.chan in ["ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u"]:
+        for options.q in ["d"]:
 
-            
+            is_vec = False
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
@@ -75,7 +75,7 @@ for y in [-1]:
 
 
             #for mLQ in [1500]:
-            for mLQ in [1000]:
+            for mLQ in [1500,2000,2500]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
             #for mbin in range(bin_start, bin_stop):
@@ -83,7 +83,7 @@ for y in [-1]:
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
                 workspace="workspaces/%s_LQ.root" % (options.chan)
-                make_workspace(workspace, options.gen_level, options.chan, options.q, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
+                make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
@@ -96,7 +96,7 @@ for y in [-1]:
                             % (fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
-                    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s " % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
+                    print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s --gen_level" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1" % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
