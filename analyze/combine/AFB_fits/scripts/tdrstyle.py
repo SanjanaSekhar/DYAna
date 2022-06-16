@@ -93,7 +93,7 @@ def setTDRStyle():
   tdrStyle.SetTitleColor(1)
   tdrStyle.SetTitleTextColor(1)
   tdrStyle.SetTitleFillColor(10)
-  tdrStyle.SetTitleFontSize(0.05)
+  tdrStyle.SetTitleFontSize(0.5)
   # tdrStyle.SetTitleH(0) # Set the height of the title box
   # tdrStyle.SetTitleW(0) # Set the width of the title box
   # tdrStyle.SetTitleX(0) # Set the position of the title box
