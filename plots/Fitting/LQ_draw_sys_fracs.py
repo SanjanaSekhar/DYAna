@@ -235,7 +235,8 @@ for idx,chan in enumerate(chans):
 
     h_dummy = hists[0].Clone("h_dummy")
     h_dummy.Reset()
-    h_dummy.SetTitle("Channel: %s, %i TeV S_%s%s" % (chan, mLQ, chan[0], q)) 
+    if "ee" in chan: h_dummy.SetTitle("Dielectron channel, %i"%(2000+int(chan[-2:-1]))) 
+    if "mu" in chan: h_dummy.SetTitle("Dimuon channel, %i"%(2000+int(chan[-2:-1])))
     h_dummy.GetXaxis().SetTitle("Template Bin")
     h_dummy.GetYaxis().SetTitle("Fractional Uncertainty")
     h_dummy.SetMaximum(hmax)
@@ -245,7 +246,7 @@ for idx,chan in enumerate(chans):
     for h in hists:
         h.Draw("hist same")
 
-    leg = TLegend(0.25, 0.2)
+    leg = TLegend(0.5, 0.2)
     for h in hists:
         leg.AddEntry(h, name_dict[h.GetTitle()], "l")
 

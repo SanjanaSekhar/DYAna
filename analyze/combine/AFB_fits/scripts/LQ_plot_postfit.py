@@ -419,7 +419,7 @@ parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 (options, args) = parser.parse_args()
-
+yLQ = 0.5
 mLQ = options.mLQ
 #fin_ = "combined_fit_shapes_mbin1.root"
 #odir = "postfit_plots/combined_fit_mbin1"
@@ -489,7 +489,7 @@ for year in years:
         if(options.chan=="mumu"): title = "Muons %i GeV mLQ = %i" % (year, mLQ)
         if(options.chan=="ee"): title = "Electrons %i  GeV mLQ = %i" % (year,mLQ)
         #if(idx == 2): title = "Electrons Samesign %i  GeV" % (year)
-        
+       	if(options.gen_level): title = "Channel: Electrons, %i GeV S_eu, y_eu = %.1f" %(mLQ,yLQ) 
         #if(idx == 2): name_list = h_ss_names
         #else: 
         name_list = h_names
