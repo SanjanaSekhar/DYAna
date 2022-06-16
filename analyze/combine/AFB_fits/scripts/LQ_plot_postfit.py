@@ -10,7 +10,7 @@ import CMS_lumi, tdrstyle
 
 gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
-gStyle.SetTitleFontSize(0.9)
+gStyle.SetTitleFontSize(2)
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='data',bkgNames=[],signalNames=[],
         logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1):  
     # histlist is just the generic list but if bkglist is specified (non-empty)
