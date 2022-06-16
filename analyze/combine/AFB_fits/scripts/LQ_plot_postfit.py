@@ -489,7 +489,7 @@ for year in years:
         if(options.chan=="mumu"): title = "Muons %i GeV mLQ = %i" % (year, mLQ)
         if(options.chan=="ee"): title = "Electrons %i  GeV mLQ = %i" % (year,mLQ)
         #if(idx == 2): title = "Electrons Samesign %i  GeV" % (year)
-       	if(options.gen_level): title = "Channel: Electrons, SM only, y_eu = %.1f" %(mLQ,yLQ) 
+       	if(options.gen_level): title = "Channel: Electrons, SM only, y_eu = %.1f" %(yLQ) 
         #if(idx == 2): name_list = h_ss_names
         #else: 
         name_list = h_names
