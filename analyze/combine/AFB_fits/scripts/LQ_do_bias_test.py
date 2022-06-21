@@ -36,6 +36,7 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
 
         if chan=="mumu" and q=="d": is_vec = True
         yLQ2 = yLQ**2
+	print(chan,q)
         workspace = "workspaces/%s_%s_fit_bias_tests.root" % (chan, q)
         make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
 
@@ -47,12 +48,12 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
         res_yLQ2 = []
         pull_yLQ2 = []
 
-        '''
+        
         if(not options.prefit):
             print("Sampling toys based on postfit")
             if(not options.reuse_fit):
                 print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s" % (workspace, extra_params))
-        '''
+        
         for i in range(options.nToys):
 
             if(not options.prefit):
