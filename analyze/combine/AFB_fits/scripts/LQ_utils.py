@@ -83,7 +83,7 @@ def print_and_do(s):
     print("Exec: " + s)
     os.system(s)
 
-def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
+def setSnapshot(mdf = False, yLQ2_val = 0.0,  d=''):
     fit_name = 'fit_s'
     workspace = d+'higgsCombineTest.FitDiagnostics.mH120.root'
     fit_file = d+'fitDiagnosticsTest.root'
@@ -96,20 +96,20 @@ def setSnapshot(mdf = False, Afb_val = 0.6, A0_val= 0.05, d=''):
     fr_f = TFile.Open(fit_file)
     fr = fr_f.Get(fit_name)
     myargs = RooArgSet(fr.floatParsFinal())
-    fitted_afb = myargs.find("Afb").getVal()
-    fitted_a0 = myargs.find("A0").getVal()
-    if(Afb_val > -0.9):
+    fitted_yLQ2 = myargs.find("yLQ2").getVal()
+    #fitted_a0 = myargs.find("A0").getVal()
+    if(yLQ2_val > -0.9):
 
-        myargs.find("Afb").setVal(Afb_val)
+        myargs.find("yLQ2").setVal(yLQ2_val)
         #myargs.find("Afb").setError(0.)
-        myargs.find("A0").setVal(A0_val)
+        #myargs.find("A0").setVal(A0_val)
         #myargs.find("A0").setError(0.)
     # end new lines
     importPars = w.saveSnapshot('initialFit',myargs, True)
     fout = TFile('initialFitWorkspace.root',"recreate")
     fout.WriteTObject(w,'w')
     fout.Close()
-    return fitted_afb, fitted_a0
+    return fitted_yLQ2
 
 def do_lumi(card, year):
         l_vals = dict()
