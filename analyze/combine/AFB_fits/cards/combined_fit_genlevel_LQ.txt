@@ -3,14 +3,14 @@ imax 1 number of bins
 jmax 4 number of processes minus 1
 kmax 1 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y17  cards/LQm1000_SM_gen_templates17_060622.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm1000_R2RLde_gen_nojets_templates17_060622.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y17  
 observation  -1   
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                             Y17       Y17       Y17       Y17       Y17     
-process                         LQpure_u  LQint_u   fmn       alpha     fpl     
+process                         LQint_d   LQpure_d  fmn       alpha     fpl     
 process                         -1        0         1         2         3       
 rate                            -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
-nlo_sys                 lnN     1.1       1.1       -         -         -       
+nlo_sys                 lnN     1.15      1.15      -         -         -       

@@ -1,7 +1,7 @@
 
 import ROOT
 from ROOT import *
-from utils import *
+from LQ_utils import *
 import numpy as np
 
 gROOT.SetBatch(True)
@@ -21,34 +21,39 @@ parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit
 gStyle.SetOptFit(1) 
 chan = "combined"
 
-options.nToys = 100
+options.nToys = 50
 is_vec = False
 mLQ = 1500
 chan = "ee"
 q = "u"
 yLQ = 0.0
-
+yLQ2 = yLQ**2
+gen_level = False
+no_LQ = False
+fake_data = True
+no_sys = False
+year = -1
 workspace = "workspaces/%s_%s_fit_bias_tests.root" % (chan, q)
 make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
 
 #extra_params = "--X-rtd MINIMIZER_no_analytic"
-
+extra_params = ""
 
 print("Will inject yLQ %.2f for chan %s%s for all toys " %(yLQ,chan,q))
 
 res_yLQ2 = []
 pull_yLQ2 = []
 
-
+'''
 if(not options.prefit):
     print("Sampling toys based on postfit")
     if(not options.reuse_fit):
         print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s" % (workspace, extra_params))
-
+'''
 for i in range(options.nToys):
 
     if(not options.prefit):
-        fitted_afb, fitted_a0 = setSnapshot(yLQ2_val = -1., mdf = True)
+        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True)
         if(options.no_sys):
             print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" 
                 % (i, yLQ*yLQ))
@@ -58,12 +63,11 @@ for i in range(options.nToys):
             % (i, yLQ*yLQ))
     else:
 
-        print_and_do("combine -M GenerateOnly -d %s -s %i --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f" 
-            % (workspace, i, yLQ*yLQ))
+        print_and_do("combine -M GenerateOnly -d %s -s %i --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ*yLQ))
 
     print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" 
             %(workspace, i, extra_params))
-    f_fit = TFile.Open("multidimfitTest.root")
+    f_fit = TFile.Open("multidimfit.root")
     if f_fit:
         fr = f_fit.Get('fit_mdf')
         myargs = RooArgSet(fr.floatParsFinal())

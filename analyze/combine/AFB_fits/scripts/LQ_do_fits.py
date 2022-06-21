@@ -23,7 +23,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 for y in [2017]:
     for options.chan in ["ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u"]:
+        for options.q in ["d"]:
 
             is_vec = False
 	    #options.gen_level = False
