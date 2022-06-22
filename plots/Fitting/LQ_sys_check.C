@@ -23,7 +23,7 @@ void LQ_sys_check(){
 
         float m_LQ = 1000.;
         char *plot_dir = "Misc_plots";
-        char *sys = "_muRC";
+        char *sys = "_elIDENDPTLOW";
         bool do_bkg = true;
 	bool do_qcd = true;
         bool do_electrons = true;
