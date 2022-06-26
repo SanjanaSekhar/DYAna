@@ -31,8 +31,20 @@ def plotLimits(channel):
     del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
-    axis.GetXaxis().SetTitle('m_{S_{%s}} (GeV)'%(channel))
-    axis.GetYaxis().SetTitle('Limits on y_{%s}'%(channel))
+    if is_vec:
+	if 'm' in channel: 
+		axis.GetXaxis().SetTitle(r'$m_{V_{\mu %s}}$ (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle(r'Limits on $g_{\mu %s}$'%(channel[0]))
+	else: 
+		axis.GetXaxis().SetTitle(r'$m_{V_{e %s}}$ (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle(r'Limits on $g_{e %s}$'%(channel[0]))
+    else:
+	if 'm' in channel: 
+		axis.GetXaxis().SetTitle(r'$m_{S_{\mu %s}}$ (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle(r'Limits on $y_{\mu %s}$'%(channel[0]))
+        else: 
+		axis.GetXaxis().SetTitle(r'$m_{S_{e %s}}$ (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle(r'Limits on $y_{e %s}$'%(channel[0]))
     pads[0].cd()
     axis.Draw('axis')
      
@@ -71,9 +83,9 @@ is_vec = True
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
 
-#for channel in ['ue','de','um','dm','ce','cm','se','sm']:   
+for channel in ['ue','de','um','dm','ce','cm','se','sm']:   
 #for channel in ['ce','se','cm','sm']:
-for channel in ['se','sm']:
+#for channel in ['se','sm']:
     if channel=='ue' or channel=='ce':
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
@@ -122,15 +134,15 @@ for channel in ['se','sm']:
         
         print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
         print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks" % (comb_card, workspace))
+        #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks" % (comb_card, workspace))
         print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
         #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
-	print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
-	print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
+	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
+	#print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
+	#print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-    print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
-    
+    #print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
+    '''
     with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
         data = json.load(f)
         for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0']:
@@ -140,7 +152,7 @@ for channel in ['se','sm']:
         f.seek(0)        # <--- should reset file position to the beginning.
         json.dump(data, f, indent=4)
         f.truncate()     # remove remaining part
-    
+    '''
     print("\n========= making limit plot for channel %s =========\n"%(channel))
     #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
     plotLimits(channel)

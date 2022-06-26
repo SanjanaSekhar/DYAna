@@ -1,11 +1,11 @@
 Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
 imax 3 number of bins
 jmax 9 number of processes minus 1
-kmax 149 number of nuisance parameters
+kmax 150 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm1500_merge_templates16_061322.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm1500_merge_templates17_061322.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm1500_merge_templates18_061322.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm1500_merge_templates16_062422.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm1500_merge_templates17_062422.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm1500_merge_templates18_062422.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
@@ -86,6 +86,7 @@ lumiDB                  lnN           1.004         1.004         1.004         
 lumiGS                  lnN           1.004         1.004         1.004         1.004         1.004         1.004         1.004         1.004         1.004         -             1.001         1.001         1.001         1.001         1.001         1.001         1.001         1.001         1.001         -             -             -             -             -             -             -             -             -             -             -           
 lumiLS                  lnN           -             -             -             -             -             -             -             -             -             -             1.003         1.003         1.003         1.003         1.003         1.003         1.003         1.003         1.003         -             1.002         1.002         1.002         1.002         1.002         1.002         1.002         1.002         1.002         -           
 lumiXY                  lnN           1.009         1.009         1.009         1.009         1.009         1.009         1.009         1.009         1.009         -             1.009         1.009         1.009         1.009         1.009         1.009         1.009         1.009         1.009         -             1.02          1.02          1.02          1.02          1.02          1.02          1.02          1.02          1.02          -           
+nlo_sys                 lnN           1.15          -             1.15          -             -             -             -             -             -             -             1.15          -             1.15          -             -             -             -             -             -             -             1.15          -             1.15          -             -             -             -             -             -             -           
 pdf1                    shape         1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
 pdf10                   shape         1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
 pdf11                   shape         1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           

@@ -1,11 +1,11 @@
 Combination of Y16=cards/combined_fit_y16_LQ.txt  Y17=cards/combined_fit_y17_LQ.txt  Y18=cards/combined_fit_y18_LQ.txt
 imax 3 number of bins
 jmax 9 number of processes minus 1
-kmax 143 number of nuisance parameters
+kmax 144 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm4500_merge_templates16_061322.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm4500_merge_templates17_061322.root LQ/mumu17_$PROCESS LQ/mumu17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm4500_merge_templates18_061322.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm4500_merge_templates16_062422.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm4500_merge_templates17_062422.root LQ/mumu17_$PROCESS LQ/mumu17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm4500_merge_templates18_062422.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
@@ -83,6 +83,7 @@ mufakesrw3b18           shape        -             -             -             -
 mufakesrw4b16           shape        -             -             -             -             -             -             -             -             -             1.0           -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -           
 mufakesrw4b17           shape        -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             1.0           -             -             -             -             -             -             -             -             -             -           
 mufakesrw4b18           shape        -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             -             1.0         
+nlo_sys                 lnN          -             1.15          -             -             1.15          -             -             -             -             -             -             1.15          -             -             1.15          -             -             -             -             -             -             1.15          -             -             1.15          -             -             -             -             -           
 pdf1                    shape        1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
 pdf10                   shape        1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
 pdf11                   shape        1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
