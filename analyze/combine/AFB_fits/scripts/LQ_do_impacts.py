@@ -20,13 +20,13 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 for chan in ["mumu"]:
     for q in ["u","d"]:
 
-        options.mLQ = 1000
+        options.mLQ = 1500
         fake_data = True
         no_sys = False
         gen_level = False
         no_LQ = False
         year = -1
-
+	is_vec = False	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
 
@@ -38,14 +38,14 @@ for chan in ["mumu"]:
                         "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
                         "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                         "elfakesrw1b", "elfakesrw2b", "elfakesrw3b", "elfakesrw4b",
-                        "RENORM", "FAC", "REFAC", "alphaS", 
+                        "RENORM", "FAC", "REFAC", "alphaS","nlo_sys", 
                         "dy_xsec","db_xsec","top_xsec","gam_xsec" ,"elFakes",
                         "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC", "lumiGS" ,"lumi", 
                         ]
 
             correlate_all = ["elScaleSyst", "elSmear", "Pu", "elRECOBARPTHIGH", "elRECOENDPTHIGH", "elRECOBARPTLOW", "elRECOENDPTLOW",
                              "elIDBARPTHIGH", "elIDENDPTHIGH", "elIDBARPTLOW", "elIDENDPTLOW", 
-                             "dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
+                             "nlo_sys","dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
                              "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                              ] 
 
@@ -59,13 +59,13 @@ for chan in ["mumu"]:
                         "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
                         "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                         "mufakesrw1b", "mufakesrw2b", "mufakesrw3b", "mufakesrw4b",
-                        "RENORM", "FAC", "REFAC", "alphaS", 
+                        "RENORM", "FAC", "REFAC", "alphaS", "nlo_sys",
                         "dy_xsec","db_xsec","top_xsec","gam_xsec" ,"muFakes", 
                         "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC", "lumiGS" ,"lumi", 
                         ]
 
             correlate_all = [ "Pu", "muIDSYS", "muISOSYS",
-                             "dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
+                             "nlo_sys","dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
                              "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                              ] 
 
@@ -131,7 +131,7 @@ for chan in ["mumu"]:
 
         workspace = "workspaces/%s.root" % (ws_label)
         #make_workspace(workspace, options.mbin, diff = options.diff)
-        make_workspace(workspace, gen_level, chan, q, no_LQ , no_sys, fake_data, options.mLQ, year,False)
+        make_workspace(workspace, gen_level, chan, q, is_vec,  no_LQ , no_sys, fake_data, options.mLQ, year,False)
 
         print("Num pars = %i " % (len(pars16) + len(pars17) + len(pars18) + len(pars_comb)))
         print(par_str)

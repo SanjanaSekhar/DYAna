@@ -22,7 +22,7 @@ parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit
 gStyle.SetOptFit(1) 
 chan = "combined"
 
-options.nToys = 60
+options.nToys = 200
 is_vec = False
 mLQ = 1500
 gen_level = False
@@ -30,8 +30,8 @@ no_LQ = False
 fake_data = True
 no_sys = False
 year = -1
-
-for chan,q in zip(["ee","mumu"],["u","d"]):
+ending = "062422"
+for chan,q in zip(["ee"],["u"]):
     for yLQ in [0.,0.5,1.]:
 
         if chan=="mumu" and q=="d": is_vec = True
@@ -67,10 +67,10 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
                     % (i, yLQ*yLQ))
             else:
 
-                print_and_do("combine -M GenerateOnly -d %s -s %i --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ*yLQ))
+                print_and_do("combine -M GenerateOnly -d %s  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace,  yLQ*yLQ))
 
-            print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" 
-                    %(workspace, i, extra_params))
+            print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" 
+                    %(workspace,  extra_params))
             f_fit = TFile.Open("multidimfit.root")
             if f_fit:
                 fr = f_fit.Get('fit_mdf')
@@ -104,7 +104,9 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
         #ws.writeToFile("toy_ws.root")
         #print_and_do("PostFitShapesFromWorkspace -w toy_ws.root --dataset model_sData  -f fitDiagnostics.root:fit_s -o toy_shapes.root --sampling --samples 100")
         ##print_and_do("python scripts/plot_postfit.py -i toy_ws.root -o test/ -m %i" % (mbin))
-
+	with open('%srespull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,chan,q,yLQ,ending), 'w') as f:
+            for res,pull in zip(res_yLQ2,pull_yLQ2):
+                f.write("%f %f\n" %(res,pull))
 
         n_bins = 20
         h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
@@ -113,7 +115,7 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
 
         h_res_yLQ2 = TH1F("h_res_yLQ2", "", n_bins, -res_yLQ2_range, res_yLQ2_range)
 
-
+	
 
         def fill_h(arr, h):
             #print(arr)
@@ -134,8 +136,8 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
         h_pull_yLQ2.Draw()
         h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_%s%s = %.2f" % (chan[0],q,yLQ))
         h_pull_yLQ2.GetXaxis().SetTitle("Pull y_%s%s2"%(chan[0],q))
-        if is_vec: c1.Print("%sbias_test_yLQ%.1f_%s_%s_vec.png" %(options.odir, yLQ, chan, q))
-        else: c1.Print("%sbias_test_yLQ%.1f_%s_%s.png" %(options.odir, yLQ, chan, q))
+        if is_vec: c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, yLQ, chan, q,ending))
+        else: c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, yLQ, chan, q,ending))
 
 
     # c2 = TCanvas("c1", "", 900, 900)
@@ -148,14 +150,15 @@ for chan,q in zip(["ee","mumu"],["u","d"]):
     # c2.Print("%sbias_test_mbin%i_Az%.0f.png" %(options.odir, options.mbin, 100.* options.A0))
 
 
-    # c3 = TCanvas("c1", "", 900, 900)
-    # h_res_afb.Fit("gaus")
-    # fit_afb= h_res_afb.GetFunction("gaus")
-    # if(fit_afb): fit_afb.SetLineColor(kBlue)
-    # h_res_afb.Draw()
-    # h_res_afb.SetTitle("Signal Inject Test Mass bin %i, Inject AFB %.2f" % (options.mbin, options.Afb))
-    # h_res_afb.GetXaxis().SetTitle("#Delta Afb")
-    # c3.Print("%sbias_test_res_mbin%i_afb%.0f.png" %(options.odir, options.mbin, 100.* options.Afb))
+        c3 = TCanvas("c3", "", 900, 900)
+        h_res_yLQ2.Fit("gaus")
+        fit_yLQ2= h_res_yLQ2.GetFunction("gaus")
+        if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
+        h_res_yLQ2.Draw()
+        h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_%s%s = %.2f" % (chan[0],q,yLQ))
+        h_res_yLQ2.GetXaxis().SetTitle("#Delta yLQ2")
+        if is_vec: c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, yLQ, chan, q, ending))
+        else: c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir, yLQ, chan, q, ending))
 
 
     # c4 = TCanvas("c1", "", 900, 900)

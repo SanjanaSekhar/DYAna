@@ -6,7 +6,7 @@ from optparse import OptionGroup
 from string import digits
 import copy
 
-sys_keys = ["pdf", "refac", "lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other", "btag"]
+sys_keys = ["pdf", "refac", "lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other", "btag","nlo_sys"]
 
 color_dict = dict()
 color_dict["pdf"] = kGreen +3
@@ -19,6 +19,7 @@ color_dict["btag"] = kGreen
 color_dict["ptrw"] = kOrange
 color_dict["pileup"] =  kCyan
 color_dict["emucostrw"] = kMagenta + 4
+color_dict["nlo_sys"] = kYellow+2
 
 name_dict = dict()
 name_dict["pdf"] = "PDFs"
@@ -31,7 +32,7 @@ name_dict["btag"] = "b-tagging"
 name_dict["ptrw"] = "DY p_{T} Reweighting"
 name_dict["pileup"] =  "Pileup"
 name_dict["emucostrw"] = "e#mu Shape Correction"
-
+name_dict["nlo_sys"] = "LQ LO reweighting"
 
 
 
@@ -94,6 +95,7 @@ def add_sys(d, fracs, sys_name):
     elif("Pu" in sys_name): key_name = "pileup"
     elif("emu" in sys_name): key_name = "emucostrw"
     elif("BTAG" in sys_name): key_name = "btag"
+    elif("nlo" in sys_name): key_name = "nlo_sys"
     else: 
         key_name = "other"
         if(np.max(fracs) > 0.01**2):
@@ -113,7 +115,7 @@ def get_sys_dict(year, chan, q, mLQ):
     h_tot= gDirectory.Get('TotalProcs')
     print("h_tot Integral ",h_tot.Integral())
 
-    f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_061322.root" % (mLQ, year)
+    f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_062422.root" % (mLQ, year)
 
     f = TFile.Open(f_in_name)
     gDirectory.cd("LQ")
@@ -211,7 +213,7 @@ gStyle.SetOptStat(0)
 
 
 q = "u"
-mLQ = 1000
+mLQ = 1500
 
 for idx,chan in enumerate(chans):
     year = years[idx]

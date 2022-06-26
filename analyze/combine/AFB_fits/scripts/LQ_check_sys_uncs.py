@@ -19,29 +19,30 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 for chan in ["mumu","ee"]:
     for q in ["u","d"]:
-        options.mLQ = 1000
+        options.mLQ = 1500
         fake_data = True
         no_sys = False
         gen_level = False
         no_LQ = False
         year = -1
+	is_vec = False
         #extra_params = "--X-rtd MINIMIZER_no_analytic"
 
         s = 123456
         extra_params = " -s %i" % s
 
         if chan == "ee":
-            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
+            individual_pars = [ "nlo_sys","dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
         else:
-            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
+            individual_pars = [ "nlo_sys","dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
                             "mufakesrwsYR",  "autoMCStats"] 
 
         sys_name_conv = dict()
-
+	sys_name_conv['nlo_sys'] = "LQ LO reweighting"
         sys_name_conv['dy_xsec'] = "DY Cross Section"
         sys_name_conv['db_xsec'] = "Diboson Cross Section"
         sys_name_conv['top_xsec'] = "$\\ttbar$ Cross Section"
@@ -106,7 +107,7 @@ for chan in ["mumu","ee"]:
         workspace = "workspaces/%s_%s_sys_uncs.root" % (chan, q)
 
 
-        make_workspace(workspace, gen_level, chan, q, no_LQ , no_sys, fake_data, options.mLQ, year,False)
+        make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,False)
         print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s" % (workspace, extra_params))
 
 
@@ -153,7 +154,7 @@ for chan in ["mumu","ee"]:
 
         print(d)
         os.system("mkdir %s \n" % options.odir)
-        with open("%s/%s_%s_sys_uncs.txt" % (options.odir, chan, q), 'w') as f_out:
+        with open("%s/%s_%s_m%s_sys_uncs.txt" % (options.odir, chan, q, options.mLQ), 'w') as f_out:
             sorted_d = sorted(d.items(), key=operator.itemgetter(1))
             f_out.write("Systematic uncertainties (values x1000) for bin %i \n" % options.mbin)
             for sys_name, val in sorted_d[::-1]:
