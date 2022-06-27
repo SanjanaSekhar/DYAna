@@ -36,6 +36,8 @@ ending = "062422"
 if options.chan=="mumu" and options.q=="d": is_vec = True
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
+
+'''
 workspace = "workspaces/%s_%s_fit_bias_tests.root" % (options.chan, options.q)
 make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
 
@@ -103,6 +105,17 @@ for i in range(options.nToys):
 with open('%srespull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.yLQ,ending), 'w') as f:
     for res,pull in zip(res_yLQ2,pull_yLQ2):
         f.write("%f %f\n" %(res,pull))
+'''
+respull = []
+with open('%srespull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.yLQ,ending), 'r') as f:
+    for line in f.readlines():
+	respull.append(line.split(' '))
+
+respull = np.asarray(respull, dtype=float)
+res_yLQ2 = respull[:,0].tolist()
+pull_yLQ2 = respull[:,1].tolist()
+
+print(res_yLQ2)
 
 n_bins = 20
 h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
@@ -158,12 +171,12 @@ fit_yLQ2= h_res_yLQ2.GetFunction("gaus")
 if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
 h_res_yLQ2.Draw()
 if is_vec: 
-    h_res_yLQ2.SetTitle(r"Signal Inject Test : Inject $g_%s %s$ = %.1f ($M_{LQ}$ = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-    h_res_yLQ2.GetXaxis().SetTitle(r"#Delta $g_{%s %s}^2$"%(chan_label,options.q))
+    h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_%s %s = %.1f ($M_{LQ}$ = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
     c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 else: 
-    h_res_yLQ2.SetTitle(r"Signal Inject Test : Inject $y_%s %s$ = %.1f ($M_{LQ}$ = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-    h_res_yLQ2.GetXaxis().SetTitle(r"#Delta $y_{%s %s}^2$"%(chan_label,options.q))
+    h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_%s %s = %.1f ($M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
     c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 
 
