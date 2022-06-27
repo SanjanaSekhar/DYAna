@@ -58,18 +58,15 @@ for i in range(options.nToys):
     if(not options.prefit):
         fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True)
         if(options.no_sys):
-            print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" 
-                % (yLQ2))
+            print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
 
         else:
-            print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root  --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" 
-            % (yLQ2))
+            print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
     else:
 
-        print_and_do("combine -M GenerateOnly -d %s  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace,  yLQ2))
+        print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ2))
 
-    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" 
-            %(workspace,  extra_params))
+    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" %(workspace,  i, extra_params))
     f_fit = TFile.Open("multidimfit.root")
     if f_fit:
         fr = f_fit.Get('fit_mdf')
@@ -126,7 +123,7 @@ fill_h(pull_yLQ2, h_pull_yLQ2)
 fill_h(res_yLQ2, h_res_yLQ2)
 #fill_h(res_a0, h_res_a0)
 
-if options.chan=="mumu": chan_label = "\mu"
+if options.chan=="mumu": chan_label = "#mu"
 else : chan_label = "e"
 
 c1 = TCanvas("c1", "", 900, 900)
@@ -136,12 +133,12 @@ if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
 h_pull_yLQ2.Draw()
 
 if is_vec: 
-    h_pull_yLQ2.SetTitle(r"Signal Inject Test : Inject $g_%s %s$ = %.1f ($M_{LQ}$ = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-    h_pull_yLQ2.GetXaxis().SetTitle(r"Pull $g_{%s %s}^2$"%(chan_label,options.q))
+    h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_%s %s = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
     c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 else: 
-    h_pull_yLQ2.SetTitle(r"Signal Inject Test : Inject $y_%s %s$ = %.1f ($M_{LQ}$ = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-    h_pull_yLQ2.GetXaxis().SetTitle(r"Pull $y_{%s %s}^2$"%(chan_label,options.q))
+    h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_%s %s = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
     c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 
 

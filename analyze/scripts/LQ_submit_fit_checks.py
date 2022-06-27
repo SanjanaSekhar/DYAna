@@ -25,12 +25,12 @@ cmds = [
 #"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 17\n",
 #"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 18\n",
 #"python scripts/do_impacts.py -o temp/  --mbin $3 --nThreads 4 --expected \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d \n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u -o temp/\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u -o temp/\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u -o temp/\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d -o temp/\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d -o temp/\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d -o temp/\n",
 #"python scripts/LQ_do_bias_test.py --nToys 100  --yLQ 0.0 --chan ee --q u \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.6 --A0 0.1 \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.0 --A0 0.00 \n",
@@ -71,7 +71,7 @@ labels = [
 ]
 
 
-cpy_cmd = "xrdcp -f signal_injection/* $1 \n"
+cpy_cmd = "xrdcp -f temp/* $1 \n"
 
 date = "062422"
 n_m_bins = 1
@@ -81,7 +81,7 @@ for i,cmd in enumerate(cmds):
 
     #regular templates
     script_name = "scripts/script3.sh"
-    print_and_do("cp scripts/combine_template.sh %s" % script_name)
+    print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
     script_file = open(script_name, 'a+')
     script_file.write(cmd)
     script_file.write(cpy_cmd)
