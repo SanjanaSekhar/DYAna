@@ -146,11 +146,11 @@ if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
 h_pull_yLQ2.Draw()
 
 if is_vec: 
-    h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_%s %s = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
     c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 else: 
-    h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_%s %s = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
     c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 
@@ -171,11 +171,11 @@ fit_yLQ2= h_res_yLQ2.GetFunction("gaus")
 if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
 h_res_yLQ2.Draw()
 if is_vec: 
-    h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_%s %s = %.1f ($M_{LQ}$ = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
     c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 else: 
-    h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_%s %s = %.1f ($M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
+    h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
     c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
 

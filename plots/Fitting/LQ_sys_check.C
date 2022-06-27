@@ -21,9 +21,9 @@ void LQ_sys_check(){
     for(int year = 2016; year <= 2018; year++){
         init(year);
 
-        float m_LQ = 1000.;
+        float m_LQ = 1500.;
         char *plot_dir = "Misc_plots";
-        char *sys = "_elIDENDPTLOW";
+        char *sys = "_REFAC";
         bool do_bkg = true;
 	bool do_qcd = true;
         bool do_electrons = true;
