@@ -32,12 +32,12 @@ for chan in ["mumu"]:
         extra_params = " -s %i" % s
 
         if chan == "ee":
-            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
+            individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
         else:
-            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
+            individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
                             "mufakesrwsYR",  "autoMCStats"] 
 
@@ -127,7 +127,7 @@ for chan in ["mumu"]:
         else:
             print_and_do("cp higgsCombine_base.MultiDimFit.mH120.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s))
 
-        print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _nom1 %s""" % (s,extra_params))
+        print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _nom1 %s -v 2""" % (s,extra_params))
 
 
 
@@ -137,7 +137,7 @@ for chan in ["mumu"]:
         for indi_par in individual_pars:
             n+=1
             freeze_str = par_to_freezestr(indi_par)
-            print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s """ 
+            print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s -v 2""" 
                     % (freeze_str,s, indi_par, extra_params))
             sys_unc = compute_sys("nom1", indi_par, -1)
             #sys_unc = compute_sys("nom", indi_par, s)
@@ -147,7 +147,7 @@ for chan in ["mumu"]:
         for group_par in group_pars:
             n+=1
             freeze_str = par_to_freezestr(group_par)
-            print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s """ % 
+            print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s -v 2""" % 
                     (freeze_str, s, group_par, extra_params))
             sys_unc = compute_sys("nom1", group_par, -1)
             #sys_unc = compute_sys("nom", indi_par, s)

@@ -5,6 +5,7 @@ MC and MisID Backgrounds Statistical Uncertainty & 279.29 \\
 PDFs & 279.20 \\ 
 $\alpha_s$ + Renormalization/Factorization Scales & 279.11 \\ 
 DY $p_{T}$ Correction & 25.02 \\ 
+LQ LO reweighting & 18.69 \\ 
 Muon MisID Normalization & 12.23 \\ 
 Pileup & 11.87 \\ 
 Muon Trigger & 10.23 \\ 

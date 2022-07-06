@@ -3,7 +3,7 @@ from optparse import OptionParser
 import sys
 
 ext = "062422"
-mLQ_list = [1500]#,2000,2500,3000,3500,4000,4500,5000]
+mLQ_list = [1000]#,2000,2500,3000,3500,4000,4500,5000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)
@@ -30,7 +30,7 @@ for mLQ in mLQ_list:
         "_RENORM", "_FAC", "_REFAC", "_A0Den", "_alphaS",
         """
         correlate_all = ["elScaleSyst", "elSmear", "Pu", "muIDSYS", "muISOSYS", "elRECOBARPTHIGH", "elRECOENDPTHIGH", "elRECOBARPTLOW", "elRECOENDPTLOW",
-                         "elIDBARPTHIGH", "elIDENDPTHIGH", "elIDBARPTLOW", "elIDENDPTLOW", "BTAGCOR"] 
+                         "elIDBARPTHIGH", "elIDENDPTHIGH", "elIDBARPTLOW", "elIDENDPTLOW"] 
 
         correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                             "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
