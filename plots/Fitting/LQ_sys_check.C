@@ -16,24 +16,27 @@ void LQ_sys_check(){
 
 
     gStyle->SetOptStat(0);
-    gROOT->SetBatch(1);
-    
-    for(int year = 2016; year <= 2018; year++){
+    gROOT->SetBatch(1); 
+    const int num_sys = 6;
+    string sys_array[num_sys] = {"_muIDEND","_muIDBAR","_muIDSYS","_REFAC","_FAC","_muRC"};
+    for(int year = 2017; year <= 2017; year++){
         init(year);
 
         float m_LQ = 1500.;
         char *plot_dir = "Misc_plots";
-        char *sys = "_REFAC";
+        //char *sys = "_";
         bool do_bkg = true;
 	bool do_qcd = true;
-        bool do_electrons = true;
-        bool do_muons = false;
+        bool do_electrons = false;
+        bool do_muons = true;
         bool vec = false;
         int flag_q = 2;
         float yLQ = 1.0;
 
         setup_all_SFs(year);
+	for(int i = 0; i< num_sys; i++){
 
+	const char *sys = sys_array[i].c_str();
         string sys_up = string(sys) + string("Up");
         string sys_down = string(sys) + string("Down");
 
@@ -306,7 +309,7 @@ void LQ_sys_check(){
     }
 
 
-
+}
 
 }
 
