@@ -258,9 +258,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		if(scramble_data) rand = new TRandom3();
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			//tm.doCorrections();
+			tm.doCorrections();
 			if( (tm.m >= lq_m_bins[0]) && tm.not_cosmic){ //tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
-				tm.doCorrections();
+				//tm.doCorrections();
 				float var1 = abs(tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
 
@@ -451,11 +451,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			//tm.doCorrections();
+			tm.doCorrections();
 			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets ;
 			if(pass){
 
-				tm.doCorrections();
+				//tm.doCorrections();
 				tm.getEvtWeight(false);//incl_btag_SFs = false
 				n++;
 
@@ -555,11 +555,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
-			//tm.doCorrections();
+			tm.doCorrections();
 			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets;
 			if(pass){
 
-				tm.doCorrections();
+				//tm.doCorrections();
 				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
 
@@ -743,11 +743,11 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 				for (int i=0; i<tm.nEntries; i++) {
 					tm.getEvent(i);
-					//tm.doCorrections();
+					tm.doCorrections();
 					bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
 					if(pass){
-						tm.doCorrections();
+						//tm.doCorrections();
 						tm.getEvtWeight(false);//incl_btag_SFs=false
 
 						float var1 = abs(tm.cm.Rapidity());
