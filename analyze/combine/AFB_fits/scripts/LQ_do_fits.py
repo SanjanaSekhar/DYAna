@@ -21,9 +21,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["ee","mumu"]:
+    for options.chan in ["mumu"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u","d"]:
+        for options.q in ["u"]:
 
             is_vec = False
 	    #options.gen_level = False
@@ -74,7 +74,7 @@ for y in [-1]:
             print("\n fit_name = ", fit_name)
 
 
-            for mLQ in [1500]:
+            for mLQ in [1000]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.

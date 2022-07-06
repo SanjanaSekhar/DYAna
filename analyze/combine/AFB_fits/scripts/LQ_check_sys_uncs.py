@@ -17,8 +17,8 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 (options, args) = parser.parse_args()
 
-for chan in ["mumu","ee"]:
-    for q in ["u","d"]:
+for chan in ["mumu"]:
+    for q in ["u"]:
         options.mLQ = 1500
         fake_data = True
         no_sys = False
@@ -27,17 +27,17 @@ for chan in ["mumu","ee"]:
         year = -1
 	is_vec = False
         #extra_params = "--X-rtd MINIMIZER_no_analytic"
-
+	ending = "062422"
         s = 123456
         extra_params = " -s %i" % s
 
         if chan == "ee":
-            individual_pars = [ "nlo_sys","dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
+            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
         else:
-            individual_pars = [ "nlo_sys","dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
+            individual_pars = [ "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
                             "mufakesrwsYR",  "autoMCStats"] 
 
@@ -140,6 +140,7 @@ for chan in ["mumu","ee"]:
             print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s """ 
                     % (freeze_str,s, indi_par, extra_params))
             sys_unc = compute_sys("nom1", indi_par, -1)
+            #sys_unc = compute_sys("nom", indi_par, s)
             d[indi_par] = sys_unc
             #if(n>2): break
 
@@ -149,12 +150,13 @@ for chan in ["mumu","ee"]:
             print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s """ % 
                     (freeze_str, s, group_par, extra_params))
             sys_unc = compute_sys("nom1", group_par, -1)
-            d[group_par] = sys_unc
+            #sys_unc = compute_sys("nom", indi_par, s)
+            d[group_par] =sys_unc
             #if(n>4): break
 
         print(d)
         os.system("mkdir %s \n" % options.odir)
-        with open("%s/%s_%s_m%s_sys_uncs.txt" % (options.odir, chan, q, options.mLQ), 'w') as f_out:
+        with open("%s/%s_%s_m%s_sys_uncs_%s.txt" % (options.odir, chan, q, options.mLQ,ending), 'w') as f_out:
             sorted_d = sorted(d.items(), key=operator.itemgetter(1))
             f_out.write("Systematic uncertainties (values x1000) for bin %i \n" % options.mbin)
             for sys_name, val in sorted_d[::-1]:
@@ -165,5 +167,5 @@ for chan in ["mumu","ee"]:
                 f_out.write("%s & %.2f \\\\ \n" % (out_name, val*1000.))
 
 
-        print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
+        #print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
 
