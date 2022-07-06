@@ -22,7 +22,7 @@ void LQ_sys_check(){
     for(int year = 2017; year <= 2017; year++){
         init(year);
 
-        float m_LQ = 1500.;
+        float m_LQ = 1000.;
         char *plot_dir = "Misc_plots";
         //char *sys = "_";
         bool do_bkg = true;
