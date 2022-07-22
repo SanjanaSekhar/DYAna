@@ -17,8 +17,8 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 (options, args) = parser.parse_args()
 
-for chan in ["mumu"]:
-    for q in ["u"]:
+for chan in ["mumu","ee"]:
+    for q in ["u","d"]:
         options.mLQ = 1500
         fake_data = True
         no_sys = False
@@ -27,7 +27,7 @@ for chan in ["mumu"]:
         year = -1
 	is_vec = False
         #extra_params = "--X-rtd MINIMIZER_no_analytic"
-	ending = "062422"
+	ending = "072122"
         s = 123456
         extra_params = " -s %i" % s
 
