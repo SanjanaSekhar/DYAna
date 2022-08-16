@@ -21,9 +21,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["mumu"]:
+    for options.chan in ["mumu","ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u"]:
+        for options.q in ["u","d"]:
 
             is_vec = False
 	    #options.gen_level = False
@@ -31,10 +31,11 @@ for y in [-1]:
 #            options.chan="mumu"
 #            options.q="u"
             print("options.gen_level = ",options.gen_level);
-	    options.no_sys=False
+	        options.no_sys=False
             if not options.gen_level: options.fake_data=True
             options.no_LQ=False
             options.year = y
+            likelihood_scan = True
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -90,6 +91,7 @@ for y in [-1]:
                 print_and_do("mkdir %s" % (plotdir))
                 #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
                 print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid 2000 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
@@ -107,5 +109,6 @@ for y in [-1]:
                 print_and_do("""echo ".q" >> cmd.txt """)
                 print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
                 print_and_do("rm -f cards/sed*")
+                if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan.root")
                 if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 
