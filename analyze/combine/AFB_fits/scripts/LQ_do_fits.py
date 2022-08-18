@@ -2,6 +2,7 @@
 from LQ_utils import *
 import ROOT
 from ROOT import *
+import matplotlib.pyplot as plt
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
@@ -81,6 +82,7 @@ for y in [-1]:
             #mLQ = 1000.
             #for mbin in range(bin_start, bin_stop):
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
+                '''
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
                 workspace="workspaces/%s_LQ.root" % (options.chan)
@@ -111,4 +113,24 @@ for y in [-1]:
                 print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q))
                 if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
+                '''
+                if likelihood_scan:
+
+                    deltaNLL, yLQ2_list = [],[]
+
+                    f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q),"READ")
+                    limit_tree = f.Get("limit")
+
+                    for i in range(limit_tree.GetEntries()):
+
+                        limit_tree.GetEntry(i)
+                        deltaNLL.append(limit_tree.deltaNLL)
+                        yLQ2_list.append(limit_tree.yLQ2)
+
+                    f.Close()
+                    plt.plot(yLQ2_list,deltaNLL)
+                    plt.xlabel("yLQ2")
+                    plt.ylabel("-2deltaLL")
+                    plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
+                    plt.savefig("like_scan_%s_%s.jpg"%(options.chan,options.q))
 
