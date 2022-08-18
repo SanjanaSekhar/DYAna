@@ -20,7 +20,7 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 for chan in ["mumu","ee"]:
     for q in ["u","d"]:
 
-        options.mLQ = 1500
+        options.mLQ = 1000
         fake_data = True
         no_sys = False
         gen_level = False
@@ -29,7 +29,7 @@ for chan in ["mumu","ee"]:
 	is_vec = False	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
-
+	ending="072122"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
             all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
@@ -166,7 +166,7 @@ for chan in ["mumu","ee"]:
                 os.system("cp higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.%i.root higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.root" % (par, s, par))
 
         print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/%s.json --named %s" % (workspace, options.odir, ws_label, par_str))
-        print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_yLQ2 --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, yLQ2_str))
+        print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_yLQ2_%s --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label,ending, yLQ2_str))
         #print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_afb --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, Afb_str))
         #print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_a0 --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, A0_str))
         #print_and_do("rm higgsCombine_*")

@@ -24,20 +24,20 @@ gStyle.SetOptFit(1)
 
 options.nToys = 200
 is_vec = False
-mLQ = 1500
+mLQ = 1000
 gen_level = False
 no_LQ = False
 fake_data = True
 no_sys = False
 year = -1
-ending = "062422"
+ending = "072122"
 
 
 if options.chan=="mumu" and options.q=="d": is_vec = True
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
-'''
+
 workspace = "workspaces/%s_%s_fit_bias_tests.root" % (options.chan, options.q)
 make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
 
@@ -116,7 +116,7 @@ res_yLQ2 = respull[:,0].tolist()
 pull_yLQ2 = respull[:,1].tolist()
 
 print(res_yLQ2)
-
+'''
 n_bins = 20
 h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
 

@@ -19,7 +19,7 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 for chan in ["mumu","ee"]:
     for q in ["u","d"]:
-        options.mLQ = 1500
+        options.mLQ = 1000
         fake_data = True
         no_sys = False
         gen_level = False

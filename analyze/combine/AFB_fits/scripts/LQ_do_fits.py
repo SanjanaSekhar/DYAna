@@ -31,7 +31,7 @@ for y in [-1]:
 #            options.chan="mumu"
 #            options.q="u"
             print("options.gen_level = ",options.gen_level);
-	        options.no_sys=False
+	    options.no_sys=False
             if not options.gen_level: options.fake_data=True
             options.no_LQ=False
             options.year = y
@@ -91,7 +91,7 @@ for y in [-1]:
                 print_and_do("mkdir %s" % (plotdir))
                 #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
                 print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
-                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid 2000 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 2000 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
@@ -109,6 +109,6 @@ for y in [-1]:
                 print_and_do("""echo ".q" >> cmd.txt """)
                 print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
                 print_and_do("rm -f cards/sed*")
-                if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan.root")
+                if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q))
                 if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
 
