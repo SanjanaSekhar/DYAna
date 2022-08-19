@@ -13,8 +13,8 @@ types = [0, 1]
 labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
-njobs = 10
-ending = "062422_6cost"
+njobs = 20
+ending = "081922"
 for mass in masses:
     for year in years:
         for j,ttype in enumerate(types):

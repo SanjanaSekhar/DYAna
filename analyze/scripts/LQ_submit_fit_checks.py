@@ -73,7 +73,7 @@ labels = [
 
 cpy_cmd = "xrdcp -f temp/* $1 \n"
 
-date = "062422"
+date = "072122"
 n_m_bins = 1
 
 

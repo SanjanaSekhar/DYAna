@@ -126,11 +126,18 @@ for y in [-1]:
                         limit_tree.GetEntry(i)
                         deltaNLL.append(limit_tree.deltaNLL)
                         yLQ2_list.append(limit_tree.yLQ2)
-
+			if limit_tree.quantileExpected > 0.49 and limit_tree.quantileExpected < 0.51: print(limit_tree.yLQ2,limit_tree.deltaNLL)
+			if limit_tree.quantileExpected > 0.83 and limit_tree.quantileExpected < 0.86: print(limit_tree.yLQ2,limit_tree.deltaNLL)	
                     f.Close()
-                    plt.plot(yLQ2_list,deltaNLL)
+		    #print(yLQ2_list)
+		    #print(deltaNLL)
+		    idx = np.argsort(np.array(yLQ2_list))
+		    yLQ2_list = np.array(yLQ2_list)[idx]
+		    deltaNLL = np.array(deltaNLL)[idx]
+                    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
+		    plt.plot(yLQ2_list,2*deltaNLL)
                     plt.xlabel("yLQ2")
                     plt.ylabel("-2deltaLL")
                     plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
                     plt.savefig("like_scan_%s_%s.jpg"%(options.chan,options.q))
-
+		    plt.close()

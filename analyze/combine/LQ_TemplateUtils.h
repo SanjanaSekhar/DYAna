@@ -85,7 +85,8 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
     //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
     //int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
 
-    int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx-1)*(n_binsy) ; // for mass > 700, merge last 2  rap bins
+    //int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx-1)*(n_binsy) ; // for mass > 700, merge last 2  rap bins
+    int n_1d_bins = n_binsx*n_binsy + (2)*(n_binsx-1)*(n_binsy) ; // for mass > 700    , merge last 2  rap bins
     return n_1d_bins;
 }
 
@@ -105,7 +106,7 @@ TH1F* convert3d(TH3F *h_3d){
    int gbin = 1;
     TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_1d_bins, 0, n_1d_bins);
     for(int k=1; k<=n_m_bins; k++){    
-        if(h_3d->GetXaxis()->GetBinLowEdge(k) == 800.){
+        if(h_3d->GetXaxis()->GetBinLowEdge(k) == 700.){
           //  n_binsx--;
             n_binsy-=1;
         }
@@ -117,7 +118,7 @@ TH1F* convert3d(TH3F *h_3d){
             float error = h_3d->GetBinError(k,i,j);
            // int gbin = one_idx(i,j, k, n_binsx, n_binsy);
             float content_next, error_next, content_1d, error_1d;
-            if(h_3d->GetXaxis()->GetBinLowEdge(k) >= 800. and j == n_binsy){
+            if(h_3d->GetXaxis()->GetBinLowEdge(k) >= 700. and j == n_binsy){
                 content_next = h_3d->GetBinContent(k,i,j+1);
                 error_next = h_3d->GetBinError(k,i,j+1);
                 content_1d = h_1d->GetBinContent(gbin); 

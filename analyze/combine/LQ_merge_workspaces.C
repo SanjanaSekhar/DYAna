@@ -33,7 +33,7 @@ void LQ_merge_workspaces(){
         int mLQ = 1000*i;
         for(int year=16;year<=18;year++){
 
-            char *ending="062422_6cost";
+            char *ending="072122";
             char f1_s[180];
             sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ);
             char fout_s[180];
@@ -51,8 +51,8 @@ void LQ_merge_workspaces(){
             sprintf(pdf_base,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_pdf_%s_m%i", year, ending, mLQ);
             
             
-            int num_sys_files = 10;
-            int num_pdf_files = 10;
+            int num_sys_files = 20;
+            int num_pdf_files = 20;
 
             std::vector<string> fs;
             for(int i=0; i<num_sys_files; i++){
