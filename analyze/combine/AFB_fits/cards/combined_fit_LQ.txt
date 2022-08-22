@@ -3,15 +3,15 @@ imax 3 number of bins
 jmax 9 number of processes minus 1
 kmax 150 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm1500_merge_templates16_072122.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm1500_merge_templates17_072122.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm1500_merge_templates18_072122.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm1000_merge_templates16_081922.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm1000_merge_templates17_081922.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm1000_merge_templates18_081922.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                                   Y16       Y16       Y16       Y16       Y16       Y16       Y16       Y16       Y16       Y16       Y17       Y17       Y17       Y17       Y17       Y17       Y17       Y17       Y17       Y17       Y18       Y18       Y18       Y18       Y18       Y18       Y18       Y18       Y18       Y18     
-process                               LQpure_d  fpl       LQint_d   fmn       alpha     top       db        gam       tautau    qcd       LQpure_d  fpl       LQint_d   fmn       alpha     top       db        gam       tautau    qcd       LQpure_d  fpl       LQint_d   fmn       alpha     top       db        gam       tautau    qcd     
+process                               LQpure_u  fpl       fmn       alpha     LQint_u   top       db        gam       tautau    qcd       LQpure_u  fpl       fmn       alpha     LQint_u   top       db        gam       tautau    qcd       LQpure_u  fpl       fmn       alpha     LQint_u   top       db        gam       tautau    qcd     
 process                               -4        -3        -2        -1        0         1         2         3         4         5         -4        -3        -2        -1        0         1         2         3         4         5         -4        -3        -2        -1        0         1         2         3         4         5       
 rate                                  -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1        -1      
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ RENORM1718              shape         -         -         -         -         - 
 alphaS16                shape         1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 alphaS1718              shape         -         -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       -         1.0       1.0       1.0       1.0       1.0       -         -         -         1.0       -       
 db_xsec                 lnN           -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         -         1.05      -         -         -       
-dy_xsec                 lnN           -         1.03      -         1.03      1.03      -         -         -         1.03      -         -         1.03      -         1.03      1.03      -         -         -         1.03      -         -         1.03      -         1.03      1.03      -         -         -         1.03      -       
+dy_xsec                 lnN           -         1.03      1.03      1.03      -         -         -         -         1.03      -         -         1.03      1.03      1.03      -         -         -         -         1.03      -         -         1.03      1.03      1.03      -         -         -         -         1.03      -       
 elFakes16               lnN           -         -         -         -         -         -         -         -         -         1.5       -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -       
 elFakes17               lnN           -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.5       -         -         -         -         -         -         -         -         -         -       
 elFakes18               lnN           -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.5     
@@ -86,7 +86,7 @@ lumiDB                  lnN           1.004     1.004     1.004     1.004     1.
 lumiGS                  lnN           1.004     1.004     1.004     1.004     1.004     1.004     1.004     1.004     1.004     -         1.001     1.001     1.001     1.001     1.001     1.001     1.001     1.001     1.001     -         -         -         -         -         -         -         -         -         -         -       
 lumiLS                  lnN           -         -         -         -         -         -         -         -         -         -         1.003     1.003     1.003     1.003     1.003     1.003     1.003     1.003     1.003     -         1.002     1.002     1.002     1.002     1.002     1.002     1.002     1.002     1.002     -       
 lumiXY                  lnN           1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     -         1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     1.009     -         1.02      1.02      1.02      1.02      1.02      1.02      1.02      1.02      1.02      -       
-nlo_sys                 lnN           1.15      -         1.15      -         -         -         -         -         -         -         1.15      -         1.15      -         -         -         -         -         -         -         1.15      -         1.15      -         -         -         -         -         -         -       
+nlo_sys                 lnN           1.6       -         -         -         1.3       -         -         -         -         -         1.6       -         -         -         1.3       -         -         -         -         -         1.6       -         -         -         1.3       -         -         -         -         -       
 pdf1                    shape         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -       
 pdf10                   shape         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -       
 pdf11                   shape         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       -         -         -         -         -       
@@ -169,14 +169,14 @@ lumis18 group = lumiDB lumiBC lumi18 lumiLS lumiXY lumiGS
 elRECOs group = elRECOBARPTHIGH elRECOENDPTHIGH elRECOBARPTLOW elRECOENDPTLOW
 elScales18 group = elScaleGain18 elScaleSyst elSmear elScaleStat18
 RFscales16 group = RENORM16 alphaS16 REFAC16 FAC16
-elfakesrws18 group = elfakesrw2b18 elfakesrw1b18 elfakesrw4b18
-elfakesrws17 group = elfakesrw4b17 elfakesrw1b17 elfakesrw2b17
+elfakesrws18 group = elfakesrw2b18 elfakesrw3b18 elfakesrw1b18 elfakesrw4b18
+elfakesrws17 group = elfakesrw4b17 elfakesrw1b17 elfakesrw3b17 elfakesrw2b17
 elScales17 group = elScaleStat17 elScaleSyst elSmear elScaleGain17
 elScales16 group = elScaleStat16 elSmear elScaleGain16 elScaleSyst
 RFscales1718 group = REFAC1718 RENORM1718 FAC1718 alphaS1718
 elHLTs17 group = elHLTBARPTHIGH17 elHLTBARPTLOW17 elHLTENDPTHIGH17 elHLTENDPTLOW17
 ptrws1718 group = ptrw1b1718 ptrw2b1718 ptrw3b1718 ptrw4b1718 ptrw5b1718 ptrw6b1718 ptrw7b1718
-elfakesrws16 group = elfakesrw4b16 elfakesrw1b16 elfakesrw2b16
+elfakesrws16 group = elfakesrw4b16 elfakesrw1b16 elfakesrw3b16 elfakesrw2b16
 elHLTs16 group = elHLTBARPTLOW16 elHLTBARPTHIGH16 elHLTENDPTLOW16 elHLTENDPTHIGH16
 ptrws16 group = ptrw6b16 ptrw5b16 ptrw7b16 ptrw2b16 ptrw1b16 ptrw4b16 ptrw3b16
 pdfs group = pdf21 pdf20 pdf23 pdf22 pdf25 pdf24 pdf27 pdf26 pdf29 pdf28 pdf60 pdf54 pdf55 pdf8 pdf9 pdf2 pdf3 pdf1 pdf6 pdf7 pdf4 pdf5 pdf32 pdf33 pdf30 pdf31 pdf36 pdf37 pdf34 pdf35 pdf38 pdf39 pdf58 pdf59 pdf49 pdf48 pdf43 pdf42 pdf41 pdf40 pdf47 pdf46 pdf45 pdf44 pdf18 pdf19 pdf56 pdf57 pdf50 pdf51 pdf52 pdf53 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17

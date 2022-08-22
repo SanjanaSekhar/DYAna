@@ -6,24 +6,22 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1500_merge_templates16_072122.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
-
+shapes * * LQm1000_merge_templates16_081922.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             ee16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      ee16    ee16    ee16    ee16     ee16    ee16     ee16 	ee16    ee16      ee16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
-
-nlo_sys         lnN      -       -        -      -        -        -       -            -        1.15    1.15
+nlo_sys         lnN      -       -        -      -        -        -       -            -        1.60    1.30
 
 elFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
@@ -31,7 +29,7 @@ elFakes16       lnN      -       -        -      -        -       -       1.5		-
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     -			1.022    	1.022	1.022		
 lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     -			1.009    	1.009	1.009		
-lumiLS           lnN       -        -         -       -         -       -       - 		  -      	  -  	  -  		  
+lumiLS           lnN       -        -         -       -         -       -       - 			  -      	  -  	  -  		  
 lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
 lumiBC           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	 
 lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
@@ -64,23 +62,24 @@ elHLTENDPTHIGH16   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -  
 elHLTBARPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTENDPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTs16 group = elHLTENDPTHIGH16  elHLTBARPTLOW16   elHLTENDPTLOW16 elHLTBARPTHIGH16
+elHLTs16 group = elHLTENDPTHIGH16  elHLTBARPTLOW16   elHLTENDPTLOW16 elHLTBARPTHIGH16   
 
 elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
+elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+  
 
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
-
+elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH
+                                                                                                                                  
 alphaS16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC16               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -95,13 +94,15 @@ emucostrw3b16        shape    -       -        -     1.0      1.0     -      -  
 emucostrw4b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws16 group = emucostrw1b16 emucostrw3b16 emucostrw4b16 emucostrw2b16
+
 ##fakes cost reweighting                                                                                                 
 elfakesrw1b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw2b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw3b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw4b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw4b16 #elfakesrw3b16
+elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw4b16 elfakesrw3b16
+
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   

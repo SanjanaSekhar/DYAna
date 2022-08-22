@@ -16,6 +16,7 @@ parser.add_option("-o", "--odir", default="signal_injection/", help = "output di
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("--prefit", default=False, action="store_true", help="Sample toys from prefit uncs")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
+parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 
 (options, args) = parser.parse_args()
 
@@ -24,13 +25,13 @@ gStyle.SetOptFit(1)
 
 options.nToys = 200
 is_vec = False
-mLQ = 1000
+mLQ = options.mLQ
 gen_level = False
 no_LQ = False
 fake_data = True
 no_sys = False
 year = -1
-ending = "072122"
+ending = "081922"
 
 
 if options.chan=="mumu" and options.q=="d": is_vec = True

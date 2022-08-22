@@ -25,12 +25,18 @@ cmds = [
 #"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 17\n",
 #"python scripts/do_gof.py --nToys 200 -o temp/  --mbin $3 --teststat saturated --prefit --mask_mumu -y 18\n",
 #"python scripts/do_impacts.py -o temp/  --mbin $3 --nThreads 4 --expected \n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u -o temp/\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u -o temp/\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u -o temp/\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d -o temp/\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d -o temp/\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d -o temp/\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u -o temp/ --mLQ 1000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u -o temp/ --mLQ 1000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u -o temp/ --mLQ 1000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d -o temp/ --mLQ 1000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d -o temp/ --mLQ 1000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d -o temp/ --mLQ 1000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u -o temp/ --mLQ 1500\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u -o temp/ --mLQ 1500\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u -o temp/ --mLQ 1500\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d -o temp/ --mLQ 1500\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d -o temp/ --mLQ 1500\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d -o temp/ --mLQ 1500\n",
 #"python scripts/LQ_do_bias_test.py --nToys 100  --yLQ 0.0 --chan ee --q u \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.6 --A0 0.1 \n",
 #"python scripts/do_bias_test.py --nToys 100 -o temp/  --mbin $3 --Afb 0.0 --A0 0.00 \n",
@@ -67,13 +73,14 @@ labels = [
         #"gof_prefit",
         #"gof_postfit", 
         #"expected_impacts",  
-        "bias_test_yLQ0.0_ee_u",  "bias_test_yLQ0.5_ee_u",  "bias_test_yLQ1.0_ee_u",  "bias_test_yLQ0.0_mumu_d", "bias_test_yLQ0.5_mumu_d", "bias_test_yLQ1.0_mumu_d"
+        "bias_test_yLQ0.0_ee_u_m1000",  "bias_test_yLQ0.5_ee_u_m1000",  "bias_test_yLQ1.0_ee_u_m1000",  "bias_test_yLQ0.0_mumu_d_m1000", "bias_test_yLQ0.5_mumu_d_m1000", "bias_test_yLQ1.0_mumu_d_m1000",
+	"bias_test_yLQ0.0_ee_u_m1500",  "bias_test_yLQ0.5_ee_u_m1500",  "bias_test_yLQ1.0_ee_u_m1500",  "bias_test_yLQ0.0_mumu_d_m1500", "bias_test_yLQ0.5_mumu_d_m1500", "bias_test_yLQ1.0_mumu_d_m1500"
 ]
 
 
 cpy_cmd = "xrdcp -f temp/* $1 \n"
 
-date = "072122"
+date = "081922"
 n_m_bins = 1
 
 

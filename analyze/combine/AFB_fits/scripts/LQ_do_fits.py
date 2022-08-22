@@ -4,6 +4,9 @@ import ROOT
 from ROOT import *
 import matplotlib.pyplot as plt
 
+plt.ioff()
+
+
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
 parser.add_option("--q",  default="combined", type="string", help="What channels to run the fit over (combined, u, or d)")
@@ -22,7 +25,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee","mumu"]:
     #for options.chan in ["ee"]:
         for options.q in ["u","d"]:
 
@@ -37,6 +40,7 @@ for y in [-1]:
             options.no_LQ=False
             options.year = y
             likelihood_scan = True
+	    if likelihood_scan: ending = "081922"
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -71,7 +75,7 @@ for y in [-1]:
 
             if(options.no_LQ): fit_name+="_noLQ"
 
-            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_run"
+            if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_SMdata_nlosys"
 
             print("\n fit_name = ", fit_name)
 
@@ -82,7 +86,7 @@ for y in [-1]:
             #mLQ = 1000.
             #for mbin in range(bin_start, bin_stop):
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
-                '''
+                
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 
                 workspace="workspaces/%s_LQ.root" % (options.chan)
@@ -113,7 +117,7 @@ for y in [-1]:
                 print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q))
                 if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
-                '''
+                
                 if likelihood_scan:
 
                     deltaNLL, yLQ2_list = [],[]
@@ -138,6 +142,6 @@ for y in [-1]:
 		    plt.plot(yLQ2_list,2*deltaNLL)
                     plt.xlabel("yLQ2")
                     plt.ylabel("-2deltaLL")
-                    plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
-                    plt.savefig("like_scan_%s_%s.jpg"%(options.chan,options.q))
+                    plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV"%(options.chan,options.q,mLQ))
+                    plt.savefig("like_scan_%s_%s_m%i_%s.jpg"%(options.chan,options.q,mLQ,ending))
 		    plt.close()

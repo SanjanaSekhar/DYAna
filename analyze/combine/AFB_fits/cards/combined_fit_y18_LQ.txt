@@ -6,24 +6,22 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1500_merge_templates18_072122.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
-
+shapes * * LQm1000_merge_templates18_081922.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             ee18  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      ee18    ee18    ee18    ee18     ee18    ee18     ee18 	ee18    ee18      ee18 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
-
-nlo_sys         lnN      -       -        -      -        -        -       -            -        1.15    1.15
+nlo_sys         lnN      -       -        -      -        -        -       -            -        1.60    1.30
 
 elFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
@@ -31,7 +29,7 @@ elFakes18       lnN      -       -        -      -        -       -       1.5		-
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi18           lnN     1.015    1.015     1.015   1.015     1.015   1.015     -			1.015    	1.015	1.015		
 lumiXY           lnN     1.020    1.020     1.020   1.020     1.020   1.020     -			1.020    	1.020	1.020		
-lumiLS           lnN     1.002    1.002     1.002   1.002     1.002   1.002     - 		1.002    	1.002	1.002		  
+lumiLS           lnN     1.002    1.002     1.002   1.002     1.002   1.002     - 			1.002    	1.002	1.002		  
 lumiDB           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
 lumiBC           lnN     1.002    1.002     1.002   1.002     1.002   1.002     -			1.002    	1.002	1.002	 
 lumiGS           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
@@ -64,23 +62,24 @@ elHLTENDPTHIGH18   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -  
 elHLTBARPTLOW18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTENDPTLOW18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTs18 group = elHLTENDPTHIGH18  elHLTBARPTLOW18   elHLTENDPTLOW18 elHLTBARPTHIGH18
+elHLTs18 group = elHLTENDPTHIGH18  elHLTBARPTLOW18   elHLTENDPTLOW18 elHLTBARPTHIGH18   
 
 elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
+elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+  
 
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
-
+elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH
+                                                                                                                                  
 alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC1718               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -95,13 +94,15 @@ emucostrw3b1718        shape    -       -        -     1.0      1.0     -      -
 emucostrw4b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws1718 group = emucostrw1b1718 emucostrw3b1718 emucostrw4b1718 emucostrw2b1718
+
 ##fakes cost reweighting                                                                                                 
 elfakesrw1b18          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw2b18          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw3b18          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw4b18          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-elfakesrws18 group = elfakesrw1b18 elfakesrw2b18 elfakesrw4b18 #elfakesrw3b18
+elfakesrws18 group = elfakesrw1b18 elfakesrw2b18 elfakesrw4b18 elfakesrw3b18
+
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
