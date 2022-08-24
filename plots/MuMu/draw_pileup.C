@@ -84,7 +84,7 @@ void draw_pileup(){
 
 
     make_pileup_hist(t_mumu_mc, mc_pu_before, mc_pu_after, false, year, type);
-    make_pileup_hist(t_mumu_nosig, mc_nosig_pu_before, mc_nosig_pu_after, false, year, type);
+    //make_pileup_hist(t_mumu_nosig, mc_nosig_pu_before, mc_nosig_pu_after, false, year, type);
     make_pileup_hist(t_mumu_ttbar, ttbar_pu_before, ttbar_pu_after, false, year, type);
     make_pileup_hist(t_mumu_wt, wt_pu_before, wt_pu_after, false,year, type);
     make_pileup_hist(t_mumu_diboson, diboson_pu_before, diboson_pu_after, false, year, type);
@@ -98,41 +98,40 @@ void draw_pileup(){
 
 
     Double_t pu_before_tot = ttbar_pu_before->Integral() + wt_pu_before->Integral() + diboson_pu_before->Integral() + 
-                            mc_nosig_pu_before->Integral() + mc_pu_before->Integral();
+                             mc_pu_before->Integral();
 
     printf("pu_before_tot: %.3e \n", pu_before_tot);
-    printf("%.2e %.2e %.2e %.2e %.2e \n", ttbar_pu_before->Integral(), wt_pu_before->Integral(), diboson_pu_before->Integral(), 
-            mc_nosig_pu_before->Integral(), mc_pu_before->Integral());
+    printf("%.2e %.2e %.2e %.2e  \n", ttbar_pu_before->Integral(), wt_pu_before->Integral(), diboson_pu_before->Integral(),  mc_pu_before->Integral());
     ttbar_pu_before->Scale(1./pu_before_tot);
     wt_pu_before->Scale(1./pu_before_tot);
     diboson_pu_before->Scale(1./pu_before_tot);
-    mc_nosig_pu_before->Scale(1./pu_before_tot);
+    //mc_nosig_pu_before->Scale(1./pu_before_tot);
     mc_pu_before->Scale(1./pu_before_tot);
 
     Double_t pu_after_tot = ttbar_pu_after->Integral() + wt_pu_after->Integral() + diboson_pu_after->Integral() + 
-                            mc_nosig_pu_after->Integral() + mc_pu_after->Integral();
+                             mc_pu_after->Integral();
     printf("pu_after_tot: %.3e \n", pu_after_tot);
 
     ttbar_pu_after->Scale(1./pu_after_tot);
     wt_pu_after->Scale(1./pu_after_tot);
     diboson_pu_after->Scale(1./pu_after_tot);
-    mc_nosig_pu_after->Scale(1./pu_after_tot);
+    //mc_nosig_pu_after->Scale(1./pu_after_tot);
     mc_pu_after->Scale(1./pu_after_tot);
 
-    printf("%.3e %.3e %.3e \n", mc_nosig_pu_after->Integral(), mc_pu_after->Integral(), ttbar_pu_after->Integral());
+    printf(" %.3e %.3e \n", mc_pu_after->Integral(), ttbar_pu_after->Integral());
 
     THStack *pu_before_stack = new THStack("pu_before_stack", "DiMuon Pileup; # Primary Vertices");
     pu_before_stack->Add(ttbar_pu_before);
     pu_before_stack->Add(wt_pu_before);
     pu_before_stack->Add(diboson_pu_before);
-    pu_before_stack->Add(mc_nosig_pu_before);
+    //pu_before_stack->Add(mc_nosig_pu_before);
     pu_before_stack->Add(mc_pu_before);
 
     THStack *pu_after_stack = new THStack("pu_after_stack", "Dimuon Pileup; # Primary Vertices");
     pu_after_stack->Add(ttbar_pu_after);
     pu_after_stack->Add(wt_pu_after);
     pu_after_stack->Add(diboson_pu_after);
-    pu_after_stack->Add(mc_nosig_pu_after);
+    //pu_after_stack->Add(mc_nosig_pu_after);
     pu_after_stack->Add(mc_pu_after);
 
 
@@ -152,10 +151,10 @@ void draw_pileup(){
     data_pu->Draw("P same");
     before_pad1->SetLogy();
     before_pad1->Update();
-    TLegend *leg3 = new TLegend(0.5, 0.65, 0.75, 0.8);
+    TLegend *leg3 = new TLegend(0.8, 0.65, 0.75, 0.8);
     leg3->AddEntry(data_pu, "data", "p");
     leg3->AddEntry(mc_pu_before, "DY (q#bar{q}, qg #bar{q}g)", "f");
-    leg3->AddEntry(mc_nosig_pu_before, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");
+    //leg3->AddEntry(mc_nosig_pu_before, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");
     leg3->AddEntry(diboson_pu_before, "WW + WZ + ZZ", "f");
     leg3->AddEntry(wt_pu_before, "tW + #bar{t}W", "f");
     leg3->AddEntry(ttbar_pu_before, "t#bar{t}", "f");
@@ -226,7 +225,7 @@ void draw_pileup(){
     TLegend *leg4 = new TLegend(0.5, 0.65, 0.75, 0.8);
     leg4->AddEntry(data_pu, "data", "p");
     leg4->AddEntry(mc_pu_after, "DY (q#bar{q}, qg #bar{q}g)", "f");
-    leg4->AddEntry(mc_nosig_pu_after, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");
+    //leg4->AddEntry(mc_nosig_pu_after, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");
     leg4->AddEntry(diboson_pu_after, "WW + WZ + ZZ", "f");
     leg4->AddEntry(wt_pu_after, "tW + #bar{t}W", "f");
     leg4->AddEntry(ttbar_pu_after, "t#bar{t}", "f");
@@ -272,7 +271,7 @@ void draw_pileup(){
    after_ratio->GetYaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    after_ratio->GetYaxis()->SetLabelSize(15);
    // X axis after_ratio plot settings
-   after_ratio->GetXaxis()->SetTitle("Pileup after reweighting");
+   after_ratio->GetXaxis()->SetTitle("Number of vertices after reweighting");
    after_ratio->GetXaxis()->SetTitleSize(20);
    after_ratio->GetXaxis()->SetTitleFont(43);
    after_ratio->GetXaxis()->SetTitleOffset(3.);

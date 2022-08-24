@@ -88,7 +88,7 @@ for y in [-1]:
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
                 
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
-
+		'''
                 workspace="workspaces/%s_LQ.root" % (options.chan)
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
@@ -117,16 +117,16 @@ for y in [-1]:
                 print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q))
                 if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
-                
+                '''
                 if likelihood_scan:
 
                     deltaNLL, yLQ2_list = [],[]
-
+		    '''
                     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q),"READ")
                     limit_tree = f.Get("limit")
 
                     for i in range(limit_tree.GetEntries()):
-
+			
                         limit_tree.GetEntry(i)
                         deltaNLL.append(limit_tree.deltaNLL)
                         yLQ2_list.append(limit_tree.yLQ2)
@@ -138,10 +138,23 @@ for y in [-1]:
 		    idx = np.argsort(np.array(yLQ2_list))
 		    yLQ2_list = np.array(yLQ2_list)[idx]
 		    deltaNLL = np.array(deltaNLL)[idx]
-                    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
-		    plt.plot(yLQ2_list,2*deltaNLL)
+                    with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'w') as f:
+	     		for ylq,dnll in zip(yLQ2_list, deltaNLL):
+         		    f.write("%f %f\n" %(ylq,2*dnll)) 
+		    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
+		    '''
+		    respull = []
+		    with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'r') as f:
+    		        for line in f.readlines():
+        		    respull.append(line.split(' '))
+
+		    respull = np.asarray(respull, dtype=float)
+		    yLQ2_list = respull[:,0].tolist()
+		    deltaNLL = respull[:,1].tolist()		    
+		    plt.plot(yLQ2_list,deltaNLL)
                     plt.xlabel("yLQ2")
                     plt.ylabel("-2deltaLL")
                     plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV"%(options.chan,options.q,mLQ))
                     plt.savefig("like_scan_%s_%s_m%i_%s.jpg"%(options.chan,options.q,mLQ,ending))
 		    plt.close()
+		    
