@@ -184,8 +184,8 @@ void fit_fiducial_AFB(){
 
     float m_low, m_high;
     int i_start=1;
-
-    int i_max = n_m_bins;
+    //int i_max = n_m_bins;
+    int i_max = 2;
 
     vector<string>  sys_labels_raw = { "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",  "pdf", "RENORM", "FAC", "REFAC","ptcut" };
 
@@ -205,8 +205,10 @@ void fit_fiducial_AFB(){
 
     for(int i=i_start; i<i_max; i++){
 
-        m_low = m_bins[i];
-        m_high = m_bins[i+1];
+        //m_low = m_bins[i];
+        //m_high = m_bins[i+1];
+        m_low = 170.;
+        m_high = 14000.;
         printf("\n \n Start making templates for mass bin %.0f-%.0f \n", m_low, m_high);
 
 

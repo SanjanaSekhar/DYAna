@@ -35,6 +35,7 @@ char *plot_dir = "Paper_plots/EMu_plots/";
 //char *plot_dir = "PAS_plots/EMu_plots/";
 //char *plot_dir = "Misc_plots/mu_prefire_check_before/";
 //char *plot_label = "e#mu Control Region";
+//char *plot_label = "#bf{e#mu control region}";
 char *plot_label = "";
 char *fin_name = "EMu/saved_hists.root";
 
@@ -147,6 +148,36 @@ void draw_cmp_from_saved(){
     setHistError(wt_m, top_sys_unc);
     setHistError(wt_cost, top_sys_unc);
     setHistError(wt_rap, top_sys_unc);
+
+
+
+    TH1F *total_mc = (TH1F *) diboson_cost->Clone("total_mc");
+    total_mc->Add(QCD_cost);
+    total_mc->Add(dy_cost);
+    total_mc->Add(wt_cost);
+    total_mc->Add(top_cost);
+
+
+    Double_t data_B = data_cost->Integral(1,n_cost_bins/2);
+    Double_t data_F = data_cost->Integral(n_cost_bins/2 + 1, n_cost_bins);
+    Double_t data_AFB = (data_F - data_B)/(data_F+data_B);
+   
+    Double_t data_dAFB = AFB_counting_unc(data_F, data_B, sqrt(data_F), sqrt(data_B));
+    printf("F %.0f, B %.0f \n", data_F, data_B);
+    printf("AFB %.3f +/- %.3f \n", data_AFB, data_dAFB);
+
+
+
+    Double_t total_mc_dF, total_mc_dB;
+    Double_t total_mc_B = total_mc->IntegralAndError(1,n_cost_bins/2, total_mc_dB);
+    Double_t total_mc_F = total_mc->IntegralAndError(n_cost_bins/2 + 1, n_cost_bins, total_mc_dF);
+    Double_t total_mc_AFB = (total_mc_F - total_mc_B)/(total_mc_F+total_mc_B);
+   
+    Double_t total_mc_dAFB = AFB_counting_unc(total_mc_F, total_mc_B, total_mc_dF, total_mc_dB);
+    printf("total_mc F %.0f, B %.0f \n", total_mc_F, total_mc_B);
+    printf("total_mc AFB %.3f +/- %.3f \n", total_mc_AFB, total_mc_dAFB);
+
+
 
     float mbin_base = 10.;
     binwidth_normalize(data_m, mbin_base);
@@ -274,6 +305,7 @@ void draw_cmp_from_saved(){
     TLegend *leg1 = new TLegend(x_size, y_size);
 
     leg1->SetNColumns(2);
+    //leg1->SetHeader("#bf{e#mu} control region");
     leg1->SetHeader("e#mu control region");
     //different data error bars
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");

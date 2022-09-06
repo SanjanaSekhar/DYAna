@@ -31,8 +31,8 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2016;
-const bool write_out = true;
+const int year = 2018;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "";
 
@@ -174,7 +174,7 @@ void draw_cmp(){
 
 
 
-    float m_low = 170.;
+    float m_low = 500.;
     float m_high = 13000;
     bool ss = false;
 
@@ -201,6 +201,8 @@ void draw_cmp(){
     printf("Data integral is %.2f \n", data_m->Integral());
     printf("DY integral is %.2f \n", dy_cost->Integral());
     printf("ttbar integral is %.2f \n", ttbar_cost->Integral());
+    printf("diboson integral is %.2f \n", diboson_cost->Integral());
+    printf("fakes integral is %.2f \n", QCD_cost->Integral());
 
 
 

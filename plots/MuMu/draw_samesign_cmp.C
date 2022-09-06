@@ -30,12 +30,13 @@
 
 const int type = FLAG_MUONS;
 int year = 2018;
-bool write_out = true;
-//char *plot_dir = "Misc_plots/samesign_cmp_test/";
-char *plot_dir = "Paper_plots/prefit_kinematics/";
-bool normalize_cos = true;
+bool write_out = false;
+//char *plot_dir = "Misc_plots/fakes_aug2022_test/";
+char *plot_dir = "Paper_plots/samesign_highmass/";
+bool normalize_cos = false;
 char *plot_label = "Muons: Same Sign Control Region";
-char *plot_label_cos = "Muons: Same Sign Control Region (normalized)";
+char *plot_label_cos = "Muons: Same Sign Control Region";
+int m_low = 500.;
 
 
 
@@ -114,7 +115,6 @@ void draw_samesign_cmp(){
     DY_phi->SetFillColor(kRed+1);
     DY_rap->SetFillColor(kRed+1);
 
-    int m_low = 170.;
     int m_high = 10000.;
     bool ss = true;
 
@@ -216,12 +216,16 @@ void draw_samesign_cmp(){
     rap_stack->Add(DY_rap);
 
 
+    float x_size = 0.3;
+    float y_size = 0.2;
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.3, 0.25);
+    TLegend *leg1 = new TLegend(x_size, y_size);
+    leg1->SetNColumns(2);
     leg1->AddEntry(data_pt, "data", "p");
     leg1->AddEntry(DY_pt, "DY (miss-sign)", "f");
     leg1->AddEntry(QCD_pt, "QCD + WJets", "f");
     leg1->AddEntry(diboson_m, "t#bar{t} + wt + WW + WZ + ZZ", "f");
+
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
     TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
     TLegend *leg4 = (TLegend *) leg1->Clone("leg4");
@@ -240,6 +244,14 @@ void draw_samesign_cmp(){
     float ratio_range_cos = 0.4;
     float ratio_range = 1.0;
 
+
+    float x_start_m = 0.625;
+    float y_start_m = 0.5;
+    leg1->SetX1(x_start_m);
+    leg1->SetX2(x_start_m+x_size);
+    leg1->SetY1(y_start_m);
+    leg1->SetY2(y_start_m+y_size);
+
     
 
 
@@ -247,6 +259,14 @@ void draw_samesign_cmp(){
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sMuMu%i_ss_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
+
+
+    float x_start_c = 0.325;
+    float y_start_c = 0.5;
+    leg2->SetX1(x_start_c);
+    leg2->SetX2(x_start_c+x_size);
+    leg2->SetY1(y_start_c);
+    leg2->SetY2(y_start_c+y_size);
 
     
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", plot_label_cos, -1., false, logx, draw_sys_uncs, ratio_range_cos);

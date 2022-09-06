@@ -50,7 +50,7 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH1F *h){
             float f = h_fr->GetBinContent(i,j);
             float num = h_errs->GetBinContent(i,j);
             //compute error on f/(1-f). Derive is 1/(1-f)^2
-            float err = f_err/(1.-f)/(1.-f);
+            float err = f_err/(1.-f)/(1.-f) * 0.5;
             err_sum += err*num;
             hist_sum += num*f/(1.-f);
             //printf("i,j,f,f_err,num,err: %i %i %.3f %.3f %.1f %.1f \n", i,j, f, f_err, num, err);
@@ -83,7 +83,7 @@ void set_fakerate_errors(TH2 *h_errs, TH2 *h_fr, TH2F *h){
             float f = h_fr->GetBinContent(i,j);
             float num = h_errs->GetBinContent(i,j);
             //compute error on f/(1-f). Derive is 1/(1-f)^2
-            float err = f_err/(1.-f)/(1.-f);
+            float err = f_err/(1.-f)/(1.-f) * 0.5;
             err_sum += err*num;
             hist_sum += num*f/(1.-f);
             //printf("i,j,f,f_err,num,err: %i %i %.3f %.3f %.1f %.1f \n", i,j, f, f_err, num, err);

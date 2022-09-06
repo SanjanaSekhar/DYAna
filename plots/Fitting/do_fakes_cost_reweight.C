@@ -29,9 +29,9 @@
 
 
 
-const int year = 2016;
-char *out_file = "../analyze/SFs/2016/fakes_cost_rw.root";
-const bool write_out = true;
+const int year = 2018;
+char *out_file = "../analyze/SFs/2018/fakes_cost_rw.root";
+const bool write_out = false;
 bool corr_ss = true;
 char *plot_dir = "Paper_plots/fakes_cost_reweights/";
 
@@ -83,7 +83,7 @@ void do_fakes_cost_reweight(){
     make_m_cost_pt_xf_hist(t_mumu_ss_dy, dummy, mumu_other_cost, dummy, dummy, dummy, dummy, false, FLAG_MUONS,   year, m_low, m_high, ss);
 
     bool reweight = false;
-    bool sys_errors = false;
+    bool sys_errors = true;
     make_fakerate_est(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, dummy, mumu_QCD_ss_cost, dummy, dummy, dummy, dummy, FLAG_MUONS, 
             year, m_low, m_high, ss, reweight, sys_errors);
     ss = false;
@@ -103,6 +103,8 @@ void do_fakes_cost_reweight(){
     TH1F *mumu_QCD_ss_cost_clone = (TH1F*) mumu_QCD_ss_cost->Clone("mumu_QCD_ss_cost_clone");
     mumu_QCD_ss_cost_clone->Scale(1./mumu_QCD_ss_cost_clone->Integral());
     mumu_QCD_os_cost->Scale(1./mumu_QCD_os_cost->Integral());
+
+    sprintf(plt_title, "Muons %i", year);
 
     TCanvas *c_os_ss_mumu_plot = make_ratio_plot(string("mumu_ss_os_comparison"), mumu_QCD_os_cost, "OS Fakes Estimate", mumu_QCD_ss_cost_clone, "SS Fakes Estimate", 
             "OS/SS", "mumu cos(#theta)", logy, false, 0.0,2.0, plt_title);
@@ -132,12 +134,13 @@ void do_fakes_cost_reweight(){
     h_mumu_ratio->Print("range");
 
 
-    sprintf(plt_title, "Muons %i", year);
     TCanvas *c_mumu_plot = make_ratio_plot(string("mumu_ss_cost_comparison"), h_mumu_data_sub, "Data - Other Backgrounds", mumu_QCD_ss_cost, "Fakes Estimate", 
             "ratio", "samesign mumu cos(#theta)", logy, false, 0.0, 2.0, plt_title, h_mumu_ratio);
     sprintf(plot_file, "%sy%i_mumu_ss_cost_rw.png", plot_dir, year - 2000);
     c_mumu_plot->Print(plot_file);
 
+
+    sprintf(plt_title, "Electrons %i", year);
     dummy->Reset();
 
     make_m_cost_pt_xf_hist(t_elel_ss_data, dummy, elel_data_cost, dummy, dummy, dummy,  dummy, true, FLAG_ELECTRONS,   year, m_low, m_high, ss);
@@ -225,7 +228,6 @@ void do_fakes_cost_reweight(){
     h_elel_ratio->Print("range");
 
 
-    sprintf(plt_title, "Electrons %i", year);
     TCanvas *c_elel_plot = make_ratio_plot(string("elel_ss_cost_comparison"), h_elel_data_sub, "Data - Other Backgrounds", elel_QCD_ss_cost, "Fakes Estimate", 
             "ratio", "samesign ee cos(#theta)", logy, false, 0.0, 2.0, plt_title, h_elel_ratio);
     sprintf(plot_file, "%sy%i_elel_ss_cost_rw.png", plot_dir, year - 2000);

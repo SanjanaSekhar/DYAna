@@ -30,7 +30,7 @@
 
 const int type = FLAG_ELECTRONS;
 const int year = 2018;
-const bool write_out = true;
+const bool write_out = false;
 char *plot_dir = "Paper_plots/prefit_kinematics/";
 //char *plot_label = "Electrons: With Prefire Correction";
 char *plot_label = "";
@@ -161,7 +161,7 @@ void draw_cmp(){
     gg_phi->SetFillColor(gamgam_c);
     gg_rap->SetFillColor(gamgam_c);
 
-    float m_low = 170.;
+    float m_low = 500.;
     float m_high = 10000.;
 
     make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
@@ -191,9 +191,11 @@ void draw_cmp(){
     */
 
 
-    printf("Data integral is %.2f \n", data_cost->Integral());
+    printf("Data integral is %.2f \n", data_m->Integral());
     printf("DY integral is %.2f \n", dy_cost->Integral());
     printf("ttbar integral is %.2f \n", ttbar_cost->Integral());
+    printf("diboson integral is %.2f \n", diboson_cost->Integral());
+    printf("fakes integral is %.2f \n", QCD_cost->Integral());
 
 
 

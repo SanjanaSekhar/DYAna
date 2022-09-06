@@ -5,7 +5,7 @@ Double_t m_err[n_m_bins] = {15., 25., 35., 95., 95., 150., 200.};
 
 
 const int n_m_ext_bins = 8;
-Double_t m_ext[n_m_ext_bins] = {185, 225., 285., 415., 605., 850., 1200., 1350.};
+Double_t m_ext[n_m_ext_bins] = {170, 225., 285., 415., 605., 850., 1200., 1350.};
 
 Double_t y_powheg[n_m_ext_bins] =      {0.611, 0.596, 0.597, 0.592, 0.590, 0.590, 0.590, 0.590};
 Double_t y_powheg_errs[n_m_ext_bins] = {0.004, 0.005, 0.004, 0.004, 0.004, 0.004, 0.004, 0.004};

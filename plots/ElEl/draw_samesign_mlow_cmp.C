@@ -32,7 +32,7 @@
 const int type = FLAG_ELECTRONS;
 int year = 2018;
 char *out_file = "../analyze/SFs/2018/dy_ss_rw.root";
-bool write_out = true;
+bool write_out = false;
 char *plot_dir = "Misc_plots/samesign_cmp_mlow/";
 //char *plot_dir = "Paper_plots/";
 
