@@ -68,8 +68,8 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_061322.png'%(channel,channel))
-    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_061322.png'%(channel,channel))
+    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_081922.png'%(channel,channel))
+    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_081922.png'%(channel,channel))
 
 
 
@@ -83,7 +83,7 @@ is_vec = False
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
 
-for channel in ['ue','de','um','dm','ce','cm','se','sm']:   
+for channel in ['ue','de','um','dm']:   
 #for channel in ['ce','se','cm','sm']:
 #for channel in ['se','sm']:
     if channel=='ue' or channel=='ce':
@@ -99,7 +99,7 @@ for channel in ['ue','de','um','dm','ce','cm','se','sm']:
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000]:
+    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
     
         workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
         comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
@@ -145,7 +145,7 @@ for channel in ['ue','de','um','dm','ce','cm','se','sm']:
     
     with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
         data = json.load(f)
-        for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0']:
+        for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
             for lim in data[mass]:
                 yLQ2 = data[mass][lim]
                 data[mass][lim] = sqrt(yLQ2)

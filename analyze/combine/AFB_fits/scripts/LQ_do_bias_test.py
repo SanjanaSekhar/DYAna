@@ -12,7 +12,7 @@ parser.add_option("--yLQ",  default=0.0, type='float', help="yLQ value to inject
 parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
 parser.add_option("--nToys",  default=100, type='int', help="How many toys to run")
 parser.add_option("--q",  default="u", help=" channel u,d,c,s ")
-parser.add_option("-o", "--odir", default="signal_injection/", help = "output directory")
+parser.add_option("-o", "--odir", default="signal_injection/condor/", help = "output directory")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("--prefit", default=False, action="store_true", help="Sample toys from prefit uncs")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
@@ -38,7 +38,7 @@ if options.chan=="mumu" and options.q=="d": is_vec = True
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
-
+'''
 workspace = "workspaces/%s_%s_fit_bias_tests.root" % (options.chan, options.q)
 make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
 
@@ -108,7 +108,7 @@ with open('%srespull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,
         f.write("%f %f\n" %(res,pull))
 '''
 respull = []
-with open('%srespull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.yLQ,ending), 'r') as f:
+with open('%s%s/respull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,options.yLQ,ending), 'r') as f:
     for line in f.readlines():
 	respull.append(line.split(' '))
 
@@ -117,7 +117,7 @@ res_yLQ2 = respull[:,0].tolist()
 pull_yLQ2 = respull[:,1].tolist()
 
 print(res_yLQ2)
-'''
+
 n_bins = 20
 h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
 
@@ -149,11 +149,11 @@ h_pull_yLQ2.Draw()
 if is_vec: 
     h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
-    c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
+    c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
 else: 
     h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
-    c1.Print("%sbias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
+    c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
 
 
 # c2 = TCanvas("c1", "", 900, 900)
@@ -174,11 +174,11 @@ h_res_yLQ2.Draw()
 if is_vec: 
     h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
-    c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
+    c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ, options.yLQ, options.chan, options.q,ending))
 else: 
     h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
     h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
-    c3.Print("%sbias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.yLQ, options.chan, options.q,ending))
+    c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir,options.mLQ, options.yLQ, options.chan, options.q,ending))
 
 
 
