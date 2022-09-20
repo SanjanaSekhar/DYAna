@@ -67,17 +67,17 @@ for mLQ in mLQ_list:
                         h_clone.Write()
                         break
         f.Close()
-	f = ROOT.TFile.Open(fin, "UPDATE")
-	f.cd("LQ")
-	keys = ROOT.gDirectory.GetListOfKeys().Clone()
+    	f = ROOT.TFile.Open(fin, "UPDATE")
+    	f.cd("LQ")
+    	keys = ROOT.gDirectory.GetListOfKeys().Clone()
         for k in keys:
 
             name = k.GetName()
-	    h = ROOT.gDirectory.Get(name)
-	    #for xbin in range(1,h.GetNbinsX()+1):
-	    #	if h.GetBinContent(xbin) < 0.:
-	    #		print("Negative or zero bins in %s"%name)
-	    #		break
+    	    h = ROOT.gDirectory.Get(name)
+    	    #for xbin in range(1,h.GetNbinsX()+1):
+    	    #	if h.GetBinContent(xbin) < 0.:
+    	    #		print("Negative or zero bins in %s"%name)
+    	    #		break
             if ("LQint_d_vec" in name or "LQint_s_vec" in name):
                 print("Flipping ",name)
                 h = ROOT.gDirectory.Get(name)
