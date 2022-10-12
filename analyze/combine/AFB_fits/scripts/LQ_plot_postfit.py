@@ -428,9 +428,9 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-if options.q == "u":
+if options.q == "u" or options.q == "c":
     h_names = ["gam", "LQint_u", "LQpure_u" ,"qcd", "top", "db", "tautau", "dy"]
-elif options.q == "d":
+elif options.q == "d" or options.q == "s":
     h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
 if options.gen_level and options.q == "u":
     h_names = ["LQ", "dy"]

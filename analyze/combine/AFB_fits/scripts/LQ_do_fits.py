@@ -25,9 +25,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["ee","mumu"]:
+    for options.chan in ["ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u","d"]:
+        for options.q in ["s"]:
 
             is_vec = False
 	    #options.gen_level = False
@@ -39,7 +39,7 @@ for y in [-1]:
             if not options.gen_level: options.fake_data=True
             options.no_LQ=False
             options.year = y
-            likelihood_scan = True
+            likelihood_scan = False
 	    if likelihood_scan: ending = "081922"
             '''
             if(options.chan == "ee"):
@@ -80,7 +80,7 @@ for y in [-1]:
             print("\n fit_name = ", fit_name)
 
 
-            for mLQ in [1000,1500]:
+            for mLQ in [1500]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
@@ -88,7 +88,7 @@ for y in [-1]:
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
                 
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
-		'''
+		
                 workspace="workspaces/%s_LQ.root" % (options.chan)
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year, symMCStats = (options.noSymMCStats))
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
@@ -115,9 +115,9 @@ for y in [-1]:
                 print_and_do("""echo ".q" >> cmd.txt """)
                 print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
                 print_and_do("rm -f cards/sed*")
-                if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q))
-                if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
-                '''
+                if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
+                #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
+                
                 if likelihood_scan:
 
                     deltaNLL, yLQ2_list = [],[]
