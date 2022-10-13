@@ -18,15 +18,16 @@ void LQ_sys_check(){
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
     const int num_sys = 6;
-    string sys_array[num_sys] = {"_muIDEND","_muIDBAR","_muIDSYS","_REFAC","_FAC","_muRC"};
-    for(int year = 2017; year <= 2017; year++){
+    string sys_array[num_sys] = {"_REFAC","_FAC"};
+    for(int year = 2016; year <= 2018; year++){
         init(year);
 
-        float m_LQ = 1000.;
+        float m_LQ = 2000.;
         char *plot_dir = "Misc_plots";
+        char *date = "101322";
         //char *sys = "_";
-        bool do_bkg = true;
-	bool do_qcd = true;
+        bool do_bkg = false;
+	bool do_qcd = false;
         bool do_electrons = false;
         bool do_muons = true;
         bool vec = false;
@@ -48,8 +49,8 @@ void LQ_sys_check(){
 
         char mu_fname1[100],  el_fname1[100];
 
-        sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk_fix.png", plot_dir, year, yLQ, sys);
-        sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk_fix.png", plot_dir, year, yLQ, sys);
+        sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys, date);
+        sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys, date);
 
         bool use_xf = false;
 
@@ -165,10 +166,47 @@ void LQ_sys_check(){
 
             sprintf(mu_title, "SM DY + LQ_um + all bkgs  %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
+            TPad *pad1 = new TPad(("p1").c_str(), "pad1", 0.,0.3,0.98,1.);
+            pad1->SetBottomMargin(0);
+            pad1->Draw();
+            pad1->cd();
             h1_mumu_plain->SetTitle(mu_title);
             h1_mumu_plain->Draw("hist");
             h1_mumu_sys_up->Draw("hist same");
             h1_mumu_sys_down->Draw("hist same");
+            TLegend *leg1 = new TLegend(0.15, 0.15);
+            leg1->AddEntry(h1_mumu_plain, "Nominal Template", "l");
+            leg1->AddEntry(h1_mumu_sys_up, "Sys Up Template", "l");
+            leg1->AddEntry(h1_mumu_sys_down, "Sys Down Template", "l");
+
+            c_mumu1->cd();
+            TPad *pad2 = new TPad((title+"p2").c_str(), "pad2", 0.,0,.98,0.3);
+            //pad2->SetTopMargin(0);
+            pad2->SetBottomMargin(0.2);
+            pad2->SetGridy();
+            pad2->Draw();
+            pad2->cd();
+            TH1F *ratio_up, *ratio_down;
+    
+            ratio_up = (TH1F *) h1_mumu_sys_up->Clone("h_ratio_up");
+            ratio_up->Sumw2();
+            ratio_up->SetStats(0);
+            ratio_up->Divide(h1_mumu_plain);
+
+            ratio_down = (TH1F *) h1_mumu_sys_plain->Clone("h_ratio_down");
+            ratio_down->Sumw2();
+            ratio_down->SetStats(0);
+            ratio_down->Divide(h1_mumu_sys_down);
+
+            ratio_up->SetMarkerStyle(21);
+            ratio_up->SetLineColor(kBlue);
+            ratio_up->Draw("ep");
+            ratio_down->SetMarkerStyle(21);
+            ratio_down->SetLineColor(kGreen+3);
+            ratio_down->Draw("ep");
+            
+            c_mumu1->cd();
+
             if(do_bkg){
                 h1_mumu_bkg->Draw("hist same");
                 h1_mumu_bkg_up->Draw("hist same");
@@ -179,10 +217,7 @@ void LQ_sys_check(){
                 h1_mumu_qcd_up->Draw("hist same");
                 h1_mumu_qcd_down->Draw("hist same");
             }
-            TLegend *leg1 = new TLegend(0.15, 0.15);
-            leg1->AddEntry(h1_mumu_plain, "Nominal Template", "l");
-            leg1->AddEntry(h1_mumu_sys_up, "Sys Up Template", "l");
-            leg1->AddEntry(h1_mumu_sys_down, "Sys Down Template", "l");
+            
             if(do_bkg){
                 leg1->AddEntry(h1_mumu_bkg, "Nominal Bkg Template", "l");
                 leg1->AddEntry(h1_mumu_bkg_up, "Sys Up Bkg Template", "l");
