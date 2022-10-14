@@ -3,6 +3,7 @@
 #include "../CMS_lumi.C"
 #include "../../utils/root_files.h"
 #include "../../analyze/combine/LQ_TemplateUtils.h"
+#include "../../utils/PlotUtils.C"
 
 TH3F *h_elel_asym, *h_elel_sym, *h_elel_alpha, *h_elel_LQpure,*h_elel_LQint,*h_elel_back,  *h_elel_dy_gg, *h_elel_data, *h_elel_mc, *h_elel_qcd, *h_elel_gam;
 TH3F *h_elel_mc_count, *h_elel_sym_count;
@@ -17,7 +18,7 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 6;
+    const int num_sys = 2;
     string sys_array[num_sys] = {"_REFAC","_FAC"};
     for(int year = 2016; year <= 2018; year++){
         init(year);
@@ -32,7 +33,7 @@ void LQ_sys_check(){
         bool do_muons = true;
         bool vec = false;
         int flag_q = 2;
-        float yLQ = 1.0;
+        float yLQ = 0.0;
 
         setup_all_SFs(year);
 	for(int i = 0; i< num_sys; i++){
@@ -162,11 +163,12 @@ void LQ_sys_check(){
                 printf("mumu fakes: nom %.0f, up %.0f, down %.0f \n", h_mumu_qcd->Integral(), h_mumu_qcd_up->Integral(), h_mumu_qcd_down->Integral());
                 h1_mumu_qcd->Print("range");
             }
-
+		unzero_bins(h_mumu_plain);
+		unzero_bins(h_mumu_sys_down);
 
             sprintf(mu_title, "SM DY + LQ_um + all bkgs  %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
-            TPad *pad1 = new TPad(("p1").c_str(), "pad1", 0.,0.3,0.98,1.);
+            TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
             pad1->SetBottomMargin(0);
             pad1->Draw();
             pad1->cd();
@@ -180,7 +182,7 @@ void LQ_sys_check(){
             leg1->AddEntry(h1_mumu_sys_down, "Sys Down Template", "l");
 
             c_mumu1->cd();
-            TPad *pad2 = new TPad((title+"p2").c_str(), "pad2", 0.,0,.98,0.3);
+            TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
             //pad2->SetTopMargin(0);
             pad2->SetBottomMargin(0.2);
             pad2->SetGridy();
@@ -193,7 +195,7 @@ void LQ_sys_check(){
             ratio_up->SetStats(0);
             ratio_up->Divide(h1_mumu_plain);
 
-            ratio_down = (TH1F *) h1_mumu_sys_plain->Clone("h_ratio_down");
+            ratio_down = (TH1F *) h1_mumu_plain->Clone("h_ratio_down");
             ratio_down->Sumw2();
             ratio_down->SetStats(0);
             ratio_down->Divide(h1_mumu_sys_down);
