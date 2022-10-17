@@ -2,8 +2,8 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "081922"
-mLQ_list = [2000,2500,3000,3500,4000,4500,5000]
+ext = "101322"
+mLQ_list = [2000,2500]#,3000,3500,4000,4500,5000]
 #mLQ_list = [5500,6000,6500,7000,7500,8000,8500,9000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
@@ -55,14 +55,14 @@ for mLQ in mLQ_list:
 					h_clone = h.Clone(new_name)
 					h_clone.Write()
 					break
-		f.Close()
+		#f.Close()
 		
 		if(year > 2016):
-			f = ROOT.TFile.Open(fin, "UPDATE")
-			f.cd("LQ")
-			keys = ROOT.gDirectory.GetListOfKeys().Clone()
+			#f = ROOT.TFile.Open(fin, "UPDATE")
+			#f.cd("LQ")
+			#keys = ROOT.gDirectory.GetListOfKeys().Clone()
 			for k in keys:
-			
+				name = k.GetName()		
 				for sys_1718 in correlate_1718:
 					if(sys_1718 in name):
 						h = ROOT.gDirectory.Get(name)
@@ -72,7 +72,7 @@ for mLQ in mLQ_list:
 						h_clone = h.Clone(new_name)
 						h_clone.Write()
 						break
-			f.Close()
+		f.Close()
 			
 		f = ROOT.TFile.Open(fin, "UPDATE")
 		f.cd("LQ")

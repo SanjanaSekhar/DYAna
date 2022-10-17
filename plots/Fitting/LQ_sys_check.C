@@ -18,8 +18,8 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 2;
-    string sys_array[num_sys] = {"_REFAC","_FAC"};
+    const int num_sys = 3;
+    string sys_array[num_sys] = {"_REFAC","_FAC","_ptrw7b"};
     for(int year = 2016; year <= 2018; year++){
         init(year);
 
@@ -32,6 +32,8 @@ void LQ_sys_check(){
         bool do_electrons = false;
         bool do_muons = true;
         bool vec = false;
+	bool make_ud = false;
+	if(!make_ud) date = "101322_cs";
         int flag_q = 2;
         float yLQ = 0.0;
 
@@ -96,9 +98,9 @@ void LQ_sys_check(){
 	TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         if(do_muons){
             printf("Making mumu temps \n");
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, "");
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, sys_up);
-            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, use_xf, sys_down);
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS,make_ud,  use_xf, "");
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_up);
+            one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_down);
             TH1F *h1_mumu_plain = convert3d(h_mumu_plain);
             TH1F *h1_mumu_sys_up = convert3d(h_mumu_sys_up);
             TH1F *h1_mumu_sys_down = convert3d(h_mumu_sys_down);
@@ -200,7 +202,7 @@ void LQ_sys_check(){
             ratio_down->SetStats(0);
             ratio_down->Divide(h1_mumu_sys_down);
 
-            ratio_up->SetMarkerStyle(21);
+            //ratio_up->SetMarkerStyle(21);
             ratio_up->SetLineColor(kBlue);
             ratio_up->Draw("ep");
             ratio_down->SetMarkerStyle(21);
@@ -239,9 +241,9 @@ void LQ_sys_check(){
         if(do_electrons){
             printf("Making elel temps \n");
 
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, use_xf, "");
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, use_xf, sys_up);
-            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, use_xf, sys_down);
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, "");
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_up);
+            one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_down);
             TH1F *h1_elel_plain = convert3d(h_elel_plain);
             TH1F *h1_elel_sys_up = convert3d(h_elel_sys_up);
             TH1F *h1_elel_sys_down = convert3d(h_elel_sys_down);

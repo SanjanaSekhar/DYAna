@@ -7,7 +7,7 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-masses=[2000.,2500.,3000.,3500.,4000.,4500.,5000.]
+masses=[2000.,2500.]#,3000.,3500.,4000.,4500.,5000.]
 #masses = [5500.,6000.,6500.,7000.,7500.,8000.,8500.,9000.]
 years = [2016, 2017,2018]
 types = [0, 1]
@@ -15,7 +15,7 @@ labels = ["pdf", "sys"]
 #types = [1]
 #labels = ["sys"]
 njobs = 20
-ending = "081922"
+ending = "101322"
 for mass in masses:
     for year in years:
         for j,ttype in enumerate(types):
