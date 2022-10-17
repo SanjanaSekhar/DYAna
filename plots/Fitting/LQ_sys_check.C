@@ -178,7 +178,9 @@ void LQ_sys_check(){
             h1_mumu_plain->Draw("hist");
             h1_mumu_sys_up->Draw("hist same");
             h1_mumu_sys_down->Draw("hist same");
-            TLegend *leg1 = new TLegend(0.15, 0.15);
+
+            gStyle->SetLegendBorderSize(0);
+            TLegend *leg1 = new TLegend(0.4, 0.15);
             leg1->AddEntry(h1_mumu_plain, "Nominal Template", "l");
             leg1->AddEntry(h1_mumu_sys_up, "Sys Up Template", "l");
             leg1->AddEntry(h1_mumu_sys_down, "Sys Down Template", "l");
@@ -203,11 +205,12 @@ void LQ_sys_check(){
             ratio_down->Divide(h1_mumu_sys_down);
 
             //ratio_up->SetMarkerStyle(21);
+            ratio_up->SetTitle("");
             ratio_up->SetLineColor(kBlue);
             ratio_up->Draw("ep");
-            ratio_down->SetMarkerStyle(21);
+           // ratio_down->SetMarkerStyle(21);
             ratio_down->SetLineColor(kGreen+3);
-            ratio_down->Draw("ep");
+            ratio_down->Draw("ep same");
             
             c_mumu1->cd();
 
