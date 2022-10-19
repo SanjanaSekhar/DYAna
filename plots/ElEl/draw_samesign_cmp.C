@@ -33,10 +33,12 @@ const int type = FLAG_ELECTRONS;
 int year = 2018;
 bool write_out = true;
 //char *plot_dir = "Misc_plots/samesign_cmp_scaled/";
-char *plot_dir = "Paper_plots/prefit_kinematics/";
+char *plot_dir = "Paper_plots/samesign_highmass/";
+//char *plot_dir = "Paper_plots/prefit_kinematics/";
 char *plot_label = "Electrons: Same Sign Control Region";
-char *plot_label_cos = "Electrons: Same Sign Control Region (normalized)";
-bool normalize = true;
+char *plot_label_cos = "Electrons: Same Sign Control Region";
+bool normalize = false;
+float m_low = 500.;
 
 
 void draw_samesign_cmp(){
@@ -94,6 +96,7 @@ void draw_samesign_cmp(){
 
     TH1F * dummy = new TH1F("dummy", "", 100, 0., 100.);
 
+    /*
     back_m->SetFillColor(diboson_c);
     back_cost->SetFillColor(diboson_c);
     back_xf->SetFillColor(diboson_c);
@@ -116,8 +119,31 @@ void draw_samesign_cmp(){
     DY_cost->SetFillColor(DY_c);
     DY_phi->SetFillColor(DY_c);
     DY_rap->SetFillColor(DY_c);
+    */
 
-    float m_low = 150.;
+    back_m->SetFillColor(kGreen+3);
+    back_cost->SetFillColor(kGreen + 3);
+    back_xf->SetFillColor(kGreen+3);
+    back_pt->SetFillColor(kGreen+3);
+    back_phi->SetFillColor(kGreen+3);
+    back_rap->SetFillColor(kGreen+3);
+
+    QCD_xf->SetFillColor(kRed -7);
+    QCD_m->SetFillColor(kRed -7);
+    QCD_cost->SetFillColor(kRed -7);
+    QCD_pt->SetFillColor(kRed -7);
+    QCD_phi->SetFillColor(kRed -7);
+    QCD_rap->SetFillColor(kRed -7);
+
+
+    DY_xf->SetFillColor(kRed+1);
+    DY_pt->SetFillColor(kRed+1);
+    DY_m->SetFillColor(kRed+1);
+    DY_cost->SetFillColor(kRed+1);
+    DY_phi->SetFillColor(kRed+1);
+    DY_rap->SetFillColor(kRed+1);
+
+
     float m_high = 10000.;
     bool ss = true;
 
@@ -126,6 +152,7 @@ void draw_samesign_cmp(){
     make_m_cost_pt_xf_hist(t_elel_ss_wt, back_m, back_cost, back_pt, back_xf, back_phi, back_rap, false, type,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_diboson, back_m, back_cost, back_pt, back_xf, back_phi, back_rap, false, type,   year, m_low, m_high, ss);
     make_m_cost_pt_xf_hist(t_elel_ss_dy, DY_m, DY_cost, DY_pt, DY_xf, DY_phi, DY_rap, false, type,   year, m_low, m_high, ss);
+
 
 
 
@@ -207,6 +234,7 @@ void draw_samesign_cmp(){
     }
 
 
+
     bool scale_error=false;
     float qcd_err = 0.5;
     float back_err = 0.05;
@@ -264,8 +292,11 @@ void draw_samesign_cmp(){
     rap_stack->Add(DY_rap);
 
 
+    float x_size = 0.3;
+    float y_size = 0.2;
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.25, 0.25);
+    TLegend *leg1 = new TLegend(x_size, y_size);
+    leg1->SetNColumns(2);
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(DY_m, "DY (miss-sign)", "f");
     leg1->AddEntry(QCD_m, "QCD + WJets", "f");
@@ -281,7 +312,7 @@ void draw_samesign_cmp(){
     TCanvas *c_m, *c_cost, *c_pt, *c_xf, *c_phi, *c_rap;
     TPad *p_m, *p_cost, *p_pt, *p_xf, *p_phi, *p_rap;
     int iPeriod = 4; 
-    writeExtraText = true;
+    writeExtraText = false;
     char plt_file[100];
     float ratio_range_cos = 0.4;
     float ratio_range = 1.0;
@@ -290,10 +321,25 @@ void draw_samesign_cmp(){
     bool draw_sys_uncs = false;
 
 
+    float x_start_m = 0.625;
+    float y_start_m = 0.5;
+    leg1->SetX1(x_start_m);
+    leg1->SetX2(x_start_m+x_size);
+    leg1->SetY1(y_start_m);
+    leg1->SetY2(y_start_m+y_size);
+
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)","", plot_label, -1., true, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sElEl%i_ss_m_cmp.pdf", plot_dir, year % 2000);
     if(write_out) c_m->Print(plt_file);
+
+
+    float x_start_c = 0.325;
+    float y_start_c = 0.5;
+    leg2->SetX1(x_start_c);
+    leg2->SetX2(x_start_c+x_size);
+    leg2->SetY1(y_start_c);
+    leg2->SetY2(y_start_c+y_size);
 
     
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos(#theta)","", plot_label_cos, -1., false, logx, draw_sys_uncs, ratio_range_cos);

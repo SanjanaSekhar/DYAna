@@ -62,7 +62,7 @@ void cleanup(TH2D *h_rate){
         for (int j=1; j <= nBins_y; j++){
             Double_t r = h_rate->GetBinContent(i,j);
             Double_t r_prev = h_rate->GetBinContent(i, j-1);
-            if(r <=0.01 && r_prev > 2. * r){
+            if(r <=0.005 && r_prev > 2. * r){
                 if (j != 0){
                     printf("Substituting 0 rate with 1 lower pt bin \n");
                     r = h_rate->GetBinContent(i, j-1);
@@ -120,11 +120,14 @@ void SetCorrectedRate(TH2D *h_data_rate, TH2D *h_data_total, TH2D *h_contam_rate
 
 }
 
-void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag = FLAG_MUONS, bool isData = true, int year = 2016, bool mt_cut = true){
-    Double_t mt, pt, eta, gen_weight;
+void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag = FLAG_MUONS, bool isData = true, int year = 2016, bool mt_cut = true, float z_mass_window = -1., float met_cut = 100.){
+    Double_t mt, pt, eta, gen_weight, z_mass, met;
     Bool_t pass;
     Double_t lumi = 0;
     t->SetBranchAddress("mt", &mt);
+    t->SetBranchAddress("met", &met);
+    t->SetBranchAddress("z_mass", &z_mass);
+    z_mass = 0.;
     mt = 0.;
     if(flag == FLAG_MUONS){
         t->SetBranchAddress("mu_pt", &pt);
@@ -149,7 +152,8 @@ void construct_fakerate_template(TH2D *h_rate, TH2D *h_total, TTree *t, int flag
         t->GetEntry(i);
         Double_t fill_weight = 1;
         if(!isData) fill_weight = gen_weight;
-        if(!mt_cut || (mt < 30.)){
+        bool cut = (z_mass_window < 0. || fabs(91.2 - z_mass) < z_mass_window) && (!mt_cut || (mt < 30.)) && (met < met_cut);
+        if(cut){
             h_total->Fill(eta,pt, fill_weight);
             if(pass) h_rate->Fill(eta,pt, fill_weight);
             }
@@ -167,35 +171,39 @@ void make_fakerate_hist(){
 
     bool write_out = true;
     int year = 2018;
-    int FLAG = FLAG_MUONS;
+    int FLAG = FLAG_ELECTRONS;
     int n_pt_bins = 4;
     TFile *f, *f_mc, *f_new; 
     Float_t *pt_bins;
     Float_t eta_bins[] = {0,1.479,2.4};
     int n_eta_bins = 2;
     bool mt_cut = false;
+    float met_cut = 100.;
 
-    char f_plot[100];
+    float z_mass_window = 15.;
+
+    char f_plot[100], f_ewk_plot[100];
 
     if(FLAG == FLAG_ELECTRONS){
         Float_t pt_bins_[] = {10,20,30,50, 100, 1000};
         pt_bins = pt_bins_;
         n_pt_bins = 5;
         sprintf(f_plot, "Paper_plots/El%i_fakerate.pdf", year % 2000);
+        sprintf(f_ewk_plot, "Paper_plots/El%i_ewk_contam_fakerate.pdf", year % 2000);
         if(year == 2018){
-            f = TFile::Open("../analyze/output_files/2018/FakeRate18_el_data_oct26.root");
-            f_mc = TFile::Open("../analyze/output_files/2018/FakeRate18_el_contam_oct26.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2018/FakeRate18_el_data_sep2_2022.root");
+            f_mc = TFile::Open("../analyze/output_files/2018/FakeRate18_el_contam_sep2_2022.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleElectron18_data_fakerate_test.root", "RECREATE");
         }
         else if(year == 2017){
-            f = TFile::Open("../analyze/output_files/2017/FakeRate17_el_data_oct26.root");
-            f_mc = TFile::Open("../analyze/output_files/2017/FakeRate17_el_contam_oct26.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2017/FakeRate17_el_data_sep2_2022.root");
+            f_mc = TFile::Open("../analyze/output_files/2017/FakeRate17_el_contam_sep2_2022.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleElectron17_data_fakerate_test.root", "RECREATE");
         }
         else if(year == 2016){
-            f = TFile::Open("../analyze/output_files/2016/FakeRate16_el_data_oct26.root");
-            f_mc = TFile::Open("../analyze/output_files/2016/FakeRate16_el_contam_oct26.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2016/FakeRate16_el_data_sep2_2022.root");
+            f_mc = TFile::Open("../analyze/output_files/2016/FakeRate16_el_contam_sep2_2022.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleElectron16_data_fakerate_test.root", "RECREATE");
         }
         else{
             printf("Somethign went wrong.. \n");
@@ -208,20 +216,21 @@ void make_fakerate_hist(){
         pt_bins = pt_bins_;
         n_pt_bins = 5;
         sprintf(f_plot, "Paper_plots/Mu%i_fakerate.pdf", year % 2000);
+        sprintf(f_ewk_plot, "Paper_plots/Mu%i_ewk_contam_fakerate.pdf", year % 2000);
         if(year == 2018){
-            f = TFile::Open("../analyze/output_files/2018/FakeRate18_mu_data_oct26.root");
-            f_mc = TFile::Open("../analyze/output_files/2018/FakeRate18_mu_contam_oct26.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2018/FakeRate18_mu_data_sep2_2022.root");
+            f_mc = TFile::Open("../analyze/output_files/2018/FakeRate18_mu_contam_sep2_2022.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2018/SingleMuon18_data_fakerate_test.root", "RECREATE");
         }
         else if(year == 2017){
-            f = TFile::Open("../analyze/output_files/2017/FakeRate17_mu_data_oct26.root");
-            f_mc = TFile::Open("../analyze/output_files/2017/FakeRate17_mu_contam_oct26.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2017/FakeRate17_mu_data_sep2_2022.root");
+            f_mc = TFile::Open("../analyze/output_files/2017/FakeRate17_mu_contam_sep2_2022.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2017/SingleMuon17_data_fakerate_test.root", "RECREATE");
         }
         else if(year == 2016){
-            f = TFile::Open("../analyze/output_files/2016/FakeRate16_mu_data_oct26.root");
-            f_mc = TFile::Open("../analyze/output_files/2016/FakeRate16_mu_contam_oct26.root");
-            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate.root", "RECREATE");
+            f = TFile::Open("../analyze/output_files/2016/FakeRate16_mu_data_sep2_2022.root");
+            f_mc = TFile::Open("../analyze/output_files/2016/FakeRate16_mu_contam_sep2_2022.root");
+            if(write_out) f_new = TFile::Open("../analyze/FakeRate/root_files/2016/SingleMuon16_data_fakerate_test.root", "RECREATE");
         }
         else{
             printf("Somethign went wrong.. \n");
@@ -242,14 +251,20 @@ void make_fakerate_hist(){
 
 
 
-    construct_fakerate_template(h_rate, h_total, t_data, FLAG, true, year, mt_cut);
-    construct_fakerate_template(h_contam_rate, h_contam_total, t_mc, FLAG,  false, year, mt_cut);
+    construct_fakerate_template(h_rate, h_total, t_data, FLAG, true, year, mt_cut, z_mass_window, met_cut);
+    construct_fakerate_template(h_contam_rate, h_contam_total, t_mc, FLAG,  false, year, mt_cut, z_mass_window, met_cut);
+    h_contam_rate->Print("range");
+    h_contam_total->Print("range");
+    //h_contam_total->Scale(0.5);
 
     //TH2D* h_rate = (TH2D *)f->Get("h_rate"); 
     //TH2D* h_total = (TH2D *)f->Get("h_total"); 
 
     TH2D* h_rate_new = (TH2D *)h_rate->Clone("h_rate_new");
     TH2D* h_total_new = (TH2D *)h_total->Clone("h_total_new");
+
+    TH2D* h_ewk_frac = (TH2D *) h_contam_total->Clone("h_ewk_frac");
+    h_ewk_frac->Divide(h_total);
 
 
     /*
@@ -262,7 +277,10 @@ void make_fakerate_hist(){
     */
 
     SetErrors(h_rate_new, h_total_new);
+
     SetCorrectedRate(h_rate_new, h_total_new, h_contam_rate, h_contam_total);
+    printf("Before cleanup\n");
+    h_rate_new->Print("range");
     cleanup(h_rate_new);
 
     h_rate_new->Print("range");
@@ -293,13 +311,16 @@ void make_fakerate_hist(){
     c1->SetLogx();
 
 
+
+
     rate_barrel->SetTitle(title);
     rate_barrel->SetStats(0);
     rate_barrel->SetLineWidth(3);
     rate_barrel ->Draw("E1");
     rate_barrel->GetXaxis()->SetTitle("p_t (Gev)");
     rate_barrel->GetXaxis()->SetRangeUser(10,500);
-    rate_barrel->GetYaxis()->SetRangeUser(0, 0.9);
+    if(FLAG == FLAG_MUONS) rate_barrel->GetYaxis()->SetRangeUser(0, 0.3);
+    else rate_barrel->GetYaxis()->SetRangeUser(0, 0.9);
     c1->Update();
 
     //TCanvas *c2 = new TCanvas("c2", "Histograms", 200, 10, 900, 700);
@@ -320,6 +341,36 @@ void make_fakerate_hist(){
     if(write_out){
         c1->Print(f_plot);
     }
+
+    TH1D *h_ewk_frac_barrel = h_ewk_frac->ProjectionY("ewk_frac_barrel", 1,1, "e");
+    TH1D *h_ewk_frac_endcap = h_ewk_frac->ProjectionY("ewk_frac_endcap", 2,2, "e");
+
+
+    float ymax = std::min(1.0, h_ewk_frac_barrel->GetMaximum() * 2.0);
+    TCanvas *c2 = new TCanvas("c2", "", 900, 700);
+    c2->SetLogx();
+    h_ewk_frac_barrel->SetTitle("");
+    h_ewk_frac_barrel->SetStats(0);
+    h_ewk_frac_barrel->SetLineWidth(3);
+    h_ewk_frac_barrel->SetLineColor(kGreen + 3);
+    h_ewk_frac_barrel->Draw("E1");
+    h_ewk_frac_barrel->GetYaxis()->SetRangeUser(0., 1.0);
+    h_ewk_frac_barrel->GetXaxis()->SetRangeUser(10., 500.);
+    h_ewk_frac_barrel->GetYaxis()->SetTitle("Frac. of Ewk. Contam.");
+    h_ewk_frac_barrel->GetXaxis()->SetTitle("p_t (Gev)");
+
+
+    h_ewk_frac_endcap->SetLineColor(kMagenta+ 3);
+    h_ewk_frac_endcap->Draw("E1 same");
+    h_ewk_frac_endcap->SetLineWidth(3);
+
+    TLegend *leg2 = new TLegend(0.25,0.15);
+    leg2->AddEntry(h_ewk_frac_barrel, "Barrel", "f");
+    leg2->AddEntry(h_ewk_frac_endcap, "Endcap",  "f");
+    leg2->Draw();
+
+    c2->Print(f_ewk_plot);
+
         
     
 

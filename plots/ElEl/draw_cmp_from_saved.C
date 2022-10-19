@@ -315,7 +315,8 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
+    //leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
+    leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg1->SetTextSize(0.058);
 
 
@@ -323,7 +324,8 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
+    //leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
+    leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg2->SetTextSize(0.058);
 
 
@@ -331,7 +333,8 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
+    //leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
+    leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg3->SetTextSize(0.058);
 
     leg1->SetX1NDC(0.7);
