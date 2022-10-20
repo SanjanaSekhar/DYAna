@@ -9,7 +9,7 @@ TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
 
 void set_line_attributes(float ymin, float ymax){
 	
-	line1 = new TLine(8,ymin,8,ymax);
+	    line1 = new TLine(8,ymin,8,ymax);
         line2 = new TLine(14,ymin,14,ymax);
         line3 = new TLine(20,ymin,20,ymax);
         line4 = new TLine(28,ymin,28,ymax);
@@ -18,7 +18,7 @@ void set_line_attributes(float ymin, float ymax){
         line7 = new TLine(48,ymin,48,ymax);
         line8 = new TLine(54,ymin,54,ymax);	
 
-	line1->SetLineColor(kGreen);
+	    line1->SetLineColor(kGreen);
         line2->SetLineColor(kGreen);
         line3->SetLineColor(kOrange);
         line4->SetLineColor(kGreen);
@@ -34,7 +34,7 @@ void set_line_attributes(float ymin, float ymax){
         line5->SetLineStyle(9);
         line6->SetLineStyle(9);
         line7->SetLineStyle(9);
-        line8->SetLineColor(9);
+        line8->SetLineStyle(9);
 
         line1->SetLineWidth(2);
         line2->SetLineWidth(2);
@@ -44,6 +44,15 @@ void set_line_attributes(float ymin, float ymax){
         line6->SetLineWidth(2);
         line7->SetLineWidth(2);
         line8->SetLineWidth(2);
+
+        line1->Draw("same");
+        line2->Draw("same");
+        line3->Draw("same");
+        line4->Draw("same");
+        line5->Draw("same");
+        line6->Draw("same");
+        line7->Draw("same");
+        line8->Draw("same");
 }
 	
 
@@ -73,36 +82,7 @@ void LQ_draw_templates(){
 
         float ymin = 0, ymax = 0;
 
-        //TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
-	/*        
-
-        line1->SetLineColor(kGreen);
-        line2->SetLineColor(kGreen);
-        line3->SetLineColor(kOrange);
-        line4->SetLineColor(kGreen);
-        line5->SetLineColor(kGreen);
-        line6->SetLineColor(kOrange);
-        line7->SetLineColor(kGreen);
-        line8->SetLineColor(kGreen);
-
-        line1->SetLineStyle(9);
-        line2->SetLineStyle(9);
-        line3->SetLineStyle(9);
-        line4->SetLineStyle(9);
-        line5->SetLineStyle(9);
-        line6->SetLineStyle(9);
-        line7->SetLineStyle(9);
-        line8->SetLineColor(9);
-
-        line1->SetLineWidth(2);
-        line2->SetLineWidth(2);
-        line3->SetLineWidth(2);
-        line4->SetLineWidth(2);
-        line5->SetLineWidth(2);
-        line6->SetLineWidth(2);
-        line7->SetLineWidth(2);
-        line8->SetLineWidth(2);
-	*/
+    
         TCanvas *c16_el_lqpall = new TCanvas("c_el_lqpall", "Histograms", 200, 10, 900, 700);
         TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
         TCanvas *c16_el_lqiall = new TCanvas("c_el_lqiall", "Histograms", 200, 10, 900, 700);
@@ -249,14 +229,7 @@ void LQ_draw_templates(){
 	    
 	    
             set_line_attributes(ymin, ymax);
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
@@ -279,14 +252,7 @@ void LQ_draw_templates(){
             ymin = h1_mumu_LQpure_d->GetMinimum();
 
 	    set_line_attributes(ymin, ymax);
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_mumu_LQpure_d,"Pure LQ Template","l");
@@ -306,14 +272,7 @@ void LQ_draw_templates(){
             ymin = h1_mumu_LQpure_u_vec->GetMinimum();
 
 	    set_line_attributes(ymin, ymax);
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_mumu_LQpure_u_vec,"Pure LQ Template","l");
@@ -333,14 +292,7 @@ void LQ_draw_templates(){
             ymin = h1_mumu_LQint_u_vec->GetMinimum();
 
 	    set_line_attributes(ymin, ymax);
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_mumu_LQint_u_vec,"Interference LQ Template","l");
@@ -360,14 +312,7 @@ void LQ_draw_templates(){
             ymin = h1_mumu_LQpure_d_vec->GetMinimum();
 
 	    set_line_attributes(ymin, ymax);
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
             leg5->AddEntry(h1_mumu_LQpure_d_vec,"Pure LQ Template","l");
@@ -387,14 +332,7 @@ void LQ_draw_templates(){
             ymin = h1_mumu_LQint_d_vec->GetMinimum();
 	    set_line_attributes(ymin, ymax);
 
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
             leg6->AddEntry(h1_mumu_LQint_d_vec,"Interference LQ Template","l");
@@ -501,14 +439,7 @@ void LQ_draw_templates(){
             ymin = h1_elel_LQpure_u->GetMinimum();
 	    set_line_attributes(ymin, ymax);
 
-           line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+           
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
@@ -531,14 +462,7 @@ void LQ_draw_templates(){
             ymin = h1_elel_LQpure_d->GetMinimum();
 	    set_line_attributes(ymin, ymax);
 
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_d,"Pure LQ Template","l");
@@ -558,14 +482,7 @@ void LQ_draw_templates(){
             ymin = h1_elel_LQpure_u_vec->GetMinimum();
 	    set_line_attributes(ymin, ymax);
 
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQpure_u_vec,"Pure LQ Template","l");
@@ -585,14 +502,7 @@ void LQ_draw_templates(){
             ymin = h1_elel_LQint_u_vec->GetMinimum();
 	    set_line_attributes(ymin, ymax);
 
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_elel_LQint_u_vec,"Interference LQ Template","l");
@@ -612,14 +522,7 @@ void LQ_draw_templates(){
             ymin = h1_elel_LQpure_d_vec->GetMinimum();
 
 	    set_line_attributes(ymin, ymax);
-            line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+            
 
             TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
             leg5->AddEntry(h1_elel_LQpure_d_vec,"Pure LQ Template","l");
@@ -638,14 +541,7 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQint_d_vec->GetMaximum();
             ymin = h1_elel_LQint_d_vec->GetMinimum();
 	    set_line_attributes(ymin, ymax);	    
-	    line1->Draw("same");
-            line2->Draw("same");
-            line3->Draw("same");
-            line4->Draw("same");
-            line5->Draw("same");
-            line6->Draw("same");
-            line7->Draw("same");
-            line8->Draw("same");
+	    
 
             TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
             leg6->AddEntry(h1_elel_LQint_d_vec,"Interference LQ Template","l");
