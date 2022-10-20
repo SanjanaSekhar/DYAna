@@ -13,7 +13,7 @@ void LQ_draw_templates(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = false;
+        bool draw_electrons = true;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -29,6 +29,34 @@ void LQ_draw_templates(){
        // std::cin >> m_LQ; 
         gStyle->SetOptStat(0);
         gROOT->SetBatch(1);
+
+        float ymin, ymax;
+
+        TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7;
+        line1 = new TLine(8,-50,8,200);
+        line2 = new TLine(14,-50,14,200);
+        line3 = new TLine(20,-50,20,200);
+        line4 = new TLine(28,-50,28,200);
+        line5 = new TLine(34,-50,34,200);
+        line6 = new TLine(40,-50,40,200);
+        line7 = new TLine(48,-50,48,200);
+        
+
+        line1->SetLineColor(kGreen+3);
+        line2->SetLineColor(kGreen+3);
+        line3->SetLineColor(kOrange+3);
+        line4->SetLineColor(kGreen+3);
+        line5->SetLineColor(kGreen+3);
+        line6->SetLineColor(kOrange+3);
+        line7->SetLineColor(kGreen+3);
+
+        line1->SetLineStyle(9);
+        line2->SetLineStyle(9);
+        line3->SetLineStyle(9);
+        line4->SetLineStyle(9);
+        line5->SetLineStyle(9);
+        line6->SetLineStyle(9);
+        line7->SetLineStyle(9);
 
         TCanvas *c16_el_lqpall = new TCanvas("c_el_lqpall", "Histograms", 200, 10, 900, 700);
         TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
@@ -171,6 +199,14 @@ void LQ_draw_templates(){
           // h1_mumu_pl->Draw("hist");
           //  h1_mumu_alpha->Draw("hist same");
             //h1_mumu_mn->Draw("hist same");
+          
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
@@ -189,6 +225,14 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_d->Draw("hist");
             h1_mumu_LQint_d->Draw("hist same");
 
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
+
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_mumu_LQpure_d,"Pure LQ Template","l");
             leg2->AddEntry(h1_mumu_LQint_d,"Interference LQ Template","l");
@@ -202,6 +246,14 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_u_vec->SetTitle(mu_title);
             h1_mumu_LQpure_u_vec->Draw("hist");
             //h1_mumu_LQint_u->Draw("hist same");
+
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_mumu_LQpure_u_vec,"Pure LQ Template","l");
@@ -217,6 +269,14 @@ void LQ_draw_templates(){
             h1_mumu_LQint_u_vec->Draw("hist");
             //h1_mumu_LQint_u->Draw("hist same");
 
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
+
             TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_mumu_LQint_u_vec,"Interference LQ Template","l");
             //leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
@@ -231,6 +291,14 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_d_vec->Draw("hist");
             //h1_mumu_LQint_u->Draw("hist same");
 
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
+
             TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
             leg5->AddEntry(h1_mumu_LQpure_d_vec,"Pure LQ Template","l");
             //leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
@@ -244,6 +312,14 @@ void LQ_draw_templates(){
             h1_mumu_LQint_d_vec->SetTitle(mu_title);
             h1_mumu_LQint_d_vec->Draw("hist");
             //h1_mumu_LQint_u->Draw("hist same");
+
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
 
             TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
             leg6->AddEntry(h1_mumu_LQint_d_vec,"Interference LQ Template","l");
@@ -345,6 +421,13 @@ void LQ_draw_templates(){
           // h1_elel_pl->Draw("hist");
           //  h1_elel_alpha->Draw("hist same");
             //h1_elel_mn->Draw("hist same");
+           line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
             
 
             TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
@@ -363,6 +446,14 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d->Draw("hist");
             h1_elel_LQint_d->Draw("hist same");
 
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
+
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_d,"Pure LQ Template","l");
             leg2->AddEntry(h1_elel_LQint_d,"Interference LQ Template","l");
@@ -376,6 +467,14 @@ void LQ_draw_templates(){
             h1_elel_LQpure_u_vec->SetTitle(el_title);
             h1_elel_LQpure_u_vec->Draw("hist");
             //h1_elel_LQint_u->Draw("hist same");
+
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
 
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQpure_u_vec,"Pure LQ Template","l");
@@ -391,6 +490,14 @@ void LQ_draw_templates(){
             h1_elel_LQint_u_vec->Draw("hist");
             //h1_elel_LQint_u->Draw("hist same");
 
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
+
             TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_elel_LQint_u_vec,"Interference LQ Template","l");
             //leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
@@ -405,6 +512,14 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d_vec->Draw("hist");
             //h1_elel_LQint_u->Draw("hist same");
 
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
+
             TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
             leg5->AddEntry(h1_elel_LQpure_d_vec,"Pure LQ Template","l");
             //leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
@@ -418,6 +533,14 @@ void LQ_draw_templates(){
             h1_elel_LQint_d_vec->SetTitle(el_title);
             h1_elel_LQint_d_vec->Draw("hist");
             //h1_elel_LQint_u->Draw("hist same");
+
+            line1->Draw("same");
+            line2->Draw("same");
+            line3->Draw("same");
+            line4->Draw("same");
+            line5->Draw("same");
+            line6->Draw("same");
+            line7->Draw("same");
 
             TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
             leg6->AddEntry(h1_elel_LQint_d_vec,"Interference LQ Template","l");
