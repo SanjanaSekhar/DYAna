@@ -21,21 +21,24 @@ void LQ_sys_check(){
     const int num_sys = 3;
     string sys_array[num_sys] = {"_REFAC","_FAC","_ptrw7b"};
     for(int year = 2016; year <= 2018; year++){
+	for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
 
         float m_LQ = 2000.;
         char *plot_dir = "Misc_plots";
-        char *date = "101322";
+	char *date;
+        if(flag_q==1) date = "101322_u";
+	else date = "101322_d";
         //char *sys = "_";
         bool do_bkg = false;
 	bool do_qcd = false;
         bool do_electrons = false;
         bool do_muons = true;
         bool vec = false;
-	bool make_ud = false;
-	if(!make_ud) date = "101322_cs";
-        int flag_q = 2;
-        float yLQ = 0.0;
+	bool make_ud = true;
+	if(!make_ud) date = "101322_c";
+        //int flag_q = 2;
+        float yLQ = 1.0;
 
         setup_all_SFs(year);
 	for(int i = 0; i< num_sys; i++){
@@ -180,7 +183,7 @@ void LQ_sys_check(){
             h1_mumu_sys_down->Draw("hist same");
 
             gStyle->SetLegendBorderSize(0);
-            TLegend *leg1 = new TLegend(0.4, 0.15);
+            TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
             leg1->AddEntry(h1_mumu_plain, "Nominal Template", "l");
             leg1->AddEntry(h1_mumu_sys_up, "Sys Up Template", "l");
             leg1->AddEntry(h1_mumu_sys_down, "Sys Down Template", "l");
@@ -199,18 +202,20 @@ void LQ_sys_check(){
             ratio_up->SetStats(0);
             ratio_up->Divide(h1_mumu_plain);
 
-            ratio_down = (TH1F *) h1_mumu_plain->Clone("h_ratio_down");
+            ratio_down = (TH1F *) h1_mumu_sys_down->Clone("h_ratio_down");
             ratio_down->Sumw2();
             ratio_down->SetStats(0);
-            ratio_down->Divide(h1_mumu_sys_down);
+            ratio_down->Divide(h1_mumu_plain);
 
             //ratio_up->SetMarkerStyle(21);
-            ratio_up->SetTitle("");
-            ratio_up->SetLineColor(kBlue);
-            ratio_up->Draw("ep");
-           // ratio_down->SetMarkerStyle(21);
+            ratio_down->SetMinimum(0.94);
+	    ratio_down->SetMaximum(1.06);
+	    ratio_down->SetTitle("");
             ratio_down->SetLineColor(kGreen+3);
-            ratio_down->Draw("ep same");
+            ratio_down->Draw("hist");
+           // ratio_down->SetMarkerStyle(21);
+            ratio_up->SetLineColor(kBlue);
+            ratio_up->Draw("hist same");
             
             c_mumu1->cd();
 
@@ -355,4 +360,4 @@ void LQ_sys_check(){
 
 }
 
-
+}
