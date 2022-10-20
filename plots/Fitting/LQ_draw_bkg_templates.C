@@ -40,7 +40,12 @@ void LQ_draw_bkg_templates(){
     TH1F *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 	TH1F *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 
-	
+	int n_var1_bins = n_y_bins;
+    float *var1_bins = y_bins;
+    if(use_xF){
+        n_var1_bins = n_xf_bins;
+        var1_bins = xf_bins;
+    }	
 	char title[100];
     //titles taken care of in conversion
 
@@ -76,12 +81,6 @@ void LQ_draw_bkg_templates(){
     delete h_elel_qcd, h_mumu_qcd;
 
     bool ss= false;
-    int n_var1_bins = n_y_bins;
-    float *var1_bins = y_bins;
-    if(use_xF){
-        n_var1_bins = n_xf_bins;
-        var1_bins = xf_bins;
-    }
     
    sprintf(title, "mumu%i_top%s", year %2000, sys_label.c_str());
         auto h_mumu_top = new TH3F(title, "Combined background template",
@@ -148,7 +147,7 @@ void LQ_draw_bkg_templates(){
 
 
         TTree *elel_ts[2] = {t_elel_ttbar, t_elel_wt};
-        bool emu_costrw = true;
+         emu_costrw = true;
         gen_combined_background_template(2, elel_ts, h_elel_top, year, FLAG_ELECTRONS, ss, use_xF, emu_costrw, sys_label);
 
         elel_ts[0] = t_elel_diboson;
