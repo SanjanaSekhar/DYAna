@@ -33,14 +33,14 @@ void LQ_draw_templates(){
         float ymin = 0, ymax = 0;
 
         TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
-        line1 = new TLine(8,-50,8,200);
-        line2 = new TLine(14,-50,14,200);
-        line3 = new TLine(20,-50,20,200);
-        line4 = new TLine(28,-50,28,200);
-        line5 = new TLine(34,-50,34,200);
-        line6 = new TLine(40,-50,40,200);
-        line7 = new TLine(48,-50,48,200);
-        line8 = new TLine(54,-50,54,200);
+        line1 = new TLine(8,0,8,0);
+        line2 = new TLine(14,0,14,0);
+        line3 = new TLine(20,0,20,0);
+        line4 = new TLine(28,0,28,0);
+        line5 = new TLine(34,0,34,0);
+        line6 = new TLine(40,0,40,0);
+        line7 = new TLine(48,0,48,0);
+        line8 = new TLine(54,0,54,0);
         
 
         line1->SetLineColor(kGreen);
@@ -60,6 +60,15 @@ void LQ_draw_templates(){
         line6->SetLineStyle(9);
         line7->SetLineStyle(9);
         line8->SetLineColor(9);
+
+        line1->SetLineWidth(2);
+        line2->SetLineWidth(2);
+        line3->SetLineWidth(2);
+        line4->SetLineWidth(2);
+        line5->SetLineWidth(2);
+        line6->SetLineWidth(2);
+        line7->SetLineWidth(2);
+        line8->SetLineWidth(2);
 
         TCanvas *c16_el_lqpall = new TCanvas("c_el_lqpall", "Histograms", 200, 10, 900, 700);
         TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
