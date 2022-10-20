@@ -203,7 +203,7 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_d_vec->SetLineWidth(2);
             h1_mumu_LQint_d_vec->SetLineWidth(2);
          
-            sprintf(mu_title, "Channel : Muons, %i TeV S_{#mu c}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu c}",m_LQ/1000,year);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u->SetTitle(mu_title); 
            h1_mumu_LQpure_u->Draw("hist");
@@ -214,14 +214,14 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_u->GetMaximum();
             ymin = h1_mumu_LQpure_u->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
           
             line1->Draw("same");
             line2->Draw("same");
@@ -243,7 +243,7 @@ void LQ_draw_templates(){
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
             
-            sprintf(mu_title, "Channel : Muons, %i TeV S_{#mu d}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}",m_LQ/1000,year);
             TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_d->SetTitle(mu_title);
             h1_mumu_LQpure_d->Draw("hist");
@@ -252,14 +252,14 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_d->GetMaximum();
             ymin = h1_mumu_LQpure_d->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -278,7 +278,7 @@ void LQ_draw_templates(){
             c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_{#mu u}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
             TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u_vec->SetTitle(mu_title);
             h1_mumu_LQpure_u_vec->Draw("hist");
@@ -287,14 +287,14 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_u_vec->GetMaximum();
             ymin = h1_mumu_LQpure_u_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -313,7 +313,7 @@ void LQ_draw_templates(){
             c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_{#mu u}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
             TCanvas *c_mumu4 = new TCanvas("c_mumu4", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQint_u_vec->SetTitle(mu_title);
             h1_mumu_LQint_u_vec->Draw("hist");
@@ -322,14 +322,14 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQint_u_vec->GetMaximum();
             ymin = h1_mumu_LQint_u_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -348,7 +348,7 @@ void LQ_draw_templates(){
             c_mumu4->Print(mu_fname4);
             delete c_mumu4;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_{#mu d}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
             TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_d_vec->SetTitle(mu_title);
             h1_mumu_LQpure_d_vec->Draw("hist");
@@ -357,14 +357,14 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_d_vec->GetMaximum();
             ymin = h1_mumu_LQpure_d_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -383,7 +383,7 @@ void LQ_draw_templates(){
             c_mumu5->Print(mu_fname5);
             delete c_mumu5;
 
-            sprintf(mu_title, "Channel : Muons, %i TeV V_{#mu d}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
             TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQint_d_vec->SetTitle(mu_title);
             h1_mumu_LQint_d_vec->Draw("hist");
@@ -392,14 +392,14 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQint_d_vec->GetMaximum();
             ymin = h1_mumu_LQint_d_vec->GetMinimum();
 
-            line1->DrawLine(8,-50,8,200);
-            line2->DrawLine(14,-50,14,200);
-            line3->DrawLine(20,-50,20,200);
-            line4->DrawLine(28,-50,28,200);
-            line5->DrawLine(34,-50,34,200);
-            line6->DrawLine(40,-50,40,200);
-            line7->DrawLine(48,-50,48,200);
-            line8->DrawLine(54,-50,54,200);
+            line1 = new TLine(8,-50,8,200);
+            line2 = new TLine(14,-50,14,200);
+            line3 = new TLine(20,-50,20,200);
+            line4 = new TLine(28,-50,28,200);
+            line5 = new TLine(34,-50,34,200);
+            line6 = new TLine(40,-50,40,200);
+            line7 = new TLine(48,-50,48,200);
+            line8 = new TLine(54,-50,54,200);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -502,7 +502,7 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d_vec->SetLineWidth(2);
             h1_elel_LQint_d_vec->SetLineWidth(2);
          
-            sprintf(el_title, "Channel : Electrons, %i TeV S_eu",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %.1f TeV S_eu",m_LQ/1000,year);
             TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_u->SetTitle(el_title); 
            h1_elel_LQpure_u->Draw("hist");
@@ -514,14 +514,14 @@ void LQ_draw_templates(){
            ymax = h1_elel_LQpure_u->GetMaximum();
             ymin = h1_elel_LQpure_u->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
            line1->Draw("same");
             line2->Draw("same");
@@ -543,7 +543,7 @@ void LQ_draw_templates(){
             c_elel1->Print(el_fname1);
             delete c_elel1;
             
-            sprintf(el_title, "Channel : Electrons, %i TeV S_ed",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %.1f TeV S_ed",m_LQ/1000,year);
             TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_d->SetTitle(el_title);
             h1_elel_LQpure_d->Draw("hist");
@@ -552,14 +552,14 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQpure_d->GetMaximum();
             ymin = h1_elel_LQpure_d->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -578,7 +578,7 @@ void LQ_draw_templates(){
             c_elel2->Print(el_fname2);
             delete c_elel2;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_eu",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %.1f TeV V_eu",m_LQ/1000,year);
             TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_u_vec->SetTitle(el_title);
             h1_elel_LQpure_u_vec->Draw("hist");
@@ -587,14 +587,14 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQpure_u_vec->GetMaximum();
             ymin = h1_elel_LQpure_u_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -613,7 +613,7 @@ void LQ_draw_templates(){
             c_elel3->Print(el_fname3);
             delete c_elel3;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_eu",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %.1f TeV V_eu",m_LQ/1000,year);
             TCanvas *c_elel4 = new TCanvas("c_elel4", "Histograms", 200, 10, 900, 700);
             h1_elel_LQint_u_vec->SetTitle(el_title);
             h1_elel_LQint_u_vec->Draw("hist");
@@ -622,14 +622,14 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQint_u_vec->GetMaximum();
             ymin = h1_elel_LQint_u_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -648,7 +648,7 @@ void LQ_draw_templates(){
             c_elel4->Print(el_fname4);
             delete c_elel4;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_ed",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %.1f TeV V_ed",m_LQ/1000,year);
             TCanvas *c_elel5 = new TCanvas("c_elel5", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_d_vec->SetTitle(el_title);
             h1_elel_LQpure_d_vec->Draw("hist");
@@ -657,14 +657,14 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQpure_d_vec->GetMaximum();
             ymin = h1_elel_LQpure_d_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -683,7 +683,7 @@ void LQ_draw_templates(){
             c_elel5->Print(el_fname5);
             delete c_elel5;
 
-            sprintf(el_title, "Channel : Electrons, %i TeV V_ed",m_LQ/1000,year);
+            sprintf(el_title, "Channel : Electrons, %.1f TeV V_ed",m_LQ/1000,year);
             TCanvas *c_elel6 = new TCanvas("c_elel6", "Histograms", 200, 10, 900, 700);
             h1_elel_LQint_d_vec->SetTitle(el_title);
             h1_elel_LQint_d_vec->Draw("hist");
@@ -692,14 +692,14 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQint_d_vec->GetMaximum();
             ymin = h1_elel_LQint_d_vec->GetMinimum();
 
-            line1->DrawLine(8,ymin,8,ymax);
-            line2->DrawLine(14,ymin,14,ymax);
-            line3->DrawLine(20,ymin,20,ymax);
-            line4->DrawLine(28,ymin,28,ymax);
-            line5->DrawLine(34,ymin,34,ymax);
-            line6->DrawLine(40,ymin,40,ymax);
-            line7->DrawLine(48,ymin,48,ymax);
-            line8->DrawLine(54,ymin,54,ymax);
+            line1 = new TLine(8,ymin,8,ymax);
+            line2 = new TLine(14,ymin,14,ymax);
+            line3 = new TLine(20,ymin,20,ymax);
+            line4 = new TLine(28,ymin,28,ymax);
+            line5 = new TLine(34,ymin,34,ymax);
+            line6 = new TLine(40,ymin,40,ymax);
+            line7 = new TLine(48,ymin,48,ymax);
+            line8 = new TLine(54,ymin,54,ymax);
 
             line1->Draw("same");
             line2->Draw("same");
