@@ -71,14 +71,18 @@ def plotLimits(channel):
     if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_081922.png'%(channel,channel))
     else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_081922.png'%(channel,channel))
 
+parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
+parser.add_option("--vec",  default=False, help="is vec?")
+(options, args) = parser.parse_args()
 
-
+mass = options.mLQ
+is_vec = options.vec
 
 extra_params=""
 no_sys=False
 fake_data=True
 year = -1
-is_vec = False
+
 
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
@@ -99,45 +103,49 @@ for channel in ['ue','de','um','dm']:
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
         if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
+    #for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
     
-        workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
-        comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
-        print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
+    workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
+    comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
+    print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
-        if(year > 0): years = [year % 2000]
-        else: years = [16,17,18]
+    if(year > 0): years = [year % 2000]
+    else: years = [16,17,18]
 
-        for yr in years:
-            if(yr == 16):
-                comb_yr = 16
-            else:
-                #some systematics combined between 17 and 18
-                comb_yr = 1718
-            card="cards/combined_fit_y%i_LQ.txt" % (yr)
-            print_and_do("cp %s %s" % (template_card, card))
-            do_lumi(card, yr)
-            print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
-            print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
-            print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
-            if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
-            else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
-            if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
-           # if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
-
-
-        if(year < 0 ):
-            print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
+    for yr in years:
+        if(yr == 16):
+            comb_yr = 16
         else:
-            print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
+            #some systematics combined between 17 and 18
+            comb_yr = 1718
+        card="cards/combined_fit_y%i_LQ.txt" % (yr)
+        print_and_do("cp %s %s" % (template_card, card))
+        do_lumi(card, yr)
+        print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
+        print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+        print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
+        if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
+        else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
+        if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
+       # if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
 
-        
-        print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
-        print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-        print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks" % (comb_card, workspace))
-        print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
-        #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
+
+    if(year < 0 ):
+        print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
+    else:
+        print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
+
+    
+    print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
+    print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
+    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks" % (comb_card, workspace))
+    print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
+    #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
+    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
+
+
+
+    '''    
 	print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
 	print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
     print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
@@ -156,5 +164,5 @@ for channel in ['ue','de','um','dm']:
     print("\n========= making limit plot for channel %s =========\n"%(channel))
     #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
     plotLimits(channel)
-
+    '''
 
