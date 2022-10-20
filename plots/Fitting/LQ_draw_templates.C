@@ -5,6 +5,47 @@
 #include "../../analyze/combine/LQ_TemplateUtils.h"
 #include <iostream>
 
+TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
+
+void set_line_attributes(float ymin, float ymax){
+	
+	line1 = new TLine(8,ymin,8,ymax);
+        line2 = new TLine(14,ymin,14,ymax);
+        line3 = new TLine(20,ymin,20,ymax);
+        line4 = new TLine(28,ymin,28,ymax);
+        line5 = new TLine(34,ymin,34,ymax);
+        line6 = new TLine(40,ymin,40,ymax);
+        line7 = new TLine(48,ymin,48,ymax);
+        line8 = new TLine(54,ymin,54,ymax);	
+
+	line1->SetLineColor(kGreen);
+        line2->SetLineColor(kGreen);
+        line3->SetLineColor(kOrange);
+        line4->SetLineColor(kGreen);
+        line5->SetLineColor(kGreen);
+        line6->SetLineColor(kOrange);
+        line7->SetLineColor(kGreen);
+        line8->SetLineColor(kGreen);
+
+        line1->SetLineStyle(9);
+        line2->SetLineStyle(9);
+        line3->SetLineStyle(9);
+        line4->SetLineStyle(9);
+        line5->SetLineStyle(9);
+        line6->SetLineStyle(9);
+        line7->SetLineStyle(9);
+        line8->SetLineColor(9);
+
+        line1->SetLineWidth(2);
+        line2->SetLineWidth(2);
+        line3->SetLineWidth(2);
+        line4->SetLineWidth(2);
+        line5->SetLineWidth(2);
+        line6->SetLineWidth(2);
+        line7->SetLineWidth(2);
+        line8->SetLineWidth(2);
+}
+	
 
 void LQ_draw_templates(){
 
@@ -32,16 +73,8 @@ void LQ_draw_templates(){
 
         float ymin = 0, ymax = 0;
 
-        TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
-        line1 = new TLine(8,0,8,0);
-        line2 = new TLine(14,0,14,0);
-        line3 = new TLine(20,0,20,0);
-        line4 = new TLine(28,0,28,0);
-        line5 = new TLine(34,0,34,0);
-        line6 = new TLine(40,0,40,0);
-        line7 = new TLine(48,0,48,0);
-        line8 = new TLine(54,0,54,0);
-        
+        //TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
+	/*        
 
         line1->SetLineColor(kGreen);
         line2->SetLineColor(kGreen);
@@ -69,7 +102,7 @@ void LQ_draw_templates(){
         line6->SetLineWidth(2);
         line7->SetLineWidth(2);
         line8->SetLineWidth(2);
-
+	*/
         TCanvas *c16_el_lqpall = new TCanvas("c_el_lqpall", "Histograms", 200, 10, 900, 700);
         TLegend *leg_lqpall = new TLegend(x_start, y_start, x_end, y_end);
         TCanvas *c16_el_lqiall = new TCanvas("c_el_lqiall", "Histograms", 200, 10, 900, 700);
@@ -203,7 +236,7 @@ void LQ_draw_templates(){
             h1_mumu_LQpure_d_vec->SetLineWidth(2);
             h1_mumu_LQint_d_vec->SetLineWidth(2);
          
-            sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu c}",m_LQ/1000,year);
+            sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}",m_LQ/1000,year);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_u->SetTitle(mu_title); 
            h1_mumu_LQpure_u->Draw("hist");
@@ -213,16 +246,9 @@ void LQ_draw_templates(){
             //h1_mumu_mn->Draw("hist same");
             ymax = h1_mumu_LQpure_u->GetMaximum();
             ymin = h1_mumu_LQpure_u->GetMinimum();
-
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-          
+	    
+	    
+            set_line_attributes(ymin, ymax);
             line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
@@ -252,15 +278,7 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_d->GetMaximum();
             ymin = h1_mumu_LQpure_d->GetMinimum();
 
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-
+	    set_line_attributes(ymin, ymax);
             line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
@@ -287,15 +305,7 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_u_vec->GetMaximum();
             ymin = h1_mumu_LQpure_u_vec->GetMinimum();
 
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-
+	    set_line_attributes(ymin, ymax);
             line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
@@ -322,15 +332,7 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQint_u_vec->GetMaximum();
             ymin = h1_mumu_LQint_u_vec->GetMinimum();
 
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-
+	    set_line_attributes(ymin, ymax);
             line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
@@ -357,15 +359,7 @@ void LQ_draw_templates(){
             ymax = h1_mumu_LQpure_d_vec->GetMaximum();
             ymin = h1_mumu_LQpure_d_vec->GetMinimum();
 
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-
+	    set_line_attributes(ymin, ymax);
             line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
@@ -391,15 +385,7 @@ void LQ_draw_templates(){
 
             ymax = h1_mumu_LQint_d_vec->GetMaximum();
             ymin = h1_mumu_LQint_d_vec->GetMinimum();
-
-            line1 = new TLine(8,-50,8,200);
-            line2 = new TLine(14,-50,14,200);
-            line3 = new TLine(20,-50,20,200);
-            line4 = new TLine(28,-50,28,200);
-            line5 = new TLine(34,-50,34,200);
-            line6 = new TLine(40,-50,40,200);
-            line7 = new TLine(48,-50,48,200);
-            line8 = new TLine(54,-50,54,200);
+	    set_line_attributes(ymin, ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -491,7 +477,7 @@ void LQ_draw_templates(){
             h1_elel_LQpure_d_vec->SetLineColor(kBlue);
             h1_elel_LQint_d_vec->SetLineColor(kRed );
 
-
+	    
             
             h1_elel_LQpure_u->SetLineWidth(2);
             h1_elel_LQint_u->SetLineWidth(2);
@@ -513,15 +499,7 @@ void LQ_draw_templates(){
 
            ymax = h1_elel_LQpure_u->GetMaximum();
             ymin = h1_elel_LQpure_u->GetMinimum();
-
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
+	    set_line_attributes(ymin, ymax);
 
            line1->Draw("same");
             line2->Draw("same");
@@ -551,15 +529,7 @@ void LQ_draw_templates(){
 
             ymax = h1_elel_LQpure_d->GetMaximum();
             ymin = h1_elel_LQpure_d->GetMinimum();
-
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
+	    set_line_attributes(ymin, ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -586,15 +556,7 @@ void LQ_draw_templates(){
 
             ymax = h1_elel_LQpure_u_vec->GetMaximum();
             ymin = h1_elel_LQpure_u_vec->GetMinimum();
-
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
+	    set_line_attributes(ymin, ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -621,15 +583,7 @@ void LQ_draw_templates(){
 
             ymax = h1_elel_LQint_u_vec->GetMaximum();
             ymin = h1_elel_LQint_u_vec->GetMinimum();
-
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
+	    set_line_attributes(ymin, ymax);
 
             line1->Draw("same");
             line2->Draw("same");
@@ -657,15 +611,7 @@ void LQ_draw_templates(){
             ymax = h1_elel_LQpure_d_vec->GetMaximum();
             ymin = h1_elel_LQpure_d_vec->GetMinimum();
 
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-
+	    set_line_attributes(ymin, ymax);
             line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
@@ -691,17 +637,8 @@ void LQ_draw_templates(){
 
             ymax = h1_elel_LQint_d_vec->GetMaximum();
             ymin = h1_elel_LQint_d_vec->GetMinimum();
-
-            line1 = new TLine(8,ymin,8,ymax);
-            line2 = new TLine(14,ymin,14,ymax);
-            line3 = new TLine(20,ymin,20,ymax);
-            line4 = new TLine(28,ymin,28,ymax);
-            line5 = new TLine(34,ymin,34,ymax);
-            line6 = new TLine(40,ymin,40,ymax);
-            line7 = new TLine(48,ymin,48,ymax);
-            line8 = new TLine(54,ymin,54,ymax);
-
-            line1->Draw("same");
+	    set_line_attributes(ymin, ymax);	    
+	    line1->Draw("same");
             line2->Draw("same");
             line3->Draw("same");
             line4->Draw("same");
