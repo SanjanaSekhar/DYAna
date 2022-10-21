@@ -99,24 +99,26 @@ TH1F* convert3d(TH3F *h_3d){
   //  float n_binsx_new = n_binsx;
     //merge highest rap bin for high mass templates
     //if(m_low > 550.) n_binsx_new = n_binsx -1;
-
+	int gbin=0;
     int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);  
      //int n_1d_bins = n_m_bins*n_binsx*n_binsy;
    // printf("n_1d_bins = %i\n", n_1d_bins);
   // int gbin = 1;
     TH1F *h_1d = new TH1F(h_3d->GetName(), "",  n_1d_bins, 0, n_1d_bins);
     for(int k=1; k<=n_m_bins; k++){    
-        //if(h_3d->GetXaxis()->GetBinLowEdge(k) == 700.){
+        //printf("mass bin changes at gbin = %i\n",gbin);
+	//if(h_3d->GetXaxis()->GetBinLowEdge(k) == 700.){
           //  n_binsx--;
           //  n_binsy-=1;
         //}
 //	if(h_3d->GetXaxis()->GetBinLowEdge(k) == 800.){ n_binsx--; }
         for(int i=1; i<=n_binsx; i++){
+	  // printf("rap bin changes at gbin = %i\n",gbin);
             for(int j=1; j<= n_binsy; j++){
 
             float content = h_3d->GetBinContent(k,i,j);
             float error = h_3d->GetBinError(k,i,j);
-            int gbin = one_idx(i,j, k, n_binsx, n_binsy);
+             gbin = one_idx(i,j, k, n_binsx, n_binsy);
             
             // printf("(%i,%i,%i) => gbin = %i\n",k,i,j,gbin );
             //add in case previous bin filled

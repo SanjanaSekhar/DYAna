@@ -16,7 +16,7 @@ parser.add_option("-o", "--odir", default="signal_injection/condor/", help = "ou
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("--prefit", default=False, action="store_true", help="Sample toys from prefit uncs")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
-parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
+parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
 
 (options, args) = parser.parse_args()
 
@@ -31,14 +31,14 @@ no_LQ = False
 fake_data = True
 no_sys = False
 year = -1
-ending = "081922"
+ending = "102022"
 
 
 if options.chan=="mumu" and options.q=="d": is_vec = True
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
-'''
+
 workspace = "workspaces/%s_%s_fit_bias_tests.root" % (options.chan, options.q)
 make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
 
@@ -117,7 +117,7 @@ res_yLQ2 = respull[:,0].tolist()
 pull_yLQ2 = respull[:,1].tolist()
 
 print(res_yLQ2)
-
+'''
 n_bins = 20
 h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
 

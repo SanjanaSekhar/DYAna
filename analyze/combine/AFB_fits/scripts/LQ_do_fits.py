@@ -25,9 +25,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["ee","mumu"]:
+    for options.chan in ["mumu","ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["c","s"]:
+        for options.q in ["u","d"]:
 
             is_vec = False
 	    #options.gen_level = False
@@ -76,11 +76,12 @@ for y in [-1]:
             if(options.no_LQ): fit_name+="_noLQ"
 
             if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_SMdata_nlosys"
-
+		
+	    fit_name+="_statuncs"
             print("\n fit_name = ", fit_name)
+	    
 
-
-            for mLQ in [2000,2500]:
+            for mLQ in [2000]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
@@ -95,8 +96,8 @@ for y in [-1]:
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
-                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
+                #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 2000 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):

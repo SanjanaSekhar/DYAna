@@ -18,8 +18,8 @@ void LQ_draw_bkg_templates(){
     char *plot_dir = "AN_plots/Bkg_templates/";
     int i_start = 1; 
     int i_end = 4;
-    float x_start = 0.1;
-    float x_end = 0.3;
+    float x_start = 0.7;
+    float x_end = 0.9;
     float y_start = 0.75;
     float y_end = 0.9;
    
@@ -212,11 +212,11 @@ void LQ_draw_bkg_templates(){
          h1_mumu_gam->Draw("hist same");
 
           TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-            leg1->AddEntry(h1_mumu_top,"t#\bar{t}+tW","l");
+            leg1->AddEntry(h1_mumu_top,"ttbar+tW","l");
             leg1->AddEntry(h1_mumu_qcd,"W+jets+QCD","l");
             leg1->AddEntry(h1_mumu_db,"WW+ZZ+WZ","l");
             leg1->AddEntry(h1_mumu_tautau,"DY #tau#tau","l");
-            leg1->AddEntry(h1_mumu_gam,"#gamma#gamma -> #ell#ell","l");
+            leg1->AddEntry(h1_mumu_gam,"#gamma#gamma -> ll","l");
 
             leg1->Draw();
             
@@ -233,11 +233,11 @@ void LQ_draw_bkg_templates(){
          h1_elel_gam->Draw("hist same");
 
          TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-            leg2->AddEntry(h1_elel_top,"t#\bar{t}+tW","l");
+            leg2->AddEntry(h1_elel_top,"ttbar+tW","l");
             leg2->AddEntry(h1_elel_qcd,"W+jets+QCD","l");
             leg2->AddEntry(h1_elel_db,"WW+ZZ+WZ","l");
             leg2->AddEntry(h1_elel_tautau,"DY #tau#tau","l");
-            leg2->AddEntry(h1_elel_gam,"#gamma#gamma -> #ell#ell","l");
+            leg2->AddEntry(h1_elel_gam,"#gamma#gamma -> ll","l");
 
             leg2->Draw();
             

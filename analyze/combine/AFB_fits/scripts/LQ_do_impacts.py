@@ -17,8 +17,8 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 
 (options, args) = parser.parse_args()
 
-for chan in ["mumu","ee"]:
-    for q in ["u","d","c","s"]:
+for chan in ["ee","mumu"]:
+    for q in ["u","d"]:
 
         options.mLQ = 2000
         fake_data = True
@@ -29,7 +29,7 @@ for chan in ["mumu","ee"]:
 	is_vec = True	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
-	ending="101322"
+	ending="102022"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
@@ -52,7 +52,8 @@ for chan in ["mumu","ee"]:
 
             correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                                "RENORM", "FAC", "REFAC", "alphaS" ]
+                                "RENORM", "FAC", "REFAC", "alphaS"
+			     ]
 
         else:
             all_sys =   [ "muPref","muRC", "Pu",
@@ -70,9 +71,11 @@ for chan in ["mumu","ee"]:
                              "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                              ] 
 
-            correlate_1718 = ["muPref","ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
+            correlate_1718 = ["muPref",
+				"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                                "RENORM", "FAC", "REFAC", "alphaS" ]
+                                "RENORM", "FAC", "REFAC", "alphaS"
+			     ]
 
 
         pars16 = []
@@ -99,7 +102,8 @@ for chan in ["mumu","ee"]:
 
 	if chan=="ee":        pars16.append("prefire16")
 	if chan=="ee":        pars17.append("prefire17")
-        #pars18.append("METHEM18")
+        
+	#pars18.append("METHEM18")
 
 
         par_str = ""

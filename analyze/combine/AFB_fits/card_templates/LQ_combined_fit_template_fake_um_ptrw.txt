@@ -1,0 +1,34 @@
+# Shape-based analysis setup for combined AFB
+#let combine figure this out
+imax * 
+jmax * 
+kmax * 
+-------------------------------------------------------------------------------
+# Next declare how to find the histograms in the file
+-------------------------------------------------------------------------------
+shapes * * LQmMASS_merge_templatesYR_101322.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+
+bin             mumuYR  
+observation     -1         
+-------------------------------------------------------------------------------
+# Add the processes contributing to the data expectation
+bin                      mumuYR  mumuYR  mumuYR  mumuYR   mumuYR  mumuYR   mumuYR 	mumuYR   mumuYR    mumuYR 	 
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_QUARK  LQint_QUARK	
+process                  -2      0       -1      1        4       5        3		2        -3        -4		
+rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
+---------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                  
+                                                                                                                                          
+#pt reweighting                                                                                                                   
+ptrw1bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
+ptrw2bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+ptrw3bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+ptrw5bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+ptrw6bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
+ptrw7bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+
+ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC ptrw4bYRC
+
+* autoMCStats 0 1
+
