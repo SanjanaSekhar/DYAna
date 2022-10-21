@@ -68,15 +68,21 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_081922.png'%(channel,channel))
-    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_081922.png'%(channel,channel))
+    if(is_vec): canv.Print('%s/limits_%s_vec_%s.png'%(options.odir,channel,options.ending))
+    else: canv.Print('%s/limits_%s_%s.png'%(options.odir,channel,options.ending))
 
+parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 parser.add_option("--vec",  default=False, help="is vec?")
+parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
+parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
+parser.add_option("--q",  default="u", help=" channel u,d,c,s ")
+parser.add_option("--ending",  default="102022", help=" date ")
 (options, args) = parser.parse_args()
 
-mass = options.mLQ
+
 is_vec = options.vec
+channel = options.q+options.chan[0]
 
 extra_params=""
 no_sys=False
@@ -87,24 +93,24 @@ year = -1
 print("nosys =%s"%(no_sys))
 #make directory structure: LQ_cards/channel(eu,ed,mu,md)/masses 1000-3500
 
-for channel in ['ue','de','um','dm']:   
+#for channel in ['ue','de','um','dm']:   
 #for channel in ['ce','se','cm','sm']:
 #for channel in ['se','sm']:
-    if channel=='ue' or channel=='ce':
-        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
-        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
-    if channel=='de' or channel=='se':
-        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
-        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
-    if channel=='um' or channel=='cm':
-        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
-        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
-    if channel=='dm' or channel=='sm':
-        if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
-        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
+if channel=='ue' or channel=='ce':
+    if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
+if channel=='de' or channel=='se':
+    if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
+if channel=='um' or channel=='cm':
+    if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
+if channel=='dm' or channel=='sm':
+    if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-    #for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
-    
+for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
+
     workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
     comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
     print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
@@ -145,24 +151,25 @@ for channel in ['ue','de','um','dm']:
 
 
 
-    '''    
-	print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
-	print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
-    print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-    print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
     
-    with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
-        data = json.load(f)
-        for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
-            for lim in data[mass]:
-                yLQ2 = data[mass][lim]
-                data[mass][lim] = sqrt(yLQ2)
-        f.seek(0)        # <--- should reset file position to the beginning.
-        json.dump(data, f, indent=4)
-        f.truncate()     # remove remaining part
-    
-    print("\n========= making limit plot for channel %s =========\n"%(channel))
-    #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
-    plotLimits(channel)
-    '''
+print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
+print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
+print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
+print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
+
+with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
+    data = json.load(f)
+    for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
+        for lim in data[mass]:
+            yLQ2 = data[mass][lim]
+            data[mass][lim] = sqrt(yLQ2)
+    f.seek(0)        # <--- should reset file position to the beginning.
+    json.dump(data, f, indent=4)
+    f.truncate()     # remove remaining part
+
+print_and_do("cp LQ_cards/%s/limit_json/limits_%s.json %s"%(channel,channel,options.odir))
+print("\n========= making limit plot for channel %s =========\n"%(channel))
+#print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
+plotLimits(channel)
+
 
