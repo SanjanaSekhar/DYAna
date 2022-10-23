@@ -4,6 +4,7 @@
 #include "../../utils/root_files.h"
 #include "../../analyze/combine/LQ_TemplateUtils.h"
 #include <iostream>
+#include "../../analyze/combine/LQ_make_templates.C"
 
 
 
@@ -37,6 +38,10 @@ void LQ_draw_bkg_templates(){
     printf("Setting up SFs... ");
     setup_all_SFs(year);
 
+    TH1F *h1_elel_asym, *h1_elel_sym; 
+    TH1F *h1_mumu_asym, *h1_mumu_sym; 
+    TH1F *h1_elel_pl, *h1_elel_mn, *h1_elel_alpha;
+    TH1F *h1_mumu_pl, *h1_mumu_mn, *h1_mumu_alpha;
     TH1F *h1_elel_db, *h1_elel_top,  *h1_elel_tautau, *h1_elel_data, *h1_elel_mc, *h1_elel_qcd, *h1_elel_gam;
 	TH1F *h1_mumu_db, *h1_mumu_top, *h1_mumu_tautau, *h1_mumu_data, *h1_mumu_mc, *h1_mumu_qcd, *h1_mumu_gam;
 
@@ -243,5 +248,94 @@ void LQ_draw_bkg_templates(){
             
             c_elel1->Print(el_fname1);
             delete c_elel1;
+
+
+
+        printf("making muon mc templates \n");
+        sprintf(title, "mumu%i_sym%s", year %2000, sys_label.c_str());
+        auto h_mumu_sym = new TH3F(title, "Symmetric template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_sym->SetDirectory(0);
+        sprintf(title, "mumu%i_alpha%s", year %2000, sys_label.c_str());
+        auto h_mumu_alpha = new TH3F(title, "Gauge boson polarization template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_alpha->SetDirectory(0);
+        sprintf(title, "mumu%i_asym%s", year %2000, sys_label.c_str());
+        auto h_mumu_asym = new TH3F(title, "Asymmetric template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_mumu_asym->SetDirectory(0);
 		}
+
+        printf("Making mumu mc \n");
+        //gen_mc_template includes m_LQ
+        gen_mc_SM_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, FLAG_MUONS, use_xF, sys_label );
+        
+        h1_mumu_sym = convert3d(h_mumu_sym);
+        h1_mumu_asym = convert3d(h_mumu_asym);
+        h1_mumu_alpha = convert3d(h_mumu_alpha);
+
+        printf("making electron mc templates \n");
+        sprintf(title, "ee%i_sym%s", year %2000, sys_label.c_str());
+        auto h_elel_sym = new TH3F(title, "Symmetric template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_sym->SetDirectory(0);
+        sprintf(title, "ee%i_alpha%s", year %2000, sys_label.c_str());
+        auto h_elel_alpha = new TH3F(title, "Gauge boson polarization template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_alpha->SetDirectory(0);
+        sprintf(title, "ee%i_asym%s", year %2000, sys_label.c_str());
+        auto h_elel_asym = new TH3F(title, "Asymmetric template of mc",
+                 n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+        h_elel_asym->SetDirectory(0);
+
+        printf("starting elel dy \n");
+        //gen_mc_template includes m_LQ
+        gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
+        
+        h1_elel_sym = convert3d(h_elel_sym);
+        h1_elel_asym = convert3d(h_elel_asym);
+        h1_elel_alpha = convert3d(h_elel_alpha);
+
+        convert_mc_templates(year, sys_label);
+
+        //char mu_title[100], el_title[100];
+        char mu_fname2[100], el_fname2[100];
+        sprintf(mu_fname1, "%s/Mu%i_DYbkgs.png", plot_dir, year%2000);
+        sprintf(el_fname1, "%s/El%i_DYbkgs.png", plot_dir, year%2000);
+
+        sprintf(el_title, "Channel : Electrons; DY background");
+        TCanvas *c_elel2 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
+         h1_elel_pl->SetTitle(el_title);
+         h1_elel_pl->Draw("hist");
+         h1_elel_mn->Draw("hist same");
+         h1_elel_alpha->Draw("hist same");
+         
+
+         TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
+            leg3->AddEntry(h1_elel_pl,"f_{+} template","l");
+            leg3->AddEntry(h1_elel_mn,"f_{-} template","l");
+            leg3->AddEntry(h1_elel_alpha,"f_{#alpha} template","l");
+
+            leg3->Draw();
+            
+            c_elel2->Print(el_fname2);
+            delete c_elel2;
+
+            sprintf(mu_title, "Channel : Muons; DY background");
+        TCanvas *c_mumu2 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
+         h1_mumu_pl->SetTitle(mu_title);
+         h1_mumu_pl->Draw("hist");
+         h1_mumu_mn->Draw("hist same");
+         h1_mumu_alpha->Draw("hist same");
+         
+
+         TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
+            leg4->AddEntry(h1_mumu_pl,"f_{+} template","l");
+            leg4->AddEntry(h1_mumu_mn,"f_{-} template","l");
+            leg4->AddEntry(h1_mumu_alpha,"f_{#alpha} template","l");
+
+            leg4->Draw();
+            
+            c_mumu2->Print(mu_fname2);
+            delete c_mumu2;
 }
