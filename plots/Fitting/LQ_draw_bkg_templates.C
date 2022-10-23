@@ -4,7 +4,7 @@
 #include "../../utils/root_files.h"
 #include "../../analyze/combine/LQ_TemplateUtils.h"
 #include <iostream>
-#include "../../analyze/combine/LQ_make_templates.C"
+
 
 
 
@@ -264,7 +264,7 @@ void LQ_draw_bkg_templates(){
         auto h_mumu_asym = new TH3F(title, "Asymmetric template of mc",
                  n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
         h_mumu_asym->SetDirectory(0);
-		}
+		
 
         printf("Making mumu mc \n");
         //gen_mc_template includes m_LQ
@@ -296,7 +296,62 @@ void LQ_draw_bkg_templates(){
         h1_elel_asym = convert3d(h_elel_asym);
         h1_elel_alpha = convert3d(h_elel_alpha);
 
-        convert_mc_templates(year, sys_label);
+        int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
+  
+
+        char title[100];
+        sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
+        h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+        h1_mumu_pl->SetDirectory(0);
+        sprintf(title, "mumu%i_fmn%s", year%2000, sys_label.c_str());
+        h1_mumu_mn = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+        h1_mumu_mn->SetDirectory(0);
+        make_pl_mn_templates(h1_mumu_sym, h1_mumu_asym, h1_mumu_pl, h1_mumu_mn);
+
+
+        h1_mumu_sym->Reset();
+        h1_mumu_asym->Reset();
+
+
+
+        char title[100];
+        sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
+        h1_elel_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+        h1_elel_pl->SetDirectory(0);
+        sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
+        h1_elel_mn = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
+        h1_elel_mn->SetDirectory(0);
+        make_pl_mn_templates(h1_elel_sym, h1_elel_asym, h1_elel_pl, h1_elel_mn);
+
+        sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
+        h1_elel_pl->SetName(title);
+        sprintf(title, "ee%i_fmn%s", year%2000, sys_label.c_str());
+        h1_elel_mn->SetName(title);
+
+        h1_elel_sym->Reset();
+        h1_elel_asym->Reset();
+
+        h1_mumu_pl->SetLineWidth(2);
+        h1_mumu_mn->SetLineWidth(2);
+        h1_mumu_alpha->SetLineWidth(2);
+        //h1_mumu_tautau->SetLineWidth(2);
+        //h1_mumu_gam->SetLineWidth(2);
+
+        h1_mumu_pl->SetLineColor(kRed);
+        h1_mumu_mn->SetLineColor(kBlue);
+        h1_mumu_alpha->SetLineColor(kGreen);
+        //h1_mumu_tautau->SetLineColor(kOrange);
+        //h1_mumu_gam->SetLineColor(kYellow);
+
+        h1_elel_pl->SetLineWidth(2);
+        h1_elel_mn->SetLineWidth(2);
+        h1_elel_alpha->SetLineWidth(2);
+        //h1_elel_tautau->SetLineWidth(2);
+        //h1_elel_gam->SetLineWidth(2);
+
+        h1_elel_pl->SetLineColor(kRed);
+        h1_elel_mn->SetLineColor(kBlue);
+        h1_elel_alpha->SetLineColor(kGreen);
 
         //char mu_title[100], el_title[100];
         char mu_fname2[100], el_fname2[100];
@@ -338,4 +393,5 @@ void LQ_draw_bkg_templates(){
             
             c_mumu2->Print(mu_fname2);
             delete c_mumu2;
+}
 }
