@@ -29,9 +29,9 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2016;
+int year = 2018;
 const bool write_out = true;
-char *plot_dir = "Paper_plots/EMu_plots/";
+char *plot_dir = "AN_plots/";
 //char *plot_label = "e#mu Control Region";
 char *plot_label = "";
 
@@ -48,10 +48,10 @@ void draw_cmp(){
     init_emu_indv_bkgs(year);
     setup_all_SFs(year);
 
-    int n_m_bins = 8;
+    int n_m_bins = 2;
     float mbin_base = 10.;
-    Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 500., 700., 1000.};
-
+    //Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 500., 700., 1000.};
+    Float_t mbins1[] = {500., 700., 1000.};	
     TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
     TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
     TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
@@ -90,7 +90,7 @@ void draw_cmp(){
 
     TH1F *h_dummy = new TH1F("h_dummy", "", 100, 0, 100.);
 
-    Double_t m_low = 170;
+    Double_t m_low = 500;
     Double_t m_high = 10000;
 
     bool ss = false;

@@ -32,11 +32,14 @@ const int type = FLAG_MUONS;
 
 void draw_pileup(){
     setTDRStyle();
-    int year = 2017;
+    for(int year = 2016; year<=2018; year++){
 
     init(year);
     init_indv_bkgs(year);
 
+    char mu_fname1[100], mu_fname2[100];
+    sprintf(mu_fname1,"AN_plots/Mu%i_pileup_before.png",year-2000);
+    sprintf(mu_fname2,"AN_plots/Mu%i_pileup_after.png",year-2000);
     TFile *f7;
 
     if(year == 2016) f7 = TFile::Open("../analyze/SFs/2016/Data16PileupHistogram_69200.root");
@@ -205,6 +208,7 @@ void draw_pileup(){
     writeExtraText = false;
     CMS_lumi(before_pad1, year, 33 );
     c_pu_before->Update();
+    c_pu_before->Print(mu_fname1);
 
     TCanvas *c_pu_after = new TCanvas("c_pu_after", "Histograms", 200, 10, 900, 700);
     c_pu_after->cd();
@@ -277,9 +281,10 @@ void draw_pileup(){
    after_ratio->GetXaxis()->SetTitleOffset(3.);
    after_ratio->GetXaxis()->SetLabelFont(43); // Absolute font size in pixel (precision 3)
    after_ratio->GetXaxis()->SetLabelSize(20);
+	c_pu_after->Update();
+	c_pu_after->Print(mu_fname2);
 
-
-
+	}
 }
 
 

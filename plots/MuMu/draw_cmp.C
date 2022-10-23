@@ -31,8 +31,8 @@
 
 
 const int type = FLAG_MUONS;
-const int year = 2018;
-<<<<<<< HEAD
+//const int year = 2016;
+
 const bool write_out = true;
 char *plot_dir = "AN_plots/prefit_kinematics/";
 
@@ -47,7 +47,7 @@ char *plot_label = "";
 void draw_cmp(){
 
 
-    
+for(int year = 2016; year<=2018; year++){    
     setTDRStyle();
     init(year);
     init_indv_bkgs(year);
@@ -76,9 +76,10 @@ void draw_cmp(){
     TH1F *QCD_xf = new TH1F("QCD_xf", "dy signal", n_xf_bins1,  xf_bins1);
     TH1F *gg_xf = new TH1F("gg_xf", "dy signal", n_xf_bins1,  xf_bins1);
 
-    int n_m_bins = 17;
+    int n_m_bins = 10;
     float mbin_base = 10.;
-    Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 450., 500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
+    //Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 450., 500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
+    Float_t mbins1[] = {500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
     TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, mbins1);
     TH1F *dy_m = new TH1F("dy_m", "dy Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
     TH1F *dy_tautau_m = new TH1F("dy_tautau_m", "dy no signal (qq, gluglu qbarqbar)", n_m_bins, mbins1);
@@ -430,6 +431,6 @@ void draw_cmp(){
 
 
 }
-
+}
     
     

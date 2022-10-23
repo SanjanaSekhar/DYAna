@@ -40,7 +40,8 @@ void draw_phot_3sep_parts(){
     const int type = FLAG_MUONS;
     const int year = 2016;
     const bool write_out = true;
-    char *plot_dir = "Misc_plots/photon_bkg/";
+    //char *plot_dir = "Misc_plots/photon_bkg/";
+    char *plot_dir = "AN_plots/";
     char *file_label = "LPair_3sep";
     char *plt_label = "";
 
@@ -74,8 +75,8 @@ void draw_phot_3sep_parts(){
     TTree *t3 = (TTree *) f3->Get("T_sig");
 
     int n_m_bins = 61;
-    float m_bin_size = 30.;
-	float m_bin_low = 170.;
+    float m_bin_size = 20.;
+	float m_bin_low = 500.;
 	float m_bin_high = m_bin_low + n_m_bins*m_bin_size;
     TH1F *m1 = new TH1F("m1", "LPair Elastic", n_m_bins, m_bin_low, m_bin_high);
     TH1F *m2 = new TH1F("m2", "LPair Semi-Inelastic", n_m_bins, m_bin_low, m_bin_high);

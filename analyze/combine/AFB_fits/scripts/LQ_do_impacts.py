@@ -18,7 +18,7 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 (options, args) = parser.parse_args()
 
 for chan in ["ee","mumu"]:
-    for q in ["u","d"]:
+    for q in ["s"]:
 
         options.mLQ = 2000
         fake_data = True
@@ -26,7 +26,7 @@ for chan in ["ee","mumu"]:
         gen_level = False
         no_LQ = False
         year = -1
-	is_vec = True	
+	is_vec = False	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
 	ending="102022"
