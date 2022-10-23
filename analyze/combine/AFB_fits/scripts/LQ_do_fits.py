@@ -29,7 +29,7 @@ for y in [-1]:
     #for options.chan in ["ee"]:
         for options.q in ["u","d"]:
 
-            is_vec = False
+            is_vec = True
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
@@ -77,7 +77,7 @@ for y in [-1]:
 
             if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_SMdata_nlosys"
 		
-	    fit_name+="_statuncs"
+	    fit_name+="_vec"
             print("\n fit_name = ", fit_name)
 	    
 
@@ -96,8 +96,8 @@ for y in [-1]:
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
-                #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 2000 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
