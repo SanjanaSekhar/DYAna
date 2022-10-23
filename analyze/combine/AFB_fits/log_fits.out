@@ -4,244 +4,244 @@ Analysing bin errors for: prop_binY16
 Poisson cut-off: 0
 ============================================================
 Bin        Contents        Error           Notes                         
-0          197.212070      6.292381        total sum                     
-0          982.000000      31.336879       Unweighted events, alpha=0.200827
+0          197.411848      6.292295        total sum                     
+0          984.000000      31.368774       Unweighted events, alpha=0.200622
   => Total parameter prop_binY16_bin0[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-1          109.967329      4.150192        total sum                     
-1          702.000000      26.495283       Unweighted events, alpha=0.156649
+1          110.182456      4.150078        total sum                     
+1          705.000000      26.551836       Unweighted events, alpha=0.156287
   => Total parameter prop_binY16_bin1[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-2          86.403128       3.523317        total sum                     
-2          601.000000      24.515301       Unweighted events, alpha=0.143766
+2          86.552414       3.523234        total sum                     
+2          603.000000      24.556058       Unweighted events, alpha=0.143536
   => Total parameter prop_binY16_bin2[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-3          76.087381       3.125985        total sum                     
-3          592.000000      24.331050       Unweighted events, alpha=0.128526
+3          76.234547       3.125924        total sum                     
+3          595.000000      24.392622       Unweighted events, alpha=0.128125
   => Total parameter prop_binY16_bin3[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-4          78.649814       3.036342        total sum                     
-4          671.000000      25.903668       Unweighted events, alpha=0.117213
+4          78.796034       3.036276        total sum                     
+4          673.000000      25.942244       Unweighted events, alpha=0.117082
   => Total parameter prop_binY16_bin4[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-5          101.566540      3.646419        total sum                     
-5          776.000000      27.856777       Unweighted events, alpha=0.130885
+5          101.705988      3.646339        total sum                     
+5          778.000000      27.892651       Unweighted events, alpha=0.130727
   => Total parameter prop_binY16_bin5[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-6          133.500923      4.244796        total sum                     
-6          989.000000      31.448370       Unweighted events, alpha=0.134986
+6          133.692760      4.244689        total sum                     
+6          992.000000      31.496031       Unweighted events, alpha=0.134771
   => Total parameter prop_binY16_bin6[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-7          226.683049      6.101306        total sum                     
-7          1380.000000     37.148351       Unweighted events, alpha=0.164263
+7          226.881730      6.101205        total sum                     
+7          1383.000000     37.188708       Unweighted events, alpha=0.164050
   => Total parameter prop_binY16_bin7[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-8          123.799819      5.051384        total sum                     
-8          601.000000      24.515301       Unweighted events, alpha=0.205990
+8          123.951816      5.051310        total sum                     
+8          602.000000      24.535688       Unweighted events, alpha=0.205900
   => Total parameter prop_binY16_bin8[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-9          46.514229       2.728592        total sum                     
-9          291.000000      17.058722       Unweighted events, alpha=0.159843
+9          46.601989       2.728540        total sum                     
+9          292.000000      17.088007       Unweighted events, alpha=0.159596
   => Total parameter prop_binY16_bin9[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-10         44.495091       2.499134        total sum                     
-10         317.000000      17.804494       Unweighted events, alpha=0.140363
+10         44.570055       2.499101        total sum                     
+10         318.000000      17.832555       Unweighted events, alpha=0.140157
   => Total parameter prop_binY16_bin10[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-11         54.095457       2.632693        total sum                     
-11         422.000000      20.542639       Unweighted events, alpha=0.128188
+11         54.183829       2.632649        total sum                     
+11         424.000000      20.591260       Unweighted events, alpha=0.127792
   => Total parameter prop_binY16_bin11[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-12         70.641917       2.832171        total sum                     
-12         622.000000      24.939928       Unweighted events, alpha=0.113572
+12         70.761223       2.832083        total sum                     
+12         624.000000      24.979992       Unweighted events, alpha=0.113399
   => Total parameter prop_binY16_bin12[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-13         208.855897      5.337634        total sum                     
-13         1531.000000     39.127995       Unweighted events, alpha=0.136418
+13         209.101208      5.337529        total sum                     
+13         1535.000000     39.179076       Unweighted events, alpha=0.136222
   => Total parameter prop_binY16_bin13[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-14         72.829275       4.076598        total sum                     
-14         319.000000      17.860571       Unweighted events, alpha=0.228305
+14         72.932187       4.076535        total sum                     
+14         320.000000      17.888544       Unweighted events, alpha=0.227913
   => Total parameter prop_binY16_bin14[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-15         70.132003       3.547724        total sum                     
-15         391.000000      19.773720       Unweighted events, alpha=0.179366
+15         70.248436       3.547660        total sum                     
+15         392.000000      19.798990       Unweighted events, alpha=0.179205
   => Total parameter prop_binY16_bin15[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-16         96.798306       3.318131        total sum                     
-16         851.000000      29.171904       Unweighted events, alpha=0.113747
+16         96.886455       3.318094        total sum                     
+16         853.000000      29.206164       Unweighted events, alpha=0.113583
   => Total parameter prop_binY16_bin16[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-17         129.452758      3.433783        total sum                     
-17         1421.000000     37.696154       Unweighted events, alpha=0.091100
+17         129.559794      3.433727        total sum                     
+17         1424.000000     37.735925       Unweighted events, alpha=0.090983
   => Total parameter prop_binY16_bin17[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-18         145.747319      3.595352        total sum                     
-18         1643.000000     40.533936       Unweighted events, alpha=0.088708
+18         145.889998      3.595286        total sum                     
+18         1647.000000     40.583248       Unweighted events, alpha=0.088579
   => Total parameter prop_binY16_bin18[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-19         186.702522      4.538096        total sum                     
-19         1693.000000     41.146081       Unweighted events, alpha=0.110279
+19         186.814309      4.538023        total sum                     
+19         1695.000000     41.170378       Unweighted events, alpha=0.110215
   => Total parameter prop_binY16_bin19[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-20         51.055600       2.749029        total sum                     
-20         345.000000      18.574176       Unweighted events, alpha=0.147987
+20         51.139883       2.749001        total sum                     
+20         346.000000      18.601075       Unweighted events, alpha=0.147803
   => Total parameter prop_binY16_bin20[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-21         29.656738       1.474409        total sum                     
-21         405.000000      20.124612       Unweighted events, alpha=0.073227
+21         29.748494       1.474365        total sum                     
+21         407.000000      20.174241       Unweighted events, alpha=0.073092
   => Total parameter prop_binY16_bin21[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-22         21.634746       1.016945        total sum                     
-22         453.000000      21.283797       Unweighted events, alpha=0.047759
+22         21.698239       1.016897        total sum                     
+22         455.000000      21.330729       Unweighted events, alpha=0.047688
   => Total parameter prop_binY16_bin22[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-23         21.236779       0.884760        total sum                     
-23         576.000000      24.000000       Unweighted events, alpha=0.036869
+23         21.288194       0.884731        total sum                     
+23         579.000000      24.062419       Unweighted events, alpha=0.036767
   => Total parameter prop_binY16_bin23[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-24         23.182070       0.880285        total sum                     
-24         694.000000      26.343880       Unweighted events, alpha=0.033404
+24         23.234452       0.880257        total sum                     
+24         697.000000      26.400758       Unweighted events, alpha=0.033335
   => Total parameter prop_binY16_bin24[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-25         27.514401       1.019361        total sum                     
-25         729.000000      27.000000       Unweighted events, alpha=0.037743
+25         27.585725       1.019295        total sum                     
+25         732.000000      27.055499       Unweighted events, alpha=0.037685
   => Total parameter prop_binY16_bin25[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-26         40.292147       1.773102        total sum                     
-26         516.000000      22.715633       Unweighted events, alpha=0.078086
+26         40.378059       1.773058        total sum                     
+26         519.000000      22.781571       Unweighted events, alpha=0.077800
   => Total parameter prop_binY16_bin26[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-27         64.414251       2.896235        total sum                     
-27         495.000000      22.248595       Unweighted events, alpha=0.130130
+27         64.516259       2.896206        total sum                     
+27         496.000000      22.271057       Unweighted events, alpha=0.130073
   => Total parameter prop_binY16_bin27[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-28         27.362049       1.647130        total sum                     
-28         276.000000      16.613248       Unweighted events, alpha=0.099138
+28         27.434532       1.647094        total sum                     
+28         277.000000      16.643317       Unweighted events, alpha=0.099042
   => Total parameter prop_binY16_bin28[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-29         11.471321       0.610842        total sum                     
-29         353.000000      18.788294       Unweighted events, alpha=0.032497
+29         11.499417       0.610811        total sum                     
+29         354.000000      18.814888       Unweighted events, alpha=0.032484
   => Total parameter prop_binY16_bin29[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-30         12.936112       0.573666        total sum                     
-30         508.000000      22.538855       Unweighted events, alpha=0.025465
+30         12.966700       0.573643        total sum                     
+30         511.000000      22.605309       Unweighted events, alpha=0.025375
   => Total parameter prop_binY16_bin30[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-31         16.510534       0.796964        total sum                     
-31         429.000000      20.712315       Unweighted events, alpha=0.038486
+31         16.541404       0.796944        total sum                     
+31         431.000000      20.760539       Unweighted events, alpha=0.038379
   => Total parameter prop_binY16_bin31[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-32         21.067789       0.857704        total sum                     
-32         603.000000      24.556058       Unweighted events, alpha=0.034938
+32         21.106668       0.857661        total sum                     
+32         606.000000      24.617067       Unweighted events, alpha=0.034829
   => Total parameter prop_binY16_bin32[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-33         55.150907       1.687865        total sum                     
-33         1068.000000     32.680269       Unweighted events, alpha=0.051639
+33         55.239986       1.687818        total sum                     
+33         1071.000000     32.726136       Unweighted events, alpha=0.051578
   => Total parameter prop_binY16_bin33[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-34         17.218303       1.584890        total sum                     
-34         118.000000      10.862780       Unweighted events, alpha=0.145918
+34         17.265842       1.584861        total sum                     
+34         119.000000      10.908712       Unweighted events, alpha=0.145091
   => Total parameter prop_binY16_bin34[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-35         16.417205       1.019708        total sum                     
-35         259.000000      16.093477       Unweighted events, alpha=0.063387
+35         16.440995       1.019690        total sum                     
+35         260.000000      16.124515       Unweighted events, alpha=0.063235
   => Total parameter prop_binY16_bin35[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-36         22.280698       0.790225        total sum                     
-36         795.000000      28.195744       Unweighted events, alpha=0.028026
+36         22.316151       0.790198        total sum                     
+36         798.000000      28.248894       Unweighted events, alpha=0.027965
   => Total parameter prop_binY16_bin36[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-37         30.398801       0.804022        total sum                     
-37         1429.000000     37.802116       Unweighted events, alpha=0.021273
+37         30.438710       0.803980        total sum                     
+37         1433.000000     37.854986       Unweighted events, alpha=0.021241
   => Total parameter prop_binY16_bin37[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-38         38.849394       1.035663        total sum                     
-38         1407.000000     37.509999       Unweighted events, alpha=0.027612
+38         38.886165       1.035637        total sum                     
+38         1410.000000     37.549967       Unweighted events, alpha=0.027579
   => Total parameter prop_binY16_bin38[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-39         50.847721       1.437535        total sum                     
-39         1251.000000     35.369478       Unweighted events, alpha=0.040646
+39         50.901792       1.437500        total sum                     
+39         1254.000000     35.411862       Unweighted events, alpha=0.040592
   => Total parameter prop_binY16_bin39[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-40         13.800116       1.128001        total sum                     
-40         150.000000      12.247449       Unweighted events, alpha=0.092001
+40         13.861534       1.127947        total sum                     
+40         151.000000      12.288206       Unweighted events, alpha=0.091798
   => Total parameter prop_binY16_bin40[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-41         9.973797        0.557605        total sum                     
-41         320.000000      17.888544       Unweighted events, alpha=0.031168
+41         10.018969       0.557533        total sum                     
+41         323.000000      17.972201       Unweighted events, alpha=0.031018
   => Total parameter prop_binY16_bin41[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-42         7.585669        0.309578        total sum                     
-42         600.000000      24.494897       Unweighted events, alpha=0.012643
+42         7.624117        0.309504        total sum                     
+42         607.000000      24.637370       Unweighted events, alpha=0.012560
   => Total parameter prop_binY16_bin42[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-43         8.486348        0.327908        total sum                     
-43         670.000000      25.884358       Unweighted events, alpha=0.012666
+43         8.511231        0.327867        total sum                     
+43         674.000000      25.961510       Unweighted events, alpha=0.012628
   => Total parameter prop_binY16_bin43[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-44         9.390645        0.291223        total sum                     
-44         1040.000000     32.249031       Unweighted events, alpha=0.009029
+44         9.417465        0.291171        total sum                     
+44         1046.000000     32.341923       Unweighted events, alpha=0.009003
   => Total parameter prop_binY16_bin44[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-45         10.094431       0.320685        total sum                     
-45         991.000000      31.480152       Unweighted events, alpha=0.010186
+45         10.137923       0.320604        total sum                     
+45         1000.000000     31.622777       Unweighted events, alpha=0.010138
   => Total parameter prop_binY16_bin45[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-46         13.792471       0.386045        total sum                     
-46         1276.000000     35.721142       Unweighted events, alpha=0.010809
+46         13.849764       0.385893        total sum                     
+46         1288.000000     35.888717       Unweighted events, alpha=0.010753
   => Total parameter prop_binY16_bin46[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-47         19.612342       1.098578        total sum                     
-47         319.000000      17.860571       Unweighted events, alpha=0.061481
+47         19.672443       1.098530        total sum                     
+47         321.000000      17.916473       Unweighted events, alpha=0.061285
   => Total parameter prop_binY16_bin47[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-48         7.261783        0.614166        total sum                     
-48         140.000000      11.832160       Unweighted events, alpha=0.051870
+48         7.287621        0.614108        total sum                     
+48         141.000000      11.874342       Unweighted events, alpha=0.051685
   => Total parameter prop_binY16_bin48[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-49         3.747710        0.239260        total sum                     
-49         245.000000      15.652476       Unweighted events, alpha=0.015297
+49         3.761704        0.239215        total sum                     
+49         247.000000      15.716234       Unweighted events, alpha=0.015230
   => Total parameter prop_binY16_bin49[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-50         4.387371        0.211893        total sum                     
-50         429.000000      20.712315       Unweighted events, alpha=0.010227
+50         4.397717        0.211868        total sum                     
+50         431.000000      20.760539       Unweighted events, alpha=0.010204
   => Total parameter prop_binY16_bin50[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-51         7.341136        1.008454        total sum                     
-51         53.000000       7.280110        Unweighted events, alpha=0.138512
+51         7.350899        1.008448        total sum                     
+51         53.000000       7.280110        Unweighted events, alpha=0.138696
   => Total parameter prop_binY16_bin51[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-52         8.209319        0.616439        total sum                     
-52         177.000000      13.304135       Unweighted events, alpha=0.046380
+52         8.228675        0.616415        total sum                     
+52         178.000000      13.341664       Unweighted events, alpha=0.046229
   => Total parameter prop_binY16_bin52[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-53         21.386623       1.213758        total sum                     
-53         310.000000      17.606817       Unweighted events, alpha=0.068989
+53         21.420101       1.213724        total sum                     
+53         311.000000      17.635192       Unweighted events, alpha=0.068875
   => Total parameter prop_binY16_bin53[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-54         4.145700        0.508669        total sum                     
-54         66.000000       8.124038        Unweighted events, alpha=0.062814
+54         4.156410        0.508640        total sum                     
+54         67.000000       8.185353        Unweighted events, alpha=0.062036
   => Total parameter prop_binY16_bin54[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-55         3.531051        0.272160        total sum                     
-55         168.000000      12.961481       Unweighted events, alpha=0.021018
+55         3.537304        0.272144        total sum                     
+55         169.000000      13.000000       Unweighted events, alpha=0.020931
   => Total parameter prop_binY16_bin55[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-56         4.635862        0.228033        total sum                     
-56         413.000000      20.322401       Unweighted events, alpha=0.011225
+56         4.649901        0.228012        total sum                     
+56         416.000000      20.396078       Unweighted events, alpha=0.011178
   => Total parameter prop_binY16_bin56[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-57         6.693778        0.238848        total sum                     
-57         785.000000      28.017851       Unweighted events, alpha=0.008527
+57         6.715447        0.238796        total sum                     
+57         791.000000      28.124722       Unweighted events, alpha=0.008490
   => Total parameter prop_binY16_bin57[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-58         9.436777        0.308788        total sum                     
-58         934.000000      30.561414       Unweighted events, alpha=0.010104
+58         9.452546        0.308724        total sum                     
+58         937.000000      30.610456       Unweighted events, alpha=0.010088
   => Total parameter prop_binY16_bin58[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-59         15.921369       0.958052        total sum                     
-59         276.000000      16.613248       Unweighted events, alpha=0.057686
+59         15.954195       0.958018        total sum                     
+59         277.000000      16.643317       Unweighted events, alpha=0.057596
   => Total parameter prop_binY16_bin59[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
 Channel Y17 will use autoMCStats with settings: event-threshold=0, include-signal=1, hist-mode=1
@@ -250,244 +250,244 @@ Analysing bin errors for: prop_binY17
 Poisson cut-off: 0
 ============================================================
 Bin        Contents        Error           Notes                         
-0          251.966696      7.023935        total sum                     
-0          1287.000000     35.874782       Unweighted events, alpha=0.195778
+0          252.303948      7.023878        total sum                     
+0          1290.000000     35.916570       Unweighted events, alpha=0.195584
   => Total parameter prop_binY17_bin0[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-1          124.284187      3.400956        total sum                     
-1          1335.000000     36.537652       Unweighted events, alpha=0.093097
+1          124.547123      3.400870        total sum                     
+1          1341.000000     36.619667       Unweighted events, alpha=0.092876
   => Total parameter prop_binY17_bin1[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-2          93.093767       2.664243        total sum                     
-2          1221.000000     34.942810       Unweighted events, alpha=0.076244
+2          93.310904       2.664172        total sum                     
+2          1227.000000     35.028560       Unweighted events, alpha=0.076048
   => Total parameter prop_binY17_bin2[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-3          85.751903       2.319581        total sum                     
-3          1367.000000     36.972963       Unweighted events, alpha=0.062730
+3          85.944708       2.319522        total sum                     
+3          1373.000000     37.054015       Unweighted events, alpha=0.062596
   => Total parameter prop_binY17_bin3[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-4          92.006323       2.323376        total sum                     
-4          1568.000000     39.597980       Unweighted events, alpha=0.058678
+4          92.189724       2.323316        total sum                     
+4          1575.000000     39.686270       Unweighted events, alpha=0.058533
   => Total parameter prop_binY17_bin4[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-5          108.581266      2.648683        total sum                     
-5          1681.000000     41.000000       Unweighted events, alpha=0.064593
+5          108.819104      2.648585        total sum                     
+5          1688.000000     41.085277       Unweighted events, alpha=0.064466
   => Total parameter prop_binY17_bin5[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-6          154.085019      3.453141        total sum                     
-6          1991.000000     44.620623       Unweighted events, alpha=0.077391
+6          154.345452      3.453052        total sum                     
+6          1998.000000     44.698993       Unweighted events, alpha=0.077250
   => Total parameter prop_binY17_bin6[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-7          289.221983      6.858522        total sum                     
-7          1778.000000     42.166337       Unweighted events, alpha=0.162667
+7          289.539750      6.858462        total sum                     
+7          1782.000000     42.213742       Unweighted events, alpha=0.162480
   => Total parameter prop_binY17_bin7[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-8          155.774707      5.714661        total sum                     
-8          743.000000      27.258026       Unweighted events, alpha=0.209656
+8          156.033570      5.714613        total sum                     
+8          746.000000      27.313001       Unweighted events, alpha=0.209160
   => Total parameter prop_binY17_bin8[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-9          48.446713       2.088881        total sum                     
-9          538.000000      23.194827       Unweighted events, alpha=0.090050
+9          48.550444       2.088838        total sum                     
+9          540.000000      23.237900       Unweighted events, alpha=0.089908
   => Total parameter prop_binY17_bin9[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-10         50.959498       1.878660        total sum                     
-10         736.000000      27.129320       Unweighted events, alpha=0.069238
+10         51.052230       1.878631        total sum                     
+10         738.000000      27.166155       Unweighted events, alpha=0.069176
   => Total parameter prop_binY17_bin10[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-11         61.658717       1.878202        total sum                     
-11         1078.000000     32.832910       Unweighted events, alpha=0.057197
+11         61.764571       1.878163        total sum                     
+11         1081.000000     32.878564       Unweighted events, alpha=0.057137
   => Total parameter prop_binY17_bin11[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-12         77.567013       2.112974        total sum                     
-12         1348.000000     36.715120       Unweighted events, alpha=0.057542
+12         77.677889       2.112921        total sum                     
+12         1352.000000     36.769553       Unweighted events, alpha=0.057454
   => Total parameter prop_binY17_bin12[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-13         246.954285      5.464316        total sum                     
-13         2042.000000     45.188494       Unweighted events, alpha=0.120937
+13         247.264516      5.464245        total sum                     
+13         2048.000000     45.254834       Unweighted events, alpha=0.120735
   => Total parameter prop_binY17_bin13[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-14         86.896931       3.667673        total sum                     
-14         561.000000      23.685439       Unweighted events, alpha=0.154896
+14         87.062733       3.667621        total sum                     
+14         564.000000      23.748684       Unweighted events, alpha=0.154367
   => Total parameter prop_binY17_bin14[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-15         76.262991       2.773911        total sum                     
-15         756.000000      27.495454       Unweighted events, alpha=0.100877
+15         76.403360       2.773868        total sum                     
+15         759.000000      27.549955       Unweighted events, alpha=0.100663
   => Total parameter prop_binY17_bin15[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-16         108.740226      2.719294        total sum                     
-16         1599.000000     39.987498       Unweighted events, alpha=0.068005
+16         108.918334      2.719257        total sum                     
+16         1604.000000     40.049969       Unweighted events, alpha=0.067904
   => Total parameter prop_binY17_bin16[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-17         143.961681      2.720873        total sum                     
-17         2799.000000     52.905576       Unweighted events, alpha=0.051433
+17         144.153594      2.720825        total sum                     
+17         2807.000000     52.981129       Unweighted events, alpha=0.051355
   => Total parameter prop_binY17_bin17[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-18         168.484727      2.880765        total sum                     
-18         3421.000000     58.489315       Unweighted events, alpha=0.049250
+18         168.645365      2.880715        total sum                     
+18         3427.000000     58.540584       Unweighted events, alpha=0.049211
   => Total parameter prop_binY17_bin18[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-19         222.409999      3.825556        total sum                     
-19         3380.000000     58.137767       Unweighted events, alpha=0.065802
+19         222.591147      3.825503        total sum                     
+19         3386.000000     58.189346       Unweighted events, alpha=0.065739
   => Total parameter prop_binY17_bin19[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-20         62.460615       2.551736        total sum                     
-20         599.000000      24.474477       Unweighted events, alpha=0.104275
+20         62.594969       2.551715        total sum                     
+20         602.000000      24.535688       Unweighted events, alpha=0.103978
   => Total parameter prop_binY17_bin20[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-21         33.169751       1.128670        total sum                     
-21         864.000000      29.393877       Unweighted events, alpha=0.038391
+21         33.299604       1.128622        total sum                     
+21         871.000000      29.512709       Unweighted events, alpha=0.038231
   => Total parameter prop_binY17_bin21[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-22         27.956139       0.907687        total sum                     
-22         949.000000      30.805844       Unweighted events, alpha=0.029459
+22         28.049172       0.907662        total sum                     
+22         955.000000      30.903074       Unweighted events, alpha=0.029371
   => Total parameter prop_binY17_bin22[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-23         26.091355       0.753013        total sum                     
-23         1201.000000     34.655447       Unweighted events, alpha=0.021725
+23         26.190624       0.752979        total sum                     
+23         1210.000000     34.785054       Unweighted events, alpha=0.021645
   => Total parameter prop_binY17_bin23[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-24         27.863818       0.737810        total sum                     
-24         1426.000000     37.762415       Unweighted events, alpha=0.019540
+24         27.965290       0.737778        total sum                     
+24         1437.000000     37.907783       Unweighted events, alpha=0.019461
   => Total parameter prop_binY17_bin24[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-25         33.955788       0.832064        total sum                     
-25         1665.000000     40.804412       Unweighted events, alpha=0.020394
+25         34.054419       0.832029        total sum                     
+25         1675.000000     40.926764       Unweighted events, alpha=0.020331
   => Total parameter prop_binY17_bin25[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-26         46.089442       1.170746        total sum                     
-26         1550.000000     39.370039       Unweighted events, alpha=0.029735
+26         46.225595       1.170703        total sum                     
+26         1559.000000     39.484174       Unweighted events, alpha=0.029651
   => Total parameter prop_binY17_bin26[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-27         76.823087       2.567183        total sum                     
-27         896.000000      29.933259       Unweighted events, alpha=0.085740
+27         76.940383       2.567165        total sum                     
+27         898.000000      29.966648       Unweighted events, alpha=0.085680
   => Total parameter prop_binY17_bin27[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-28         36.591124       1.736969        total sum                     
-28         444.000000      21.071308       Unweighted events, alpha=0.082412
+28         36.698933       1.736939        total sum                     
+28         446.000000      21.118712       Unweighted events, alpha=0.082285
   => Total parameter prop_binY17_bin28[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-29         14.940466       0.620760        total sum                     
-29         579.000000      24.062419       Unweighted events, alpha=0.025804
+29         14.983425       0.620734        total sum                     
+29         583.000000      24.145393       Unweighted events, alpha=0.025701
   => Total parameter prop_binY17_bin29[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-30         16.018180       0.572117        total sum                     
-30         784.000000      28.000000       Unweighted events, alpha=0.020431
+30         16.054891       0.572105        total sum                     
+30         788.000000      28.071338       Unweighted events, alpha=0.020374
   => Total parameter prop_binY17_bin30[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-31         19.133620       0.475814        total sum                     
-31         1617.000000     40.211939       Unweighted events, alpha=0.011833
+31         19.171270       0.475796        total sum                     
+31         1624.000000     40.298883       Unweighted events, alpha=0.011805
   => Total parameter prop_binY17_bin31[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-32         25.697567       0.660650        total sum                     
-32         1513.000000     38.897301       Unweighted events, alpha=0.016985
+32         25.744966       0.660623        total sum                     
+32         1519.000000     38.974351       Unweighted events, alpha=0.016949
   => Total parameter prop_binY17_bin32[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-33         73.869188       1.987004        total sum                     
-33         1382.000000     37.175261       Unweighted events, alpha=0.053451
+33         73.991981       1.986980        total sum                     
+33         1387.000000     37.242449       Unweighted events, alpha=0.053347
   => Total parameter prop_binY17_bin33[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-34         19.689203       1.056300        total sum                     
-34         347.000000      18.627936       Unweighted events, alpha=0.056741
+34         19.738051       1.056278        total sum                     
+34         349.000000      18.681542       Unweighted events, alpha=0.056556
   => Total parameter prop_binY17_bin34[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-35         19.047569       0.839161        total sum                     
-35         515.000000      22.693611       Unweighted events, alpha=0.036986
+35         19.093339       0.839149        total sum                     
+35         518.000000      22.759613       Unweighted events, alpha=0.036860
   => Total parameter prop_binY17_bin35[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-36         25.981896       0.616893        total sum                     
-36         1774.000000     42.118879       Unweighted events, alpha=0.014646
+36         26.033058       0.616874        total sum                     
+36         1781.000000     42.201896       Unweighted events, alpha=0.014617
   => Total parameter prop_binY17_bin36[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-37         35.613602       0.611121        total sum                     
-37         3396.000000     58.275209       Unweighted events, alpha=0.010487
+37         35.675454       0.611092        total sum                     
+37         3408.000000     58.378078       Unweighted events, alpha=0.010468
   => Total parameter prop_binY17_bin37[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-38         44.601545       0.819475        total sum                     
-38         2962.000000     54.424259       Unweighted events, alpha=0.015058
+38         44.663542       0.819450        total sum                     
+38         2971.000000     54.506880       Unweighted events, alpha=0.015033
   => Total parameter prop_binY17_bin38[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-39         64.226797       1.362708        total sum                     
-39         2221.000000     47.127487       Unweighted events, alpha=0.028918
+39         64.301397       1.362691        total sum                     
+39         2227.000000     47.191101       Unweighted events, alpha=0.028874
   => Total parameter prop_binY17_bin39[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-40         17.324279       1.141208        total sum                     
-40         230.000000      15.165751       Unweighted events, alpha=0.075323
+40         17.394777       1.141184        total sum                     
+40         232.000000      15.231546       Unweighted events, alpha=0.074977
   => Total parameter prop_binY17_bin40[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-41         11.554331       0.442494        total sum                     
-41         682.000000      26.115130       Unweighted events, alpha=0.016942
+41         11.612708       0.442449        total sum                     
+41         689.000000      26.248809       Unweighted events, alpha=0.016854
   => Total parameter prop_binY17_bin41[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-42         9.696795        0.278975        total sum                     
-42         1208.000000     34.756294       Unweighted events, alpha=0.008027
+42         9.747930        0.278924        total sum                     
+42         1221.000000     34.942810       Unweighted events, alpha=0.007984
   => Total parameter prop_binY17_bin42[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-43         9.052973        0.218758        total sum                     
-43         1713.000000     41.388404       Unweighted events, alpha=0.005285
+43         9.095985        0.218720        total sum                     
+43         1730.000000     41.593269       Unweighted events, alpha=0.005258
   => Total parameter prop_binY17_bin43[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-44         10.438800       0.240831        total sum                     
-44         1879.000000     43.347434       Unweighted events, alpha=0.005556
+44         10.482701       0.240791        total sum                     
+44         1895.000000     43.531598       Unweighted events, alpha=0.005532
   => Total parameter prop_binY17_bin44[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-45         12.917101       0.273528        total sum                     
-45         2230.000000     47.222876       Unweighted events, alpha=0.005792
+45         12.969506       0.273474        total sum                     
+45         2249.000000     47.423623       Unweighted events, alpha=0.005767
   => Total parameter prop_binY17_bin45[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-46         17.286466       0.450893        total sum                     
-46         1470.000000     38.340579       Unweighted events, alpha=0.011760
+46         17.351676       0.450839        total sum                     
+46         1481.000000     38.483763       Unweighted events, alpha=0.011716
   => Total parameter prop_binY17_bin46[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-47         25.150656       1.238952        total sum                     
-47         412.000000      20.297783       Unweighted events, alpha=0.061045
+47         25.224064       1.238927        total sum                     
+47         415.000000      20.371549       Unweighted events, alpha=0.060781
   => Total parameter prop_binY17_bin47[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-48         8.759372        0.452911        total sum                     
-48         374.000000      19.339080       Unweighted events, alpha=0.023421
+48         8.799096        0.452879        total sum                     
+48         377.000000      19.416488       Unweighted events, alpha=0.023340
   => Total parameter prop_binY17_bin48[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-49         4.470447        0.197122        total sum                     
-49         514.000000      22.671568       Unweighted events, alpha=0.008697
+49         4.495825        0.197092        total sum                     
+49         520.000000      22.803509       Unweighted events, alpha=0.008646
   => Total parameter prop_binY17_bin49[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-50         5.118469        0.177060        total sum                     
-50         836.000000      28.913665       Unweighted events, alpha=0.006123
+50         5.142087        0.177037        total sum                     
+50         844.000000      29.051678       Unweighted events, alpha=0.006093
   => Total parameter prop_binY17_bin50[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-51         6.604840        0.185171        total sum                     
-51         1272.000000     35.665109       Unweighted events, alpha=0.005192
+51         6.628412        0.185146        total sum                     
+51         1282.000000     35.805028       Unweighted events, alpha=0.005170
   => Total parameter prop_binY17_bin51[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-52         9.105801        0.217407        total sum                     
-52         1754.000000     41.880783       Unweighted events, alpha=0.005191
+52         9.134801        0.217375        total sum                     
+52         1766.000000     42.023803       Unweighted events, alpha=0.005173
   => Total parameter prop_binY17_bin52[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-53         23.917871       0.632982        total sum                     
-53         1428.000000     37.788887       Unweighted events, alpha=0.016749
+53         23.979988       0.632935        total sum                     
+53         1435.000000     37.881394       Unweighted events, alpha=0.016711
   => Total parameter prop_binY17_bin53[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-54         4.271440        0.328678        total sum                     
-54         169.000000      13.000000       Unweighted events, alpha=0.025275
+54         4.281070        0.328662        total sum                     
+54         170.000000      13.038405       Unweighted events, alpha=0.025183
   => Total parameter prop_binY17_bin54[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-55         3.933142        0.190823        total sum                     
-55         425.000000      20.615528       Unweighted events, alpha=0.009254
+55         3.948676        0.190811        total sum                     
+55         428.000000      20.688161       Unweighted events, alpha=0.009226
   => Total parameter prop_binY17_bin55[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-56         5.604036        0.188166        total sum                     
-56         887.000000      29.782545       Unweighted events, alpha=0.006318
+56         5.620458        0.188144        total sum                     
+56         892.000000      29.866369       Unweighted events, alpha=0.006301
   => Total parameter prop_binY17_bin56[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-57         7.967326        0.234477        total sum                     
-57         1155.000000     33.985291       Unweighted events, alpha=0.006898
+57         7.990839        0.234432        total sum                     
+57         1162.000000     34.088121       Unweighted events, alpha=0.006877
   => Total parameter prop_binY17_bin57[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-58         11.150105       0.345560        total sum                     
-58         1041.000000     32.264532       Unweighted events, alpha=0.010711
+58         11.188195       0.345514        total sum                     
+58         1049.000000     32.388269       Unweighted events, alpha=0.010666
   => Total parameter prop_binY17_bin58[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-59         17.309339       0.372261        total sum                     
-59         2162.000000     46.497312       Unweighted events, alpha=0.008006
+59         17.343343       0.372199        total sum                     
+59         2171.000000     46.593991       Unweighted events, alpha=0.007989
   => Total parameter prop_binY17_bin59[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
 Channel Y18 will use autoMCStats with settings: event-threshold=0, include-signal=1, hist-mode=1
@@ -496,244 +496,244 @@ Analysing bin errors for: prop_binY18
 Poisson cut-off: 0
 ============================================================
 Bin        Contents        Error           Notes                         
-0          360.858822      5.860659        total sum                     
-0          3791.000000     61.571097       Unweighted events, alpha=0.095188
+0          361.311948      5.860521        total sum                     
+0          3801.000000     61.652251       Unweighted events, alpha=0.095057
   => Total parameter prop_binY18_bin0[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-1          179.783796      4.082304        total sum                     
-1          1940.000000     44.045431       Unweighted events, alpha=0.092672
+1          180.181100      4.082062        total sum                     
+1          1948.000000     44.136153       Unweighted events, alpha=0.092495
   => Total parameter prop_binY18_bin1[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-2          138.488223      3.694543        total sum                     
-2          1405.000000     37.483330       Unweighted events, alpha=0.098568
+2          138.861716      3.694426        total sum                     
+2          1413.000000     37.589892       Unweighted events, alpha=0.098274
   => Total parameter prop_binY18_bin2[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-3          125.729293      3.009115        total sum                     
-3          1746.000000     41.785165       Unweighted events, alpha=0.072010
+3          126.042091      3.009018        total sum                     
+3          1755.000000     41.892720       Unweighted events, alpha=0.071819
   => Total parameter prop_binY18_bin3[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-4          132.952239      3.009534        total sum                     
-4          1952.000000     44.181444       Unweighted events, alpha=0.068111
+4          133.243967      3.009450        total sum                     
+4          1960.000000     44.271887       Unweighted events, alpha=0.067982
   => Total parameter prop_binY18_bin4[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-5          161.494120      3.705252        total sum                     
-5          1900.000000     43.588989       Unweighted events, alpha=0.084997
+5          161.868324      3.705128        total sum                     
+5          1909.000000     43.692105       Unweighted events, alpha=0.084792
   => Total parameter prop_binY18_bin5[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-6          219.641817      4.114553        total sum                     
-6          2850.000000     53.385391       Unweighted events, alpha=0.077067
+6          220.070807      4.114393        total sum                     
+6          2861.000000     53.488316       Unweighted events, alpha=0.076921
   => Total parameter prop_binY18_bin6[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-7          422.831945      5.938308        total sum                     
-7          5070.000000     71.203932       Unweighted events, alpha=0.083399
+7          423.327199      5.938146        total sum                     
+7          5082.000000     71.288148       Unweighted events, alpha=0.083299
   => Total parameter prop_binY18_bin7[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-8          211.803156      4.890631        total sum                     
-8          1876.000000     43.312816       Unweighted events, alpha=0.112901
+8          212.129289      4.890523        total sum                     
+8          1881.000000     43.370497       Unweighted events, alpha=0.112775
   => Total parameter prop_binY18_bin8[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-9          71.911744       2.680210        total sum                     
-9          720.000000      26.832816       Unweighted events, alpha=0.099877
+9          72.084227       2.680124        total sum                     
+9          723.000000      26.888659       Unweighted events, alpha=0.099702
   => Total parameter prop_binY18_bin9[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-10         75.584770       2.390981        total sum                     
-10         999.000000      31.606961       Unweighted events, alpha=0.075660
+10         75.752046       2.390911        total sum                     
+10         1004.000000     31.685959       Unweighted events, alpha=0.075450
   => Total parameter prop_binY18_bin10[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-11         89.066172       2.400501        total sum                     
-11         1377.000000     37.107951       Unweighted events, alpha=0.064681
+11         89.229059       2.400434        total sum                     
+11         1382.000000     37.175261       Unweighted events, alpha=0.064565
   => Total parameter prop_binY18_bin11[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-12         111.459831      2.698538        total sum                     
-12         1706.000000     41.303753       Unweighted events, alpha=0.065334
+12         111.601407      2.698466        total sum                     
+12         1710.000000     41.352146       Unweighted events, alpha=0.065264
   => Total parameter prop_binY18_bin12[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-13         350.907021      4.977182        total sum                     
-13         4971.000000     70.505319       Unweighted events, alpha=0.070591
+13         351.297949      4.977050        total sum                     
+13         4982.000000     70.583284       Unweighted events, alpha=0.070513
   => Total parameter prop_binY18_bin13[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-14         122.061517      4.373251        total sum                     
-14         779.000000      27.910571       Unweighted events, alpha=0.156690
+14         122.283608      4.373164        total sum                     
+14         782.000000      27.964263       Unweighted events, alpha=0.156373
   => Total parameter prop_binY18_bin14[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-15         112.550281      3.798891        total sum                     
-15         878.000000      29.631065       Unweighted events, alpha=0.128189
+15         112.750221      3.798830        total sum                     
+15         881.000000      29.681644       Unweighted events, alpha=0.127980
   => Total parameter prop_binY18_bin15[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-16         162.231956      3.693355        total sum                     
-16         1929.000000     43.920383       Unweighted events, alpha=0.084102
+16         162.411425      3.693311        total sum                     
+16         1934.000000     43.977267       Unweighted events, alpha=0.083977
   => Total parameter prop_binY18_bin16[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-17         214.416560      3.699063        total sum                     
-17         3360.000000     57.965507       Unweighted events, alpha=0.063814
+17         214.618095      3.698998        total sum                     
+17         3366.000000     58.017239       Unweighted events, alpha=0.063761
   => Total parameter prop_binY18_bin17[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-18         243.941068      3.813734        total sum                     
-18         4091.000000     63.960926       Unweighted events, alpha=0.059629
+18         244.140006      3.813457        total sum                     
+18         4099.000000     64.023433       Unweighted events, alpha=0.059561
   => Total parameter prop_binY18_bin18[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-19         315.281794      4.453462        total sum                     
-19         5012.000000     70.795480       Unweighted events, alpha=0.062905
+19         315.572141      4.453335        total sum                     
+19         5021.000000     70.859015       Unweighted events, alpha=0.062850
   => Total parameter prop_binY18_bin19[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-20         96.504336       2.253370        total sum                     
-20         1834.000000     42.825226       Unweighted events, alpha=0.052620
+20         96.684016       2.253318        total sum                     
+20         1841.000000     42.906876       Unweighted events, alpha=0.052517
   => Total parameter prop_binY18_bin20[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-21         49.695163       1.219327        total sum                     
-21         1661.000000     40.755368       Unweighted events, alpha=0.029919
+21         49.885346       1.219252        total sum                     
+21         1674.000000     40.914545       Unweighted events, alpha=0.029800
   => Total parameter prop_binY18_bin21[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-22         39.340500       0.962011        total sum                     
-22         1672.000000     40.890097       Unweighted events, alpha=0.023529
+22         39.483009       0.961956        total sum                     
+22         1685.000000     41.048752       Unweighted events, alpha=0.023432
   => Total parameter prop_binY18_bin22[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-23         37.082088       0.816794        total sum                     
-23         2061.000000     45.398238       Unweighted events, alpha=0.017992
+23         37.193462       0.816757        total sum                     
+23         2074.000000     45.541190       Unweighted events, alpha=0.017933
   => Total parameter prop_binY18_bin23[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-24         40.170303       0.818837        total sum                     
-24         2407.000000     49.061186       Unweighted events, alpha=0.016689
+24         40.287612       0.818795        total sum                     
+24         2421.000000     49.203658       Unweighted events, alpha=0.016641
   => Total parameter prop_binY18_bin24[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-25         47.934012       0.897250        total sum                     
-25         2854.000000     53.422842       Unweighted events, alpha=0.016795
+25         48.083483       0.897157        total sum                     
+25         2872.000000     53.591044       Unweighted events, alpha=0.016742
   => Total parameter prop_binY18_bin25[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-26         66.936905       1.322480        total sum                     
-26         2562.000000     50.616203       Unweighted events, alpha=0.026127
+26         67.127330       1.322410        total sum                     
+26         2577.000000     50.764161       Unweighted events, alpha=0.026049
   => Total parameter prop_binY18_bin26[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-27         115.795776      2.238995        total sum                     
-27         2675.000000     51.720402       Unweighted events, alpha=0.043288
+27         115.996565      2.238921        total sum                     
+27         2684.000000     51.807335       Unweighted events, alpha=0.043218
   => Total parameter prop_binY18_bin27[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-28         50.019183       1.508005        total sum                     
-28         1100.000000     33.166248       Unweighted events, alpha=0.045472
+28         50.163403       1.507957        total sum                     
+28         1107.000000     33.271610       Unweighted events, alpha=0.045315
   => Total parameter prop_binY18_bin28[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-29         19.835638       0.726101        total sum                     
-29         746.000000      27.313001       Unweighted events, alpha=0.026589
+29         19.908639       0.726050        total sum                     
+29         752.000000      27.422618       Unweighted events, alpha=0.026474
   => Total parameter prop_binY18_bin29[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-30         21.037681       0.596272        total sum                     
-30         1245.000000     35.284558       Unweighted events, alpha=0.016898
+30         21.104344       0.596241        total sum                     
+30         1253.000000     35.397740       Unweighted events, alpha=0.016843
   => Total parameter prop_binY18_bin30[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-31         26.737521       0.629195        total sum                     
-31         1806.000000     42.497059       Unweighted events, alpha=0.014805
+31         26.804988       0.629150        total sum                     
+31         1815.000000     42.602817       Unweighted events, alpha=0.014769
   => Total parameter prop_binY18_bin31[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-32         35.222099       0.720330        total sum                     
-32         2391.000000     48.897853       Unweighted events, alpha=0.014731
+32         35.296893       0.720271        total sum                     
+32         2401.000000     49.000000       Unweighted events, alpha=0.014701
   => Total parameter prop_binY18_bin32[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-33         103.796955      1.642521        total sum                     
-33         3993.000000     63.190189       Unweighted events, alpha=0.025995
+33         103.975574      1.642451        total sum                     
+33         4008.000000     63.308767       Unweighted events, alpha=0.025942
   => Total parameter prop_binY18_bin33[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-34         29.176017       1.266007        total sum                     
-34         531.000000      23.043437       Unweighted events, alpha=0.054945
+34         29.258347       1.265971        total sum                     
+34         534.000000      23.108440       Unweighted events, alpha=0.054791
   => Total parameter prop_binY18_bin34[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-35         27.392015       0.985615        total sum                     
-35         772.000000      27.784888       Unweighted events, alpha=0.035482
+35         27.453713       0.985596        total sum                     
+35         776.000000      27.856777       Unweighted events, alpha=0.035378
   => Total parameter prop_binY18_bin35[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-36         37.397548       0.916170        total sum                     
-36         1666.000000     40.816663       Unweighted events, alpha=0.022448
+36         37.464897       0.916150        total sum                     
+36         1672.000000     40.890097       Unweighted events, alpha=0.022407
   => Total parameter prop_binY18_bin36[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-37         50.965413       0.912624        total sum                     
-37         3119.000000     55.848008       Unweighted events, alpha=0.016340
+37         51.045462       0.912590        total sum                     
+37         3129.000000     55.937465       Unweighted events, alpha=0.016314
   => Total parameter prop_binY18_bin37[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-38         67.263228       1.057199        total sum                     
-38         4048.000000     63.623895       Unweighted events, alpha=0.016616
+38         67.361116       1.057115        total sum                     
+38         4060.000000     63.718129       Unweighted events, alpha=0.016591
   => Total parameter prop_binY18_bin38[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-39         88.930761       1.361113        total sum                     
-39         4269.000000     65.337585       Unweighted events, alpha=0.020832
+39         89.066035       1.361036        total sum                     
+39         4282.000000     65.436993       Unweighted events, alpha=0.020800
   => Total parameter prop_binY18_bin39[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-40         24.318660       0.875113        total sum                     
-40         772.000000      27.784888       Unweighted events, alpha=0.031501
+40         24.427641       0.875050        total sum                     
+40         779.000000      27.910571       Unweighted events, alpha=0.031358
   => Total parameter prop_binY18_bin40[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-41         17.144296       0.562072        total sum                     
-41         930.000000      30.495901       Unweighted events, alpha=0.018435
+41         17.232168       0.561996        total sum                     
+41         940.000000      30.659419       Unweighted events, alpha=0.018332
   => Total parameter prop_binY18_bin41[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-42         14.006776       0.538673        total sum                     
-42         676.000000      26.000000       Unweighted events, alpha=0.020720
+42         14.084842       0.538620        total sum                     
+42         684.000000      26.153394       Unweighted events, alpha=0.020592
   => Total parameter prop_binY18_bin42[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-43         13.355730       0.326786        total sum                     
-43         1670.000000     40.865633       Unweighted events, alpha=0.007997
+43         13.411608       0.326743        total sum                     
+43         1685.000000     41.048752       Unweighted events, alpha=0.007959
   => Total parameter prop_binY18_bin43[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-44         14.970648       0.293031        total sum                     
-44         2610.000000     51.088159       Unweighted events, alpha=0.005736
+44         15.028248       0.292976        total sum                     
+44         2631.000000     51.293274       Unweighted events, alpha=0.005712
   => Total parameter prop_binY18_bin44[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-45         18.959469       0.525725        total sum                     
-45         1301.000000     36.069378       Unweighted events, alpha=0.014573
+45         19.037278       0.525678        total sum                     
+45         1312.000000     36.221541       Unweighted events, alpha=0.014510
   => Total parameter prop_binY18_bin45[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-46         25.011391       0.571306        total sum                     
-46         1917.000000     43.783559       Unweighted events, alpha=0.013047
+46         25.100857       0.571221        total sum                     
+46         1931.000000     43.943145       Unweighted events, alpha=0.012999
   => Total parameter prop_binY18_bin46[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-47         34.906539       0.950429        total sum                     
-47         1349.000000     36.728735       Unweighted events, alpha=0.025876
+47         35.029252       0.950336        total sum                     
+47         1359.000000     36.864617       Unweighted events, alpha=0.025776
   => Total parameter prop_binY18_bin47[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-48         12.846773       0.589324        total sum                     
-48         475.000000      21.794495       Unweighted events, alpha=0.027046
+48         12.907043       0.589268        total sum                     
+48         480.000000      21.908902       Unweighted events, alpha=0.026890
   => Total parameter prop_binY18_bin48[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-49         6.424238        0.284815        total sum                     
-49         509.000000      22.561028       Unweighted events, alpha=0.012621
+49         6.452095        0.284778        total sum                     
+49         513.000000      22.649503       Unweighted events, alpha=0.012577
   => Total parameter prop_binY18_bin49[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-50         7.360492        0.246774        total sum                     
-50         890.000000      29.832868       Unweighted events, alpha=0.008270
+50         7.391622        0.246749        total sum                     
+50         897.000000      29.949958       Unweighted events, alpha=0.008240
   => Total parameter prop_binY18_bin50[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-51         9.365050        0.229902        total sum                     
-51         1659.000000     40.730824       Unweighted events, alpha=0.005645
+51         9.397257        0.229869        total sum                     
+51         1671.000000     40.877867       Unweighted events, alpha=0.005624
   => Total parameter prop_binY18_bin51[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-52         13.273991       0.328640        total sum                     
-52         1631.000000     40.385641       Unweighted events, alpha=0.008139
+52         13.309365       0.328594        total sum                     
+52         1641.000000     40.509258       Unweighted events, alpha=0.008111
   => Total parameter prop_binY18_bin52[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-53         34.396112       0.642917        total sum                     
-53         2862.000000     53.497664       Unweighted events, alpha=0.012018
+53         34.472323       0.642840        total sum                     
+53         2876.000000     53.628351       Unweighted events, alpha=0.011986
   => Total parameter prop_binY18_bin53[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-54         6.058935        0.402372        total sum                     
-54         227.000000      15.066519       Unweighted events, alpha=0.026691
+54         6.081486        0.402347        total sum                     
+54         228.000000      15.099669       Unweighted events, alpha=0.026673
   => Total parameter prop_binY18_bin54[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-55         5.847858        0.301802        total sum                     
-55         375.000000      19.364917       Unweighted events, alpha=0.015594
+55         5.865631        0.301781        total sum                     
+55         378.000000      19.442222       Unweighted events, alpha=0.015518
   => Total parameter prop_binY18_bin55[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-56         8.037338        0.244643        total sum                     
-56         1079.000000     32.848135       Unweighted events, alpha=0.007449
+56         8.059566        0.244618        total sum                     
+56         1086.000000     32.954514       Unweighted events, alpha=0.007421
   => Total parameter prop_binY18_bin56[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-57         11.246442       0.268651        total sum                     
-57         1752.000000     41.856899       Unweighted events, alpha=0.006419
+57         11.275302       0.268602        total sum                     
+57         1762.000000     41.976184       Unweighted events, alpha=0.006399
   => Total parameter prop_binY18_bin57[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-58         14.904758       0.283419        total sum                     
-58         2766.000000     52.592775       Unweighted events, alpha=0.005389
+58         14.946213       0.283328        total sum                     
+58         2783.000000     52.754147       Unweighted events, alpha=0.005371
   => Total parameter prop_binY18_bin58[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-59         24.158517       0.469855        total sum                     
-59         2644.000000     51.419841       Unweighted events, alpha=0.009137
+59         24.221749       0.469759        total sum                     
+59         2659.000000     51.565492       Unweighted events, alpha=0.009109
   => Total parameter prop_binY18_bin59[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
  <<< Combine >>> 
@@ -749,15 +749,15 @@ SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constra
 
  --- MultiDimFit ---
 best fit parameter values: 
-   yLQ2 :    -0.105
+   yLQ2 :    +0.439
 Done in 0.01 min (cpu), 0.01 min (real)
 [SetFlag] Changing value of flag "workspaces-use-clone" from 0 to 1
 [#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset Y16
 [#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset Y17
 [#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset Y18
 [SetFlag] Changing value of flag "workspaces-use-clone" from 0 to 1
->> Doing prefit: Y16,LQint_s_vec
->> Doing prefit: Y16,LQpure_s_vec
+>> Doing prefit: Y16,LQint_s
+>> Doing prefit: Y16,LQpure_s
 >> Doing prefit: Y16,alpha
 >> Doing prefit: Y16,db
 >> Doing prefit: Y16,fmn
@@ -769,8 +769,8 @@ Done in 0.01 min (cpu), 0.01 min (real)
 >> Doing prefit: Y16,TotalBkg
 >> Doing prefit: Y16,TotalSig
 >> Doing prefit: Y16,TotalProcs
->> Doing prefit: Y17,LQint_s_vec
->> Doing prefit: Y17,LQpure_s_vec
+>> Doing prefit: Y17,LQint_s
+>> Doing prefit: Y17,LQpure_s
 >> Doing prefit: Y17,alpha
 >> Doing prefit: Y17,db
 >> Doing prefit: Y17,fmn
@@ -782,8 +782,8 @@ Done in 0.01 min (cpu), 0.01 min (real)
 >> Doing prefit: Y17,TotalBkg
 >> Doing prefit: Y17,TotalSig
 >> Doing prefit: Y17,TotalProcs
->> Doing prefit: Y18,LQint_s_vec
->> Doing prefit: Y18,LQpure_s_vec
+>> Doing prefit: Y18,LQint_s
+>> Doing prefit: Y18,LQpure_s
 >> Doing prefit: Y18,alpha
 >> Doing prefit: Y18,db
 >> Doing prefit: Y18,fmn
@@ -795,8 +795,8 @@ Done in 0.01 min (cpu), 0.01 min (real)
 >> Doing prefit: Y18,TotalBkg
 >> Doing prefit: Y18,TotalSig
 >> Doing prefit: Y18,TotalProcs
->> Doing postfit: Y16,LQint_s_vec
->> Doing postfit: Y16,LQpure_s_vec
+>> Doing postfit: Y16,LQint_s
+>> Doing postfit: Y16,LQpure_s
 >> Doing postfit: Y16,alpha
 >> Doing postfit: Y16,db
 >> Doing postfit: Y16,fmn
@@ -808,8 +808,8 @@ Done in 0.01 min (cpu), 0.01 min (real)
 >> Doing postfit: Y16,TotalBkg
 >> Doing postfit: Y16,TotalSig
 >> Doing postfit: Y16,TotalProcs
->> Doing postfit: Y17,LQint_s_vec
->> Doing postfit: Y17,LQpure_s_vec
+>> Doing postfit: Y17,LQint_s
+>> Doing postfit: Y17,LQpure_s
 >> Doing postfit: Y17,alpha
 >> Doing postfit: Y17,db
 >> Doing postfit: Y17,fmn
@@ -821,8 +821,8 @@ Done in 0.01 min (cpu), 0.01 min (real)
 >> Doing postfit: Y17,TotalBkg
 >> Doing postfit: Y17,TotalSig
 >> Doing postfit: Y17,TotalProcs
->> Doing postfit: Y18,LQint_s_vec
->> Doing postfit: Y18,LQpure_s_vec
+>> Doing postfit: Y18,LQint_s
+>> Doing postfit: Y18,LQpure_s
 >> Doing postfit: Y18,alpha
 >> Doing postfit: Y18,db
 >> Doing postfit: Y18,fmn
@@ -834,10 +834,10 @@ Done in 0.01 min (cpu), 0.01 min (real)
 >> Doing postfit: Y18,TotalBkg
 >> Doing postfit: Y18,TotalSig
 >> Doing postfit: Y18,TotalProcs
-Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000/Y16_postfit_m2000.png has been created
-Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000/Y17_postfit_m2000.png has been created
-Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000/Y18_postfit_m2000.png has been created
-('\n file from where the h_tot is being pulled= ', 'mumu_fake_data_s_vec_statuncs_fit_shapes_LQ.root')
+Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000/Y16_postfit_m2000.png has been created
+Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000/Y17_postfit_m2000.png has been created
+Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000/Y18_postfit_m2000.png has been created
+('\n file from where the h_tot is being pulled= ', 'mumu_fake_data_s_statuncs_fit_shapes_LQ.root')
 ('\n dir_ = ', 'Y16_postfit/')
 TH1.Print Name  = h_gam_c0_y2016, Entries= 60, Total sum= 73.0665
 Chan 0 Year 2016 Name gam frac 0.030 
@@ -846,18 +846,18 @@ TH1.Print Name  = h_qcd_c0_y2016, Entries= 60, Total sum= 4.99638
 TH1.Print Name  = h_top_c0_y2016, Entries= 60, Total sum= 490.59
 TH1.Print Name  = h_db_c0_y2016, Entries= 60, Total sum= 158.506
 TH1.Print Name  = h_tautau_c0_y2016, Entries= 60, Total sum= 2.51287
-TH1.Print Name  = h_dy_c0_y2016, Entries= 300, Total sum= 2330.81
-Chi2/nbin for chan Muons 2016 GeV mLQ = 2000 is 4.1/60
+TH1.Print Name  = h_dy_c0_y2016, Entries= 300, Total sum= 2328.31
+Chi2/nbin for chan Muons 2016 GeV mLQ = 2000 is 4.2/60
 2016 2016 (36 fb^{-1})
 ('\n dir_ = ', 'Y17_postfit/')
 TH1.Print Name  = h_gam_c0_y2017, Entries= 60, Total sum= 88.0911
-Chan 0 Year 2017 Name gam frac 0.031 
+Chan 0 Year 2017 Name gam frac 0.032 
 
 TH1.Print Name  = h_qcd_c0_y2017, Entries= 60, Total sum= 42.8095
 TH1.Print Name  = h_top_c0_y2017, Entries= 60, Total sum= 595.387
 TH1.Print Name  = h_db_c0_y2017, Entries= 60, Total sum= 176.616
 TH1.Print Name  = h_tautau_c0_y2017, Entries= 60, Total sum= 2.89263
-TH1.Print Name  = h_dy_c0_y2017, Entries= 300, Total sum= 2709.69
+TH1.Print Name  = h_dy_c0_y2017, Entries= 300, Total sum= 2706.11
 Chi2/nbin for chan Muons 2017 GeV mLQ = 2000 is 1.1/60
 2017 2017 (42 fb^{-1})
 ('\n dir_ = ', 'Y18_postfit/')
@@ -868,8 +868,8 @@ TH1.Print Name  = h_qcd_c0_y2018, Entries= 60, Total sum= 27.4304
 TH1.Print Name  = h_top_c0_y2018, Entries= 60, Total sum= 912.831
 TH1.Print Name  = h_db_c0_y2018, Entries= 60, Total sum= 258.704
 TH1.Print Name  = h_tautau_c0_y2018, Entries= 60, Total sum= 4.18095
-TH1.Print Name  = h_dy_c0_y2018, Entries= 300, Total sum= 3892.35
-Chi2/nbin for chan Muons 2018 GeV mLQ = 2000 is 1.3/60
+TH1.Print Name  = h_dy_c0_y2018, Entries= 300, Total sum= 3887.18
+Chi2/nbin for chan Muons 2018 GeV mLQ = 2000 is 1.2/60
 2018 2018 (59 fb^{-1})
  <<< Combine >>> 
    Options for Robust Minimizer :: 
@@ -884,11 +884,11 @@ SimNLL created with 0 channels, 0 generic constraints, 324 fast gaussian constra
 SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
 
  --- FitDiagnostics ---
-Best fit yLQ2: 0.425783  -0.965145/+0.427635  (68% CL)
-Done in 2.05 min (cpu), 2.05 min (real)
-Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000/postfit_pulls_m2000.png has been created
-Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000/postfit_errs_m2000.png has been created
-diffNuisances run on multidimfit.root, at 2022-10-23 03:22:11.723676 with the following options ... {'poi': 'yLQ2', 'absolute_values': False, 'show_all_parameters': False, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'multidim': True, 'plotfile': 'postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000', 'skipFitB': True, 'vtol2': 2.0, 'mLQ': 2000, 'prefit': 'fitDiagnostics.root', 'skipFitS': False}
+Best fit yLQ2: 0.425811  -1.967/+0.908412  (68% CL)
+Done in 1.97 min (cpu), 1.97 min (real)
+Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000/postfit_pulls_m2000.png has been created
+Info in <TCanvas::Print>: png file postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000/postfit_errs_m2000.png has been created
+diffNuisances run on multidimfit.root, at 2022-10-23 06:23:46.721446 with the following options ... {'poi': 'yLQ2', 'absolute_values': False, 'show_all_parameters': False, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'multidim': True, 'plotfile': 'postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000', 'skipFitB': True, 'vtol2': 2.0, 'mLQ': 2000, 'prefit': 'fitDiagnostics.root', 'skipFitS': False}
 
  option '--skipFitB' set true. b-only Fit is just a copy of the s+b fit
 name                                              b-only fit            s+b fit         rho
@@ -898,244 +898,244 @@ Analysing bin errors for: prop_binY16
 Poisson cut-off: 0
 ============================================================
 Bin        Contents        Error           Notes                         
-0          128.274079      10.225698       total sum                     
-0          157.000000      12.529964       Unweighted events, alpha=0.817032
+0          128.398622      10.225671       total sum                     
+0          158.000000      12.569805       Unweighted events, alpha=0.812650
   => Total parameter prop_binY16_bin0[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-1          74.569839       3.386485        total sum                     
-1          485.000000      22.022716       Unweighted events, alpha=0.153752
+1          74.746332       3.386363        total sum                     
+1          487.000000      22.068076       Unweighted events, alpha=0.153483
   => Total parameter prop_binY16_bin1[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-2          63.861431       3.031448        total sum                     
-2          444.000000      21.071308       Unweighted events, alpha=0.143832
+2          63.987079       3.031378        total sum                     
+2          446.000000      21.118712       Unweighted events, alpha=0.143469
   => Total parameter prop_binY16_bin2[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-3          61.838872       2.716838        total sum                     
-3          518.000000      22.759613       Unweighted events, alpha=0.119380
+3          61.996882       2.716767        total sum                     
+3          521.000000      22.825424       Unweighted events, alpha=0.118996
   => Total parameter prop_binY16_bin3[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-4          65.336159       2.691983        total sum                     
-4          589.000000      24.269322       Unweighted events, alpha=0.110927
+4          65.504808       2.691893        total sum                     
+4          592.000000      24.331050       Unweighted events, alpha=0.110650
   => Total parameter prop_binY16_bin4[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-5          75.790533       3.173580        total sum                     
-5          570.000000      23.874673       Unweighted events, alpha=0.132966
+5          75.942333       3.173490        total sum                     
+5          573.000000      23.937418       Unweighted events, alpha=0.132535
   => Total parameter prop_binY16_bin5[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-6          91.168118       3.561994        total sum                     
-6          655.000000      25.592968       Unweighted events, alpha=0.139188
+6          91.306675       3.561899        total sum                     
+6          657.000000      25.632011       Unweighted events, alpha=0.138975
   => Total parameter prop_binY16_bin6[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-7          148.448898      10.362280       total sum                     
-7          205.000000      14.317821       Unweighted events, alpha=0.724141
+7          148.573858      10.362244       total sum                     
+7          206.000000      14.352700       Unweighted events, alpha=0.721232
   => Total parameter prop_binY16_bin7[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-8          82.510542       5.133307        total sum                     
-8          258.000000      16.062378       Unweighted events, alpha=0.319808
+8          82.624311       5.133251        total sum                     
+8          259.000000      16.093477       Unweighted events, alpha=0.319013
   => Total parameter prop_binY16_bin8[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-9          33.593411       2.319658        total sum                     
-9          210.000000      14.491377       Unweighted events, alpha=0.159969
+9          33.678264       2.319610        total sum                     
+9          211.000000      14.525839       Unweighted events, alpha=0.159613
   => Total parameter prop_binY16_bin9[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-10         35.581494       1.999494        total sum                     
-10         317.000000      17.804494       Unweighted events, alpha=0.112244
+10         35.641782       1.999449        total sum                     
+10         318.000000      17.832555       Unweighted events, alpha=0.112081
   => Total parameter prop_binY16_bin10[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-11         43.133750       2.124950        total sum                     
-11         412.000000      20.297783       Unweighted events, alpha=0.104694
+11         43.190995       2.124892        total sum                     
+11         413.000000      20.322401       Unweighted events, alpha=0.104579
   => Total parameter prop_binY16_bin11[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-12         49.331070       2.464826        total sum                     
-12         401.000000      20.024984       Unweighted events, alpha=0.123020
+12         49.445462       2.464746        total sum                     
+12         402.000000      20.049938       Unweighted events, alpha=0.122999
   => Total parameter prop_binY16_bin12[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-13         136.654470      5.412240        total sum                     
-13         638.000000      25.258662       Unweighted events, alpha=0.214192
+13         136.788224      5.412175        total sum                     
+13         639.000000      25.278449       Unweighted events, alpha=0.214066
   => Total parameter prop_binY16_bin13[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-14         60.332206       3.933609        total sum                     
-14         235.000000      15.329710       Unweighted events, alpha=0.256733
+14         60.425836       3.933566        total sum                     
+14         236.000000      15.362291       Unweighted events, alpha=0.256042
   => Total parameter prop_binY16_bin14[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-15         43.861586       3.257102        total sum                     
-15         181.000000      13.453624       Unweighted events, alpha=0.242329
+15         43.905729       3.257078        total sum                     
+15         182.000000      13.490738       Unweighted events, alpha=0.241240
   => Total parameter prop_binY16_bin15[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-16         54.387143       2.620104        total sum                     
-16         431.000000      20.760539       Unweighted events, alpha=0.126188
+16         54.447588       2.620071        total sum                     
+16         432.000000      20.784610       Unweighted events, alpha=0.126036
   => Total parameter prop_binY16_bin16[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-17         70.803991       2.578040        total sum                     
-17         754.000000      27.459060       Unweighted events, alpha=0.093904
+17         70.870358       2.578003        total sum                     
+17         756.000000      27.495454       Unweighted events, alpha=0.093744
   => Total parameter prop_binY16_bin17[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-18         85.447444       3.079234        total sum                     
-18         770.000000      27.748874       Unweighted events, alpha=0.110971
+18         85.508869       3.079193        total sum                     
+18         771.000000      27.766887       Unweighted events, alpha=0.110906
   => Total parameter prop_binY16_bin18[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-19         140.550232      4.109583        total sum                     
-19         1170.000000     34.205263       Unweighted events, alpha=0.120128
+19         140.690949      4.109496        total sum                     
+19         1172.000000     34.234486       Unweighted events, alpha=0.120043
   => Total parameter prop_binY16_bin19[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-20         37.252734       4.890945        total sum                     
-20         58.000000       7.615773        Unweighted events, alpha=0.642289
+20         37.316529       4.890935        total sum                     
+20         58.000000       7.615773        Unweighted events, alpha=0.643388
   => Total parameter prop_binY16_bin20[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-21         23.514052       1.398720        total sum                     
-21         283.000000      16.822604       Unweighted events, alpha=0.083089
+21         23.587442       1.398687        total sum                     
+21         284.000000      16.852300       Unweighted events, alpha=0.083054
   => Total parameter prop_binY16_bin21[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-22         19.788839       0.938326        total sum                     
-22         445.000000      21.095023       Unweighted events, alpha=0.044469
+22         19.838520       0.938289        total sum                     
+22         447.000000      21.142375       Unweighted events, alpha=0.044381
   => Total parameter prop_binY16_bin22[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-23         19.987106       0.859855        total sum                     
-23         540.000000      23.237900       Unweighted events, alpha=0.037013
+23         20.044568       0.859826        total sum                     
+23         543.000000      23.302360       Unweighted events, alpha=0.036914
   => Total parameter prop_binY16_bin23[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-24         21.323244       0.863482        total sum                     
-24         610.000000      24.698178       Unweighted events, alpha=0.034956
+24         21.385058       0.863449        total sum                     
+24         613.000000      24.758837       Unweighted events, alpha=0.034886
   => Total parameter prop_binY16_bin24[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-25         24.612957       0.752679        total sum                     
-25         1069.000000     32.695565       Unweighted events, alpha=0.023024
+25         24.663795       0.752612        total sum                     
+25         1074.000000     32.771939       Unweighted events, alpha=0.022964
   => Total parameter prop_binY16_bin25[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-26         29.113476       1.126524        total sum                     
-26         668.000000      25.845696       Unweighted events, alpha=0.043583
+26         29.187412       1.126471        total sum                     
+26         671.000000      25.903668       Unweighted events, alpha=0.043498
   => Total parameter prop_binY16_bin26[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-27         46.275557       5.018023        total sum                     
-27         85.000000       9.219544        Unweighted events, alpha=0.544418
+27         46.331144       5.018014        total sum                     
+27         85.000000       9.219544        Unweighted events, alpha=0.545072
   => Total parameter prop_binY16_bin27[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-28         23.630966       2.293259        total sum                     
-28         106.000000      10.295630       Unweighted events, alpha=0.222934
+28         23.678561       2.293243        total sum                     
+28         107.000000      10.344080       Unweighted events, alpha=0.221295
   => Total parameter prop_binY16_bin28[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-29         8.324005        0.473329        total sum                     
-29         309.000000      17.578396       Unweighted events, alpha=0.026939
+29         8.348710        0.473306        total sum                     
+29         311.000000      17.635192       Unweighted events, alpha=0.026845
   => Total parameter prop_binY16_bin29[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-30         10.703830       0.485016        total sum                     
-30         487.000000      22.068076       Unweighted events, alpha=0.021979
+30         10.732840       0.484988        total sum                     
+30         490.000000      22.135944       Unweighted events, alpha=0.021904
   => Total parameter prop_binY16_bin30[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-31         13.311975       0.489636        total sum                     
-31         739.000000      27.184554       Unweighted events, alpha=0.018013
+31         13.342636       0.489609        total sum                     
+31         743.000000      27.258026       Unweighted events, alpha=0.017958
   => Total parameter prop_binY16_bin31[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-32         14.994743       0.488205        total sum                     
-32         943.000000      30.708305       Unweighted events, alpha=0.015901
+32         15.029841       0.488165        total sum                     
+32         948.000000      30.789609       Unweighted events, alpha=0.015854
   => Total parameter prop_binY16_bin32[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-33         44.158464       2.409627        total sum                     
-33         336.000000      18.330303       Unweighted events, alpha=0.131424
+33         44.215006       2.409602        total sum                     
+33         337.000000      18.357560       Unweighted events, alpha=0.131202
   => Total parameter prop_binY16_bin33[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-34         13.285726       1.183497        total sum                     
-34         126.000000      11.224972       Unweighted events, alpha=0.105442
+34         13.315051       1.183484        total sum                     
+34         127.000000      11.269428       Unweighted events, alpha=0.104843
   => Total parameter prop_binY16_bin34[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-35         9.408748        0.575488        total sum                     
-35         267.000000      16.340135       Unweighted events, alpha=0.035239
+35         9.431608        0.575471        total sum                     
+35         269.000000      16.401219       Unweighted events, alpha=0.035062
   => Total parameter prop_binY16_bin35[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-36         12.750646       0.531630        total sum                     
-36         575.000000      23.979158       Unweighted events, alpha=0.022175
+36         12.770303       0.531615        total sum                     
+36         577.000000      24.020824       Unweighted events, alpha=0.022132
   => Total parameter prop_binY16_bin36[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-37         17.234774       0.528536        total sum                     
-37         1063.000000     32.603681       Unweighted events, alpha=0.016213
+37         17.259002       0.528510        total sum                     
+37         1066.000000     32.649655       Unweighted events, alpha=0.016190
   => Total parameter prop_binY16_bin37[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-38         23.102684       0.893912        total sum                     
-38         668.000000      25.845696       Unweighted events, alpha=0.034585
+38         23.137653       0.893890        total sum                     
+38         670.000000      25.884358       Unweighted events, alpha=0.034534
   => Total parameter prop_binY16_bin38[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-39         39.930668       1.386053        total sum                     
-39         830.000000      28.809721       Unweighted events, alpha=0.048109
+39         39.977460       1.386026        total sum                     
+39         832.000000      28.844410       Unweighted events, alpha=0.048050
   => Total parameter prop_binY16_bin39[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-40         9.206294        0.769150        total sum                     
-40         143.000000      11.958261       Unweighted events, alpha=0.064380
+40         9.240544        0.769103        total sum                     
+40         144.000000      12.000000       Unweighted events, alpha=0.064170
   => Total parameter prop_binY16_bin40[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-41         7.778418        0.589372        total sum                     
-41         174.000000      13.190906       Unweighted events, alpha=0.044704
+41         7.809265        0.589322        total sum                     
+41         176.000000      13.266499       Unweighted events, alpha=0.044371
   => Total parameter prop_binY16_bin41[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-42         6.896259        0.316096        total sum                     
-42         476.000000      21.817424       Unweighted events, alpha=0.014488
+42         6.919508        0.316055        total sum                     
+42         479.000000      21.886069       Unweighted events, alpha=0.014446
   => Total parameter prop_binY16_bin42[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-43         6.526654        0.242720        total sum                     
-43         723.000000      26.888659       Unweighted events, alpha=0.009027
+43         6.554721        0.242662        total sum                     
+43         730.000000      27.018512       Unweighted events, alpha=0.008979
   => Total parameter prop_binY16_bin43[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-44         7.440063        0.244816        total sum                     
-44         924.000000      30.397368       Unweighted events, alpha=0.008052
+44         7.467340        0.244758        total sum                     
+44         931.000000      30.512293       Unweighted events, alpha=0.008021
   => Total parameter prop_binY16_bin44[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-45         8.972561        0.291508        total sum                     
-45         947.000000      30.773365       Unweighted events, alpha=0.009475
+45         9.006339        0.291426        total sum                     
+45         955.000000      30.903074       Unweighted events, alpha=0.009431
   => Total parameter prop_binY16_bin45[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-46         10.403788       0.305425        total sum                     
-46         1160.000000     34.058773       Unweighted events, alpha=0.008969
+46         10.431394       0.305329        total sum                     
+46         1167.000000     34.161382       Unweighted events, alpha=0.008939
   => Total parameter prop_binY16_bin46[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-47         13.284713       0.917536        total sum                     
-47         210.000000      14.491377       Unweighted events, alpha=0.063261
+47         13.317636       0.917488        total sum                     
+47         211.000000      14.525839       Unweighted events, alpha=0.063117
   => Total parameter prop_binY16_bin47[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-48         7.949290        1.178650        total sum                     
-48         45.000000       6.708204        Unweighted events, alpha=0.176651
+48         7.966943        1.178635        total sum                     
+48         46.000000       6.782330        Unweighted events, alpha=0.173194
   => Total parameter prop_binY16_bin48[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-49         3.421364        0.463066        total sum                     
-49         55.000000       7.416198        Unweighted events, alpha=0.062207
+49         3.439063        0.463041        total sum                     
+49         55.000000       7.416198        Unweighted events, alpha=0.062528
   => Total parameter prop_binY16_bin49[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-50         3.545533        0.183219        total sum                     
-50         374.000000      19.339080       Unweighted events, alpha=0.009480
+50         3.556061        0.183191        total sum                     
+50         377.000000      19.416488       Unweighted events, alpha=0.009433
   => Total parameter prop_binY16_bin50[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-51         4.659338        0.187265        total sum                     
-51         619.000000      24.879711       Unweighted events, alpha=0.007527
+51         4.670306        0.187234        total sum                     
+51         622.000000      24.939928       Unweighted events, alpha=0.007509
   => Total parameter prop_binY16_bin51[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-52         5.876885        0.196624        total sum                     
-52         893.000000      29.883106       Unweighted events, alpha=0.006581
+52         5.898077        0.196565        total sum                     
+52         900.000000      30.000000       Unweighted events, alpha=0.006553
   => Total parameter prop_binY16_bin52[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-53         16.388800       1.303493        total sum                     
-53         158.000000      12.569805       Unweighted events, alpha=0.103727
+53         16.427994       1.303462        total sum                     
+53         159.000000      12.609520       Unweighted events, alpha=0.103321
   => Total parameter prop_binY16_bin53[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-54         2.436527        0.248370        total sum                     
-54         96.000000       9.797959        Unweighted events, alpha=0.025380
+54         2.445819        0.248348        total sum                     
+54         97.000000       9.848858        Unweighted events, alpha=0.025215
   => Total parameter prop_binY16_bin54[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-55         2.101786        0.200400        total sum                     
-55         110.000000      10.488088       Unweighted events, alpha=0.019107
+55         2.109898        0.200379        total sum                     
+55         111.000000      10.535654       Unweighted events, alpha=0.019008
   => Total parameter prop_binY16_bin55[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-56         2.680778        0.169630        total sum                     
-56         250.000000      15.811388       Unweighted events, alpha=0.010723
+56         2.689057        0.169615        total sum                     
+56         251.000000      15.842980       Unweighted events, alpha=0.010713
   => Total parameter prop_binY16_bin56[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-57         3.738549        0.166170        total sum                     
-57         506.000000      22.494444       Unweighted events, alpha=0.007388
+57         3.752038        0.166131        total sum                     
+57         510.000000      22.583180       Unweighted events, alpha=0.007357
   => Total parameter prop_binY16_bin57[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-58         5.601036        0.199519        total sum                     
-58         788.000000      28.071338       Unweighted events, alpha=0.007108
+58         5.614253        0.199465        total sum                     
+58         792.000000      28.142495       Unweighted events, alpha=0.007089
   => Total parameter prop_binY16_bin58[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-59         9.999674        0.244944        total sum                     
-59         1667.000000     40.828911       Unweighted events, alpha=0.005999
+59         10.032684       0.244814        total sum                     
+59         1679.000000     40.975602       Unweighted events, alpha=0.005975
   => Total parameter prop_binY16_bin59[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
 Channel Y17 will use autoMCStats with settings: event-threshold=0, include-signal=1, hist-mode=1
@@ -1144,244 +1144,244 @@ Analysing bin errors for: prop_binY17
 Poisson cut-off: 0
 ============================================================
 Bin        Contents        Error           Notes                         
-0          155.343071      9.974140        total sum                     
-0          243.000000      15.588457       Unweighted events, alpha=0.639272
+0          155.475834      9.974118        total sum                     
+0          243.000000      15.588457       Unweighted events, alpha=0.639818
   => Total parameter prop_binY17_bin0[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-1          92.159816       2.881904        total sum                     
-1          1023.000000     31.984371       Unweighted events, alpha=0.090088
+1          92.361561       2.881838        total sum                     
+1          1027.000000     32.046841       Unweighted events, alpha=0.089933
   => Total parameter prop_binY17_bin1[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-2          69.815631       2.248679        total sum                     
-2          964.000000      31.048349       Unweighted events, alpha=0.072423
+2          69.964805       2.248608        total sum                     
+2          968.000000      31.112698       Unweighted events, alpha=0.072278
   => Total parameter prop_binY17_bin2[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-3          69.701299       2.000471        total sum                     
-3          1214.000000     34.842503       Unweighted events, alpha=0.057415
+3          69.860084       2.000423        total sum                     
+3          1220.000000     34.928498       Unweighted events, alpha=0.057262
   => Total parameter prop_binY17_bin3[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-4          76.099493       2.051406        total sum                     
-4          1376.000000     37.094474       Unweighted events, alpha=0.055305
+4          76.264989       2.051354        total sum                     
+4          1382.000000     37.175261       Unweighted events, alpha=0.055185
   => Total parameter prop_binY17_bin4[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-5          84.915710       2.269148        total sum                     
-5          1400.000000     37.416574       Unweighted events, alpha=0.060654
+5          85.074359       2.269087        total sum                     
+5          1406.000000     37.496667       Unweighted events, alpha=0.060508
   => Total parameter prop_binY17_bin5[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-6          111.944408      2.846881        total sum                     
-6          1546.000000     39.319207       Unweighted events, alpha=0.072409
+6          112.115723      2.846806        total sum                     
+6          1551.000000     39.382737       Unweighted events, alpha=0.072286
   => Total parameter prop_binY17_bin6[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-7          173.418763      9.933843        total sum                     
-7          305.000000      17.464249       Unweighted events, alpha=0.568586
+7          173.595357      9.933820        total sum                     
+7          305.000000      17.464249       Unweighted events, alpha=0.569165
   => Total parameter prop_binY17_bin7[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-8          102.293163      5.587850        total sum                     
-8          335.000000      18.303005       Unweighted events, alpha=0.305353
+8          102.482434      5.587811        total sum                     
+8          336.000000      18.330303       Unweighted events, alpha=0.305007
   => Total parameter prop_binY17_bin8[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-9          36.430075       1.749247        total sum                     
-9          434.000000      20.832667       Unweighted events, alpha=0.083940
+9          36.504971       1.749216        total sum                     
+9          436.000000      20.880613       Unweighted events, alpha=0.083727
   => Total parameter prop_binY17_bin9[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-10         40.057562       1.601168        total sum                     
-10         626.000000      25.019992       Unweighted events, alpha=0.063990
+10         40.132842       1.601130        total sum                     
+10         628.000000      25.059928       Unweighted events, alpha=0.063906
   => Total parameter prop_binY17_bin10[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-11         46.967751       1.573335        total sum                     
-11         891.000000      29.849623       Unweighted events, alpha=0.052714
+11         47.052046       1.573297        total sum                     
+11         894.000000      29.899833       Unweighted events, alpha=0.052631
   => Total parameter prop_binY17_bin11[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-12         53.146730       1.763794        total sum                     
-12         908.000000      30.133038       Unweighted events, alpha=0.058532
+12         53.242319       1.763737        total sum                     
+12         911.000000      30.182777       Unweighted events, alpha=0.058444
   => Total parameter prop_binY17_bin12[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-13         156.659417      5.646938        total sum                     
-13         770.000000      27.748874       Unweighted events, alpha=0.203454
+13         156.848493      5.646900        total sum                     
+13         772.000000      27.784888       Unweighted events, alpha=0.203172
   => Total parameter prop_binY17_bin13[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-14         66.951053       2.922921        total sum                     
-14         525.000000      22.912878       Unweighted events, alpha=0.127526
+14         67.036899       2.922893        total sum                     
+14         526.000000      22.934690       Unweighted events, alpha=0.127447
   => Total parameter prop_binY17_bin14[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-15         45.058101       2.287825        total sum                     
-15         388.000000      19.697716       Unweighted events, alpha=0.116129
+15         45.128905       2.287798        total sum                     
+15         389.000000      19.723083       Unweighted events, alpha=0.116013
   => Total parameter prop_binY17_bin15[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-16         62.217244       2.025124        total sum                     
-16         944.000000      30.724583       Unweighted events, alpha=0.065908
+16         62.298616       2.025101        total sum                     
+16         946.000000      30.757113       Unweighted events, alpha=0.065855
   => Total parameter prop_binY17_bin16[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-17         79.074253       1.942852        total sum                     
-17         1656.000000     40.693980       Unweighted events, alpha=0.047750
+17         79.162443       1.942821        total sum                     
+17         1660.000000     40.743098       Unweighted events, alpha=0.047688
   => Total parameter prop_binY17_bin17[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-18         100.812733      2.297460        total sum                     
-18         1925.000000     43.874822       Unweighted events, alpha=0.052370
+18         100.898690      2.297423        total sum                     
+18         1929.000000     43.920383       Unweighted events, alpha=0.052306
   => Total parameter prop_binY17_bin18[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-19         160.829319      3.071832        total sum                     
-19         2741.000000     52.354560       Unweighted events, alpha=0.058675
+19         160.993239      3.071777        total sum                     
+19         2747.000000     52.411831       Unweighted events, alpha=0.058607
   => Total parameter prop_binY17_bin19[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-20         42.850077       3.096159        total sum                     
-20         192.000000      13.856406       Unweighted events, alpha=0.223177
+20         42.937444       3.096147        total sum                     
+20         192.000000      13.856406       Unweighted events, alpha=0.223633
   => Total parameter prop_binY17_bin20[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-21         24.420650       0.833280        total sum                     
-21         859.000000      29.308702       Unweighted events, alpha=0.028429
+21         24.497332       0.833247        total sum                     
+21         864.000000      29.393877       Unweighted events, alpha=0.028353
   => Total parameter prop_binY17_bin21[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-22         21.952868       0.690863        total sum                     
-22         1010.000000     31.780497       Unweighted events, alpha=0.021736
+22         22.027177       0.690840        total sum                     
+22         1017.000000     31.890437       Unweighted events, alpha=0.021659
   => Total parameter prop_binY17_bin22[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-23         21.378759       0.656803        total sum                     
-23         1059.000000     32.542280       Unweighted events, alpha=0.020188
+23         21.450896       0.656783        total sum                     
+23         1067.000000     32.664966       Unweighted events, alpha=0.020104
   => Total parameter prop_binY17_bin23[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-24         22.472166       0.572698        total sum                     
-24         1540.000000     39.242834       Unweighted events, alpha=0.014592
+24         22.543745       0.572676        total sum                     
+24         1550.000000     39.370039       Unweighted events, alpha=0.014544
   => Total parameter prop_binY17_bin24[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-25         27.901461       0.726816        total sum                     
-25         1474.000000     38.392708       Unweighted events, alpha=0.018929
+25         27.981179       0.726790        total sum                     
+25         1482.000000     38.496753       Unweighted events, alpha=0.018881
   => Total parameter prop_binY17_bin25[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-26         34.139690       0.967857        total sum                     
-26         1244.000000     35.270384       Unweighted events, alpha=0.027443
+26         34.226202       0.967829        total sum                     
+26         1251.000000     35.369478       Unweighted events, alpha=0.027359
   => Total parameter prop_binY17_bin26[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-27         51.294961       3.105427        total sum                     
-27         273.000000      16.522712       Unweighted events, alpha=0.187894
+27         51.377472       3.105419        total sum                     
+27         274.000000      16.552945       Unweighted events, alpha=0.187509
   => Total parameter prop_binY17_bin27[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-28         23.451528       1.221573        total sum                     
-28         369.000000      19.209373       Unweighted events, alpha=0.063554
+28         23.513813       1.221553        total sum                     
+28         371.000000      19.261360       Unweighted events, alpha=0.063380
   => Total parameter prop_binY17_bin28[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-29         11.002412       0.586374        total sum                     
-29         352.000000      18.761663       Unweighted events, alpha=0.031257
+29         11.040057       0.586359        total sum                     
+29         354.000000      18.814888       Unweighted events, alpha=0.031187
   => Total parameter prop_binY17_bin29[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-30         11.952438       0.435633        total sum                     
-30         753.000000      27.440845       Unweighted events, alpha=0.015873
+30         11.990168       0.435622        total sum                     
+30         758.000000      27.531800       Unweighted events, alpha=0.015818
   => Total parameter prop_binY17_bin30[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-31         15.366064       0.511238        total sum                     
-31         903.000000      30.049958       Unweighted events, alpha=0.017017
+31         15.404205       0.511227        total sum                     
+31         908.000000      30.133038       Unweighted events, alpha=0.016965
   => Total parameter prop_binY17_bin31[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-32         18.504241       0.422987        total sum                     
-32         1914.000000     43.749286       Unweighted events, alpha=0.009668
+32         18.543609       0.422964        total sum                     
+32         1922.000000     43.840620       Unweighted events, alpha=0.009648
   => Total parameter prop_binY17_bin32[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-33         48.137345       1.460267        total sum                     
-33         1087.000000     32.969683       Unweighted events, alpha=0.044285
+33         48.222553       1.460248        total sum                     
+33         1091.000000     33.030289       Unweighted events, alpha=0.044200
   => Total parameter prop_binY17_bin33[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-34         14.366677       0.840733        total sum                     
-34         292.000000      17.088007       Unweighted events, alpha=0.049201
+34         14.404145       0.840722        total sum                     
+34         294.000000      17.146428       Unweighted events, alpha=0.048994
   => Total parameter prop_binY17_bin34[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-35         10.642643       0.406638        total sum                     
-35         685.000000      26.172505       Unweighted events, alpha=0.015537
+35         10.670755       0.406627        total sum                     
+35         689.000000      26.248809       Unweighted events, alpha=0.015487
   => Total parameter prop_binY17_bin35[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-36         14.890244       0.531107        total sum                     
-36         786.000000      28.035692       Unweighted events, alpha=0.018944
+36         14.917287       0.531098        total sum                     
+36         789.000000      28.089144       Unweighted events, alpha=0.018907
   => Total parameter prop_binY17_bin36[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-37         19.733585       0.456671        total sum                     
-37         1867.000000     43.208795       Unweighted events, alpha=0.010570
+37         19.764989       0.456656        total sum                     
+37         1873.000000     43.278170       Unweighted events, alpha=0.010553
   => Total parameter prop_binY17_bin37[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-38         25.806793       0.491704        total sum                     
-38         2755.000000     52.488094       Unweighted events, alpha=0.009367
+38         25.844689       0.491677        total sum                     
+38         2763.000000     52.564246       Unweighted events, alpha=0.009354
   => Total parameter prop_binY17_bin38[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-39         43.279743       0.910399        total sum                     
-39         2260.000000     47.539457       Unweighted events, alpha=0.019150
+39         43.336496       0.910381        total sum                     
+39         2266.000000     47.602521       Unweighted events, alpha=0.019125
   => Total parameter prop_binY17_bin39[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-40         11.335494       1.117731        total sum                     
-40         103.000000      10.148892       Unweighted events, alpha=0.110053
+40         11.385377       1.117715        total sum                     
+40         104.000000      10.198039       Unweighted events, alpha=0.109475
   => Total parameter prop_binY17_bin40[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-41         8.613696        0.314590        total sum                     
-41         750.000000      27.386128       Unweighted events, alpha=0.011485
+41         8.670462        0.314526        total sum                     
+41         760.000000      27.568098       Unweighted events, alpha=0.011409
   => Total parameter prop_binY17_bin41[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-42         7.652295        0.226448        total sum                     
-42         1142.000000     33.793490       Unweighted events, alpha=0.006701
+42         7.688843        0.226409        total sum                     
+42         1153.000000     33.955854       Unweighted events, alpha=0.006669
   => Total parameter prop_binY17_bin42[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-43         8.595166        0.396991        total sum                     
-43         469.000000      21.656408       Unweighted events, alpha=0.018327
+43         8.630652        0.396972        total sum                     
+43         473.000000      21.748563       Unweighted events, alpha=0.018247
   => Total parameter prop_binY17_bin43[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-44         9.125534        0.250722        total sum                     
-44         1325.000000     36.400549       Unweighted events, alpha=0.006887
+44         9.160355        0.250695        total sum                     
+44         1335.000000     36.537652       Unweighted events, alpha=0.006862
   => Total parameter prop_binY17_bin44[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-45         10.434375       0.225477        total sum                     
-45         2142.000000     46.281746       Unweighted events, alpha=0.004871
+45         10.471713       0.225431        total sum                     
+45         2158.000000     46.454279       Unweighted events, alpha=0.004853
   => Total parameter prop_binY17_bin45[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-46         12.852650       0.350925        total sum                     
-46         1341.000000     36.619667       Unweighted events, alpha=0.009584
+46         12.911115       0.350865        total sum                     
+46         1354.000000     36.796739       Unweighted events, alpha=0.009536
   => Total parameter prop_binY17_bin46[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-47         15.932395       1.174539        total sum                     
-47         184.000000      13.564660       Unweighted events, alpha=0.086589
+47         15.984253       1.174524        total sum                     
+47         185.000000      13.601471       Unweighted events, alpha=0.086401
   => Total parameter prop_binY17_bin47[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-48         6.198455        0.474734        total sum                     
-48         170.000000      13.038405       Unweighted events, alpha=0.036462
+48         6.228464        0.474716        total sum                     
+48         172.000000      13.114877       Unweighted events, alpha=0.036212
   => Total parameter prop_binY17_bin48[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-49         3.766528        0.297647        total sum                     
-49         160.000000      12.649111       Unweighted events, alpha=0.023541
+49         3.778836        0.297638        total sum                     
+49         161.000000      12.688578       Unweighted events, alpha=0.023471
   => Total parameter prop_binY17_bin49[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-50         4.063990        0.122022        total sum                     
-50         1109.000000     33.301652       Unweighted events, alpha=0.003665
+50         4.081129        0.121997        total sum                     
+50         1119.000000     33.451457       Unweighted events, alpha=0.003647
   => Total parameter prop_binY17_bin50[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-51         5.452689        0.149891        total sum                     
-51         1323.000000     36.373067       Unweighted events, alpha=0.004121
+51         5.470207        0.149869        total sum                     
+51         1332.000000     36.496575       Unweighted events, alpha=0.004107
   => Total parameter prop_binY17_bin51[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-52         6.763833        0.149863        total sum                     
-52         2037.000000     45.133136       Unweighted events, alpha=0.003320
+52         6.778073        0.149835        total sum                     
+52         2046.000000     45.232732       Unweighted events, alpha=0.003313
   => Total parameter prop_binY17_bin52[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-53         17.055012       0.667016        total sum                     
-53         654.000000      25.573424       Unweighted events, alpha=0.026078
+53         17.108037       0.666990        total sum                     
+53         658.000000      25.651511       Unweighted events, alpha=0.026000
   => Total parameter prop_binY17_bin53[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-54         3.168521        0.217909        total sum                     
-54         211.000000      14.525839       Unweighted events, alpha=0.015017
+54         3.179298        0.217894        total sum                     
+54         213.000000      14.594520       Unweighted events, alpha=0.014926
   => Total parameter prop_binY17_bin54[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-55         2.313494        0.131719        total sum                     
-55         308.000000      17.549929       Unweighted events, alpha=0.007511
+55         2.314929        0.131685        total sum                     
+55         309.000000      17.578396       Unweighted events, alpha=0.007492
   => Total parameter prop_binY17_bin55[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-56         3.066060        0.127738        total sum                     
-56         576.000000      24.000000       Unweighted events, alpha=0.005323
+56         3.075704        0.127723        total sum                     
+56         580.000000      24.083189       Unweighted events, alpha=0.005303
   => Total parameter prop_binY17_bin56[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-57         4.356881        0.137987        total sum                     
-57         997.000000      31.575307       Unweighted events, alpha=0.004370
+57         4.370222        0.137959        total sum                     
+57         1003.000000     31.670175       Unweighted events, alpha=0.004357
   => Total parameter prop_binY17_bin57[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-58         6.233897        0.127268        total sum                     
-58         2399.000000     48.979588       Unweighted events, alpha=0.002599
+58         6.244386        0.127216        total sum                     
+58         2409.000000     49.081565       Unweighted events, alpha=0.002592
   => Total parameter prop_binY17_bin58[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-59         12.651621       0.479720        total sum                     
-59         696.000000      26.381812       Unweighted events, alpha=0.018178
+59         12.675344       0.479696        total sum                     
+59         698.000000      26.419690       Unweighted events, alpha=0.018160
   => Total parameter prop_binY17_bin59[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
 Channel Y18 will use autoMCStats with settings: event-threshold=0, include-signal=1, hist-mode=1
@@ -1390,244 +1390,244 @@ Analysing bin errors for: prop_binY18
 Poisson cut-off: 0
 ============================================================
 Bin        Contents        Error           Notes                         
-0          280.429174      20.217352       total sum                     
-0          192.000000      13.856406       Unweighted events, alpha=1.460569
+0          280.672165      20.217329       total sum                     
+0          193.000000      13.892444       Unweighted events, alpha=1.454260
   => Total parameter prop_binY18_bin0[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-1          143.825901      3.595368        total sum                     
-1          1600.000000     40.000000       Unweighted events, alpha=0.089891
+1          144.158461      3.595234        total sum                     
+1          1608.000000     40.099875       Unweighted events, alpha=0.089651
   => Total parameter prop_binY18_bin1[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-2          115.675102      3.080278        total sum                     
-2          1410.000000     37.549967       Unweighted events, alpha=0.082039
+2          115.956480      3.080167        total sum                     
+2          1417.000000     37.643060       Unweighted events, alpha=0.081832
   => Total parameter prop_binY18_bin2[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-3          107.364755      2.882947        total sum                     
-3          1387.000000     37.242449       Unweighted events, alpha=0.077408
+3          107.633198      2.882856        total sum                     
+3          1394.000000     37.336309       Unweighted events, alpha=0.077212
   => Total parameter prop_binY18_bin3[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-4          115.567516      2.883653        total sum                     
-4          1606.000000     40.074930       Unweighted events, alpha=0.071960
+4          115.812523      2.883570        total sum                     
+4          1613.000000     40.162171       Unweighted events, alpha=0.071799
   => Total parameter prop_binY18_bin4[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-5          137.655717      3.093691        total sum                     
-5          1980.000000     44.497191       Unweighted events, alpha=0.069523
+5          137.925160      3.093564        total sum                     
+5          1988.000000     44.586994       Unweighted events, alpha=0.069379
   => Total parameter prop_binY18_bin5[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-6          176.849007      3.628610        total sum                     
-6          2375.000000     48.733972       Unweighted events, alpha=0.074463
+6          177.211412      3.628455        total sum                     
+6          2385.000000     48.836462       Unweighted events, alpha=0.074302
   => Total parameter prop_binY18_bin6[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-7          311.782694      20.229366       total sum                     
-7          238.000000      15.427249       Unweighted events, alpha=1.310011
+7          312.055328      20.229339       total sum                     
+7          238.000000      15.427249       Unweighted events, alpha=1.311157
   => Total parameter prop_binY18_bin7[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-8          170.331523      6.975092        total sum                     
-8          596.000000      24.413111       Unweighted events, alpha=0.285791
+8          170.592751      6.975022        total sum                     
+8          598.000000      24.454039       Unweighted events, alpha=0.285272
   => Total parameter prop_binY18_bin8[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-9          56.026341       2.328105        total sum                     
-9          579.000000      24.062419       Unweighted events, alpha=0.096764
+9          56.175500       2.327982        total sum                     
+9          582.000000      24.124676       Unweighted events, alpha=0.096521
   => Total parameter prop_binY18_bin9[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-10         63.493915       2.174271        total sum                     
-10         853.000000      29.206164       Unweighted events, alpha=0.074436
+10         63.663547       2.174201        total sum                     
+10         857.000000      29.274562       Unweighted events, alpha=0.074287
   => Total parameter prop_binY18_bin10[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-11         73.300472       2.183569        total sum                     
-11         1127.000000     33.570821       Unweighted events, alpha=0.065040
+11         73.469320       2.183499        total sum                     
+11         1132.000000     33.645208       Unweighted events, alpha=0.064902
   => Total parameter prop_binY18_bin11[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-12         87.682427       2.329978        total sum                     
-12         1416.000000     37.629775       Unweighted events, alpha=0.061923
+12         87.795650       2.329853        total sum                     
+12         1420.000000     37.682887       Unweighted events, alpha=0.061828
   => Total parameter prop_binY18_bin12[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-13         268.914949      7.034412        total sum                     
-13         1461.000000     38.223030       Unweighted events, alpha=0.184062
+13         269.193162      7.034339        total sum                     
+13         1464.000000     38.262253       Unweighted events, alpha=0.183875
   => Total parameter prop_binY18_bin13[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-14         131.655136      4.743876        total sum                     
-14         770.000000      27.748874       Unweighted events, alpha=0.170981
+14         131.929607      4.743777        total sum                     
+14         773.000000      27.802878       Unweighted events, alpha=0.170672
   => Total parameter prop_binY18_bin14[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-15         77.700863       3.142299        total sum                     
-15         611.000000      24.718414       Unweighted events, alpha=0.127170
+15         77.848006       3.142257        total sum                     
+15         614.000000      24.779023       Unweighted events, alpha=0.126788
   => Total parameter prop_binY18_bin15[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-16         102.502557      2.899133        total sum                     
-16         1250.000000     35.355339       Unweighted events, alpha=0.082002
+16         102.617200      2.899092        total sum                     
+16         1253.000000     35.397740       Unweighted events, alpha=0.081897
   => Total parameter prop_binY18_bin16[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-17         138.560740      2.915812        total sum                     
-17         2258.000000     47.518417       Unweighted events, alpha=0.061364
+17         138.681319      2.915759        total sum                     
+17         2262.000000     47.560488       Unweighted events, alpha=0.061309
   => Total parameter prop_binY18_bin17[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-18         173.236469      3.186986        total sum                     
-18         2955.000000     54.359912       Unweighted events, alpha=0.058625
+18         173.425685      3.186913        total sum                     
+18         2961.000000     54.415071       Unweighted events, alpha=0.058570
   => Total parameter prop_binY18_bin18[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-19         311.091235      4.811095        total sum                     
-19         4181.000000     64.660653       Unweighted events, alpha=0.074406
+19         311.370201      4.810983        total sum                     
+19         4189.000000     64.722485       Unweighted events, alpha=0.074330
   => Total parameter prop_binY18_bin19[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-20         79.512678       6.559930        total sum                     
-20         147.000000      12.124356       Unweighted events, alpha=0.540903
+20         79.626685       6.559921        total sum                     
+20         147.000000      12.124356       Unweighted events, alpha=0.541678
   => Total parameter prop_binY18_bin20[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-21         39.834228       0.971899        total sum                     
-21         1680.000000     40.987803       Unweighted events, alpha=0.023711
+21         39.978002       0.971829        total sum                     
+21         1692.000000     41.133928       Unweighted events, alpha=0.023628
   => Total parameter prop_binY18_bin21[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-22         34.979136       0.805886        total sum                     
-22         1884.000000     43.405069       Unweighted events, alpha=0.018566
+22         35.114397       0.805830        total sum                     
+22         1899.000000     43.577517       Unweighted events, alpha=0.018491
   => Total parameter prop_binY18_bin22[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-23         31.594801       0.696175        total sum                     
-23         2060.000000     45.387223       Unweighted events, alpha=0.015337
+23         31.720785       0.696121        total sum                     
+23         2076.000000     45.563143       Unweighted events, alpha=0.015280
   => Total parameter prop_binY18_bin23[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-24         35.297177       0.708784        total sum                     
-24         2480.000000     49.799598       Unweighted events, alpha=0.014233
+24         35.422806       0.708734        total sum                     
+24         2498.000000     49.979996       Unweighted events, alpha=0.014180
   => Total parameter prop_binY18_bin24[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-25         41.221258       0.781146        total sum                     
-25         2785.000000     52.773099       Unweighted events, alpha=0.014801
+25         41.365001       0.781077        total sum                     
+25         2805.000000     52.962251       Unweighted events, alpha=0.014747
   => Total parameter prop_binY18_bin25[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-26         51.123797       0.955154        total sum                     
-26         2865.000000     53.525695       Unweighted events, alpha=0.017844
+26         51.284268       0.955065        total sum                     
+26         2883.000000     53.693575       Unweighted events, alpha=0.017789
   => Total parameter prop_binY18_bin26[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-27         92.467670       6.568531        total sum                     
-27         198.000000      14.071247       Unweighted events, alpha=0.467008
+27         92.581309       6.568518        total sum                     
+27         199.000000      14.106736       Unweighted events, alpha=0.465233
   => Total parameter prop_binY18_bin27[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-28         41.779417       2.204252        total sum                     
-28         359.000000      18.947295       Unweighted events, alpha=0.116377
+28         41.885720       2.204227        total sum                     
+28         361.000000      19.000000       Unweighted events, alpha=0.116027
   => Total parameter prop_binY18_bin28[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-29         15.880144       0.589368        total sum                     
-29         726.000000      26.944387       Unweighted events, alpha=0.021873
+29         15.939755       0.589324        total sum                     
+29         732.000000      27.055499       Unweighted events, alpha=0.021776
   => Total parameter prop_binY18_bin29[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-30         17.994400       0.514946        total sum                     
-30         1221.000000     34.942810       Unweighted events, alpha=0.014737
+30         18.051448       0.514917        total sum                     
+30         1229.000000     35.057096       Unweighted events, alpha=0.014688
   => Total parameter prop_binY18_bin30[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-31         22.525950       0.533734        total sum                     
-31         1781.000000     42.201896       Unweighted events, alpha=0.012648
+31         22.583196       0.533709        total sum                     
+31         1790.000000     42.308392       Unweighted events, alpha=0.012616
   => Total parameter prop_binY18_bin31[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-32         28.041044       0.646273        total sum                     
-32         1883.000000     43.393548       Unweighted events, alpha=0.014892
+32         28.105496       0.646233        total sum                     
+32         1891.000000     43.485630       Unweighted events, alpha=0.014863
   => Total parameter prop_binY18_bin32[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-33         79.275257       2.299868        total sum                     
-33         1188.000000     34.467376       Unweighted events, alpha=0.066730
+33         79.383889       2.299842        total sum                     
+33         1191.000000     34.510868       Unweighted events, alpha=0.066653
   => Total parameter prop_binY18_bin33[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-34         29.107769       1.356421        total sum                     
-34         460.000000      21.447611       Unweighted events, alpha=0.063278
+34         29.165258       1.356405        total sum                     
+34         462.000000      21.494185       Unweighted events, alpha=0.063128
   => Total parameter prop_binY18_bin34[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-35         18.074254       0.679734        total sum                     
-35         707.000000      26.589472       Unweighted events, alpha=0.025565
+35         18.124830       0.679703        total sum                     
+35         711.000000      26.664583       Unweighted events, alpha=0.025492
   => Total parameter prop_binY18_bin35[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-36         23.648277       0.696717        total sum                     
-36         1152.000000     33.941125       Unweighted events, alpha=0.020528
+36         23.684377       0.696703        total sum                     
+36         1156.000000     34.000000       Unweighted events, alpha=0.020488
   => Total parameter prop_binY18_bin36[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-37         32.160599       0.709878        total sum                     
-37         2052.000000     45.299007       Unweighted events, alpha=0.015673
+37         32.201719       0.709855        total sum                     
+37         2058.000000     45.365185       Unweighted events, alpha=0.015647
   => Total parameter prop_binY18_bin37[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-38         44.942968       0.718126        total sum                     
-38         3917.000000     62.585941       Unweighted events, alpha=0.011474
+38         45.005435       0.718088        total sum                     
+38         3928.000000     62.673758       Unweighted events, alpha=0.011458
   => Total parameter prop_binY18_bin38[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-39         85.834550       1.432641        total sum                     
-39         3590.000000     59.916609       Unweighted events, alpha=0.023909
+39         85.944091       1.432601        total sum                     
+39         3599.000000     59.991666       Unweighted events, alpha=0.023880
   => Total parameter prop_binY18_bin39[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-40         23.109847       2.599449        total sum                     
-40         79.000000       8.888194        Unweighted events, alpha=0.292530
+40         23.174060       2.599436        total sum                     
+40         79.000000       8.888194        Unweighted events, alpha=0.293343
   => Total parameter prop_binY18_bin40[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-41         13.496646       0.347997        total sum                     
-41         1504.000000     38.781439       Unweighted events, alpha=0.008974
+41         13.557607       0.347898        total sum                     
+41         1519.000000     38.974351       Unweighted events, alpha=0.008925
   => Total parameter prop_binY18_bin41[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-42         12.617401       0.316790        total sum                     
-42         1586.000000     39.824616       Unweighted events, alpha=0.007955
+42         12.678289       0.316725        total sum                     
+42         1602.000000     40.024992       Unweighted events, alpha=0.007914
   => Total parameter prop_binY18_bin42[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-43         12.938938       0.301079        total sum                     
-43         1847.000000     42.976738       Unweighted events, alpha=0.007005
+43         12.994933       0.301025        total sum                     
+43         1864.000000     43.174066       Unweighted events, alpha=0.006972
   => Total parameter prop_binY18_bin43[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-44         14.575683       0.304874        total sum                     
-44         2286.000000     47.812132       Unweighted events, alpha=0.006376
+44         14.632344       0.304818        total sum                     
+44         2304.000000     48.000000       Unweighted events, alpha=0.006351
   => Total parameter prop_binY18_bin44[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-45         17.064584       0.341818        total sum                     
-45         2492.000000     49.919936       Unweighted events, alpha=0.006848
+45         17.128440       0.341743        total sum                     
+45         2512.000000     50.119856       Unweighted events, alpha=0.006819
   => Total parameter prop_binY18_bin45[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-46         20.402767       0.396279        total sum                     
-46         2651.000000     51.487863       Unweighted events, alpha=0.007696
+46         20.470264       0.396171        total sum                     
+46         2670.000000     51.672043       Unweighted events, alpha=0.007667
   => Total parameter prop_binY18_bin46[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-47         31.352238       2.620061        total sum                     
-47         143.000000      11.958261       Unweighted events, alpha=0.219246
+47         31.431836       2.620043        total sum                     
+47         144.000000      12.000000       Unweighted events, alpha=0.218277
   => Total parameter prop_binY18_bin47[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-48         10.950252       0.695098        total sum                     
-48         248.000000      15.748016       Unweighted events, alpha=0.044154
+48         11.004458       0.695059        total sum                     
+48         251.000000      15.842980       Unweighted events, alpha=0.043842
   => Total parameter prop_binY18_bin48[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-49         5.129073        0.196208        total sum                     
-49         683.000000      26.134269       Unweighted events, alpha=0.007510
+49         5.147554        0.196179        total sum                     
+49         688.000000      26.229754       Unweighted events, alpha=0.007482
   => Total parameter prop_binY18_bin49[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-50         6.489573        0.182729        total sum                     
-50         1261.000000     35.510562       Unweighted events, alpha=0.005146
+50         6.513122        0.182694        total sum                     
+50         1271.000000     35.651087       Unweighted events, alpha=0.005124
   => Total parameter prop_binY18_bin50[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-51         8.614984        0.219316        total sum                     
-51         1543.000000     39.281039       Unweighted events, alpha=0.005583
+51         8.640339        0.219287        total sum                     
+51         1553.000000     39.408121       Unweighted events, alpha=0.005564
   => Total parameter prop_binY18_bin51[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-52         10.684406       0.227994        total sum                     
-52         2196.000000     46.861498       Unweighted events, alpha=0.004865
+52         10.714339       0.227955        total sum                     
+52         2209.000000     47.000000       Unweighted events, alpha=0.004850
   => Total parameter prop_binY18_bin52[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-53         27.597705       0.760459        total sum                     
-53         1317.000000     36.290495       Unweighted events, alpha=0.020955
+53         27.660601       0.760402        total sum                     
+53         1323.000000     36.373067       Unweighted events, alpha=0.020907
   => Total parameter prop_binY18_bin53[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-54         5.776620        0.351880        total sum                     
-54         269.000000      16.401219       Unweighted events, alpha=0.021474
+54         5.806282        0.351850        total sum                     
+54         272.000000      16.492423       Unweighted events, alpha=0.021347
   => Total parameter prop_binY18_bin54[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-55         3.838541        0.243410        total sum                     
-55         249.000000      15.779734       Unweighted events, alpha=0.015416
+55         3.851094        0.243399        total sum                     
+55         250.000000      15.811388       Unweighted events, alpha=0.015404
   => Total parameter prop_binY18_bin55[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-56         5.119106        0.174561        total sum                     
-56         860.000000      29.325757       Unweighted events, alpha=0.005952
+56         5.134705        0.174531        total sum                     
+56         866.000000      29.427878       Unweighted events, alpha=0.005929
   => Total parameter prop_binY18_bin56[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-57         7.145876        0.200121        total sum                     
-57         1275.000000     35.707142       Unweighted events, alpha=0.005605
+57         7.166523        0.200069        total sum                     
+57         1283.000000     35.818989       Unweighted events, alpha=0.005586
   => Total parameter prop_binY18_bin57[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-58         10.089964       0.234603        total sum                     
-58         1850.000000     43.011626       Unweighted events, alpha=0.005454
+58         10.119411       0.234525        total sum                     
+58         1862.000000     43.150898       Unweighted events, alpha=0.005435
   => Total parameter prop_binY18_bin58[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
-59         24.602409       0.515070        total sum                     
-59         2282.000000     47.770284       Unweighted events, alpha=0.010781
+59         24.677062       0.514929        total sum                     
+59         2297.000000     47.927028       Unweighted events, alpha=0.010743
   => Total parameter prop_binY18_bin59[0.00,-7.00,7.00] to be gaussian constrained
 ------------------------------------------------------------
  <<< Combine >>> 
@@ -1643,15 +1643,15 @@ SimNLL created with 3 channels, 0 generic constraints, 330 fast gaussian constra
 
  --- MultiDimFit ---
 best fit parameter values: 
-   yLQ2 :    -0.033
-Done in 0.02 min (cpu), 0.02 min (real)
+   yLQ2 :    +0.283
+Done in 0.01 min (cpu), 0.02 min (real)
 [SetFlag] Changing value of flag "workspaces-use-clone" from 0 to 1
 [#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset Y16
 [#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset Y17
 [#1] INFO:ObjectHandling -- RooWorkspace::import(w) importing dataset Y18
 [SetFlag] Changing value of flag "workspaces-use-clone" from 0 to 1
->> Doing prefit: Y16,LQint_s_vec
->> Doing prefit: Y16,LQpure_s_vec
+>> Doing prefit: Y16,LQint_s
+>> Doing prefit: Y16,LQpure_s
 >> Doing prefit: Y16,alpha
 >> Doing prefit: Y16,db
 >> Doing prefit: Y16,fmn
@@ -1663,8 +1663,8 @@ Done in 0.02 min (cpu), 0.02 min (real)
 >> Doing prefit: Y16,TotalBkg
 >> Doing prefit: Y16,TotalSig
 >> Doing prefit: Y16,TotalProcs
->> Doing prefit: Y17,LQint_s_vec
->> Doing prefit: Y17,LQpure_s_vec
+>> Doing prefit: Y17,LQint_s
+>> Doing prefit: Y17,LQpure_s
 >> Doing prefit: Y17,alpha
 >> Doing prefit: Y17,db
 >> Doing prefit: Y17,fmn
@@ -1676,8 +1676,8 @@ Done in 0.02 min (cpu), 0.02 min (real)
 >> Doing prefit: Y17,TotalBkg
 >> Doing prefit: Y17,TotalSig
 >> Doing prefit: Y17,TotalProcs
->> Doing prefit: Y18,LQint_s_vec
->> Doing prefit: Y18,LQpure_s_vec
+>> Doing prefit: Y18,LQint_s
+>> Doing prefit: Y18,LQpure_s
 >> Doing prefit: Y18,alpha
 >> Doing prefit: Y18,db
 >> Doing prefit: Y18,fmn
@@ -1689,8 +1689,8 @@ Done in 0.02 min (cpu), 0.02 min (real)
 >> Doing prefit: Y18,TotalBkg
 >> Doing prefit: Y18,TotalSig
 >> Doing prefit: Y18,TotalProcs
->> Doing postfit: Y16,LQint_s_vec
->> Doing postfit: Y16,LQpure_s_vec
+>> Doing postfit: Y16,LQint_s
+>> Doing postfit: Y16,LQpure_s
 >> Doing postfit: Y16,alpha
 >> Doing postfit: Y16,db
 >> Doing postfit: Y16,fmn
@@ -1702,8 +1702,8 @@ Done in 0.02 min (cpu), 0.02 min (real)
 >> Doing postfit: Y16,TotalBkg
 >> Doing postfit: Y16,TotalSig
 >> Doing postfit: Y16,TotalProcs
->> Doing postfit: Y17,LQint_s_vec
->> Doing postfit: Y17,LQpure_s_vec
+>> Doing postfit: Y17,LQint_s
+>> Doing postfit: Y17,LQpure_s
 >> Doing postfit: Y17,alpha
 >> Doing postfit: Y17,db
 >> Doing postfit: Y17,fmn
@@ -1715,8 +1715,8 @@ Done in 0.02 min (cpu), 0.02 min (real)
 >> Doing postfit: Y17,TotalBkg
 >> Doing postfit: Y17,TotalSig
 >> Doing postfit: Y17,TotalProcs
->> Doing postfit: Y18,LQint_s_vec
->> Doing postfit: Y18,LQpure_s_vec
+>> Doing postfit: Y18,LQint_s
+>> Doing postfit: Y18,LQpure_s
 >> Doing postfit: Y18,alpha
 >> Doing postfit: Y18,db
 >> Doing postfit: Y18,fmn
@@ -1728,10 +1728,10 @@ Done in 0.02 min (cpu), 0.02 min (real)
 >> Doing postfit: Y18,TotalBkg
 >> Doing postfit: Y18,TotalSig
 >> Doing postfit: Y18,TotalProcs
-Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000/Y16_postfit_m2000.png has been created
-Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000/Y17_postfit_m2000.png has been created
-Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000/Y18_postfit_m2000.png has been created
-('\n file from where the h_tot is being pulled= ', 'ee_fake_data_s_vec_statuncs_fit_shapes_LQ.root')
+Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_statuncs_LQ_m2000/Y16_postfit_m2000.png has been created
+Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_statuncs_LQ_m2000/Y17_postfit_m2000.png has been created
+Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_statuncs_LQ_m2000/Y18_postfit_m2000.png has been created
+('\n file from where the h_tot is being pulled= ', 'ee_fake_data_s_statuncs_fit_shapes_LQ.root')
 ('\n dir_ = ', 'Y16_postfit/')
 TH1.Print Name  = h_gam_c0_y2016, Entries= 60, Total sum= 50.5925
 Chan 0 Year 2016 Name gam frac 0.031 
@@ -1740,7 +1740,7 @@ TH1.Print Name  = h_qcd_c0_y2016, Entries= 60, Total sum= 115.047
 TH1.Print Name  = h_top_c0_y2016, Entries= 60, Total sum= 293.615
 TH1.Print Name  = h_db_c0_y2016, Entries= 60, Total sum= 98.8048
 TH1.Print Name  = h_tautau_c0_y2016, Entries= 60, Total sum= 1.96858
-TH1.Print Name  = h_dy_c0_y2016, Entries= 300, Total sum= 1580.38
+TH1.Print Name  = h_dy_c0_y2016, Entries= 300, Total sum= 1580.99
 Chi2/nbin for chan Electrons 2016  GeV mLQ = 2000 is 1.9/60
 2016 2016 (36 fb^{-1})
 ('\n dir_ = ', 'Y17_postfit/')
@@ -1751,7 +1751,7 @@ TH1.Print Name  = h_qcd_c0_y2017, Entries= 60, Total sum= 101.592
 TH1.Print Name  = h_top_c0_y2017, Entries= 60, Total sum= 356.026
 TH1.Print Name  = h_db_c0_y2017, Entries= 60, Total sum= 118.639
 TH1.Print Name  = h_tautau_c0_y2017, Entries= 60, Total sum= 2.46524
-TH1.Print Name  = h_dy_c0_y2017, Entries= 300, Total sum= 1806.41
+TH1.Print Name  = h_dy_c0_y2017, Entries= 300, Total sum= 1807.18
 Chi2/nbin for chan Electrons 2017  GeV mLQ = 2000 is 1.8/60
 2017 2017 (42 fb^{-1})
 ('\n dir_ = ', 'Y18_postfit/')
@@ -1762,8 +1762,8 @@ TH1.Print Name  = h_qcd_c0_y2018, Entries= 60, Total sum= 216.317
 TH1.Print Name  = h_top_c0_y2018, Entries= 60, Total sum= 661.784
 TH1.Print Name  = h_db_c0_y2018, Entries= 60, Total sum= 195.458
 TH1.Print Name  = h_tautau_c0_y2018, Entries= 60, Total sum= 4.29774
-TH1.Print Name  = h_dy_c0_y2018, Entries= 300, Total sum= 2981.02
-Chi2/nbin for chan Electrons 2018  GeV mLQ = 2000 is 0.9/60
+TH1.Print Name  = h_dy_c0_y2018, Entries= 300, Total sum= 2982.33
+Chi2/nbin for chan Electrons 2018  GeV mLQ = 2000 is 0.8/60
 2018 2018 (59 fb^{-1})
  <<< Combine >>> 
    Options for Robust Minimizer :: 
@@ -1778,10 +1778,16 @@ SimNLL created with 0 channels, 0 generic constraints, 330 fast gaussian constra
 SimNLL created with 3 channels, 0 generic constraints, 330 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
 
  --- FitDiagnostics ---
-Best fit yLQ2: 0.326355  -0.859869/+0.522876  (68% CL)
-Done in 2.05 min (cpu), 2.05 min (real)
+Best fit yLQ2: 0.365401  -1.97659/+1.09541  (68% CL)
+Done in 1.93 min (cpu), 1.93 min (real)
+Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_statuncs_LQ_m2000/postfit_pulls_m2000.png has been created
+Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_statuncs_LQ_m2000/postfit_errs_m2000.png has been created
+diffNuisances run on multidimfit.root, at 2022-10-23 06:26:44.451181 with the following options ... {'poi': 'yLQ2', 'absolute_values': False, 'show_all_parameters': False, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'multidim': True, 'plotfile': 'postfit_plots/ee_fake_data_s_statuncs_LQ_m2000', 'skipFitB': True, 'vtol2': 2.0, 'mLQ': 2000, 'prefit': 'fitDiagnostics.root', 'skipFitS': False}
+
+ option '--skipFitB' set true. b-only Fit is just a copy of the s+b fit
+name                                              b-only fit            s+b fit         rho
 ('options.gen_level = ', False)
-('\n fit_name = ', 'mumu_fake_data_s_vec_statuncs')
+('\n fit_name = ', 'mumu_fake_data_s_statuncs')
 (' \n \n Starting fit for LQ m = %i\n\n', 2000)
 
  inside make_workspace()
@@ -1798,7 +1804,7 @@ Exec: sed -i "s/LUMIYR/LUMI16/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/YRC/16/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/YR/16/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y16_LQ.txt
-Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y16_LQ.txt
+Exec: sed -i "s/QUARK/s/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/#prefire/prefire/g" cards/combined_fit_y16_LQ.txt
 Exec: cp card_templates/LQ_combined_fit_template_fake_dm.txt cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/LBCV/1.003/g" cards/combined_fit_y17_LQ.txt
@@ -1811,7 +1817,7 @@ Exec: sed -i "s/LUMIYR/LUMI17/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/YRC/1718/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/YR/17/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y17_LQ.txt
-Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/QUARK/s/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/#prefire/prefire/g" cards/combined_fit_y17_LQ.txt
 Exec: cp card_templates/LQ_combined_fit_template_fake_dm.txt cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/LBCV/1.002/g" cards/combined_fit_y18_LQ.txt
@@ -1824,25 +1830,25 @@ Exec: sed -i "s/LUMIYR/LUMI18/g" cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/YRC/1718/g" cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/YR/18/g" cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y18_LQ.txt
-Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/QUARK/s/g" cards/combined_fit_y18_LQ.txt
 Exec: combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > cards/combined_fit_LQ.txt
 Exec: text2workspace.py cards/combined_fit_LQ.txt -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o workspaces/mumu_LQ.root --channel-masks 
-('\n plotdir = ', 'postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000')
-Exec: [ -e postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000 ] && rm -r postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000
-Exec: mkdir postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000
+('\n plotdir = ', 'postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000')
+Exec: [ -e postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000 ] && rm -r postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000
+Exec: mkdir postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000
 Exec: combine workspaces/mumu_LQ.root -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances 
-Exec: PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o mumu_fake_data_s_vec_statuncs_fit_shapes_LQ.root --sampling --samples 100
-Exec: python scripts/LQ_plot_postfit.py -i mumu_fake_data_s_vec_statuncs_fit_shapes_LQ.root -o postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000   --mLQ 2000 --chan mumu --q s 
+Exec: PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o mumu_fake_data_s_statuncs_fit_shapes_LQ.root --sampling --samples 100
+Exec: python scripts/LQ_plot_postfit.py -i mumu_fake_data_s_statuncs_fit_shapes_LQ.root -o postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000   --mLQ 2000 --chan mumu --q s 
 Exec: combine workspaces/mumu_LQ.root -M FitDiagnostics --skipBOnlyFit   --robustFit 1
-Exec: python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ 2000 --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000
-Exec: mv mumu_fake_data_s_vec_statuncs_fit_shapes_LQ.root postfit_plots/mumu_fake_data_s_vec_statuncs_LQ_m2000
+Exec: python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ 2000 --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000
+Exec: mv mumu_fake_data_s_statuncs_fit_shapes_LQ.root postfit_plots/mumu_fake_data_s_statuncs_LQ_m2000
 Exec: rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root
 Exec: echo "fit_mdf->Print();" > cmd.txt
 Exec: echo ".q" >> cmd.txt 
-Exec: root -l -b multidimfit.root < cmd.txt > fit_results/mumu_fake_data_s_vec_statuncs_m2000.txt
+Exec: root -l -b multidimfit.root < cmd.txt > fit_results/mumu_fake_data_s_statuncs_m2000.txt
 Exec: rm -f cards/sed*
 ('options.gen_level = ', False)
-('\n fit_name = ', 'ee_fake_data_s_vec_statuncs')
+('\n fit_name = ', 'ee_fake_data_s_statuncs')
 (' \n \n Starting fit for LQ m = %i\n\n', 2000)
 
  inside make_workspace()
@@ -1859,7 +1865,7 @@ Exec: sed -i "s/LUMIYR/LUMI16/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/YRC/16/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/YR/16/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y16_LQ.txt
-Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y16_LQ.txt
+Exec: sed -i "s/QUARK/s/g" cards/combined_fit_y16_LQ.txt
 Exec: sed -i "s/#prefire/prefire/g" cards/combined_fit_y16_LQ.txt
 Exec: cp card_templates/LQ_combined_fit_template_fake_de.txt cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/LBCV/1.003/g" cards/combined_fit_y17_LQ.txt
@@ -1872,7 +1878,7 @@ Exec: sed -i "s/LUMIYR/LUMI17/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/YRC/1718/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/YR/17/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y17_LQ.txt
-Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/QUARK/s/g" cards/combined_fit_y17_LQ.txt
 Exec: sed -i "s/#prefire/prefire/g" cards/combined_fit_y17_LQ.txt
 Exec: cp card_templates/LQ_combined_fit_template_fake_de.txt cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/LBCV/1.002/g" cards/combined_fit_y18_LQ.txt
@@ -1885,26 +1891,20 @@ Exec: sed -i "s/LUMIYR/LUMI18/g" cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/YRC/1718/g" cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/YR/18/g" cards/combined_fit_y18_LQ.txt
 Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y18_LQ.txt
-Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/QUARK/s/g" cards/combined_fit_y18_LQ.txt
 Exec: combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > cards/combined_fit_LQ.txt
 Exec: text2workspace.py cards/combined_fit_LQ.txt -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o workspaces/ee_LQ.root --channel-masks 
-('\n plotdir = ', 'postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000')
-Exec: [ -e postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000 ] && rm -r postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000
-Exec: mkdir postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000
+('\n plotdir = ', 'postfit_plots/ee_fake_data_s_statuncs_LQ_m2000')
+Exec: [ -e postfit_plots/ee_fake_data_s_statuncs_LQ_m2000 ] && rm -r postfit_plots/ee_fake_data_s_statuncs_LQ_m2000
+Exec: mkdir postfit_plots/ee_fake_data_s_statuncs_LQ_m2000
 Exec: combine workspaces/ee_LQ.root -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances 
-Exec: PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o ee_fake_data_s_vec_statuncs_fit_shapes_LQ.root --sampling --samples 100
-Exec: python scripts/LQ_plot_postfit.py -i ee_fake_data_s_vec_statuncs_fit_shapes_LQ.root -o postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000   --mLQ 2000 --chan ee --q s 
+Exec: PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfit.root:fit_mdf --postfit -o ee_fake_data_s_statuncs_fit_shapes_LQ.root --sampling --samples 100
+Exec: python scripts/LQ_plot_postfit.py -i ee_fake_data_s_statuncs_fit_shapes_LQ.root -o postfit_plots/ee_fake_data_s_statuncs_LQ_m2000   --mLQ 2000 --chan ee --q s 
 Exec: combine workspaces/ee_LQ.root -M FitDiagnostics --skipBOnlyFit   --robustFit 1
-Exec: python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ 2000 --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g postfit_plots/ee_fake_data_s_vec_statuncInfo in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000/postfit_pulls_m2000.png has been created
-Info in <TCanvas::Print>: png file postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000/postfit_errs_m2000.png has been created
-diffNuisances run on multidimfit.root, at 2022-10-23 03:25:15.863870 with the following options ... {'poi': 'yLQ2', 'absolute_values': False, 'show_all_parameters': False, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'multidim': True, 'plotfile': 'postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000', 'skipFitB': True, 'vtol2': 2.0, 'mLQ': 2000, 'prefit': 'fitDiagnostics.root', 'skipFitS': False}
-
- option '--skipFitB' set true. b-only Fit is just a copy of the s+b fit
-name                                              b-only fit            s+b fit         rho
-s_LQ_m2000
-Exec: mv ee_fake_data_s_vec_statuncs_fit_shapes_LQ.root postfit_plots/ee_fake_data_s_vec_statuncs_LQ_m2000
+Exec: python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ 2000 --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g postfit_plots/ee_fake_data_s_statuncs_LQ_m2000
+Exec: mv ee_fake_data_s_statuncs_fit_shapes_LQ.root postfit_plots/ee_fake_data_s_statuncs_LQ_m2000
 Exec: rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root
 Exec: echo "fit_mdf->Print();" > cmd.txt
 Exec: echo ".q" >> cmd.txt 
-Exec: root -l -b multidimfit.root < cmd.txt > fit_results/ee_fake_data_s_vec_statuncs_m2000.txt
+Exec: root -l -b multidimfit.root < cmd.txt > fit_results/ee_fake_data_s_statuncs_m2000.txt
 Exec: rm -f cards/sed*

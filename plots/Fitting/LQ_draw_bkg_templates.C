@@ -207,7 +207,7 @@ void LQ_draw_bkg_templates(){
         sprintf(el_fname1, "%s/El%i_bkgs.png", plot_dir, year%2000);
             
 
-        sprintf(mu_title, "Channel : Muons %i, All backgrounds", year);
+        sprintf(mu_title, "Channel : Muons %i, Backgrounds", year);
         TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
          h1_mumu_top->SetTitle(mu_title);
          h1_mumu_top->Draw("hist");
@@ -228,7 +228,7 @@ void LQ_draw_bkg_templates(){
             c_mumu1->Print(mu_fname1);
             delete c_mumu1;
 
-         sprintf(el_title, "Channel : Electrons %i, All backgrounds", year);
+         sprintf(el_title, "Channel : Electrons %i, Backgrounds", year);
         TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
          h1_elel_top->SetTitle(el_title);
          h1_elel_top->Draw("hist");
@@ -358,7 +358,7 @@ void LQ_draw_bkg_templates(){
         sprintf(mu_fname2, "%s/Mu%i_DYbkgs.png", plot_dir, year%2000);
         sprintf(el_fname2, "%s/El%i_DYbkgs.png", plot_dir, year%2000);
 
-        sprintf(el_title2, "Channel : Electrons %i; DY background",year);
+        sprintf(el_title2, "Channel : Electrons %i, DY background",year);
         TCanvas *c_elel2 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
          h1_elel_alpha->SetTitle(el_title2);
          h1_elel_alpha->Draw("hist");
@@ -376,7 +376,7 @@ void LQ_draw_bkg_templates(){
             c_elel2->Print(el_fname2);
             delete c_elel2;
 
-            sprintf(mu_title2, "Channel : Muons %i; DY background",year);
+            sprintf(mu_title2, "Channel : Muons %i, DY background",year);
         TCanvas *c_mumu2 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
          h1_mumu_alpha->SetTitle(mu_title2);
          h1_mumu_alpha->Draw("hist");

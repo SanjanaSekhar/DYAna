@@ -77,8 +77,10 @@ for y in [-1]:
 
             if options.chan=="ee" and options.gen_level : fit_name+="_gen_level_SMdata_nlosys"
 		
-	    fit_name+="_vec_statuncs"
-            print("\n fit_name = ", fit_name)
+	    if is_vec: fit_name+="_vec"
+
+            fit_name+="_statuncs"
+	    print("\n fit_name = ", fit_name)
 	    
 
             for mLQ in [2000]:

@@ -1,0 +1,195 @@
+
+Processing Fitting/LQ_draw_bkg_templates.C...
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_draw_bkg_templates.C:19:22: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+    char *plot_dir = "AN_plots/Bkg_templates/";
+                     ^
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//Mu16_bkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//El16_bkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//El16_DYbkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//Mu16_DYbkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//Mu17_bkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//El17_bkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//El17_DYbkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//Mu17_DYbkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//Mu18_bkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//El18_bkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//El18_DYbkgs.png has been created
+Info in <TCanvas::Print>: png file AN_plots/Bkg_templates//Mu18_DYbkgs.png has been created
+Initializing files 
+init year 2016  
+Setting up SFs... making ElEl fakes template 
+After iter 0 current fakerate est is 587 
+After iter 1 current fakerate est is 498 
+After iter 2 current fakerate est is 207 
+After iter 3 current fakerate est is 217 
+Tot weight OS is 120.1, ss 97.4, hist integral 232.5 
+Total fakerate est is 115 +/- 23 
+making MuMu fakes template 
+After iter 0 current fakerate est is 17 
+After iter 1 current fakerate est is 17 
+After iter 2 current fakerate est is 10 
+After iter 3 current fakerate est is 10 
+Tot weight OS is 6.4, ss 3.8, hist integral 10.3 
+Total fakerate est is 5 +/- 1 
+Integral of QCD templates are 115.05 5.00 
+Made qcd templates 
+Making mumu back 
+Tree 0 
+Tree 1 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 490.59 from 1578 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 158.51 from 5768 events 
+Making mumu tautau 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 2.51 from 2886 events 
+Making mumu gamgam 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 73.07 from 2553 events 
+Tree 0 
+Tree 1 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 293.61 from 973 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 98.80 from 3848 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 1.97 from 2286 events 
+Making ee gamgam 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 50.59 from 127032 events 
+making muon mc templates 
+Making mumu mc 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+making electron mc templates 
+starting elel dy 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Initializing files 
+init year 2017  
+Setting up SFs... hlt
+id
+iso
+making ElEl fakes template 
+After iter 0 current fakerate est is 280 
+After iter 1 current fakerate est is 271 
+After iter 2 current fakerate est is 154 
+After iter 3 current fakerate est is 155 
+Tot weight OS is 93.7, ss 61.4, hist integral 156.6 
+Total fakerate est is 102 +/- 21 
+making MuMu fakes template 
+After iter 0 current fakerate est is 144 
+After iter 1 current fakerate est is 143 
+After iter 2 current fakerate est is 103 
+After iter 3 current fakerate est is 103 
+Tot weight OS is 54.9, ss 48.0, hist integral 103.3 
+Total fakerate est is 43 +/- 9 
+Integral of QCD templates are 101.59 42.81 
+Made qcd templates 
+Making mumu back 
+Tree 0 
+Tree 1 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 595.39 from 2413 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 176.62 from 5515 events 
+Making mumu tautau 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 2.89 from 5011 events 
+Making mumu gamgam 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 88.09 from 2245 events 
+Tree 0 
+Tree 1 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 356.03 from 1729 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 118.64 from 4259 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 2.47 from 4534 events 
+Making ee gamgam 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 66.33 from 68044 events 
+making muon mc templates 
+Making mumu mc 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+making electron mc templates 
+starting elel dy 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Initializing files 
+init year 2018  
+Setting up SFs... making ElEl fakes template 
+After iter 0 current fakerate est is 712 
+After iter 1 current fakerate est is 651 
+After iter 2 current fakerate est is 468 
+After iter 3 current fakerate est is 472 
+Tot weight OS is 252.3, ss 219.3, hist integral 472.9 
+Total fakerate est is 216 +/- 44 
+making MuMu fakes template 
+After iter 0 current fakerate est is 89 
+After iter 1 current fakerate est is 89 
+After iter 2 current fakerate est is 60 
+After iter 3 current fakerate est is 60 
+Tot weight OS is 34.6, ss 25.9, hist integral 60.5 
+Total fakerate est is 27 +/- 5 
+Integral of QCD templates are 216.32 27.43 
+Made qcd templates 
+Making mumu back 
+Tree 0 
+Tree 1 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 912.83 from 12943 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 258.70 from 9379 events 
+Making mumu tautau 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 4.18 from 5346 events 
+Making mumu gamgam 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 119.71 from 1253 events 
+Tree 0 
+Tree 1 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 661.78 from 9217 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 195.46 from 6893 events 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 4.30 from 4711 events 
+Making ee gamgam 
+Tree 0 
+Performing templ. cleanup (removing neg. bins) 
+Tot Weight is 109.41 from 79974 events 
+making muon mc templates 
+Making mumu mc 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+making electron mc templates 
+starting elel dy 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
