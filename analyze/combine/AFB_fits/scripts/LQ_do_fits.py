@@ -29,7 +29,7 @@ for y in [-1]:
     #for options.chan in ["ee"]:
         for options.q in ["s"]:
 
-            is_vec = True
+            is_vec = False
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"

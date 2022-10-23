@@ -299,7 +299,7 @@ void LQ_draw_bkg_templates(){
         int n_1d_bins = get_n_1d_bins(n_var1_bins, n_cost_bins);
   
 
-        char title[100];
+        //char title[100];
         sprintf(title, "mumu%i_fpl%s", year%2000, sys_label.c_str());
         h1_mumu_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_mumu_pl->SetDirectory(0);
@@ -314,7 +314,7 @@ void LQ_draw_bkg_templates(){
 
 
 
-        char title[100];
+        //char title[100];
         sprintf(title, "ee%i_fpl%s", year%2000, sys_label.c_str());
         h1_elel_pl = new TH1F(title, "Plus template of DY", n_1d_bins, 0, n_1d_bins);
         h1_elel_pl->SetDirectory(0);
@@ -355,8 +355,8 @@ void LQ_draw_bkg_templates(){
 
         //char mu_title[100], el_title[100];
         char mu_fname2[100], el_fname2[100];
-        sprintf(mu_fname1, "%s/Mu%i_DYbkgs.png", plot_dir, year%2000);
-        sprintf(el_fname1, "%s/El%i_DYbkgs.png", plot_dir, year%2000);
+        sprintf(mu_fname2, "%s/Mu%i_DYbkgs.png", plot_dir, year%2000);
+        sprintf(el_fname2, "%s/El%i_DYbkgs.png", plot_dir, year%2000);
 
         sprintf(el_title, "Channel : Electrons; DY background");
         TCanvas *c_elel2 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
