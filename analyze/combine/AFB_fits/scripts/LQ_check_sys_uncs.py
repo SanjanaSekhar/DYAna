@@ -17,8 +17,8 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 (options, args) = parser.parse_args()
 
-for chan in ["mumu","ee"]:
-    for q in ["s"]:
+for chan in ["ee"]:
+    for q in ["u"]:
         options.mLQ = 2000
         fake_data = True
         no_sys = False
@@ -27,16 +27,20 @@ for chan in ["mumu","ee"]:
         year = -1
 	is_vec = False
         #extra_params = "--X-rtd MINIMIZER_no_analytic"
-	ending = "102022"
+	ending = "nlogam_102022"
         s = 123456
         extra_params = " -s %i" % s
 
         if chan == "ee":
+	    '''
             individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
-        else:
+            '''
+	    individual_pars = ["nlo_sys","gam_xsec"]
+	    group_pars = []
+	else:
             individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
                             "mufakesrwsYR",  "autoMCStats"] 
@@ -104,7 +108,7 @@ for chan in ["mumu","ee"]:
 
 
 
-        workspace = "workspaces/%s_%s_sys_uncs.root" % (chan, q)
+        workspace = "workspaces/%s_%s_sys_uncs_m%i.root" % (chan, q, options.mLQ)
 
 
         make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,False)
@@ -155,16 +159,25 @@ for chan in ["mumu","ee"]:
             #if(n>4): break
 
         print(d)
+	sum_uncs2 = 0
         os.system("mkdir %s \n" % options.odir)
         with open("%s/%s_%s_m%s_sys_uncs_%s.txt" % (options.odir, chan, q, options.mLQ,ending), 'w') as f_out:
             sorted_d = sorted(d.items(), key=operator.itemgetter(1))
-            f_out.write("Systematic uncertainties (values x1000) for bin %i \n" % options.mbin)
+            f_out.write("Systematic uncertainties for bin %i\n" % options.mbin)
             for sys_name, val in sorted_d[::-1]:
                 if (sys_name in sys_name_conv.keys()):
                         out_name = sys_name_conv[sys_name]
                 else:
                     out_name = sys_name
-                f_out.write("%s & %.2f \\\\ \n" % (out_name, val*1000.))
+		sum_uncs2 += (val*val)
+
+	    for sys_name, val in sorted_d[::-1]:
+                if (sys_name in sys_name_conv.keys()):
+                        out_name = sys_name_conv[sys_name]
+                else:
+                    out_name = sys_name
+                f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, (val*val)/sum_uncs2))
+
 
 
         #print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")

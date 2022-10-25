@@ -25,11 +25,11 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["s"]:
+        for options.q in ["u"]:
 
-            is_vec = True
+            is_vec = False
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
@@ -79,7 +79,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 
-            fit_name+="_statuncs"
+            fit_name+="_nlogam"
 	    print("\n fit_name = ", fit_name)
 	    
 
@@ -98,8 +98,8 @@ for y in [-1]:
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
-                #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                #print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s --freezeParameters allConstrainedNuisances " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 2000 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
@@ -111,7 +111,7 @@ for y in [-1]:
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1" % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfit.root --multidim --mLQ %i --prefit fitDiagnostics.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
-                    if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
+                    #if(not options.no_cleanup): print_and_do("rm fitDiagnostics.root higgsCombineTest.FitDiagnostics.mH120.root")
 
 
                 print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
