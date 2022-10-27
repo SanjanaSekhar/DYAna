@@ -29,7 +29,7 @@ for chan in ["ee"]:
 	is_vec = False	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
-	ending="nlogram_102022"
+	ending="nlogram_LQsig_102022"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
@@ -56,8 +56,8 @@ for chan in ["ee"]:
                                 "RENORM", "FAC", "REFAC", "alphaS"
 			     ]
 	    '''
-	    all_sys = ["nlo_sys","gam_xsec"]
-	    correlate_all = ["nlo_sys","gam_xsec"]
+	    all_sys = ["nlo_sys"]
+	    correlate_all = ["nlo_sys"]
 	    correlate_1718 = []
         else:
 	    '''

@@ -1,2 +1,2 @@
-fit_mdf->Print();
+fit_s->Print();
 .q

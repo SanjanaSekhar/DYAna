@@ -1,4 +1,7 @@
 Systematic uncertainties for bin 0
 LQ LO reweighting & 0.36032 & 1.00  \\ 
+$\ttbar$ Cross Section & 0.00000 & 0.00  \\ 
 $\PGg\PGg$ Cross Section & 0.00000 & 0.00  \\ 
+Diboson Cross Section & 0.00000 & 0.00  \\ 
+DY Cross Section & 0.00000 & 0.00  \\ 
 Total Uncertainty & 0.36  \\ 

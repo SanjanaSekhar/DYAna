@@ -1,0 +1,10 @@
+Systematic uncertainties for bin 0
+LQ LO reweighting & 0.36019 & 0.99  \\ 
+$\PGg\PGg$ Cross Section & 0.01247 & 0.00  \\ 
+DY Cross Section & 0.01247 & 0.00  \\ 
+Electron Trigger Prefire Correction & 0.01247 & 0.00  \\ 
+$\ttbar$ Cross Section & 0.01247 & 0.00  \\ 
+Pileup & 0.01247 & 0.00  \\ 
+Electron MisID Normalization & 0.01247 & 0.00  \\ 
+Diboson Cross Section & 0.01247 & 0.00  \\ 
+Total Uncertainty & 0.36  \\ 

@@ -3,7 +3,7 @@ import ROOT
 from ROOT import *
 from LQ_utils import *
 from add_group_impact import *
-
+import numpy as np
 gROOT.SetBatch(True)
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
@@ -17,8 +17,8 @@ parser.add_option("--diff", default=False, action="store_true", help="Diff")
 
 (options, args) = parser.parse_args()
 
-for chan in ["ee"]:
-    for q in ["u"]:
+for chan in ["ee","mumu"]:
+    for q in ["u","d"]:
         options.mLQ = 2000
         fake_data = True
         no_sys = False
@@ -27,19 +27,21 @@ for chan in ["ee"]:
         year = -1
 	is_vec = False
         #extra_params = "--X-rtd MINIMIZER_no_analytic"
-	ending = "nlogam_102022"
-        s = 123456
+	ending = "fd_102022"
+        s = 3456
         extra_params = " -s %i" % s
 
         if chan == "ee":
-	    '''
+	    
             individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
-            group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
+            
+	    group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
             '''
-	    individual_pars = ["nlo_sys","gam_xsec"]
+	    #individual_pars = ["nlo_sys","dy_xsec","gam_xsec","top_xsec","db_xsec"]
 	    group_pars = []
+	    '''
 	else:
             individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
             group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
@@ -113,7 +115,7 @@ for chan in ["ee"]:
 
         make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,False)
         print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s" % (workspace, extra_params))
-
+	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
         if(options.expected):
             print("Will inject AFB %.2f A0 %.2f for all toys " %(options.Afb, options.A0))
@@ -129,10 +131,11 @@ for chan in ["ee"]:
             extra_params += " --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist -t 1" % s
 
         else:
-            print_and_do("cp higgsCombine_base.MultiDimFit.mH120.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s))
-
-        print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _nom1 %s -v 2""" % (s,extra_params))
-
+            print_and_do("cp higgsCombine_base.MultiDimFit.mH120.%i.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s,s))
+	    #print_and_do("cp higgsCombine_base.FitDiagnostics.mH120.%i.root higgsCombine_nom.FitDiagnostics.mH120.%i.root" % (s,s))
+	    print_and_do("cp multidimfit_base.root multidimfit_nom.root")
+        #print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _nom1 %s """ % (s,extra_params))
+	#print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w --snapshotName FitDiagnostics -n _nom1 %s """ % (s,extra_params))
 
 
 
@@ -141,9 +144,11 @@ for chan in ["ee"]:
         for indi_par in individual_pars:
             n+=1
             freeze_str = par_to_freezestr(indi_par)
-            print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s -v 2""" 
-                    % (freeze_str,s, indi_par, extra_params))
-            sys_unc = compute_sys("nom1", indi_par, -1)
+            #print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+                  #  % (freeze_str,s, indi_par, extra_params))
+            #print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+	    print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+	    sys_unc = compute_sys("nom", indi_par, s)
             #sys_unc = compute_sys("nom", indi_par, s)
             d[indi_par] = sys_unc
             #if(n>2): break
@@ -151,9 +156,11 @@ for chan in ["ee"]:
         for group_par in group_pars:
             n+=1
             freeze_str = par_to_freezestr(group_par)
-            print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _%s %s -v 2""" % 
-                    (freeze_str, s, group_par, extra_params))
-            sys_unc = compute_sys("nom1", group_par, -1)
+            #print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % 
+            #       (freeze_str, s, group_par, extra_params))
+            #print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
+	    print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" %(freeze_str, s, group_par, extra_params))
+	    sys_unc = compute_sys("nom", group_par, s)
             #sys_unc = compute_sys("nom", indi_par, s)
             d[group_par] =sys_unc
             #if(n>4): break
@@ -177,8 +184,6 @@ for chan in ["ee"]:
                 else:
                     out_name = sys_name
                 f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, (val*val)/sum_uncs2))
-
-
+	    f_out.write("Total Uncertainty & %.2f  \\\\ \n" % (np.sqrt(sum_uncs2)))
 
         #print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
-

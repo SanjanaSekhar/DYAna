@@ -1,0 +1,3 @@
+Systematic uncertainties for bin 0
+LQ LO reweighting & 0.36019 & 1.00  \\ 
+Total Uncertainty & 0.36  \\ 

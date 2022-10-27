@@ -1,0 +1,5 @@
+Systematic uncertainties for bin 0
+LQ LO reweighting & 0.36019 & 1.00  \\ 
+$\PGg\PGg$ Cross Section & 0.01247 & 0.00  \\ 
+DY Cross Section & 0.01247 & 0.00  \\ 
+Total Uncertainty & 0.36  \\ 

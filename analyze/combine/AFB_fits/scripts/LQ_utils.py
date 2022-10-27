@@ -98,7 +98,7 @@ def setSnapshot(mdf = False, yLQ2_val = 0.0,  d=''):
     myargs = RooArgSet(fr.floatParsFinal())
     fitted_yLQ2 = myargs.find("yLQ2").getVal()
     #fitted_a0 = myargs.find("A0").getVal()
-    if(yLQ2_val > -0.9):
+    if(yLQ2_val > -5.):
 
         myargs.find("yLQ2").setVal(yLQ2_val)
         #myargs.find("Afb").setError(0.)
@@ -144,7 +144,7 @@ def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False,
     
     if chan=="ee" and (q=="u" or q=="c"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_ue.txt"
-        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_nlogam_ue.txt"
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_ue.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_ee_noLQ.txt"
     if chan=="ee" and (q=="d" or q=="s"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_de.txt"
