@@ -7,6 +7,11 @@ from itertools import *
 
 gROOT.SetBatch(True)
 
+gStyle.SetOptFit(1) 
+
+
+
+
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--yLQ",  default=0.0, type='float', help="yLQ value to inject")
 parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
@@ -17,24 +22,24 @@ parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse
 parser.add_option("--prefit", default=False, action="store_true", help="Sample toys from prefit uncs")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
 parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
-
+parser.add_option("--is_vec", default=False, action="store_true", help="is vec?")
+parser.add_option("--ending",  default="102022", help="png ext")
 (options, args) = parser.parse_args()
 
-gStyle.SetOptFit(1) 
 
 
-options.nToys = 200
-is_vec = False
+#options.nToys = 200
+is_vec = options.is_vec
 mLQ = options.mLQ
 gen_level = False
 no_LQ = False
 fake_data = True
 no_sys = False
 year = -1
-ending = "102022"
+ending = options.ending
+if is_vec: ending = "vec_"+ending
 
-
-if options.chan=="mumu" and options.q=="d": is_vec = True
+#if options.chan=="mumu" and options.q=="d": is_vec = True
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
