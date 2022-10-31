@@ -397,7 +397,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(hmax <= 0. ) hmax = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
     if(logy) hmax *=2;
     h_stack->SetMaximum(hmax);
-    h_stack->SetMinimum(hmin);
+    h_stack->SetMinimum(1e-5);
 
     if(draw_sys_unc){
         gStyle->SetHatchesLineWidth(2);

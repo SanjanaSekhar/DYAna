@@ -7,7 +7,7 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-date = "102022"
+date = "102822"
 
 cmds = [
 #"python scripts/check_sys_uncs.py -o temp/  --mbin $3 --diff \n",
@@ -33,9 +33,18 @@ cmds = [
 #"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d -o temp/ --mLQ 1000\n",
 #"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d -o temp/ --mLQ 1000\n",
 #"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d -o temp/ --mLQ 1000\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q s -o temp/ --mLQ 2000\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q s -o temp/ --mLQ 2000\n",
-"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q s -o temp/ --mLQ 2000\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q s --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q s --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q s --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+#"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+#"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+#"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u --is_vec True --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+#"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+#"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+#"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q u --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q s --is_vec True --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q s --is_vec True --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
+"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q s --is_vec True --nToys 200 -o temp/ --mLQ 2000 --ending 102822\n",
 #"python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d -o temp/ --mLQ 2000\n",
 #"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d -o temp/ --mLQ 2000\n",
 #"python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d -o temp/ --mLQ 2000\n",
@@ -83,8 +92,8 @@ labels = [
         #"gof_prefit",
         #"gof_postfit", 
         #"expected_impacts",  
-        #"bias_test_yLQ0.0_ee_u_m1000",  "bias_test_yLQ0.5_ee_u_m1000",  "bias_test_yLQ1.0_ee_u_m1000",  "bias_test_yLQ0.0_mumu_d_m1000", "bias_test_yLQ0.5_mumu_d_m1000", "bias_test_yLQ1.0_mumu_d_m1000",
-	"bias_test_yLQ0.0_ee_s_m2000",  "bias_test_yLQ0.5_ee_s_m2000",  "bias_test_yLQ1.0_ee_s_m2000", # "bias_test_yLQ0.0_mumu_d_m2000", "bias_test_yLQ0.5_mumu_d_m2000", "bias_test_yLQ1.0_mumu_d_m2000",
+        "bias_test_yLQ0.0_ee_s_m2000",  "bias_test_yLQ0.5_ee_s_m2000",  "bias_test_yLQ1.0_ee_s_m2000",#  "bias_test_yLQ0.0_ee_u_vec_m2000", "bias_test_yLQ0.5_ee_u_vec_m2000", "bias_test_yLQ1.0_ee_u_vec_m2000",
+	"bias_test_yLQ0.0_mumu_s_vec_m2000",  "bias_test_yLQ0.5_mumu_s_vec_m2000",  "bias_test_yLQ1.0_mumu_s_vec_m2000", # "bias_test_yLQ0.0_mumu_d_vec_m2000", "bias_test_yLQ0.5_mumu_d_vec_m2000", "bias_test_yLQ1.0_mumu_d_vec_m2000",
        #"limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
 	#"limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
 	#"limits_ee_s","limits_mumu_s",

@@ -111,7 +111,7 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
-        bool pass  = tm.m >= m_low && tm.m <= m_high && tm.met_pt < met_cut && tm.has_no_bjets;
+        bool pass  = tm.m >= m_low && tm.m <= m_high; //&& tm.met_pt < met_cut && tm.has_no_bjets;
         if(pass){
 
             nEvents++;
@@ -156,7 +156,7 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.not_cosmic;//&& tm.met_pt < met_cut  && tm.has_no_bjets ;
             //bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.has_no_bjets && tm.not_cosmic;
             //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
             //pass = pass && good_eta;
@@ -238,7 +238,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
         for (int i=0; i<tm.nEntries; i++) {
             tm.getEvent(i);
 
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets;
+            bool pass = (tm.m >= m_low && tm.m <= m_high); //&& tm.met_pt < met_cut  && tm.has_no_bjets;
 
             //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
             //pass = pass && good_eta;
@@ -452,7 +452,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
             tm.getEvent(i);
 
             bool opp_sign =  ((abs(tm.mu1_charge - tm.el1_charge)) > 0.01);
-            bool pass = tm.m>= m_low && tm.m <= m_high && tm.met_pt < met_cut  && tm.has_no_bjets && opp_sign &&
+            bool pass = tm.m>= m_low && tm.m <= m_high && opp_sign &&//tm.met_pt < met_cut  && tm.has_no_bjets && opp_sign &&
 
                 ((flag1 == FLAG_MUONS && tm.mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && tm.el1_pt > 29.));
             if(pass){

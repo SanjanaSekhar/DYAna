@@ -1875,3 +1875,322 @@ Bin        Contents        Error           Notes
 >>> 0 out of 3 channels masked
 
 SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 1.03 min (cpu), 1.03 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 0.82 min (cpu), 0.82 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.174
+Done in 1.01 min (cpu), 1.01 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 1.02 min (cpu), 1.02 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 0.95 min (cpu), 0.95 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 1.04 min (cpu), 1.04 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.176
+Done in 0.96 min (cpu), 0.96 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 0.99 min (cpu), 0.99 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 1.02 min (cpu), 1.02 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.179
+Done in 0.94 min (cpu), 0.94 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.166
+Done in 0.92 min (cpu), 0.92 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 0.91 min (cpu), 0.91 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.170
+Done in 0.67 min (cpu), 0.67 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.175
+Done in 0.36 min (cpu), 0.37 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.174
+Done in 0.91 min (cpu), 0.91 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.171
+Done in 0.86 min (cpu), 0.86 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 1.00 min (cpu), 1.00 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.177
+Done in 0.95 min (cpu), 0.95 min (real)
+ <<< Combine >>> 
+   Options for Robust Minimizer :: 
+        Tolerance  0.1
+        Strategy   0
+        Type,Algo  Minuit2,Migrad
+>>> method used is MultiDimFit
+>>> random number generator seed is 3456
+>>> 0 out of 3 channels masked
+
+SimNLL created with 3 channels, 0 generic constraints, 324 fast gaussian constraints, 0 fast poisson constraints, 0 fast group constraints, 
+
+ --- MultiDimFit ---
+best fit parameter values: 
+   yLQ2 :    -0.182
+Done in 0.62 min (cpu), 0.62 min (real)
+mkdir: cannot create directory 'sys_uncs/': File exists
+/LYRV/1.020/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/LUMIYR/LUMI17/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/YRC/1718/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/YR/17/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y17_LQ.txt
+Exec: sed -i "s/#prefire/prefire/g" cards/combined_fit_y17_LQ.txt
+Exec: cp card_templates/LQ_combined_fit_template_fake_dm.txt cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LBCV/1.002/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LLSV/1.002/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LDBV/  -  /g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LXYV/1.020/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LGSV/  -  /g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LYRV/1.015/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/LUMIYR/LUMI18/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/YRC/1718/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/YR/18/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/MASS/2000/g" cards/combined_fit_y18_LQ.txt
+Exec: sed -i "s/QUARK/s_vec/g" cards/combined_fit_y18_LQ.txt
+Exec: combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > cards/combined_fit_LQ.txt
+Exec: text2workspace.py cards/combined_fit_LQ.txt -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o workspaces/mumu_s_sys_uncs_m2000.root --channel-masks 
+Exec: combine -M MultiDimFit -d workspaces/mumu_s_sys_uncs_m2000.root --saveFitResult --saveWorkspace -n _base --robustFit 1   -s 3456
+Exec: cp higgsCombine_base.MultiDimFit.mH120.3456.root higgsCombine_nom.MultiDimFit.mH120.3456.root
+Exec: cp multidimfit_base.root multidimfit_nom.root
+Exec: combine -M MultiDimFit --freezeParameters nlo_sys -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _nlo_sys  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters dy_xsec -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _dy_xsec  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters db_xsec -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _db_xsec  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters top_xsec -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _top_xsec  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters gam_xsec -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _gam_xsec  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters muFakes16,muFakes17,muFakes18 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _muFakesYR  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters Pu -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _Pu  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters muPref16,muPref1718 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _muPrefYRC  -s 3456
+Exec: combine -M MultiDimFit --freezeParameters muRC16,muRC17,muRC18 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _muRCYR  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups RFscales16,RFscales1718 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _RFscalesYRC  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups emucostrws16,emucostrws1718 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _emucostrwsYRC  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups ptrws16,ptrws1718 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _ptrwsYRC  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups pdfs -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _pdfs  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups lumis16,lumis17,lumis18 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _lumisYR  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups muIDs16,muIDs17,muIDs18 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _muIDsYR  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups muHLTs16,muHLTs17,muHLTs18 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _muHLTsYR  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups mufakesrws16,mufakesrws17,mufakesrws18 -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _mufakesrwsYR  -s 3456
+Exec: combine -M MultiDimFit --freezeNuisanceGroups autoMCStats -d higgsCombine_nom.MultiDimFit.mH120.3456.root  --saveFitResult --robustFit 1 -n _autoMCStats  -s 3456
+{'lumisYR': 0.09835415351513123, 'db_xsec': 0.012722424516183842, 'mufakesrwsYR': 0.013431726891542211, 'muHLTsYR': 0.01289066714007062, 'muIDsYR': 0.09566738025550056, 'Pu': 0.015579208838301915, 'muRCYR': 0.07047973880020685, 'ptrwsYRC': 0.13636463545255342, 'RFscalesYRC': 0.11690910351838771, 'top_xsec': 0.06097472197992068, 'muFakesYR': 0.02565501071865471, 'autoMCStats': 0.056673836787037024, 'muPrefYRC': 0.0042947620649046205, 'pdfs': 0.06743342656620963, 'dy_xsec': 0.10737263232027015, 'emucostrwsYRC': 0.02532725163752383, 'gam_xsec': 0.008060595462707494, 'nlo_sys': 0.19476335203453313}

@@ -55,7 +55,7 @@ void LQ_check_metcut(){
 
      // for(int i=i_start;i<=i_end;i++)
       // {
-        Double_t m_LQ=1500.;
+        Double_t m_LQ=2000.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -213,7 +213,7 @@ void LQ_check_metcut(){
          
             
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_eu",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}",m_LQ/1000,year);
                 TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_u->SetTitle(mu_title); 
                h1_mumu_LQpure_u->Draw("hist");
@@ -233,7 +233,7 @@ void LQ_check_metcut(){
                 c_mumu1->Print(mu_fname1);
                 delete c_mumu1;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_eu",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}",m_LQ/1000,year);
                 TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_u->SetTitle(mu_title); 
                h1_mumu_LQint_u->Draw("hist");
@@ -254,7 +254,7 @@ void LQ_check_metcut(){
                 delete c_mumu2;
                 
                 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_ed",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}",m_LQ/1000,year);
                 TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_d->SetTitle(mu_title);
                 h1_mumu_LQpure_d->Draw("hist");
@@ -268,7 +268,7 @@ void LQ_check_metcut(){
                 c_mumu3->Print(mu_fname3);
                 delete c_mumu3;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_ed",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}",m_LQ/1000,year);
                 TCanvas *c_mumu4 = new TCanvas("c_mumu4", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_d->SetTitle(mu_title);
                 h1_mumu_LQint_d->Draw("hist");
@@ -282,7 +282,7 @@ void LQ_check_metcut(){
                 c_mumu4->Print(mu_fname4);
                 delete c_mumu4;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_eu",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
                 TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_u_vec->SetTitle(mu_title);
                 h1_mumu_LQpure_u_vec->Draw("hist");
@@ -296,7 +296,7 @@ void LQ_check_metcut(){
                 c_mumu5->Print(mu_fname5);
                 delete c_mumu5;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_eu",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
                 TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_u_vec->SetTitle(mu_title);
                 h1_mumu_LQint_u_vec->Draw("hist");
@@ -310,7 +310,7 @@ void LQ_check_metcut(){
                 c_mumu6->Print(mu_fname6);
                 delete c_mumu6;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_ed",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
                 TCanvas *c_mumu7 = new TCanvas("c_mumu7", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_d_vec->SetTitle(mu_title);
                 h1_mumu_LQpure_d_vec->Draw("hist");
@@ -324,7 +324,7 @@ void LQ_check_metcut(){
                 c_mumu7->Print(mu_fname7);
                 delete c_mumu7;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_ed",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
                 TCanvas *c_mumu8 = new TCanvas("c_mumu8", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_d_vec->SetTitle(mu_title);
                 h1_mumu_LQint_d_vec->Draw("hist");
@@ -473,7 +473,7 @@ void LQ_check_metcut(){
          
             
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV S_eu",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV S_{eu}",m_LQ/1000,year);
                 TCanvas *c_elel1 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQpure_u->SetTitle(el_title); 
                h1_elel_LQpure_u->Draw("hist");
@@ -493,7 +493,7 @@ void LQ_check_metcut(){
                 c_elel1->Print(el_fname1);
                 delete c_elel1;
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV S_eu",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV S_{eu}",m_LQ/1000,year);
                 TCanvas *c_elel2 = new TCanvas("c_elel2", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQint_u->SetTitle(el_title); 
                h1_elel_LQint_u->Draw("hist");
@@ -514,7 +514,7 @@ void LQ_check_metcut(){
                 delete c_elel2;
                 
                 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV S_ed",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV S_{ed}",m_LQ/1000,year);
                 TCanvas *c_elel3 = new TCanvas("c_elel3", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQpure_d->SetTitle(el_title);
                 h1_elel_LQpure_d->Draw("hist");
@@ -528,7 +528,7 @@ void LQ_check_metcut(){
                 c_elel3->Print(el_fname3);
                 delete c_elel3;
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV S_ed",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV S_{ed}",m_LQ/1000,year);
                 TCanvas *c_elel4 = new TCanvas("c_elel4", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQint_d->SetTitle(el_title);
                 h1_elel_LQint_d->Draw("hist");
@@ -542,7 +542,7 @@ void LQ_check_metcut(){
                 c_elel4->Print(el_fname4);
                 delete c_elel4;
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV V_eu",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV V_{eu}",m_LQ/1000,year);
                 TCanvas *c_elel5 = new TCanvas("c_elel5", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQpure_u_vec->SetTitle(el_title);
                 h1_elel_LQpure_u_vec->Draw("hist");
@@ -556,7 +556,7 @@ void LQ_check_metcut(){
                 c_elel5->Print(el_fname5);
                 delete c_elel5;
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV V_eu",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV V_{eu}",m_LQ/1000,year);
                 TCanvas *c_elel6 = new TCanvas("c_elel6", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQint_u_vec->SetTitle(el_title);
                 h1_elel_LQint_u_vec->Draw("hist");
@@ -570,7 +570,7 @@ void LQ_check_metcut(){
                 c_elel6->Print(el_fname6);
                 delete c_elel6;
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV V_ed",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV V_{ed}",m_LQ/1000,year);
                 TCanvas *c_elel7 = new TCanvas("c_elel7", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQpure_d_vec->SetTitle(el_title);
                 h1_elel_LQpure_d_vec->Draw("hist");
@@ -584,7 +584,7 @@ void LQ_check_metcut(){
                 c_elel7->Print(el_fname7);
                 delete c_elel7;
 
-                sprintf(el_title, "Channel : Electrons, %.1f TeV V_ed",m_LQ/1000,year);
+                sprintf(el_title, "Channel : Electrons, %.1f TeV V_{ed}",m_LQ/1000,year);
                 TCanvas *c_elel8 = new TCanvas("c_elel8", "Histograms", 200, 10, 900, 700);
                 h1_elel_LQint_d_vec->SetTitle(el_title);
                 h1_elel_LQint_d_vec->Draw("hist");
