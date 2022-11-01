@@ -30,14 +30,17 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-int year = 2018;
+//int year = 2018;
 char *out_file = "../analyze/SFs/2018/dy_ss_rw.root";
-bool write_out = false;
-char *plot_dir = "Misc_plots/samesign_cmp_mlow/";
+bool write_out = true;
+char *plot_dir = "AN_plots/samesign_cmp_mlow/";
 //char *plot_dir = "Paper_plots/";
 
 
 void draw_samesign_mlow_cmp(){
+    
+
+    for(int year = 2016; year <= 2018; year++){
     init(year);
     init_mlow(year);
 
@@ -160,7 +163,7 @@ void draw_samesign_mlow_cmp(){
 
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.25, 0.25);
+    TLegend *leg1 = new TLegend(0.2, 0.7, 0.5,0.95);
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(DY_m, "DY (miss-sign)", "f");
     leg1->AddEntry(back_m, "t#bar{t} + wt + WW + WZ + ZZ", "f");
@@ -224,7 +227,7 @@ void draw_samesign_mlow_cmp(){
     }
 
     
-
+}
 }
 
     

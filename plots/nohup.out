@@ -1,0 +1,17 @@
+
+Processing ElEl/draw_samesign_mlow_cmp.C...
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:29:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/../../utils/PlotUtils.C:172:139: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
+                                                                                                                                          ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/../../utils/PlotUtils.C:422:26: warning: implicit conversion from 'double' to 'Width_t' (aka 'short') changes value from 2.5 to 2 [-Wliteral-conversion]
+    h_data->SetLineWidth(2.5);
+            ~~~~~~~~~~~~ ^~~
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:34:18: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *out_file = "../analyze/SFs/2018/dy_ss_rw.root";
+                 ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:36:18: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *plot_dir = "Misc_plots/samesign_cmp_mlow/";
+                 ^

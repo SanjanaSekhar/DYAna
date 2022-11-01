@@ -1,0 +1,34 @@
+
+Processing ElEl/draw_samesign_mlow_cmp.C...
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:29:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/../../utils/PlotUtils.C:172:139: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
+                                                                                                                                          ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/../../utils/PlotUtils.C:422:26: warning: implicit conversion from 'double' to 'Width_t' (aka 'short') changes value from 2.5 to 2 [-Wliteral-conversion]
+    h_data->SetLineWidth(2.5);
+            ~~~~~~~~~~~~ ^~~
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:34:18: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *out_file = "../analyze/SFs/2018/dy_ss_rw.root";
+                 ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:36:18: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *plot_dir = "AN_plots/samesign_cmp_mlow/";
+                 ^
+Error in <TFile::TFile>: file ../analyze/output_files/2016/ElEl16_dy_mlow_jan28.root does not exist
+init year 2016  
+#0  0x00007f641401860c in waitpid () from /lib64/libc.so.6
+#1  0x00007f6413f95f62 in do_system () from /lib64/libc.so.6
+#2  0x00007f6414b5e75f in TUnixSystem::StackTrace() () from /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.12.07-dlmfga/lib/libCore.so
+#3  0x00007f6410c78f65 in cling::MultiplexInterpreterCallbacks::PrintStackTrace() () from /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.12.07-dlmfga/lib/libCling.so
+#4  0x00007f6410c78a3b in cling_runtime_internal_throwIfInvalidPointer () from /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.12.07-dlmfga/lib/libCling.so
+#5  0x00007f6405d69e16 in ?? ()
+#6  0x00000000000000c3 in ?? ()
+#7  0x0000000000000000 in ?? ()
+Error in <HandleInterpreterException>: Trying to dereference null pointer or trying to call routine taking non-null arguments.
+Execution of your code was aborted.
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/draw_samesign_mlow_cmp.C:28:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/ElEl/../../utils/root_files.h:135:35: warning: null passed to a callee that requires a non-null argument [-Wnonnull]
+        t_elel_dy_mlow = (TTree *)f_elel_dy_mlow->Get("T_sig");
+                                  ^~~~~~~~~~~~~~

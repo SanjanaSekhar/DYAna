@@ -324,7 +324,7 @@ for(int year = 2016; year <= 2018; year++){
     float x_size = 0.4;
     float y_size = 0.3;
 
-    TLegend *leg1 = new TLegend(x_size, y_size);
+    TLegend *leg1 = new TLegend(0.3,0.7,0.7,0.95);
     leg1->SetNColumns(2);
     leg1->SetHeader("Dielectron Signal Region");
     leg1->AddEntry(data_m, "data", "p");
