@@ -154,7 +154,7 @@ void draw_pileup(){
     data_pu->Draw("P same");
     before_pad1->SetLogy();
     before_pad1->Update();
-    TLegend *leg3 = new TLegend(0.5, 0.65, 0.75, 0.8);
+    TLegend *leg3 = new TLegend(0.65, 0.65, 0.9, 0.8);
     leg3->AddEntry(data_pu, "data", "p");
     leg3->AddEntry(mc_pu_before, "DY (q#bar{q}, qg #bar{q}g)", "f");
     //leg3->AddEntry(mc_nosig_pu_before, "DY no asymmety(gg, qq, #bar{q}#bar{q})", "f");

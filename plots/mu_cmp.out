@@ -1,0 +1,178 @@
+
+Processing MuMu/draw_cmp.C...
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/MuMu/draw_cmp.C:27:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/MuMu/../../utils/PlotUtils.C:172:139: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
+                                                                                                                                          ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/MuMu/../../utils/PlotUtils.C:422:26: warning: implicit conversion from 'double' to 'Width_t' (aka 'short') changes value from 2.5 to 2 [-Wliteral-conversion]
+    h_data->SetLineWidth(2.5);
+            ~~~~~~~~~~~~ ^~~
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/MuMu/draw_cmp.C:37:18: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *plot_dir = "AN_plots/prefit_kinematics/";
+                 ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/MuMu/draw_cmp.C:42:20: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *plot_label = "";
+                   ^
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Invalid MIT-MAGIC-COOKIE-1 keyError in <TGClient::TGClient>: can't open display "localhost:10.0", switching to batch mode...
+ In case you run from a remote ssh session, reconnect with ssh -Y
+init year 2016  
+Selected 3103 events 
+Selected 366768 events 
+Selected 2886 events 
+Selected 1520 events 
+Selected 58 events 
+Selected 2553 events 
+Selected 5768 events 
+After iter 0 current fakerate est is 13 
+After iter 1 current fakerate est is 13 
+After iter 2 current fakerate est is 6 
+After iter 3 current fakerate est is 6 
+Total fakerate est is 6 +/- 1 
+Data integral is 3103.00 
+DY integral is 2344.31 
+ttbar integral is 508.09 
+diboson integral is 186.02 
+fakes integral is 6.49 
+not const size
+Made ratio plot for label m chi2/dof = 11.6/10 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu16_m_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+const size
+Made ratio plot for label cost chi2/dof = 6.4/10 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu16_cost_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+not const size
+Made ratio plot for label pt chi2/dof = 3.5/7 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu16_pt_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+not const size
+Made ratio plot for label xf chi2/dof = 1.6/5 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu16_xf_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+const size
+Made ratio plot for label phi chi2/dof = 6.8/20 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu16_phi_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+const size
+Made ratio plot for label rap chi2/dof = 7.0/20 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu16_rap_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_m
+init year 2017  
+hlt
+id
+iso
+Selected 3953 events 
+Selected 667207 events 
+Selected 5011 events 
+Selected 1928 events 
+Selected 485 events 
+Selected 2245 events 
+Selected 5515 events 
+After iter 0 current fakerate est is 92 
+After iter 1 current fakerate est is 89 
+After iter 2 current fakerate est is 51 
+After iter 3 current fakerate est is 51 
+Total fakerate est is 51 +/- 4 
+Data integral is 3951.00 
+DY integral is 2696.98 
+ttbar integral is 603.20 
+diboson integral is 194.57 
+fakes integral is 50.97 
+not const size
+Made ratio plot for label m chi2/dof = 7.6/10 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu17_m_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_cost
+const size
+Made ratio plot for label cost chi2/dof = 7.2/10 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu17_cost_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_pt
+not const size
+Made ratio plot for label pt chi2/dof = 2.7/7 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu17_pt_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_xf
+not const size
+Made ratio plot for label xf chi2/dof = 2.2/5 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu17_xf_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_phi
+const size
+Made ratio plot for label phi chi2/dof = 7.1/20 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu17_phi_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_rap
+const size
+Made ratio plot for label rap chi2/dof = 11.0/20 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu17_rap_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_m
+init year 2018  
+Selected 5578 events 
+Selected 679084 events 
+Selected 5346 events 
+Selected 12347 events 
+Selected 596 events 
+Selected 1253 events 
+Selected 9379 events 
+After iter 0 current fakerate est is 61 
+After iter 1 current fakerate est is 60 
+After iter 2 current fakerate est is 33 
+After iter 3 current fakerate est is 33 
+Total fakerate est is 33 +/- 2 
+Data integral is 5571.00 
+DY integral is 3810.02 
+ttbar integral is 820.74 
+diboson integral is 267.58 
+fakes integral is 33.36 
+not const size
+Made ratio plot for label m chi2/dof = 11.3/10 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu18_m_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_cost
+const size
+Made ratio plot for label cost chi2/dof = 6.8/10 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu18_cost_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_pt
+not const size
+Made ratio plot for label pt chi2/dof = 4.7/7 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu18_pt_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_xf
+not const size
+Made ratio plot for label xf chi2/dof = 3.7/5 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu18_xf_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_phi
+const size
+Made ratio plot for label phi chi2/dof = 10.9/20 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu18_phi_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_rap
+const size
+Made ratio plot for label rap chi2/dof = 18.5/20 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/prefit_kinematics/MuMu18_rap_cmp.pdf has been created

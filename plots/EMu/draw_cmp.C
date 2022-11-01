@@ -29,7 +29,7 @@
 #include "../../utils/root_files.h"
 #include "../../utils/Colors.h"
 
-int year = 2018;
+//for(int year = 2016; year <=2018; year++){
 const bool write_out = true;
 char *plot_dir = "AN_plots/";
 //char *plot_label = "e#mu Control Region";
@@ -41,6 +41,7 @@ char *plot_label = "";
 
 void draw_cmp(){
 
+for(int year = 2016; year <=2018; year++){
     printf("Year is %i \n", year);
     setTDRStyle();
 
@@ -48,10 +49,10 @@ void draw_cmp(){
     init_emu_indv_bkgs(year);
     setup_all_SFs(year);
 
-    int n_m_bins = 2;
+    int n_m_bins = 5;
     float mbin_base = 10.;
     //Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 500., 700., 1000.};
-    Float_t mbins1[] = {500., 700., 1000.};	
+    Float_t mbins1[] = {500., 550., 600., 700., 850.,1000.};	
     TH1F *data_m = new TH1F("data_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
     TH1F *ttbar_m = new TH1F("ttbar_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
     TH1F *diboson_m = new TH1F("diboson_m", "MC Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
@@ -341,7 +342,7 @@ void draw_cmp(){
 }
 
 
-
+}
 
 
 

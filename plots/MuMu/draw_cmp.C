@@ -328,10 +328,13 @@ for(int year = 2016; year<=2018; year++){
     gStyle->SetLegendBorderSize(0);
     float x_size = 0.4;
     float y_size = 0.3;
-
+    float x_start = 0.3;
+    float x_end = 0.7;
+    float y_start = 0.7;
+    float y_end = 1.0;
 
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
-    TLegend *leg1 = new TLegend(x_size, y_size);
+    TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
     leg1->SetNColumns(2);
     leg1->SetHeader("Dimuon Signal Region");
     leg1->AddEntry(data_m, "data", "p");

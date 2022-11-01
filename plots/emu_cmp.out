@@ -1,0 +1,153 @@
+
+Processing EMu/draw_cmp.C...
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/EMu/draw_cmp.C:28:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/EMu/../../utils/PlotUtils.C:172:139: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
+                                                                                                                                          ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/EMu/../../utils/PlotUtils.C:422:26: warning: implicit conversion from 'double' to 'Width_t' (aka 'short') changes value from 2.5 to 2 [-Wliteral-conversion]
+    h_data->SetLineWidth(2.5);
+            ~~~~~~~~~~~~ ^~~
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/EMu/draw_cmp.C:34:18: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *plot_dir = "AN_plots/";
+                 ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/EMu/draw_cmp.C:36:20: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+char *plot_label = "";
+                   ^
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Invalid MIT-MAGIC-COOKIE-1 keyError in <TGClient::TGClient>: can't open display "localhost:10.0", switching to batch mode...
+ In case you run from a remote ssh session, reconnect with ssh -Y
+Year is 2016 
+Selected 1053 events 
+Selected 2134 events 
+Selected 3687 events 
+Selected 99 events 
+Selected 4883 events 
+After iter 0 current fakerate est is 132 
+After iter 1 current fakerate est is 132 
+After iter 2 current fakerate est is 50 
+After iter 3 current fakerate est is 50 
+Total fakerate est is 49 
+Data count 1029 +/- 32 
+MC count 990 +/- 133 
+TTbar count 669  (frac 0.64) 
+WT count 114  (frac 0.11) 
+Diboson count 202 (frac 0.19 ) 
+Fake count 49 +/- 27 (frac 0.05) 
+Ratio is 0.991 +/- 0.133 
+F 569, B 484 
+AFB 0.081 +/- 0.031 
+total_mc F 548, B 525 
+total_mc AFB 0.022 +/- 0.019 
+Diboson F 116, B 95 
+Diboson AFB 0.102 +/- 0.050 
+not const size
+Made ratio plot for label m chi2/dof = 8.8/5 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu16_m_cmp.pdf has been created
+const size
+Made ratio plot for label cost chi2/dof = 13.6/8 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu16_cost_cmp.pdf has been created
+const size
+Made ratio plot for label pt chi2/dof = 12.6/30 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu16_pt_cmp.pdf has been created
+const size
+Made ratio plot for label rap chi2/dof = 15.6/20 
+2016 (36 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu16_rap_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_m
+Year is 2017 
+hlt
+id
+iso
+Selected 1306 events 
+Selected 2983 events 
+Selected 4157 events 
+Selected 782 events 
+Selected 9627 events 
+After iter 0 current fakerate est is 80 
+After iter 1 current fakerate est is 79 
+After iter 2 current fakerate est is 33 
+After iter 3 current fakerate est is 33 
+Total fakerate est is 37 
+Data count 1277 +/- 36 
+MC count 1159 +/- 155 
+TTbar count 808  (frac 0.68) 
+WT count 121  (frac 0.10) 
+Diboson count 223 (frac 0.19 ) 
+Fake count 37 +/- 20 (frac 0.03) 
+Ratio is 1.068 +/- 0.143 
+F 669, B 637 
+AFB 0.025 +/- 0.028 
+total_mc F 639, B 589 
+total_mc AFB 0.041 +/- 0.013 
+Diboson F 139, B 96 
+Diboson AFB 0.184 +/- 0.030 
+not const size
+Made ratio plot for label m chi2/dof = 4.3/5 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu17_m_cmp.pdf has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_cost
+const size
+Made ratio plot for label cost chi2/dof = 5.6/8 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu17_cost_cmp.pdf has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_pt
+const size
+Made ratio plot for label pt chi2/dof = 31.8/30 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu17_pt_cmp.pdf has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_rap
+const size
+Made ratio plot for label rap chi2/dof = 12.4/20 
+2017 (42 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu17_rap_cmp.pdf has been created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_m
+Year is 2018 
+Selected 2138 events 
+Selected 18785 events 
+Selected 7164 events 
+Selected 872 events 
+Selected 9860 events 
+After iter 0 current fakerate est is 137 
+After iter 1 current fakerate est is 136 
+After iter 2 current fakerate est is 74 
+After iter 3 current fakerate est is 74 
+Total fakerate est is 61 
+Data count 2077 +/- 46 
+MC count 1776 +/- 237 
+TTbar count 1249  (frac 0.68) 
+WT count 184  (frac 0.10) 
+Diboson count 335 (frac 0.18 ) 
+Fake count 61 +/- 34 (frac 0.03) 
+Ratio is 1.131 +/- 0.150 
+F 1086, B 1052 
+AFB 0.016 +/- 0.022 
+total_mc F 976, B 909 
+total_mc AFB 0.036 +/- 0.007 
+Diboson F 212, B 142 
+Diboson AFB 0.197 +/- 0.016 
+not const size
+Made ratio plot for label m chi2/dof = 4.9/5 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu18_m_cmp.pdf has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_cost
+const size
+Made ratio plot for label cost chi2/dof = 11.4/8 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu18_cost_cmp.pdf has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_pt
+const size
+Made ratio plot for label pt chi2/dof = 35.0/30 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu18_pt_cmp.pdf has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_rap
+const size
+Made ratio plot for label rap chi2/dof = 28.3/20 
+2018 (59 fb^{-1})
+Info in <TCanvas::Print>: pdf file AN_plots/EMu18_rap_cmp.pdf has been created
