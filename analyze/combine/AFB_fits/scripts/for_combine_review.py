@@ -63,10 +63,16 @@ for is_vec in [False,True]:
 			extra_arg = ""
 			print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s " % (comb_card, workspace))
 			print_and_do("combine -M FitDiagnostics -d %s  --setParameters yLQ2=0.0  --forceRecreateNLL -n _t0" %workspace)
-			print_and_do("python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py  -a fitDiagnostics_t0.root -g plots_t0.root >> combine_review/fitResults_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
+			print_and_do("python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py  -a fitDiagnostics_t0.root -g plots_t0.root > combine_review/fitResults_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 
 			print_and_do("combine -M FitDiagnostics -d %s  --setParameters yLQ2=1.0  --forceRecreateNLL -n _t1" %workspace)
 			# Increase the rMin value if (rMin * Nsig + Nbackground) < 0 for any channel
-			print_and_do("python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py  -a fitDiagnostics_t1.root -g plots_t1.root >> combine_review/fitResults_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
+			print_and_do("python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py  -a fitDiagnostics_t1.root -g plots_t1.root > combine_review/fitResults_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 
+			print_and_do("combineTool.py -M Impacts -d %s --setParameters yLQ2=0.0 --doInitialFit --allPars -n t0_%s_%s_%s"%(workspace,chan,q,("vec" if is_vec else "")))
+			print_and_do("combineTool.py -M Impacts -d %s --setParameters yLQ2=1.0 --doInitialFit --allPars -n t1_%s_%s_%s"%(workspace,chan,q,("vec" if is_vec else "")))
 
+			print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json --setParameters yLQ2=0.0 --doFits -n t0 --job-mode condor --task-name t0 --sub-opts '+JobFlavour = "espresso"\nrequirements = (OpSysAndVer =?= "CentOS7")'"%(workspace,chan,q,("vec" if is_vec else "")))
+			print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json --setParameters yLQ2=0.0 --doFits -n t1 --job-mode condor --task-name t1 --sub-opts '+JobFlavour = "espresso"\nrequirements = (OpSysAndVer =?= "CentOS7")'"%(workspace,chan,q,("vec" if is_vec else "")))
+
+			print_and_do("ValidateDatacards.py %s"%comb_card)
