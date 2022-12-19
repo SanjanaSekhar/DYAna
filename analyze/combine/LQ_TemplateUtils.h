@@ -72,7 +72,7 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
    //int base = (k-1)*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
    int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
    if(i <= n_binsx/2) return base + (i-1) * n_binsy + j;
-   if(j == n_binsy) {j-=1; }
+   if(j == n_binsy or j == (n_binsy/2 + 1) ) {j-=1; }
    if(j>1) {j-=1; }
 
    return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
