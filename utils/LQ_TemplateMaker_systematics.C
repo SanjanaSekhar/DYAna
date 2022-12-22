@@ -523,7 +523,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 	}
 
 	int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpure_d, TH3F *h_LQint_d,TH3F *h_LQpure_u_vec, TH3F *h_LQint_u_vec,TH3F *h_LQpure_d_vec, TH3F *h_LQint_d_vec,
-		int year, float m_LQ, int flag1 = FLAG_MUONS, bool make_ud = true, bool metcut = false, bool use_xF = false, const string &sys_label = "" ){
+		int year, float m_LQ, int flag1 = FLAG_MUONS, bool make_ud = true, bool ptcut = false, bool use_xF = false, const string &sys_label = "" ){
 
 		printf("Making LQ mc template for sys %s \n", sys_label.c_str());
 
@@ -559,12 +559,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			tm.getEvent(i);
 			tm.doCorrections();
 			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets;
-			if(metcut) pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
+			pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
+
 			
 			if(pass){
+
 	//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
 				//tm.doCorrections();
-				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
+				if(ptcut and ((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.))) {
 				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
 
