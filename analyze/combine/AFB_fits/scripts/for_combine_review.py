@@ -61,18 +61,25 @@ for is_vec in [False,True]:
 
 			
 			extra_arg = ""
+			'''
 			print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s " % (comb_card, workspace))
-			print_and_do("combine -M FitDiagnostics -d %s  --setParameters yLQ2=0.0  --forceRecreateNLL -n _t0" %workspace)
+			print_and_do("combine -M FitDiagnostics -d %s  --setParameters yLQ2=0.0,A0=0.05,A4=1.6  --forceRecreateNLL -n _t0" %workspace)
 			print_and_do("python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py  -a fitDiagnostics_t0.root -g plots_t0.root > combine_review/fitResults_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 
-			print_and_do("combine -M FitDiagnostics -d %s  --setParameters yLQ2=1.0  --forceRecreateNLL -n _t1" %workspace)
+			print_and_do("combine -M FitDiagnostics -d %s  --setParameters yLQ2=1.0,A0=0.05,A4=1.6  --forceRecreateNLL -n _t1" %workspace)
 			# Increase the rMin value if (rMin * Nsig + Nbackground) < 0 for any channel
 			print_and_do("python $CMSSW_BASE/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py  -a fitDiagnostics_t1.root -g plots_t1.root > combine_review/fitResults_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 
-			print_and_do("combineTool.py -M Impacts -d %s --setParameters yLQ2=0.0 --doInitialFit --allPars -n t0_%s_%s_%s"%(workspace,chan,q,("vec" if is_vec else "")))
-			print_and_do("combineTool.py -M Impacts -d %s --setParameters yLQ2=1.0 --doInitialFit --allPars -n t1_%s_%s_%s"%(workspace,chan,q,("vec" if is_vec else "")))
+			print_and_do("combineTool.py -M Impacts -d %s --setParameters yLQ2=0.0,A0=0.05,A4=1.6 -m 125 --doInitialFit --allPars -n t0"%workspace)
+			print_and_do("combineTool.py -M Impacts -d %s --setParameters yLQ2=1.0,A0=0.05,A4=1.6 -m 125 --doInitialFit --allPars -n t1"%(workspace))
 
-			print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json --setParameters yLQ2=0.0 --doFits -n t0 --job-mode condor --task-name t0 --sub-opts '+JobFlavour = "espresso"\nrequirements = (OpSysAndVer =?= "CentOS7")'"%(workspace,chan,q,("vec" if is_vec else "")))
-			print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json --setParameters yLQ2=0.0 --doFits -n t1 --job-mode condor --task-name t1 --sub-opts '+JobFlavour = "espresso"\nrequirements = (OpSysAndVer =?= "CentOS7")'"%(workspace,chan,q,("vec" if is_vec else "")))
-
-			print_and_do("ValidateDatacards.py %s"%comb_card)
+			print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json --setParameters yLQ2=0.0,A0=0.05,A4=1.6 --doFits -m 125 -n t0 "%(workspace,chan,q,("vec" if is_vec else "")))
+			print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json --setParameters yLQ2=0.0,A0=0.05,A4=1.6 --doFits -m 125 -n t1 "%(workspace,chan,q,("vec" if is_vec else "")))
+			
+			print_and_do("combineTool.py -M Impacts -d %s  -m 125 -n t0 -o impacts_t0_%s_%s_%s.json"%(workspace,chan,q,("vec" if is_vec else "")))
+			print_and_do("combineTool.py -M Impacts -d %s  -m 125 -n t1 -o impacts_t1_%s_%s_%s.json"%(workspace,chan,q,("vec" if is_vec else "")))
+			print_and_do("plotImpacts.py -i  impacts_t0_%s_%s_%s.json -o  impacts_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else ""),chan,q,("vec" if is_vec else "")))
+			print_and_do("plotImpacts.py -i  impacts_t1_%s_%s_%s.json -o  impacts_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else ""),chan,q,("vec" if is_vec else "")))
+			'''
+			print_and_do("cd cards")
+			print_and_do("ValidateDatacards.py %s"%comb_card[6:])

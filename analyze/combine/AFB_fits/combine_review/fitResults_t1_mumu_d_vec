@@ -322,7 +322,7 @@
 [#0] ERROR:InputArguments -- RooFitResult::correlation() parameter r is not a floating fit parameter
 [#0] ERROR:InputArguments -- RooFitResult::correlation() parameter r is not a floating fit parameter
 [#0] ERROR:InputArguments -- RooFitResult::correlation() parameter r is not a floating fit parameter
-diffNuisances run on fitDiagnostics_t1.root, at 2022-12-15 02:19:22.370074 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'vtol2': 2.0, 'poi': 'r', 'skipFitS': False}
+diffNuisances run on fitDiagnostics_t1.root, at 2022-12-22 15:52:00.690892 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'vtol2': 2.0, 'poi': 'r', 'skipFitS': False}
 
 name                                              b-only fit            s+b fit         rho
 FAC16                                            +0.09, 0.91     * +0.33, 0.90*       +0.00
