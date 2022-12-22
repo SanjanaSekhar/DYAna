@@ -64,18 +64,19 @@ TH1F* convert3d(TH3F *h_3d){
     return h_1d;
 }
 */
-int one_idx(int i, int j, int k, int n_binsx, int n_binsy){
+int one_idx(int i, int j, int k, int n_binsx, int n_binsy, int base){
 
       //get rid of high rap bins if needed
-    if( i > n_binsx) i -=1;
+    if( i > n_binsx ) i -=1;
    //lose 2 bins for each row above mid-row
    //int base = (k-1)*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
-   int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
+   //int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-3)));
    if(i <= n_binsx/2) return base + (i-1) * n_binsy + j;
-   if(j == n_binsy or j == (n_binsy/2 + 1) ) {j-=1; }
-   if(j>1) {j-=1; }
+   if(j == n_binsy) j-=1; 
+   if(j >= (n_binsy/2 + 1)) j-=1; 
+   if(j > 1) j-=1; 
 
-   return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
+   return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-3) + j;
 
 }
 
@@ -83,8 +84,8 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
     //merge 2 highest cos bins in 2 larger eta bins
     //int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
     //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
-    int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
-
+    //int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-3)));
+    int n_1d_bins = 2*(std::round(n_binsy + 2* (n_binsy-3)))+(std::round(n_binsy + (n_binsy-3)));
     //int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx-1)*(n_binsy) ; // for mass > 700, merge last 2  rap bins
     //int n_1d_bins = n_binsx*n_binsy + (2)*(n_binsx-1)*(n_binsy) ; // for mass > 700    , merge last 2  rap bins
     return n_1d_bins;
@@ -92,13 +93,14 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
 
 
 TH1F* convert3d(TH3F *h_3d){
+    printf("==== %s ====\n",h_3d->GetTitle());
     int n_m_bins = h_3d->GetNbinsX();
     float n_binsx = h_3d->GetNbinsY();
     float n_binsy = h_3d->GetNbinsZ();
   //  int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);
   //  float n_binsx_new = n_binsx;
     //merge highest rap bin for high mass templates
-    //if(m_low > 550.) n_binsx_new = n_binsx -1;
+   int  n_binsx_new = n_binsx ;
 	int gbin=0;
     int n_1d_bins = get_n_1d_bins(n_binsx, n_binsy);  
      //int n_1d_bins = n_m_bins*n_binsx*n_binsy;
@@ -111,23 +113,24 @@ TH1F* convert3d(TH3F *h_3d){
           //  n_binsx--;
           //  n_binsy-=1;
         //}
-//	if(h_3d->GetXaxis()->GetBinLowEdge(k) == 800.){ n_binsx--; }
+	if(k == n_m_bins){ n_binsx_new = n_binsx - 1; }
         for(int i=1; i<=n_binsx; i++){
 	  // printf("rap bin changes at gbin = %i\n",gbin);
             for(int j=1; j<= n_binsy; j++){
 
             float content = h_3d->GetBinContent(k,i,j);
             float error = h_3d->GetBinError(k,i,j);
-             gbin = one_idx(i,j, k, n_binsx, n_binsy);
+	    int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-3)));	    
+             gbin = one_idx(i,j, k, n_binsx_new, n_binsy, base);
             
-            // printf("(%i,%i,%i) => gbin = %i\n",k,i,j,gbin );
+            //printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
             //add in case previous bin filled
             float content_1d = h_1d->GetBinContent(gbin); 
             float error_1d = h_1d->GetBinError(gbin); 
             h_1d->SetBinContent(gbin, content_1d + content);
             h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
                 
-        
+        printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
         }
         }
     }

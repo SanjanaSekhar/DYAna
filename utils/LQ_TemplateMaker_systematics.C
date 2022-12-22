@@ -260,6 +260,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			tm.getEvent(i);
 			tm.doCorrections();
 			if( (tm.m >= lq_m_bins[0]) && tm.not_cosmic){ //tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
+				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
 				//tm.doCorrections();
 				float var1 = abs(tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
@@ -282,12 +283,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 							nEvents++;
 						}
 
-
+  
 					}
-
+				}
 					tm.finish();
 					return nEvents;
-				}
+			}
 
 				float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
 // if(test_sign)cal = crl - cll;
@@ -454,8 +455,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			tm.doCorrections();
 			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets ;
 			if(pass){
-
+//				if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){	
 				//tm.doCorrections();
+				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
 				tm.getEvtWeight(false);//incl_btag_SFs = false
 				n++;
 
@@ -497,7 +499,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 				h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight * RFfactor); 
 				h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight * RFfactor); 
-
+				}
 			}
 		}
 		tm.finish();
@@ -560,8 +562,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			if(metcut) pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
 			
 			if(pass){
-
+	//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
 				//tm.doCorrections();
+				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
 				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
 
@@ -684,7 +687,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 						h_LQint_u_vec->Fill(tm.m, var1, tm.cost, reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
 						h_LQint_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight * RFfactor);
 					}
-
+				}
 				}
 			}
 		}
@@ -749,8 +752,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 					bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
 					if(pass){
-						//tm.doCorrections();
-						tm.getEvtWeight(false);//incl_btag_SFs=false
+		//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){	
+					//tm.doCorrections();
+					if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){	
+					tm.getEvtWeight(false);//incl_btag_SFs=false
 
 						float var1 = abs(tm.cm.Rapidity());
 						if(use_xF)  var1 = tm.xF;
@@ -760,6 +765,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 							h->Fill(tm.m, var1, -abs(tm.cost), tm.evt_weight);
 						}
 					}
+				}
 				}
 				tm.finish();
 			}
@@ -972,6 +978,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 					if(!incl_ss) pass = pass && opp_sign; 
 					if(pass){
+		//				if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
+						if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
 						double evt_reweight = 0.;
 
 						if(flag1 == FLAG_MUONS){
@@ -1064,7 +1072,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 						}
 						if(opp_sign) tot_weight_os += tot_evt_weight;
 						else tot_weight_ss += tot_evt_weight;
-
+					}
 
 					}
 				}

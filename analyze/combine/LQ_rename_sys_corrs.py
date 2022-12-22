@@ -2,8 +2,9 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "102022_cs"
-mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000]#,5500,6000,6500,7000,7500,8000,8500,9000]
+ext = "122122_cs"
+mLQ_list = [2000]
+#mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000]#,5500,6000,6500,7000,7500,8000,8500,9000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)

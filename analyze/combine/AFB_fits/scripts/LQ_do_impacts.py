@@ -17,8 +17,8 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 
 (options, args) = parser.parse_args()
 
-for chan in ["ee"]:
-    for q in ["u"]:
+for chan in ["ee","mumu"]:
+    for q in ["s"]:
 
         options.mLQ = 2000
         fake_data = True
@@ -29,11 +29,11 @@ for chan in ["ee"]:
 	is_vec = False	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
-	ending="nlogram_LQsig_102022"
+	ending="_122122"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
-	    '''
+	    
             all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
                         "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
                         "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
@@ -55,12 +55,12 @@ for chan in ["ee"]:
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                                 "RENORM", "FAC", "REFAC", "alphaS"
 			     ]
-	    '''
-	    all_sys = ["nlo_sys"]
-	    correlate_all = ["nlo_sys"]
-	    correlate_1718 = []
+	    
+	    #all_sys = ["nlo_sys"]
+	    #correlate_all = ["nlo_sys"]
+	    #correlate_1718 = []
         else:
-	    '''
+	    
             all_sys =   [ "muPref","muRC", "Pu",
                         "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
                         "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
@@ -81,15 +81,15 @@ for chan in ["ee"]:
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                                 "RENORM", "FAC", "REFAC", "alphaS"
 			     ]
-	    '''
+	    
 
         pars16 = []
         pars17 = []
         pars18 = []
         pars_comb = []
 
-        #for i in range(1,61):
-        #    pars_comb.append("pdf" + str(i))
+        for i in range(1,61):
+            pars_comb.append("pdf" + str(i))
 
         for par in all_sys:
             if(par not in correlate_all): 
@@ -105,8 +105,8 @@ for chan in ["ee"]:
 
 
 
-	#if chan=="ee":        pars16.append("prefire16")
-	#if chan=="ee":        pars17.append("prefire17")
+	if chan=="ee":        pars16.append("prefire16")
+	if chan=="ee":        pars17.append("prefire17")
         
 	#pars18.append("METHEM18")
 

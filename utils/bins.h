@@ -15,6 +15,7 @@ const int n_cost_bins = 8;
 Float_t cost_bins[] = {-1.0, -0.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.0};
 //const int n_cost_bins = 6;
 //Float_t cost_bins[] =  {-1.0,-0.5,-0.25,0.0,0.25, 0.5,1.0};
+//Float_t cost_bins[] = {-1.0, -0.75, -0.5,  0.5, 0.75, 1.0};
 const int n_cost_ss_bins = n_cost_bins/2;
 Float_t cost_ss_bins[] = {-1.0, -0.5, -0.3, -0.1, 0.0};
 
