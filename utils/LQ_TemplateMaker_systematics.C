@@ -566,7 +566,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 	//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
 				//tm.doCorrections();
-				if(ptcut and ((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.))) {
+				if(ptcut) pass = ((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)); 
+				else pass = true;
+				if(pass){
 				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
 

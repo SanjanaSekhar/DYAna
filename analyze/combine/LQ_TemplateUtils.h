@@ -93,7 +93,7 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
 
 
 TH1F* convert3d(TH3F *h_3d){
-    printf("==== %s ====\n",h_3d->GetTitle());
+    //printf("==== %s ====\n",h_3d->GetTitle());
     int n_m_bins = h_3d->GetNbinsX();
     float n_binsx = h_3d->GetNbinsY();
     float n_binsy = h_3d->GetNbinsZ();
@@ -130,7 +130,7 @@ TH1F* convert3d(TH3F *h_3d){
             h_1d->SetBinContent(gbin, content_1d + content);
             h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
                 
-        printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
+        //printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
         }
         }
     }
