@@ -26,7 +26,7 @@ for chan in ["ee","mumu"]:
         gen_level = False
         no_LQ = False
         year = -1
-	is_vec = False	
+	is_vec = True	
         #extra_params = "--X-rtd MINIMIZER_no_analytic        
         extra_params = ""
 	ending="_122122"
