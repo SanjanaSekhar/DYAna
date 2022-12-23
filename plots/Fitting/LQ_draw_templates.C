@@ -195,9 +195,9 @@ void LQ_draw_templates(){
            auto h1_mumu_LQpure_d_vec = convert3d(h_mumu_LQpure_d_vec);
            auto h1_mumu_LQint_d_vec = convert3d(h_mumu_LQint_d_vec);
 		
-	   printf("========= h_LQpure_s =========\n");
+	   printf("========= h_mumu_LQpure_s =========\n");
 	   h1_mumu_LQpure_d->Print("range");
-	   printf("========= h_LQint_s =========\n");
+	   printf("========= h_mumu_LQint_s =========\n");
 	   h1_mumu_LQint_d->Print("range");
 
             h1_mumu_LQpure_u->SetLineColor(kBlue);
