@@ -13,7 +13,7 @@ void LQ_check_metcut(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = true;
+        bool draw_electrons = false;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
@@ -218,7 +218,7 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_u->SetTitle(mu_title); 
                h1_mumu_LQpure_u->Draw("hist");
-               h1_mumu_LQpure_u_metcut->Draw("hist same");
+               //h1_mumu_LQpure_u_metcut->Draw("hist same");
               // h1_mumu_pl->Draw("hist");
               //  h1_mumu_alpha->Draw("hist same");
                 //h1_mumu_mn->Draw("hist same");
@@ -226,7 +226,7 @@ void LQ_check_metcut(){
 
                 TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
                 leg1->AddEntry(h1_mumu_LQpure_u, "Pure LQ Template", "l");
-                leg1->AddEntry(h1_mumu_LQpure_u_metcut, "Pure LQ Template (mu_pt > 40 GeV)", "l");
+                //leg1->AddEntry(h1_mumu_LQpure_u_metcut, "Pure LQ Template (mu_pt > 40 GeV)", "l");
                //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -238,7 +238,7 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_u->SetTitle(mu_title); 
                h1_mumu_LQint_u->Draw("hist");
-               h1_mumu_LQint_u_metcut->Draw("hist same");
+               //h1_mumu_LQint_u_metcut->Draw("hist same");
               // h1_mumu_pl->Draw("hist");
               //  h1_mumu_alpha->Draw("hist same");
                 //h1_mumu_mn->Draw("hist same");
@@ -246,7 +246,7 @@ void LQ_check_metcut(){
 
                 TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
                 leg2->AddEntry(h1_mumu_LQint_u, "Intereference LQ Template", "l");
-                leg2->AddEntry(h1_mumu_LQint_u_metcut, "Intereference LQ Template (mu_pt > 40 GeV)", "l");
+                //leg2->AddEntry(h1_mumu_LQint_u_metcut, "Intereference LQ Template (mu_pt > 40 GeV)", "l");
                //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -259,11 +259,11 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_d->SetTitle(mu_title);
                 h1_mumu_LQpure_d->Draw("hist");
-                h1_mumu_LQpure_d_metcut->Draw("hist same");
+                //h1_mumu_LQpure_d_metcut->Draw("hist same");
 
                 TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
                 leg3->AddEntry(h1_mumu_LQpure_d,"Pure LQ Template","l");
-                leg3->AddEntry(h1_mumu_LQpure_d_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
+                //leg3->AddEntry(h1_mumu_LQpure_d_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
                 leg3->Draw();
 
                 c_mumu3->Print(mu_fname3);
@@ -273,11 +273,11 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu4 = new TCanvas("c_mumu4", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_d->SetTitle(mu_title);
                 h1_mumu_LQint_d->Draw("hist");
-                h1_mumu_LQint_d_metcut->Draw("hist same");
+                //h1_mumu_LQint_d_metcut->Draw("hist same");
 
                 TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
                 leg4->AddEntry(h1_mumu_LQint_d,"Interference LQ Template","l");
-                leg4->AddEntry(h1_mumu_LQint_d_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
+                //leg4->AddEntry(h1_mumu_LQint_d_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
                 leg4->Draw();
 
                 c_mumu4->Print(mu_fname4);
@@ -287,11 +287,11 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_u_vec->SetTitle(mu_title);
                 h1_mumu_LQpure_u_vec->Draw("hist");
-                h1_mumu_LQpure_u_vec_metcut->Draw("hist same");
+                //h1_mumu_LQpure_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
                 leg5->AddEntry(h1_mumu_LQpure_u_vec,"Pure LQ Template","l");
-                leg5->AddEntry(h1_mumu_LQpure_u_vec_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
+                //leg5->AddEntry(h1_mumu_LQpure_u_vec_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
                 leg5->Draw();
                 
                 c_mumu5->Print(mu_fname5);
@@ -301,11 +301,11 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_u_vec->SetTitle(mu_title);
                 h1_mumu_LQint_u_vec->Draw("hist");
-                h1_mumu_LQint_u_vec_metcut->Draw("hist same");
+                //h1_mumu_LQint_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
                 leg6->AddEntry(h1_mumu_LQint_u_vec,"Interference LQ Template","l");
-                leg6->AddEntry(h1_mumu_LQint_u_vec_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
+                //leg6->AddEntry(h1_mumu_LQint_u_vec_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
                 leg6->Draw();
                 
                 c_mumu6->Print(mu_fname6);
@@ -315,11 +315,11 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu7 = new TCanvas("c_mumu7", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_d_vec->SetTitle(mu_title);
                 h1_mumu_LQpure_d_vec->Draw("hist");
-                h1_mumu_LQpure_d_vec_metcut->Draw("hist same");
+                //h1_mumu_LQpure_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg7 = new TLegend(x_start, y_start, x_end, y_end);
                 leg7->AddEntry(h1_mumu_LQpure_d_vec,"Pure LQ Template","l");
-                leg7->AddEntry(h1_mumu_LQpure_d_vec_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
+                //leg7->AddEntry(h1_mumu_LQpure_d_vec_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
                 leg7->Draw();
                 
                 c_mumu7->Print(mu_fname7);
@@ -329,11 +329,11 @@ void LQ_check_metcut(){
                 TCanvas *c_mumu8 = new TCanvas("c_mumu8", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_d_vec->SetTitle(mu_title);
                 h1_mumu_LQint_d_vec->Draw("hist");
-                h1_mumu_LQint_d_vec_metcut->Draw("hist same");
+                //h1_mumu_LQint_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg8 = new TLegend(x_start, y_start, x_end, y_end);
                 leg8->AddEntry(h1_mumu_LQint_d_vec,"Interference LQ Template","l");
-                leg8->AddEntry(h1_mumu_LQint_d_vec_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
+                //leg8->AddEntry(h1_mumu_LQint_d_vec_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
                 leg8->Draw();
                 
                 c_mumu8->Print(mu_fname8);
