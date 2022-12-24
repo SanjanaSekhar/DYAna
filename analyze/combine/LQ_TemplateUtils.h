@@ -73,10 +73,10 @@ int one_idx(int i, int j, int k, int n_binsx, int n_binsy, int base){
    //int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-3)));
    if(i <= n_binsx/2) return base + (i-1) * n_binsy + j;
    if(j == n_binsy) j-=1; 
-   if(j >= (n_binsy/2 + 1)) j-=1; 
+   //if(j >= (n_binsy/2 + 1)) j-=1; 
    if(j > 1) j-=1; 
 
-   return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-3) + j;
+   return base + (n_binsx/2) * n_binsy+ std::max((i - n_binsx/2 -1), 0)* (n_binsy-2) + j;
 
 }
 
@@ -84,8 +84,8 @@ int get_n_1d_bins(int n_binsx, int n_binsy){
     //merge 2 highest cos bins in 2 larger eta bins
     //int n_1d_bins = std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2));
     //int n_1d_bins = n_lq_m_bins*(std::round(std::ceil(n_binsx/2.) * n_binsy + std::floor(n_binsx/2.) * (n_binsy-2)));
-    //int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-3)));
-    int n_1d_bins = 2*(std::round(n_binsy + 2* (n_binsy-3)))+(std::round(n_binsy + (n_binsy-3)));
+    int n_1d_bins = n_lq_m_bins*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));
+    //int n_1d_bins = 2*(std::round(n_binsy + 2* (n_binsy-3)))+(std::round(n_binsy + (n_binsy-3)));
     //int n_1d_bins = (n_lq_m_bins/2)*n_binsx*n_binsy + (n_lq_m_bins/2)*(n_binsx-1)*(n_binsy) ; // for mass > 700, merge last 2  rap bins
     //int n_1d_bins = n_binsx*n_binsy + (2)*(n_binsx-1)*(n_binsy) ; // for mass > 700    , merge last 2  rap bins
     return n_1d_bins;
@@ -113,14 +113,14 @@ TH1F* convert3d(TH3F *h_3d){
           //  n_binsx--;
           //  n_binsy-=1;
         //}
-	if(k == n_m_bins){ n_binsx_new = n_binsx - 1; }
+	//if(k == n_m_bins){ n_binsx_new = n_binsx - 1; }
         for(int i=1; i<=n_binsx; i++){
 	  // printf("rap bin changes at gbin = %i\n",gbin);
             for(int j=1; j<= n_binsy; j++){
 
             float content = h_3d->GetBinContent(k,i,j);
             float error = h_3d->GetBinError(k,i,j);
-	    int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-3)));	    
+	    int base = (k-1)*(std::round(std::floor(n_binsx/2.) * n_binsy + std::ceil(n_binsx/2.) * (n_binsy-2)));	    
              gbin = one_idx(i,j, k, n_binsx_new, n_binsy, base);
             
             //printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
