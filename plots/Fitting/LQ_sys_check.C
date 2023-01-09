@@ -18,8 +18,8 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 3;
-    string sys_array[num_sys] = {"_REFAC","_FAC","_ptrw7b"};
+    const int num_sys = 2;
+    string sys_array[num_sys] = {"_elScaleGain","_ptrw7b"};
     for(int year = 2016; year <= 2018; year++){
 	for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
@@ -27,8 +27,8 @@ void LQ_sys_check(){
         float m_LQ = 2000.;
         char *plot_dir = "Misc_plots";
 	char *date;
-        if(flag_q==1) date = "101322_u";
-	else date = "101322_d";
+        if(flag_q==1) date = "010923_u";
+	else date = "010923_d";
         //char *sys = "_";
         bool do_bkg = false;
 	bool do_qcd = false;

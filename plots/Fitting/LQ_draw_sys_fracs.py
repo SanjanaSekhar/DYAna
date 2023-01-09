@@ -6,7 +6,7 @@ from optparse import OptionGroup
 from string import digits
 import copy
 
-sys_keys = ["pdf", "refac", "lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other", "btag","nlo_sys"]
+sys_keys = ["pdf", "refac", "lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other","nlo_sys"]
 
 color_dict = dict()
 color_dict["pdf"] = kGreen +3
@@ -15,7 +15,7 @@ color_dict["lep_eff"] = kRed + 2
 color_dict["mc_xsec"] = kBlue
 color_dict["fakes"] = kRed -7 
 color_dict["other"] = kGray
-color_dict["btag"] = kGreen
+#color_dict["btag"] = kGreen
 color_dict["ptrw"] = kOrange
 color_dict["pileup"] =  kCyan
 color_dict["emucostrw"] = kMagenta + 4
@@ -28,7 +28,7 @@ name_dict["lep_eff"] = "Lepton Efficiencies"
 name_dict["mc_xsec"] = "MC Cross Sections + Lumi"
 name_dict["fakes"] = "Fakes Estimate"
 name_dict["other"] = "Other"
-name_dict["btag"] = "b-tagging"
+#name_dict["btag"] = "b-tagging"
 name_dict["ptrw"] = "DY p_{T} Reweighting"
 name_dict["pileup"] =  "Pileup"
 name_dict["emucostrw"] = "e#mu Shape Correction"
@@ -94,7 +94,7 @@ def add_sys(d, fracs, sys_name):
     elif("ptrw" in sys_name): key_name = "ptrw"
     elif("Pu" in sys_name): key_name = "pileup"
     elif("emu" in sys_name): key_name = "emucostrw"
-    elif("BTAG" in sys_name): key_name = "btag"
+    #elif("BTAG" in sys_name): key_name = "btag"
     elif("nlo" in sys_name): key_name = "nlo_sys"
     else: 
         key_name = "other"
@@ -107,7 +107,7 @@ def add_sys(d, fracs, sys_name):
 
 def get_sys_dict(year, chan, q, mLQ):
 
-    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_LQ_m%i/%s_fake_data_%s_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
+    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_nlosys_symMCstats_LQ_m%s/%s_fake_data_%s_nlosys_symMCstats_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
     f_tot = TFile.Open(f_tot_name)
     prefit_dir = "Y%i_prefit" % ( year)
 
@@ -134,7 +134,7 @@ def get_sys_dict(year, chan, q, mLQ):
     #combine these names into a single systematic
     removes = ['Up', 'Down', 'PTHIGH', 'PTLOW', 'BAR', 'END']
     #plus template gets factor of 3/4s in norm
-    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4, 0., 0.]
+    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4, 1.2, 0.6]
     lumi_unc = 0.025
     mumu_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'mumu_fakes_xsec', 'gamgam_xsec']
     ee_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'ee_fakes_xsec', 'gamgam_xsec']

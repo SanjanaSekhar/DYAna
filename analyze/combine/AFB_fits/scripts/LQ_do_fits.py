@@ -25,12 +25,12 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["ee"]:
+    for options.chan in ["mumu"]:
     #for options.chan in ["ee"]:
         for options.q in ["u"]:
 
             is_vec = False
-	    statuncs = True
+	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
