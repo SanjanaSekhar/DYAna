@@ -27,8 +27,8 @@ for chan in ["ee","mumu"]:
         no_LQ = False
         year = -1
 	is_vec = False	
-        #extra_params = "--X-rtd MINIMIZER_no_analytic        
-        extra_params = ""
+        extra_params = "--X-rtd MINIMIZER_no_analytic"        
+        #extra_params = ""
 	ending="_010923"
 	if is_vec: ending += "_vec"
         if chan=="ee":
