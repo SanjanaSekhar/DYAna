@@ -109,7 +109,7 @@ if channel=='dm' or channel=='sm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000]:#,5500,6000,6500,7000,7500,8000,8500,9000]:
+for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
 
     workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
     comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
@@ -159,7 +159,7 @@ print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs
 
 with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
     data = json.load(f)
-    for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0']:#,'5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
+    for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
         for lim in data[mass]:
             yLQ2 = data[mass][lim]
             data[mass][lim] = sqrt(yLQ2)

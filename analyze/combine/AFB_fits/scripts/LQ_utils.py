@@ -135,7 +135,7 @@ def do_lumi(card, year):
 
         print_and_do("""sed -i "s/LUMIYR/LUMI%i/g" %s""" % (year, card))
 
-def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,symMCStats = False):
+def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False, no_sys = False, fake_data = False, mLQ = 1000, year = -1,noSymMCStats = False):
     print("\n inside make_workspace()")
     print("Making workspace %s LQ" % (workspace))
     print("nosys =%s"%(no_sys))
@@ -192,8 +192,9 @@ def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False,
         print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
-
-    if(symMCStats): extra_arg = "--symMCStats"
+    
+    sigma = 0.6 **0.5
+    if(not noSymMCStats): extra_arg = "--symMCStats" 
     else: extra_arg = ""
     print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
     #print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
