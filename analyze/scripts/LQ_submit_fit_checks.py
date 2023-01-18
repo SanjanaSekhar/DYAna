@@ -102,8 +102,8 @@ labels = [
 ]
 
 
-cpy_cmd = "xrdcp -f temp/* $1 \n"
-#cpy_cmd = "xrdcp -f limits/* $1 \n"
+#cpy_cmd = "xrdcp -f temp/* $1 \n"
+cpy_cmd = "xrdcp -f limits/* $1 \n"
 
 n_m_bins = 1
 

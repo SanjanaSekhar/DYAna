@@ -845,9 +845,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 
 
-			h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
+			//h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
 			h_alpha.Scale(norm * alpha);
-			h_dy->Add(&h_alpha);
+			//h_dy->Add(&h_alpha);
 
 			if(flag_q == 1){	
 

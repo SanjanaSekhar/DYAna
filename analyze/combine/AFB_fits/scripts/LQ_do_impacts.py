@@ -17,8 +17,8 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 
 (options, args) = parser.parse_args()
 
-for chan in ["mumu"]:
-    for q in ["s"]:
+for chan in ["mumu","ee"]:
+    for q in ["u","d"]:
 
         options.mLQ = 2000
         fake_data = True
@@ -29,7 +29,7 @@ for chan in ["mumu"]:
 	is_vec = False	
         extra_params = "--X-rtd MINIMIZER_no_analytic"        
         #extra_params = ""
-	ending="_test1"
+	ending="_011723_nodyxsecforLQ"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
@@ -61,25 +61,25 @@ for chan in ["mumu"]:
 	    #correlate_1718 = []
         else:
 	    
-            all_sys =   [ #"muPref","muRC", "Pu",
-                        #"muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
+            all_sys =   [ "muPref","muRC", "Pu",
+                        "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
                         "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
-                        #"emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                        #"mufakesrw1b", "mufakesrw2b", "mufakesrw3b", "mufakesrw4b",
-                        #"RENORM", "FAC", "REFAC", "alphaS", "nlo_sys",
-                        #"dy_xsec","db_xsec","top_xsec","gam_xsec" ,"muFakes", 
-                        #"lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC", "lumiGS" ,"lumi", 
+                        "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
+                        "mufakesrw1b", "mufakesrw2b", "mufakesrw3b", "mufakesrw4b",
+                        "RENORM", "FAC", "REFAC", "alphaS", "nlo_sys",
+                        "dy_xsec","db_xsec","top_xsec","gam_xsec" ,"muFakes", 
+                        "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC", "lumiGS" ,"lumi", 
                         ]
 
-            correlate_all = [ #"Pu", "muIDSYS", "muISOSYS",
-                             #"nlo_sys","dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
-                             #"lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
+            correlate_all = [ "Pu", "muIDSYS", "muISOSYS",
+                             "nlo_sys","dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
+                             "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                              ] 
 
-            correlate_1718 = [#"muPref",
+            correlate_1718 = ["muPref",
 				"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
-                               # "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
-                                #"RENORM", "FAC", "REFAC", "alphaS"
+                                "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
+                                "RENORM", "FAC", "REFAC", "alphaS"
 			     ]
 	    
 

@@ -18,8 +18,8 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 2;
-    string sys_array[num_sys] = {"_elScaleGain","_ptrw7b"};
+    const int num_sys = 4;
+    string sys_array[num_sys] = {"_elScaleGain","_FAC","_REFAC","_ptrw7b"};
     for(int year = 2016; year <= 2018; year++){
 	for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
@@ -27,16 +27,16 @@ void LQ_sys_check(){
         float m_LQ = 2000.;
         char *plot_dir = "Misc_plots";
 	char *date;
-        if(flag_q==1) date = "010923_u";
-	else date = "010923_d";
+        if(flag_q==2) date = "011723_c";
+	else date = "011723_s";
         //char *sys = "_";
         bool do_bkg = false;
 	bool do_qcd = false;
-        bool do_electrons = false;
+        bool do_electrons = true;
         bool do_muons = true;
         bool vec = false;
-	bool make_ud = true;
-	if(!make_ud) date = "101322_c";
+	bool make_ud = false;
+	//if(!make_ud) date = "101322_c";
         //int flag_q = 2;
         float yLQ = 1.0;
 
@@ -168,10 +168,10 @@ void LQ_sys_check(){
                 printf("mumu fakes: nom %.0f, up %.0f, down %.0f \n", h_mumu_qcd->Integral(), h_mumu_qcd_up->Integral(), h_mumu_qcd_down->Integral());
                 h1_mumu_qcd->Print("range");
             }
-		unzero_bins(h_mumu_plain);
-		unzero_bins(h_mumu_sys_down);
+		//unzero_bins(h_mumu_plain);
+		//unzero_bins(h_mumu_sys_down);
 
-            sprintf(mu_title, "SM DY + LQ_um + all bkgs  %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
+            sprintf(mu_title, "yLQ**4*LQ_pure+yLQ**2*LQ_int %s, m_LQ = %i GeV, year = %i, yLQ = %.1f, channel: muons ", sys, int(m_LQ), year, yLQ);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
             pad1->SetBottomMargin(0);
@@ -314,15 +314,55 @@ void LQ_sys_check(){
                 h1_elel_qcd_down->SetLineWidth(2);
                 printf("elel fakes: nom %.0f, up %.0f, down %.0f \n", h_elel_qcd->Integral(), h_elel_qcd_up->Integral(), h_elel_qcd_down->Integral());
             }
+		
 
-
-            sprintf(el_title, "SM DY + LQ_ue + all bkgs %s, m_LQ = %i GeV, year = %i, yLQ = %.1f ", sys, int(m_LQ), year, yLQ);
-            TCanvas *c_elel1 = new TCanvas("c_elel", "Electrons", 200, 10, 900, 700);
+		sprintf(el_title, "yLQ**4*LQ_pure+yLQ**2*LQ_int %s, m_LQ = %i GeV, year = %i, yLQ = %.1f, Channel: electrons ", sys, int(m_LQ), year, yLQ);
+            TCanvas *c_elel1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
+            TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
+            pad1->SetBottomMargin(0);
+            pad1->Draw();
+            pad1->cd();
             h1_elel_plain->SetTitle(el_title);
             h1_elel_plain->Draw("hist");
             h1_elel_sys_up->Draw("hist same");
             h1_elel_sys_down->Draw("hist same");
-            if(do_bkg){
+
+            gStyle->SetLegendBorderSize(0);
+            TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
+            leg1->AddEntry(h1_elel_plain, "Nominal Template", "l");
+            leg1->AddEntry(h1_elel_sys_up, "Sys Up Template", "l");
+            leg1->AddEntry(h1_elel_sys_down, "Sys Down Template", "l");
+
+            c_elel1->cd();
+            TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
+	    pad2->SetBottomMargin(0.2);
+            pad2->SetGridy();
+            pad2->Draw();
+            pad2->cd();
+            TH1F *ratio_up, *ratio_down;
+
+            ratio_up = (TH1F *) h1_elel_sys_up->Clone("h_ratio_up");
+            ratio_up->Sumw2();
+            ratio_up->SetStats(0);
+            ratio_up->Divide(h1_elel_plain);
+
+            ratio_down = (TH1F *) h1_elel_sys_down->Clone("h_ratio_down");
+            ratio_down->Sumw2();
+            ratio_down->SetStats(0);
+            ratio_down->Divide(h1_elel_plain);
+	    ratio_down->SetMinimum(0.94);
+            ratio_down->SetMaximum(1.06);
+            ratio_down->SetTitle("");
+            ratio_down->SetLineColor(kGreen+3);
+            ratio_down->Draw("hist");
+           // ratio_down->SetMarkerStyle(21);
+             ratio_up->SetLineColor(kBlue);
+             ratio_up->Draw("hist same");
+           
+             c_elel1->cd(); 
+	
+
+	if(do_bkg){
                 h1_elel_bkg->Draw("hist same");
                 h1_elel_bkg_up->Draw("hist same");
                 h1_elel_bkg_down->Draw("hist same");
@@ -333,10 +373,6 @@ void LQ_sys_check(){
                 h1_elel_qcd_down->Draw("hist same");
             }
 
-            TLegend *leg1 = new TLegend(0.15, 0.15);
-            leg1->AddEntry(h1_elel_plain, "Nominal Template", "l");
-            leg1->AddEntry(h1_elel_sys_up, "Sys Up Template", "l");
-            leg1->AddEntry(h1_elel_sys_down, "Sys Down Template", "l");
             if(do_bkg){
                 leg1->AddEntry(h1_elel_bkg, "Nominal Bkg Template", "l");
                 leg1->AddEntry(h1_elel_bkg_up, "Sys Up Bkg Template", "l");
@@ -360,4 +396,4 @@ void LQ_sys_check(){
 
 }
 
-}
+} 
