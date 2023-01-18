@@ -18,8 +18,9 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 4;
-    string sys_array[num_sys] = {"_elScaleGain","_FAC","_REFAC","_ptrw7b"};
+    const int num_sys = 3;
+    //string sys_array[num_sys] = {"_RENORM","_FAC","_REFAC"};
+    string sys_array[num_sys] = {"_elScaleGain","_ptrw2b", "_ptrw7b"};
     for(int year = 2016; year <= 2018; year++){
 	for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
@@ -27,15 +28,15 @@ void LQ_sys_check(){
         float m_LQ = 2000.;
         char *plot_dir = "Misc_plots";
 	char *date;
-        if(flag_q==2) date = "011723_c";
-	else date = "011723_s";
+        if(flag_q==2) date = "011723_u";
+	else date = "011723_d";
         //char *sys = "_";
         bool do_bkg = false;
 	bool do_qcd = false;
         bool do_electrons = true;
-        bool do_muons = true;
+        bool do_muons = false;
         bool vec = false;
-	bool make_ud = false;
+	bool make_ud = true;
 	//if(!make_ud) date = "101322_c";
         //int flag_q = 2;
         float yLQ = 1.0;
@@ -208,8 +209,8 @@ void LQ_sys_check(){
             ratio_down->Divide(h1_mumu_plain);
 
             //ratio_up->SetMarkerStyle(21);
-            ratio_down->SetMinimum(0.94);
-	    ratio_down->SetMaximum(1.06);
+            ratio_down->SetMinimum(0.8);
+	    ratio_down->SetMaximum(1.2);
 	    ratio_down->SetTitle("");
             ratio_down->SetLineColor(kGreen+3);
             ratio_down->Draw("hist");

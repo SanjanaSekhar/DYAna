@@ -1,0 +1,895 @@
+
+Processing Fitting/LQ_sys_check.C...
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:6:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/../../utils/PlotUtils.C:172:139: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
+                                                                                                                                          ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/../../utils/PlotUtils.C:422:26: warning: implicit conversion from 'double' to 'Width_t' (aka 'short') changes value from 2.5 to 2 [-Wliteral-conversion]
+    h_data->SetLineWidth(2.5);
+            ~~~~~~~~~~~~ ^~~
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:28:26: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char *plot_dir = "Misc_plots";
+                         ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:30:30: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        if(flag_q==2) date = "011723_u";
+                             ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:31:14: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        else date = "011723_d";
+                    ^
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2016_yLQ1.0__RENORM_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2016_yLQ1.0__RENORM_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2016_yLQ1.0__FAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2016_yLQ1.0__FAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2016_yLQ1.0__REFAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2016_yLQ1.0__REFAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2016_yLQ1.0__RENORM_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2016_yLQ1.0__RENORM_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2016_yLQ1.0__FAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2016_yLQ1.0__FAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2016_yLQ1.0__REFAC_chk_011723_u.png has been created
+init year 2016  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1343.0 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 366768 events. Sym integral is 6255.2 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1366.2 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 366768 events. Sym integral is 5926.8 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1283.4 
+ 
+MuMu: nom 278, up 283, down 266 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 257650 events. LQpure_u_vec integral is 942.4 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 257650 events. Sym integral is 4252.1 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 257650 events. LQpure_u_vec integral is 960.1 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 257650 events. Sym integral is 4027.5 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 257650 events. LQpure_u_vec integral is 898.8 
+ 
+elel: nom 201, up 205, down 193 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1343.0 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 366768 events. Sym integral is 6340.1 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1387.1 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 366768 events. Sym integral is 6001.8 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1296.1 
+ 
+MuMu: nom 278, up 286, down 270 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 257650 events. LQpure_u_vec integral is 942.4 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 257650 events. Sym integral is 4315.8 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 257650 events. LQpure_u_vec integral is 974.0 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 257650 events. Sym integral is 4072.3 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 257650 events. LQpure_u_vec integral is 908.5 
+ 
+elel: nom 201, up 207, down 195 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1343.0 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 366768 events. Sym integral is 6434.0 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1414.9 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 366768 events. Sym integral is 5842.7 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1253.3 
+ 
+MuMu: nom 278, up 292, down 261 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 257650 events. LQpure_u_vec integral is 942.4 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 257650 events. Sym integral is 4378.8 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 257650 events. LQpure_u_vec integral is 994.8 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 257650 events. Sym integral is 3962.7 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 257650 events. LQpure_u_vec integral is 876.3 
+ 
+elel: nom 201, up 211, down 189 
+init year 2016  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1343.0 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 366768 events. Sym integral is 6255.2 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1366.2 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 366768 events. Sym integral is 5926.8 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1283.4 
+ 
+MuMu: nom 397, up 404, down 379 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 257650 events. LQpure_u_vec integral is 942.4 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 257650 events. Sym integral is 4252.1 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 257650 events. LQpure_u_vec integral is 960.1 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 257650 events. Sym integral is 4027.5 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 257650 events. LQpure_u_vec integral is 898.8 
+ 
+elel: nom 279, up 284, down 266 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1343.0 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 366768 events. Sym integral is 6340.1 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1387.1 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 366768 events. Sym integral is 6001.8 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1296.1 
+ 
+MuMu: nom 397, up 410, down 383 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 257650 events. LQpure_u_vec integral is 942.4 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 257650 events. Sym integral is 4315.8 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 257650 events. LQpure_u_vec integral is 974.0 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 257650 events. Sym integral is 4072.3 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 257650 events. LQpure_u_vec integral is 908.5 
+ 
+elel: nom 279, up 288, down 268 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6167.1 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1343.0 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 366768 events. Sym integral is 6434.0 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1414.9 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 366768 events. Sym integral is 5842.7 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1253.3 
+ 
+MuMu: nom 397, up 419, down 370 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 257650 events. Sym integral is 4192.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 257650 events. LQpure_u_vec integral is 942.4 
+ 
+Making SM mc template for sysWarning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2016_yLQ1.0__REFAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2017_yLQ1.0__RENORM_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2017_yLQ1.0__RENORM_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2017_yLQ1.0__FAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2017_yLQ1.0__FAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2017_yLQ1.0__REFAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2017_yLQ1.0__REFAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2017_yLQ1.0__RENORM_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2017_yLQ1.0__RENORM_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2017_yLQ1.0__FAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2017_yLQ1.0__FAC_chk_011723_u.png has been created
+ _REFACUp 
+MC templates generated from 257650 events. Sym integral is 4378.8 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 257650 events. LQpure_u_vec integral is 994.8 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 257650 events. Sym integral is 3962.7 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 257650 events. LQpure_u_vec integral is 876.3 
+ 
+elel: nom 279, up 294, down 259 
+init year 2017  
+hlt
+id
+iso
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1624.3 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 667208 events. Sym integral is 7226.2 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1640.7 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 667208 events. Sym integral is 7115.1 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1608.7 
+ 
+MuMu: nom 330, up 332, down 328 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Making LQ mc template for sys  
+MC templates generated from 515747 events. LQpure_u_vec integral is 1107.7 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 515747 events. Sym integral is 4836.7 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1119.7 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 515747 events. Sym integral is 4757.9 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1097.5 
+ 
+elel: nom 227, up 228, down 226 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1624.3 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 667208 events. Sym integral is 7269.0 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1655.0 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 667208 events. Sym integral is 6952.4 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1570.7 
+ 
+MuMu: nom 330, up 337, down 319 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Making LQ mc template for sys  
+MC templates generated from 515747 events. LQpure_u_vec integral is 1107.7 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 515747 events. Sym integral is 4868.5 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1129.8 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 515747 events. Sym integral is 4646.1 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1069.9 
+ 
+elel: nom 227, up 232, down 219 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1624.3 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 667208 events. Sym integral is 7339.1 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1673.5 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 667208 events. Sym integral is 6912.4 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1567.2 
+ 
+MuMu: nom 330, up 340, down 319 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Making LQ mc template for sys  
+MC templates generated from 515747 events. LQpure_u_vec integral is 1107.7 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 515747 events. Sym integral is 4918.7 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1143.7 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 515747 events. Sym integral is 4615.9 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1068.2 
+ 
+elel: nom 227, up 234, down 219 
+init year 2017  
+hlt
+id
+iso
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1624.3 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 667208 events. Sym integral is 7226.2 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1640.7 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 667208 events. Sym integral is 7115.1 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1608.7 
+ 
+MuMu: nom 478, up 483, down 473 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Making LQ mc template for sys  
+MC templates generated from 515747 events. LQpure_u_vec integral is 1107.7 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 515747 events. Sym integral is 4836.7 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1119.7 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 515747 events. Sym integral is 4757.9 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1097.5 
+ 
+elel: nom 326, up 330, down 323 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1624.3 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 667208 events. Sym integral is 7269.0 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1655.0 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 667208 events. Sym integral is 6952.4 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1570.7 
+ 
+MuMu: nom 478, up 487, down 461 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Making LQ mc template for sys  
+MC templates generated from 515747 events. LQpure_u_vec integral is 1107.7 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 515747 events. Sym integral is 4868.5 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1129.8 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 515747 events. Sym integral is 4646.1 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1069.9 
+ 
+elel: nom 326, up 333, down 315 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7164.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1624.3 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 667208 events. Sym integral is 7339.1 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1673.5 
+ 
+Making SM mc template forWarning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2017_yLQ1.0__REFAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2017_yLQ1.0__REFAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2018_yLQ1.0__RENORM_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2018_yLQ1.0__RENORM_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2018_yLQ1.0__FAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2018_yLQ1.0__FAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2018_yLQ1.0__REFAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2018_yLQ1.0__REFAC_chk_011723_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2018_yLQ1.0__RENORM_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2018_yLQ1.0__RENORM_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2018_yLQ1.0__FAC_chk_011723_u.png has been created
+ sys _REFACDown 
+MC templates generated from 667208 events. Sym integral is 6912.4 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1567.2 
+ 
+MuMu: nom 478, up 493, down 460 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 515747 events. Sym integral is 4792.4 
+ 
+Making LQ mc template for sys  
+MC templates generated from 515747 events. LQpure_u_vec integral is 1107.7 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 515747 events. Sym integral is 4918.7 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1143.7 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 515747 events. Sym integral is 4615.9 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 515747 events. LQpure_u_vec integral is 1068.2 
+ 
+elel: nom 326, up 338, down 314 
+init year 2018  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2331.7 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 679084 events. Sym integral is 10375.8 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2353.6 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 679084 events. Sym integral is 10219.3 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2310.9 
+ 
+MuMu: nom 475, up 479, down 472 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 512792 events. LQpure_u_vec integral is 1817.3 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 512792 events. Sym integral is 7977.1 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1833.1 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 512792 events. Sym integral is 7855.2 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1803.0 
+ 
+elel: nom 367, up 370, down 365 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2331.7 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 679084 events. Sym integral is 10457.4 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2381.3 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 679084 events. Sym integral is 9977.7 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2249.2 
+ 
+MuMu: nom 475, up 486, down 459 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 512792 events. LQpure_u_vec integral is 1817.3 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 512792 events. Sym integral is 8030.3 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1854.4 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 512792 events. Sym integral is 7677.4 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1754.8 
+ 
+elel: nom 367, up 375, down 355 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2331.7 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 679084 events. Sym integral is 10553.3 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2406.0 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 679084 events. Sym integral is 9938.2 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2247.4 
+ 
+MuMu: nom 475, up 490, down 459 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 512792 events. LQpure_u_vec integral is 1817.3 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 512792 events. Sym integral is 8105.5 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1873.0 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 512792 events. Sym integral is 7644.7 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1755.1 
+ 
+elel: nom 367, up 378, down 354 
+init year 2018  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2331.7 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 679084 events. Sym integral is 10375.8 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2353.6 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 679084 events. Sym integral is 10219.3 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2310.9 
+ 
+MuMu: nom 687, up 693, down 681 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 512792 events. LQpure_u_vec integral is 1817.3 
+ 
+Making SM mc template for sys _RENORMUp 
+MC templates generated from 512792 events. Sym integral is 7977.1 
+ 
+Making LQ mc template for sys _RENORMUp 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1833.1 
+ 
+Making SM mc template for sys _RENORMDown 
+MC templates generated from 512792 events. Sym integral is 7855.2 
+ 
+Making LQ mc template for sys _RENORMDown 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1803.0 
+ 
+elel: nom 535, up 540, down 531 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2331.7 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 679084 events. Sym integral is 10457.4 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2381.3 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 679084 events. Sym integral is 9977.7 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2249.2 
+ 
+MuMu: nom 687, up 702, down 662 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 512792 events. LQpure_u_vec integral is 1817.3 
+ 
+Making SM mc template for sys _FACUp 
+MC templates generated from 512792 events. Sym integral is 8030.3 
+ 
+Making LQ mc template for sys _FACUp 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1854.4 
+ 
+Making SM mc template for sys _FACDown 
+MC templates generated from 512792 events. Sym integral is 7677.4 
+ 
+Making LQ mc template for sys _FACDown 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1754.8 
+ 
+elel: nom 535, up 547, doWarning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2018_yLQ1.0__FAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/mumu2018_yLQ1.0__REFAC_chk_011723_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file Misc_plots/ee2018_yLQ1.0__REFAC_chk_011723_u.png has been created
+wn 516 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10289.3 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2331.7 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 679084 events. Sym integral is 10553.3 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2406.0 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 679084 events. Sym integral is 9938.2 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2247.4 
+ 
+MuMu: nom 687, up 710, down 660 
+Making elel temps 
+Making SM mc template for sys  
+MC templates generated from 512792 events. Sym integral is 7910.2 
+ 
+Making LQ mc template for sys  
+MC templates generated from 512792 events. LQpure_u_vec integral is 1817.3 
+ 
+Making SM mc template for sys _REFACUp 
+MC templates generated from 512792 events. Sym integral is 8105.5 
+ 
+Making LQ mc template for sys _REFACUp 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1873.0 
+ 
+Making SM mc template for sys _REFACDown 
+MC templates generated from 512792 events. Sym integral is 7644.7 
+ 
+Making LQ mc template for sys _REFACDown 
+MC templates generated from 512792 events. LQpure_u_vec integral is 1755.1 
+ 
+elel: nom 535, up 553, down 516 
