@@ -25,9 +25,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["mumu"]:
+    for options.chan in ["mumu","ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["u"]:
+        for options.q in ["u","d"]:
 
             is_vec = False
 	    statuncs = False
@@ -80,7 +80,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_nlosys_symMCstats"
+            fit_name+="_newSymMCstats"
 	    print("\n fit_name = ", fit_name)
 	    
 
