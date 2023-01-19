@@ -351,8 +351,8 @@ void LQ_sys_check(){
             ratio_down->Sumw2();
             ratio_down->SetStats(0);
             ratio_down->Divide(h1_elel_plain);
-	    ratio_down->SetMinimum(0.94);
-            ratio_down->SetMaximum(1.06);
+	    ratio_down->SetMinimum(0.8);
+            ratio_down->SetMaximum(1.2);
             ratio_down->SetTitle("");
             ratio_down->SetLineColor(kGreen+3);
             ratio_down->Draw("hist");

@@ -6,7 +6,7 @@ from optparse import OptionGroup
 from string import digits
 import copy
 
-sys_keys = ["pdf", "refac", "lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other","nlo_sys"]
+sys_keys = ["pdf", "refac", "el_scale","lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other","nlo_sys"]
 
 color_dict = dict()
 color_dict["pdf"] = kGreen +3
@@ -15,7 +15,7 @@ color_dict["lep_eff"] = kRed + 2
 color_dict["mc_xsec"] = kBlue
 color_dict["fakes"] = kRed -7 
 color_dict["other"] = kGray
-#color_dict["btag"] = kGreen
+color_dict["el_scale"] = kGreen
 color_dict["ptrw"] = kOrange
 color_dict["pileup"] =  kCyan
 color_dict["emucostrw"] = kMagenta + 4
@@ -28,7 +28,7 @@ name_dict["lep_eff"] = "Lepton Efficiencies"
 name_dict["mc_xsec"] = "MC Cross Sections + Lumi"
 name_dict["fakes"] = "Fakes Estimate"
 name_dict["other"] = "Other"
-#name_dict["btag"] = "b-tagging"
+name_dict["el_scale"] = "Electron Momentum Scale"
 name_dict["ptrw"] = "DY p_{T} Reweighting"
 name_dict["pileup"] =  "Pileup"
 name_dict["emucostrw"] = "e#mu Shape Correction"
@@ -89,6 +89,7 @@ def add_sys(d, fracs, sys_name):
     if("pdf" in sys_name): key_name = 'pdf'
     elif('RENORM' in sys_name or 'FAC' in sys_name or 'REFAC' in sys_name): key_name = 'refac'
     elif('ID' in sys_name or 'RECO' in sys_name or 'HLT' in sys_name or 'ISO' in sys_name ): key_name = "lep_eff"
+    elif("Scale" in sys_name): key_name = "el_scale"
     elif("xsec" in sys_name and "fakes" not in sys_name): key_name = "mc_xsec"
     elif("fakes" in sys_name): key_name = "fakes"
     elif("ptrw" in sys_name): key_name = "ptrw"
@@ -107,7 +108,7 @@ def add_sys(d, fracs, sys_name):
 
 def get_sys_dict(year, chan, q, mLQ):
 
-    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_nlosys_symMCstats_LQ_m%s/%s_fake_data_%s_nlosys_symMCstats_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
+    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_newSymMCstats_LQ_m%s/%s_fake_data_%s_newSymMCstats_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
     f_tot = TFile.Open(f_tot_name)
     prefit_dir = "Y%i_prefit" % ( year)
 
@@ -134,10 +135,13 @@ def get_sys_dict(year, chan, q, mLQ):
     #combine these names into a single systematic
     removes = ['Up', 'Down', 'PTHIGH', 'PTLOW', 'BAR', 'END']
     #plus template gets factor of 3/4s in norm
-    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4, 1.2, 0.6]
+    xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4, 0.0, 0.0]
     lumi_unc = 0.025
-    mumu_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'mumu_fakes_xsec', 'gamgam_xsec']
-    ee_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'ee_fakes_xsec', 'gamgam_xsec']
+    mumu_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'mumu_fakes_xsec', 'gamgam_xsec','','']
+    ee_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'ee_fakes_xsec', 'gamgam_xsec','','']
+    nlo_unc = [0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 0.6]
+
+    
     my_excludes = []
 
     if(chan == 'ee'):
@@ -172,7 +176,10 @@ def get_sys_dict(year, chan, q, mLQ):
                 #plus templates get normalization factor of 0.75 in fit
                 if('fpl' in base):
                     fracs = fracs * (0.75**2)
-                
+    		if('LQpure' in base):
+		   fracs = fracs * (yLQ**4)**2
+		if('LQint' in base):
+		   fracs = fracs * (yLQ**2)**2            
                 parse = (key_name.split("_"))
                 sys_name = parse[2]
                 add_sys(sys_dict, fracs, sys_name)
@@ -188,7 +195,11 @@ def get_sys_dict(year, chan, q, mLQ):
         else: 
             s_key = "mc_xsec"
         add_sys(sys_dict, xsec_frac, s_key)  
-
+	
+	# do nlo sys
+	nlo_frac = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
+	nlo_frac = (2*nlo_frac)**2
+	add_sys(sys_dict, nlo_frac, 'nlo_sys')
 
     d_final = avg_sqrt(sys_dict)
     return d_final
@@ -214,7 +225,7 @@ gStyle.SetOptStat(0)
 
 q = "u"
 mLQ = 2000
-
+yLQ = 1.0
 for idx,chan in enumerate(chans):
     year = years[idx]
 
