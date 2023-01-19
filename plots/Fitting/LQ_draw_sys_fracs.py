@@ -241,7 +241,7 @@ for idx,chan in enumerate(chans):
     #m_high = m_bins[options.mbin+1]
 
     c = TCanvas(chan, "", 1600, 1000)
-    hmax = 0.25
+    hmax = 0.2
 
     #for h in hists:
         #hmax = hmaxs[options.mbin]
@@ -257,10 +257,12 @@ for idx,chan in enumerate(chans):
     h_dummy.Draw("hist")
 
     for h in hists:
+	if "mu" in chan and "scale" in h.GetName(): continue
         h.Draw("hist same")
 
     leg = TLegend(0.5, 0.2)
     for h in hists:
+	if "mu" in chan and "scale" in h.GetName(): continue
         leg.AddEntry(h, name_dict[h.GetTitle()], "l")
 
     leg.Draw()
