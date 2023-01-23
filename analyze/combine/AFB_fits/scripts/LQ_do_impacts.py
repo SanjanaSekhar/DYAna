@@ -18,7 +18,7 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 (options, args) = parser.parse_args()
 
 for chan in ["mumu","ee"]:
-    for q in ["u","d"]:
+    for q in ["s"]:
 
         options.mLQ = 2000
         fake_data = True
