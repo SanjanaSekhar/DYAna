@@ -13,7 +13,7 @@ years = [2016,2017,2018]
 #types = [1]
 #labels = ["sys"]
 njobs = 1
-ending = "122122_cs"
+ending = "012323_cs"
 for mass in masses:
     for year in years:
             script_name = "scripts/script2.sh"
