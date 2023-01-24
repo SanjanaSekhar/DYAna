@@ -29,7 +29,7 @@ for chan in ["mumu","ee"]:
 	is_vec = False	
         extra_params = "--X-rtd MINIMIZER_no_analytic"        
         #extra_params = ""
-	ending="_011723_nodyxsecforLQ"
+	ending="_012323"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
@@ -37,7 +37,7 @@ for chan in ["mumu","ee"]:
             all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
                         "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
                         "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
-                        "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
+                        #"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
                         "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                         "elfakesrw1b", "elfakesrw2b", "elfakesrw3b", "elfakesrw4b",
                         "RENORM", "FAC", "REFAC", "alphaS","nlo_sys", 
@@ -51,7 +51,7 @@ for chan in ["mumu","ee"]:
                              "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                              ] 
 
-            correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
+            correlate_1718 = [#"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                                 "RENORM", "FAC", "REFAC", "alphaS"
 			     ]
@@ -63,7 +63,7 @@ for chan in ["mumu","ee"]:
 	    
             all_sys =   [ "muPref","muRC", "Pu",
                         "muHLTBAR", "muIDBAR", "muISOBAR",  "muHLTEND", "muIDEND", "muISOEND",  "muIDSYS", "muISOSYS",  
-                        "ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
+                        #"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
                         "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                         "mufakesrw1b", "mufakesrw2b", "mufakesrw3b", "mufakesrw4b",
                         "RENORM", "FAC", "REFAC", "alphaS", "nlo_sys",
@@ -77,7 +77,7 @@ for chan in ["mumu","ee"]:
                              ] 
 
             correlate_1718 = ["muPref",
-				"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
+			#	"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                                 "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                                 "RENORM", "FAC", "REFAC", "alphaS"
 			     ]

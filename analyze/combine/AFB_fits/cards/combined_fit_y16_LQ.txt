@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm2000_merge_templates16_102022_cs.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2000_merge_templates16_012323_cs.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 
 bin             ee16  
@@ -105,15 +105,15 @@ elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw4b16 elfakesrw3b16
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
-ptrw1b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
-ptrw2b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw3b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-ptrw4b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-ptrw5b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-ptrw6b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
-ptrw7b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw1b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
+#ptrw2b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw3b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw4b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw5b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw6b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
+#ptrw7b16              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 
-ptrws16 group = ptrw1b16 ptrw2b16 ptrw3b16 ptrw5b16 ptrw6b16 ptrw7b16 ptrw4b16
+#ptrws16 group = ptrw1b16 ptrw2b16 ptrw3b16 ptrw5b16 ptrw6b16 ptrw7b16 ptrw4b16
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
