@@ -441,7 +441,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		if(flag1 == FLAG_MUONS) tm.do_muons = true;
 		else tm.do_electrons = true;
 		tm.is_gen_level = true;
-		tm.do_ptrw = true;
+		tm.do_ptrw = false;
 
 		//tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
 		tm.btag_mc_eff_idx = 0; //no btags applied
@@ -545,7 +545,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		if(flag1 == FLAG_MUONS) tm.do_muons = true;
 		else tm.do_electrons = true;
 		tm.is_gen_level = true;
-		tm.do_ptrw = true;
+		tm.do_ptrw = false; // turned DY pt correction off for AN comment
 
 		//tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
 		tm.btag_mc_eff_idx = 0;
@@ -845,9 +845,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 
 
-			h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
+			//h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
 			h_alpha.Scale(norm * alpha);
-			h_dy->Add(&h_alpha);
+			//h_dy->Add(&h_alpha);
 
 			if(flag_q == 1){	
 
