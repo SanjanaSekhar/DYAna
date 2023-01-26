@@ -428,9 +428,9 @@ if(options.year < 0):
     years = [2016, 2017, 2018]
 else:
     years = [options.year]
-if options.q == "u" or options.q == "c":
+if options.q == "u":
     h_names = ["gam", "LQint_u", "LQpure_u" ,"qcd", "top", "db", "tautau", "dy"]
-elif options.q == "d" or options.q == "s":
+elif options.q == "d":
     h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
 elif options.q == "c":
     h_names = ["gam", "LQint_c", "LQpure_c" ,"qcd", "top", "db", "tautau", "dy"]
@@ -521,7 +521,7 @@ for year in years:
                 	h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
                 	h_dy.Add(h)
                     
-		    h = h.Copy(h_dy)
+		    h = h_dy
 		    #h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
                 else:
                     h = f_in.Get(dir_ + name)
