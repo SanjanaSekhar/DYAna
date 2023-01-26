@@ -432,6 +432,10 @@ if options.q == "u" or options.q == "c":
     h_names = ["gam", "LQint_u", "LQpure_u" ,"qcd", "top", "db", "tautau", "dy"]
 elif options.q == "d" or options.q == "s":
     h_names = ["gam", "LQint_d", "LQpure_d" ,"qcd", "top", "db", "tautau", "dy"]
+elif options.q == "c":
+    h_names = ["gam", "LQint_c", "LQpure_c" ,"qcd", "top", "db", "tautau", "dy"]
+elif options.q == "s":
+    h_names = ["gam", "LQint_s", "LQpure_s" ,"qcd", "top", "db", "tautau", "dy"]
 if options.gen_level and options.q == "u":
     h_names = ["LQ", "dy"]
 #if options.gen_level and options.q == "d":
@@ -459,7 +463,12 @@ if options.q=="u":
 if options.q=="d":
     label_color_map['LQint_d'] = ("LQint_d", kGreen)
     label_color_map['LQpure_d'] = ("LQpure_d", kBlue+7)
-
+if options.q=="c":
+    label_color_map['LQint_c'] = ("LQint_c", kGreen)
+    label_color_map['LQpure_c'] = ("LQpure_c", kBlue+7)
+if options.q=="s":
+    label_color_map['LQint_s'] = ("LQint_s", kGreen)
+    label_color_map['LQpure_s'] = ("LQpure_s", kBlue+7)
 
 datastyle = "pe0x0"
 
@@ -500,7 +509,20 @@ for year in years:
         if not options.gen_level:
             for name in name_list:
                 if(name == "dy"):
-                    h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
+		    h_dy = f_in.Get(dir_ + "fpl")
+            	    if(h_dy != None):
+                	h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
+            	    h = f_in.Get(dir_ + "fmn")
+            	    if(h != None):
+                	h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
+                	h_dy.Add(h)
+            	    h = f_in.Get(dir_ + "alpha")
+            	    if(h != None):
+                	h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
+                	h_dy.Add(h)
+                    
+		    h = h.Copy(h_dy)
+		    #h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
                 else:
                     h = f_in.Get(dir_ + name)
                     if(h != None):

@@ -80,7 +80,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_3rapbin"
+            fit_name+="_1rapbin"
 	    print("\n fit_name = ", fit_name)
 	    
 
