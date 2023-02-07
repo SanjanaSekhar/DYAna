@@ -2,7 +2,7 @@ import ROOT
 from optparse import OptionParser
 import sys
 
-ext = "012323_cs"
+ext = "020123_cs"
 mLQ_list = [2000]
 #mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000]#,5500,6000,6500,7000,7500,8000,8500,9000]
 #if(len(sys.argv) < 3):
@@ -33,7 +33,7 @@ for mLQ in mLQ_list:
 		correlate_all = ["elScaleSyst", "elSmear", "Pu", "muIDSYS", "muISOSYS", "elRECOBARPTHIGH", "elRECOENDPTHIGH", "elRECOBARPTLOW", "elRECOENDPTLOW",
 						 "elIDBARPTHIGH", "elIDENDPTHIGH", "elIDBARPTLOW", "elIDENDPTLOW"] 
 
-		correlate_1718 = ["ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
+		correlate_1718 = [#"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
 							"emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
 							"RENORM", "FAC", "REFAC", "alphaS", "muPref" ]
 

@@ -90,7 +90,7 @@ def setSnapshot(mdf = False, yLQ2_val = 0.0,  d=''):
     if(mdf):
         fit_name = 'fit_mdf'
         workspace = d+'higgsCombineTest.MultiDimFit.mH120.root'
-        fit_file = d+'multidimfit.root'
+        fit_file = d+'multidimfitTest.root'
     w_f = TFile.Open(workspace)
     w = w_f.Get('w')
     fr_f = TFile.Open(fit_file)

@@ -119,9 +119,9 @@ def submit_jobs(lofjobs):
         condor_file.write('Executable = %s\n'% sub_file)
         condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
         #condor_file.write('request_disk = 500000\n') # modify these requirements depending on job
-        if(options.with_combine): 
-            condor_file.write('request_memory = 6000\n')
-            condor_file.write('request_cpus = 4\n')
+        #if(options.with_combine): 
+        condor_file.write('request_memory = 6000\n')
+        condor_file.write('request_cpus = 4\n')
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write("Transfer_Input_Files = %s, %s \n" %(script_location, sub_file))
         condor_file.write('WhenToTransferOutput = ON_EXIT \n')
@@ -144,7 +144,7 @@ if options.tar:
     if options.DY:
         print "Using DY tarball options"
         excludeList = ['LQ_Analysis/DYAna/analyze/input_files', 'LQ_Analysis/DYAna/analyze/condor_jobs', 'LQ_Analysis/DYAna/analyze/output_files', 'LQ_Analysis/DYAna/generator_stuff', 
-                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results', 'LQ_Analysis/DYAna/analyze/combine/templates',
+                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results', #'LQ_Analysis/DYAna/analyze/combine/templates',
                        'LQ_Analysis/DYAna/analyze/combine/AFB_fits/postfit_plots' ]
         options.tarname = "LQ_Analysis"
         for item in excludeList:

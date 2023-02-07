@@ -43,9 +43,9 @@ if is_vec: ending = "vec_"+ending
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
-'''
+
 workspace = "workspaces/%s_%s_fit_bias_tests.root" % (options.chan, options.q)
-make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False)
+make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False, False)
 
 #extra_params = "--X-rtd MINIMIZER_no_analytic"
 extra_params = ""
@@ -75,7 +75,7 @@ for i in range(options.nToys):
         print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ2))
 
     print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" %(workspace,  i, extra_params))
-    f_fit = TFile.Open("multidimfit.root")
+    f_fit = TFile.Open("multidimfitTest.root")
     if f_fit:
         fr = f_fit.Get('fit_mdf')
         myargs = RooArgSet(fr.floatParsFinal())
@@ -122,7 +122,7 @@ res_yLQ2 = respull[:,0].tolist()
 pull_yLQ2 = respull[:,1].tolist()
 
 print(res_yLQ2)
-
+'''
 n_bins = 20
 h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
 

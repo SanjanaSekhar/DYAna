@@ -41,7 +41,7 @@ for y in [-1]:
             options.no_LQ=False
             options.year = y
             likelihood_scan = False
-	    if likelihood_scan: ending = "081922"
+	    if likelihood_scan: ending = ""
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -61,6 +61,7 @@ for y in [-1]:
 
             #No analytic minimization of MC stats nuisances
             extra_params += "--X-rtd MINIMIZER_no_analytic"
+	    extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 	    if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
             fit_name = options.chan
@@ -80,7 +81,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_3rapbin"
+            fit_name+="_020123"
 	    print("\n fit_name = ", fit_name)
 	    
 
@@ -99,7 +100,7 @@ for y in [-1]:
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 2000 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
@@ -112,7 +113,7 @@ for y in [-1]:
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1" % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
-                    if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
+                    #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
 
                 #print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
@@ -121,14 +122,29 @@ for y in [-1]:
                 print_and_do("""echo ".q" >> cmd.txt """)
                 #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
                 print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
+		
+		print_and_do(""" echo "auto a=fit_mdf->floatParsFinal();" > cmd.txt """)
+		print_and_do(""" echo "auto A0=(RooRealVar *) a.at(0);" >> cmd.txt """)
+		print_and_do(""" echo "std::cout  << A0->getValV() << ' '  << A0->getErrorHi() << ' ' << A0->getErrorLo() << std::endl;" >> cmd.txt """)
+		
+                print_and_do(""" echo "auto Afb=(RooRealVar *) a.at(1);" >> cmd.txt """)
+                print_and_do(""" echo "std::cout  << Afb->getValV() << ' '  << Afb->getErrorHi() << ' ' << Afb->getErrorLo() << std::endl;" >> cmd.txt """)
+		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(318);" >> cmd.txt """)
+		if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(192);" >> cmd.txt """) 
+		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(312);" >> cmd.txt """)
+		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(186);" >> cmd.txt """)
+                print_and_do(""" echo "std::cout  << yLQ2->getValV() << ' '  << yLQ2->getErrorHi() << ' ' << yLQ2->getErrorLo() << std::endl;" >> cmd.txt """)
+		print_and_do("root -l -b multidimfitTest.root < cmd.txt > results_%s_m%i.txt" % (fit_name,mLQ))
+                
+                
 		print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
-                if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
+                #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
                 
                 if likelihood_scan:
 
                     deltaNLL, yLQ2_list = [],[]
-		    '''
+		    
                     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.forLikelihoodScan_%s_%s.root"%(options.chan,options.q),"READ")
                     limit_tree = f.Get("limit")
 
@@ -149,7 +165,7 @@ for y in [-1]:
 	     		for ylq,dnll in zip(yLQ2_list, deltaNLL):
          		    f.write("%f %f\n" %(ylq,2*dnll)) 
 		    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
-		    '''
+		    
 		    respull = []
 		    with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'r') as f:
     		        for line in f.readlines():

@@ -293,10 +293,10 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         printf("Making mumu mc \n");
         //gen_mc_template includes m_LQ
         gen_mc_SM_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, FLAG_MUONS, use_xF, sys_label );
-        make_ud = true;
-        gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud,metcut, use_xF, sys_label );
-        //make_ud = false;
-        //gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_c, h_mumu_LQint_c,h_mumu_LQpure_s, h_mumu_LQint_s, h_mumu_LQpure_c_vec, h_mumu_LQint_c_vec, h_mumu_LQpure_s_vec, h_mumu_LQint_s_vec, year, m_LQ, FLAG_MUONS, make_ud,metcut, use_xF, sys_label );
+        //make_ud = true;
+        //gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u,h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud,metcut, use_xF, sys_label );
+        make_ud = false;
+        gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_c, h_mumu_LQint_c,h_mumu_LQpure_s, h_mumu_LQint_s, h_mumu_LQpure_c_vec, h_mumu_LQint_c_vec, h_mumu_LQpure_s_vec, h_mumu_LQint_s_vec, year, m_LQ, FLAG_MUONS, make_ud,metcut, use_xF, sys_label );
 
 
         TTree *mumu_ts[2] = {t_mumu_ttbar, t_mumu_wt};
@@ -456,10 +456,10 @@ void make_mc_templates(int year, Double_t m_LQ, const string &sys_label){
         printf("starting elel dy \n");
         //gen_mc_template includes m_LQ
         gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
-        make_ud = true;
-        gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud,metcut, use_xF, sys_label );
-        //make_ud = false;
-        //gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_c, h_elel_LQint_c, h_elel_LQpure_s, h_elel_LQint_s, h_elel_LQpure_c_vec, h_elel_LQint_c_vec, h_elel_LQpure_s_vec, h_elel_LQint_s_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, metcut, use_xF, sys_label );
+        //make_ud = true;
+        //gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud,metcut, use_xF, sys_label );
+        make_ud = false;
+        gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_c, h_elel_LQint_c, h_elel_LQpure_s, h_elel_LQint_s, h_elel_LQpure_c_vec, h_elel_LQint_c_vec, h_elel_LQpure_s_vec, h_elel_LQint_s_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, metcut, use_xF, sys_label );
        
 
         TTree *elel_ts[2] = {t_elel_ttbar, t_elel_wt};

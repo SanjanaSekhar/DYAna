@@ -140,11 +140,12 @@ for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,75
         print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
-
+    sigma = 0.6 **0.5
+    extra_arg = "--symMCStats --sigma %f"%sigma 
     
     print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
     print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks" % (comb_card, workspace))
+    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
     print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
