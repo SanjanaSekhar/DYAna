@@ -1,0 +1,2197 @@
+{
+  "POIs": [
+    {
+      "fit": [
+        -1.8410828113555908,
+        0.19109401106834412,
+        1.6436647176742554
+      ],
+      "name": "yLQ2"
+    }
+  ],
+  "method": "default",
+  "params": [
+    {
+      "groups": [],
+      "name": "A0",
+      "prefit": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "type": "Unconstrained"
+    },
+    {
+      "groups": [],
+      "name": "A4",
+      "prefit": [
+        1.6,
+        1.6,
+        1.6
+      ],
+      "type": "Unconstrained"
+    },
+    {
+      "groups": [
+        "RFscales16"
+      ],
+      "name": "FAC16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales1718"
+      ],
+      "name": "FAC1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "Pu",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales16"
+      ],
+      "name": "REFAC16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales1718"
+      ],
+      "name": "REFAC1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales16"
+      ],
+      "name": "RENORM16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales1718"
+      ],
+      "name": "RENORM1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales16"
+      ],
+      "name": "alphaS16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "RFscales1718"
+      ],
+      "name": "alphaS1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "db_xsec",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "dy_xsec",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "elFakes16",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "elFakes17",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "elFakes18",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs16"
+      ],
+      "name": "elHLTBARPTHIGH16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs17"
+      ],
+      "name": "elHLTBARPTHIGH17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs18"
+      ],
+      "name": "elHLTBARPTHIGH18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs16"
+      ],
+      "name": "elHLTBARPTLOW16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs17"
+      ],
+      "name": "elHLTBARPTLOW17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs18"
+      ],
+      "name": "elHLTBARPTLOW18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs16"
+      ],
+      "name": "elHLTENDPTHIGH16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs17"
+      ],
+      "name": "elHLTENDPTHIGH17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs18"
+      ],
+      "name": "elHLTENDPTHIGH18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs16"
+      ],
+      "name": "elHLTENDPTLOW16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs17"
+      ],
+      "name": "elHLTENDPTLOW17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elHLTs18"
+      ],
+      "name": "elHLTENDPTLOW18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elIDs"
+      ],
+      "name": "elIDBARPTHIGH",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elIDs"
+      ],
+      "name": "elIDBARPTLOW",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elIDs"
+      ],
+      "name": "elIDENDPTHIGH",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elIDs"
+      ],
+      "name": "elIDENDPTLOW",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elRECOs"
+      ],
+      "name": "elRECOBARPTHIGH",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elRECOs"
+      ],
+      "name": "elRECOBARPTLOW",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elRECOs"
+      ],
+      "name": "elRECOENDPTHIGH",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elRECOs"
+      ],
+      "name": "elRECOENDPTLOW",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales16"
+      ],
+      "name": "elScaleGain16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales17"
+      ],
+      "name": "elScaleGain17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales18"
+      ],
+      "name": "elScaleGain18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales16"
+      ],
+      "name": "elScaleStat16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales17"
+      ],
+      "name": "elScaleStat17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales18"
+      ],
+      "name": "elScaleStat18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales16",
+        "elScales17",
+        "elScales18"
+      ],
+      "name": "elScaleSyst",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elScales16",
+        "elScales17",
+        "elScales18"
+      ],
+      "name": "elSmear",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws16"
+      ],
+      "name": "elfakesrw1b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws17"
+      ],
+      "name": "elfakesrw1b17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws18"
+      ],
+      "name": "elfakesrw1b18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws16"
+      ],
+      "name": "elfakesrw2b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws17"
+      ],
+      "name": "elfakesrw2b17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws18"
+      ],
+      "name": "elfakesrw2b18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws16"
+      ],
+      "name": "elfakesrw3b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws17"
+      ],
+      "name": "elfakesrw3b17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws18"
+      ],
+      "name": "elfakesrw3b18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws16"
+      ],
+      "name": "elfakesrw4b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws17"
+      ],
+      "name": "elfakesrw4b17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "elfakesrws18"
+      ],
+      "name": "elfakesrw4b18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws16"
+      ],
+      "name": "emucostrw1b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws1718"
+      ],
+      "name": "emucostrw1b1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws16"
+      ],
+      "name": "emucostrw2b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws1718"
+      ],
+      "name": "emucostrw2b1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws16"
+      ],
+      "name": "emucostrw3b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws1718"
+      ],
+      "name": "emucostrw3b1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws16"
+      ],
+      "name": "emucostrw4b16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "emucostrws1718"
+      ],
+      "name": "emucostrw4b1718",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "gam_xsec",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis16"
+      ],
+      "name": "lumi16",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis17"
+      ],
+      "name": "lumi17",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis18"
+      ],
+      "name": "lumi18",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis16",
+        "lumis17",
+        "lumis18"
+      ],
+      "name": "lumiBC",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis16",
+        "lumis17",
+        "lumis18"
+      ],
+      "name": "lumiDB",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis16",
+        "lumis17",
+        "lumis18"
+      ],
+      "name": "lumiGS",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis16",
+        "lumis17",
+        "lumis18"
+      ],
+      "name": "lumiLS",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "lumis16",
+        "lumis17",
+        "lumis18"
+      ],
+      "name": "lumiXY",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "nlo_sys",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf1",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf10",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf11",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf12",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf13",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf14",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf15",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf19",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf2",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf20",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf21",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf22",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf23",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf24",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf25",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf26",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf27",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf28",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf29",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf3",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf30",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf31",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf32",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf33",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf34",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf35",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf36",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf37",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf38",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf39",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf4",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf40",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf41",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf42",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf43",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf44",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf45",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf46",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf47",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf48",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf49",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf5",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf50",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf51",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf52",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf53",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf54",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf55",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf56",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf57",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf58",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf59",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf6",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf60",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf7",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf8",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [
+        "pdfs"
+      ],
+      "name": "pdf9",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prefire16",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prefire17",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prefire18",
+      "prefit": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin0",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin1",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin10",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin11",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin12",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin13",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin14",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin15",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin16",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin17",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin2",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin3",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin4",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin5",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin6",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin7",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin8",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY16_bin9",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin0",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin1",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin10",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin11",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin12",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin13",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin14",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin15",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin16",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin17",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin2",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin3",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin4",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin5",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin6",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin7",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin8",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY17_bin9",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin0",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin1",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin10",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin11",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin12",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin13",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin14",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin15",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin16",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin17",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin2",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin3",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin4",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin5",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin6",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin7",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin8",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "prop_binY18_bin9",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    },
+    {
+      "groups": [],
+      "name": "top_xsec",
+      "prefit": [
+        -0.9999999999999999,
+        0.0,
+        0.9999999999999999
+      ],
+      "type": "Gaussian"
+    }
+  ]
+}
