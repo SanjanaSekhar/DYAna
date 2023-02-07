@@ -6,26 +6,24 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm2000_merge_templates16_020123_cs.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2000_merge_templates16_020123.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-
-bin             ee16  
+bin             mumu16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee16    ee16    ee16    ee16     ee16    ee16     ee16 	ee16    ee16      ee16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_s  LQint_s	
+bin                      mumu16  mumu16  mumu16  mumu16   mumu16  mumu16   mumu16 	mumu16   mumu16    mumu16 	 
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d_vec  LQint_d_vec	
 process                  -2      0       -1      1        4       5        3		2        -3        -4		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -		
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
-
 nlo_sys         lnN      -       -        -      -        -        -       -            -        2.20    1.60
 
-elFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
+muFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
@@ -34,14 +32,14 @@ lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     
 lumiLS           lnN       -        -         -       -         -       -       - 		  -      	  -  	  -  		  
 lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
 lumiBC           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	 
-lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
+lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004	  
 
 lumis16 group = lumi16 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
-prefire16       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+muPref16       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
 #METJEC16         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
 #METHEM16        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
                                                                                                                                          
@@ -50,37 +48,21 @@ prefire16       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1
 #BTAGLIGHT16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
 #BTAGS16 group = BTAGUNCOR16 BTAGCOR BTAGLIGHT16
-                                                                                                                                          
-elScaleStat16    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleGain16    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+                                                                                                                                           
 
-elScales16 group = elScaleStat16  elScaleGain16  elScaleSyst   elSmear
+muRC16       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDBAR16    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOBAR16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTBAR16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDEND16    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOEND16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTEND16   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 
-
-elHLTBARPTHIGH16     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTHIGH16   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTBARPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
-
-elHLTs16 group = elHLTENDPTHIGH16  elHLTBARPTLOW16   elHLTENDPTLOW16 elHLTBARPTHIGH16
-
-elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
-#elIDs group =  elIDENDPTHIGH elIDENDPTLOW
-
-elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
-
+muIDs16 group  = muIDBAR16 muISOBAR16 muIDEND16 muISOEND16 muIDSYS muISOSYS
+muHLTs16 group = muHLTBAR16 muHLTEND16
+                                                                                                                                  
 alphaS16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC16               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -95,13 +77,13 @@ emucostrw3b16        shape    -       -        -     1.0      1.0     -      -  
 emucostrw4b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws16 group = emucostrw1b16 emucostrw3b16 emucostrw4b16 emucostrw2b16
-##fakes cost reweighting                                                                                                 
-elfakesrw1b16          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw2b16          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw3b16          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw4b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw4b16 elfakesrw3b16
+mufakesrw1b16         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw2b16         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw3b16         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw4b16         shape    -       -        -      -        -      -      1.0       -       -       -         
+
+mufakesrws16 group = mufakesrw1b16 mufakesrw2b16 mufakesrw3b16 mufakesrw4b16
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   

@@ -13,9 +13,9 @@ import numpy as np
 
 year = -1
 mLQ = 2000
-for is_vec in [False,True]:
+for is_vec in [True]:
 	for chan in ["ee","mumu"]:
-		for q in ['s']:#["u","d"]:
+		for q in ["u","d"]:
 
 			workspace="workspaces/%s_%s_%s_LQ.root" % (chan,q,("vec" if is_vec else ""))
 
