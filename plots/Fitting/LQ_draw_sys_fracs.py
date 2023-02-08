@@ -6,7 +6,7 @@ from optparse import OptionGroup
 from string import digits
 import copy
 
-sys_keys = ["pdf", "refac", "el_scale","lep_eff", "mc_xsec", "fakes", "ptrw", "pileup", "emucostrw", "other","nlo_sys"]
+sys_keys = ["pdf", "refac", "el_scale","lep_eff", "mc_xsec", "fakes",  "pileup", "emucostrw", "other","nlo_sys"]
 
 color_dict = dict()
 color_dict["pdf"] = kGreen +3
@@ -29,7 +29,7 @@ name_dict["mc_xsec"] = "MC Cross Sections + Lumi"
 name_dict["fakes"] = "Fakes Estimate"
 name_dict["other"] = "Other"
 name_dict["el_scale"] = "Electron Momentum Scale"
-name_dict["ptrw"] = "DY p_{T} Reweighting"
+#name_dict["ptrw"] = "DY p_{T} Reweighting"
 name_dict["pileup"] =  "Pileup"
 name_dict["emucostrw"] = "e#mu Shape Correction"
 name_dict["nlo_sys"] = "LQ LO reweighting"
@@ -92,7 +92,7 @@ def add_sys(d, fracs, sys_name):
     elif("Scale" in sys_name): key_name = "el_scale"
     elif("xsec" in sys_name and "fakes" not in sys_name): key_name = "mc_xsec"
     elif("fakes" in sys_name): key_name = "fakes"
-    elif("ptrw" in sys_name): key_name = "ptrw"
+    #elif("ptrw" in sys_name): key_name = "ptrw"
     elif("Pu" in sys_name): key_name = "pileup"
     elif("emu" in sys_name): key_name = "emucostrw"
     #elif("BTAG" in sys_name): key_name = "btag"
@@ -108,7 +108,7 @@ def add_sys(d, fracs, sys_name):
 
 def get_sys_dict(year, chan, q, mLQ):
 
-    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_newSymMCstats_LQ_m%s/%s_fake_data_%s_newSymMCstats_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
+    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_020123_LQ_m%s/%s_fake_data_%s_020123_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
     f_tot = TFile.Open(f_tot_name)
     prefit_dir = "Y%i_prefit" % ( year)
 
@@ -116,7 +116,7 @@ def get_sys_dict(year, chan, q, mLQ):
     h_tot= gDirectory.Get('TotalProcs')
     print("h_tot Integral ",h_tot.Integral())
 
-    f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_102022.root" % (mLQ, year)
+    f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_020123.root" % (mLQ, year)
 
     f = TFile.Open(f_in_name)
     gDirectory.cd("LQ")
