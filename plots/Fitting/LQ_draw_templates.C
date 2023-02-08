@@ -67,7 +67,7 @@ void LQ_draw_templates(){
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
-        char *plot_dir = "AN_plots/LQ_templates/neg_inteference_test";
+        char *plot_dir = "AN_plots/LQ_templates/";
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.1;
@@ -243,8 +243,8 @@ void LQ_draw_templates(){
            //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
            //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
             //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
-            //leg1->Draw();
-            //c_mumu1->Print(mu_fname1);
+            leg1->Draw();
+            c_mumu1->Print(mu_fname1);
             delete c_mumu1;
             
             sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}",m_LQ/1000,year);
@@ -263,9 +263,9 @@ void LQ_draw_templates(){
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_mumu_LQpure_d,"Pure LQ Template","l");
             leg2->AddEntry(h1_mumu_LQint_d,"Interference LQ Template","l");
-            //leg2->Draw();
+            leg2->Draw();
 
-            //c_mumu2->Print(mu_fname2);
+            c_mumu2->Print(mu_fname2);
             delete c_mumu2;
 
             sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
@@ -284,9 +284,9 @@ void LQ_draw_templates(){
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_mumu_LQpure_u_vec,"Pure LQ Template","l");
             //leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
-            //leg3->Draw();
+            leg3->Draw();
             
-            //c_mumu3->Print(mu_fname3);
+            c_mumu3->Print(mu_fname3);
             delete c_mumu3;
 
             sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
@@ -305,16 +305,16 @@ void LQ_draw_templates(){
             TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_mumu_LQint_u_vec,"Interference LQ Template","l");
             //leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
-            //leg4->Draw();
+            leg4->Draw();
             
-            //c_mumu4->Print(mu_fname4);
+            c_mumu4->Print(mu_fname4);
             delete c_mumu4;
 
             sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
             TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
             h1_mumu_LQpure_d_vec->SetTitle(mu_title);
 	    //h1_mumu_LQpure_d_vec->SetMinimum(0.);
-            h1_mumu_LQpure_d_vec->Add(h1_mumu_LQint_d_vec);
+            //h1_mumu_LQpure_d_vec->Add(h1_mumu_LQint_d_vec);
 	    h1_mumu_LQpure_d_vec->Draw("hist");
             //h1_mumu_LQint_u->Draw("hist same");
 
@@ -348,9 +348,9 @@ void LQ_draw_templates(){
             TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
             leg6->AddEntry(h1_mumu_LQint_d_vec,"Interference LQ Template","l");
             //leg3->AddEntry(h1_mumu_LQint_d,"d-LQint Template","l");
-            //leg6->Draw();
+            leg6->Draw();
             
-            //c_mumu6->Print(mu_fname6);
+            c_mumu6->Print(mu_fname6);
             delete c_mumu6;
 
         }
@@ -460,8 +460,8 @@ void LQ_draw_templates(){
            //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
            //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
             //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
-            //leg1->Draw();
-            //c_elel1->Print(el_fname1);
+            leg1->Draw();
+            c_elel1->Print(el_fname1);
             delete c_elel1;
             
             sprintf(el_title, "Channel : Electrons, %.1f TeV S_{ed}",m_LQ/1000,year);
@@ -480,9 +480,9 @@ void LQ_draw_templates(){
             TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_LQpure_d,"Pure LQ Template","l");
             leg2->AddEntry(h1_elel_LQint_d,"Interference LQ Template","l");
-            //leg2->Draw();
+            leg2->Draw();
 
-            //c_elel2->Print(el_fname2);
+            c_elel2->Print(el_fname2);
             delete c_elel2;
 
             sprintf(el_title, "Channel : Electrons, %.1f TeV V_{eu}",m_LQ/1000,year);
@@ -501,9 +501,9 @@ void LQ_draw_templates(){
             TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_LQpure_u_vec,"Pure LQ Template","l");
             //leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
-            //leg3->Draw();
+            leg3->Draw();
             
-            //c_elel3->Print(el_fname3);
+            c_elel3->Print(el_fname3);
             delete c_elel3;
 
             sprintf(el_title, "Channel : Electrons, %.1f TeV V_{eu}",m_LQ/1000,year);
@@ -522,16 +522,16 @@ void LQ_draw_templates(){
             TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_elel_LQint_u_vec,"Interference LQ Template","l");
             //leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
-            //leg4->Draw();
+            leg4->Draw();
             
-            //c_elel4->Print(el_fname4);
+            c_elel4->Print(el_fname4);
             delete c_elel4;
 
             sprintf(el_title, "Channel : Electrons, %.1f TeV V_{ed}",m_LQ/1000,year);
             TCanvas *c_elel5 = new TCanvas("c_elel5", "Histograms", 200, 10, 900, 700);
             h1_elel_LQpure_d_vec->SetTitle(el_title);
 	    //h1_elel_LQpure_d_vec->SetMinimum(0.);
-            h1_elel_LQpure_d_vec->Add(h1_elel_LQint_d_vec);
+            //h1_elel_LQpure_d_vec->Add(h1_elel_LQint_d_vec);
 	    h1_elel_LQpure_d_vec->Draw("hist");
             //h1_elel_LQint_u->Draw("hist same");
 
@@ -564,9 +564,9 @@ void LQ_draw_templates(){
             TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
             leg6->AddEntry(h1_elel_LQint_d_vec,"Interference LQ Template","l");
             //leg3->AddEntry(h1_elel_LQint_d,"d-LQint Template","l");
-            //leg6->Draw();
+            leg6->Draw();
             
-            //c_elel6->Print(el_fname6);
+            c_elel6->Print(el_fname6);
             delete c_elel6;
 
         }
