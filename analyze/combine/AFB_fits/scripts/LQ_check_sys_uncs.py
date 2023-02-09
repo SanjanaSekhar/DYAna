@@ -27,15 +27,16 @@ for chan in ["ee","mumu"]:
         year = -1
 	is_vec = True
         #extra_params = "--X-rtd MINIMIZER_no_analytic"
-	ending = "mdf_vec_102022"
+	ending = "020723"
         s = 3456
+	if is_vec: ending+="_vec"
         extra_params = " -s %i" % s
 
         if chan == "ee":
 	    
             individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
             
-	    group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
+	    group_pars =[  "RFscalesYRC", "emucostrwsYRC",  "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
                             "elfakesrwsYR", "autoMCStats"] 
             #"BTAGSYR","muPrefYRC","METJECYR",
             '''
@@ -44,7 +45,7 @@ for chan in ["ee","mumu"]:
 	    '''
 	else:
             individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
-            group_pars =[  "RFscalesYRC", "emucostrwsYRC", "ptrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
+            group_pars =[  "RFscalesYRC", "emucostrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
                             "mufakesrwsYR",  "autoMCStats"] 
 
         sys_name_conv = dict()
@@ -55,7 +56,7 @@ for chan in ["ee","mumu"]:
         sys_name_conv['gam_xsec'] = "$\\PGg\\PGg$ Cross Section"
         sys_name_conv['RFscalesYRC'] = "$\\alpha_s$ + Renormalization/Factorization Scales"
         sys_name_conv['emucostrwsYRC'] = "$e\\mu$ Shape Corrections"
-        sys_name_conv['ptrwsYRC'] = "DY $p_{T}$ Correction"
+        #sys_name_conv['ptrwsYRC'] = "DY $p_{T}$ Correction"
         sys_name_conv['pdfs'] = "PDFs"
         sys_name_conv['lumisYR'] = "Luminosity"
         sys_name_conv['autoMCStats'] = "MC and MisID Backgrounds Statistical Uncertainty"
@@ -113,7 +114,7 @@ for chan in ["ee","mumu"]:
         workspace = "workspaces/%s_%s_sys_uncs_m%i.root" % (chan, q, options.mLQ)
 
 
-        make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,False)
+        make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,False, False)
         print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s" % (workspace, extra_params))
 	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
@@ -183,7 +184,7 @@ for chan in ["ee","mumu"]:
                         out_name = sys_name_conv[sys_name]
                 else:
                     out_name = sys_name
-                f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, (val*val)/sum_uncs2))
+                f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, ((val*val)*100)/sum_uncs2))
 	    f_out.write("Total Uncertainty & %.2f  \\\\ \n" % (np.sqrt(sum_uncs2)))
 
         #print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
