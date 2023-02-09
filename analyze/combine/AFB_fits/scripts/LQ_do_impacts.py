@@ -145,7 +145,7 @@ for chan in ["mumu","ee"]:
 
         workspace = "workspaces/%s.root" % (ws_label)
         #make_workspace(workspace, options.mbin, diff = options.diff)
-        make_workspace(workspace, gen_level, chan, q, is_vec,  no_LQ , no_sys, fake_data, options.mLQ, year, False, False)
+        make_workspace(workspace, gen_level, chan, q, is_vec,  no_LQ , no_sys, fake_data, options.mLQ, year, True, False)
 
         print("Num pars = %i " % (len(pars16) + len(pars17) + len(pars18) + len(pars_comb)))
         print(par_str)
