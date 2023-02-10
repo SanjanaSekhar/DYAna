@@ -24,6 +24,7 @@ parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit
 parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
 parser.add_option("--is_vec", default=False, action="store_true", help="is vec?")
 parser.add_option("--ending",  default="102022", help="png ext")
+parser.add_option("--job",  default=1, help="job index")
 (options, args) = parser.parse_args()
 
 
@@ -44,11 +45,11 @@ yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
 
-workspace = "workspaces/%s_%s_fit_bias_tests.root" % (options.chan, options.q)
+workspace = "workspaces/%s_%s_%i_fit_bias_tests.root" % (options.chan, options.q, options.job)
 make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False, False)
 
-#extra_params = "--X-rtd MINIMIZER_no_analytic"
-extra_params = ""
+extra_params = "--X-rtd MINIMIZER_no_analytic"
+#extra_params = ""
 
 print("Will inject options.yLQ %.2f for options.chan %s%s for all toys " %(options.yLQ,options.chan,options.q))
 
@@ -108,7 +109,7 @@ for i in range(options.nToys):
 #ws.writeToFile("toy_ws.root")
 #print_and_do("PostFitShapesFromWorkspace -w toy_ws.root --dataset model_sData  -f fitDiagnostics.root:fit_s -o toy_shapes.root --sampling --samples 100")
 ##print_and_do("python scripts/plot_postfit.py -i toy_ws.root -o test/ -m %i" % (mbin))
-with open('%srespull_%s_%s_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.yLQ,ending), 'w') as f:
+with open('%srespull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.job,options.yLQ,ending), 'w') as f:
     for res,pull in zip(res_yLQ2,pull_yLQ2):
         f.write("%f %f\n" %(res,pull))
 '''
