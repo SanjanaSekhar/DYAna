@@ -6,7 +6,7 @@
 #include <iostream>
 
 TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
-bool make_ud = true;
+bool make_ud = false;
 
 void set_line_attributes(float ymin, float ymax, bool make_ud){
 	
