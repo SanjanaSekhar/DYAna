@@ -41,7 +41,6 @@ for mLQ in mLQ_list:
 		f.cd("LQ")
 		keys = ROOT.gDirectory.GetListOfKeys().Clone()
 
-
 		
 		for k in keys:
 			#print(h.GetName())
@@ -91,6 +90,22 @@ for mLQ in mLQ_list:
 				#h_clone = h.Clone(name)
 				h.Scale(-1)
 				h.Write("",ROOT.TObject.kOverwrite)
+
+		for k in keys:
+			name = k.GetName()
+			if "LQpure" in name:
+				print("Scaling LQpure temp by 100: ",name)
+				h = ROOT.gDirectory.Get(name)
+				#h_clone = h.Clone(name)
+				h.Scale(100)
+				h.Write("",ROOT.TObject.kOverwrite)
+			if "LQint" in name:
+				print("Scaling LQint temp by 10: ",name)
+				h = ROOT.gDirectory.Get(name)
+				#h_clone = h.Clone(name)
+				h.Scale(10)
+				h.Write("",ROOT.TObject.kOverwrite)
+
 				
 					
 
