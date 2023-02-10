@@ -27,9 +27,9 @@ for chan in ["mumu","ee"]:
         no_LQ = False
         year = -1
 	is_vec = False	
-        #extra_params = "--X-rtd MINIMIZER_no_analytic"        
-        extra_params = ""
-	ending="020723_noAM_oldtemps"
+        extra_params = "--X-rtd MINIMIZER_no_analytic"        
+        #extra_params = ""
+	ending="020723_LQscaled10"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
