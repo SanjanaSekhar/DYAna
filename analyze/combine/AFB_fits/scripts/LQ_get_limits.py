@@ -62,7 +62,8 @@ def plotLimits(channel):
      
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
-    FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
+    #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
+    FixBothRanges(pads[0], 0, 0, 4., 0.25)
      
      # Standard CMS logo
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
@@ -157,6 +158,7 @@ print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
 print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
 print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
 print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
+print_and_do("cp LQ_cards/%s/limit_json/limits_%s.json %s"%(channel,channel,options.odir))
 
 with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
     data = json.load(f)
@@ -168,7 +170,7 @@ with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
     json.dump(data, f, indent=4)
     f.truncate()     # remove remaining part
 
-print_and_do("cp LQ_cards/%s/limit_json/limits_%s.json %s"%(channel,channel,options.odir))
+
 print("\n========= making limit plot for channel %s =========\n"%(channel))
 #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
 plotLimits(channel)
