@@ -1,765 +1,360 @@
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m1000': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m5500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368742.
+1 job(s) submitted to cluster 77485902.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m1000
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m5500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m1000': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m5500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368743.
+1 job(s) submitted to cluster 77485903.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m1000
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m5500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m1000': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m5500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368744.
+1 job(s) submitted to cluster 77485904.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m1000
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m5500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m1500': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m6000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368745.
+1 job(s) submitted to cluster 77485905.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m1500
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m6000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m1500': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m6000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368746.
+1 job(s) submitted to cluster 77485906.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m1500
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m6000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m1500': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m6000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368747.
+1 job(s) submitted to cluster 77485907.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m1500
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m6000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m2000': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m6500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368754.
+1 job(s) submitted to cluster 77485908.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m2000
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m6500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m2000': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m6500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368760.
+1 job(s) submitted to cluster 77485909.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m2000
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m6500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m2000': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m6500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368766.
+1 job(s) submitted to cluster 77485910.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m2000
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m6500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m2500': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m7000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368771.
+1 job(s) submitted to cluster 77485911.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m2500
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m7000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m2500': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m7000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368773.
+1 job(s) submitted to cluster 77485912.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m2500
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m7000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m2500': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m7000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368779.
+1 job(s) submitted to cluster 77485917.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m2500
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m7000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m3000': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m7500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368785.
+1 job(s) submitted to cluster 77485923.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m3000
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m7500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m3000': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m7500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368791.
+1 job(s) submitted to cluster 77485927.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m3000
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m7500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m3000': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m7500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368796.
+1 job(s) submitted to cluster 77485933.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m3000
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m7500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m3500': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m8000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368798.
+1 job(s) submitted to cluster 77485939.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m3500
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m8000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m3500': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m8000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368804.
+1 job(s) submitted to cluster 77485945.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m3500
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m8000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m3500': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m8000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368810.
+1 job(s) submitted to cluster 77485949.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m3500
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m8000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m4000': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m8500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368815.
+1 job(s) submitted to cluster 77485950.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m4000
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m8500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m4000': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m8500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368821.
+1 job(s) submitted to cluster 77485955.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m4000
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m8500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m4000': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m8500': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368823.
+1 job(s) submitted to cluster 77485959.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m4000
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m8500
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m4500': No such file or directory
+rm: cannot remove 'condor_jobs/templ16_nonsys_020923_m9000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368829.
+1 job(s) submitted to cluster 77485965.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m4500
+Submitting 1 jobs from directory condor_jobs/templ16_nonsys_020923_m9000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m4500': No such file or directory
+rm: cannot remove 'condor_jobs/templ17_nonsys_020923_m9000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368835.
+1 job(s) submitted to cluster 77485969.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m4500
+Submitting 1 jobs from directory condor_jobs/templ17_nonsys_020923_m9000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m4500': No such file or directory
+rm: cannot remove 'condor_jobs/templ18_nonsys_020923_m9000': No such file or directory
 Submitting job(s).
-1 job(s) submitted to cluster 77368842.
+1 job(s) submitted to cluster 77485975.
 Querying the CMS LPC pool and trying to find an available schedd...
 
 Attempting to submit jobs to lpcschedd3.fnal.gov
 
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m4500
+Submitting 1 jobs from directory condor_jobs/templ18_nonsys_020923_m9000
 Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m5000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368846.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m5000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m5000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368849.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m5000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m5000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368855.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m5000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m5500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368861.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m5500
-Finished submitting
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/1000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m1000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/1000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m1000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/1000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m1000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/1500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m1500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/1500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m1500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/1500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m1500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/2000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m2000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/2000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m2000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/2000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m2000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/2500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m2500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/2500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m2500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/2500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m2500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/3000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m3000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/3000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m3000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/3000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m3000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/3500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m3500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/3500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m3500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/3500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m3500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/4000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m4000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/4000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m4000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/4000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m4000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/4500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m4500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/4500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m4500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/4500/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m4500
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2016/g scripts/script2.sh
-sed -i  s/MASS/5000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m5000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2017/g scripts/script2.sh
-sed -i  s/MASS/5000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m5000
-rm scripts/script2.sh
-cp scripts/LQ_nonsys_template.sh scripts/script2.sh
-sed -i  s/YEAR/2018/g scripts/script2.sh
-sed -i  s/MASS/5000/g scripts/script2.sh
-chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m5000
-rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/5500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m5500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m5500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/5500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m5500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368867.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m5500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m5500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368871.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m5500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m6000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368873.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m6000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m6000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368879.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m6000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m6000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368886.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m6000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m6500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368892.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m6500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m6500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368896.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m6500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m6500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368899.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m6500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m7000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368905.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m7000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m7000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368913.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m7000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m7000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368919.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m7000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m7500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368921.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m7500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m7500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368926.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m7500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m7500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368932.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m7500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m8000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368938.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m8000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m8000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368944.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m8000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m8000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368946.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m8000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m8500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368950.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m8500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m8500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368956.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m8500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m8500': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368962.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m8500
-Finished submitting
-rm: cannot remove 'condor_jobs/templ16_nonsys_012323_m9000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368968.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ16_nonsys_012323_m9000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ17_nonsys_012323_m9000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368971.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ17_nonsys_012323_m9000
-Finished submitting
-rm: cannot remove 'condor_jobs/templ18_nonsys_012323_m9000': No such file or directory
-Submitting job(s).
-1 job(s) submitted to cluster 77368976.
-Querying the CMS LPC pool and trying to find an available schedd...
-
-Attempting to submit jobs to lpcschedd3.fnal.gov
-
-Submitting 1 jobs from directory condor_jobs/templ18_nonsys_012323_m9000
-Finished submitting
---njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m5500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m5500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/5500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m5500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m5500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/6000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m6000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m6000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/6000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m6000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m6000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/6000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m6000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m6000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/6500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m6500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m6500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/6500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m6500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m6500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/6500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m6500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m6500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/7000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m7000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m7000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/7000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m7000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m7000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/7000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m7000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m7000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/7500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m7500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m7500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/7500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m7500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m7500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/7500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m7500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m7500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/8000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m8000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m8000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/8000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m8000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m8000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/8000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m8000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m8000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/8500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m8500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m8500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/8500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m8500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m8500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/8500/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m8500
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m8500
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2016/g scripts/script2.sh
 sed -i  s/MASS/9000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_012323_m9000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ16_nonsys_020923_m9000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2017/g scripts/script2.sh
 sed -i  s/MASS/9000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_012323_m9000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ17_nonsys_020923_m9000
 rm scripts/script2.sh
 cp scripts/LQ_nonsys_template.sh scripts/script2.sh
 sed -i  s/YEAR/2018/g scripts/script2.sh
 sed -i  s/MASS/9000/g scripts/script2.sh
 chmod +x scripts/script2.sh
-python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_012323_m9000
+python LQ_doCondor.py --njobs 1 --combine --sub  -s scripts/script2.sh -n templ18_nonsys_020923_m9000
 rm scripts/script2.sh

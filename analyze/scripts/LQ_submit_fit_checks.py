@@ -8,23 +8,23 @@ def print_and_do(s):
     return os.system(s)
 
 n_m_bins = 1
-date = "020923"
+date = "021223"
 bias_tests = True
 
 if bias_tests:
     cmds = [
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q u --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
-    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s\n"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q u --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
+    "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
 
     ]
 
@@ -40,14 +40,14 @@ if bias_tests:
 
     for i,cmd in enumerate(cmds):
 
-        for job_idx in range(len(total_jobs/50)):
+        for job_idx in range(total_jobs/50):
 
             #regular templates
             script_name = "scripts/script3.sh"
             print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
             script_file = open(script_name, 'a+')
-            script_file.write("mkdir temp")
-            script_file.write(cmd + " --job %i"%job_idx)
+            script_file.write("mkdir temp\n")
+            script_file.write(cmd + " --job %i\n"%job_idx)
             script_file.write(cpy_cmd)
             script_file.close()
             #print_and_do("cat %s" % script_name)
@@ -85,7 +85,7 @@ else:
         script_name = "scripts/script3.sh"
         print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
         script_file = open(script_name, 'a+')
-        script_file.write("mkdir limits")
+        script_file.write("mkdir limits\n")
         script_file.write(cmd)
         script_file.write(cpy_cmd)
         script_file.close()

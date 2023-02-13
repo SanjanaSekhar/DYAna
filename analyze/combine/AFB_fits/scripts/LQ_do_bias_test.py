@@ -24,7 +24,7 @@ parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit
 parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
 parser.add_option("--is_vec", default=False, action="store_true", help="is vec?")
 parser.add_option("--ending",  default="102022", help="png ext")
-parser.add_option("--job",  default=1, help="job index")
+parser.add_option("--job",  default=1, type='int',help="job index")
 (options, args) = parser.parse_args()
 
 
