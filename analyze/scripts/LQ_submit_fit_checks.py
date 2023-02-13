@@ -7,11 +7,16 @@ def print_and_do(s):
     print(s)
     return os.system(s)
 
-n_m_bins = 1
-date = "021223"
-bias_tests = True
+parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
+parser.add_option("--ending",  default="021223", help="date")
+parser.add_option("--limits",  default=False, help="do limits")
+(options, args) = parser.parse_args()
 
-if bias_tests:
+n_m_bins = 1
+date = options.ending
+
+
+if not options.limits:
     cmds = [
     "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
     "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 50 -o temp/ --mLQ 2000 --ending %s"%date,
