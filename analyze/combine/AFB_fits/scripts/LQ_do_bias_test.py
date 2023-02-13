@@ -45,76 +45,76 @@ if is_vec: ending = "vec_"+ending
 yLQ2 = options.yLQ**2
 print(options.chan,options.q)
 
+if not options.plot:
+    workspace = "workspaces/%s_%s_%i_fit_bias_tests.root" % (options.chan, options.q, options.job)
+    make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False, False)
 
-workspace = "workspaces/%s_%s_%i_fit_bias_tests.root" % (options.chan, options.q, options.job)
-make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,False, False)
+    extra_params = "--X-rtd MINIMIZER_no_analytic"
+    #extra_params = ""
 
-extra_params = "--X-rtd MINIMIZER_no_analytic"
-#extra_params = ""
+    print("Will inject options.yLQ %.2f for options.chan %s%s for all toys " %(options.yLQ,options.chan,options.q))
 
-print("Will inject options.yLQ %.2f for options.chan %s%s for all toys " %(options.yLQ,options.chan,options.q))
+    res_yLQ2 = []
+    pull_yLQ2 = []
 
-res_yLQ2 = []
-pull_yLQ2 = []
-
-
-if(not options.prefit):
-    print("Sampling toys based on postfit")
-    if(not options.reuse_fit):
-        print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s" % (workspace, extra_params))
-
-for i in range(options.nToys):
 
     if(not options.prefit):
-        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True)
-        if(options.no_sys):
-            print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
+        print("Sampling toys based on postfit")
+        if(not options.reuse_fit):
+            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s" % (workspace, extra_params))
 
+    for i in range(options.nToys):
+
+        if(not options.prefit):
+            fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True)
+            if(options.no_sys):
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
+
+            else:
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
         else:
-            print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
-    else:
 
-        print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ2))
+            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ2))
 
-    print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" %(workspace,  i, extra_params))
-    f_fit = TFile.Open("multidimfitTest.root")
-    if f_fit:
-        fr = f_fit.Get('fit_mdf')
-        myargs = RooArgSet(fr.floatParsFinal())
+        print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" %(workspace,  i, extra_params))
+        f_fit = TFile.Open("multidimfitTest.root")
+        if f_fit:
+            fr = f_fit.Get('fit_mdf')
+            myargs = RooArgSet(fr.floatParsFinal())
 
-        yLQ2_fit = myargs.find("yLQ2").getVal()
-        yLQ2_err = myargs.find("yLQ2").getError()
-        #A0 = myargs.find("A0").getVal()
-        #A0_err = myargs.find("A0").getError()
-        print("yLQ2 %.3f err %.3f " % (yLQ2_fit, yLQ2_err))
-        res_yLQ2.append(yLQ2_fit - yLQ2)
-        if(yLQ2_err > 0.): pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err)
-        
+            yLQ2_fit = myargs.find("yLQ2").getVal()
+            yLQ2_err = myargs.find("yLQ2").getError()
+            #A0 = myargs.find("A0").getVal()
+            #A0_err = myargs.find("A0").getError()
+            print("yLQ2 %.3f err %.3f " % (yLQ2_fit, yLQ2_err))
+            res_yLQ2.append(yLQ2_fit - yLQ2)
+            if(yLQ2_err > 0.): pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err)
+            
 
-        #h_res_afb.Fill(Afb - options.Afb)
-        #h_res_a0.Fill(A0 - options.A0)
-        #if(Afb_err > 0.): h_pull_afb.Fill((Afb- options.Afb)/ Afb_err)
-        #if(A0_err > 0.):  h_pull_a0.Fill((A0- options.A0)/ A0_err)
-        f_fit.Close()
-        #print_and_do("rm higgsCombineTest.GenerateOnly.mH120.%i.root" % i)
-    else:
-        print("Can't open multidimfit. Looks like the fit failed.")
+            #h_res_afb.Fill(Afb - options.Afb)
+            #h_res_a0.Fill(A0 - options.A0)
+            #if(Afb_err > 0.): h_pull_afb.Fill((Afb- options.Afb)/ Afb_err)
+            #if(A0_err > 0.):  h_pull_a0.Fill((A0- options.A0)/ A0_err)
+            f_fit.Close()
+            #print_and_do("rm higgsCombineTest.GenerateOnly.mH120.%i.root" % i)
+        else:
+            print("Can't open multidimfit. Looks like the fit failed.")
 
 
 
-#f_ws = TFile.Open("higgsCombineTest.FitDiagnostics.mH120.123456.root")
-#f_toys = TFile.Open("higgsCombineTest.GenerateOnly.mH120.123456.root")
-#ws = f_ws.Get('w')
-#toy = f_toys.Get('toys/toy_1')
-#getattr(ws, 'import')(toy)
-#ws.writeToFile("toy_ws.root")
-#print_and_do("PostFitShapesFromWorkspace -w toy_ws.root --dataset model_sData  -f fitDiagnostics.root:fit_s -o toy_shapes.root --sampling --samples 100")
-##print_and_do("python scripts/plot_postfit.py -i toy_ws.root -o test/ -m %i" % (mbin))
-with open('%srespull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.job,options.yLQ,ending), 'w') as f:
-    for res,pull in zip(res_yLQ2,pull_yLQ2):
-        f.write("%f %f\n" %(res,pull))
+    #f_ws = TFile.Open("higgsCombineTest.FitDiagnostics.mH120.123456.root")
+    #f_toys = TFile.Open("higgsCombineTest.GenerateOnly.mH120.123456.root")
+    #ws = f_ws.Get('w')
+    #toy = f_toys.Get('toys/toy_1')
+    #getattr(ws, 'import')(toy)
+    #ws.writeToFile("toy_ws.root")
+    #print_and_do("PostFitShapesFromWorkspace -w toy_ws.root --dataset model_sData  -f fitDiagnostics.root:fit_s -o toy_shapes.root --sampling --samples 100")
+    ##print_and_do("python scripts/plot_postfit.py -i toy_ws.root -o test/ -m %i" % (mbin))
+    with open('%srespull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.job,options.yLQ,ending), 'w') as f:
+        for res,pull in zip(res_yLQ2,pull_yLQ2):
+            f.write("%f %f\n" %(res,pull))
 
-if options.plot:
+else:
 
     respull = []
 
