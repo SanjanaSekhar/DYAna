@@ -61,7 +61,7 @@ if not options.plot:
     if(not options.prefit):
         print("Sampling toys based on postfit")
         if(not options.reuse_fit):
-            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s" % (workspace, extra_params))
+            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i" % (workspace, extra_params,options.job))
 
     for i in range(options.nToys):
 
@@ -76,8 +76,8 @@ if not options.plot:
 
             print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ2))
 
-        print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s" %(workspace,  i, extra_params))
-        f_fit = TFile.Open("multidimfitTest.root")
+        print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s -n _%i" %(workspace,  i, extra_params, i))
+        f_fit = TFile.Open("multidimfit_%i.root"%i)
         if f_fit:
             fr = f_fit.Get('fit_mdf')
             myargs = RooArgSet(fr.floatParsFinal())
@@ -119,7 +119,7 @@ else:
     respull = []
 
     for job_idx in range(8):
-        print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_%i_%s/* %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, job_idx, ending, options.odir,options.mLQ))
+        print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
         with open('%s%s/respull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,ending), 'r') as f:
             for line in f.readlines():
         	respull.append(line.split(' '))

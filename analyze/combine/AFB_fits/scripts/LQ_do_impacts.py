@@ -18,7 +18,7 @@ parser.add_option("--diff", default = False, action="store_true",  help="Measure
 (options, args) = parser.parse_args()
 
 for chan in ["mumu","ee"]:
-    for q in ["s"]:
+    for q in ["u","d"]:
 
         options.mLQ = 2000
         fake_data = True
@@ -26,10 +26,10 @@ for chan in ["mumu","ee"]:
         gen_level = False
         no_LQ = False
         year = -1
-	is_vec = False	
+	is_vec = True	
         extra_params = "--X-rtd MINIMIZER_no_analytic"        
         #extra_params = ""
-	ending="020723_LQscaled10"
+	ending="021423"
 	if is_vec: ending += "_vec"
         if chan=="ee":
         #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
