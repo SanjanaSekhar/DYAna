@@ -18,27 +18,27 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 3;
-    string sys_array[num_sys] = {"_RENORM","_FAC","_REFAC"};
+    const int num_sys = 6;
+    string sys_array[num_sys] = {"_RENORM","_REFAC","FAC","_elScaleGain","_elIDBARPTHIGH","_elIDENDPTHIGH"};
     //string sys_array[num_sys] = {"_elScaleGain","_elIDENDPTHIGH", "_elIDBARPTHIGH"};
     for(int year = 2016; year <= 2018; year++){
-	for(int flag_q = 1; flag_q <=1; flag_q++){
+	for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
 
         float m_LQ = 2000.;
-        char *plot_dir = "Misc_plots";
+        char *plot_dir = "AN_plots/UpDown";
 	char *date;
         if(flag_q==2) date = "012423_u";
-	else date = "012423_s";
+	else date = "012423_d";
         //char *sys = "_";
         bool do_bkg = false;
 	bool do_qcd = false;
-        bool do_electrons = false;
-        bool do_muons = true;
+        bool do_electrons = true;
+        bool do_muons = false;
         bool vec = false;
 	bool make_ud;
 	if(flag_q==2) make_ud = true;
-	else make_ud = false;
+	else make_ud = true;
 	//if(!make_ud) date = "101322_c";
         //int flag_q = 2;
         float yLQ = 1.0;
@@ -174,7 +174,7 @@ void LQ_sys_check(){
 		//unzero_bins(h_mumu_plain);
 		//unzero_bins(h_mumu_sys_down);
 
-            sprintf(mu_title, "yLQ**4*LQ_pure+yLQ**2*LQ_int %s, m_LQ = %i GeV, year = %i, yLQ = %.1f, channel: muons ", sys, int(m_LQ), year, yLQ);
+            sprintf(mu_title, "%s, m_LQ = %i GeV, yLQ = %.1f, channel: Muons %i ", sys, int(m_LQ), yLQ, year);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
             pad1->SetBottomMargin(0);
@@ -319,7 +319,7 @@ void LQ_sys_check(){
             }
 		
 
-		sprintf(el_title, "yLQ**4*LQ_pure+yLQ**2*LQ_int %s, m_LQ = %i GeV, year = %i, yLQ = %.1f, Channel: electrons ", sys, int(m_LQ), year, yLQ);
+		sprintf(el_title, "%s, m_LQ = %i GeV, yLQ = %.1f, Channel: Electrons %i", sys, int(m_LQ), yLQ, year);
             TCanvas *c_elel1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
             pad1->SetBottomMargin(0);
