@@ -27,9 +27,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 for y in [-1]:
     for options.chan in ["mumu","ee"]:
     #for options.chan in ["ee"]:
-        for options.q in ["s"]:
+        for options.q in ["u","d"]:
 
-            is_vec = False
+            is_vec = True
 	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
@@ -81,7 +81,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_020123"
+            #fit_name+="_020123"
 	    print("\n fit_name = ", fit_name)
 	    
 
@@ -134,7 +134,7 @@ for y in [-1]:
 		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(312);" >> cmd.txt """)
 		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(186);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << yLQ2->getValV() << ' '  << yLQ2->getErrorHi() << ' ' << yLQ2->getErrorLo() << std::endl;" >> cmd.txt """)
-		print_and_do("root -l -b multidimfitTest.root < cmd.txt > results_%s_m%i.txt" % (fit_name,mLQ))
+		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
                 
                 
 		print_and_do("rm -f cards/sed*")
