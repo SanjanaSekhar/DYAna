@@ -22,50 +22,50 @@ void LQ_sys_check(){
     string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_muRC"};
     //string sys_array[num_sys] = {"_elScaleGain","_elIDENDPTHIGH", "_elIDBARPTHIGH"};
     for(int year = 2016; year <= 2018; year++){
-	for(int flag_q = 1; flag_q <=2; flag_q++){
+       for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
 
         float m_LQ = 2000.;
-        char *plot_dir = "AN_plots/UpDown";
-	char *date;
+        char *plot_dir = "AN_plots/Systematics/UpDown";
+        char *date;
         if(flag_q==2) date = "012423_u";
-	else date = "012423_d";
+        else date = "012423_d";
         //char *sys = "_";
         bool do_bkg = false;
-	bool do_qcd = false;
+        bool do_qcd = false;
         bool do_electrons = false;
         bool do_muons = true;
         bool vec = false;
-	bool make_ud;
-	if(flag_q==2) make_ud = true;
-	else make_ud = true;
+        bool make_ud;
+        if(flag_q==2) make_ud = true;
+        else make_ud = true;
 	//if(!make_ud) date = "101322_c";
         //int flag_q = 2;
         float yLQ = 1.0;
 
         setup_all_SFs(year);
-	for(int i = 0; i< num_sys; i++){
+        for(int i = 0; i< num_sys; i++){
 
-	const char *sys = sys_array[i].c_str();
-        string sys_up = string(sys) + string("Up");
-        string sys_down = string(sys) + string("Down");
+           const char *sys = sys_array[i].c_str();
+           string sys_up = string(sys) + string("Up");
+           string sys_down = string(sys) + string("Down");
 
-        Double_t alpha_denom = (amc_alpha[5]+amc_alpha[6]+amc_alpha[7])/3.;
+           Double_t alpha_denom = (amc_alpha[5]+amc_alpha[6]+amc_alpha[7])/3.;
         //double m_low = m_bins[i];
         //double m_high = m_bins[i+1];
-        double afb = 0.6;
+           double afb = 0.6;
 
 
-        char mu_fname1[100],  el_fname1[100];
+           char mu_fname1[100],  el_fname1[100];
 
-        sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys, date);
-        sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys, date);
+           sprintf(mu_fname1, "%s/mumu%i_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys, date);
+           sprintf(el_fname1, "%s/ee%i_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys, date);
 
-        bool use_xf = false;
+           bool use_xf = false;
 
-        int n_var1_bins = n_y_bins;
-        float *var1_bins = y_bins;
-        if(use_xf){
+           int n_var1_bins = n_y_bins;
+           float *var1_bins = y_bins;
+           if(use_xf){
             n_var1_bins = n_xf_bins;
             var1_bins = xf_bins;
         }
@@ -101,7 +101,7 @@ void LQ_sys_check(){
         char mu_title[100], el_title[100];
 
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
-	TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
+        TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         if(do_muons){
             printf("Making mumu temps \n");
             one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS,make_ud,  use_xf, "");
@@ -142,15 +142,15 @@ void LQ_sys_check(){
                 h1_mumu_bkg_down->SetLineWidth(2);
                 printf("MuMu Bkg: nom %.0f, up %.0f, down %.0f \n", h_mumu_bkg->Integral(), h_mumu_bkg_up->Integral(), h_mumu_bkg_down->Integral());
             }
-             if(do_qcd){
+            if(do_qcd){
                 bool incl_ss = true;
                 bool ss_binning = false;
                 gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd, year, 
-                        FLAG_MUONS, incl_ss, ss_binning, use_xF, "");
+                    FLAG_MUONS, incl_ss, ss_binning, use_xF, "");
                 gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd_up, year,  
-                        FLAG_MUONS, incl_ss, ss_binning, use_xF, sys_up);
+                    FLAG_MUONS, incl_ss, ss_binning, use_xF, sys_up);
                 gen_fakes_template(t_mumu_WJets, t_mumu_QCD, t_mumu_WJets_contam, t_mumu_QCD_contam, h_mumu_qcd_down, year, 
-                        FLAG_MUONS, incl_ss, ss_binning, use_xF, sys_down);
+                    FLAG_MUONS, incl_ss, ss_binning, use_xF, sys_down);
 
                 symmetrize3d(h_mumu_qcd);
                 symmetrize3d(h_mumu_qcd_up);
@@ -174,13 +174,14 @@ void LQ_sys_check(){
 		//unzero_bins(h_mumu_plain);
 		//unzero_bins(h_mumu_sys_down);
 
-            sprintf(mu_title, "%s, m_LQ = %i GeV, yLQ = %.1f, channel: Muons %i ", sys, int(m_LQ), yLQ, year);
+            if(flag_q==2) sprintf(mu_title, "%s, m_LQ = %i GeV, y_{#mu u} = %.1f, channel: Muons %i ", sys, int(m_LQ), yLQ, year);
+            else sprintf(mu_title, "%s, m_LQ = %i GeV, y_{#mu d} = %.1f, channel: Muons %i ", sys, int(m_LQ), yLQ, year);
             TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
             pad1->SetBottomMargin(0);
             pad1->Draw();
             pad1->cd();
-	    h1_mumu_sys_up->SetMaximum(h1_mumu_sys_up->GetMaximum()*1.2);
+            h1_mumu_sys_up->SetMaximum(h1_mumu_sys_up->GetMaximum()*1.2);
             h1_mumu_sys_up->SetTitle(mu_title);
             h1_mumu_sys_up->Draw("hist");
             h1_mumu_plain->Draw("hist same");
@@ -200,7 +201,7 @@ void LQ_sys_check(){
             pad2->Draw();
             pad2->cd();
             TH1F *ratio_up, *ratio_down;
-    
+
             ratio_up = (TH1F *) h1_mumu_sys_up->Clone("h_ratio_up");
             ratio_up->Sumw2();
             ratio_up->SetStats(0);
@@ -213,8 +214,8 @@ void LQ_sys_check(){
 
             //ratio_up->SetMarkerStyle(21);
             ratio_down->SetMinimum(0.8);
-	    ratio_down->SetMaximum(1.2);
-	    ratio_down->SetTitle("");
+            ratio_down->SetMaximum(1.2);
+            ratio_down->SetTitle("");
             ratio_down->SetLineColor(kGreen+3);
             ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
@@ -239,7 +240,7 @@ void LQ_sys_check(){
                 leg1->AddEntry(h1_mumu_bkg_up, "Sys Up Bkg Template", "l");
                 leg1->AddEntry(h1_mumu_bkg_down, "Sys Down Bkg Template", "l");
             }
-             if(do_qcd){
+            if(do_qcd){
                 leg1->AddEntry(h1_mumu_qcd, "Nominal qcd Template", "l");
                 leg1->AddEntry(h1_mumu_qcd_up, "Sys Up qcd Template", "l");
                 leg1->AddEntry(h1_mumu_qcd_down, "Sys Down qcd Template", "l");
@@ -295,11 +296,11 @@ void LQ_sys_check(){
                 bool incl_ss = true;
                 bool ss_binning = false;
                 gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, 
-                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
+                    FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
                 gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_up, year, 
-                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_up);
+                    FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_up);
                 gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_down, year, 
-                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_down);
+                    FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_down);
 
                 symmetrize3d(h_elel_qcd);
                 symmetrize3d(h_elel_qcd_up);
@@ -318,15 +319,16 @@ void LQ_sys_check(){
                 h1_elel_qcd_down->SetLineWidth(2);
                 printf("elel fakes: nom %.0f, up %.0f, down %.0f \n", h_elel_qcd->Integral(), h_elel_qcd_up->Integral(), h_elel_qcd_down->Integral());
             }
-		
 
-		sprintf(el_title, "%s, m_LQ = %i GeV, yLQ = %.1f, Channel: Electrons %i", sys, int(m_LQ), yLQ, year);
+
+            if(flag_q == 2) sprintf(el_title, "%s, m_LQ = %i GeV, y_{eu} = %.1f, Channel: Electrons %i", sys, int(m_LQ), yLQ, year);
+            else sprintf(el_title, "%s, m_LQ = %i GeV, y_{ed} = %.1f, channel: Electrons %i ", sys, int(m_LQ), yLQ, year);
             TCanvas *c_elel1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
             TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
             pad1->SetBottomMargin(0);
             pad1->Draw();
             pad1->cd();
-	    h1_elel_sys_up->SetMaximum(h1_elel_sys_up->GetMaximum()*1.2);
+            h1_elel_sys_up->SetMaximum(h1_elel_sys_up->GetMaximum()*1.2);
             h1_elel_sys_up->SetTitle(el_title);
             h1_elel_sys_up->Draw("hist");
             h1_elel_plain->Draw("hist same");
@@ -340,7 +342,7 @@ void LQ_sys_check(){
 
             c_elel1->cd();
             TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
-	    pad2->SetBottomMargin(0.2);
+            pad2->SetBottomMargin(0.2);
             pad2->SetGridy();
             pad2->Draw();
             pad2->cd();
@@ -355,24 +357,24 @@ void LQ_sys_check(){
             ratio_down->Sumw2();
             ratio_down->SetStats(0);
             ratio_down->Divide(h1_elel_plain);
-	    ratio_down->SetMinimum(0.8);
+            ratio_down->SetMinimum(0.8);
             ratio_down->SetMaximum(1.2);
             ratio_down->SetTitle("");
             ratio_down->SetLineColor(kGreen+3);
             ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
-             ratio_up->SetLineColor(kBlue);
-             ratio_up->Draw("hist same");
-           
-             c_elel1->cd(); 
-	
+            ratio_up->SetLineColor(kBlue);
+            ratio_up->Draw("hist same");
 
-	if(do_bkg){
+            c_elel1->cd(); 
+
+
+            if(do_bkg){
                 h1_elel_bkg->Draw("hist same");
                 h1_elel_bkg_up->Draw("hist same");
                 h1_elel_bkg_down->Draw("hist same");
             }
-             if(do_qcd){
+            if(do_qcd){
                 h1_elel_qcd->Draw("hist same");
                 h1_elel_qcd_up->Draw("hist same");
                 h1_elel_qcd_down->Draw("hist same");
@@ -383,7 +385,7 @@ void LQ_sys_check(){
                 leg1->AddEntry(h1_elel_bkg_up, "Sys Up Bkg Template", "l");
                 leg1->AddEntry(h1_elel_bkg_down, "Sys Down Bkg Template", "l");
             }
-               if(do_qcd){
+            if(do_qcd){
                 leg1->AddEntry(h1_elel_qcd, "Nominal qcd Template", "l");
                 leg1->AddEntry(h1_elel_qcd_up, "Sys Up qcd Template", "l");
                 leg1->AddEntry(h1_elel_qcd_down, "Sys Down qcd Template", "l");
