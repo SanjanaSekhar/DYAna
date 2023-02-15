@@ -18,8 +18,8 @@ void LQ_sys_check(){
 
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
-    const int num_sys = 6;
-    string sys_array[num_sys] = {"_RENORM","_REFAC","FAC","_elScaleGain","_elIDBARPTHIGH","_elIDENDPTHIGH"};
+    const int num_sys = 4;
+    string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_muRC"};
     //string sys_array[num_sys] = {"_elScaleGain","_elIDENDPTHIGH", "_elIDBARPTHIGH"};
     for(int year = 2016; year <= 2018; year++){
 	for(int flag_q = 1; flag_q <=2; flag_q++){
@@ -33,8 +33,8 @@ void LQ_sys_check(){
         //char *sys = "_";
         bool do_bkg = false;
 	bool do_qcd = false;
-        bool do_electrons = true;
-        bool do_muons = false;
+        bool do_electrons = false;
+        bool do_muons = true;
         bool vec = false;
 	bool make_ud;
 	if(flag_q==2) make_ud = true;
@@ -180,9 +180,10 @@ void LQ_sys_check(){
             pad1->SetBottomMargin(0);
             pad1->Draw();
             pad1->cd();
-            h1_mumu_plain->SetTitle(mu_title);
-            h1_mumu_plain->Draw("hist");
-            h1_mumu_sys_up->Draw("hist same");
+	    h1_mumu_sys_up->SetMaximum(h1_mumu_sys_up->GetMaximum()*1.2);
+            h1_mumu_sys_up->SetTitle(mu_title);
+            h1_mumu_sys_up->Draw("hist");
+            h1_mumu_plain->Draw("hist same");
             h1_mumu_sys_down->Draw("hist same");
 
             gStyle->SetLegendBorderSize(0);
@@ -325,9 +326,10 @@ void LQ_sys_check(){
             pad1->SetBottomMargin(0);
             pad1->Draw();
             pad1->cd();
-            h1_elel_plain->SetTitle(el_title);
-            h1_elel_plain->Draw("hist");
-            h1_elel_sys_up->Draw("hist same");
+	    h1_elel_sys_up->SetMaximum(h1_elel_sys_up->GetMaximum()*1.2);
+            h1_elel_sys_up->SetTitle(el_title);
+            h1_elel_sys_up->Draw("hist");
+            h1_elel_plain->Draw("hist same");
             h1_elel_sys_down->Draw("hist same");
 
             gStyle->SetLegendBorderSize(0);

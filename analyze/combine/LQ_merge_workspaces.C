@@ -29,11 +29,11 @@ void CopyDir(TDirectory *source, TDirectory *savdir) {
 
 void LQ_merge_workspaces(){
 
-    for(double i=2.;i<=2.;i+=0.5){
+    for(double i=2.5;i<=9.;i+=0.5){
         int mLQ = 1000*i;
         for(int year=16;year<=18;year++){
 
-            char *ending="020123_cs";
+            char *ending="020923";
             char f1_s[180];
             sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ);
             char fout_s[180];
@@ -51,8 +51,8 @@ void LQ_merge_workspaces(){
             sprintf(pdf_base,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_pdf_%s_m%i", year, ending, mLQ);
             
             
-            int num_sys_files = 25;
-            int num_pdf_files = 25;
+            int num_sys_files = 30;
+            int num_pdf_files = 30;
 
             std::vector<string> fs;
             for(int i=0; i<num_sys_files; i++){
