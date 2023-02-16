@@ -110,10 +110,13 @@ if channel=='dm' or channel=='sm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
+for mass in [3500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
 
-    workspace ="LQ_cards/%s/%i/workspace.root"%(channel,mass)
+    workspace ="LQ_cards/%s/%i/workspace_%s_%i.root"%(channel,mass,channel,mass)
+    #workspace = "workspaces/%s_LQ.root"%channel
     comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
+    comb_card ="cards/combined_fit_%s_LQm%i.txt"%(channel,mass)
+    print_and_do("rm LQ_cards/%s/%i/*"%(channel,mass))
     print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
     if(year > 0): years = [year % 2000]
@@ -143,13 +146,13 @@ for mass in [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,75
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
     sigma = 0.6 **0.5
     extra_arg = "--symMCStats --sigma %f"%sigma 
-    
+    #extra_arg = ""
     print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
     print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s --channel-masks %s" % (comb_card, workspace, extra_arg))
+    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there"%(workspace,mass))
+    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there --X-rtd MINIMIZER_no_analytic"%(workspace,mass))
 
 
 
