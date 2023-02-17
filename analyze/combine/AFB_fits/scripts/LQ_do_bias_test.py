@@ -61,7 +61,7 @@ if not options.plot:
     if(not options.prefit):
         print("Sampling toys based on postfit")
         if(not options.reuse_fit):
-            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i" % (workspace, extra_params,options.job))
+            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s " % (workspace, extra_params))
 
     for i in range(options.nToys):
 

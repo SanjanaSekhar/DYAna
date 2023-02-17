@@ -3,15 +3,15 @@ imax 3 number of bins
 jmax 9 number of processes minus 1
 kmax 136 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm2000_merge_templates16_020923.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
-shapes *    Y17  cards/LQm2000_merge_templates17_020923.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
-shapes *    Y18  cards/LQm2000_merge_templates18_020923.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y16  cards/LQm3000_merge_templates16_020923.root LQ/ee16_$PROCESS LQ/ee16_$PROCESS_$SYSTEMATIC
+shapes *    Y17  cards/LQm3000_merge_templates17_020923.root LQ/ee17_$PROCESS LQ/ee17_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm3000_merge_templates18_020923.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y16    Y17    Y18  
 observation  -1     -1     -1   
 ----------------------------------------------------------------------------------------------------------------------------------
 bin                                   Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y17           Y17           Y17           Y17           Y17           Y17           Y17           Y17           Y17           Y17           Y18           Y18           Y18           Y18           Y18           Y18           Y18           Y18           Y18           Y18         
-process                               LQpure_d_vec  fpl           fmn           alpha         LQint_d_vec   top           db            gam           tautau        qcd           LQpure_d_vec  fpl           fmn           alpha         LQint_d_vec   top           db            gam           tautau        qcd           LQpure_d_vec  fpl           fmn           alpha         LQint_d_vec   top           db            gam           tautau        qcd         
+process                               LQpure_u_vec  fpl           fmn           alpha         LQint_u_vec   top           db            gam           tautau        qcd           LQpure_u_vec  fpl           fmn           alpha         LQint_u_vec   top           db            gam           tautau        qcd           LQpure_u_vec  fpl           fmn           alpha         LQint_u_vec   top           db            gam           tautau        qcd         
 process                               -4            -3            -2            -1            0             1             2             3             4             5             -4            -3            -2            -1            0             1             2             3             4             5             -4            -3            -2            -1            0             1             2             3             4             5           
 rate                                  -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1            -1          
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -170,6 +170,6 @@ elHLTs18 group = elHLTENDPTLOW18 elHLTENDPTHIGH18 elHLTBARPTLOW18 elHLTBARPTHIGH
 lumis16 group = lumiDB lumiBC lumi16 lumiLS lumiXY lumiGS
 emucostrws16 group = emucostrw1b16 emucostrw2b16 emucostrw3b16 emucostrw4b16
 emucostrws1718 group = emucostrw1b1718 emucostrw4b1718 emucostrw2b1718 emucostrw3b1718
-Y17 autoMCStats 0 1 1
-Y16 autoMCStats 0 1 1
-Y18 autoMCStats 0 1 1
+Y17 autoMCStats 1 0 1
+Y16 autoMCStats 1 0 1
+Y18 autoMCStats 1 0 1

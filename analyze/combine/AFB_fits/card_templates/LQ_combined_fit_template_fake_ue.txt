@@ -181,7 +181,7 @@ pdf58                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf59                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
-* autoMCStats 0 1
+* autoMCStats 1 0 1
 
 pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60
 
