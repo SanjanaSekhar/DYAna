@@ -83,13 +83,13 @@ def print_and_do(s):
     print("Exec: " + s)
     os.system(s)
 
-def setSnapshot(mdf = False, yLQ2_val = 0.0,  d=''):
+def setSnapshot(mdf = False, yLQ2_val = 0.0,  d='', s = 123456):
     fit_name = 'fit_s'
     workspace = d+'higgsCombineTest.FitDiagnostics.mH120.root'
     fit_file = d+'fitDiagnosticsTest.root'
     if(mdf):
         fit_name = 'fit_mdf'
-        workspace = d+'higgsCombineTest.MultiDimFit.mH120.root'
+        workspace = d+'higgsCombineTest.MultiDimFit.mH120.%i.root'%s
         fit_file = d+'multidimfitTest.root'
     w_f = TFile.Open(workspace)
     w = w_f.Get('w')
