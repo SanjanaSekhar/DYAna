@@ -152,7 +152,7 @@ for mass in [3500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000
     print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there --X-rtd MINIMIZER_no_analytic"%(workspace,mass))
+    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
 
 
 
