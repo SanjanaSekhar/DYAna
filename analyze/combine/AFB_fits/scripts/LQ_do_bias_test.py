@@ -118,7 +118,7 @@ else:
 
     respull = []
 
-    for job_idx in range(6):
+    for job_idx in [0,1,2,3,4,5]:
         print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
         with open('%s%s/respull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,ending), 'r') as f:
             for line in f.readlines():
