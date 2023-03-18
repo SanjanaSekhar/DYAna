@@ -83,12 +83,13 @@ parser.add_option("--inject_yLQ2",  default=0.2, type='float', help="r=X")
 parser.add_option("--quantile",  default=0.5, type='float', help="quantile expected")
 parser.add_option("--ntoys",  default=10, type='int', help="no of toys")
 parser.add_option("--iterations",  default=10, type='int', help="no of iterations")
+parser.add_option("--hadd",  default=False, help="hadd")
 (options, args) = parser.parse_args()
 
 
 is_vec = options.vec
 channel = options.q+options.chan[0]
-
+mass = options.mLQ
 extra_params=""
 no_sys=False
 fake_data=True
@@ -114,51 +115,65 @@ if channel=='dm' or channel=='sm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-for mass in [1500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
+#for mass in [1500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
 
-    workspace ="LQ_cards/%s/%i/workspace_%s_%i.root"%(channel,mass,channel,mass)
-    #workspace = "workspaces/%s_LQ.root"%channel
-    comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
-    #comb_card ="cards/combined_fit_%s_LQm%i.txt"%(channel,mass)
-    print_and_do("rm LQ_cards/%s/%i/*"%(channel,mass))
-    print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
+workspace ="LQ_cards/%s/%i/workspace_%s_%i.root"%(channel,mass,channel,mass)
+#workspace = "workspaces/%s_LQ.root"%channel
+comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
+#comb_card ="cards/combined_fit_%s_LQm%i.txt"%(channel,mass)
+print_and_do("rm LQ_cards/%s/%i/*"%(channel,mass))
+print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
-    if(year > 0): years = [year % 2000]
-    else: years = [16,17,18]
+if(year > 0): years = [year % 2000]
+else: years = [16,17,18]
 
-    for yr in years:
-        if(yr == 16):
-            comb_yr = 16
-        else:
-            #some systematics combined between 17 and 18
-            comb_yr = 1718
-        card="cards/combined_fit_y%i_LQ.txt" % (yr)
-        print_and_do("cp %s %s" % (template_card, card))
-        do_lumi(card, yr)
-        print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
-        print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
-        print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
-        if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
-        else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
-        if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
-       # if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
-
-
-    if(year < 0 ):
-        print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
+for yr in years:
+    if(yr == 16):
+        comb_yr = 16
     else:
-        print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
-    sigma = 0.6 **0.5
-    extra_arg = " --symMCStats --sigma %f"%sigma 
-    #extra_arg = ""
-    print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
-    print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
+        #some systematics combined between 17 and 18
+        comb_yr = 1718
+    card="cards/combined_fit_y%i_LQ.txt" % (yr)
+    print_and_do("cp %s %s" % (template_card, card))
+    do_lumi(card, yr)
+    print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
+    print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
+    print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
+    if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
+    else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
+    if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
+   # if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
+
+
+if(year < 0 ):
+    print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
+else:
+    print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
+sigma = 0.6 **0.5
+extra_arg = " --symMCStats --sigma %f"%sigma 
+#extra_arg = ""
+print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
+print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
+print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
+
+if options.hadd:
+    print_and_do("rm -rf HybridNew_output/%s/%s/"%(channel,mass))
+    print_and_do("mkdir HybridNew_output/%s/%s/"%(channel,mass))
+    for q_string in [0.025,0.160,0.500,0.840,0.975]:
+        for point in np.arange(0.2,1.0,0.05):
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.Test.POINT.%.7f.HybridNew.mH%i.*.quant%.3f.root HybridNew_output/%s/%s/"
+                % ( options.chan, options.q, point, q_string, ending, point, mass, q_string ))
+        print_and_do("hadd HybridNew_output/%s/%s/merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,mass,channel,q_string,mass,channel,mass,mass,q_string))
+        print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=HybridNew_output/%s/%s/merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,mass,channel,q_string,mass,q_string))
+
+else:
+
+    
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
     print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
-    print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult --saveToys"%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
-    
+    print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
+
     print_and_do("cp *.root %s"%(options.odir))
 '''   
 print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
