@@ -79,6 +79,10 @@ parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output dir
 parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
 parser.add_option("--q",  default="u", help=" channel u,d,c,s ")
 parser.add_option("--ending",  default="102022", help=" date ")
+parser.add_option("--inject_yLQ2",  default=0.2, type='float', help="r=X")
+parser.add_option("--quantile",  default=0.5, type='float', help="quantile expected")
+parser.add_option("--ntoys",  default=10, type='int', help="no of toys")
+parser.add_option("--iterations",  default=10, type='int', help="no of iterations")
 (options, args) = parser.parse_args()
 
 
@@ -110,12 +114,12 @@ if channel=='dm' or channel=='sm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
 
-for mass in [3500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
+for mass in [1500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
 
     workspace ="LQ_cards/%s/%i/workspace_%s_%i.root"%(channel,mass,channel,mass)
     #workspace = "workspaces/%s_LQ.root"%channel
     comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
-    comb_card ="cards/combined_fit_%s_LQm%i.txt"%(channel,mass)
+    #comb_card ="cards/combined_fit_%s_LQm%i.txt"%(channel,mass)
     print_and_do("rm LQ_cards/%s/%i/*"%(channel,mass))
     print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
@@ -145,7 +149,7 @@ for mass in [3500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000
     else:
         print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
     sigma = 0.6 **0.5
-    extra_arg = "--symMCStats --sigma %f"%sigma 
+    extra_arg = " --symMCStats --sigma %f"%sigma 
     #extra_arg = ""
     print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
     print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
@@ -153,10 +157,10 @@ for mass in [3500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
     print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
-
-
-
+    print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult --saveToys"%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
     
+    print_and_do("cp *.root %s"%(options.odir))
+'''   
 print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
 print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
 print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
@@ -178,4 +182,4 @@ print("\n========= making limit plot for channel %s =========\n"%(channel))
 #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
 plotLimits(channel)
 
-
+'''

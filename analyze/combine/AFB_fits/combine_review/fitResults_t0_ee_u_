@@ -1,0 +1,12 @@
+diffNuisances run on multidimfitTest.root, at 2023-03-15 17:56:11.511298 with the following options ... {'poi': 'yLQ2', 'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'multidim': True, 'plotfile': 'plots_t0.root', 'skipFitB': False, 'vtol2': 2.0, 'mLQ': 2000, 'prefit': 'fitDiagnosticsTest.root', 'skipFitS': False}
+
+ option '--skipFitB' set true. b-only Fit is just a copy of the s+b fit
+name                                              b-only fit            s+b fit         rho
+db_xsec                                          -0.02, 0.99        -0.02, 0.99       -0.04
+dy_xsec                                       * +0.00, 0.71*     * +0.00, 0.71*       -0.59
+elFakes16                                     * +0.03, 0.58*     * +0.03, 0.58*       -0.10
+elFakes17                                     * -0.02, 0.70*     * -0.02, 0.70*       -0.09
+elFakes18                                     ! -0.01, 0.47!     ! -0.01, 0.47!       -0.12
+gam_xsec                                         +0.00, 1.00        +0.00, 1.00       -0.03
+nlo_sys                                          -0.00, 1.00        -0.00, 1.00       +0.00
+top_xsec                                         -0.02, 0.91        -0.02, 0.91       +0.01

@@ -170,6 +170,6 @@ elHLTs18 group = elHLTENDPTLOW18 elHLTENDPTHIGH18 elHLTBARPTLOW18 elHLTBARPTHIGH
 lumis16 group = lumiDB lumiBC lumi16 lumiLS lumiXY lumiGS
 emucostrws16 group = emucostrw1b16 emucostrw2b16 emucostrw3b16 emucostrw4b16
 emucostrws1718 group = emucostrw1b1718 emucostrw4b1718 emucostrw2b1718 emucostrw3b1718
-Y17 autoMCStats 0 1 1
-Y16 autoMCStats 0 1 1
-Y18 autoMCStats 0 1 1
+Y17 autoMCStats 1 0 1
+Y16 autoMCStats 1 0 1
+Y18 autoMCStats 1 0 1

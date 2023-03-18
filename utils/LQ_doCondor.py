@@ -120,7 +120,7 @@ def submit_jobs(lofjobs):
         condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
         #condor_file.write('request_disk = 500000\n') # modify these requirements depending on job
         #if(options.with_combine): 
-        condor_file.write('request_memory = 4000\n')
+        condor_file.write('request_memory = 5000\n')
         condor_file.write('request_cpus = 4\n')
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write("Transfer_Input_Files = %s, %s \n" %(script_location, sub_file))
