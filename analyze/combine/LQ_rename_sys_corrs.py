@@ -3,7 +3,7 @@ from optparse import OptionParser
 import sys
 
 ext = "020923"
-mLQ_list = [6500,7000,7500,8000,8500]
+mLQ_list = [1500,2000,2500]
 #mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")

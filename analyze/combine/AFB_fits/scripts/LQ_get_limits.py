@@ -158,20 +158,25 @@ print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o
 
 if options.hadd:
     print_and_do("rm -rf HybridNew_output/%s/%s/"%(channel,mass))
-    print_and_do("mkdir HybridNew_output/%s/%s/"%(channel,mass))
+    print_and_do("mkdir -p HybridNew_output/%s/%s/"%(channel,mass))
+    print_and_do("rm eosoutput.log")
     for q_string in [0.025,0.160,0.500,0.840,0.975]:
         for point in np.arange(0.2,1.0,0.05):
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.Test.POINT.%.7f.HybridNew.mH%i.*.quant%.3f.root HybridNew_output/%s/%s/"
-                % ( options.chan, options.q, point, q_string, ending, point, mass, q_string ))
-        print_and_do("hadd HybridNew_output/%s/%s/merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,mass,channel,q_string,mass,channel,mass,mass,q_string))
-        print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=HybridNew_output/%s/%s/merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,mass,channel,q_string,mass,q_string))
+            print_and_do("xrdfs root://cmseos.fnal.gov/ ls /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/ | grep POINT.%.3f | grep %.3f >> eosoutput.log"%(options.chan,options.q,point,q_string,options.ending,point,q_string))
+            #print_and_do("eos root://cmseos.fnal.gov file rename  /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.Test.POINT.%.6f.HybridNew.mH%i.*.quant%.3f.root /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.yLQ2%.2f.HybridNew.mH%i.q%.3f.root "%(options.chan,options.q,point,q_string,options.ending,point,mass,q_string,options.chan,options.q,point,q_string,options.ending,point,mass,q_string))
+        with open("eosoutput.log","r") as f:
+            for line in f: 
+                print_and_do("xrdcp -f root://cmseos.fnal.gov/%s HybridNew_output/%s/%s/"
+                % ( line[:-1], channel, mass ))
+        print_and_do("hadd merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,q_string,mass,channel,mass,mass,q_string))
+        print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
 
 else:
 
     
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
+    #print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
     print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
 
     print_and_do("cp *.root %s"%(options.odir))
