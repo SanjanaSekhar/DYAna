@@ -46,10 +46,10 @@ for year in [2016,2017,2018]:
             h.Draw("hist")
             h_up.Draw("hist same")
             h_down.Draw("hist same")
-            leg1 = TLegend(x_start, y_start, x_end, y_end);
-            leg1.AddEntry(h, "Nominal Template", "l");
-            leg1.AddEntry(h_up, "Sys Up Template", "l");
-            leg1.AddEntry(h_down, "Sys Down Template", "l");
+            leg1 = TLegend(x_start, y_start, x_end, y_end)
+            leg1.AddEntry(h, "Nominal Template", "l")
+            leg1.AddEntry(h_up, "Sys Up Template", "l")
+            leg1.AddEntry(h_down, "Sys Down Template", "l")
             c1.Print("%s/ee%i_fpl_%s.pdf"%(odir,year-2000,sys))
             c1.Delete()
     print(mumu_sys_list)
@@ -71,10 +71,10 @@ for year in [2016,2017,2018]:
             h.Draw("hist")
             h_up.Draw("hist same")
             h_down.Draw("hist same")
-            leg1 = TLegend(x_start, y_start, x_end, y_end);
-            leg1.AddEntry(h, "Nominal Template", "l");
-            leg1.AddEntry(h_up, "Sys Up Template", "l");
-            leg1.AddEntry(h_down, "Sys Down Template", "l");
+            leg1 = TLegend(x_start, y_start, x_end, y_end)
+            leg1.AddEntry(h, "Nominal Template", "l")
+            leg1.AddEntry(h_up, "Sys Up Template", "l")
+            leg1.AddEntry(h_down, "Sys Down Template", "l")
             c1.Print("%s/mumu%i_fpl_%s.pdf"%(odir,year-2000,sys))
             c1.Delete()
     f.Close()
