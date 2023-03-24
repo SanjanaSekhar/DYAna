@@ -50,7 +50,7 @@ for year in [2016,2017,2018]:
             leg1.AddEntry(h, "Nominal Template", "l");
             leg1.AddEntry(h_up, "Sys Up Template", "l");
             leg1.AddEntry(h_down, "Sys Down Template", "l");
-            c1.Print("%s/ee%i_fpl_MCStatBin.pdf"%(odir,year-2000))
+            c1.Print("%s/ee%i_fpl_%s.pdf"%(odir,year-2000,sys))
             c1.Delete()
     print(mumu_sys_list)
     for i,sys in enumerate(mumu_sys_list):
@@ -75,6 +75,6 @@ for year in [2016,2017,2018]:
             leg1.AddEntry(h, "Nominal Template", "l");
             leg1.AddEntry(h_up, "Sys Up Template", "l");
             leg1.AddEntry(h_down, "Sys Down Template", "l");
-            c1.Print("%s/mumu%i_fpl_MCStatBin.pdf"%(odir,year-2000))
+            c1.Print("%s/mumu%i_fpl_%s.pdf"%(odir,year-2000,sys))
             c1.Delete()
     f.Close()
