@@ -23,8 +23,8 @@ for year in [2016,2017,2018]:
     keys = ROOT.gDirectory.GetListOfKeys().Clone()
     ee_sys_list, mumu_sys_list = [],[]
     for k in keys:
-        if 'ee%i_fpl_MCStatBin'%(year-2000) in k.GetName(): ee_sys_list.append(k.GetName())
-        if 'mumu%i_fpl_MCStatBin'%(year-2000) in k.GetName(): mumu_sys_list.append(k.GetName())
+        if 'ee%i_LQpure_u_MCStatBin'%(year-2000) in k.GetName(): ee_sys_list.append(k.GetName())
+        if 'mumu%i_LQpure_u_MCStatBin'%(year-2000) in k.GetName(): mumu_sys_list.append(k.GetName())
     #ee_sys_list = [s.GetName() for s.GetName() in keys if 'ee%i_fpl_MCStatBin'%(year-2000) in s.GetName()]
     #mumu_sys_list = [s.GetName() for s.GetName() in keys if 'mumu%i_fpl_MCStatBin'%(year-2000) in s.GetName()]
     print(ee_sys_list)
@@ -33,8 +33,8 @@ for year in [2016,2017,2018]:
 	    print("Drawing %s"%sys)
             h_up = ROOT.gDirectory.Get(sys)
             h_down = ROOT.gDirectory.Get(sys[:-2]+"Down")
-            h = ROOT.gDirectory.Get("ee%i_fpl"%(year-2000))
-            c1 = TCanvas("c%i"%i,"c%i"%i,700,700)
+            h = ROOT.gDirectory.Get("ee%i_LQpure_u"%(year-2000))
+            c1 = TCanvas("c1","c1",700,700)
             c1.cd()
             h.SetLineWidth(2)
             h_up.SetLineWidth(2)
@@ -51,16 +51,16 @@ for year in [2016,2017,2018]:
             leg1.AddEntry(h_up, "Sys Up Template", "l")
             leg1.AddEntry(h_down, "Sys Down Template", "l")
             leg1.Draw()
-            c1.Print("%s/ee%i_fpl_%s.pdf"%(odir,year-2000,sys))
-            c1.Delete()
+            c1.Print("%s/ee%i_LQpure_u_%s.pdf"%(odir,year-2000,sys))
+            
     print(mumu_sys_list)
     for i,sys in enumerate(mumu_sys_list):
         if 'Up' in sys:
             print("Drawing %s"%sys)
             h_up = ROOT.gDirectory.Get(sys)
             h_down = ROOT.gDirectory.Get(sys[:-2]+"Down")
-            h = ROOT.gDirectory.Get("mumu%i_fpl"%(year-2000))
-            c1 = TCanvas("c%i"%i,"c%i"%i,700,700)
+            h = ROOT.gDirectory.Get("mumu%i_LQpure_u"%(year-2000))
+            c1 = TCanvas("c1","c1",700,700)
             c1.cd()
             h.SetLineWidth(2)
             h_up.SetLineWidth(2)
@@ -77,6 +77,6 @@ for year in [2016,2017,2018]:
             leg1.AddEntry(h_up, "Sys Up Template", "l")
             leg1.AddEntry(h_down, "Sys Down Template", "l")
             leg1.Draw()
-            c1.Print("%s/mumu%i_fpl_%s.pdf"%(odir,year-2000,sys))
-            c1.Delete()
+            c1.Print("%s/mumu%i_LQpure_u_%s.pdf"%(odir,year-2000,sys))
+            
     f.Close()
