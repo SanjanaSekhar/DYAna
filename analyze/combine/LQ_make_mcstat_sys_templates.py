@@ -64,16 +64,55 @@ for mLQ in mLQ_list:
 					new_name2 = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%sym_bin)
 					#print("New names: %s and %s"%(new_name,new_name2))	
 					if((new_name+"Up" in keys) or (new_name+"Down" in keys) or (new_name2+"Up" in keys) or (new_name2+"Down" in keys)): continue
-					print("Creating %s"%new_name)
+					#print("Creating %s"%new_name)
 
 					# UP template
 					h_clone = h.Clone(new_name+"Up")
 					h_clone.SetBinContent(idx, h.GetBinContent(idx) + err)
 					h_clone.SetBinContent(sym_bin, h.GetBinContent(sym_bin) + err)
 					h_clone.Write()
+					del h_clone
 					# DOWN template
 					h_clone = h.Clone(new_name+"Down")
 					h_clone.SetBinContent(idx, h.GetBinContent(idx) - err)
 					h_clone.SetBinContent(sym_bin, h.GetBinContent(sym_bin) - err)
 					h_clone.Write()
+					del h_clone
+
+		for chan in ["ee","mumu"]:
+
+			print("year is %i, chan is %s" % (year, chan))
+			
+			mcstats_bkg_procs = ["top","db","gam","qcd"]
+
+			
+			for proc in mcstats_bkg_procs:
+				
+				proc_name = chan + str(year)[2:4] + '_' + proc
+				#print("Creating templates for the MC stat uncs for process: %s"%proc_name)
+
+				h = ROOT.gDirectory.Get(proc_name)
+				for idx in range(1,h.GetNbinsX()+1):
+					keys = ROOT.gDirectory.GetListOfKeys().Clone()
+					#sym_bin = get_sym_bin(idx-1, h.GetNbinsX())
+					err = h.GetBinError(idx)
+					
+					new_name = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%idx)
+					#new_name2 = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%sym_bin)
+					#print("New names: %s and %s"%(new_name,new_name2))	
+					if((new_name+"Up" in keys) or (new_name+"Down" in keys)): continue
+					print("Creating %s"%new_name)
+
+					# UP template
+					h_clone = h.Clone(new_name+"Up")
+					h_clone.SetBinContent(idx, h.GetBinContent(idx) + err)
+					#h_clone.SetBinContent(sym_bin, h.GetBinContent(sym_bin) + err)
+					h_clone.Write()
+					del h_clone
+					# DOWN template
+					h_clone = h.Clone(new_name+"Down")
+					h_clone.SetBinContent(idx, h.GetBinContent(idx) - err)
+					#h_clone.SetBinContent(sym_bin, h.GetBinContent(sym_bin) - err)
+					h_clone.Write()
+					del h_clone
 		f.Close()
