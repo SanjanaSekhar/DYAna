@@ -51,6 +51,7 @@ for year in [2016,2017,2018]:
             leg1.AddEntry(h_up, "Sys Up Template", "l");
             leg1.AddEntry(h_down, "Sys Down Template", "l");
             c1.Print("%s/ee%i_fpl_MCStatBin.pdf"%(odir,year-2000))
+            c1.Delete()
     print(mumu_sys_list)
     for sys in mumu_sys_list:
         if 'Up' in sys:
@@ -58,7 +59,7 @@ for year in [2016,2017,2018]:
             h_up = ROOT.gDirectory.Get(sys)
             h_down = ROOT.gDirectory.Get(sys[:-2]+"Down")
             h = ROOT.gDirectory.Get("mumu%i_fpl"%(year-2000))
-            c1 = TCanvas("c1","c1",200,300,700,500)
+            c1 = TCanvas("c2","c2",200,300,700,500)
             c1.cd()
             h.SetLineWidth(2)
             h_up.SetLineWidth(2)
@@ -75,5 +76,5 @@ for year in [2016,2017,2018]:
             leg1.AddEntry(h_up, "Sys Up Template", "l");
             leg1.AddEntry(h_down, "Sys Down Template", "l");
             c1.Print("%s/mumu%i_fpl_MCStatBin.pdf"%(odir,year-2000))
-
+            c1.Delete()
     f.Close()
