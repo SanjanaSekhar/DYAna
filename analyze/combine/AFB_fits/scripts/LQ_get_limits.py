@@ -65,7 +65,8 @@ def plotLimits(channel):
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
     FixBothRanges(pads[0], 0, 0, 4., 0.25)
      
-     # Standard CMS logo
+     
+# Standard CMS logo
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
@@ -176,8 +177,8 @@ else:
     
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-    #print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
-    print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
+    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
+    #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
 
     print_and_do("cp *.root %s"%(options.odir))
 '''   

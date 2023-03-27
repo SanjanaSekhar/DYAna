@@ -27,7 +27,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["ee"]:
-        for options.q in ["d"]:
+        for options.q in ["u"]:
 
             is_vec = False
 	    statuncs = False
@@ -36,7 +36,7 @@ for y in [-1]:
 #            options.chan="mumu"
 #            options.q="u"
             print("options.gen_level = ",options.gen_level);
-	    options.no_sys=True
+	    options.no_sys=False
             if not options.gen_level and not options.no_sys: options.fake_data=True
             options.no_LQ=False
             options.year = y
@@ -85,7 +85,7 @@ for y in [-1]:
 	    print("\n fit_name = ", fit_name)
 	    
 
-            for mLQ in [2000]:
+            for mLQ in [1500]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.

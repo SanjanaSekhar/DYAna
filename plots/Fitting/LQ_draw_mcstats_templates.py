@@ -7,7 +7,7 @@ gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
 
 ext = "020923"
-mLQ = 2000
+mLQ = 1500
 odir = "AN_plots/Systematics/UpDown/"
 x_start = 0.7;
 x_end = 0.9;
