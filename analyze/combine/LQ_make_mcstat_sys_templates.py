@@ -3,7 +3,7 @@ from optparse import OptionParser
 import sys
 
 ext = "020923"
-mLQ_list = [1500]
+mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000]
 
 
 def get_sym_bin(idx, nBins):
@@ -46,7 +46,7 @@ for mLQ in mLQ_list:
 
 			print("making signal temps: year is %i, chan is %s, mLQ is %i" % (year, chan, mLQ))
 			
-			mcstats_procs = ["fpl","fmn","alpha","tautau","LQpure_u","LQint_u","LQpure_d","LQint_d","LQpure_u_vec","LQint_u_vec","LQpure_d_vec","LQint_d_vec"]
+			mcstats_procs = ["fpl","fmn","alpha","LQpure_u","LQint_u","LQpure_d","LQint_d","LQpure_u_vec","LQint_u_vec","LQpure_d_vec","LQint_d_vec"]
 
 			
 			for proc in mcstats_procs:
@@ -59,14 +59,17 @@ for mLQ in mLQ_list:
 					keys = ROOT.gDirectory.GetListOfKeys().Clone()
 					sym_bin = get_sym_bin(idx-1, h.GetNbinsX())
 					err = h.GetBinError(idx)
-					
+					h.SetBinError(idx,1e-6) #setting nominal stat unc to zero for autmcstat	
+					h.SetBinError(sym_bin,1e-6)
 					new_name = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%idx)
 					new_name2 = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%sym_bin)
 					#print("New names: %s and %s"%(new_name,new_name2))	
 					#if((new_name+"Up" in keys) or (new_name+"Down" in keys) or (new_name2+"Up" in keys) or (new_name2+"Down" in keys)): continue
 					#print("Creating %s"%new_name)
+					flag = 0
 					for s in keys:
-						if s.GetName()+"Up"==new_name or s.GetName()+"Down"==new_name or s.GetName()+"Up"==new_name2 or s.GetName()+"Down"==new_name2: continue
+						if s.GetName()+"Up"==new_name or s.GetName()+"Down"==new_name or s.GetName()+"Up"==new_name2 or s.GetName()+"Down"==new_name2: flag = 1
+					if flag == 1: continue
 					# UP template
 					h_clone = h.Clone(new_name+"Up")
 					h_clone.SetBinContent(idx, h.GetBinContent(idx) + err)
@@ -78,7 +81,7 @@ for mLQ in mLQ_list:
 					h_clone.SetBinContent(idx, h.GetBinContent(idx) - err)
 					h_clone.SetBinContent(sym_bin, h.GetBinContent(sym_bin) - err)
 					h_clone.Write()
-					
+		'''			
 
 		for chan in ["ee","mumu"]:
 
@@ -103,8 +106,10 @@ for mLQ in mLQ_list:
 					#print("New names: %s and %s"%(new_name,new_name2))	
 					#if((new_name+"Up" in keys) or (new_name+"Down" in keys)): continue
 					#print("Creating %s"%new_name)
+					flag = 0
 					for s in keys:
-						if s.GetName()+"Up"==new_name or s.GetName()+"Down"==new_name: continue
+						if s.GetName()+"Up"==new_name or s.GetName()+"Down"==new_name: flag = 1
+					if flag == 1: continue
 					# UP template
 					h_clone = h.Clone(new_name+"Up")
 					h_clone.SetBinContent(idx, h.GetBinContent(idx) + err)
@@ -116,5 +121,5 @@ for mLQ in mLQ_list:
 					h_clone.SetBinContent(idx, h.GetBinContent(idx) - err)
 					#h_clone.SetBinContent(sym_bin, h.GetBinContent(sym_bin) - err)
 					h_clone.Write()
-					
+		'''			
 		del f

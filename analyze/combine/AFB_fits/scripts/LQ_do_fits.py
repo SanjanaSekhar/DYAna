@@ -17,7 +17,7 @@ parser.add_option("--no_cleanup",  default=False, action="store_true", help="Don
 parser.add_option("--mbin", default = -1, type='int', help="Only do fits for this single mass bin, default is all bins")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("-v", "--verbose", default = 0, type='int', help="Turn up verbosity on fits")
-parser.add_option("--noSymMCStats", default = False, action="store_true",  help="Don't add constraints to mcStat nuisances")
+parser.add_option("--noSymMCStats", default = True, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--no_LQ",  default=False, action="store_true", help="For sanity check purposes remove LQ temps")
 parser.add_option("--gen_level",  default=False, action="store_true", help="gen level fits")
 (options, args) = parser.parse_args()
@@ -85,7 +85,7 @@ for y in [-1]:
 	    print("\n fit_name = ", fit_name)
 	    
 
-            for mLQ in [1500]:
+            for mLQ in [1000]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.

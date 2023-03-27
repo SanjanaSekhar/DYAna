@@ -151,8 +151,8 @@ if(year < 0 ):
 else:
     print_and_do("combineCards.py Y%i=cards/combined_fit_y%i_LQ.txt > %s" % (yr,yr,  comb_card))
 sigma = 0.6 **0.5
-extra_arg = " --symMCStats --sigma %f"%sigma 
-#extra_arg = ""
+#extra_arg = " --symMCStats --sigma %f"%sigma 
+extra_arg = ""
 print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
 print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
 print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
