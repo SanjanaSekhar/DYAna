@@ -71,14 +71,14 @@ if not options.limits:
 else:
     cmds = [
   
-    "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  --ntoys 500 --iterations 1 "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
  
     ]
 
@@ -93,19 +93,19 @@ else:
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	for m in [1500,2000,2500,3000,3500]:
-	    for point in np.arange(0.28,1.5,0.005):
-	        for q in [0.025,0.16,0.5,0.84,0.975]:
-                    #regular templates
-                    script_name = "scripts/script3.sh"
-                    print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
-                    script_file = open(script_name, 'a+')
-                    script_file.write("mkdir limits\n")
-                    script_file.write(cmd+" --mLQ %i --inject_yLQ2 %f --quantile %f\n"%(m,point,q))
-                    script_file.write(cpy_cmd)
-                    script_file.close()
-                    #print_and_do("cat %s" % script_name)
-                    print_and_do("chmod +x %s" % script_name)
-                    print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_yLQ2%.3f_q%.3f_%s"  % (n_m_bins, script_name, labels[i], m, point, q, date))
-                    print_and_do("rm scripts/script3.sh")
+	for m in range(1000,9500,500):
+	    #for point in np.arange(0.28,1.5,0.005):
+	    #for q in [0.025,0.16,0.5,0.84,0.975]:
+            #regular templates
+            script_name = "scripts/script3.sh"
+            print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+            script_file = open(script_name, 'a+')
+            script_file.write("mkdir limits\n")
+            script_file.write(cmd+" --mLQ %i \n"%(m))
+            script_file.write(cpy_cmd)
+            script_file.close()
+            #print_and_do("cat %s" % script_name)
+            print_and_do("chmod +x %s" % script_name)
+            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_%s"  % (n_m_bins, script_name, labels[i], m, date))
+            print_and_do("rm scripts/script3.sh")
 

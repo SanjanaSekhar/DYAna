@@ -180,14 +180,14 @@ else:
     print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
     #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
 
-    print_and_do("cp *.root %s"%(options.odir))
-'''   
+    #print_and_do("cp *.root %s"%(options.odir))
+   
 print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
 print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
 print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/*/*.limit.* --use-dirs -o LQ_cards/%s/limit_json/limits.json"%(channel,channel))
-print_and_do("cp LQ_cards/%s/limit_json/limits_%s.json %s"%(channel,channel,options.odir))
-
+print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/%i/*.limit.* --use-dirs -o LQ_cards/%s/%i/limits.json"%(channel,mass,channel,mass))
+print_and_do("cp LQ_cards/%s/%i/limits_%s.json %s/limits_%s_m%i.json"%(channel,mass,channel,options.odir,channel,mass))
+'''
 with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
     data = json.load(f)
     for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
