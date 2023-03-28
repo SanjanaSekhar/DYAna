@@ -60,8 +60,10 @@ for year in [2016,2017,2018]:
 
 			h = ROOT.gDirectory.Get(proc_name)
 			for idx in range(1,h.GetNbinsX()+1):
-				keys = ROOT.gDirectory.GetListOfKeys().Clone()
+				#keys = ROOT.gDirectory.GetListOfKeys().Clone()
+
 				sym_bin = get_sym_bin(idx-1, h.GetNbinsX())
+				if sym_bin < idx : continue
 				err = h.GetBinError(idx)
 				h.SetBinError(idx,1e-6) #setting nominal stat unc to zero for autmcstat	
 				h.SetBinError(sym_bin,1e-6)
@@ -70,10 +72,10 @@ for year in [2016,2017,2018]:
 				#print("New names: %s and %s"%(new_name,new_name2))	
 				#if((new_name+"Up" in keys) or (new_name+"Down" in keys) or (new_name2+"Up" in keys) or (new_name2+"Down" in keys)): continue
 				#print("Creating %s"%new_name)
-				flag = 0
-				for s in keys:
-					if s.GetName()+"Up"==new_name or s.GetName()+"Down"==new_name or s.GetName()+"Up"==new_name2 or s.GetName()+"Down"==new_name2: flag = 1
-				if flag == 1: continue
+				#flag = 0
+				#for s in keys:
+				#	if s.GetName()+"Up"==new_name or s.GetName()+"Down"==new_name or s.GetName()+"Up"==new_name2 or s.GetName()+"Down"==new_name2: flag = 1
+				#if flag == 1: continue
 				# UP template
 				h_clone = h.Clone(new_name+"Up")
 				h_clone.SetBinContent(idx, h.GetBinContent(idx) + err)
