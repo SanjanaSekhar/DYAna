@@ -85,6 +85,7 @@ parser.add_option("--quantile",  default=0.5, type='float', help="quantile expec
 parser.add_option("--ntoys",  default=10, type='int', help="no of toys")
 parser.add_option("--iterations",  default=10, type='int', help="no of iterations")
 parser.add_option("--hadd",  default=False, help="hadd")
+parser.add_option("--HybridNew",  default=False, help="use HybridNew instead of AsymptoticLimits")
 (options, args) = parser.parse_args()
 
 
@@ -158,49 +159,62 @@ print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
 print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
 
 if options.hadd:
-    print_and_do("rm -rf HybridNew_output/%s/%s/"%(channel,mass))
-    print_and_do("mkdir -p HybridNew_output/%s/%s/"%(channel,mass))
-    print_and_do("rm eosoutput.log")
-    for q_string in [0.025,0.160,0.500,0.840,0.975]:
-        for point in np.arange(0.2,1.0,0.05):
-            print_and_do("xrdfs root://cmseos.fnal.gov/ ls /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/ | grep POINT.%.3f | grep %.3f >> eosoutput.log"%(options.chan,options.q,point,q_string,options.ending,point,q_string))
-            #print_and_do("eos root://cmseos.fnal.gov file rename  /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.Test.POINT.%.6f.HybridNew.mH%i.*.quant%.3f.root /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.yLQ2%.2f.HybridNew.mH%i.q%.3f.root "%(options.chan,options.q,point,q_string,options.ending,point,mass,q_string,options.chan,options.q,point,q_string,options.ending,point,mass,q_string))
-        with open("eosoutput.log","r") as f:
-            for line in f: 
-                print_and_do("xrdcp -f root://cmseos.fnal.gov/%s HybridNew_output/%s/%s/"
-                % ( line[:-1], channel, mass ))
-        print_and_do("hadd merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,q_string,mass,channel,mass,mass,q_string))
-        print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
+
+    if options.HybridNew:
+        print_and_do("rm -rf HybridNew_output/%s/%s/"%(channel,mass))
+        print_and_do("mkdir -p HybridNew_output/%s/%s/"%(channel,mass))
+        print_and_do("rm eosoutput.log")
+        for q_string in [0.025,0.160,0.500,0.840,0.975]:
+            for point in np.arange(0.2,1.0,0.05):
+                print_and_do("xrdfs root://cmseos.fnal.gov/ ls /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/ | grep POINT.%.3f | grep %.3f >> eosoutput.log"%(options.chan,options.q,point,q_string,options.ending,point,q_string))
+                #print_and_do("eos root://cmseos.fnal.gov file rename  /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.Test.POINT.%.6f.HybridNew.mH%i.*.quant%.3f.root /store/user/sasekhar/Condor_outputs/limits_%s_%s_yLQ2%.2f_q%.3f_%s/higgsCombine.yLQ2%.2f.HybridNew.mH%i.q%.3f.root "%(options.chan,options.q,point,q_string,options.ending,point,mass,q_string,options.chan,options.q,point,q_string,options.ending,point,mass,q_string))
+            with open("eosoutput.log","r") as f:
+                for line in f: 
+                    print_and_do("xrdcp -f root://cmseos.fnal.gov/%s HybridNew_output/%s/%s/"
+                    % ( line[:-1], channel, mass ))
+            print_and_do("hadd merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,q_string,mass,channel,mass,mass,q_string))
+            print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
+    else:
+        for m in range(1000,9500,500):
+            # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
+            print_and_do("xrdcp -f root://cmseos.fnal.gov/store/user/ssekhar/Condor_outputs/limits_%s_%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json"
+                %(options.chan, options.q, m, ending, channel, m, channel))
+            with open("LQ_cards/%s/limit_json/limits_%s_m%i.json"%(channel,channel,m), 'r+') as f:
+                data = json.load(f)
+                #for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
+                for lim in data[m]:
+                    yLQ2 = data[m][lim]
+                    data[m][lim] = sqrt(yLQ2)
+                f.seek(0)        # <--- should reset file position to the beginning.
+                json.dump(data, f, indent=4)
+                f.truncate()     # remove remaining part
+
+
+        # print("\n========= making limit plot for channel %s =========\n"%(channel))
+        # #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
+        # plotLimits(channel)
 
 else:
 
     
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
-    #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-    print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass))
-    #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
+    
 
-    #print_and_do("cp *.root %s"%(options.odir))
+    if not options.HybridNew: 
+
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass)) #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
+        print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
+        print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
+        print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
+        print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/%i/*.limit.* --use-dirs -o LQ_cards/%s/%i/limits.json"%(channel,mass,channel,mass))
+        print_and_do("cp LQ_cards/%s/%i/limits_%s.json %s/limits_%s_m%i.json"%(channel,mass,channel,options.odir,channel,mass))
+    
+    else:
+        print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "
+            %(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
+        print_and_do("cp *.root %s"%(options.odir))
    
-print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
-print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
-print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
-print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/%i/*.limit.* --use-dirs -o LQ_cards/%s/%i/limits.json"%(channel,mass,channel,mass))
-print_and_do("cp LQ_cards/%s/%i/limits_%s.json %s/limits_%s_m%i.json"%(channel,mass,channel,options.odir,channel,mass))
-'''
-with open("LQ_cards/%s/limit_json/limits_%s.json"%(channel,channel), 'r+') as f:
-    data = json.load(f)
-    for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
-        for lim in data[mass]:
-            yLQ2 = data[mass][lim]
-            data[mass][lim] = sqrt(yLQ2)
-    f.seek(0)        # <--- should reset file position to the beginning.
-    json.dump(data, f, indent=4)
-    f.truncate()     # remove remaining part
 
 
-print("\n========= making limit plot for channel %s =========\n"%(channel))
-#print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
-plotLimits(channel)
 
-'''
+
