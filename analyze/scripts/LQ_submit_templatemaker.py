@@ -8,9 +8,9 @@ def print_and_do(s):
     return os.system(s)
 
 #masses=[1000.,1500.,2000.,2500.,3000.,3500.,4000.,4500.,5000.]#,
-masses = [6500.,7000.,7500.,8000.]
-#masses = [2000.]
-years = [2017,2018]
+#masses = [6500.,7000.,7500.,8000.]
+masses = [5500.,8000.]
+years = [2016,2017,2018]
 types = [0, 1]
 labels = ["pdf", "sys"]
 #types = [1]

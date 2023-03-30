@@ -69,7 +69,7 @@ if not options.limits and not options.combine_review:
                 print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s%i_%i_%s"  % (n_m_bins, script_name, labels[i], mLQ, job_idx, date))
                 print_and_do("rm scripts/script3.sh")
 
-else if not options.combine_review:
+elif not options.combine_review:
     cmds = [
   
     "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,

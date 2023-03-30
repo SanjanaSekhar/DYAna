@@ -131,7 +131,7 @@ x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
 for m_ll in [500,600,700,800]:
 
-    flag = 2
+    flag = 1
     s = m_ll*m_ll
 
     SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
@@ -168,12 +168,12 @@ for m_ll in [500,600,700,800]:
     
 
 
-pylab.title(r"$2 TeV S_{ed}, $y_{ed}$ = "+str(y_lq) )
+pylab.title(r"$2 TeV S_{eu}, $y_{ed}$ = "+str(y_lq) )
 pylab.xlabel(r'$cos \theta$')
 pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
 pylab.ylim([0., 1.4])
 pylab.legend()
-pylab.savefig("Sed_mll.png")
+pylab.savefig("Seu_mll.png")
 pylab.close()
 '''
 for m_ll in [500]:
