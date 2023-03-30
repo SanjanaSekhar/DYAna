@@ -10,13 +10,14 @@ def print_and_do(s):
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--ending",  default="021223", help="date")
 parser.add_option("--limits",  default=False, help="do limits")
+parser.add_option("--combine_review",  default=False, help="do review")
 (options, args) = parser.parse_args()
 
 n_m_bins = 1
 date = options.ending
 
 
-if not options.limits:
+if not options.limits and not options.combine_review:
 
     mLQ_list = [5000]
     for mLQ in mLQ_list:
@@ -68,7 +69,7 @@ if not options.limits:
                 print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s%i_%i_%s"  % (n_m_bins, script_name, labels[i], mLQ, job_idx, date))
                 print_and_do("rm scripts/script3.sh")
 
-else:
+else if not options.combine_review:
     cmds = [
   
     "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
@@ -93,7 +94,7 @@ else:
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	for m in range(1000,9500,500):
+	   for m in range(1000,9500,500):
 	    #for point in np.arange(0.28,1.5,0.005):
 	    #for q in [0.025,0.16,0.5,0.84,0.975]:
             #regular templates
@@ -108,4 +109,46 @@ else:
             print_and_do("chmod +x %s" % script_name)
             print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_%s"  % (n_m_bins, script_name, labels[i], m, date))
             print_and_do("rm scripts/script3.sh")
+
+else:
+
+    cmds = [
+  
+    "python scripts/for_combine_review.py --chan ee --q u \n",
+    "python scripts/for_combine_review.py --chan ee --q d \n",
+    "python scripts/for_combine_review.py --chan mumu --q u \n",
+    "python scripts/for_combine_review.py --chan mumu --q d \n",
+    "python scripts/for_combine_review.py --chan ee --q u --vec True \n",
+    "python scripts/for_combine_review.py --chan ee --q d --vec True \n",
+    "python scripts/for_combine_review.py --chan mumu --q u --vec True \n",
+    "python scripts/for_combine_review.py --chan mumu --q d --vec True \n",
+ 
+    ]
+
+    labels = [
+        "CR_ee_u","CR_ee_d","CR_mumu_u","CR_mumu_d",
+        "CR_ee_u_vec","CR_ee_d_vec","CR_mumu_u_vec","CR_mumu_d_vec"
+        #"limits_ee_s","limits_mumu_s",
+        #"limits_ee_s_vec","limits_mumu_s_vec"
+    ]
+
+
+    cpy_cmd = "xrdcp -f CR/* $1 \n"
+
+    for i,cmd in enumerate(cmds):
+    #for m in range(1000,9500,500):
+    #for point in np.arange(0.28,1.5,0.005):
+    #for q in [0.025,0.16,0.5,0.84,0.975]:
+        #regular templates
+        script_name = "scripts/script3.sh"
+        print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+        script_file = open(script_name, 'a+')
+        script_file.write("mkdir CR\n")
+        #script_file.write(cmd+" --mLQ %i \n"%(m))
+        script_file.write(cpy_cmd)
+        script_file.close()
+        #print_and_do("cat %s" % script_name)
+        print_and_do("chmod +x %s" % script_name)
+        print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
+        print_and_do("rm scripts/script3.sh")
 
