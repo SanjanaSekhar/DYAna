@@ -175,16 +175,16 @@ if options.hadd:
             print_and_do("hadd merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,q_string,mass,channel,mass,mass,q_string))
             print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
     else:
-        for m in range(1000,9500,500):
+        for m in range(8500,9500,500):
             # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
-            print_and_do("xrdcp -f root://cmseos.fnal.gov/store/user/ssekhar/Condor_outputs/limits_%s_%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json"
-                %(options.chan, options.q, m, ending, channel, m, channel))
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json"
+                %(options.chan, options.q, m, options.ending, channel, m, channel))
             with open("LQ_cards/%s/limit_json/limits_%s_m%i.json"%(channel,channel,m), 'r+') as f:
                 data = json.load(f)
                 #for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
-                for lim in data[m]:
-                    yLQ2 = data[m][lim]
-                    data[m][lim] = sqrt(yLQ2)
+                for lim in data[str(m)+".0"]:
+                    yLQ2 = data[str(m)+".0"][lim]
+                    data[str(m)+".0"][lim] = sqrt(yLQ2)
                 f.seek(0)        # <--- should reset file position to the beginning.
                 json.dump(data, f, indent=4)
                 f.truncate()     # remove remaining part
