@@ -129,6 +129,53 @@ pylab.close()
 '''
 x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
+for m_ll in [500,600,700,800]:
+
+    flag = 2
+    s = m_ll*m_ll
+
+    SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
+    sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
+#afb = AFB(s)
+#print("SM AFB is %.3f" % afb)
+   # sm = SM(x_axis)
+    pylab.plot(x_axis,sm_v2,'b',label='SM')
+#   pylab.plot(x_axis,sm,'.',label='SM (rough)')
+
+    m_lq = 2000.
+   
+
+    y_lq = .6
+    LQ_norm = quad(lambda x: LQ_cost(flag,x,s), -1., 1.)[0]
+    F = LQ_cost(flag,x_axis,s)/LQ_norm
+   # print F
+    pylab.plot(x_axis,F,'r',label=r'$m_{ll}=$'+str(m_ll))
+
+   #  g_lq = 1.6
+   #  LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+   #  F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
+   # # print F
+   #  pylab.plot(x_axis,F,'black',label=r'$g_{ue}=1.6$')
+
+
+   #  g_lq = 3.0
+   #  LQ_norm = quad(lambda x: LQ_vec_cost(flag,x,s), -1., 1.)[0]
+   #  F = LQ_vec_cost(flag,x_axis,s)/LQ_norm
+   # # print F
+   #  pylab.plot(x_axis,F,'g',label=r'$g_{ue}=3.0$')
+
+
+    
+
+
+pylab.title(r"$2 TeV S_{ed}, $y_{ed}$ = "+str(y_lq) )
+pylab.xlabel(r'$cos \theta$')
+pylab.ylabel(r'$(1/\sigma)d\sigma/dcos\theta$')
+pylab.ylim([0., 1.4])
+pylab.legend()
+pylab.savefig("Sed_mll.png")
+pylab.close()
+'''
 for m_ll in [500]:
 
     flag = 2
@@ -142,7 +189,7 @@ for m_ll in [500]:
     pylab.plot(x_axis,sm_v2,'b',label='SM')
 #   pylab.plot(x_axis,sm,'.',label='SM (rough)')
 
-    m_lq = 1000.
+    m_lq = 2000.
    
 
     g_lq = .6
@@ -292,5 +339,5 @@ for m_ll in [500]:
     pylab.legend()
     pylab.savefig("sLQ_ElectroUp_mLQ.png")
     pylab.close()
-
+'''
 
