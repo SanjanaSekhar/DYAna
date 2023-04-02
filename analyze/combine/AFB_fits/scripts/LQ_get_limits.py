@@ -26,7 +26,7 @@ def plotLimits(channel):
     pads = OnePad()
      
      # Get limit TGraphs as a dictionary
-    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s_%s.json'%(channel,channel,options.ending))
+    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s%s_%s.json'%(channel,channel,("_vec" if is_vec else ""),options.ending))
     print(graphs)
     del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
