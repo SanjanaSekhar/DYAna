@@ -3,8 +3,8 @@ from optparse import OptionParser
 import sys
 
 ext = "020923"
-#mLQ_list = [1500,2000,2500,3000,3500,4000,4500,5000]
-mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8500,9000] #8000 templates are missing processes
+mLQ_list = [5500]
+#mLQ_list = [1000,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8500,9000] #8000 templates are missing processes
 #if(len(sys.argv) < 3):
 #    print("Need filename and year")
 #    sys.exit(1)

@@ -94,7 +94,7 @@ elif not options.combine_review:
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	   for m in range(1000,9500,500):
+	   for m in [5500]:
 	    #for point in np.arange(0.28,1.5,0.005):
 	    #for q in [0.025,0.16,0.5,0.84,0.975]:
             #regular templates
@@ -114,14 +114,14 @@ else:
 
     cmds = [
   
-    "python scripts/for_combine_review.py --chan ee --q u \n",
-    "python scripts/for_combine_review.py --chan ee --q d \n",
-    "python scripts/for_combine_review.py --chan mumu --q u \n",
-    "python scripts/for_combine_review.py --chan mumu --q d \n",
-    "python scripts/for_combine_review.py --chan ee --q u --vec True \n",
-    "python scripts/for_combine_review.py --chan ee --q d --vec True \n",
-    "python scripts/for_combine_review.py --chan mumu --q u --vec True \n",
-    "python scripts/for_combine_review.py --chan mumu --q d --vec True \n",
+    "python scripts/for_combine_review.py --chan ee --q u -o CR\n",
+    "python scripts/for_combine_review.py --chan ee --q d -o CR\n",
+    "python scripts/for_combine_review.py --chan mumu --q u -o CR\n",
+    "python scripts/for_combine_review.py --chan mumu --q d -o CR\n",
+    "python scripts/for_combine_review.py --chan ee --q u --vec True -o CR\n",
+    "python scripts/for_combine_review.py --chan ee --q d --vec True -o CR\n",
+    "python scripts/for_combine_review.py --chan mumu --q u --vec True -o CR\n",
+    "python scripts/for_combine_review.py --chan mumu --q d --vec True -o CR\n",
  
     ]
 
@@ -144,7 +144,7 @@ else:
         print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
         script_file = open(script_name, 'a+')
         script_file.write("mkdir CR\n")
-        #script_file.write(cmd+" --mLQ %i \n"%(m))
+        script_file.write(cmd)
         script_file.write(cpy_cmd)
         script_file.close()
         #print_and_do("cat %s" % script_name)

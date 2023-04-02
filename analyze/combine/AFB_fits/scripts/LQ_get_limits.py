@@ -26,7 +26,7 @@ def plotLimits(channel):
     pads = OnePad()
      
      # Get limit TGraphs as a dictionary
-    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s.json'%(channel,channel))
+    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s_%s.json'%(channel,channel,options.ending))
     print(graphs)
     del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
@@ -70,8 +70,8 @@ def plotLimits(channel):
     DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
-    if(is_vec): canv.Print('%s/limits_%s_vec_%s.png'%(options.odir,channel,options.ending))
-    else: canv.Print('%s/limits_%s_%s.png'%(options.odir,channel,options.ending))
+    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_%s.png'%(channel,channel,options.ending))
+    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_%s.png'%(channel,channel,options.ending))
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
@@ -155,12 +155,13 @@ sigma = 0.6 **0.5
 #extra_arg = " --symMCStats --sigma %f"%sigma 
 extra_arg = ""
 print("\n=========completed card for channel %s mass %i =========\n"%(channel,mass))
-print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
-print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
+#print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
+#print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
 
 if options.hadd:
 
     if options.HybridNew:
+	print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
         print_and_do("rm -rf HybridNew_output/%s/%s/"%(channel,mass))
         print_and_do("mkdir -p HybridNew_output/%s/%s/"%(channel,mass))
         print_and_do("rm eosoutput.log")
@@ -175,28 +176,34 @@ if options.hadd:
             print_and_do("hadd merged_%s_q%.3f_m%i.root HybridNew_output/%s/%s/higgsCombine.Test.POINT.*.HybridNew.mH%i.*.quant%.3f.root"%(channel,q_string,mass,channel,mass,mass,q_string))
             print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
     else:
-        for m in range(8500,9500,500):
+	limits = {}
+        for m in range(1000,9500,500):
             # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json"
-                %(options.chan, options.q, m, options.ending, channel, m, channel))
-            with open("LQ_cards/%s/limit_json/limits_%s_m%i.json"%(channel,channel,m), 'r+') as f:
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json/limits_%s%s_m%i.json"
+                %(options.chan, options.q, ("_vec" if is_vec else ""), m, options.ending, channel, m, channel, channel, ("_vec" if is_vec else ""), m))
+            
+	    with open("LQ_cards/%s/limit_json/limits_%s%s_m%i.json"%(channel,channel, ("_vec" if is_vec else ""),m), 'r+') as f:
                 data = json.load(f)
                 #for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
                 for lim in data[str(m)+".0"]:
                     yLQ2 = data[str(m)+".0"][lim]
                     data[str(m)+".0"][lim] = sqrt(yLQ2)
+	 	limits[str(m)+".0"]=data[str(m)+".0"]
                 f.seek(0)        # <--- should reset file position to the beginning.
                 json.dump(data, f, indent=4)
                 f.truncate()     # remove remaining part
+	with open("LQ_cards/%s/limit_json/limits_%s%s_%s.json"%(channel,channel, ("_vec" if is_vec else ""),options.ending), 'w') as f:
+	    f.seek(0)
+	    json.dump(limits, f, indent=4)
+	    
 
-
-        # print("\n========= making limit plot for channel %s =========\n"%(channel))
+        print("\n========= making limit plot for channel %s =========\n"%(channel))
         # #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
-        # plotLimits(channel)
+        plotLimits(channel)
 
 else:
-
-    
+    print("\n========= making workspace for %s mass %i =========\n"%(channel,mass))
+    print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s  %s" % (comb_card, workspace, extra_arg))
     print("\n========= extracting upper limits for %s mass %i =========\n"%(channel, mass))
     
 

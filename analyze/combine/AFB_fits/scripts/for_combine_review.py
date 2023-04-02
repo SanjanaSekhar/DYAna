@@ -21,7 +21,7 @@ parser.add_option("-o", "--odir", default="combine_review/", help = "output dire
 year = -1
 mLQ = options.mLQ
 chan = options.chan
-q = options.mLQ
+q = options.q
 is_vec = options.vec
 
 # for is_vec in [True]:
@@ -97,6 +97,6 @@ print_and_do("cp fitResults_t0_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),op
 print_and_do("cp fitResults_t1_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
 print_and_do("cp impacts_t0_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))
 print_and_do("cp impacts_t1_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))
-'''
+
 #print_and_do("cd cards")
 #print_and_do("ValidateDatacards.py %s"%comb_card)
