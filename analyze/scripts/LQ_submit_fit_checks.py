@@ -153,3 +153,46 @@ if options.combine_review:
         print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
         print_and_do("rm scripts/script3.sh")
 
+
+if options.impacts:
+
+    cmds = [
+  
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u --vec True -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d --vec True -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u --vec True -o imps --ending %s  "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000--chan mumu --q d --vec True -o imps --ending %s  "%date,
+ 
+    ]
+
+    labels = [
+        "imps_ee_u","imps_ee_d","imps_mumu_u","imps_mumu_d",
+        "imps_ee_u_vec","imps_ee_d_vec","imps_mumu_u_vec","imps_mumu_d_vec"
+        #"limits_ee_s","limits_mumu_s",
+        #"limits_ee_s_vec","limits_mumu_s_vec"
+    ]
+
+
+    cpy_cmd = "xrdcp -f imps/* $1 \n"
+
+    for i,cmd in enumerate(cmds):
+    #for m in range(1000,9500,500):
+    #for point in np.arange(0.28,1.5,0.005):
+    #for q in [0.025,0.16,0.5,0.84,0.975]:
+        #regular templates
+        script_name = "scripts/script3.sh"
+        print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+        script_file = open(script_name, 'a+')
+        script_file.write("mkdir imps\n")
+        script_file.write(cmd)
+        script_file.write(cpy_cmd)
+        script_file.close()
+        #print_and_do("cat %s" % script_name)
+        print_and_do("chmod +x %s" % script_name)
+        print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
+        print_and_do("rm scripts/script3.sh")
+

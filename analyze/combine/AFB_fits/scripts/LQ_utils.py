@@ -213,3 +213,32 @@ def make_gen_level_workspace(workspace, mbin,  year = -1):
     print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
 
     print_and_do("text2workspace.py %s --keyword-value M_BIN=%i -P Analysis.DYAna.my_model:dy_AFB -o %s" % (card, mbin, workspace))
+
+
+def get_sym_bin(idx, nBins):
+    # 3 mass bins, 8+6+6 cost bins
+    #print("nBins = ",nBins)
+    if nBins < 20:
+    n_cos_bins = 6
+        cos_bin = idx % n_cos_bins
+        eta_bin = idx / n_cos_bins
+        opp_cos_bin = (n_cos_bins - 1 - cos_bin) % n_cos_bins
+        sym_bin = eta_bin * n_cos_bins + opp_cos_bin
+    else:   
+        if((idx) % 20 >= 0 and (idx) % 20 < 8):
+            n_cos_bins = 8
+        idx_new = idx - 20*(idx/20)
+            cos_bin = idx_new % n_cos_bins
+            eta_bin = idx_new / n_cos_bins
+            opp_cos_bin = (n_cos_bins -1 - cos_bin) % n_cos_bins
+            sym_bin = 20*(idx/20) + eta_bin * n_cos_bins + opp_cos_bin
+        #else: sym_bin = eta_bin * n_cos_bins + opp_cos_bin
+        else:
+            n_cos_bins = 6
+        idx_new = idx - 8 - 20*(idx/20)
+            cos_bin = idx_new % n_cos_bins
+            eta_bin = idx_new / n_cos_bins
+            opp_cos_bin = (n_cos_bins -1 - cos_bin) % n_cos_bins
+            sym_bin = 8 + 20*(idx/20) + eta_bin * n_cos_bins + opp_cos_bin
+    
+    return sym_bin+1

@@ -47,7 +47,7 @@ print(options.chan,options.q)
 
 if not options.plot:
     workspace = "workspaces/%s_%s_%i_fit_bias_tests.root" % (options.chan, options.q, options.job)
-    make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year, False, False)
+    make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year, True, False)
 
     extra_params = "--X-rtd MINIMIZER_no_analytic"
     #extra_params = ""
