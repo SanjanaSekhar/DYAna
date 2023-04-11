@@ -9,6 +9,7 @@ def print_and_do(s):
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--ending",  default="021223", help="date")
+parser.add_option("--bias_tests",  default=False, help="do bias tests")
 parser.add_option("--limits",  default=False, help="do limits")
 parser.add_option("--combine_review",  default=False, help="do review")
 (options, args) = parser.parse_args()
@@ -17,9 +18,9 @@ n_m_bins = 1
 date = options.ending
 
 
-if not options.limits and not options.combine_review:
+if options.bias_tests:
 
-    mLQ_list = [5000]
+    mLQ_list = [2500,3500,5000]
     for mLQ in mLQ_list:
         cmds = [
         "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
@@ -50,7 +51,7 @@ if not options.limits and not options.combine_review:
 
         cpy_cmd = "xrdcp -f temp/* $1 \n"
 
-        total_jobs = 300
+        total_jobs = 400
 
         for i,cmd in enumerate(cmds):
 
@@ -69,32 +70,32 @@ if not options.limits and not options.combine_review:
                 print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s%i_%i_%s"  % (n_m_bins, script_name, labels[i], mLQ, job_idx, date))
                 print_and_do("rm scripts/script3.sh")
 
-elif not options.combine_review:
+if options.limits:
     cmds = [
   
-    "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
  
     ]
 
     labels = [
-        "limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
-        "limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
+        #"limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
+        #"limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
-        #"limits_ee_s_vec","limits_mumu_s_vec"
+        "limits_ee_d_vec"#,"limits_mumu_s_vec"
     ]
 
 
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	   for m in [5500]:
+	   for m in range(1000,9500,500):
 	    #for point in np.arange(0.28,1.5,0.005):
 	    #for q in [0.025,0.16,0.5,0.84,0.975]:
             #regular templates
@@ -110,7 +111,7 @@ elif not options.combine_review:
             print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_%s"  % (n_m_bins, script_name, labels[i], m, date))
             print_and_do("rm scripts/script3.sh")
 
-else:
+if options.combine_review:
 
     cmds = [
   
