@@ -197,9 +197,15 @@ def get_sys_dict(year, chan, q, mLQ):
         add_sys(sys_dict, xsec_frac, s_key)  
 	
 	# do nlo sys
-	nlo_frac = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
-	nlo_frac = (2*nlo_frac)**2
-	add_sys(sys_dict, nlo_frac, 'nlo_sys')
+	if "LQpure" in base:
+	    nlo_frac_pure = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
+	    nlo_frac_pure = (2*nlo_frac_pure)**2
+	if "LQint" in base:
+	    nlo_frac_int = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)    
+	    nlo_frac_int = (2*nlo_frac_int)**2    
+	    
+	    nlo_frac = (nlo_frac_pure**2 + nlo_frac_int**2)**0.5
+	    add_sys(sys_dict, nlo_frac, 'nlo_sys')
 
     d_final = avg_sqrt(sys_dict)
     return d_final
