@@ -116,7 +116,7 @@ def get_sys_dict(year, chan, q, mLQ):
     h_tot= gDirectory.Get('TotalProcs')
     print("h_tot Integral ",h_tot.Integral())
 
-    f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_020123.root" % (mLQ, year)
+    f_in_name = "../analyze/combine/templates/LQm%i_merge_templates%i_020923.root" % (mLQ, year)
 
     f = TFile.Open(f_in_name)
     gDirectory.cd("LQ")
