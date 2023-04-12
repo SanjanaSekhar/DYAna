@@ -25,12 +25,12 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    #for options.chan in ["mumu","ee"]:
-    for options.chan in ["ee"]:
-        for options.q in ["u"]:
+    for options.chan in ["mumu","ee"]:
+    	#for options.chan in ["ee"]:
+        for options.q in ["u","d"]:
 
             is_vec = False
-	    statuncs = False
+	    statuncs = True
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
@@ -60,7 +60,7 @@ for y in [-1]:
         	extra_params +=" --verbose %i" % options.verbose
 
             #No analytic minimization of MC stats nuisances
-            #extra_params += "--X-rtd MINIMIZER_no_analytic"
+            extra_params += "--X-rtd MINIMIZER_no_analytic"
 	    #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 	    if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
@@ -68,8 +68,8 @@ for y in [-1]:
             if(options.no_sys): 
                 fit_name +="_nosys"
                 #extra_params += " --freezeParameters allConstrainedNuisances"
-            if(options.noSymMCStats):
-                fit_name += "_noSymMC"
+            if(not options.noSymMCStats):
+                fit_name += "_SymMC"
             if(options.fake_data): fit_name +="_fake_data"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
@@ -85,7 +85,7 @@ for y in [-1]:
 	    print("\n fit_name = ", fit_name)
 	    
 
-            for mLQ in [1000]:
+            for mLQ in [2000]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
