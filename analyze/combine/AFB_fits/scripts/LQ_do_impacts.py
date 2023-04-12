@@ -5,6 +5,10 @@ from LQ_utils import *
 
 gROOT.SetBatch(True)
 
+def print_and_do(s):
+    print("Exec: " + s)
+    os.system(s)
+
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
 parser.add_option("--vec",  default=False, help="is vec?")
@@ -12,7 +16,7 @@ parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
 parser.add_option("--q",  default="u", help=" channel u,d")
 parser.add_option("-o", "--odir", default="impacts/", help = "output directory")
 parser.add_option("--hadd",  default=False, help="hadd")
-
+parser.add_option("--ending", default="041123", help="date")
 (options, args) = parser.parse_args()
 
 chan = options.chan
@@ -30,8 +34,7 @@ if is_vec: ending += "_vec"
 
 
 if options.hadd:
-    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/imps_%s_%s%s/* impacts/"
-                %(chan, q, ("_vec" if is_vec else "")))
+    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/imps_%s_%s%s/* impacts/"%(chan, q, ("_vec" if is_vec else "")))
 
 else:
     if chan=="ee":
@@ -57,12 +60,12 @@ else:
         correlate_1718 = [#"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b", 
                             "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                             "RENORM", "FAC", "REFAC", "alphaS"
-    	     ]
-    '''
-    all_sys = ["dy_xsec"]
-    correlate_all = ["dy_xsec"]
-    correlate_1718 = []
-    '''
+    	       	         ]
+    	'''
+    	all_sys = ["dy_xsec"]
+    	correlate_all = ["dy_xsec"]
+    	correlate_1718 = []
+    	'''
     else:
 
         all_sys =   [ "muPref","muRC", "Pu",

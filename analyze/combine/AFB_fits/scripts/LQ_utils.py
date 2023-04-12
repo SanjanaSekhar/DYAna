@@ -219,7 +219,7 @@ def get_sym_bin(idx, nBins):
     # 3 mass bins, 8+6+6 cost bins
     #print("nBins = ",nBins)
     if nBins < 20:
-    n_cos_bins = 6
+        n_cos_bins = 6
         cos_bin = idx % n_cos_bins
         eta_bin = idx / n_cos_bins
         opp_cos_bin = (n_cos_bins - 1 - cos_bin) % n_cos_bins
@@ -227,7 +227,7 @@ def get_sym_bin(idx, nBins):
     else:   
         if((idx) % 20 >= 0 and (idx) % 20 < 8):
             n_cos_bins = 8
-        idx_new = idx - 20*(idx/20)
+            idx_new = idx - 20*(idx/20)
             cos_bin = idx_new % n_cos_bins
             eta_bin = idx_new / n_cos_bins
             opp_cos_bin = (n_cos_bins -1 - cos_bin) % n_cos_bins
@@ -235,7 +235,7 @@ def get_sym_bin(idx, nBins):
         #else: sym_bin = eta_bin * n_cos_bins + opp_cos_bin
         else:
             n_cos_bins = 6
-        idx_new = idx - 8 - 20*(idx/20)
+            idx_new = idx - 8 - 20*(idx/20)
             cos_bin = idx_new % n_cos_bins
             eta_bin = idx_new / n_cos_bins
             opp_cos_bin = (n_cos_bins -1 - cos_bin) % n_cos_bins

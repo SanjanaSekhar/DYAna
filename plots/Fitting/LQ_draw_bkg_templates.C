@@ -352,6 +352,17 @@ void LQ_draw_bkg_templates(){
         h1_elel_pl->SetLineColor(kRed);
         h1_elel_mn->SetLineColor(kBlue);
         h1_elel_alpha->SetLineColor(kGreen);
+	
+
+	h1_mumu_pl->Scale(0.5);
+        h1_mumu_mn->Scale(0.5);
+        Double_t alpha= 0.04;
+        double norm = 3./4./(2.+alpha);
+        h1_mumu_alpha->Scale(norm);
+		
+	h1_elel_pl->Scale(0.5);
+        h1_elel_mn->Scale(0.5);
+        h1_elel_alpha->Scale(norm);
 
         char mu_title2[100], el_title2[100];
         char mu_fname2[100], el_fname2[100];
@@ -360,10 +371,10 @@ void LQ_draw_bkg_templates(){
 
         sprintf(el_title2, "Channel : Electrons %i, DY background",year);
         TCanvas *c_elel2 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
-         h1_elel_alpha->SetTitle(el_title2);
-         h1_elel_alpha->Draw("hist");
-         h1_elel_pl->Draw("hist same");
+         h1_elel_pl->SetTitle(el_title2);
+         h1_elel_pl->Draw("hist");
          h1_elel_mn->Draw("hist same");
+         h1_elel_alpha->Draw("hist same");
          
 
          TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
@@ -378,10 +389,10 @@ void LQ_draw_bkg_templates(){
 
             sprintf(mu_title2, "Channel : Muons %i, DY background",year);
         TCanvas *c_mumu2 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
-         h1_mumu_alpha->SetTitle(mu_title2);
-         h1_mumu_alpha->Draw("hist");
-         h1_mumu_pl->Draw("hist same");
+         h1_mumu_pl->SetTitle(mu_title2);
+         h1_mumu_pl->Draw("hist");
          h1_mumu_mn->Draw("hist same");
+         h1_mumu_alpha->Draw("hist same");
          
 
          TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
