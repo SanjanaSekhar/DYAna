@@ -204,7 +204,7 @@ def get_sys_dict(year, chan, q, mLQ):
 	    nlo_frac_int = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)    
 	    nlo_frac_int = (2*nlo_frac_int)**2    
 	    
-	    nlo_frac = (nlo_frac_pure**2 + nlo_frac_int**2)**0.5
+	    nlo_frac = nlo_frac_pure + nlo_frac_int
 	    add_sys(sys_dict, nlo_frac, 'nlo_sys')
 
     d_final = avg_sqrt(sys_dict)
