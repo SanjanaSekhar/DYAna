@@ -108,7 +108,7 @@ def add_sys(d, fracs, sys_name):
 
 def get_sys_dict(year, chan, q, mLQ):
 
-    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_020123_LQ_m%s/%s_fake_data_%s_020123_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
+    f_tot_name = "../analyze/combine/AFB_fits/postfit_plots/%s_fake_data_%s_LQ_m%s/%s_fake_data_%s_fit_shapes_LQ.root"%(chan, q, mLQ, chan, q)
     f_tot = TFile.Open(f_tot_name)
     prefit_dir = "Y%i_prefit" % ( year)
 
@@ -197,19 +197,19 @@ def get_sys_dict(year, chan, q, mLQ):
         add_sys(sys_dict, xsec_frac, s_key)  
 	
 	# do nlo sys
-	if "LQpure" in base:
-	    nlo_frac_pure = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
-	    print("nlo_frac_pure before = ", nlo_frac_pure)
-	    nlo_frac_pure = (2*nlo_frac_pure)**2
-	    print("nlo_frac_pure after = ", nlo_frac_pure)
-	if "LQint" in base:
-	    nlo_frac_int = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)    
-	    print("nlo_frac_int before = ", nlo_frac_pure)
-	    nlo_frac_int = (2*nlo_frac_int)**2    
-	    print("nlo_frac_int after = ", nlo_frac_int)
-	    nlo_frac = (nlo_frac_pure**2 + nlo_frac_int**2)**0.5
-	    print("nlo_frac = ",nlo_frac)
-	    add_sys(sys_dict, nlo_frac, 'nlo_sys')
+	#if "LQpure" in base:
+	#    nlo_frac_pure = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
+	#    print("nlo_frac_pure before = ", nlo_frac_pure)
+	#    nlo_frac_pure = (2*nlo_frac_pure)**2
+	#    print("nlo_frac_pure after = ", nlo_frac_pure)
+	#if "LQint" in base:
+	nlo_frac = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)    
+	print("nlo_frac before = ", nlo_frac)
+	nlo_frac = (2*nlo_frac)**2    
+	print("nlo_frac after = ", nlo_frac)
+	#nlo_frac = (nlo_frac_pure**2 + nlo_frac_int**2)**0.5
+	#print("nlo_frac = ",nlo_frac)
+	add_sys(sys_dict, nlo_frac, 'nlo_sys')
 
     d_final = avg_sqrt(sys_dict)
     return d_final
