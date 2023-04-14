@@ -13,6 +13,7 @@ parser.add_option("--bias_tests",  default=False, help="do bias tests")
 parser.add_option("--limits",  default=False, help="do limits")
 parser.add_option("--combine_review",  default=False, help="do review")
 parser.add_option("--impacts",  default=False, help="do impacts")
+parser.add_option("--sys_uncs",  default=False, help="do sys uncs")
 (options, args) = parser.parse_args()
 
 n_m_bins = 1
@@ -173,7 +174,7 @@ if options.impacts:
     labels = [
         #"imps_ee_u","imps_ee_d","imps_mumu_u","imps_mumu_d",
         #"imps_ee_u_vec","imps_ee_d_vec","imps_mumu_u_vec",
-	"imps_mumu_d_vec"
+	    "imps_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
         #"limits_ee_s_vec","limits_mumu_s_vec"
     ]
@@ -198,3 +199,44 @@ if options.impacts:
         print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
         print_and_do("rm scripts/script3.sh")
 
+if options.sys_uncs:
+
+    cmds = [
+  
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u -o sys --ending %s \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d -o sys --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u -o sys --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d -o sys --ending %s \n "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u --vec True -o sys --ending %s \n "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d --vec True -o sys --ending %s  \n"%date,
+ 
+    ]
+
+    labels = [
+        "sys_ee_u","sys_ee_d","sys_mumu_u","sys_mumu_d",
+        "sys_ee_u_vec","sys_ee_d_vec","sys_mumu_u_vec","sys_mumu_d_vec"
+        #"limits_ee_s","limits_mumu_s",
+        #"limits_ee_s_vec","limits_mumu_s_vec"
+    ]
+
+
+    cpy_cmd = "xrdcp -f sys/* $1 \n"
+
+    for i,cmd in enumerate(cmds):
+    #for m in range(1000,9500,500):
+    #for point in np.arange(0.28,1.5,0.005):
+    #for q in [0.025,0.16,0.5,0.84,0.975]:
+        #regular templates
+        script_name = "scripts/script3.sh"
+        print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+        script_file = open(script_name, 'a+')
+        script_file.write("mkdir sys\n")
+        script_file.write(cmd)
+        script_file.write(cpy_cmd)
+        script_file.close()
+        #print_and_do("cat %s" % script_name)
+        print_and_do("chmod +x %s" % script_name)
+        print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
+        print_and_do("rm scripts/script3.sh")
