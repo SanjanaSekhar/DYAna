@@ -99,8 +99,8 @@ def add_sys(d, fracs, sys_name):
     elif("nlo" in sys_name): key_name = "nlo_sys"
     else: 
         key_name = "other"
-        if(np.max(fracs) > 0.01**2):
-            print(sys_name, np.mean(fracs), np.max(fracs))
+        #if(np.max(fracs) > 0.01**2):
+            #print(sys_name, np.mean(fracs), np.max(fracs))
 
     d[key_name] += fracs
 
@@ -199,12 +199,16 @@ def get_sys_dict(year, chan, q, mLQ):
 	# do nlo sys
 	if "LQpure" in base:
 	    nlo_frac_pure = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
+	    print("nlo_frac_pure before = ", nlo_frac_pure)
 	    nlo_frac_pure = (2*nlo_frac_pure)**2
+	    print("nlo_frac_pure after = ", nlo_frac_pure)
 	if "LQint" in base:
 	    nlo_frac_int = np.array([nlo_unc[idx] * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)    
+	    print("nlo_frac_int before = ", nlo_frac_pure)
 	    nlo_frac_int = (2*nlo_frac_int)**2    
-	    
-	    nlo_frac = nlo_frac_pure + nlo_frac_int
+	    print("nlo_frac_int after = ", nlo_frac_int)
+	    nlo_frac = (nlo_frac_pure**2 + nlo_frac_int**2)**0.5
+	    print("nlo_frac = ",nlo_frac)
 	    add_sys(sys_dict, nlo_frac, 'nlo_sys')
 
     d_final = avg_sqrt(sys_dict)

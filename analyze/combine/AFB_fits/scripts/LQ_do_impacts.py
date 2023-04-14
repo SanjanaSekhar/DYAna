@@ -17,6 +17,12 @@ parser.add_option("--q",  default="u", help=" channel u,d")
 parser.add_option("-o", "--odir", default="impacts/", help = "output directory")
 parser.add_option("--hadd",  default=False, help="hadd")
 parser.add_option("--ending", default="041123", help="date")
+parser.add_option("--nThreads",  default=10, type='int', help="Number of threads ")
+parser.add_option("--expected",  default=False, action="store_true", help="Compute expected impacts based on toys with AFB=0.6 A0=0.05")
+parser.add_option("--Afb",  default=0.6, type='float', help="Afb value to inject if expected")
+parser.add_option("--A0",  default=0.05, type='float', help="A0 value to inject if expected")
+parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
+parser.add_option("--diff", default = False, action="store_true",  help="Measure difference between electron and muon AFB's")
 (options, args) = parser.parse_args()
 
 chan = options.chan
@@ -34,7 +40,7 @@ if is_vec: ending += "_vec"
 
 
 if options.hadd:
-    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/imps_%s_%s%s/* impacts/"%(chan, q, ("_vec" if is_vec else "")))
+    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/imps_%s_%s%s/%s_%s_impacts_mLQ%i_plot_yLQ2_%s.pdf impacts/"%(chan, q, ("_vec" if is_vec else ""),chan,q,options.mLQ, ending))
 
 else:
     if chan=="ee":
