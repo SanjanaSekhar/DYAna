@@ -240,6 +240,8 @@ MCStatBin57            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 #MCStatBin59            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
 #MCStatBin60            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
 
+MCStatBin group = MCStatBin1 MCStatBin2 MCStatBin3 MCStatBin4 MCStatBin9 MCStatBin10 MCStatBin11 MCStatBin15 MCStatBin16 MCStatBin17 MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin30 MCStatBin31 MCStatBin35 MCStatBin36 MCStatBin37 MCStatBin31 MCStatBin32 MCStatBin33 MCStatBin34 MCStatBin39 MCStatBin40 MCStatBin41 MCStatBin45 MCStatBin46 MCStatBin47 MCStatBin41 MCStatBin42 MCStatBin43 MCStatBin44 MCStatBin49 MCStatBin50 MCStatBin51 MCStatBin55 MCStatBin56 MCStatBin57
+
 
 * autoMCStats 1 0 1
 
