@@ -175,12 +175,13 @@ pdf7                    shape        1.0           1.0           1.0           1
 pdf8                    shape        1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
 pdf9                    shape        1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -             1.0           1.0           1.0           1.0           1.0           -             -             -             -             -           
 top_xsec                lnN          -             -             -             -             -             1.05          -             -             -             -             -             -             -             -             -             1.05          -             -             -             -             -             -             -             -             -             1.05          -             -             -             -           
-lumis18 group = lumiDB lumiBC lumi18 lumiLS lumiXY lumiGS
+MCStatBin group = MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin17 MCStatBin16 MCStatBin11 MCStatBin36 MCStatBin1 MCStatBin3 MCStatBin2 MCStatBin4 MCStatBin9 MCStatBin51 MCStatBin50 MCStatBin55 MCStatBin57 MCStatBin56 MCStatBin33 MCStatBin32 MCStatBin31 MCStatBin30 MCStatBin37 MCStatBin10 MCStatBin35 MCStatBin34 MCStatBin39 MCStatBin46 MCStatBin47 MCStatBin44 MCStatBin45 MCStatBin42 MCStatBin43 MCStatBin40 MCStatBin41 MCStatBin15 MCStatBin49
 muIDs18 group = muISOBAR18 muISOEND18 muIDSYS muIDEND18 muISOSYS muIDBAR18
 mufakesrws18 group = mufakesrw3b18 mufakesrw4b18 mufakesrw1b18 mufakesrw2b18
 mufakesrws17 group = mufakesrw2b17 mufakesrw1b17 mufakesrw4b17 mufakesrw3b17
 mufakesrws16 group = mufakesrw1b16 mufakesrw2b16 mufakesrw3b16 mufakesrw4b16
 lumis17 group = lumiDB lumiBC lumi17 lumiLS lumiXY lumiGS
+lumis18 group = lumiDB lumiBC lumi18 lumiLS lumiXY lumiGS
 RFscales1718 group = REFAC1718 RENORM1718 FAC1718 alphaS1718
 RFscales16 group = RENORM16 alphaS16 REFAC16 FAC16
 emucostrws1718 group = emucostrw1b1718 emucostrw4b1718 emucostrw2b1718 emucostrw3b1718

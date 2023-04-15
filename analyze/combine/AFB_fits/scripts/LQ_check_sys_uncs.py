@@ -41,20 +41,20 @@ if options.hadd:
 
 else:
 	if chan == "ee":
-
+		
 		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
 		
 		group_pars =[  "RFscalesYRC", "emucostrwsYRC",  "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
 						"elfakesrwsYR", "autoMCStats,MCStatBin"] 
 		#"BTAGSYR","muPrefYRC","METJECYR",
 		'''
-	#individual_pars = ["nlo_sys","dy_xsec","gam_xsec","top_xsec","db_xsec"]
-	group_pars = []
-	'''
+		individual_pars = []
+		group_pars = ["autoMCStats,MCStatBin"]
+		'''
 	else:
 		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
 		group_pars =[  "RFscalesYRC", "emucostrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
-						"mufakesrwsYR",  "autoMCStats"] 
+						"mufakesrwsYR",  "autoMCStats,MCStatBin"] 
 
 	sys_name_conv = dict()
 	sys_name_conv['nlo_sys'] = "LQ LO reweighting"
@@ -103,7 +103,7 @@ else:
 			return par16 + "," + par1718
 		elif("YR" in par):
 
-		if  "prefire" not in par:
+			if  "prefire" not in par:
 				par16 = par.replace("YR", "16")
 				par17 = par.replace("YR", "17")
 				par18 = par.replace("YR", "18")
@@ -168,8 +168,12 @@ else:
 		#print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % 
 		#       (freeze_str, s, group_par, extra_params))
 		#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
-		print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" %(freeze_str, s, group_par, extra_params))
-		sys_unc = compute_sys("nom", group_par, s)
+		if group_par == 'autoMCStats,MCStatBin': 
+			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" %(freeze_str, s, 'mcstats', extra_params))
+			sys_unc = compute_sys("nom", "mcstats", s)
+		else:
+			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" %(freeze_str, s, group_par, extra_params))
+			sys_unc = compute_sys("nom", group_par, s)
 		#sys_unc = compute_sys("nom", indi_par, s)
 		d[group_par] =sys_unc
 		#if(n>4): break
