@@ -426,6 +426,7 @@ void LQ_draw_bkg_templates(){
         sprintf(el_title2, "Channel : Electrons %i, DY background",year);
         TCanvas *c_elel2 = new TCanvas("c_elel", "Histograms", 200, 10, 900, 700);
          h1_elel_pl->SetTitle(el_title2);
+	h1_elel_pl->SetMaximum(h1_elel_pl->GetMaximum()*1.2);
          h1_elel_pl->Draw("hist");
          h1_elel_mn->Draw("hist same");
          h1_elel_alpha->Draw("hist same");
@@ -446,7 +447,8 @@ void LQ_draw_bkg_templates(){
             sprintf(mu_title2, "Channel : Muons %i, DY background",year);
         TCanvas *c_mumu2 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
          h1_mumu_pl->SetTitle(mu_title2);
-         h1_mumu_pl->Draw("hist");
+        h1_mumu_pl->SetMaximum(h1_mumu_pl->GetMaximum()*1.2); 
+	h1_mumu_pl->Draw("hist");
          h1_mumu_mn->Draw("hist same");
          h1_mumu_alpha->Draw("hist same");
           ymax = h1_mumu_pl->GetMaximum();
