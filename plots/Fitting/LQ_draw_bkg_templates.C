@@ -18,14 +18,14 @@ void set_line_attributes(float ymin, float ymax){
        line7 = new TLine(48,ymin,48,ymax);
        line8 = new TLine(54,ymin,54,ymax);
 
-       line1->SetLineColor(kGreen);
-       line2->SetLineColor(kGreen);
+       line1->SetLineColor(kGreen+7);
+       line2->SetLineColor(kGreen+7);
        line3->SetLineColor(kOrange);
-       line4->SetLineColor(kGreen);
-       line5->SetLineColor(kGreen);
+       line4->SetLineColor(kGreen+7);
+       line5->SetLineColor(kGreen+7);
        line6->SetLineColor(kOrange);
-       line7->SetLineColor(kGreen);
-       line8->SetLineColor(kGreen);
+       line7->SetLineColor(kGreen+7);
+       line8->SetLineColor(kGreen+7);
 
        line1->SetLineStyle(9);
        line2->SetLineStyle(9);
