@@ -5,8 +5,56 @@
 #include "../../analyze/combine/LQ_TemplateUtils.h"
 #include <iostream>
 
+TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
+void set_line_attributes(float ymin, float ymax){
 
+   
+       line1 = new TLine(8,ymin,8,ymax);
+       line2 = new TLine(14,ymin,14,ymax);
+       line3 = new TLine(20,ymin,20,ymax);
+       line4 = new TLine(28,ymin,28,ymax);
+       line5 = new TLine(34,ymin,34,ymax);
+       line6 = new TLine(40,ymin,40,ymax);
+       line7 = new TLine(48,ymin,48,ymax);
+       line8 = new TLine(54,ymin,54,ymax);
 
+       line1->SetLineColor(kGreen);
+       line2->SetLineColor(kGreen);
+       line3->SetLineColor(kOrange);
+       line4->SetLineColor(kGreen);
+       line5->SetLineColor(kGreen);
+       line6->SetLineColor(kOrange);
+       line7->SetLineColor(kGreen);
+       line8->SetLineColor(kGreen);
+
+       line1->SetLineStyle(9);
+       line2->SetLineStyle(9);
+       line3->SetLineStyle(9);
+       line4->SetLineStyle(9);
+       line5->SetLineStyle(9);
+       line6->SetLineStyle(9);
+       line7->SetLineStyle(9);
+       line8->SetLineStyle(9);
+
+       line1->SetLineWidth(2);
+       line2->SetLineWidth(2);
+       line3->SetLineWidth(2);
+       line4->SetLineWidth(2);
+       line5->SetLineWidth(2);
+       line6->SetLineWidth(2);
+       line7->SetLineWidth(2);
+       line8->SetLineWidth(2);
+
+       line1->Draw("same");
+       line2->Draw("same");
+       line3->Draw("same");
+       line4->Draw("same");
+       line5->Draw("same");
+       line6->Draw("same");
+       line7->Draw("same");
+       line8->Draw("same");
+
+}
 
 
 void LQ_draw_bkg_templates(){
@@ -23,7 +71,7 @@ void LQ_draw_bkg_templates(){
     float x_end = 0.9;
     float y_start = 0.75;
     float y_end = 0.9;
-   
+   float ymin,ymax;
    // std::cout << "enter m_LQ:";        
    // std::cin >> m_LQ; 
     gStyle->SetOptStat(0);
@@ -215,6 +263,9 @@ void LQ_draw_bkg_templates(){
          h1_mumu_db->Draw("hist same");
          h1_mumu_tautau->Draw("hist same");
          h1_mumu_gam->Draw("hist same");
+	 ymax = h1_mumu_top->GetMaximum();
+         ymin = h1_mumu_top->GetMinimum();
+	 set_line_attributes(ymin,ymax);
 
           TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
             leg1->AddEntry(h1_mumu_top,"ttbar+tW","l");
@@ -236,7 +287,10 @@ void LQ_draw_bkg_templates(){
          h1_elel_db->Draw("hist same");
          h1_elel_tautau->Draw("hist same");
          h1_elel_gam->Draw("hist same");
-
+	  ymax = h1_elel_top->GetMaximum();
+         ymin = h1_elel_top->GetMinimum();
+         set_line_attributes(ymin,ymax);
+	
          TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
             leg2->AddEntry(h1_elel_top,"ttbar+tW","l");
             leg2->AddEntry(h1_elel_qcd,"W+jets+QCD","l");
@@ -375,7 +429,9 @@ void LQ_draw_bkg_templates(){
          h1_elel_pl->Draw("hist");
          h1_elel_mn->Draw("hist same");
          h1_elel_alpha->Draw("hist same");
-         
+          ymax = h1_elel_pl->GetMaximum();
+         ymin = h1_elel_pl->GetMinimum();
+         set_line_attributes(ymin,ymax);
 
          TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
             leg3->AddEntry(h1_elel_pl,"f_{+} template","l");
@@ -393,7 +449,9 @@ void LQ_draw_bkg_templates(){
          h1_mumu_pl->Draw("hist");
          h1_mumu_mn->Draw("hist same");
          h1_mumu_alpha->Draw("hist same");
-         
+          ymax = h1_mumu_pl->GetMaximum();
+         ymin = h1_mumu_pl->GetMinimum();
+         set_line_attributes(ymin,ymax);
 
          TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
             leg4->AddEntry(h1_mumu_pl,"f_{+} template","l");

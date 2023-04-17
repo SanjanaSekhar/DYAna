@@ -203,14 +203,14 @@ if options.sys_uncs:
 
     cmds = [
   
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u -o sys --ending %s \n"%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d -o sys --ending %s  \n"%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u -o sys --ending %s  \n"%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d -o sys --ending %s \n "%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u --vec True -o sys --ending %s \n "%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d --vec True -o sys --ending %s  \n"%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u --vec True -o sys --ending %s  \n"%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q u -o sys --ending %s \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q d -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q u -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q d -o sys --ending %s \n "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q u --vec True -o sys --ending %s \n "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q d --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q u --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q d --vec True -o sys --ending %s  \n"%date,
  
     ]
 
