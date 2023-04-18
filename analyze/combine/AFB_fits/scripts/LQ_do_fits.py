@@ -25,12 +25,12 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee"]:
     	#for options.chan in ["ee"]:
-        for options.q in ["u","d"]:
+        for options.q in ["d"]:
 
             is_vec = False
-	    statuncs = True
+	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
@@ -40,7 +40,7 @@ for y in [-1]:
             if not options.gen_level and not options.no_sys: options.fake_data=True
             options.no_LQ=False
             options.year = y
-            likelihood_scan = False
+            likelihood_scan = True
 	    if likelihood_scan: ending = ""
             '''
             if(options.chan == "ee"):
@@ -91,7 +91,7 @@ for y in [-1]:
             #mLQ = 1000.
             #for mbin in range(bin_start, bin_stop):
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
-                
+                '''
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 		
                 workspace="workspaces/%s_LQ.root" % (options.chan)
@@ -102,7 +102,7 @@ for y in [-1]:
                 print_and_do("mkdir %s" % (plotdir))
                 print_and_do("combine %s -M MultiDimFit  --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
-                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 2000 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
@@ -129,9 +129,9 @@ for y in [-1]:
 		
                 print_and_do(""" echo "auto Afb=(RooRealVar *) a.at(1);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << Afb->getValV() << ' '  << Afb->getErrorHi() << ' ' << Afb->getErrorLo() << std::endl;" >> cmd.txt """)
-		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(318);" >> cmd.txt """)
+		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(348);" >> cmd.txt """)
 		if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(192);" >> cmd.txt """) 
-		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(312);" >> cmd.txt """)
+		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(342);" >> cmd.txt """)
 		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(186);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << yLQ2->getValV() << ' '  << yLQ2->getErrorHi() << ' ' << yLQ2->getErrorLo() << std::endl;" >> cmd.txt """)
 		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
@@ -140,7 +140,7 @@ for y in [-1]:
 		print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
                 #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
-                
+                ''' 
                 if likelihood_scan:
 
                     deltaNLL, yLQ2_list = [],[]

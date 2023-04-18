@@ -209,7 +209,7 @@ else:
 
     if not options.HybridNew: 
 
-        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there "%(workspace,mass)) #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 "%(workspace,mass)) #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
         print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
         print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
         print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
