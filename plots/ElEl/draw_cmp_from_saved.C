@@ -31,12 +31,13 @@
 const int type = FLAG_ELECTRONS;
 const bool write_out = true;
 bool prelim = false;
-char *plot_dir = "Paper_plots/prefit_kinematics/";
+char *plot_dir = "AN_plots/";
 //char *plot_dir = "PAS_plots/prefit_kinematics/";
-char *fin_name = "ElEl/saved_hists.root";
+char *fin_name = "ElEl/LQ_saved_hists.root";
 char *plot_label = "";
 
-
+//gStyle->SetOptStat(0);
+//gROOT->SetBatch(1);
 void draw_cmp_from_saved(){
 
     TH1F *data_m ,*diboson_m, *QCD_m, *top_m, *dy_m, *wt_m, *gg_m;
@@ -44,7 +45,8 @@ void draw_cmp_from_saved(){
     TH1F *data_rap, *diboson_rap, *QCD_rap, *top_rap, *dy_rap, *wt_rap, *gg_rap;
 
     TFile *fin = new TFile(fin_name, "READ");
-
+    gStyle->SetOptStat(0);
+    gROOT->SetBatch(1);
     for(int year = 2016; year <= 2018; year++){
 
         char year_str[80];
@@ -127,7 +129,7 @@ void draw_cmp_from_saved(){
 
 
     setTDRStyle();
-    gStyle->SetLegendBorderSize(0);
+   gStyle->SetLegendBorderSize(0);
 
 
     setHistError(QCD_cost, qcd_sys_unc);

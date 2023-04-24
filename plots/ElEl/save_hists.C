@@ -30,10 +30,10 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2016;
+const int year = 2018;
 const bool write_out = true;
 
-char *fout_name = "ElEl/saved_hists.root";
+char *fout_name = "ElEl/LQ_saved_hists.root";
 
 void save_hists(){
 
@@ -67,9 +67,11 @@ void save_hists(){
     TH1F *QCD_xf = new TH1F("QCD_xf", "dy signal", n_xf_bins1,  xf_bins1);
     TH1F *gg_xf = new TH1F("gg_xf", "dy signal", n_xf_bins1,  xf_bins1);
 
-    int n_m_bins = 17;
+    int n_m_bins = 10;
     float mbin_base = 10.;
-    Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 450., 500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
+    //Float_t mbins1[] = {170.,200., 250., 300., 350., 400., 450., 500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
+    
+    Float_t mbins1[] = {500., 550., 600., 700., 800., 900., 1000., 1200., 1400., 1800., 2400.};
     TH1F *data_m = new TH1F("data_m", "Data Dimuon Mass Distribution", n_m_bins, mbins1);
     TH1F *dy_m = new TH1F("dy_m", "dy Signal (qqbar, qglu, qbarglu)", n_m_bins, mbins1);
     TH1F *dy_tautau_m = new TH1F("dy_tautau_m", "dy no signal (qq, gluglu qbarqbar)", n_m_bins, mbins1);
@@ -116,7 +118,7 @@ void save_hists(){
     TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
 
 
-    float m_low = 170.;
+    float m_low = 500.;
     float m_high = 10000.;
 
     make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high);
