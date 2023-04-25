@@ -418,7 +418,7 @@ void draw_cmp_from_saved(){
 
 
     int year = -1;
-    float hmax = 500000;
+    float hmax = 200000;
     if(year == 2016)
         hmax *= 0.625;
     if(year == 2017)
@@ -474,7 +474,7 @@ void draw_cmp_from_saved(){
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 60000;
+    hmax = 20000;
 
     if(year == 2016)
         hmax *= 0.625;
