@@ -41,13 +41,13 @@ char *plot_label = "";
 void draw_cmp_from_saved(){
 
     TH1F *data_m ,*diboson_m, *QCD_m, *top_m, *dy_m, *wt_m, *gg_m, *LQu_m, *LQu_vec_m;
-    TH1F *data_cost, *diboson_cost, *QCD_cost, *top_cost, *dy_cost, *wt_cost, *gg_cost, *LQu_m, *LQu_vec_cost;
+    TH1F *data_cost, *diboson_cost, *QCD_cost, *top_cost, *dy_cost, *wt_cost, *gg_cost, *LQu_cost, *LQu_vec_cost;
     TH1F *data_rap, *diboson_rap, *QCD_rap, *top_rap, *dy_rap, *wt_rap, *gg_rap, *LQu_rap, *LQu_vec_rap;
 
     TFile *fin = new TFile(fin_name, "READ");
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
-    for(int year = 2016; year <= 2018; year++){
+    for(int year = 2016; year <= 2017; year++){
 
         char year_str[80];
         sprintf(year_str, "y%i", year);
@@ -260,7 +260,13 @@ void draw_cmp_from_saved(){
     LQu_vec_cost->SetLineColor(kGreen);
     LQu_vec_rap->SetLineColor(kGreen);
 
+    LQu_m->SetLineWidth(2);
+    LQu_cost->SetLineWidth(2);
+    LQu_rap->SetLineWidth(2);
 
+    LQu_vec_m->SetLineWidth(2);
+    LQu_vec_cost->SetLineWidth(2);
+    LQu_vec_rap->SetLineWidth(2);
 
     dy_cost->SetFillStyle(DY_style);
     dy_m->SetFillStyle(DY_style);
