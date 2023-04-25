@@ -22,8 +22,8 @@
 #include "TSystem.h"
 #include "TH2D.h"
 #include "Math/Functor.h"
-#include "TempMaker.C"
-
+//#include "TempMaker.C"
+#include "LQ_TemplateMaker_systematics.C"
 using namespace std;
 
 
@@ -75,24 +75,24 @@ void setHistMassDepError(TH1 *h, bool add_err = true){
 void symmetrize1d(TH1F *h){
     int n_cost_bins = h->GetNbinsX();
 
-        for(int j=1; j<= n_cost_bins/2; j++){
-            float content = h->GetBinContent(j);
-            float error = h->GetBinError(j);
+    for(int j=1; j<= n_cost_bins/2; j++){
+        float content = h->GetBinContent(j);
+        float error = h->GetBinError(j);
 
-            int opp_j = (n_cost_bins + 1) -j;
-            float content2 = h->GetBinContent(opp_j);
-            float error2 = h->GetBinError(opp_j);
+        int opp_j = (n_cost_bins + 1) -j;
+        float content2 = h->GetBinContent(opp_j);
+        float error2 = h->GetBinError(opp_j);
 
-            float new_content = (content + content2)/2.0;
-            float new_error = pow((error*error + error2*error2), 0.5)/2.0;
-            h->SetBinContent(j, new_content);
-            h->SetBinContent(opp_j, new_content);
+        float new_content = (content + content2)/2.0;
+        float new_error = pow((error*error + error2*error2), 0.5)/2.0;
+        h->SetBinContent(j, new_content);
+        h->SetBinContent(opp_j, new_content);
 
-            h->SetBinError(j, new_error);
-            h->SetBinError(opp_j, new_error);
+        h->SetBinError(j, new_error);
+        h->SetBinError(opp_j, new_error);
 
 
-        }
+    }
     
 }
 
@@ -100,7 +100,7 @@ void symmetrize1d(TH1F *h){
 
 
 void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,   TH1F *h_rap, bool is_data = false, 
-        int year=2016, float m_low = 150., float m_high = 999999., bool ss = false, bool costrw = false){
+    int year=2016, float m_low = 150., float m_high = 999999., bool ss = false, bool costrw = false){
     Long64_t size  =  t1->GetEntries();
     TempMaker tm(t1, is_data, year);
     tm.do_emu = true;
@@ -108,15 +108,17 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 
     tm.setup();
     int nEvents=0;
-
+    tm.btag_mc_eff_idx = 0;
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
+        tm.doCorrections();
+
         bool pass  = tm.m >= m_low && tm.m <= m_high; //&& tm.met_pt < met_cut && tm.has_no_bjets;
         if(pass){
 
             nEvents++;
-            tm.doCorrections();
-            tm.getEvtWeight();
+            
+            tm.getEvtWeight(false);
 
             h_m->Fill(tm.m, tm.evt_weight);
             if(ss) h_cost->Fill(abs(tm.cost), tm.evt_weight);
@@ -136,27 +138,29 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 
 
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
-        bool is_data=false, int flag1 = FLAG_MUONS,
-        int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false){
-        h_m->Sumw2();
-        h_cost->Sumw2();
-        h_pt->Sumw2();
-        h_xf->Sumw2();
-        h_phi->Sumw2();
-        h_rap->Sumw2();
+    bool is_data=false, int flag1 = FLAG_MUONS,
+    int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false, int do_LQ = 0, float yLQ = 0.){
+    h_m->Sumw2();
+    h_cost->Sumw2();
+    h_pt->Sumw2();
+    h_xf->Sumw2();
+    h_phi->Sumw2();
+    h_rap->Sumw2();
     //read event data
-        TempMaker tm(t1, is_data, year);
-        if(flag1 == FLAG_MUONS) tm.do_muons = true;
-        else tm.do_electrons = true;
-        tm.do_RC = true;
+    TempMaker tm(t1, is_data, year);
+    if(flag1 == FLAG_MUONS) tm.do_muons = true;
+    else tm.do_electrons = true;
+    tm.do_RC = true;
 
+    tm.btag_mc_eff_idx = 0;
+    tm.setup();
+    int nEvents=0;
 
-        tm.setup();
-        int nEvents=0;
-
-        for (int i=0; i<tm.nEntries; i++) {
-            tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.not_cosmic;//&& tm.met_pt < met_cut  && tm.has_no_bjets ;
+    for (int i=0; i<tm.nEntries; i++) {
+        tm.getEvent(i);
+        tm.doCorrections();
+        
+            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.not_cosmic ;//&& tm.met_pt < met_cut  && tm.has_no_bjets ;
             //bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.has_no_bjets && tm.not_cosmic;
             //bool good_eta = (fabs(tm.el1_eta) > 1.5 && fabs(tm.el2_eta) < 1.4) || (fabs(tm.el2_eta) > 1.5 && fabs(tm.el1_eta) < 1.4);
             //pass = pass && good_eta;
@@ -164,9 +168,66 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 
             if(pass){
                 nEvents++;
-                tm.doCorrections();
-                tm.getEvtWeight();
+                
+                tm.getEvtWeight(false);
                 //if(flag1 == FLAG_ELECTRONS && (tm.el2_pt < 20 && tm.el2_eta > 1.8)) tm.evt_weight = 0;
+                if(do_LQ > 0){
+
+                    TH1F *h_m2 =(TH1F *) h_m->Clone("LQint_m");
+                    TH1F *h_cost2 =(TH1F *) h_cost->Clone("LQint_cost");
+                    TH1F *h_rap2 =(TH1F *) h_rap->Clone("LQint_rap");
+
+                    int bin_i = find_bin(m_bins, tm.m);
+                    float RFfactor = tm.fixRFNorm(bin_i, year);
+                    float s = tm.gen_m*tm.gen_m;
+                    if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)){ // only Seu and Veu atm
+                        set_running_couplings(s,2);
+
+                        float LQ_denom = get_LQ_denom(tm.cost_st, s, Q_q, caq, cvq);
+
+                // scalar
+                        if(do_LQ == 1){
+                            float reweight_LQpure_pos = get_LQ_scalar_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
+
+                            float reweight_LQpure_neg = get_LQ_scalar_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+
+                            float reweight_LQint_pos = get_LQ_scalar_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+
+                            float reweight_LQint_neg = get_LQ_scalar_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
+
+                            h_m->Fill(tm.m, pow(yLQ,4) * reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+                            h_m2->Fill(tm.m, pow(yLQ,2) * reweight_LQint_pos * tm.evt_weight * RFfactor); 
+                            h_cost->Fill(tm.cost, pow(yLQ,4) * reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+                            h_cost2->Fill(tm.cost, pow(yLQ,2) * reweight_LQint_pos * tm.evt_weight * RFfactor); 
+                            h_rap->Fill(tm.cm.Rapidity(), pow(yLQ,4) * reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+                            h_rap2->Fill(tm.cm.Rapidity(), pow(yLQ,2) * reweight_LQint_pos * tm.evt_weight * RFfactor); 
+                            
+                        }
+                // vector
+                        else{
+                            float reweight_LQpure_pos_vec = get_LQ_vec_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
+
+                            float reweight_LQpure_neg_vec = get_LQ_vec_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
+
+                            float reweight_LQint_pos_vec = get_LQ_vec_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+
+                            float reweight_LQint_neg_vec = get_LQ_vec_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
+
+                            
+                        //vector
+                            h_m->Fill(tm.m, pow(yLQ,4) * reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+                            h_m2->Fill(tm.m, pow(yLQ,2) * reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+                            h_cost->Fill(tm.cost, pow(yLQ,4) * reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+                            h_cost2->Fill(tm.cost, pow(yLQ,2) * reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+                            h_rap->Fill(tm.cm.Rapidity(), pow(yLQ,4) * reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+                            h_rap2->Fill(tm.cm.Rapidity(), pow(yLQ,2) * reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+                        }
+                    }
+                    h_m->Add(h_m2);
+                    h_rap->Add(h_rap2);
+                    h_cost->Add(h_cost2);
+
+                }
 
                 h_m->Fill(tm.m,tm.evt_weight);
                 h_pt->Fill(tm.pt,tm.evt_weight);
@@ -183,60 +244,60 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
             }
 
 
-        
+            
         }
         printf("Selected %i events \n", nEvents);
 
 
-    tm.finish();
-}
+        tm.finish();
+    }
 
-void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
+    void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree *t_QCD_contam, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
         int flag1 = FLAG_MUONS, int year = 2016, float m_low=150., float m_high = 99999., bool ss = false, bool reweight = false, bool sys_errors = false){
-    TLorentzVector *lep_p=0;
-    TLorentzVector *lep_m=0;
-    Double_t pt;
-    FakeRate FR;
-    float tot_weight_os = 0.;
-    float tot_weight_ss = 0.;
-    h_cost->Sumw2();
-    if(flag1 == FLAG_MUONS) setup_new_mu_fakerate(&FR, year);
-    else setup_new_el_fakerate(&FR, year);
-    TH2D *h_err = (TH2D *) FR.h->Clone("h_err");
-    h_err->Reset();
-    for (int l=0; l<=3; l++){
-        TTree *t;
-        bool is_data, is_one_iso;
-        if (l==0){
-            t = t_WJets;
-            is_data =true;
-            is_one_iso = true;
-        }
-        if (l==1){
-            t = t_QCD;
-            is_data =true;
-            is_one_iso = false;
-        }
-        if (l==2){
-            t = t_WJets_contam;
-            is_data =false;
-            is_one_iso = true;
-        }
-        if (l==3){
-            t = t_QCD_contam;
-            is_data =false;
-            is_one_iso = false;
-        }
-        TempMaker tm(t, is_data, year);
-        tm.is_one_iso = is_one_iso;
-        if(flag1 == FLAG_MUONS) tm.do_muons = true;
-        else tm.do_electrons = true;
-        tm.do_RC = true;
-        tm.setup();
-        int n= 0;
+        TLorentzVector *lep_p=0;
+        TLorentzVector *lep_m=0;
+        Double_t pt;
+        FakeRate FR;
+        float tot_weight_os = 0.;
+        float tot_weight_ss = 0.;
+        h_cost->Sumw2();
+        if(flag1 == FLAG_MUONS) setup_new_mu_fakerate(&FR, year);
+        else setup_new_el_fakerate(&FR, year);
+        TH2D *h_err = (TH2D *) FR.h->Clone("h_err");
+        h_err->Reset();
+        for (int l=0; l<=3; l++){
+            TTree *t;
+            bool is_data, is_one_iso;
+            if (l==0){
+                t = t_WJets;
+                is_data =true;
+                is_one_iso = true;
+            }
+            if (l==1){
+                t = t_QCD;
+                is_data =true;
+                is_one_iso = false;
+            }
+            if (l==2){
+                t = t_WJets_contam;
+                is_data =false;
+                is_one_iso = true;
+            }
+            if (l==3){
+                t = t_QCD_contam;
+                is_data =false;
+                is_one_iso = false;
+            }
+            TempMaker tm(t, is_data, year);
+            tm.is_one_iso = is_one_iso;
+            if(flag1 == FLAG_MUONS) tm.do_muons = true;
+            else tm.do_electrons = true;
+            tm.do_RC = true;
+            tm.setup();
+            int n= 0;
 
-        for (int i=0; i<tm.nEntries; i++) {
-            tm.getEvent(i);
+            for (int i=0; i<tm.nEntries; i++) {
+                tm.getEvent(i);
 
             bool pass = (tm.m >= m_low && tm.m <= m_high); //&& tm.met_pt < met_cut  && tm.has_no_bjets;
 
@@ -277,15 +338,15 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                         if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = -(mu1_fakerate )/(1-mu1_fakerate);
 
-                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight());
-                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight(false));
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight(false));
                     }
                     if(l==3){
                         mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
                         mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
                         evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
-                        h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight() * (mu2_fakerate/(1-mu2_fakerate)));
-                        h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight() * (mu1_fakerate/(1-mu1_fakerate)));
+                        h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight(false) * (mu2_fakerate/(1-mu2_fakerate)));
+                        h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight(false) * (mu1_fakerate/(1-mu1_fakerate)));
                     }
                 }
                 else{
@@ -314,8 +375,8 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                         evt_reweight = -(el1_fakerate )/(1-el1_fakerate);
 
 
-                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight());
-                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight());
+                        if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight(false));
+                        if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight(false));
                     }
                     if(l==3){
 
@@ -323,15 +384,15 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
                         el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
                         evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
 
-                        h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight() * (el2_fakerate/(1-el2_fakerate)));
-                        h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight() * (el1_fakerate/(1-el1_fakerate)));
+                        h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight(false) * (el2_fakerate/(1-el2_fakerate)));
+                        h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight(false) * (el1_fakerate/(1-el1_fakerate)));
                     }
                 }
                 double tot_evt_weight = 0.;
                 if(is_data) tot_evt_weight = evt_reweight; 
                 else{
-                    tot_evt_weight = evt_reweight * tm.getEvtWeight();
-                    //printf("%.3e %.3e \n", tm.getEvtWeight(), tot_evt_weight);
+                    tot_evt_weight = evt_reweight * tm.getEvtWeight(false);
+                    //printf("%.3e %.3e \n", tm.getEvtWeight(false), tot_evt_weight);
                 }
 
 
@@ -400,7 +461,7 @@ void make_fakerate_est(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTre
 
 
 void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_QCD_MC, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_rap, int flag1 = FLAG_MUONS, 
-        int year=2016, float m_low = 150., float m_high = 10000., bool reweight = false, bool sys_errors = false){
+    int year=2016, float m_low = 150., float m_high = 10000., bool reweight = false, bool sys_errors = false){
     FakeRate el_FR, mu_FR;
     //TH2D *FR;
     setup_new_el_fakerate(&el_FR, year);
@@ -454,7 +515,7 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
             bool opp_sign =  ((abs(tm.mu1_charge - tm.el1_charge)) > 0.01);
             bool pass = tm.m>= m_low && tm.m <= m_high && opp_sign &&//tm.met_pt < met_cut  && tm.has_no_bjets && opp_sign &&
 
-                ((flag1 == FLAG_MUONS && tm.mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && tm.el1_pt > 29.));
+            ((flag1 == FLAG_MUONS && tm.mu1_pt > 27.) || (flag1 == FLAG_ELECTRONS && tm.el1_pt > 29.));
             if(pass){
                 double evt_reweight = 0.;
                 float lep1_fakerate, lep2_fakerate;
@@ -474,16 +535,16 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
                     evt_reweight = -(lep1_fakerate/(1-lep1_fakerate)) * (lep2_fakerate/(1-lep2_fakerate));
 
 
-                        h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(lep2_fakerate/(1-lep2_fakerate)));
-                        h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  -0.5*(lep1_fakerate/(1-lep1_fakerate)));
+                    h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(lep2_fakerate/(1-lep2_fakerate)));
+                    h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  -0.5*(lep1_fakerate/(1-lep1_fakerate)));
                 }
                 if(l==2){
                     if(tm.iso_lep ==1) lep1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, mu_FR.h);
                     else            lep1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, el_FR.h);
                     evt_reweight = -(lep1_fakerate)/(1-lep1_fakerate);
 
-                        if(tm.iso_lep ==1) h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight());
-                        if(tm.iso_lep ==0) h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight());
+                    if(tm.iso_lep ==1) h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight(false));
+                    if(tm.iso_lep ==0) h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight(false));
 
                 }
                 if(l==3){
@@ -491,26 +552,26 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
                     lep2_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, el_FR.h);
                     evt_reweight = (lep1_fakerate/(1-lep1_fakerate)) * (lep2_fakerate/(1-lep2_fakerate));
 
-                        h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight() * (lep2_fakerate/(1-lep2_fakerate)));
-                        h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 0.5*tm.getEvtWeight() * (lep1_fakerate/(1-lep1_fakerate)));
+                    h_mu_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight(false) * (lep2_fakerate/(1-lep2_fakerate)));
+                    h_el_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 0.5*tm.getEvtWeight(false) * (lep1_fakerate/(1-lep1_fakerate)));
 
-                    }
-
-                    double tot_evt_weight = 0.;
-                    if(is_data) tot_evt_weight = evt_reweight; 
-                    else{
-                        tot_evt_weight = evt_reweight * tm.getEvtWeight();
-                        //printf("%.3e %.3e \n", tm.getEvtWeight(), tot_evt_weight);
-                    }
-
-                    h_m->Fill(tm.m, tot_evt_weight);
-                    h_pt->Fill(tm.cm.Pt(), tot_evt_weight);
-                    h_cost->Fill(tm.cost, tot_evt_weight);
-                    h_rap->Fill(tm.cm.Rapidity(),tot_evt_weight);
-                    if(opp_sign) tot_weight_os += tot_evt_weight;
-                    else tot_weight_ss += tot_evt_weight;
                 }
+
+                double tot_evt_weight = 0.;
+                if(is_data) tot_evt_weight = evt_reweight; 
+                else{
+                    tot_evt_weight = evt_reweight * tm.getEvtWeight(false);
+                        //printf("%.3e %.3e \n", tm.getEvtWeight(false), tot_evt_weight);
+                }
+
+                h_m->Fill(tm.m, tot_evt_weight);
+                h_pt->Fill(tm.cm.Pt(), tot_evt_weight);
+                h_cost->Fill(tm.cost, tot_evt_weight);
+                h_rap->Fill(tm.cm.Rapidity(),tot_evt_weight);
+                if(opp_sign) tot_weight_os += tot_evt_weight;
+                else tot_weight_ss += tot_evt_weight;
             }
+        }
 
         printf("After iter %i current fakerate est is %.0f \n", l, h_m->Integral());
     }
@@ -552,31 +613,31 @@ void Fakerate_est_emu(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_MC, TTree *t_
 
 void make_pileup_hist(TTree *t1, TH1F *h_before, TH1F *h_after, bool is_data=false, int year = 2016, int flag1 = FLAG_MUONS){
     //read event data
-        TempMaker tm(t1, is_data, year);
-        if(flag1 == FLAG_MUONS) tm.do_muons = true;
-        else tm.do_electrons = true;
+    TempMaker tm(t1, is_data, year);
+    if(flag1 == FLAG_MUONS) tm.do_muons = true;
+    else tm.do_electrons = true;
 
-        tm.setup();
-        int nEvents=0;
-        double m_low = 150.;
-        double m_high = 100000.;
+    tm.setup();
+    int nEvents=0;
+    double m_low = 150.;
+    double m_high = 100000.;
 
-        for (int i=0; i<tm.nEntries; i++) {
-            tm.getEvent(i);
-            bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
+    for (int i=0; i<tm.nEntries; i++) {
+        tm.getEvent(i);
+        bool pass = (tm.m >= m_low && tm.m <= m_high) && tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
-            if(pass){
-                nEvents++;
-                    Double_t evt_weight = tm.getEvtWeight();
-                    if(tm.pu_SF < 1e-4) tm.pu_SF = 1.0;
-                    h_before->Fill(tm.pu_NtrueInt, evt_weight/tm.pu_SF);
-                    h_after->Fill(tm.pu_NtrueInt, evt_weight);
+        if(pass){
+            nEvents++;
+            Double_t evt_weight = tm.getEvtWeight(false);
+            if(tm.pu_SF < 1e-4) tm.pu_SF = 1.0;
+            h_before->Fill(tm.pu_NtrueInt, evt_weight/tm.pu_SF);
+            h_after->Fill(tm.pu_NtrueInt, evt_weight);
 
-                }
+        }
 
         
-        }
-        printf("Selected %i events \n", nEvents);
+    }
+    printf("Selected %i events \n", nEvents);
 
 
     tm.finish();

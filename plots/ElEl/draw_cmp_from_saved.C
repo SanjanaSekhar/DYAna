@@ -40,9 +40,9 @@ char *plot_label = "";
 //gROOT->SetBatch(1);
 void draw_cmp_from_saved(){
 
-    TH1F *data_m ,*diboson_m, *QCD_m, *top_m, *dy_m, *wt_m, *gg_m;
-    TH1F *data_cost, *diboson_cost, *QCD_cost, *top_cost, *dy_cost, *wt_cost, *gg_cost;
-    TH1F *data_rap, *diboson_rap, *QCD_rap, *top_rap, *dy_rap, *wt_rap, *gg_rap;
+    TH1F *data_m ,*diboson_m, *QCD_m, *top_m, *dy_m, *wt_m, *gg_m, *LQu_m, *LQu_vec_m;
+    TH1F *data_cost, *diboson_cost, *QCD_cost, *top_cost, *dy_cost, *wt_cost, *gg_cost, *LQu_m, *LQu_vec_cost;
+    TH1F *data_rap, *diboson_rap, *QCD_rap, *top_rap, *dy_rap, *wt_rap, *gg_rap, *LQu_rap, *LQu_vec_rap;
 
     TFile *fin = new TFile(fin_name, "READ");
     gStyle->SetOptStat(0);
@@ -63,6 +63,9 @@ void draw_cmp_from_saved(){
         TH1F *dy_m_ = (TH1F *) gDirectory->Get("dy_m");
         TH1F *wt_m_ = (TH1F *) gDirectory->Get("wt_m");
         TH1F *gg_m_ = (TH1F *) gDirectory->Get("gg_m");
+        TH1F *LQu_m_ = (TH1F *) gDirectory->Get("LQu_m");
+        TH1F *LQu_vec_m_ = (TH1F *) gDirectory->Get("LQu_vec_m");
+        
 
         TH1F *data_cost_ = (TH1F *) gDirectory->Get("data_cost");
         TH1F *diboson_cost_ = (TH1F *) gDirectory->Get("diboson_cost");
@@ -71,7 +74,9 @@ void draw_cmp_from_saved(){
         TH1F *dy_cost_ = (TH1F *) gDirectory->Get("dy_cost");
         TH1F *wt_cost_ = (TH1F *) gDirectory->Get("wt_cost");
         TH1F *gg_cost_ = (TH1F *) gDirectory->Get("gg_cost");
-
+        TH1F *LQu_cost_ = (TH1F *) gDirectory->Get("LQu_cost");
+        TH1F *LQu_vec_cost_ = (TH1F *) gDirectory->Get("LQu_vec_cost");
+        
 
         TH1F *data_rap_ = (TH1F *) gDirectory->Get("data_rap");
         TH1F *diboson_rap_ = (TH1F *) gDirectory->Get("diboson_rap");
@@ -80,6 +85,8 @@ void draw_cmp_from_saved(){
         TH1F *dy_rap_ = (TH1F *) gDirectory->Get("dy_rap");
         TH1F *wt_rap_ = (TH1F *) gDirectory->Get("wt_rap");
         TH1F *gg_rap_ = (TH1F *) gDirectory->Get("gg_rap");
+        TH1F *LQu_rap_ = (TH1F *) gDirectory->Get("LQu_rap");
+        TH1F *LQu_vec_rap_ = (TH1F *) gDirectory->Get("LQu_vec_rap");
 
 
 
@@ -93,9 +100,9 @@ void draw_cmp_from_saved(){
 
         if(year == 2016){
             printf("%i \n", year);
-            data_m = data_m_; diboson_m = diboson_m_; QCD_m = QCD_m_; top_m = top_m_; dy_m = dy_m_; wt_m = wt_m_; gg_m = gg_m_;
-            data_cost = data_cost_; diboson_cost = diboson_cost_; QCD_cost = QCD_cost_; top_cost = top_cost_; dy_cost = dy_cost_; wt_cost = wt_cost_; gg_cost = gg_cost_;
-            data_rap = data_rap_; diboson_rap = diboson_rap_; QCD_rap = QCD_rap_; top_rap = top_rap_; dy_rap = dy_rap_; wt_rap = wt_rap_; gg_rap = gg_rap_;
+            data_m = data_m_; diboson_m = diboson_m_; QCD_m = QCD_m_; top_m = top_m_; dy_m = dy_m_; wt_m = wt_m_; gg_m = gg_m_; LQu_m = LQu_m_; LQu_vec_m = LQu_vec_m_;
+            data_cost = data_cost_; diboson_cost = diboson_cost_; QCD_cost = QCD_cost_; top_cost = top_cost_; dy_cost = dy_cost_; wt_cost = wt_cost_; gg_cost = gg_cost_; LQu_cost = LQu_cost_; LQu_vec_cost = LQu_vec_cost_;
+            data_rap = data_rap_; diboson_rap = diboson_rap_; QCD_rap = QCD_rap_; top_rap = top_rap_; dy_rap = dy_rap_; wt_rap = wt_rap_; gg_rap = gg_rap_; LQu_rap = LQu_rap_; LQu_vec_rap = LQu_vec_rap_;
 
         }
         else{
@@ -107,6 +114,8 @@ void draw_cmp_from_saved(){
             dy_m->Add(dy_m_);
             wt_m->Add(wt_m_);
             gg_m->Add(gg_m_);
+            LQu_m->Add(LQu_m_);
+            LQu_vec_m->Add(LQu_vec_m_);
 
 
             data_cost->Add(data_cost_);
@@ -116,6 +125,8 @@ void draw_cmp_from_saved(){
             dy_cost->Add(dy_cost_);
             wt_cost->Add(wt_cost_);
             gg_cost->Add(gg_cost_);
+            LQu_cost->Add(LQu_cost_);
+            LQu_vec_cost->Add(LQu_vec_cost_);           
 
             data_rap->Add(data_rap_);
             diboson_rap->Add(diboson_rap_);
@@ -124,6 +135,8 @@ void draw_cmp_from_saved(){
             dy_rap->Add(dy_rap_);
             wt_rap->Add(wt_rap_);
             gg_rap->Add(gg_rap_);
+            LQu_rap->Add(LQu_rap_);
+            LQu_vec_rap->Add(LQu_vec_rap_);
         }
     }
 
@@ -151,6 +164,13 @@ void draw_cmp_from_saved(){
     setHistError(gg_cost, gam_sys_unc);
     setHistError(gg_rap, gam_sys_unc);
 
+    setHistError(LQu_cost, LQu_sys_unc);
+    setHistError(LQu_rap, LQu_sys_unc);
+
+    setHistError(LQu_vec_cost, LQu_vec_sys_unc);
+    setHistError(LQu_vec_rap, LQu_vec_sys_unc);
+
+
 
 
     setHistError(QCD_m, qcd_sys_unc);
@@ -161,6 +181,9 @@ void draw_cmp_from_saved(){
     setHistMassDepError(wt_m);
     setHistMassDepError(wt_m);
     setHistMassDepError(gg_m);
+    setHistMassDepError(LQu_m);
+    setHistMassDepError(LQu_vec_m);
+   
 
     float mbin_base = 10.;
     binwidth_normalize(data_m, mbin_base);
@@ -170,7 +193,8 @@ void draw_cmp_from_saved(){
     binwidth_normalize(top_m, mbin_base);
     binwidth_normalize(gg_m, mbin_base);
     binwidth_normalize(dy_m, mbin_base);
-
+    binwidth_normalize(LQu_m, mbin_base);
+    binwidth_normalize(LQu_vec_m, mbin_base);
 
 
 
@@ -228,6 +252,13 @@ void draw_cmp_from_saved(){
     gg_rap->SetLineColor(gamgam_c);
 
 
+    LQu_m->SetLineColor(kRed);
+    LQu_cost->SetLineColor(kRed);
+    LQu_rap->SetLineColor(kRed);
+
+    LQu_vec_m->SetLineColor(kGreen);
+    LQu_vec_cost->SetLineColor(kGreen);
+    LQu_vec_rap->SetLineColor(kGreen);
 
 
 
@@ -270,6 +301,8 @@ void draw_cmp_from_saved(){
     m_stack->Add(QCD_m);
     m_stack->Add(top_m);
     m_stack->Add(dy_m);
+    m_stack->Add(LQu_m);
+    m_stack->Add(LQu_vec_m);
 
 
     THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; Cos(#theta)_{r}");
@@ -278,6 +311,8 @@ void draw_cmp_from_saved(){
     cost_stack->Add(QCD_cost);
     cost_stack->Add(top_cost);
     cost_stack->Add(dy_cost);
+    cost_stack->Add(LQu_cost);
+    cost_stack->Add(LQu_vec_cost);
 
 
     THStack *rap_stack = new THStack("rap_stack", "DiElectron Rapidity Distribution: Data vs MC; y");
@@ -286,7 +321,8 @@ void draw_cmp_from_saved(){
     rap_stack->Add(QCD_rap);
     rap_stack->Add(top_rap);
     rap_stack->Add(dy_rap);
-
+    rap_stack->Add(LQu_rap);
+    rap_stack->Add(LQu_vec_rap);
 
 
 
@@ -319,6 +355,8 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+    leg1->AddEntry(LQu_m, "S_{eu} (y_{eu}=2.0)");
+    leg1->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=2.0)");
     leg1->SetTextSize(0.058);
 
 
@@ -328,6 +366,8 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+    leg2->AddEntry(LQu_m, "S_{eu} (y_{eu}=2.0)");
+    leg2->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=2.0)");
     leg2->SetTextSize(0.058);
 
 
@@ -337,6 +377,8 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+    leg3->AddEntry(LQu_m, "S_{eu} (y_{eu}=2.0)");
+    leg3->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=2.0)");
     leg3->SetTextSize(0.058);
 
     leg1->SetX1NDC(0.7);

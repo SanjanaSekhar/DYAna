@@ -16,6 +16,9 @@ float qcd_sys_unc = 0.55;
 float diboson_sys_unc = 0.15;
 float top_sys_unc = 0.13;
 float gam_sys_unc = 0.13;
+float LQu_sys_unc = 0.0;
+float LQu_vec_sys_unc = 0.0;
+
 
 float computeChi2(TH1 *h){
     // only use on ratio plots, with expected value of 1
