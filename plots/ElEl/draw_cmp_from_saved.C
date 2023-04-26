@@ -478,7 +478,7 @@ void draw_cmp_from_saved(){
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 1500;
+    hmax = 1250;
 
     //if(year == 2016)
     //    hmax *= 0.625;
