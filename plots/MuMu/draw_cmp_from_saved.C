@@ -464,7 +464,7 @@ void draw_cmp_from_saved(){
     logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
-    hmax = 3200;
+    hmax = 5000;
 
     // if(year == 2016)
     //     hmax *= 0.25;
