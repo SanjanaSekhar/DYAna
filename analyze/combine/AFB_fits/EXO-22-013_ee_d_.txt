@@ -181,11 +181,10 @@ prefire16               shape         1.0       1.0       1.0       1.0       1.
 prefire17               shape         -         -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       -         -         -         -         -         -         -         -         -         -         -       
 prefire18               shape         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         -         1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       1.0       -       
 top_xsec                lnN           -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         -         1.05      -         -         -         -         -         -         -         -         -         1.05      -         -         -         -       
-MCStatBin group = MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin17 MCStatBin16 MCStatBin11 MCStatBin36 MCStatBin1 MCStatBin3 MCStatBin2 MCStatBin4 MCStatBin9 MCStatBin51 MCStatBin50 MCStatBin55 MCStatBin57 MCStatBin56 MCStatBin15 MCStatBin31 MCStatBin30 MCStatBin37 MCStatBin10 MCStatBin35 MCStatBin44 MCStatBin42 MCStatBin43 MCStatBin41 MCStatBin49
+lumis18 group = lumiDB lumiBC lumi18 lumiLS lumiXY lumiGS
 elRECOs group = elRECOBARPTHIGH elRECOENDPTHIGH elRECOBARPTLOW elRECOENDPTLOW
 elScales18 group = elScaleGain18 elScaleSyst elSmear elScaleStat18
 RFscales16 group = RENORM16 alphaS16 REFAC16 FAC16
-lumis18 group = lumiDB lumiBC lumi18 lumiLS lumiXY lumiGS
 elfakesrws18 group = elfakesrw2b18 elfakesrw3b18 elfakesrw1b18 elfakesrw4b18
 elfakesrws17 group = elfakesrw4b17 elfakesrw1b17 elfakesrw3b17 elfakesrw2b17
 elScales17 group = elScaleStat17 elScaleSyst elSmear elScaleGain17

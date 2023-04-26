@@ -103,13 +103,13 @@ else:
     pars17 = []
     pars18 = []
     pars_comb = []
-
+    '''
     #appending MC stats sys
     for i in range(1,61):
         sym_i = get_sym_bin(i-1, 60)
         if sym_i < i: continue
         pars_comb.append("MCStatBin%i"%i)
-
+    '''
     for i in range(1,61):
         pars_comb.append("pdf" + str(i))
 

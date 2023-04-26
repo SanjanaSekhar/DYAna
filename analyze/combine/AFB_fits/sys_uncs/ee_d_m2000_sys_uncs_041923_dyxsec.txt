@@ -1,0 +1,3 @@
+Systematic uncertainties for bin 0
+DY Cross Section & 0.02099 & 100.00  \\ 
+Total Uncertainty & 0.02  \\ 

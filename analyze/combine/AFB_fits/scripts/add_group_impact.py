@@ -29,8 +29,10 @@ def UncertaintiesFromTriplet(triplet):
 	#up = triplet[2][1] - triplet[0][1]
 	#dn = triplet[1][1] - triplet[0][1]
 	# print dn, up
+	print(triplet[0],triplet[1],triplet[2])
 	up = triplet[2] - triplet[0]
 	dn = triplet[1] - triplet[0]
+	print("(dn,up) = ",(dn,up))
 	return (dn, up)
 
 from math import sqrt

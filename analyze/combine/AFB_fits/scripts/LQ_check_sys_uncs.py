@@ -41,16 +41,16 @@ if options.hadd:
 
 else:
 	if chan == "ee":
-		
+		'''		
 		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
 		
 		group_pars =[  "RFscalesYRC", "emucostrwsYRC",  "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
 						"elfakesrwsYR", "autoMCStats,MCStatBin"] 
 		#"BTAGSYR","muPrefYRC","METJECYR",
 		'''
-		individual_pars = []
-		group_pars = ["autoMCStats,MCStatBin"]
-		'''
+		individual_pars = ["dy_xsec"]
+		group_pars = []
+		
 	else:
 		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
 		group_pars =[  "RFscalesYRC", "emucostrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 

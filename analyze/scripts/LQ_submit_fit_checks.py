@@ -75,22 +75,22 @@ if options.bias_tests:
 if options.limits:
     cmds = [
   
-    "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
  
     ]
 
     labels = [
-        "limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
-        "limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
+        #"limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
+        #"limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
-        #"limits_ee_d_vec"#,"limits_mumu_s_vec"
+        "limits_ee_d_vec","limits_mumu_d_vec"
     ]
 
 
@@ -160,21 +160,20 @@ if options.impacts:
 
     cmds = [
   
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u -o imps --ending %s \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d -o imps --ending %s \n "%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u --vec True -o imps --ending %s \n "%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d --vec True -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u --vec True -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u -o imps --ending %s \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d -o imps --ending %s \n "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u --vec True -o imps --ending %s \n "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d --vec True -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u --vec True -o imps --ending %s  \n"%date,
     "python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d --vec True -o imps --ending %s  \n"%date,
  
     ]
 
     labels = [
-        #"imps_ee_u","imps_ee_d","imps_mumu_u","imps_mumu_d",
-        #"imps_ee_u_vec","imps_ee_d_vec","imps_mumu_u_vec",
-	    "imps_mumu_d_vec"
+        "imps_ee_u","imps_ee_d","imps_mumu_u","imps_mumu_d",
+        "imps_ee_u_vec","imps_ee_d_vec","imps_mumu_u_vec", "imps_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
         #"limits_ee_s_vec","limits_mumu_s_vec"
     ]
