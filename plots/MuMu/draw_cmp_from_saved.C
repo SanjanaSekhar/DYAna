@@ -31,7 +31,7 @@
 const int type = FLAG_MUONS;
 const bool write_out = true;
 bool prelim = false;
-char *plot_dir = "AN_plots";
+char *plot_dir = "AN_plots/";
 //char *plot_dir = "Misc_plots/mu_prefire_check_after/";
 char *fin_name = "MuMu/LQ_saved_hists.root";
 char *plot_label = "";

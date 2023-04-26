@@ -211,7 +211,7 @@ void save_hists(){
         wt_rap->Write();
         LQu_rap->Write();
         LQu_vec_rap->Write();
-
+	fout->Close();
     }
 
     

@@ -40,7 +40,7 @@ int year;
 
 
 void save_hists(){
-
+    TFile *fout = new TFile(fout_name, "UPDATE");
     for(year = 2016; year <= 2018; year++){
         char year_str[80];
         sprintf(year_str, "y%i", year);
@@ -177,7 +177,7 @@ void save_hists(){
 
 
 
-        TFile *fout = new TFile(fout_name, "UPDATE");
+        //TFile *fout = new TFile(fout_name, "UPDATE");
         fout->cd();
         fout->mkdir(year_str);
         fout->cd(year_str);
@@ -215,7 +215,6 @@ void save_hists(){
         wt_rap->Write();
         LQu_rap->Write();
         LQu_vec_rap->Write();
-
     }
 
     
