@@ -337,8 +337,8 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_size = 0.6;
-    float y_size = 0.4;
+    float x_size = 0.5;
+    float y_size = 0.3;
 
 
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
@@ -355,37 +355,37 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(data_m, "Data", "pe");
     leg3->AddEntry(data_m, "Data", "pe");
 
-    leg1->AddEntry(dy_m, "DY signal", "f");
+    leg1->AddEntry(dy_m, "DY ", "f");
     leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg1->AddEntry(LQu_m, "S_{eu} (y_{eu}=2.0)");
-    leg1->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=2.0)");
-    leg1->SetTextSize(0.058);
+    leg1->AddEntry(LQu_m, "S_{eu} (y_{eu}=0.8)");
+    leg1->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=0.8)");
+    leg1->SetTextSize(0.048);
 
 
-    leg2->AddEntry(dy_m, "DY signal", "f");
+    leg2->AddEntry(dy_m, "DY ", "f");
     leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg2->AddEntry(LQu_m, "S_{eu} (y_{eu}=2.0)");
-    leg2->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=2.0)");
-    leg2->SetTextSize(0.058);
+    leg2->AddEntry(LQu_m, "S_{eu} (y_{eu}=0.8)");
+    leg2->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=0.8)");
+    leg2->SetTextSize(0.048);
 
 
-    leg3->AddEntry(dy_m, "DY signal", "f");
+    leg3->AddEntry(dy_m, "DY ", "f");
     leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg3->AddEntry(LQu_m, "S_{eu} (y_{eu}=2.0)");
-    leg3->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=2.0)");
-    leg3->SetTextSize(0.058);
+    leg3->AddEntry(LQu_m, "S_{eu} (y_{eu}=0.8)");
+    leg3->AddEntry(LQu_vec_m, "V_{eu} (g_{eu}=0.8)");
+    leg3->SetTextSize(0.048);
 
     leg1->SetX1NDC(0.7);
     leg1->SetX2NDC(0.7);
@@ -410,7 +410,7 @@ void draw_cmp_from_saved(){
 
 
     float x_start_m = 0.34;
-    float y_start_m = 0.5;
+    float y_start_m = 0.6;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
@@ -421,8 +421,8 @@ void draw_cmp_from_saved(){
     float hmax = 1000;
     //if(year == 2016)
     //    hmax *= 0.625;
-    if(year == 2017)
-        hmax *= 0.75;
+    //if(year == 2017)
+    //    hmax *= 0.75;
 
     float hmin = 0.1;
     sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
@@ -437,7 +437,7 @@ void draw_cmp_from_saved(){
     //float x_start_c = 0.57 - x_size/2;
     //float y_start_c = 0.14;
     float x_start_c = 0.34;
-    float y_start_c = 0.5;
+    float y_start_c = 0.6;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
     leg2->SetY1(y_start_c);
@@ -447,12 +447,12 @@ void draw_cmp_from_saved(){
     logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
-    hmax = 1000;
+    hmax = 2200;
 
     //if(year == 2016)
     //    hmax *= 0.625;
-    if(year == 2017)
-        hmax *= 0.75;
+    //if(year == 2017)
+    //    hmax *= 0.75;
 
 
 
@@ -474,12 +474,12 @@ void draw_cmp_from_saved(){
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 1000;
+    hmax = 1500;
 
     //if(year == 2016)
     //    hmax *= 0.625;
-    if(year == 2017)
-        hmax *= 0.75;
+    //if(year == 2017)
+    //    hmax *= 0.75;
 
 
 

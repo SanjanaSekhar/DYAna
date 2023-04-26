@@ -139,7 +139,10 @@ void make_emu_m_cost_pt_rap_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt,
 
 void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F *h_xf, TH1F *h_phi, TH1F *h_rap,
     bool is_data=false, int flag1 = FLAG_MUONS,
-    int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false, int do_LQ = 0, float yLQ = 0.){
+    int year = 2016, Double_t m_low = 150., Double_t m_high = 9999999., bool ss = false, int do_LQ = 0, float yLQ = 0., float m_LQ = 2000.){
+    
+    printf("do_LQ = %i, yLQ = %.1f, m_LQ = %.1f\n", do_LQ, yLQ, m_LQ);
+    
     h_m->Sumw2();
     h_cost->Sumw2();
     h_pt->Sumw2();
@@ -151,11 +154,15 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
     if(flag1 == FLAG_MUONS) tm.do_muons = true;
     else tm.do_electrons = true;
     tm.do_RC = true;
-
+    if (do_LQ > 0) tm.is_gen_level = true;
     tm.btag_mc_eff_idx = 0;
     tm.setup();
     int nEvents=0;
-
+    
+    TH1F *h_m2 =(TH1F *) h_m->Clone("LQint_m");
+    TH1F *h_cost2 =(TH1F *) h_cost->Clone("LQint_cost");
+    TH1F *h_rap2 =(TH1F *) h_rap->Clone("LQint_rap");
+    //printf("tm.is_gen_level = %i\n",tm.is_gen_level);
     for (int i=0; i<tm.nEntries; i++) {
         tm.getEvent(i);
         tm.doCorrections();
@@ -173,14 +180,12 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
                 //if(flag1 == FLAG_ELECTRONS && (tm.el2_pt < 20 && tm.el2_eta > 1.8)) tm.evt_weight = 0;
                 if(do_LQ > 0){
 
-                    TH1F *h_m2 =(TH1F *) h_m->Clone("LQint_m");
-                    TH1F *h_cost2 =(TH1F *) h_cost->Clone("LQint_cost");
-                    TH1F *h_rap2 =(TH1F *) h_rap->Clone("LQint_rap");
-
                     int bin_i = find_bin(m_bins, tm.m);
                     float RFfactor = tm.fixRFNorm(bin_i, year);
                     float s = tm.gen_m*tm.gen_m;
-                    if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)){ // only Seu and Veu atm
+		    //printf("tm.inc_id1 = %i, tm.inc_id2 = %i\n",tm.inc_id1,tm.inc_id2);
+                    
+		    if((tm.inc_id1 == 2 && tm.inc_id2 == -2)||(tm.inc_id1 == -2 && tm.inc_id2 == 2)){ // only Seu and Veu atm
                         set_running_couplings(s,2);
 
                         float LQ_denom = get_LQ_denom(tm.cost_st, s, Q_q, caq, cvq);
@@ -194,13 +199,14 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
                             float reweight_LQint_pos = get_LQ_scalar_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
 
                             float reweight_LQint_neg = get_LQ_scalar_num(tm.cost_st, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
-
-                            h_m->Fill(tm.m, pow(yLQ,4) * reweight_LQpure_pos * tm.evt_weight * RFfactor); 
-                            h_m2->Fill(tm.m, pow(yLQ,2) * reweight_LQint_pos * tm.evt_weight * RFfactor); 
-                            h_cost->Fill(tm.cost, pow(yLQ,4) * reweight_LQpure_pos * tm.evt_weight * RFfactor); 
-                            h_cost2->Fill(tm.cost, pow(yLQ,2) * reweight_LQint_pos * tm.evt_weight * RFfactor); 
-                            h_rap->Fill(tm.cm.Rapidity(), pow(yLQ,4) * reweight_LQpure_pos * tm.evt_weight * RFfactor); 
-                            h_rap2->Fill(tm.cm.Rapidity(), pow(yLQ,2) * reweight_LQint_pos * tm.evt_weight * RFfactor); 
+				
+			    //printf("reweight_LQpure_pos = %.3f, reweight_LQint_pos = %.3f, tm.evt_weight = %.3f, RFfactor = %.3f\n",reweight_LQpure_pos,reweight_LQint_pos,tm.evt_weight,RFfactor);
+                            h_m->Fill(tm.m, reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+                            h_m2->Fill(tm.m, reweight_LQint_pos * tm.evt_weight * RFfactor); 
+                            h_cost->Fill(tm.cost, reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+                            h_cost2->Fill(tm.cost, reweight_LQint_pos * tm.evt_weight * RFfactor); 
+                            h_rap->Fill(tm.cm.Rapidity(), reweight_LQpure_pos * tm.evt_weight * RFfactor); 
+                            h_rap2->Fill(tm.cm.Rapidity(), reweight_LQint_pos * tm.evt_weight * RFfactor); 
                             
                         }
                 // vector
@@ -215,20 +221,17 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
 
                             
                         //vector
-                            h_m->Fill(tm.m, pow(yLQ,4) * reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
-                            h_m2->Fill(tm.m, pow(yLQ,2) * reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
-                            h_cost->Fill(tm.cost, pow(yLQ,4) * reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
-                            h_cost2->Fill(tm.cost, pow(yLQ,2) * reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
-                            h_rap->Fill(tm.cm.Rapidity(), pow(yLQ,4) * reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
-                            h_rap2->Fill(tm.cm.Rapidity(), pow(yLQ,2) * reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+                            h_m->Fill(tm.m, reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+                            h_m2->Fill(tm.m, reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+                            h_cost->Fill(tm.cost, reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+                            h_cost2->Fill(tm.cost, reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
+                            h_rap->Fill(tm.cm.Rapidity(), reweight_LQpure_pos_vec * tm.evt_weight * RFfactor); 
+                            h_rap2->Fill(tm.cm.Rapidity(), reweight_LQint_pos_vec * tm.evt_weight * RFfactor); 
                         }
                     }
-                    h_m->Add(h_m2);
-                    h_rap->Add(h_rap2);
-                    h_cost->Add(h_cost2);
 
                 }
-
+		if(do_LQ==0){
                 h_m->Fill(tm.m,tm.evt_weight);
                 h_pt->Fill(tm.pt,tm.evt_weight);
                 h_xf->Fill(tm.xF, tm.evt_weight);
@@ -243,12 +246,19 @@ void make_m_cost_pt_xf_hist(TTree *t1, TH1F *h_m, TH1F *h_cost, TH1F *h_pt, TH1F
                 else h_cost->Fill(tm.cost, tm.evt_weight);
             }
 
-
+	}
             
         }
         printf("Selected %i events \n", nEvents);
-
-
+	if(do_LQ > 0){
+		    h_m->Print("range");
+                    h_m->Scale(pow(yLQ,4)); h_m2->Scale(pow(yLQ,2));
+                    h_cost->Scale(pow(yLQ,4)); h_cost2->Scale(pow(yLQ,2));
+                    h_rap->Scale(pow(yLQ,4)); h_rap2->Scale(pow(yLQ,2));
+                    h_m->Add(h_m2);
+                    h_rap->Add(h_rap2);
+                    h_cost->Add(h_cost2);
+	}
         tm.finish();
     }
 

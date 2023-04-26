@@ -47,6 +47,7 @@ void binwidth_normalize(TH1 *h, float base = 1.){
         float content = h->GetBinContent(i);
         float error = h->GetBinError(i);
         float width = h->GetBinWidth(i);
+	printf("i = %i, bin content = %i\n", i, content);
         h->SetBinContent(i, base*content/width);
         h->SetBinError(i, base*error/width);
     }
