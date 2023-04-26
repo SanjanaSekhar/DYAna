@@ -36,7 +36,7 @@ const bool write_out = true;
 char *fout_name = "ElEl/LQ_saved_hists.root";
 
 void save_hists(){
-
+    TFile *fout = new TFile(fout_name, "UPDATE");
     for(year = 2016; year <= 2018; year++){
 
         char year_str[80];
@@ -46,7 +46,7 @@ void save_hists(){
         init(year);
         init_indv_bkgs(year);
 
-        float yLQ = 1.0;
+        float yLQ = 2.0; float gLQ = 1.0;
         float m_LQ = 2000.;
         int n_pt_bins1 = 7;
         Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
@@ -144,7 +144,7 @@ void save_hists(){
         make_m_cost_pt_xf_hist(t_elel_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type,  year, m_low, m_high, false, 0);
         make_m_cost_pt_xf_hist(t_elel_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,   year, m_low, m_high, false, 0);
         make_m_cost_pt_xf_hist(t_elel_mc, LQu_m, LQu_cost, LQu_pt, LQu_xf, LQu_phi, LQu_rap, false, type, year, m_low, m_high, false, 1, yLQ, m_LQ);
-        make_m_cost_pt_xf_hist(t_elel_mc, LQu_vec_m, LQu_vec_cost, LQu_vec_pt, LQu_vec_xf, LQu_vec_phi, LQu_vec_rap, false, type, year, m_low, m_high, false, 2, yLQ, m_LQ);
+        make_m_cost_pt_xf_hist(t_elel_mc, LQu_vec_m, LQu_vec_cost, LQu_vec_pt, LQu_vec_xf, LQu_vec_phi, LQu_vec_rap, false, type, year, m_low, m_high, false, 2, gLQ, m_LQ);
         symmetrize1d(gg_cost);
 
     //gg_cost->Scale(0.);
@@ -173,7 +173,7 @@ void save_hists(){
 
 
 
-        TFile *fout = new TFile(fout_name, "UPDATE");
+        //TFile *fout = new TFile(fout_name, "UPDATE");
         fout->cd();
         fout->mkdir(year_str);
         fout->cd(year_str);
@@ -211,7 +211,7 @@ void save_hists(){
         wt_rap->Write();
         LQu_rap->Write();
         LQu_vec_rap->Write();
-	fout->Close();
+	//fout->Close();
     }
 
     

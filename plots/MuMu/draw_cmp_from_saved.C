@@ -358,8 +358,8 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg1->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=0.8)");
-    leg1->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=0.8)");
+    leg1->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=2.0)");
+    leg1->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=1.0)");
     leg1->SetTextSize(0.04);
 
 
@@ -368,8 +368,8 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg2->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=0.8)");
-    leg2->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=0.8)");
+    leg2->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=2.0)");
+    leg2->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=1.0)");
     leg2->SetTextSize(0.04);
 
 
@@ -378,8 +378,8 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg3->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=0.8)");
-    leg3->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=0.8)");
+    leg3->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=2.0)");
+    leg3->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=1.0)");
     leg3->SetTextSize(0.04);
 
 
@@ -443,8 +443,8 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     CMS_lumi(p_m, year, 11 );
-    LQu_m->Draw("hist e2 same");
-    LQu_vec_m->Draw("hist e2 same");
+    LQu_m->Draw("hist  same");
+    LQu_vec_m->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_m_cmp.png", plot_dir, file_label );
     if(write_out) c_m->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_m_cmp.pdf", plot_dir, file_label );
@@ -464,7 +464,7 @@ void draw_cmp_from_saved(){
     logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
-    hmax = 2500;
+    hmax = 3200;
 
     // if(year == 2016)
     //     hmax *= 0.25;
@@ -478,8 +478,8 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos #theta_{R}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
-    LQu_cost->Draw("hist e2 same");
-    LQu_vec_cost->Draw("hist e2 same");
+    LQu_cost->Draw("hist  same");
+    LQu_vec_cost->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_cost_cmp.png", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_cost_cmp.pdf", plot_dir, file_label);
@@ -494,7 +494,7 @@ void draw_cmp_from_saved(){
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 2200;
+    hmax = 2500;
     // if(year == 2016)
     //     hmax *= 0.25;
     // if(year == 2017)
@@ -506,8 +506,8 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "Dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
-    LQu_rap->Draw("hist e2 same");
-    LQu_vec_rap->Draw("hist e2 same");
+    LQu_rap->Draw("hist  same");
+    LQu_vec_rap->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_rap_cmp.png", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_rap_cmp.pdf", plot_dir, file_label);
