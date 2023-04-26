@@ -353,7 +353,7 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(data_m, "Data", "pe");
     leg3->AddEntry(data_m, "Data", "pe");
 
-    leg1->AddEntry(dy_m, "DY signal", "f");
+    leg1->AddEntry(dy_m, "DY", "f");
     leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
@@ -363,7 +363,7 @@ void draw_cmp_from_saved(){
     leg1->SetTextSize(0.04);
 
 
-    leg2->AddEntry(dy_m, "DY signal", "f");
+    leg2->AddEntry(dy_m, "DY", "f");
     leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
@@ -373,7 +373,7 @@ void draw_cmp_from_saved(){
     leg2->SetTextSize(0.04);
 
 
-    leg3->AddEntry(dy_m, "DY signal", "f");
+    leg3->AddEntry(dy_m, "DY", "f");
     leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
@@ -443,8 +443,8 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     CMS_lumi(p_m, year, 11 );
-    LQu_m->Draw("hist e same");
-    LQu_vec_m->Draw("hist e same");
+    LQu_m->Draw("hist e2 same");
+    LQu_vec_m->Draw("hist e2 same");
     sprintf(plt_file, "%sMuMu%s_m_cmp.png", plot_dir, file_label );
     if(write_out) c_m->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_m_cmp.pdf", plot_dir, file_label );
@@ -478,8 +478,8 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos #theta_{R}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_cost, year, 11);
-    LQu_cost->Draw("hist e same");
-    LQu_vec_cost->Draw("hist e same");
+    LQu_cost->Draw("hist e2 same");
+    LQu_vec_cost->Draw("hist e2 same");
     sprintf(plt_file, "%sMuMu%s_cost_cmp.png", plot_dir, file_label);
     if(write_out) c_cost->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_cost_cmp.pdf", plot_dir, file_label);
@@ -506,8 +506,8 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "Dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 11);
-    LQu_rap->Draw("hist e same");
-    LQu_vec_rap->Draw("hist e same");
+    LQu_rap->Draw("hist e2 same");
+    LQu_vec_rap->Draw("hist e2 same");
     sprintf(plt_file, "%sMuMu%s_rap_cmp.png", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_rap_cmp.pdf", plot_dir, file_label);
