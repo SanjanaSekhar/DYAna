@@ -30,7 +30,7 @@
 #include "../../utils/Colors.h"
 
 const int type = FLAG_ELECTRONS;
-const int year = 2018;
+const int year = 2016;
 const bool write_out = true;
 
 char *fout_name = "ElEl/LQ_saved_hists.root";
@@ -44,7 +44,7 @@ void save_hists(){
     init(year);
     init_indv_bkgs(year);
 
-    float yLQ = 200.0;
+    float yLQ = 20.0;
     float m_LQ = 2000.;
     int n_pt_bins1 = 7;
     Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
