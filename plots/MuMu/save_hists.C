@@ -34,7 +34,7 @@ char *plot_dir = "AN_plots/";
 char *plot_label = "";
 
 const int type = FLAG_MUONS;
-const int year = 2016;
+const int year = 2018;
 char *fout_name = "MuMu/LQ_saved_hists.root";
 
 
@@ -148,15 +148,15 @@ void save_hists(){
     float m_high = 13000;
     bool ss = false;
 
-    make_m_cost_pt_xf_hist(t_elel_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_mc, dy_m, dy_cost, dy_pt, dy_xf, dy_phi, dy_rap, false, type, year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_tautau, dy_tautau_m, dy_tautau_cost, dy_tautau_pt, dy_tautau_xf, dy_tautau_phi, dy_tautau_rap, false, type,  year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type,  year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type,  year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type,  year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,   year, m_low, m_high, false, 0);
-    make_m_cost_pt_xf_hist(t_elel_mc, LQu_m, LQu_cost, LQu_pt, LQu_xf, LQu_phi, LQu_rap, false, type, year, m_low, m_high, false, 1, yLQ, m_LQ);
-    make_m_cost_pt_xf_hist(t_elel_mc, LQu_vec_m, LQu_vec_cost, LQu_vec_pt, LQu_vec_xf, LQu_vec_phi, LQu_vec_rap, false, type, year, m_low, m_high, false, 2, yLQ, m_LQ);
+    make_m_cost_pt_xf_hist(t_mumu_data, data_m, data_cost, data_pt, data_xf, data_phi, data_rap, true, type,  year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_mc, dy_m, dy_cost, dy_pt, dy_xf, dy_phi, dy_rap, false, type, year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_tautau, dy_tautau_m, dy_tautau_cost, dy_tautau_pt, dy_tautau_xf, dy_tautau_phi, dy_tautau_rap, false, type,  year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_ttbar, ttbar_m, ttbar_cost, ttbar_pt, ttbar_xf, ttbar_phi, ttbar_rap, false, type,  year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_wt, wt_m, wt_cost, wt_pt, wt_xf, wt_phi, wt_rap, false, type,  year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_gamgam, gg_m, gg_cost, gg_pt, gg_xf, gg_phi, gg_rap, false, type,  year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_diboson, diboson_m, diboson_cost, diboson_pt, diboson_xf, diboson_phi, diboson_rap, false, type,   year, m_low, m_high, false, 0);
+    make_m_cost_pt_xf_hist(t_mumu_mc, LQu_m, LQu_cost, LQu_pt, LQu_xf, LQu_phi, LQu_rap, false, type, year, m_low, m_high, false, 1, yLQ, m_LQ);
+    make_m_cost_pt_xf_hist(t_mumu_mc, LQu_vec_m, LQu_vec_cost, LQu_vec_pt, LQu_vec_xf, LQu_vec_phi, LQu_vec_rap, false, type, year, m_low, m_high, false, 2, yLQ, m_LQ);
     symmetrize1d(gg_cost);
 
     //gg_cost->Scale(0.);

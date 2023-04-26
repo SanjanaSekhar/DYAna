@@ -251,21 +251,21 @@ void draw_cmp_from_saved(){
     gg_m->SetLineColor(gamgam_c);
     gg_rap->SetLineColor(gamgam_c);
 
-    LQu_m->SetLineColor(kRed);
-    LQu_cost->SetLineColor(kRed);
-    LQu_rap->SetLineColor(kRed);
+    LQu_m->SetLineColor(kGreen);
+    LQu_cost->SetLineColor(kGreen);
+    LQu_rap->SetLineColor(kGreen);
 
-    LQu_vec_m->SetLineColor(kGreen);
-    LQu_vec_cost->SetLineColor(kGreen);
-    LQu_vec_rap->SetLineColor(kGreen);
+    LQu_vec_m->SetLineColor(kRed);
+    LQu_vec_cost->SetLineColor(kRed);
+    LQu_vec_rap->SetLineColor(kRed);
 
-    LQu_m->SetLineWidth(2);
-    LQu_cost->SetLineWidth(2);
-    LQu_rap->SetLineWidth(2);
+    LQu_m->SetLineWidth(4);
+    LQu_cost->SetLineWidth(4);
+    LQu_rap->SetLineWidth(4);
 
-    LQu_vec_m->SetLineWidth(2);
-    LQu_vec_cost->SetLineWidth(2);
-    LQu_vec_rap->SetLineWidth(2);
+    LQu_vec_m->SetLineWidth(4);
+    LQu_vec_cost->SetLineWidth(4);
+    LQu_vec_rap->SetLineWidth(4);
 
 
 
@@ -358,8 +358,8 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg1->AddEntry(LQu_m, "S_{#mu u} (y_{#mu u}=0.8)");
-    leg1->AddEntry(LQu_vec_m, "V_{#mu u} (g_{#mu u}=0.8)");
+    leg1->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=0.8)");
+    leg1->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=0.8)");
     leg1->SetTextSize(0.048);
 
 
@@ -368,8 +368,8 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg2->AddEntry(LQu_m, "S_{#mu u} (y_{#mu u}=0.8)");
-    leg2->AddEntry(LQu_vec_m, "V_{#mu u} (g_{#mu u}=0.8)");
+    leg2->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=0.8)");
+    leg2->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=0.8)");
     leg2->SetTextSize(0.048);
 
 
@@ -378,8 +378,8 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg3->AddEntry(LQu_m, "S_{#mu u} (y_{#mu u}=0.8)");
-    leg3->AddEntry(LQu_vec_m, "V_{#mu u} (g_{#mu u}=0.8)");
+    leg3->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=0.8)");
+    leg3->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=0.8)");
     leg3->SetTextSize(0.048);
 
 
