@@ -30,7 +30,7 @@ gen_level = False
 no_LQ = False
 year = -1
 is_vec = options.vec
-extra_params = "--X-rtd MINIMIZER_no_analytic"
+extra_params = ""
 ending = options.ending
 s = 3456
 if is_vec: ending+="_vec"
@@ -41,20 +41,20 @@ if options.hadd:
 
 else:
 	if chan == "ee":
-		'''		
+				
 		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
 		
 		group_pars =[  "RFscalesYRC", "emucostrwsYRC",  "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs",  
-						"elfakesrwsYR", "autoMCStats,MCStatBin"] 
+						"elfakesrwsYR"] 
 		#"BTAGSYR","muPrefYRC","METJECYR",
 		'''
 		individual_pars = ["dy_xsec"]
 		group_pars = []
-		
+		'''
 	else:
 		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
 		group_pars =[  "RFscalesYRC", "emucostrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", 
-						"mufakesrwsYR",  "autoMCStats,MCStatBin"] 
+						"mufakesrwsYR"] 
 
 	sys_name_conv = dict()
 	sys_name_conv['nlo_sys'] = "LQ LO reweighting"
@@ -123,7 +123,7 @@ else:
 
 
 	make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,True, False)
-	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s" % (workspace, extra_params))
+	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s --setParameters A4=1.61,A0=0.05" % (workspace, extra_params))
 	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
 	if(options.expected):
@@ -156,7 +156,7 @@ else:
 		#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
 			  #  % (freeze_str,s, indi_par, extra_params))
 		#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
-		print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+		print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s --setParameters yLQ2=0.0,A4=1.61,A0=0.05""" % (freeze_str,s, indi_par, extra_params))
 		sys_unc = compute_sys("nom", indi_par, s)
 		#sys_unc = compute_sys("nom", indi_par, s)
 		d[indi_par] = sys_unc
@@ -169,10 +169,10 @@ else:
 		#       (freeze_str, s, group_par, extra_params))
 		#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
 		if group_par == 'autoMCStats,MCStatBin': 
-			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" %(freeze_str, s, 'mcstats', extra_params))
+			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s --setParameters yLQ2=0.0,A4=1.61,A0=0.05""" %(freeze_str, s, 'mcstats', extra_params))
 			sys_unc = compute_sys("nom", "mcstats", s)
 		else:
-			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s""" %(freeze_str, s, group_par, extra_params))
+			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s --setParameters yLQ2=0.0,A4=1.61,A0=0.05""" %(freeze_str, s, group_par, extra_params))
 			sys_unc = compute_sys("nom", group_par, s)
 		#sys_unc = compute_sys("nom", indi_par, s)
 		d[group_par] =sys_unc

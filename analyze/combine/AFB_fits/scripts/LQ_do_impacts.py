@@ -33,10 +33,12 @@ gen_level = False
 no_LQ = False
 year = -1
 is_vec = options.vec	
-extra_params = "--X-rtd MINIMIZER_no_analytic"        
+extra_params = ""        
 #extra_params = ""
 ending = options.ending
 if is_vec: ending += "_vec"
+s = 3456
+extra_params += " -s %i" % s
 
 
 if options.hadd:
@@ -168,7 +170,7 @@ else:
     print("Num pars = %i " % (len(pars16) + len(pars17) + len(pars18) + len(pars_comb)))
     print(par_str)
 
-    s = 123456
+    
     if(options.expected):
         print("Will inject AFB %.2f A0 %.2f for all toys " %(options.Afb, options.A0))
 
@@ -185,20 +187,20 @@ else:
         extra_params += " --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist -t 1" % s
 
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s " % (workspace, extra_params))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s --setParameters A4=1.61,A0=0.05" % (workspace, extra_params))
 
     if(options.expected):
         print_and_do("cp higgsCombine_initialFit_Test.MultiDimFit.mH125.%i.root higgsCombine_initialFit_Test.MultiDimFit.mH125.root" % s)
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s" % (workspace, par_str, options.nThreads, extra_params))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s --setParameters A4=1.61,A0=0.05" % (workspace, par_str, options.nThreads, extra_params))
 
     if(options.expected):
         print("Renaming sys fits")
         for par in (pars16 + pars17 + pars18 + pars_comb):
             os.system("cp higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.%i.root higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.root" % (par, s, par))
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/%s.json --named %s" % (workspace, options.odir, ws_label, par_str))
-    print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_yLQ2_%s --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label,ending, yLQ2_str))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/%s.json --named %s " % (workspace, options.odir, ws_label, par_str))
+    print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_yLQ2_%s --POI %s " % (options.odir, ws_label, options.odir, ws_label,ending, yLQ2_str))
     #print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_afb --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, Afb_str))
     #print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_a0 --POI %s --blind" % (options.odir, ws_label, options.odir, ws_label, A0_str))
     #print_and_do("rm higgsCombine_*")
