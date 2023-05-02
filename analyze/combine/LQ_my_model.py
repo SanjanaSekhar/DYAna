@@ -11,7 +11,7 @@ class LQ_YLQ_SQ(PhysicsModel):
 
         self.modelBuilder.doVar("A4[1.6, -2.0, 2.0]");
         self.modelBuilder.doVar("A0[0.04, -0.2, 0.2]");
-        self.modelBuilder.doVar("yLQ2[0.001, -5., 5.]");
+        self.modelBuilder.doVar("yLQ2[0.01, -5., 5.]");
         self.modelBuilder.doSet("POI","yLQ2")
         self.modelBuilder.doVar('expr::yLQ("((TMath::Abs(@0))**(0.5))",yLQ2)')
         #self.modelBuilder.doSet("POI","yLQ")

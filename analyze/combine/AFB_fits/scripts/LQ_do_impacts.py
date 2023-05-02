@@ -47,7 +47,7 @@ if options.hadd:
 else:
     if chan=="ee":
     #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
-	'''
+	
         all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
                     "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
                     "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
@@ -73,7 +73,7 @@ else:
     	all_sys = ["dy_xsec"]
     	correlate_all = ["dy_xsec"]
     	correlate_1718 = []
-    	
+    	'''
     else:
 
         all_sys =   [ "muPref","muRC", "Pu",

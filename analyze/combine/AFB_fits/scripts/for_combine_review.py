@@ -125,7 +125,7 @@ if not options.hadd:
 else:
 
 	print_and_do("cp %s ."%(comb_card))
-	print_and_do("ValidateDatacards.py %s --jsonFile combine_review/validation_%s_%s_%s.json"%(comb_card[6:],options.chan, options.q, ("vec" if is_vec else "")))
+	print_and_do("ValidateDatacards.py %s --jsonFile combine_review/validation_%s_%s_%s.json --printLevel 5"%(comb_card[6:],options.chan, options.q, ("vec" if is_vec else "")))
 	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/fitResults_t0_%s_%s_%s combine_review/"
                 %(options.chan, options.q, ("_vec" if is_vec else ""),options.chan, options.q, ("vec" if is_vec else "")))
 	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/fitResults_t1_%s_%s_%s combine_review/"
