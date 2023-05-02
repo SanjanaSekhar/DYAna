@@ -14,7 +14,7 @@ observation     -1
 # Add the processes contributing to the data expectation
 bin                      mumuYR  mumuYR  mumuYR  mumuYR   mumuYR  mumuYR   mumuYR 	mumuYR   mumuYR    mumuYR 	 
 process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_QUARK  LQint_QUARK	
-process                  -2      0       -1      1        4       5        3		2        -3        -4		
+process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
 dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -		

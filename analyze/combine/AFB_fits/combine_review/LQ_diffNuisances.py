@@ -37,7 +37,7 @@ parser.add_option("", "--pullDef",  dest="pullDef", default="", type="string", h
 parser.add_option("", "--skipFitS", dest="skipFitS", default=False, action='store_true', help="skip the S+B fit, instead the B-only fit will be repeated")
 parser.add_option("", "--skipFitB", dest="skipFitB", default=False, action='store_true', help="skip the B-only fit, instead the S+B fit will be repeated")
 parser.add_option("", "--sortBy", dest="sortBy", default="correlation", type='string', help="choose 'correlation' or 'impact' to sort rows by correlation with or impact on --poi (largest to smallest absolute)")
-
+parser.add_option("", "--MDF", default=False, action='store_true', help="multidimfit results")
 (options, args) = parser.parse_args()
 if len(args) == 0:
     parser.print_usage()
@@ -57,8 +57,12 @@ setUpString = "diffNuisances run on %s, at %s with the following options ... "%(
 
 file = ROOT.TFile(args[0])
 if file == None: raise RuntimeError, "Cannot open file %s" % args[0]
-fit_s  = file.Get("fit_mdf") if not options.skipFitS  else file.Get("fit_b")
-fit_b  = file.Get("fit_b") if not options.skipFitB  else file.Get("fit_mdf")
+if options.MDF:
+  fit_s  = file.Get("fit_mdf_s") if not options.skipFitS  else file.Get("fit_mdf_b")
+  fit_b  = file.Get("fit_mdf_b") if not options.skipFitB  else file.Get("fit_mdf_s")
+else:
+  fit_s  = file.Get("fit_s") if not options.skipFitS  else file.Get("fit_b")
+  fit_b  = file.Get("fit_b") if not options.skipFitB  else file.Get("fit_s")
 prefit = file.Get("nuisances_prefit")
 if fit_s == None or fit_s.ClassName()   != "RooFitResult": raise RuntimeError, "File %s does not contain the output of the signal fit 'fit_s'"     % args[0]
 if fit_b == None or fit_b.ClassName()   != "RooFitResult": raise RuntimeError, "File %s does not contain the output of the background fit 'fit_b'" % args[0]

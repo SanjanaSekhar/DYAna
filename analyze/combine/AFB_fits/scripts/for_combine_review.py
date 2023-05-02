@@ -10,14 +10,14 @@ from optparse import OptionGroup
 from itertools import product
 import numpy as np
 
-def transfer_MDFresults(file_mdf_s, file_fd_s):
+def transfer_MDFresults(file_mdf_s, file_fd_s, type = 's'):
 	file_mdf = ROOT.TFile(file_mdf_s)
 	if file_mdf == None: raise RuntimeError, "Cannot open file %s"%file_mdf_s
 	fit_mdf  = file_mdf.Get("fit_mdf")
-    file_mdf.Close()
-    file_fd = ROOT.TFile(file_fd_s,"UPDATE") 
+	file_mdf.Close()
+	file_fd = ROOT.TFile(file_fd_s,"UPDATE") 
 	if file_fd == None: raise RuntimeError, "Cannot open file %s"%file_fd_s
-	file_fd.WriteTObject(fit_mdf,"fit_mdf");
+	file_fd.WriteTObject(fit_mdf,"fit_mdf_%s"%type);
 	file_fd.Close()
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
@@ -89,30 +89,34 @@ if not options.hadd:
 	
 	print_and_do("text2workspace.py %s -P LQ_Analysis.DYAna.LQ_my_model:lq_ylq_sq -o %s %s" % (comb_card, workspace, extra_arg))
 
-	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.05  --forceRecreateNLL -n _t0_s --saveFitResult --saveWorkspace  --robustFit 1" %workspace)	
-	print_and_do("combine -M FitDiagnostics -d higgsCombine_t0_s.MultiDimFit.mH120.root --forceRecreateNLL -n _t0" )
-	transfer_MDFresults("multidimfit_t0_s.root","fitDiagnostics_t0.root")
-	print_and_do("python combine_review/LQ_diffNuisances.py  -a fitDiagnostics_t0.root -p yLQ2 -g plots_t0.root >> ./fitResults_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
+	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.04  --forceRecreateNLL -n _t0_s --saveFitResult --saveWorkspace --robustFit 1 " %workspace)	
+	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters A4=1.61,A0=0.04 --freezeParameters yLQ2  --forceRecreateNLL -n _t0_b --saveFitResult --saveWorkspace --robustFit 1 " %workspace)
+	print_and_do("combine -M FitDiagnostics -d higgsCombine_t0_s.MultiDimFit.mH120.root -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.04  --forceRecreateNLL  -n _t0" )
+	transfer_MDFresults("multidimfit_t0_s.root", "fitDiagnostics_t0.root", type = 's')
+	transfer_MDFresults("multidimfit_t0_b.root", "fitDiagnostics_t0.root", type = 'b')
+	print_and_do("python combine_review/LQ_diffNuisances.py  -a fitDiagnostics_t0.root -p yLQ2 -g plots_t0.root --MDF true > ./fitResults_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 
-	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.05  --forceRecreateNLL -n _t1_s --saveFitResult --saveWorkspace --robustFit 1" %workspace)
-	print_and_do("combine -M FitDiagnostics -d higgsCombine_t1_s.MultiDimFit.mH120.root --forceRecreateNLL -n _t1" )
-	transfer_MDFresults("multidimfit_t1_s.root","fitDiagnostics_t1.root")
-	print_and_do("python combine_review/LQ_diffNuisances.py  -a fitDiagnostics_t1.root -p yLQ2 -g plots_t0.root >> ./fitResults_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
+	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.04  --forceRecreateNLL -n _t1_s --saveFitResult --saveWorkspace --robustFit 1 " %workspace)
+	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters A4=1.61,A0=0.04 --freezeParameters yLQ2  --forceRecreateNLL -n _t1_b --saveFitResult --saveWorkspace --robustFit 1 " %workspace)
+	print_and_do("combine -M FitDiagnostics -d higgsCombine_t1_s.MultiDimFit.mH120.root -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.04 --forceRecreateNLL -n _t1" )
+	transfer_MDFresults("multidimfit_t1_s.root", "fitDiagnostics_t1.root", type = 's')
+	transfer_MDFresults("multidimfit_t1_b.root", "fitDiagnostics_t1.root", type = 'b')
+	print_and_do("python combine_review/LQ_diffNuisances.py  -a fitDiagnostics_t1.root -p yLQ2 -g plots_t0.root --MDF true > ./fitResults_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 	#print_and_do("combine -M MultiDimFit -d %s -t -1 --freezeParameters yLQ2,A4,A0  --forceRecreateNLL -n _t1_b --saveFitResult --robustFit 1" %workspace)
 	#print_and_do("python combine_review/LQ_diffNuisances.py -a multidimfit_t1_b.root -p yLQ2 --skipFitS -g plots_t1.root >> ./fitResults_t1_b_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
-	'''
-	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.05 -m 2000 --doInitialFit --allPars -n t0"%workspace)
-	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.05 -m 2000 --doInitialFit --allPars -n t1"%(workspace))
+	
+	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.04 -m 2000 --doInitialFit --allPars -n t0"%workspace)
+	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.04 -m 2000 --doInitialFit --allPars -n t1"%(workspace))
 
-	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.05 --doFits -m 2000 -n t0 "%(workspace,chan,q,("vec" if is_vec else "")))
+	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json -t -1 --setParameters yLQ2=0.0,A4=1.61,A0=0.04 --doFits -m 2000 -n t0 "%(workspace,chan,q,("vec" if is_vec else "")))
 
-	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.05 --doFits -m 2000 -n t1 "%(workspace,chan,q,("vec" if is_vec else "")))
+	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json -t -1 --setParameters yLQ2=0.6,A4=1.61,A0=0.04 --doFits -m 2000 -n t1 "%(workspace,chan,q,("vec" if is_vec else "")))
 
 	print_and_do("combineTool.py -M Impacts -d %s  -m 2000 -n t0 -o impacts_t0_%s_%s_%s.json"%(workspace,chan,q,("vec" if is_vec else "")))
 	print_and_do("combineTool.py -M Impacts -d %s  -m 2000 -n t1 -o impacts_t1_%s_%s_%s.json"%(workspace,chan,q,("vec" if is_vec else "")))
 	print_and_do("plotImpacts.py -i  impacts_t0_%s_%s_%s.json -o  impacts_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else ""),chan,q,("vec" if is_vec else "")))
 	print_and_do("plotImpacts.py -i  impacts_t1_%s_%s_%s.json -o  impacts_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else ""),chan,q,("vec" if is_vec else "")))
-	'''
+	
 	print_and_do("cp fitResults_t0_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
 	print_and_do("cp fitResults_t1_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
 	print_and_do("cp impacts_t0_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))

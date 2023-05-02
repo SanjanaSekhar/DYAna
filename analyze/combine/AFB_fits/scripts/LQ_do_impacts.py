@@ -47,7 +47,7 @@ if options.hadd:
 else:
     if chan=="ee":
     #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
-
+	'''
         all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
                     "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
                     "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
@@ -73,7 +73,7 @@ else:
     	all_sys = ["dy_xsec"]
     	correlate_all = ["dy_xsec"]
     	correlate_1718 = []
-    	'''
+    	
     else:
 
         all_sys =   [ "muPref","muRC", "Pu",
@@ -189,15 +189,15 @@ else:
 
     print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s --setParameters A4=1.61,A0=0.05" % (workspace, extra_params))
 
-    if(options.expected):
-        print_and_do("cp higgsCombine_initialFit_Test.MultiDimFit.mH125.%i.root higgsCombine_initialFit_Test.MultiDimFit.mH125.root" % s)
+    #if(options.expected):
+    print_and_do("cp higgsCombine_initialFit_Test.MultiDimFit.mH125.%i.root higgsCombine_initialFit_Test.MultiDimFit.mH125.root" % s)
 
     print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s --setParameters A4=1.61,A0=0.05" % (workspace, par_str, options.nThreads, extra_params))
 
-    if(options.expected):
-        print("Renaming sys fits")
-        for par in (pars16 + pars17 + pars18 + pars_comb):
-            os.system("cp higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.%i.root higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.root" % (par, s, par))
+    #if(options.expected):
+    print("Renaming sys fits")
+    for par in (pars16 + pars17 + pars18 + pars_comb):
+        os.system("cp higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.%i.root higgsCombine_paramFit_Test_%s.MultiDimFit.mH125.root" % (par, s, par))
 
     print_and_do("combineTool.py -M Impacts -m 125 -d %s -o %s/%s.json --named %s " % (workspace, options.odir, ws_label, par_str))
     print_and_do("python scripts/my_plotImpacts.py -i %s/%s.json -o %s/%s_plot_yLQ2_%s --POI %s " % (options.odir, ws_label, options.odir, ws_label,ending, yLQ2_str))
