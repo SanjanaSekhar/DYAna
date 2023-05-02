@@ -25,7 +25,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 for y in [-1]:
-    for options.chan in ["ee"]:
+    for options.chan in ["mumu"]:
     	#for options.chan in ["ee"]:
         for options.q in ["d"]:
 
@@ -40,7 +40,7 @@ for y in [-1]:
             if not options.gen_level and not options.no_sys: options.fake_data=True
             options.no_LQ=False
             options.year = y
-            likelihood_scan = False
+            likelihood_scan = True
 	    if likelihood_scan: ending = ""
             '''
             if(options.chan == "ee"):
@@ -60,7 +60,7 @@ for y in [-1]:
         	extra_params +=" --verbose %i" % options.verbose
 
             #No analytic minimization of MC stats nuisances
-            extra_params += "--X-rtd MINIMIZER_no_analytic"
+            extra_params += ""
 	    #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 	    if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
@@ -81,7 +81,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_freezeNLO"
+            fit_name+=""
 	    print("\n fit_name = ", fit_name)
 	    
 
@@ -100,7 +100,7 @@ for y in [-1]:
                 print("\n plotdir = ", plotdir)
                 print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit --freezeParameters nlo_sys  --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
