@@ -41,7 +41,7 @@ for y in [-1]:
             options.no_LQ=False
             options.year = y
             likelihood_scan = True
-	    if likelihood_scan: ending = "forLikelihoodScan"
+	    if likelihood_scan: ending = "freezeA0A4"
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -60,7 +60,7 @@ for y in [-1]:
         	extra_params +=" --verbose %i" % options.verbose
 
             #No analytic minimization of MC stats nuisances
-            #extra_params += "  --freezeParameters A4,A0 "
+            extra_params += "  --freezeParameters A4,A0 "
 	    #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 	    if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
@@ -102,7 +102,7 @@ for y in [-1]:
                 print_and_do("mkdir %s" % (plotdir))
                 print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
-                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep --autoRange 2 --setParameterRanges yLQ2=-3,3 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --setParameterRanges yLQ2=-0.8,0.8 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
