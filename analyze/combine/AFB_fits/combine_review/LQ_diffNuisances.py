@@ -352,6 +352,7 @@ for n in names:
     if options.absolute_values:
        print fmtstring % (n, v[0], v[1], v[2], v[3],v[4])
     else:
+       print(v[0], v[1], v[2],v[3])
        print fmtstring % (n, v[0], v[1], v[2],v[3])
 
 if options.format == "latex":
