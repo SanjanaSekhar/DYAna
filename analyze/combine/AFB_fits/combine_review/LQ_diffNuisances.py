@@ -352,8 +352,15 @@ for n in names:
     if options.absolute_values:
        print fmtstring % (n, v[0], v[1], v[2], v[3],v[4])
     else:
-       print(v[0], v[1], v[2],v[3])
-       print fmtstring % (n, v[0], v[1], v[2],v[3])
+       unc_b = [x.strip() for x in v[0].split(',')][1]
+       unc_sb = [x.strip() for x in v[1].split(',')][1]
+       unc_b = unc_b.replace('!','')
+       unc_b = float(unc_b.replace('*',''))
+       unc_sb = unc_sb.replace('!','')
+       unc_sb = float(unc_sb.replace('*',''))
+       if unc_b > 1.0 or unc_sb > 1.0: 
+          #print(unc_b, unc_sb)
+          print fmtstring % (n, v[0], v[1], v[2],v[3])
 
 if options.format == "latex":
     print " \\hline\n\end{tabular}"
