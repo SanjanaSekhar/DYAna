@@ -41,7 +41,7 @@ for y in [-1]:
             options.no_LQ=False
             options.year = y
             likelihood_scan = True
-	    if likelihood_scan: ending = "freezeA0A4_nopdf"
+	    if likelihood_scan: ending = "freezeA0A4_yLQ"
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -98,11 +98,12 @@ for y in [-1]:
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
                 print("\n plotdir = ", plotdir)
-                print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
+                '''
+		print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
-                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --setParameterRanges yLQ2=-0.8,0.8 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --setParameterRanges yLQ=-1,1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
@@ -111,11 +112,11 @@ for y in [-1]:
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s " % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1" % (workspace, extra_params)) #only to get prefit, probably a better way
-                    print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
+                    print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
-
+		
                 #print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
 		print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
 		print_and_do(""" cat cmd.txt """)
@@ -129,14 +130,14 @@ for y in [-1]:
 		
                 print_and_do(""" echo "auto Afb=(RooRealVar *) a.at(1);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << Afb->getValV() << ' '  << Afb->getErrorHi() << ' ' << Afb->getErrorLo() << std::endl;" >> cmd.txt """)
-		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(348);" >> cmd.txt """)
-		if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(192);" >> cmd.txt """) 
-		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(342);" >> cmd.txt """)
-		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ2=(RooRealVar *) a.at(186);" >> cmd.txt """)
-                print_and_do(""" echo "std::cout  << yLQ2->getValV() << ' '  << yLQ2->getErrorHi() << ' ' << yLQ2->getErrorLo() << std::endl;" >> cmd.txt """)
+		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(348);" >> cmd.txt """)
+		if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(192);" >> cmd.txt """) 
+		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(342);" >> cmd.txt """)
+		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(186);" >> cmd.txt """)
+                print_and_do(""" echo "std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;" >> cmd.txt """)
 		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
                 
-                
+                '''
 		print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
                 #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
@@ -152,9 +153,9 @@ for y in [-1]:
 			
                         limit_tree.GetEntry(i)
                         deltaNLL.append(limit_tree.deltaNLL)
-                        yLQ2_list.append(limit_tree.yLQ2)
-			if limit_tree.quantileExpected > 0.49 and limit_tree.quantileExpected < 0.51: print(limit_tree.yLQ2,limit_tree.deltaNLL)
-			if limit_tree.quantileExpected > 0.83 and limit_tree.quantileExpected < 0.86: print(limit_tree.yLQ2,limit_tree.deltaNLL)	
+                        yLQ2_list.append(limit_tree.yLQ)
+			if limit_tree.quantileExpected > 0.49 and limit_tree.quantileExpected < 0.51: print(limit_tree.yLQ,limit_tree.deltaNLL)
+			if limit_tree.quantileExpected > 0.83 and limit_tree.quantileExpected < 0.86: print(limit_tree.yLQ,limit_tree.deltaNLL)	
                     f.Close()
 		    #print(yLQ2_list)
 		    #print(deltaNLL)
@@ -175,7 +176,7 @@ for y in [-1]:
 		    yLQ2_list = respull[:,0].tolist()
 		    deltaNLL = respull[:,1].tolist()		    
 		    plt.plot(yLQ2_list,deltaNLL)
-                    plt.xlabel("yLQ2")
+                    plt.xlabel("yLQ")
                     plt.ylabel("-2deltaLL")
                     plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV"%(options.chan,options.q,mLQ))
                     plt.savefig("like_scan_%s_%s_m%i_%s.jpg"%(options.chan,options.q,mLQ,ending))
