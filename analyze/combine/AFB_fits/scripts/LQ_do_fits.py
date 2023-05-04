@@ -41,7 +41,7 @@ for y in [-1]:
             options.no_LQ=False
             options.year = y
             likelihood_scan = True
-	    if likelihood_scan: ending = "freezeA0A4"
+	    if likelihood_scan: ending = "freezeA0A4_nopdf"
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -60,7 +60,7 @@ for y in [-1]:
         	extra_params +=" --verbose %i" % options.verbose
 
             #No analytic minimization of MC stats nuisances
-            extra_params += "  --freezeParameters A4,A0 --freezeNuisanceGroups pdfs"
+            extra_params += "  --freezeParameters A4,A0 "
 	    #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 	    if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
