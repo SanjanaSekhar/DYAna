@@ -1,5 +1,5 @@
 import pylab
-import numpy
+import numpy as np
 from math import *
 from scipy.integrate import quad
 
@@ -127,12 +127,39 @@ pylab.plot(E_range, Afbs, 'b')
 pylab.show()
 pylab.close()
 '''
-x_axis = numpy.linspace(-1,1,1000) # 1000 linearly spaced numbers
+x_axis = np.linspace(-1,1,1000) # 1000 linearly spaced numbers
 
 
 #SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
 #sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #pylab.plot(x_axis,sm_v2,'b',label='SM')
+y_lq_list = np.linspace(0.,1.,30)
+m_ll_list = np.linspace(500,5000,300)
+cost_list = np.linspace(-1,1,300)
+flag = 1
+
+for mLQ in [500,1000,2000,3000]:
+    for y_lq in y_lq_list:
+        f_list = []
+        for m_ll in m_ll_list:
+            for cost in cost_list:
+                
+
+                s = m_ll*m_ll
+                f_list.append(LQ_cost(flag,cost,s))
+
+        avg_xsec.append(np.mean(f_list))
+        avg_xsec_err.append(np.std(f_list))
+    
+    plt.plot(y_lq_list, avg_xsec, label = 'mLQ=%i GeV'%mLQ)
+
+plt.title('LQ angular distribution averaged over s and cost')
+plt.ylabel('LQ xsec averaged over s and cost')
+plt.xlabel('yLQ (mu-d)')
+plt.savefig("xsec_vs_yLQ_dm.png")
+
+'''
+
 for m_ll in [500,600,700,800,900,1000,1500,2000]:
 
     flag = 1
@@ -179,7 +206,7 @@ pylab.ylim([0., 1.4])
 pylab.legend()
 pylab.savefig("Sed_mll.png")
 pylab.close()
-'''
+
 for m_ll in [500]:
 
     flag = 2
@@ -343,5 +370,6 @@ for m_ll in [500]:
     pylab.legend()
     pylab.savefig("sLQ_ElectroUp_mLQ.png")
     pylab.close()
-'''
 
+
+'''
