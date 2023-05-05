@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm500_merge_templates17_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2000_merge_templates17_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             mumu17  
 observation     -1         
@@ -97,90 +97,6 @@ mufakesrws17 group = mufakesrw1b17 mufakesrw2b17 mufakesrw3b17 mufakesrw4b17
 
 #ptrws1718 group = ptrw1b1718 ptrw2b1718 ptrw3b1718 ptrw5b1718 ptrw6b1718 ptrw7b1718 ptrw4b1718
                                                                                                                                    
-#pdf unc                                                                                                                           
 
-# MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_d LQint_d
 
-MCStatBin1             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin2             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin3             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin4             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin5             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin6             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin7             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin8             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin9             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin10            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin11            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin12            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin13            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin14            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin15            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin18            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin19            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin20            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin21            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin22            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin23            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin24            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin25            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin26            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin27            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin28            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin29            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin30            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin31            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin32            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin33            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin34            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin35            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin36            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin37            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin38            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin39            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin40            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin41            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin42            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin43            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin44            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin45            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin46            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin47            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin48            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin49            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin50            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin51            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin52            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin53            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin54            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin55            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin56            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin57            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin58            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin59            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin60            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin group = MCStatBin1 MCStatBin2 MCStatBin3 MCStatBin4 MCStatBin9 MCStatBin10 MCStatBin11 MCStatBin15 MCStatBin16 MCStatBin17 MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin30 MCStatBin31 MCStatBin35 MCStatBin36 MCStatBin37 MCStatBin41 MCStatBin42 MCStatBin43 MCStatBin44 MCStatBin49 MCStatBin50 MCStatBin51 MCStatBin55 MCStatBin56 MCStatBin57
-
-* autoMCStats 1 0 1
 

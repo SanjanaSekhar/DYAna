@@ -41,7 +41,7 @@ for y in [-1]:
             options.no_LQ=False
             options.year = y
             likelihood_scan = True
-	    if likelihood_scan: ending = "freezeA0A4_yLQ"
+	    if likelihood_scan: ending = "freezeA0A4_yLQ_nopdfsMCstats"
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -85,7 +85,7 @@ for y in [-1]:
 	    print("\n fit_name = ", fit_name)
 	    
 
-            for mLQ in [500]:
+            for mLQ in [2000]:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
