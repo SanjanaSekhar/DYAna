@@ -239,3 +239,53 @@ if options.sys_uncs:
         print_and_do("chmod +x %s" % script_name)
         print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
         print_and_do("rm scripts/script3.sh")
+
+
+if options.likelihood:
+
+    cmds = [
+  
+
+    "python scripts/LQ_do_likelihood.py --mLQ 2000 --chan mumu --q d -o likelihood_scans ",
+
+ 
+    ]
+
+    labels = [
+        "likelihood_mumu_d"
+    ]
+
+
+    cpy_cmd = "xrdcp -f likelihood_scans/* $1 \n"
+
+    poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
+     "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
+      "MCStatBin24", "MCStatBin29", "MCStatBin30", "MCStatBin31", "MCStatBin35", "MCStatBin36", "MCStatBin37", 
+      "MCStatBin41", "MCStatBin42", "MCStatBin43", "MCStatBin44", "MCStatBin49", "MCStatBin50", "MCStatBin51", 
+      "MCStatBin55", "MCStatBin56", "MCStatBin57",
+      ]
+
+    for i in range(1,61):
+        poi_list.append("pdf" + str(i))
+
+
+    for i in range(1,61):
+        poi_list.append("prop_binY18_bin" + str(i))
+
+    for poi in poi_list:
+        for i,cmd in enumerate(cmds):
+        #for m in range(1000,9500,500):
+        #for point in np.arange(0.28,1.5,0.005):
+        #for q in [0.025,0.16,0.5,0.84,0.975]:
+            #regular templates
+            script_name = "scripts/script3.sh"
+            print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+            script_file = open(script_name, 'a+')
+            script_file.write("mkdir likelihood_scans\n")
+            script_file.write(cmd + " --poi %s \n "%poi)
+            script_file.write(cpy_cmd)
+            script_file.close()
+            #print_and_do("cat %s" % script_name)
+            print_and_do("chmod +x %s" % script_name)
+            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s"  % (n_m_bins, script_name, labels[i], poi))
+            print_and_do("rm scripts/script3.sh")
