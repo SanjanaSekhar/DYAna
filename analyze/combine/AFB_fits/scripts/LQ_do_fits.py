@@ -3,7 +3,7 @@ from LQ_utils import *
 import ROOT
 from ROOT import *
 import matplotlib.pyplot as plt
-
+from array import array
 plt.ioff()
 
 
@@ -28,20 +28,23 @@ for y in [-1]:
     for options.chan in ["mumu"]:
     	#for options.chan in ["ee"]:
         for options.q in ["d"]:
-
-            is_vec = False
+            #mLQ_list = [500,1000,2000,3000]
+            mLQ_list = [2000]
+	    is_vec = False
 	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
 #            options.q="u"
             print("options.gen_level = ",options.gen_level);
-	    options.no_sys=False
-            if not options.gen_level and not options.no_sys: options.fake_data=True
-            options.no_LQ=False
+	    options.no_sys = False
+            if not options.gen_level and not options.no_sys: options.fake_data = True
+            options.no_LQ = False
             options.year = y
             likelihood_scan = True
-	    if likelihood_scan: ending = "freezeA0A4_yLQ_nopdfsMCstats"
+	    if likelihood_scan: 
+		poi = 'nlo_sys'
+		ending = "freezeA0A4_%s"%poi
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -84,8 +87,8 @@ for y in [-1]:
             fit_name+=""
 	    print("\n fit_name = ", fit_name)
 	    
-
-            for mLQ in [2000]:
+	    
+            for mLQ in mLQ_list:
             #for mLQ in [1000]:
             #,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000]:
             #mLQ = 1000.
@@ -93,7 +96,7 @@ for y in [-1]:
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
                 
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
-		
+		'''
                 workspace="workspaces/%s_LQ.root" % (options.chan)
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
@@ -103,7 +106,7 @@ for y in [-1]:
                 print_and_do("mkdir %s" % (plotdir))
                 print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
-                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --setParameterRanges yLQ=-0.8,0.8 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
@@ -137,7 +140,7 @@ for y in [-1]:
                 print_and_do(""" echo "std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;" >> cmd.txt """)
 		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
                 
-                
+                '''
 		print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
                 #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
@@ -148,14 +151,17 @@ for y in [-1]:
 		    
                     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q),"READ")
                     limit_tree = f.Get("limit")
+		    poi_value = array('f',[0])
+		    limit_tree.SetBranchAddress("%s"%poi, poi_value)
 
                     for i in range(limit_tree.GetEntries()):
 			
                         limit_tree.GetEntry(i)
                         deltaNLL.append(limit_tree.deltaNLL)
-                        yLQ2_list.append(limit_tree.yLQ)
-			if limit_tree.quantileExpected > 0.49 and limit_tree.quantileExpected < 0.51: print(limit_tree.yLQ,limit_tree.deltaNLL)
-			if limit_tree.quantileExpected > 0.83 and limit_tree.quantileExpected < 0.86: print(limit_tree.yLQ,limit_tree.deltaNLL)	
+                        yLQ2_list.append(poi_value[0])
+			print(poi_value)
+			#if limit_tree.quantileExpected > 0.49 and limit_tree.quantileExpected < 0.51: print(limit_tree.yLQ,limit_tree.deltaNLL)
+			#if limit_tree.quantileExpected > 0.83 and limit_tree.quantileExpected < 0.86: print(limit_tree.yLQ,limit_tree.deltaNLL)	
                     f.Close()
 		    #print(yLQ2_list)
 		    #print(deltaNLL)
@@ -166,19 +172,22 @@ for y in [-1]:
 	     		for ylq,dnll in zip(yLQ2_list, deltaNLL):
          		    f.write("%f %f\n" %(ylq,2*dnll)) 
 		    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
-		    
-		    respull = []
-		    with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'r') as f:
-    		        for line in f.readlines():
-        		    respull.append(line.split(' '))
+	    
+	    for mLQ in mLQ_list:	    
+	        respull = []
+	        with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'r') as f:
+    	            for line in f.readlines():
+                        respull.append(line.split(' '))
 
-		    respull = np.asarray(respull, dtype=float)
-		    yLQ2_list = respull[:,0].tolist()
-		    deltaNLL = respull[:,1].tolist()		    
-		    plt.plot(yLQ2_list,deltaNLL)
-                    plt.xlabel("yLQ")
-                    plt.ylabel("-2deltaLL")
-                    plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV"%(options.chan,options.q,mLQ))
-                    plt.savefig("like_scan_%s_%s_m%i_%s.jpg"%(options.chan,options.q,mLQ,ending))
-		    plt.close()
+	        respull = np.asarray(respull, dtype=float)
+	        yLQ2_list = respull[:,0].tolist()
+	        deltaNLL = respull[:,1].tolist()
+	        plt.ylim(0,10)		    
+	        plt.plot(yLQ2_list,deltaNLL,label='mLQ=%s GeV'%mLQ)
+        plt.xlabel("%s"%poi)
+        plt.ylabel("-2deltaLL")
+        plt.legend()
+        plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
+        plt.savefig("like_scan_%s_%s_%s.jpg"%(options.chan,options.q,ending))
+        plt.close()
 		    

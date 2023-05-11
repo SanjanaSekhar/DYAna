@@ -1,29 +1,27 @@
 
-Attaching file multidimfit.root as _file0...
-(TFile *) 0x2403c10
+Attaching file multidimfitTest.root as _file0...
+(TFile *) 0x2e84710
 
-  RooFitResult: minimized FCN value: -125.773, estimated distance to minimum: 8.40708e-05
+  RooFitResult: minimized FCN value: -1.26465e-05, estimated distance to minimum: 2.17243e-05
                 covariance matrix quality: Full, accurate covariance matrix
                 Status : MINIMIZE=0 HESSE=0 
 
     Floating Parameter    FinalValue +/-  Error   
   --------------------  --------------------------
-                    A0    3.6052e-02 +/-  7.53e-02
-                   Afb    7.5000e-01 +/-  1.47e-02
-               db_xsec    7.0300e-02 +/-  9.84e-01
-               dy_xsec    1.4225e+00 +/-  7.85e-01
-              gam_xsec    6.8429e-02 +/-  9.42e-01
-                lumi16    7.7715e-01 +/-  8.28e-01
-                lumi17    1.3650e-01 +/-  8.43e-01
-                lumi18    7.5926e-02 +/-  9.02e-01
-                lumiBC    3.1079e-02 +/-  9.92e-01
-                lumiDB    1.7052e-01 +/-  9.87e-01
-                lumiGS    1.4813e-01 +/-  9.90e-01
-                lumiLS    3.1079e-02 +/-  9.92e-01
-                lumiXY    4.8612e-01 +/-  8.97e-01
-             muFakes16   -3.3540e-02 +/-  9.78e-01
-             muFakes17   -1.3072e-01 +/-  9.38e-01
-             muFakes18   -3.5940e-02 +/-  9.80e-01
-              top_xsec   -7.0455e-02 +/-  9.42e-01
-                   yLQ    7.0718e-01 +/-  3.21e-02
+               db_xsec   -1.5120e-02 +/-  9.68e-01
+               dy_xsec   -4.5447e-02 +/-  6.64e-01
+              gam_xsec    4.3809e-02 +/-  9.23e-01
+                lumi16   -2.7763e-02 +/-  7.33e-01
+                lumi17   -1.0070e-02 +/-  7.57e-01
+                lumi18    3.6759e-03 +/-  8.61e-01
+                lumiBC    1.9682e-04 +/-  9.96e-01
+                lumiDB   -5.9495e-03 +/-  9.88e-01
+                lumiGS   -5.3555e-03 +/-  9.93e-01
+                lumiLS    1.9682e-04 +/-  9.96e-01
+                lumiXY   -1.3626e-02 +/-  8.57e-01
+             muFakes16   -8.2347e-05 +/-  9.99e-01
+             muFakes17    2.9069e-03 +/-  9.47e-01
+             muFakes18    9.9364e-03 +/-  9.94e-01
+              top_xsec    1.5083e-02 +/-  7.84e-01
+                   yLQ    8.3925e-02 +/-  5.26e-01
 

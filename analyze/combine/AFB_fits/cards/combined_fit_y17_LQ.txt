@@ -97,6 +97,151 @@ mufakesrws17 group = mufakesrw1b17 mufakesrw2b17 mufakesrw3b17 mufakesrw4b17
 
 #ptrws1718 group = ptrw1b1718 ptrw2b1718 ptrw3b1718 ptrw5b1718 ptrw6b1718 ptrw7b1718 ptrw4b1718
                                                                                                                                    
+#pdf unc                                                                                                                           
+pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
+pdf2                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf3                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf4                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf5                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf6                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf7                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf8                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf9                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf10                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf11                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf12                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf13                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf14                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf15                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf16                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf17                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf18                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf19                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf20                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf21                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf22                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf23                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf24                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf25                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf26                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf27                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf28                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf29                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf30                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0   
+pdf31                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf32                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf33                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf34                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf35                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf36                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf37                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf38                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf39                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf40                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf41                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf42                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf43                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf44                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf45                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf46                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf47                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf48                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf49                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf50                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf51                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf52                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf53                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf54                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf55                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf56                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf57                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf58                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf59                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
+# MC Stats
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_d LQint_d
 
+MCStatBin1             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin2             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin3             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin4             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
+#MCStatBin5             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin6             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin7             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin8             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin9             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin10            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin11            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin12            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin13            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin14            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin15            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin18            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin19            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin20            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin21            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin22            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin23            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin24            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin25            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin26            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin27            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin28            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin29            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin30            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin31            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin32            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin33            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin34            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin35            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin36            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin37            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin38            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin39            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin40            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin41            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin42            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin43            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin44            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin45            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin46            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin47            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin48            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin49            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin50            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin51            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin52            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin53            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin54            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin55            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin56            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin57            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+#MCStatBin58            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin59            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+#MCStatBin60            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+
+MCStatBin group = MCStatBin1 MCStatBin2 MCStatBin3 MCStatBin4 MCStatBin9 MCStatBin10 MCStatBin11 MCStatBin15 MCStatBin16 MCStatBin17 MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin30 MCStatBin31 MCStatBin35 MCStatBin36 MCStatBin37 MCStatBin41 MCStatBin42 MCStatBin43 MCStatBin44 MCStatBin49 MCStatBin50 MCStatBin51 MCStatBin55 MCStatBin56 MCStatBin57
+
+* autoMCStats 1 0 1
+
+pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60

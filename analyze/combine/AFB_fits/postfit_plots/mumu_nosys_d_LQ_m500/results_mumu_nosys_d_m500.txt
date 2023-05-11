@@ -1,0 +1,5 @@
+
+Attaching file multidimfitTest.root as _file0...
+(TFile *) 0x3df2020
+-0.0143808 0.968045 -0.968045
+-0.0600958 0.695647 -0.695647

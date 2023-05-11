@@ -1,0 +1,27 @@
+
+Attaching file multidimfitTest.root as _file0...
+(TFile *) 0x14ee9e0
+
+  RooFitResult: minimized FCN value: -2.32679e-05, estimated distance to minimum: 3.97844e-05
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
+
+    Floating Parameter    FinalValue +/-  Error   
+  --------------------  --------------------------
+               db_xsec   -1.4381e-02 +/-  9.68e-01
+               dy_xsec   -6.0096e-02 +/-  6.96e-01
+              gam_xsec    3.8831e-02 +/-  9.22e-01
+                lumi16   -3.1514e-02 +/-  7.35e-01
+                lumi17   -1.4939e-02 +/-  7.60e-01
+                lumi18    1.0447e-03 +/-  8.62e-01
+                lumiBC   -6.4023e-04 +/-  9.96e-01
+                lumiDB   -7.1152e-03 +/-  9.88e-01
+                lumiGS   -6.0881e-03 +/-  9.93e-01
+                lumiLS   -6.4023e-04 +/-  9.96e-01
+                lumiXY   -2.1639e-02 +/-  8.60e-01
+             muFakes16   -1.8769e-04 +/-  9.99e-01
+             muFakes17    1.8933e-03 +/-  9.48e-01
+             muFakes18    9.1067e-03 +/-  9.94e-01
+              top_xsec    1.5218e-02 +/-  7.84e-01
+                   yLQ    7.3634e-02 +/-  3.15e-01
+
