@@ -60,25 +60,41 @@ print("\n fit_name = ", fit_name)
 
 if options.plot:
 
-    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
-                %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+    poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
+     "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
+      "MCStatBin24", "MCStatBin29", "MCStatBin30", "MCStatBin31", "MCStatBin35", "MCStatBin36", "MCStatBin37", 
+      "MCStatBin41", "MCStatBin42", "MCStatBin43", "MCStatBin44", "MCStatBin49", "MCStatBin50", "MCStatBin51", 
+      "MCStatBin55", "MCStatBin56", "MCStatBin57",
+      ]
 
-    respull = []
-    with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
-        for line in f.readlines():
-            respull.append(line.split(' '))
+    for i in range(1,61):
+        poi_list.append("pdf" + str(i))
 
-    respull = np.asarray(respull, dtype=float)
-    poi_list = respull[:,0].tolist()
-    deltaNLL = respull[:,1].tolist()
-    #plt.ylim(0,10)          
-    plt.plot(poi_list,deltaNLL,label='mLQ=%s GeV'%mLQ)
-    plt.xlabel("%s"%poi)
-    plt.ylabel("-2deltaLL")
-    plt.legend()
-    plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
-    plt.savefig("like_scan_%s_%s_%s.jpg"%(options.chan,options.q,poi))
-    plt.close()
+
+    for i in range(1,61):
+        poi_list.append("prop_binY18_bin" + str(i))
+
+    for poi in poi_list:
+
+        print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
+                    %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+
+        respull = []
+        with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
+            for line in f.readlines():
+                respull.append(line.split(' '))
+
+        respull = np.asarray(respull, dtype=float)
+        poi_list = respull[:,0].tolist()
+        deltaNLL = respull[:,1].tolist()
+        #plt.ylim(0,10)          
+        plt.plot(poi_list,deltaNLL,label='mLQ=%s GeV'%mLQ)
+        plt.xlabel("%s"%poi)
+        plt.ylabel("-2deltaLL")
+        plt.legend()
+        plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
+        plt.savefig("%s/like_scan_%s_%s_%s.jpg"%(options.odir,options.chan,options.q,poi))
+        plt.close()
 
         
 else:
