@@ -12,7 +12,7 @@ parser.add_option("--chan",  default="combined", type="string", help="What chann
 parser.add_option("--q",  default="combined", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--plot",  default=False, action="store_true", help="make plots")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
-parser.add_option("--fake_data",  default=False, action="store_true", help="Use fit template without any shape systematics and no fakes")
+parser.add_option("--fake_data",  default=True, action="store_true", help="Use fit template without any shape systematics and no fakes")
 parser.add_option("--vec",  default=False, action="store_true", help="vec")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("--mLQ", default = 2000, type='int', help="LQ mass")
@@ -21,9 +21,9 @@ parser.add_option("--ending", default = 'yLQ2', type='string', help="ending stri
 parser.add_option("--statuncs", default = False,  help="freeze allConstrainedNuisances")
 parser.add_option("--noSymMCStats", default = True, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--gen_level",  default=False, action="store_true", help="gen level fits")
-parser.add_option("--fake_data",  default=True, action="store_true", help="Use fit template without any shape systematics and no fakes")
+#parser.add_option("--fake_data",  default=True, action="store_true", help="Use fit template without any shape systematics and no fakes")
 parser.add_option("--no_LQ",  default=False, action="store_true", help="For sanity check purposes remove LQ temps")
-parser.add_option("-o", "--odir", default="postfit_plots/", help = "output directory")
+parser.add_option("-o", "--odir", default="likelihood_scans/", help = "output directory")
 (options, args) = parser.parse_args()
 
 
@@ -60,11 +60,11 @@ print("\n fit_name = ", fit_name)
 
 if options.plot:
 
-    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_scans/like_scan_%s_%s%s_m%i_%s.txt postfit_plots/"
-                %(options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi))
+    print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
+                %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
 
     respull = []
-    with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
+    with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
         for line in f.readlines():
             respull.append(line.split(' '))
 
@@ -88,7 +88,7 @@ else:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
 
-    print_and_do("combine %s -M MultiDimFit --algo grid --points 500 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --freezeParameters A4,A0  --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
+    print_and_do("combine %s -M MultiDimFit --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --freezeParameters A4,A0  --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
 
     #print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
@@ -110,15 +110,15 @@ else:
         deltaNLL.append(limit_tree.deltaNLL)
         poi_list.append(poi_value[0])
     	print(poi_value)	
-        f.Close()
-        #print(poi_list)
-        #print(deltaNLL)
-        idx = np.argsort(np.array(poi_list))
-        poi_list = np.array(poi_list)[idx]
-        deltaNLL = np.array(deltaNLL)[idx]
-        with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan,options.q,("_vec" if is_vec else ""), mLQ, poi), 'w') as f:
-     		for ylq,dnll in zip(poi_list, deltaNLL):
-     		    f.write("%f %f\n" %(ylq,2*dnll)) 
+    f.Close()
+    #print(poi_list)
+    #print(deltaNLL)
+    idx = np.argsort(np.array(poi_list))
+    poi_list = np.array(poi_list)[idx]
+    deltaNLL = np.array(deltaNLL)[idx]
+    with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan,options.q,("_vec" if is_vec else ""), mLQ, poi), 'w') as f:
+        for ylq,dnll in zip(poi_list, deltaNLL):
+            f.write("%f %f\n" %(ylq,2*dnll)) 
         #print(np.amax(poi_list),np.amin(poi_list))
 
 	    
