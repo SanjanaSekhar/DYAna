@@ -3,7 +3,7 @@ import subprocess
 import sys, commands, os, fnmatch
 from optparse import OptionParser
 from optparse import OptionGroup
-from combine.AFB_fits.scripts.LQ_utils import *
+#from AFB_fits.scripts.LQ_utils import *
 
 ext = "020923"
 
@@ -13,8 +13,35 @@ parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 
 mLQ = options.mLQ
 
+def get_sym_bin(idx, nBins):
+    # 3 mass bins, 8+6+6 cost bins
+    #print("nBins = ",nBins)
+    if nBins < 20:
+        n_cos_bins = 6
+        cos_bin = idx % n_cos_bins
+        eta_bin = idx / n_cos_bins
+        opp_cos_bin = (n_cos_bins - 1 - cos_bin) % n_cos_bins
+        sym_bin = eta_bin * n_cos_bins + opp_cos_bin
+    else:
+        if((idx) % 20 >= 0 and (idx) % 20 < 8):
+            n_cos_bins = 8
+            idx_new = idx - 20*(idx/20)
+            cos_bin = idx_new % n_cos_bins
+            eta_bin = idx_new / n_cos_bins
+            opp_cos_bin = (n_cos_bins -1 - cos_bin) % n_cos_bins
+            sym_bin = 20*(idx/20) + eta_bin * n_cos_bins + opp_cos_bin
+        #else: sym_bin = eta_bin * n_cos_bins + opp_cos_bin
+        else:
+            n_cos_bins = 6
+            idx_new = idx - 8 - 20*(idx/20)
+            cos_bin = idx_new % n_cos_bins
+            eta_bin = idx_new / n_cos_bins
+            opp_cos_bin = (n_cos_bins -1 - cos_bin) % n_cos_bins
+            sym_bin = 8 + 20*(idx/20) + eta_bin * n_cos_bins + opp_cos_bin
 
-for mLQ in [5500]:
+    return sym_bin+1
+
+for mLQ in [500]:
 	for year in [2016,2017,2018]:
 
 		fin = "combine/templates/LQm%i_merge_templates%i_%s.root"%(mLQ,year-2000,ext)

@@ -14,6 +14,7 @@ parser.add_option("--limits",  default=False, help="do limits")
 parser.add_option("--combine_review",  default=False, help="do review")
 parser.add_option("--impacts",  default=False, help="do impacts")
 parser.add_option("--sys_uncs",  default=False, help="do sys uncs")
+parser.add_option("--likelihood",  default=False, help="do like scans")
 (options, args) = parser.parse_args()
 
 n_m_bins = 1
