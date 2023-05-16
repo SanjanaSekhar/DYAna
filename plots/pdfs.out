@@ -1,0 +1,1043 @@
+
+Processing Fitting/LQ_sys_check.C...
+In file included from input_line_10:1:
+In file included from /uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:6:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/../../utils/PlotUtils.C:50:42: warning: format specifies type 'int' but the argument has type 'float' [-Wformat]
+        printf("i = %i, bin content = %i\n", i, content);
+                                      ~~        ^~~~~~~
+                                      %f
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/../../utils/PlotUtils.C:176:139: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char axis_label[80], bool logy=false, bool write_out = true, float ratio_min = 0.5, float ratio_max = 1.5, char plot_label[100] = "",
+                                                                                                                                          ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/../../utils/PlotUtils.C:426:26: warning: implicit conversion from 'double' to 'Width_t' (aka 'short') changes value from 2.5 to 2 [-Wliteral-conversion]
+    h_data->SetLineWidth(2.5);
+            ~~~~~~~~~~~~ ^~~
+In file included from input_line_10:1:
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:29:26: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        char *plot_dir = "AN_plots/Systematics/UpDown";
+                         ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:31:30: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        if(flag_q==2) date = "051523_u";
+                             ^
+/uscms_data/d3/ssekhar/CMSSW_10_5_0/src/LQ_Analysis/DYAna/plots/Fitting/LQ_sys_check.C:32:21: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        else date = "051523_d";
+                    ^
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf4_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf5_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf6_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf7_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf8_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf9_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf4_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf5_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf6_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf7_chk_051523_u.png has been created
+init year 2016  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 366768 events. Sym integral is 6244.0 
+ 
+Making LQ mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.8 
+ 
+Making SM mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 366768 events. Sym integral is 6241.4 
+ 
+Making LQ mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.7 
+ 
+MuMu: nom 281, up 280, down 282 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 366768 events. Sym integral is 6239.3 
+ 
+Making LQ mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.7 
+ 
+Making SM mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 366768 events. Sym integral is 6246.2 
+ 
+Making LQ mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.7 
+ 
+MuMu: nom 281, up 282, down 280 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 366768 events. Sym integral is 6247.0 
+ 
+Making LQ mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.0 
+ 
+Making SM mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 366768 events. Sym integral is 6238.4 
+ 
+Making LQ mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.4 
+ 
+MuMu: nom 281, up 281, down 281 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 366768 events. Sym integral is 6245.9 
+ 
+Making LQ mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.6 
+ 
+Making SM mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 366768 events. Sym integral is 6239.1 
+ 
+Making LQ mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.8 
+ 
+MuMu: nom 281, up 281, down 281 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 366768 events. Sym integral is 6242.1 
+ 
+Making LQ mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.3 
+ 
+Making SM mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 366768 events. Sym integral is 6243.6 
+ 
+Making LQ mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1379.1 
+ 
+MuMu: nom 281, up 281, down 282 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 366768 events. Sym integral is 6240.6 
+ 
+Making LQ mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.4 
+ 
+Making SM mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 366768 events. Sym integral is 6244.6 
+ 
+Making LQ mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.9 
+ 
+MuMu: nom 281, up 281, down 281 
+init year 2016  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 366768 events. Sym integral is 6244.0 
+ 
+Making LQ mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.8 
+ 
+Making SM mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 366768 events. Sym integral is 6241.4 
+ 
+Making LQ mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.7 
+ 
+MuMu: nom 404, up 404, down 404 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 366768 events. Sym integral is 6239.3 
+ 
+Making LQ mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.7 
+ 
+Making SM mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 366768 events. Sym integral is 6246.2 
+ 
+Making LQ mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.7 
+ 
+MuMu: nom 404, up 404, down 404 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 366768 events. Sym integral is 6247.0 
+ 
+Making LQ mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.0 
+ 
+Making SM mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 366768 events. Sym integral is 6238.4 
+ 
+Making LQ mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.4 
+ 
+MuMu: nom 404, up 404, down 404 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 366768 events. Sym integral is 6245.9 
+ 
+Making LQ mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.6 
+ 
+Making SM mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 366768 events. Sym integral is 6239.1 
+ 
+Making LQ mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.8 
+ 
+MuMu: nom 404, up 404, down 404 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generatedWarning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf8_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2016_yLQ1.0__pdf9_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf4_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf5_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf6_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf7_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf8_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf9_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf4_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf5_chk_051523_u.png has been created
+ from 366768 events. Sym integral is 6242.1 
+ 
+Making LQ mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.3 
+ 
+Making SM mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 366768 events. Sym integral is 6243.6 
+ 
+Making LQ mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1379.1 
+ 
+MuMu: nom 404, up 404, down 405 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 366768 events. Sym integral is 6242.8 
+ 
+Making LQ mc template for sys  
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.2 
+ 
+Making SM mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 366768 events. Sym integral is 6240.6 
+ 
+Making LQ mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1378.4 
+ 
+Making SM mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 366768 events. Sym integral is 6244.6 
+ 
+Making LQ mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 366768 events. LQpure_u_vec integral is 1377.9 
+ 
+MuMu: nom 404, up 404, down 404 
+init year 2017  
+hlt
+id
+iso
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 667208 events. Sym integral is 7165.3 
+ 
+Making LQ mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.0 
+ 
+Making SM mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 667208 events. Sym integral is 7162.8 
+ 
+Making LQ mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.0 
+ 
+MuMu: nom 330, up 329, down 331 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 667208 events. Sym integral is 7159.6 
+ 
+Making LQ mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1626.8 
+ 
+Making SM mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 667208 events. Sym integral is 7168.6 
+ 
+Making LQ mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.0 
+ 
+MuMu: nom 330, up 332, down 329 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 667208 events. Sym integral is 7168.9 
+ 
+Making LQ mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.1 
+ 
+Making SM mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 667208 events. Sym integral is 7159.1 
+ 
+Making LQ mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.7 
+ 
+MuMu: nom 330, up 330, down 330 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 667208 events. Sym integral is 7167.2 
+ 
+Making LQ mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.0 
+ 
+Making SM mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 667208 events. Sym integral is 7160.6 
+ 
+Making LQ mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1626.9 
+ 
+MuMu: nom 330, up 330, down 330 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 667208 events. Sym integral is 7162.4 
+ 
+Making LQ mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1626.4 
+ 
+Making SM mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 667208 events. Sym integral is 7165.8 
+ 
+Making LQ mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.4 
+ 
+MuMu: nom 330, up 330, down 331 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 667208 events. Sym integral is 7161.4 
+ 
+Making LQ mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.7 
+ 
+Making SM mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 667208 events. Sym integral is 7166.6 
+ 
+Making LQ mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.2 
+ 
+MuMu: nom 330, up 330, down 330 
+init year 2017  
+hlt
+id
+iso
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 667208 events. Sym integral is 7165.3 
+ 
+Making LQ mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.0 
+ 
+Making SM mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 667208 events. Sym integral is 7162.8 
+ 
+Making LQ mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.0 
+ 
+MuMu: nom 478, up 478, down 478 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 667208 events. Sym integral is 7159.6 
+ 
+Making LQ mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1626.8 
+ 
+Making SM mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 667208 events. Sym integral is 7168.6 
+ 
+Making LQ mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.0 
+ 
+MuMu: nom 478, up 478, down 478 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 667208 events. Sym integral is 7168.9 
+ 
+Making LQ mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.1 
+ 
+Making SM mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 667208 events. Sym Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf6_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf7_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf8_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2017_yLQ1.0__pdf9_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf4_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf5_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf6_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf7_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf8_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf9_chk_051523_d.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf4_chk_051523_u.png has been created
+integral is 7159.1 
+ 
+Making LQ mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.7 
+ 
+MuMu: nom 478, up 478, down 478 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 667208 events. Sym integral is 7167.2 
+ 
+Making LQ mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.0 
+ 
+Making SM mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 667208 events. Sym integral is 7160.6 
+ 
+Making LQ mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1626.9 
+ 
+MuMu: nom 478, up 478, down 478 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 667208 events. Sym integral is 7162.4 
+ 
+Making LQ mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1626.4 
+ 
+Making SM mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 667208 events. Sym integral is 7165.8 
+ 
+Making LQ mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1628.4 
+ 
+MuMu: nom 478, up 478, down 479 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 667208 events. Sym integral is 7163.9 
+ 
+Making LQ mc template for sys  
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.4 
+ 
+Making SM mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 667208 events. Sym integral is 7161.4 
+ 
+Making LQ mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.7 
+ 
+Making SM mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 667208 events. Sym integral is 7166.6 
+ 
+Making LQ mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 667208 events. LQpure_u_vec integral is 1627.2 
+ 
+MuMu: nom 478, up 478, down 478 
+init year 2018  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 679084 events. Sym integral is 10317.4 
+ 
+Making LQ mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.9 
+ 
+Making SM mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 679084 events. Sym integral is 10311.4 
+ 
+Making LQ mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.8 
+ 
+MuMu: nom 475, up 474, down 477 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 679084 events. Sym integral is 10308.8 
+ 
+Making LQ mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.3 
+ 
+Making SM mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 679084 events. Sym integral is 10320.4 
+ 
+Making LQ mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2349.4 
+ 
+MuMu: nom 475, up 477, down 474 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 679084 events. Sym integral is 10321.1 
+ 
+Making LQ mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.7 
+ 
+Making SM mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 679084 events. Sym integral is 10307.9 
+ 
+Making LQ mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.9 
+ 
+MuMu: nom 475, up 475, down 475 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 679084 events. Sym integral is 10318.5 
+ 
+Making LQ mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2349.0 
+ 
+Making SM mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 679084 events. Sym integral is 10310.3 
+ 
+Making LQ mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.6 
+ 
+MuMu: nom 475, up 476, down 475 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 679084 events. Sym integral is 10311.6 
+ 
+Making LQ mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2346.5 
+ 
+Making SM mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 679084 events. Sym integral is 10317.4 
+ 
+Making LQ mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2350.1 
+ 
+MuMu: nom 475, up 474, down 476 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 679084 events. Sym integral is 10312.0 
+ 
+Making LQ mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.9 
+ 
+Making SM mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 679084 events. Sym integral is 10317.1 
+ 
+Making LQ mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.7 
+ 
+MuMu: nom 475, up 475, down 476 
+init year 2018  
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 679084 events. Sym integral is 10317.4 
+ 
+Making LQ mc template for sys _pdf4Up 
+Doing pdf sys 4 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.9 
+ 
+Making SM mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 679084 events. Sym integral is 10311.4 
+ 
+Making LQ mc template for sys _pdf4Down 
+Doing pdf sys 4 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.8 
+ 
+MuMu: nom 689, up 689, down 689 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. SyWarning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf5_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf6_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf7_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf8_chk_051523_u.png has been created
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c_mumu
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Warning in <TH1F::Sumw2>: Sum of squares of weights structure already created
+Info in <TCanvas::Print>: png file AN_plots/Systematics/UpDown/mumu2018_yLQ1.0__pdf9_chk_051523_u.png has been created
+m integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 679084 events. Sym integral is 10308.8 
+ 
+Making LQ mc template for sys _pdf5Up 
+Doing pdf sys 5 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.3 
+ 
+Making SM mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 679084 events. Sym integral is 10320.4 
+ 
+Making LQ mc template for sys _pdf5Down 
+Doing pdf sys 5 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2349.4 
+ 
+MuMu: nom 689, up 689, down 689 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 679084 events. Sym integral is 10321.1 
+ 
+Making LQ mc template for sys _pdf6Up 
+Doing pdf sys 6 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.7 
+ 
+Making SM mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 679084 events. Sym integral is 10307.9 
+ 
+Making LQ mc template for sys _pdf6Down 
+Doing pdf sys 6 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.9 
+ 
+MuMu: nom 689, up 689, down 689 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 679084 events. Sym integral is 10318.5 
+ 
+Making LQ mc template for sys _pdf7Up 
+Doing pdf sys 7 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2349.0 
+ 
+Making SM mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 679084 events. Sym integral is 10310.3 
+ 
+Making LQ mc template for sys _pdf7Down 
+Doing pdf sys 7 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.6 
+ 
+MuMu: nom 689, up 689, down 689 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 679084 events. Sym integral is 10311.6 
+ 
+Making LQ mc template for sys _pdf8Up 
+Doing pdf sys 8 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2346.5 
+ 
+Making SM mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 679084 events. Sym integral is 10317.4 
+ 
+Making LQ mc template for sys _pdf8Down 
+Doing pdf sys 8 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2350.1 
+ 
+MuMu: nom 689, up 688, down 690 
+Making mumu temps 
+Making SM mc template for sys  
+MC templates generated from 679084 events. Sym integral is 10314.5 
+ 
+Making LQ mc template for sys  
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.3 
+ 
+Making SM mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 679084 events. Sym integral is 10312.0 
+ 
+Making LQ mc template for sys _pdf9Up 
+Doing pdf sys 9 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2348.9 
+ 
+Making SM mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 679084 events. Sym integral is 10317.1 
+ 
+Making LQ mc template for sys _pdf9Down 
+Doing pdf sys 9 
+MC templates generated from 679084 events. LQpure_u_vec integral is 2347.7 
+ 
+MuMu: nom 689, up 689, down 689 

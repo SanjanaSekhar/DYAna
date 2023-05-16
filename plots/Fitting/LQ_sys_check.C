@@ -20,7 +20,7 @@ void LQ_sys_check(){
     gROOT->SetBatch(1); 
     const int num_sys = 6;
     //string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_muRC"};
-    string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_elScaleGain","_elIDENDPTHIGH", "_elIDBARPTHIGH"};
+    string sys_array[num_sys] = {"_pdf4","_pdf5","_pdf6","_pdf7","_pdf8","_pdf9"};
     for(int year = 2016; year <= 2018; year++){
        for(int flag_q = 1; flag_q <=2; flag_q++){
         init(year);
@@ -28,13 +28,13 @@ void LQ_sys_check(){
         float m_LQ = 2000.;
         char *plot_dir = "AN_plots/Systematics/UpDown";
         char *date;
-        if(flag_q==2) date = "012423_u";
-        else date = "012423_d";
+        if(flag_q==2) date = "051523_u";
+        else date = "051523_d";
         //char *sys = "_";
         bool do_bkg = false;
         bool do_qcd = false;
-        bool do_electrons = true;
-        bool do_muons = false;
+        bool do_electrons = false;
+        bool do_muons = true;
         bool vec = false;
         bool make_ud;
         if(flag_q==2) make_ud = true;

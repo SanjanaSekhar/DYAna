@@ -59,7 +59,8 @@ if statuncs: fit_name += "_statuncs"
 print("\n fit_name = ", fit_name)
 
 if options.plot:
-
+    poi_list=["yLQ2"]
+    '''
     poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
      "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
       "MCStatBin24", "MCStatBin29", "MCStatBin30", "MCStatBin31", "MCStatBin35", "MCStatBin36", "MCStatBin37", 
@@ -73,11 +74,11 @@ if options.plot:
 
     for i in range(1,61):
         poi_list.append("prop_binY18_bin" + str(i))
-
+    '''
     for poi in poi_list:
 
-        print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
-                    %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+        #print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
+        #            %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
 
         respull = []
         with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
@@ -105,7 +106,7 @@ else:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
 
-    print_and_do("combine %s -M MultiDimFit -t -1 --setParameters yLQ2=0. --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --freezeParameters A4,A0  --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
+    print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --freezeParameters A4,A0  --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
 
     #print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
