@@ -41,7 +41,7 @@ for y in [-1]:
             if not options.gen_level and not options.no_sys: options.fake_data = True
             options.no_LQ = False
             options.year = y
-            likelihood_scan = True
+            likelihood_scan = False
 	    if likelihood_scan: 
 		poi = 'nlo_sys'
 		ending = "freezeA0A4_%s"%poi
@@ -96,7 +96,7 @@ for y in [-1]:
             #print(" \n \n Starting fit for bin %i \n\n" % mbin)
                 
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
-		'''
+		
                 workspace="workspaces/%s_LQ.root" % (options.chan)
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
@@ -104,7 +104,7 @@ for y in [-1]:
                 
 		print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ %s " %(workspace, extra_params))
+                print_and_do("combine %s -M MultiDimFit -v 3  --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s " %(workspace, extra_params))
                 #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
@@ -115,7 +115,7 @@ for y in [-1]:
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s " % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q))
                     print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1" % (workspace, extra_params)) #only to get prefit, probably a better way
-                    print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ --skipFitB -g %s" % (mLQ, plotdir))
+                    print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
@@ -140,7 +140,7 @@ for y in [-1]:
                 print_and_do(""" echo "std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;" >> cmd.txt """)
 		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
                 
-                '''
+                
 		print_and_do("rm -f cards/sed*")
                 if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
                 #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
