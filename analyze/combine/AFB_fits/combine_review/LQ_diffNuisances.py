@@ -58,11 +58,16 @@ setUpString = "diffNuisances run on %s, at %s with the following options ... "%(
 file = ROOT.TFile(args[0])
 if file == None: raise RuntimeError, "Cannot open file %s" % args[0]
 if options.MDF:
-  fit_s  = file.Get("fit_mdf_s") if not options.skipFitS  else file.Get("fit_mdf_b")
-  fit_b  = file.Get("fit_mdf_b") if not options.skipFitB  else file.Get("fit_mdf_s")
+  file_s = ROOT.TFile(args[1])
+  file_b = ROOT.TFile(args[2])
+  if file_s == None: raise RuntimeError, "Cannot open file %s" % args[1]
+  if file_b == None: raise RuntimeError, "Cannot open file %s" % args[2]
+  fit_s  = file_s.Get("fit_mdf") if not options.skipFitS  else file_b.Get("fit_mdf")
+  fit_b  = file_b.Get("fit_mdf") if not options.skipFitB  else file_s.Get("fit_mdf")
 else:
   fit_s  = file.Get("fit_s") if not options.skipFitS  else file.Get("fit_b")
   fit_b  = file.Get("fit_b") if not options.skipFitB  else file.Get("fit_s")
+
 prefit = file.Get("nuisances_prefit")
 if fit_s == None or fit_s.ClassName()   != "RooFitResult": raise RuntimeError, "File %s does not contain the output of the signal fit 'fit_s'"     % args[0]
 if fit_b == None or fit_b.ClassName()   != "RooFitResult": raise RuntimeError, "File %s does not contain the output of the background fit 'fit_b'" % args[0]
