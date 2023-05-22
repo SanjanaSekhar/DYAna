@@ -1,17 +1,9 @@
-diffNuisances run on fitDiagnostics_t1.root, at 2023-05-03 23:28:50.308315 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': False, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
+diffNuisances run on fitDiagnostics_t1.root, at 2023-05-20 18:33:40.424307 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': False, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
 
 name                                              b-only fit            s+b fit         rho  approx impact
-nlo_sys                                          +0.00, 1.00        +0.00, 1.03       -0.95      -0.260
-pdf41                                            -0.03, 1.01        +0.00, 1.00       +0.02      +0.006
-pdf36                                            +0.06, 1.00        -0.00, 1.01       +0.01      +0.003
-pdf35                                            +0.08, 1.01        -0.00, 1.00       +0.00      +0.001
-pdf34                                            +0.02, 1.01        -0.00, 1.00       +0.00      +0.000
-pdf3                                             +0.03, 1.01        -0.00, 1.00       +0.00      +0.000
-pdf27                                            +0.05, 1.01        -0.00, 1.00       +0.00      +0.000
-pdf25                                            -0.01, 1.01        -0.00, 1.00       +0.00      +0.000
-pdf14                                            -0.07, 1.01        +0.00, 1.00       +0.00      +0.001
-pdf1                                             +0.02, 1.01        -0.00, 1.00       -0.00      -0.001
-elHLTENDPTHIGH18                                 -0.02, 1.03        -0.00, 0.99       +0.00      +0.000
-elHLTENDPTHIGH17                                 -0.00, 1.01        -0.00, 1.00       +0.00      +0.000
-elHLTBARPTHIGH17                                 -0.02, 1.01        -0.00, 0.99       +0.00      +0.000
-REFAC1718                                        -0.11, 1.29     * +0.00, 0.88*     *+0.00*      +0.000
+nlo_sys                                          -0.00, 1.00        +0.00, 1.26     *-0.95*      -0.383
+REFAC1718                                        -0.11, 1.22     * -0.00, 0.93*       +0.01      +0.002
+pdf3                                             +0.01, 1.01        -0.00, 1.00       -0.00      -0.000
+pdf1                                             +0.01, 1.01        +0.00, 1.00       -0.00      -0.001
+elHLTENDPTHIGH18                                 -0.01, 1.01        -0.00, 0.99       +0.00      +0.000
+FAC1718                                          -0.03, 1.11     * -0.00, 1.06*       -0.00      -0.000

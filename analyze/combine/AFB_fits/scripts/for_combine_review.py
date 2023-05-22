@@ -96,7 +96,8 @@ if not options.hadd:
 	transfer_MDFresults("multidimfit_t0_b.root", "fitDiagnostics_t0.root", type = 'b')
 	print_and_do("python combine_review/LQ_diffNuisances.py  -a fitDiagnostics_t0.root -p yLQ2 -g plots_t0.root   > ./fitResults_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 	print_and_do("python combine_review/LQ_diffNuisances.py  -a fitDiagnostics_t0.root -p yLQ2 -g plots_t0.root --MDF true  > ./fitResults_MDF_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
-	print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0  --forceRecreateNLL -n _t1_s --saveFitResult --saveWorkspace --robustFit 1 --robustHesse=1" %workspace)
+	
+        print_and_do("combine -M MultiDimFit -d %s -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0  --forceRecreateNLL -n _t1_s --saveFitResult --saveWorkspace --robustFit 1 --robustHesse=1" %workspace)
 	print_and_do("combine -M MultiDimFit -d %s -t -1  --freezeParameters yLQ2  --forceRecreateNLL -n _t1_b --saveFitResult --saveWorkspace --robustFit 1 --robustHesse=1" %workspace)
 	print_and_do("combine -M FitDiagnostics -d %s -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0  --robustFit 1 --forceRecreateNLL -n _t1 --robustHesse=1"%workspace )
 	transfer_MDFresults("multidimfit_t1_s.root", "fitDiagnostics_t1.root", type = 's')
@@ -106,30 +107,30 @@ if not options.hadd:
 	#print_and_do("combine -M MultiDimFit -d %s -t -1 --freezeParameters yLQ2,A4,A0  --forceRecreateNLL -n _t1_b --saveFitResult --robustFit 1" %workspace)
 	#print_and_do("python combine_review/LQ_diffNuisances.py -a multidimfit_t1_b.root -p yLQ2 --skipFitS -g plots_t1.root >> ./fitResults_t1_b_%s_%s_%s"%(chan,q,("vec" if is_vec else "")))
 	'''
-	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.0 --freezeParameters A4,A0 -m 2000 --doInitialFit --allPars -n t0"%workspace)
-	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0 -m 2000 --doInitialFit --allPars -n t1"%(workspace))
+	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.0 --freezeParameters A4,A0 -m 2000 --doInitialFit --allPars -n t0 --robustHesse=1"%workspace)
+	print_and_do("combineTool.py -M Impacts -d %s -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0 -m 2000 --doInitialFit --allPars -n t1 --robustHesse=1"%(workspace))
 
-	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json -t -1 --setParameters yLQ2=0.0 --freezeParameters A4,A0 --doFits -m 2000 -n t0 "%(workspace,chan,q,("vec" if is_vec else "")))
+	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t0_%s_%s_%s.json -t -1 --setParameters yLQ2=0.0 --freezeParameters A4,A0 --doFits -m 2000 -n t0 --robustHesse=1"%(workspace,chan,q,("vec" if is_vec else "")))
 
-	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0 --doFits -m 2000 -n t1 "%(workspace,chan,q,("vec" if is_vec else "")))
+	print_and_do("combineTool.py -M Impacts -d %s -o impacts_t1_%s_%s_%s.json -t -1 --setParameters yLQ2=0.6 --freezeParameters A4,A0 --doFits -m 2000 -n t1 --robustHesse=1"%(workspace,chan,q,("vec" if is_vec else "")))
 
 	print_and_do("combineTool.py -M Impacts -d %s  -m 2000 -n t0 -o impacts_t0_%s_%s_%s.json"%(workspace,chan,q,("vec" if is_vec else "")))
 	print_and_do("combineTool.py -M Impacts -d %s  -m 2000 -n t1 -o impacts_t1_%s_%s_%s.json"%(workspace,chan,q,("vec" if is_vec else "")))
 	print_and_do("plotImpacts.py -i  impacts_t0_%s_%s_%s.json -o  impacts_t0_%s_%s_%s"%(chan,q,("vec" if is_vec else ""),chan,q,("vec" if is_vec else "")))
 	print_and_do("plotImpacts.py -i  impacts_t1_%s_%s_%s.json -o  impacts_t1_%s_%s_%s"%(chan,q,("vec" if is_vec else ""),chan,q,("vec" if is_vec else "")))
-	
-	print_and_do("cp fitResults_t0_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
-	print_and_do("cp fitResults_t1_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
-	print_and_do("cp impacts_t0_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))
-	print_and_do("cp impacts_t1_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))
 	'''
+	print_and_do("cp fitResults_MDF_t0_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
+	print_and_do("cp fitResults_MDF_t1_%s_%s_%s %s"%(chan,q,("vec" if is_vec else ""),options.odir))
+	#print_and_do("cp impacts_t0_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))
+	#print_and_do("cp impacts_t1_%s_%s_%s* %s"%(chan,q,("vec" if is_vec else ""),options.odir))
+	
 else:
 
 	print_and_do("cp %s ."%(comb_card))
 	print_and_do("ValidateDatacards.py %s --jsonFile combine_review/validation_%s_%s_%s.json --printLevel 5"%(comb_card[6:],options.chan, options.q, ("vec" if is_vec else "")))
-	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/fitResults_t0_%s_%s_%s combine_review/"
+	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/fitResults_MDF_t0_%s_%s_%s combine_review/"
                 %(options.chan, options.q, ("_vec" if is_vec else ""),options.chan, options.q, ("vec" if is_vec else "")))
-	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/fitResults_t1_%s_%s_%s combine_review/"
+	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/fitResults_MDF_t1_%s_%s_%s combine_review/"
                 %(options.chan, options.q, ("_vec" if is_vec else ""),options.chan, options.q, ("vec" if is_vec else "")))
 	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/CR_%s_%s%s/impacts_t0_%s_%s_%s.pdf combine_review/"
                 %(options.chan, options.q, ("_vec" if is_vec else ""),options.chan, options.q, ("vec" if is_vec else "")))

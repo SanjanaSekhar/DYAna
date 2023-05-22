@@ -1,0 +1,11 @@
+diffNuisances run on fitDiagnostics_t1.root, at 2023-05-21 16:27:00.896406 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': False, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
+
+name                                              b-only fit            s+b fit         rho  approx impact
+FAC1718                                          -0.37, 0.79     * +0.00, 1.05*       -0.14      -0.031
+RENORM16                                         -0.28, 0.77     * +0.00, 1.01*       -0.06      -0.013
+muRC16                                           -0.59, 1.60     ! +0.00, 0.90!     *-0.02*      -0.003
+pdf3                                             -0.06, 1.01        +0.00, 1.00       +0.01      +0.001
+pdf60                                            -0.02, 1.01        +0.00, 1.00       -0.00      -0.000
+pdf41                                            -0.11, 1.01        +0.00, 1.00       +0.00      +0.001
+pdf2                                             -0.08, 1.01        +0.00, 1.00       +0.00      +0.000
+muHLTEND16                                       -0.04, 1.02        -0.00, 0.99       -0.00      -0.000

@@ -358,9 +358,9 @@ for n in names:
        unc_b = float(unc_b.replace('*',''))
        unc_sb = unc_sb.replace('!','')
        unc_sb = float(unc_sb.replace('*',''))
-       if unc_b > 1.0 or unc_sb > 1.0: 
-          #print(unc_b, unc_sb)
-          print fmtstring % (n, v[0], v[1], v[2],v[3])
+       #if unc_b > 1.0 or unc_sb > 1.0: 
+       #print(unc_b, unc_sb)
+       print fmtstring % (n, v[0], v[1], v[2],v[3])
 
 if options.format == "latex":
     print " \\hline\n\end{tabular}"

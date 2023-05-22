@@ -1,35 +1,4 @@
-diffNuisances run on fitDiagnostics_t0.root, at 2023-05-03 23:21:39.128707 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': False, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t0.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
+diffNuisances run on fitDiagnostics_t0.root, at 2023-05-20 18:26:30.386050 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': False, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t0.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
 
 name                                              b-only fit            s+b fit         rho  approx impact
-prop_binY18_bin54                                -0.00, 1.01        +0.00, 0.99       -0.04      -0.013
-pdf7                                             +0.00, 1.03        -0.00, 1.00       -0.03      -0.010
-pdf35                                            -0.00, 1.01        -0.00, 1.00       -0.03      -0.010
-pdf23                                            -0.00, 1.02        +0.00, 1.00       +0.03      +0.010
-pdf11                                            -0.00, 1.01        +0.00, 1.00       +0.03      +0.010
-MCStatBin44                                      -0.00, 1.02        -0.00, 0.99       -0.03      -0.012
-MCStatBin43                                      -0.00, 1.01        -0.00, 0.99       -0.03      -0.011
-MCStatBin42                                      -0.00, 1.02        -0.00, 0.99       -0.03      -0.011
-pdf53                                            -0.00, 1.03        -0.00, 1.00       -0.02      -0.006
-pdf48                                            +0.00, 1.02        -0.00, 1.00       -0.02      -0.008
-pdf45                                            -0.00, 1.01        +0.00, 1.00       +0.02      +0.007
-pdf24                                            +0.00, 1.01        +0.00, 1.00       +0.02      +0.008
-prop_binY18_bin29                                -0.00, 1.01        +0.00, 0.99       -0.01      -0.003
-prop_binY18_bin22                                -0.00, 1.01        +0.00, 0.99       -0.01      -0.003
-pdf9                                             -0.00, 1.02        +0.00, 1.00       +0.01      +0.005
-pdf59                                            -0.00, 1.02        +0.00, 1.00       -0.01      -0.003
-pdf54                                            +0.00, 1.01        -0.00, 1.00       -0.01      -0.004
-pdf50                                            -0.00, 1.01        +0.00, 1.00       +0.01      +0.004
-pdf5                                             +0.00, 1.02        +0.00, 1.00       +0.01      +0.003
-pdf42                                            -0.00, 1.01        -0.00, 1.00       -0.01      -0.003
-pdf34                                            +0.00, 1.02        -0.00, 1.00       -0.01      -0.003
-pdf33                                            +0.00, 1.01        -0.00, 1.00       -0.01      -0.005
-pdf3                                             +0.00, 1.01        -0.00, 1.00       -0.01      -0.004
-pdf29                                            +0.00, 1.01        -0.00, 1.00       -0.01      -0.003
-pdf25                                            -0.00, 1.01        -0.00, 1.00       +0.01      +0.003
-pdf20                                            +0.00, 1.01        -0.00, 1.00       -0.01      -0.002
-MCStatBin56                                      -0.00, 1.02        -0.00, 0.99       -0.01      -0.006
-prop_binY18_bin52                                +0.00, 1.04        +0.00, 1.00       +0.00      +0.001
-prop_binY18_bin51                                -0.00, 1.03        +0.00, 1.00       +0.00      +0.000
-prop_binY18_bin46                                -0.00, 1.02        +0.00, 1.00       -0.00      -0.001
-pdf22                                            -0.00, 1.01        -0.00, 1.00       -0.00      -0.001
-elIDBARPTLOW                                     +0.00, 1.01        -0.00, 1.00       +0.00      +0.000
+FAC1718                                          +0.00, 1.04        -0.00, 1.04       -0.00      -0.001
