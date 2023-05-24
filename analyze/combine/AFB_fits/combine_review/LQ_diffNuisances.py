@@ -58,6 +58,7 @@ setUpString = "diffNuisances run on %s, at %s with the following options ... "%(
 file = ROOT.TFile(args[0])
 if file == None: raise RuntimeError, "Cannot open file %s" % args[0]
 if options.MDF:
+  print(args[0],args[1],args[2])
   file_s = ROOT.TFile(args[1])
   file_b = ROOT.TFile(args[2])
   if file_s == None: raise RuntimeError, "Cannot open file %s" % args[1]

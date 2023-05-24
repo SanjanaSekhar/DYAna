@@ -1,5 +1,6 @@
-diffNuisances run on fitDiagnostics_t1.root, at 2023-05-20 18:33:42.676358 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': True, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
+('fitDiagnostics_t1.root', 'multidimfit_t1_s.root', 'multidimfit_t1_b.root')
+diffNuisances run on fitDiagnostics_t1.root, at 2023-05-22 21:07:19.444588 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': True, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t1.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
 
 name                                              b-only fit            s+b fit         rho  approx impact
-nlo_sys                                          -0.00, 1.00        +0.00, 1.21     *-0.95*      -0.354
-FAC1718                                          -0.00, 1.04        +0.00, 1.06       -0.00      -0.000
+nlo_sys                                          -0.00, 1.00        +0.00, 1.15     *-0.96*      -0.330
+FAC1718                                          -0.00, 1.04        +0.00, 1.07       -0.00      -0.001
