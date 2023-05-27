@@ -349,11 +349,11 @@ void draw_cmp_from_saved(){
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
     TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
 
-    data_m->SetLineWidth(2);
-    leg1->AddEntry(data_m, "Data", "lpe");
-    data_m->SetLineWidth(2);
-    leg2->AddEntry(data_m, "Data", "pe");
-    leg3->AddEntry(data_m, "Data", "pe");
+    // data_m->SetLineWidth(2);
+    // leg1->AddEntry(data_m, "Data", "lpe");
+    // data_m->SetLineWidth(2);
+    // leg2->AddEntry(data_m, "Data", "pe");
+    // leg3->AddEntry(data_m, "Data", "pe");
 
     leg1->AddEntry(dy_m, "DY ", "f");
     leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
