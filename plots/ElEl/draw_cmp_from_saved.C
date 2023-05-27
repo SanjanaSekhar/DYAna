@@ -492,7 +492,7 @@ void draw_cmp_from_saved(){
     sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "Dielectron rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
     //CMS_lumi(p_rap, year, 11);
-    CMS_lumi(p_rap, year, 11 );
+    CMS_lumi(c_rap, year, 11 );
     LQu_rap->Draw("hist  same");
     LQu_vec_rap->Draw("hist  same");
     sprintf(plt_file, "%sElElComb_rap_cmp.png", plot_dir);
