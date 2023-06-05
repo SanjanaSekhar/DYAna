@@ -41,7 +41,7 @@ def get_sym_bin(idx, nBins):
 
     return sym_bin+1
 
-for mLQ in [500]:
+for mLQ in range(1000,9500,500):
 	for year in [2016,2017,2018]:
 
 		fin = "combine/templates/LQm%i_merge_templates%i_%s.root"%(mLQ,year-2000,ext)
@@ -69,8 +69,8 @@ for mLQ in [500]:
 					err = h.GetBinError(idx)
 					h.SetBinError(idx,1e-6) #setting nominal stat unc to zero for autmcstat	
 					h.SetBinError(sym_bin,1e-6)
-					new_name = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%idx)
-					new_name2 = proc_name.replace(proc_name,  proc_name + "_MCStatBin%i"%sym_bin)
+					new_name = proc_name.replace(proc_name,  proc_name + "_MCStatBin%iy%s"%(idx, str(year)[2:4]))
+					new_name2 = proc_name.replace(proc_name,  proc_name + "_MCStatBin%iy%s"%(sym_bin,str(year)[2:4]))
 					#print("New names: %s and %s"%(new_name,new_name2))	
 					#if((new_name+"Up" in keys) or (new_name+"Down" in keys) or (new_name2+"Up" in keys) or (new_name2+"Down" in keys)): continue
 					#print("Creating %s"%new_name)

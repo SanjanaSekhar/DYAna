@@ -162,85 +162,46 @@ pdf60                 shape    1.0     1.0     1.0     -        -      -      - 
 # MC Stats
 # process                      alpha fpl fmn top db gam qcd tautau LQpure_QUARK LQint_QUARK
 
-MCStatBin1             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin2             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin3             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin4             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin1yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin2yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin3yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin4yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin5             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin6             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin7             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin8             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin9yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin10yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin11yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin9             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin10            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin11            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin15yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin16yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin17yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin12            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin13            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin14            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin21yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin22yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin23yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin24yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin15            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin29yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin30yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin31yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin18            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin19            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin20            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin35yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin36yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin37yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin21            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin22            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin23            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin24            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin41yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin42yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin43yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin44yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin25            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin26            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin27            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin28            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin49yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin50yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin51yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin29            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin30            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin31            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin55yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin56yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin57yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin32            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin33            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin34            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin35            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin36            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin37            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin38            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin39            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin40            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin41            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin42            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin43            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin44            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin45            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin46            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin47            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin48            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin49            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin50            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin51            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin52            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin53            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin54            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin55            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin56            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin57            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin58            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin59            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin60            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin group = MCStatBin1 MCStatBin2 MCStatBin3 MCStatBin4 MCStatBin9 MCStatBin10 MCStatBin11 MCStatBin15 MCStatBin16 MCStatBin17 MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin30 MCStatBin31 MCStatBin35 MCStatBin36 MCStatBin37 MCStatBin41 MCStatBin42 MCStatBin43 MCStatBin44 MCStatBin49 MCStatBin50 MCStatBin51 MCStatBin55 MCStatBin56 MCStatBin57
+MCStatBin group = MCStatBin1yYR  MCStatBin2yYR  MCStatBin3yYR  MCStatBin4yYR  MCStatBin9yYR  MCStatBin10yYR  MCStatBin11yYR  MCStatBin15yYR  MCStatBin16yYR  MCStatBin17yYR  MCStatBin21yYR  MCStatBin22yYR  MCStatBin23yYR  MCStatBin24yYR  MCStatBin29yYR  MCStatBin30yYR  MCStatBin31yYR  MCStatBin35yYR  MCStatBin36yYR  MCStatBin37yYR  MCStatBin41yYR  MCStatBin42yYR  MCStatBin43yYR  MCStatBin44yYR  MCStatBin49yYR  MCStatBin50yYR  MCStatBin51yYR  MCStatBin55yYR  MCStatBin56yYR  MCStatBin57yYR 
 
 * autoMCStats 1 0 1
 
