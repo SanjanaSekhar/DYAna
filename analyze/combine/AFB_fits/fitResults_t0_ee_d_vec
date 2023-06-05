@@ -1,7 +1,0 @@
-diffNuisances run on fitDiagnostics_t0.root, at 2023-05-21 07:37:40.087253 with the following options ... {'absolute_values': False, 'show_all_parameters': True, 'format': 'text', 'stol2': 0.5, 'MDF': False, 'pullDef': '', 'vtol': 0.3, 'stol': 0.1, 'plotfile': 'plots_t0.root', 'skipFitB': False, 'sortBy': 'correlation', 'vtol2': 2.0, 'poi': 'yLQ2', 'skipFitS': False}
-
-name                                              b-only fit            s+b fit         rho  approx impact
-nlo_sys                                          +0.00, 1.00        -0.43, 1.06     *-0.66*      -0.139
-FAC1718                                          +0.00, 1.04        +0.12, 0.90       +0.06      +0.011
-elHLTENDPTHIGH18                                 +0.00, 0.99        +0.01, 1.01       +0.01      +0.002
-elHLTENDPTHIGH17                                 +0.00, 1.00        -0.01, 1.01       -0.00      -0.000
