@@ -43,52 +43,53 @@ if is_vec: ending = "vec_"+ending
 
 #if options.chan=="mumu" and options.q=="d": is_vec = True
 yLQ2 = options.yLQ**2
+yLQ = options.yLQ
 print(options.chan,options.q)
 
 if not options.plot:
     workspace = "workspaces/%s_%s_%i_fit_bias_tests.root" % (options.chan, options.q, options.job)
     make_workspace(workspace, gen_level, options.chan, options.q, is_vec, no_LQ , no_sys, fake_data, mLQ, year, True, False)
 
-    extra_params = "--X-rtd MINIMIZER_no_analytic"
-    #extra_params = ""
+    #extra_params = "--X-rtd MINIMIZER_no_analytic"
+    extra_params = ""
 
     print("Will inject options.yLQ %.2f for options.chan %s%s for all toys " %(options.yLQ,options.chan,options.q))
 
-    res_yLQ2 = []
-    pull_yLQ2 = []
+    res_yLQ = []
+    pull_yLQ = []
 
 
     if(not options.prefit):
         print("Sampling toys based on postfit")
         if(not options.reuse_fit):
-            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i" % (workspace, extra_params,123457+options.job))
+            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i --freezeParameters A4,A0 --robustHesse=1" % (workspace, extra_params,123457+options.job))
 
     for i in range(options.nToys):
 
         if(not options.prefit):
             fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = 123457+options.job)
             if(options.no_sys):
-                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ=%.2f --freezeParameters A4,A0 " % (i,yLQ))
 
             else:
-                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f" % (i,yLQ2))
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ=%.2f --freezeParameters A4,A0 " % (i,yLQ))
         else:
 
-            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f"% (workspace, i, yLQ2))
+            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ=%.2f --freezeParameters A4,A0 --robustHesse=1"% (workspace, i, yLQ))
 
-        print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s -n _%i" %(workspace,  i, extra_params, i))
+        print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s -n _%i --freezeParameters A4,A0 --robustHesse=1" %(workspace,  i, extra_params, i))
         f_fit = TFile.Open("multidimfit_%i.root"%i)
         if f_fit:
             fr = f_fit.Get('fit_mdf')
             myargs = RooArgSet(fr.floatParsFinal())
 
-            yLQ2_fit = myargs.find("yLQ2").getVal()
-            yLQ2_err = myargs.find("yLQ2").getError()
+            yLQ_fit = myargs.find("yLQ").getVal()
+            yLQ_err = myargs.find("yLQ").getError()
             #A0 = myargs.find("A0").getVal()
             #A0_err = myargs.find("A0").getError()
-            print("yLQ2 %.3f err %.3f " % (yLQ2_fit, yLQ2_err))
-            res_yLQ2.append(yLQ2_fit - yLQ2)
-            if(yLQ2_err > 0.): pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err)
+            print("yLQ %.3f err %.3f " % (yLQ_fit, yLQ_err))
+            res_yLQ.append(yLQ_fit - yLQ)
+            if(yLQ_err > 0.): pull_yLQ.append((yLQ_fit-yLQ)/ yLQ_err)
             
 
             #h_res_afb.Fill(Afb - options.Afb)
@@ -111,14 +112,14 @@ if not options.plot:
     #print_and_do("PostFitShapesFromWorkspace -w toy_ws.root --dataset model_sData  -f fitDiagnostics.root:fit_s -o toy_shapes.root --sampling --samples 100")
     ##print_and_do("python scripts/plot_postfit.py -i toy_ws.root -o test/ -m %i" % (mbin))
     with open('%srespull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.chan,options.q,options.job,options.yLQ,ending), 'w') as f:
-        for res,pull in zip(res_yLQ2,pull_yLQ2):
+        for res,pull in zip(res_yLQ, pull_yLQ):
             f.write("%f %f\n" %(res,pull))
 
 else:
 
     respull = []
 
-    for job_idx in [0,1,2,3,4,5,6,7]:
+    for job_idx in [0,1,2,3,4,5,6,7,8,9]:
         print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
         with open('%s%s/respull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,ending), 'r') as f:
             for line in f.readlines():
@@ -160,11 +161,11 @@ else:
 
     if is_vec: 
         h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-        h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
+        h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}"%(chan_label,options.q))
         c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
     else: 
         h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-        h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
+        h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}"%(chan_label,options.q))
         c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
 
 
@@ -185,11 +186,11 @@ else:
     h_res_yLQ2.Draw()
     if is_vec: 
         h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-        h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
+        h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}"%(chan_label,options.q))
         c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ, options.yLQ, options.chan, options.q,ending))
     else: 
         h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV)" % (chan_label,options.q,options.yLQ,mLQ/1000.))
-        h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
+        h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}"%(chan_label,options.q))
         c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir,options.mLQ, options.yLQ, options.chan, options.q,ending))
 
 

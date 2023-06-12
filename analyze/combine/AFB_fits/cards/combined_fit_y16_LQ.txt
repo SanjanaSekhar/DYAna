@@ -6,24 +6,23 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm2000_merge_templates16_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2500_merge_templates16_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+
 
 bin             ee16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      ee16    ee16    ee16    ee16     ee16    ee16     ee16 	ee16    ee16      ee16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u_vec  LQint_u_vec	
-process                  1      2       3      4        5      6        7	8        -1        -2		
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -    	  -		
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
+
 nlo_sys         lnN      -       -        -      -        -        -       -            -        2.20    1.60
 
 elFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
@@ -32,7 +31,7 @@ elFakes16       lnN      -       -        -      -        -       -       1.5		-
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     -			1.022    	1.022	1.022		
 lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     -			1.009    	1.009	1.009		
-lumiLS           lnN       -        -         -       -         -       -       - 			  -      	  -  	  -  		  
+lumiLS           lnN       -        -         -       -         -       -       - 		  -      	  -  	  -  		  
 lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
 lumiBC           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	 
 lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
@@ -65,24 +64,23 @@ elHLTENDPTHIGH16   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -  
 elHLTBARPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTENDPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTs16 group = elHLTENDPTHIGH16  elHLTBARPTLOW16   elHLTENDPTLOW16 elHLTBARPTHIGH16   
+elHLTs16 group = elHLTENDPTHIGH16  elHLTBARPTLOW16   elHLTENDPTLOW16 elHLTBARPTHIGH16
 
 elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW 
+elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-  
 
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH
-                                                                                                                                  
+elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
+
 alphaS16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC16               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -97,7 +95,6 @@ emucostrw3b16        shape    -       -        -     1.0      1.0     -      -  
 emucostrw4b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws16 group = emucostrw1b16 emucostrw3b16 emucostrw4b16 emucostrw2b16
-
 ##fakes cost reweighting                                                                                                 
 elfakesrw1b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw2b16          shape    -       -        -      -        -      -     1.0      -       -       -        
@@ -105,7 +102,6 @@ elfakesrw3b16          shape    -       -        -      -        -      -     1.
 elfakesrw4b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 
 elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw4b16 elfakesrw3b16
-
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
@@ -182,90 +178,49 @@ pdf59                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
 # MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_u_vec LQint_u_vec
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_d LQint_d
 
-MCStatBin1             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin2             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin3             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin4             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin1y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin2y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin3y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin4y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin5             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin6             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin7             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin8             shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin9y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin10y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin11y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin9             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin10            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin11            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin15y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin16y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin17y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin12            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin13            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin14            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin21y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin22y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin23y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin24y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin15            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin29y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin30y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin31y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin18            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin19            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin20            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin35y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin36y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin37y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin21            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin22            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin23            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin24            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin41y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin42y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin43y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin44y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin25            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin26            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin27            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin28            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
+MCStatBin49y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin50y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin51y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin29            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin30            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin31            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin55y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin56y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin57y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-#MCStatBin32            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin33            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin34            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin35            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin36            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin37            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin38            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin39            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin40            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin41            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin42            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin43            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin44            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin45            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin46            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin47            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin48            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin49            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin50            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin51            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin52            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin53            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin54            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin55            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin56            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin57            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-
-#MCStatBin58            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin59            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-#MCStatBin60            shape     -    -    -   1.0  1.0  1.0  1.0   -    -    - 
-
-MCStatBin group = MCStatBin1 MCStatBin2 MCStatBin3 MCStatBin4 MCStatBin9 MCStatBin10 MCStatBin11 MCStatBin15 MCStatBin16 MCStatBin17 MCStatBin21 MCStatBin22 MCStatBin23 MCStatBin24 MCStatBin29 MCStatBin30 MCStatBin31 MCStatBin35 MCStatBin36 MCStatBin37 MCStatBin41 MCStatBin42 MCStatBin43 MCStatBin44 MCStatBin49 MCStatBin50 MCStatBin51 MCStatBin55 MCStatBin56 MCStatBin57 
+MCStatBin16 group = MCStatBin1y16  MCStatBin2y16  MCStatBin3y16  MCStatBin4y16  MCStatBin9y16  MCStatBin10y16  MCStatBin11y16  MCStatBin15y16  MCStatBin16y16  MCStatBin17y16  MCStatBin21y16  MCStatBin22y16  MCStatBin23y16  MCStatBin24y16  MCStatBin29y16  MCStatBin30y16  MCStatBin31y16  MCStatBin35y16  MCStatBin36y16  MCStatBin37y16  MCStatBin41y16  MCStatBin42y16  MCStatBin43y16  MCStatBin44y16  MCStatBin49y16  MCStatBin50y16  MCStatBin51y16  MCStatBin55y16  MCStatBin56y16  MCStatBin57y16 
 
 * autoMCStats 1 0 1
 
 pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60
-
-

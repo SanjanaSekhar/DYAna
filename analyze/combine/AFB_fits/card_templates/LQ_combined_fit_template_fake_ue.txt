@@ -223,7 +223,7 @@ MCStatBin55yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  
 MCStatBin56yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin57yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin group = MCStatBin1yYR  MCStatBin2yYR  MCStatBin3yYR  MCStatBin4yYR  MCStatBin9yYR  MCStatBin10yYR  MCStatBin11yYR  MCStatBin15yYR  MCStatBin16yYR  MCStatBin17yYR  MCStatBin21yYR  MCStatBin22yYR  MCStatBin23yYR  MCStatBin24yYR  MCStatBin29yYR  MCStatBin30yYR  MCStatBin31yYR  MCStatBin35yYR  MCStatBin36yYR  MCStatBin37yYR  MCStatBin41yYR  MCStatBin42yYR  MCStatBin43yYR  MCStatBin44yYR  MCStatBin49yYR  MCStatBin50yYR  MCStatBin51yYR  MCStatBin55yYR  MCStatBin56yYR  MCStatBin57yYR 
+MCStatBinYR group = MCStatBin1yYR  MCStatBin2yYR  MCStatBin3yYR  MCStatBin4yYR  MCStatBin9yYR  MCStatBin10yYR  MCStatBin11yYR  MCStatBin15yYR  MCStatBin16yYR  MCStatBin17yYR  MCStatBin21yYR  MCStatBin22yYR  MCStatBin23yYR  MCStatBin24yYR  MCStatBin29yYR  MCStatBin30yYR  MCStatBin31yYR  MCStatBin35yYR  MCStatBin36yYR  MCStatBin37yYR  MCStatBin41yYR  MCStatBin42yYR  MCStatBin43yYR  MCStatBin44yYR  MCStatBin49yYR  MCStatBin50yYR  MCStatBin51yYR  MCStatBin55yYR  MCStatBin56yYR  MCStatBin57yYR 
 
 * autoMCStats 1 0 1
 

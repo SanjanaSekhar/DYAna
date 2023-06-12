@@ -187,12 +187,12 @@ else:
         extra_params += " --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist -t 1" % s
 
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s --setParameters A4=1.61,A0=0.05" % (workspace, extra_params))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s  --freezeParameters A4,A0 --robustHesse=1" % (workspace, extra_params))
 
     #if(options.expected):
     print_and_do("cp higgsCombine_initialFit_Test.MultiDimFit.mH125.%i.root higgsCombine_initialFit_Test.MultiDimFit.mH125.root" % s)
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s --setParameters A4=1.61,A0=0.05" % (workspace, par_str, options.nThreads, extra_params))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s  --freezeParameters A4,A0 --robustHesse=1" % (workspace, par_str, options.nThreads, extra_params))
 
     #if(options.expected):
     print("Renaming sys fits")

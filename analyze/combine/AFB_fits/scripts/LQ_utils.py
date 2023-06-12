@@ -96,11 +96,11 @@ def setSnapshot(mdf = False, yLQ2_val = 0.0,  d='', s = 123456):
     fr_f = TFile.Open(fit_file)
     fr = fr_f.Get(fit_name)
     myargs = RooArgSet(fr.floatParsFinal())
-    fitted_yLQ2 = myargs.find("yLQ2").getVal()
+    fitted_yLQ2 = myargs.find("yLQ").getVal()
     #fitted_a0 = myargs.find("A0").getVal()
     if(yLQ2_val > -5.):
 
-        myargs.find("yLQ2").setVal(yLQ2_val)
+        myargs.find("yLQ").setVal(yLQ2_val)
         #myargs.find("Afb").setError(0.)
         #myargs.find("A0").setVal(A0_val)
         #myargs.find("A0").setError(0.)
