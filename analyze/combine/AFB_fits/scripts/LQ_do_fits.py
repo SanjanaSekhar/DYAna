@@ -29,7 +29,7 @@ for y in [-1]:
     	#for options.chan in ["ee"]:
         for options.q in ["d"]:
             #mLQ_list = [500,1000,2000,3000]
-            mLQ_list = [2000]
+            mLQ_list = [2500]
 	    is_vec = False
 	    statuncs = False
 	    #options.gen_level = False
