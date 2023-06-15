@@ -36,7 +36,7 @@ mLQ = options.mLQ
 gen_level = False
 no_LQ = False
 fake_data = True
-options.no_sys = no_sys = True
+options.no_sys = no_sys = False
 year = -1
 ending = options.ending
 if is_vec: ending = "vec_"+ending
