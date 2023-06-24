@@ -25,6 +25,7 @@ nlo_sys         lnN      -       -        -      -        -        -       -    
 
 muFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
+xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys muFakes16 muFakes17 muFakes18
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	LYRV	LYRV		
