@@ -99,8 +99,8 @@ if not options.plot:
             #A0_err = myargs.find("A0").getError()
             print("yLQ2 %.3f err %.3f %.3f" % (yLQ2_fit, yLQ2_err_hi, yLQ2_err_lo))
             res_yLQ2.append(yLQ2_fit - yLQ2)
-            if (yLQ2_fit - yLQ2) > 0 and yLQ2_err_hi > 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err_hi)
-            elif (yLQ2_fit - yLQ2) < 0 and yLQ2_err_lo < 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/abs(yLQ2_err_lo))
+            if (yLQ2_fit - yLQ2) < 0 and yLQ2_err_hi > 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err_hi)
+            elif (yLQ2_fit - yLQ2) > 0 and yLQ2_err_lo < 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/abs(yLQ2_err_lo))
             
 
             #h_res_afb.Fill(Afb - options.Afb)
@@ -137,10 +137,12 @@ else:
         	respull.append(line.split(' '))
 
     respull = np.asarray(respull, dtype=float)
-    res_yLQ2 = respull[:,0].tolist()
-    pull_yLQ2 = respull[:,1].tolist()
-
-    print(res_yLQ2)
+    res_yLQ2 = respull[:,0]
+    pull_yLQ2 = respull[:,1]
+    #pull_yLQ2[res_yLQ2<0] = -1.*pull_yLQ2[res_yLQ2<0]
+    res_yLQ2 = res_yLQ2.tolist()
+    pull_yLQ2 = pull_yLQ2.tolist()
+    print(pull_yLQ2)
 
     n_bins = 20
     h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -3.5, 3.5)
