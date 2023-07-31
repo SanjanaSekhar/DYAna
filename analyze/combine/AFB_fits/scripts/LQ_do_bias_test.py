@@ -145,7 +145,7 @@ else:
     pull_yLQ2 = pull_yLQ2.tolist()
     print(pull_yLQ2)
 
-    n_bins = 20
+    n_bins = 40
     h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -5, 5)
 
     res_yLQ2_range = max(5*np.std(res_yLQ2), 0.15)
