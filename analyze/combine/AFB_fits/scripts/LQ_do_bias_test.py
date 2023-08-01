@@ -70,7 +70,7 @@ if not options.plot:
         print("Sampling toys based on postfit")
         if(not options.reuse_fit):
             print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i   -n _%i" % (workspace, extra_params,123457+options.job,123457+options.job))
-
+    count = 0
     for i in range(options.nToys):
 
         if(not options.prefit):
@@ -89,6 +89,11 @@ if not options.plot:
         else: print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult -t 1 --toysFrequentist --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root   --robustFit 1  --forceRecreateNLL %s -n _%i " %(workspace,  i, extra_params, i))
         f_fit = TFile.Open("multidimfit_%i.root"%i)
         if f_fit:
+            print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
+            print_and_do(""" cat cmd.txt """)
+            print_and_do("""echo ".q" >> cmd.txt """)
+            #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
+            print_and_do("root -l -b multidimfit_%i.root < cmd.txt"%i)
             fr = f_fit.Get('fit_mdf')
             myargs = RooArgSet(fr.floatParsFinal())
 
@@ -97,6 +102,10 @@ if not options.plot:
             yLQ2_err_lo = myargs.find("yLQ2").getErrorLo()
             #A0 = myargs.find("A0").getVal()
             #A0_err = myargs.find("A0").getError()
+            if yLQ2_err_hi == 0. or yLQ2_err_lo == 0. :
+                count += 1 
+                print("FIT FAILED, SKIPPING TOY %i"%count)
+                continue
             print("yLQ2 %.3f err %.3f %.3f" % (yLQ2_fit, yLQ2_err_hi, yLQ2_err_lo))
             res_yLQ2.append(yLQ2_fit - yLQ2)
             if (yLQ2_fit - yLQ2) < 0 and yLQ2_err_hi > 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err_hi)
@@ -143,12 +152,14 @@ else:
     #pull_yLQ2[res_yLQ2<0] = -1.*pull_yLQ2[res_yLQ2<0]
     res_yLQ2 = res_yLQ2.tolist()
     pull_yLQ2 = pull_yLQ2.tolist()
-    print(pull_yLQ2)
+    print("No. of toys in residuals: ", len(res_yLQ2))
+    print("No. of toys in pulls: ", len(pull_yLQ2))
+    if len(res_yLQ2) != len(pull_yLQ2): print("REDO TESTS for %s %s",options.chan, options.q)
 
-    n_bins = 30
+    n_bins = 25
     h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -4, 4)
 
-    res_yLQ2_range = max(4*np.std(res_yLQ2), 0.15)
+    res_yLQ2_range = max(3*np.std(res_yLQ2), 0.15)
 
     h_res_yLQ2 = TH1F("h_res_yLQ2", "", n_bins, -res_yLQ2_range, res_yLQ2_range)
 
