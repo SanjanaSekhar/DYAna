@@ -137,95 +137,103 @@ if not options.plot:
 
 else:
 
-    respull = []
+    for options.chan in ["mumu","ee"]:
+        for options.q in ["u","d"]:
+            for options.mLQ in [1000,2500,3500,5000,9000]:
+                for options.yLQ in [0.0,0.25,0.5]:
 
-    for job_idx in [0,1,2,3,4,5,6,7,8,9]:
-        if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
-        else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
-        with open('%s%s/respull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,ending), 'r') as f:
-            for line in f.readlines():
-        	respull.append(line.split(' '))
-
-    respull = np.asarray(respull, dtype=float)
-    res_yLQ2 = respull[:,0]
-    pull_yLQ2 = respull[:,1]
-    #pull_yLQ2[res_yLQ2<0] = -1.*pull_yLQ2[res_yLQ2<0]
-    res_yLQ2 = res_yLQ2.tolist()
-    pull_yLQ2 = pull_yLQ2.tolist()
-    print("No. of toys in residuals: ", len(res_yLQ2))
-    print("No. of toys in pulls: ", len(pull_yLQ2))
-    if len(res_yLQ2) != len(pull_yLQ2): print("REDO TESTS for %s %s",options.chan, options.q)
-
-    n_bins = 25
-    h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -4, 4)
-
-    res_yLQ2_range = max(3*np.std(res_yLQ2), 0.15)
-
-    h_res_yLQ2 = TH1F("h_res_yLQ2", "", n_bins, -res_yLQ2_range, res_yLQ2_range)
+                    if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
 
 
+                    respull = []
 
-    def fill_h(arr, h):
-        #print(arr)
-        for arg in arr:
-            h.Fill(arg)
+                    for job_idx in [0,1,2,3,4,5,6,7,8,9]:
+                        if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
+                        else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
+                        with open('%s%s/respull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,ending), 'r') as f:
+                            for line in f.readlines():
+                        	respull.append(line.split(' '))
 
-    fill_h(pull_yLQ2, h_pull_yLQ2)
-    #fill_h(pull_a0, h_pull_a0)
-    fill_h(res_yLQ2, h_res_yLQ2)
-    #fill_h(res_a0, h_res_a0)
+                    respull = np.asarray(respull, dtype=float)
+                    res_yLQ2 = respull[:,0]
+                    pull_yLQ2 = respull[:,1]
+                    #pull_yLQ2[res_yLQ2<0] = -1.*pull_yLQ2[res_yLQ2<0]
+                    res_yLQ2 = res_yLQ2.tolist()
+                    pull_yLQ2 = pull_yLQ2.tolist()
+                    print("No. of toys in residuals: ", len(res_yLQ2))
+                    print("No. of toys in pulls: ", len(pull_yLQ2))
+                    if len(res_yLQ2) != len(pull_yLQ2): print("REDO TESTS for channel %s %s - yLQ = %.2f - mLQ = %s ",options.chan, options.q, options.yLQ, options.mLQ)
 
-    if options.chan=="mumu": chan_label = "#mu"
-    else : chan_label = "e"
+                    n_bins = 25
+                    h_pull_yLQ2 = TH1F("h_pull_yLQ2", "", n_bins, -4, 4)
 
-    c1 = TCanvas("c1", "", 900, 900)
-    h_pull_yLQ2.Fit("gaus")
-    fit_yLQ2= h_pull_yLQ2.GetFunction("gaus")
-    if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
-    h_pull_yLQ2.Draw()
+                    res_yLQ2_range = max(3*np.std(res_yLQ2), 0.15)
 
-    if is_vec: 
-        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
-        h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
-        c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
-    else: 
-        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
-        h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
-        c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
-
-
-    # c2 = TCanvas("c1", "", 900, 900)
-    # h_pull_a0.Fit("gaus")
-    # fit_a0= h_pull_a0.GetFunction("gaus")
-    # if(fit_a0): fit_a0.SetLineColor(kBlue)
-    # h_pull_a0.Draw()
-    # h_pull_a0.SetTitle("Signal Inject Test Mass bin %i, Inject A0 %.2f" % (options.mbin, options.A0))
-    # h_pull_a0.GetXaxis().SetTitle("Pull A0")
-    # c2.Print("%sbias_test_mbin%i_Az%.0f.png" %(options.odir, options.mbin, 100.* options.A0))
-
-
-    c3 = TCanvas("c3", "", 900, 900)
-    h_res_yLQ2.Fit("gaus")
-    fit_yLQ2= h_res_yLQ2.GetFunction("gaus")
-    if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
-    h_res_yLQ2.Draw()
-    if is_vec: 
-        h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
-        h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
-        c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ, options.yLQ, options.chan, options.q,ending))
-    else: 
-        h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
-        h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
-        c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir,options.mLQ, options.yLQ, options.chan, options.q,ending))
+                    h_res_yLQ2 = TH1F("h_res_yLQ2", "", n_bins, -res_yLQ2_range, res_yLQ2_range)
 
 
 
-    # c4 = TCanvas("c1", "", 900, 900)
-    # h_res_a0.Fit("gaus")
-    # fit_a0= h_res_a0.GetFunction("gaus")
-    # if(fit_a0): fit_a0.SetLineColor(kBlue)
-    # h_res_a0.Draw()
-    # h_res_a0.SetTitle("Signal Inject Test Mass bin %i, Inject A0 %.2f" % (options.mbin, options.A0))
-    # h_res_a0.GetXaxis().SetTitle("#Delta A0")
-    # c4.Print("%sbias_test_res_mbin%i_Az%.0f.png" %(options.odir, options.mbin, 100.* options.A0))
+                    def fill_h(arr, h):
+                        #print(arr)
+                        for arg in arr:
+                            h.Fill(arg)
+
+                    fill_h(pull_yLQ2, h_pull_yLQ2)
+                    #fill_h(pull_a0, h_pull_a0)
+                    fill_h(res_yLQ2, h_res_yLQ2)
+                    #fill_h(res_a0, h_res_a0)
+
+                    if options.chan=="mumu": chan_label = "#mu"
+                    else : chan_label = "e"
+
+                    c1 = TCanvas("c1", "", 900, 900)
+                    h_pull_yLQ2.Fit("gaus")
+                    fit_yLQ2= h_pull_yLQ2.GetFunction("gaus")
+                    if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
+                    h_pull_yLQ2.Draw()
+
+                    if is_vec: 
+                        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
+                        c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
+                    else: 
+                        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
+                        c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
+
+
+                    # c2 = TCanvas("c1", "", 900, 900)
+                    # h_pull_a0.Fit("gaus")
+                    # fit_a0= h_pull_a0.GetFunction("gaus")
+                    # if(fit_a0): fit_a0.SetLineColor(kBlue)
+                    # h_pull_a0.Draw()
+                    # h_pull_a0.SetTitle("Signal Inject Test Mass bin %i, Inject A0 %.2f" % (options.mbin, options.A0))
+                    # h_pull_a0.GetXaxis().SetTitle("Pull A0")
+                    # c2.Print("%sbias_test_mbin%i_Az%.0f.png" %(options.odir, options.mbin, 100.* options.A0))
+
+
+                    c3 = TCanvas("c3", "", 900, 900)
+                    h_res_yLQ2.Fit("gaus")
+                    fit_yLQ2= h_res_yLQ2.GetFunction("gaus")
+                    if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
+                    h_res_yLQ2.Draw()
+                    if is_vec: 
+                        h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
+                        c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ, options.yLQ, options.chan, options.q,ending))
+                    else: 
+                        h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
+                        c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir,options.mLQ, options.yLQ, options.chan, options.q,ending))
+
+
+
+                    # c4 = TCanvas("c1", "", 900, 900)
+                    # h_res_a0.Fit("gaus")
+                    # fit_a0= h_res_a0.GetFunction("gaus")
+                    # if(fit_a0): fit_a0.SetLineColor(kBlue)
+                    # h_res_a0.Draw()
+                    # h_res_a0.SetTitle("Signal Inject Test Mass bin %i, Inject A0 %.2f" % (options.mbin, options.A0))
+                    # h_res_a0.GetXaxis().SetTitle("#Delta A0")
+                    # c4.Print("%sbias_test_res_mbin%i_Az%.0f.png" %(options.odir, options.mbin, 100.* options.A0))
 
