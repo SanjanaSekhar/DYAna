@@ -143,16 +143,20 @@ else:
                 for options.yLQ in [0.0,0.25,0.5]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
+                    else: is_vec = False
 
 
                     respull = []
 
                     for job_idx in [0,1,2,3,4,5,6,7,8,9]:
-                        if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
-                        else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,ending, options.odir,options.mLQ))
-                        with open('%s%s/respull_%s_%s_%i_yLQ%.1f_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,ending), 'r') as f:
-                            for line in f.readlines():
-                        	respull.append(line.split(' '))
+                        if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""),ending, options.odir,options.mLQ))
+                        else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending, options.odir,options.mLQ))
+                        filename = '%s%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending)
+                        
+                        if os.path.isfile(filename):
+                            with open(filename, 'r') as f:
+                                for line in f.readlines():
+                        	    respull.append(line.split(' '))
 
                     respull = np.asarray(respull, dtype=float)
                     res_yLQ2 = respull[:,0]
