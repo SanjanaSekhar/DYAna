@@ -22,56 +22,60 @@ date = options.ending
 
 
 if options.bias_tests:
-
-    mLQ_list = [2500,3500,5000]
+    #mLQ_list = [2500]
+    mLQ_list = [1000,2500,3500,5000,9000]
     for mLQ in mLQ_list:
         cmds = [
         "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.2 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.4 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.6 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.2 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.4 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.6 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.2 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.4 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.6 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.2 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.4 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.6 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        
         ]
 
         labels = [
-                "bias_test_yLQ0.0_ee_d_m",  "bias_test_yLQ0.2_ee_d_m",  "bias_test_yLQ0.4_ee_d_m",  "bias_test_yLQ0.6_ee_d_m", 
-		"bias_test_yLQ0.0_ee_u_vec_m", "bias_test_yLQ0.2_ee_u_vec_m","bias_test_yLQ0.4_ee_u_vec_m", "bias_test_yLQ0.6_ee_u_vec_m",
-        	"bias_test_yLQ0.0_mumu_u_m", "bias_test_yLQ0.2_mumu_u_m", "bias_test_yLQ0.4_mumu_u_m","bias_test_yLQ0.6_mumu_u_m",  
-		"bias_test_yLQ0.0_mumu_d_vec_m", "bias_test_yLQ0.2_mumu_d_vec_m", "bias_test_yLQ0.4_mumu_d_vec_m", "bias_test_yLQ0.6_mumu_d_vec_m"
+                "bias_test_yLQ0.0_ee_d_m",  "bias_test_yLQ0.25_ee_d_m",  "bias_test_yLQ0.5_ee_d_m",  #"bias_test_yLQ0.6_ee_d_m", 
+		
+                "bias_test_yLQ0.0_ee_u_vec_m", "bias_test_yLQ0.25_ee_u_vec_m","bias_test_yLQ0.5_ee_u_vec_m", #"bias_test_yLQ0.6_ee_u_vec_m",
+        	"bias_test_yLQ0.0_mumu_u_m", "bias_test_yLQ0.25_mumu_u_m", "bias_test_yLQ0.5_mumu_u_m",#"bias_test_yLQ0.6_mumu_u_m",  
+		"bias_test_yLQ0.0_mumu_d_vec_m", "bias_test_yLQ0.25_mumu_d_vec_m", "bias_test_yLQ0.5_mumu_d_vec_m",# "bias_test_yLQ0.6_mumu_d_vec_m"
                 
         ]
-
+        #sys = ["MCStatBin16,MCStatBin17,MCStatBin18,autoMCStats","elScales16,elScales17,elScales18","RFscales16,RFscales1718","elHLTs16,elHLTs17,elHLTs18"]
+        #sys = ["xsecs","MCStatBin16,MCStatBin17,MCStatBin18,autoMCStats","RFscales16,RFscales1718","muIDs16,muIDs17,muIDs18","muHLTs16,muHLTs17,muHLTs18","pdfs"]
+        sys = [""]
         cpy_cmd = "xrdcp -f temp/* $1 \n"
 
-        total_jobs = 400
+        total_jobs = 500
 
         for i,cmd in enumerate(cmds):
 
             for job_idx in range(total_jobs/50):
-
-                #regular templates
-                script_name = "scripts/script3.sh"
-                print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
-                script_file = open(script_name, 'a+')
-                script_file.write("mkdir temp\n")
-                script_file.write(cmd + " --job %i\n"%job_idx)
-                script_file.write(cpy_cmd)
-                script_file.close()
-                #print_and_do("cat %s" % script_name)
-                print_and_do("chmod +x %s" % script_name)
-                print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s%i_%i_%s"  % (n_m_bins, script_name, labels[i], mLQ, job_idx, date))
-                print_and_do("rm scripts/script3.sh")
+                for s in sys:
+                    #regular templates
+                    script_name = "scripts/script3.sh"
+                    print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+                    script_file = open(script_name, 'a+')
+                    script_file.write("mkdir temp\n")
+                    script_file.write(cmd + " --job %i \n"%(job_idx))
+                    script_file.write(cpy_cmd)
+                    script_file.close()
+                    #print_and_do("cat %s" % script_name)
+                    print_and_do("chmod +x %s" % script_name)
+                    print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s%i_no%s_%i_%s"  % (n_m_bins, script_name, labels[i], mLQ, s.replace(",",""), job_idx, date))
+                    print_and_do("rm scripts/script3.sh")
 
 if options.limits:
     cmds = [
@@ -258,21 +262,24 @@ if options.likelihood:
 
 
     cpy_cmd = "xrdcp -f likelihood_scans/* $1 \n"
-
+    poi_list = ["muISOBAR17", "muISOEND17","muIDEND17","muIDBAR17", "mufakesrw1b17", "mufakesrw2b17", "mufakesrw3b17", "mufakesrw4b17", "muISOBAR16", "muISOEND16","muIDEND16","muIDBAR16", "mufakesrw1b18", "mufakesrw2b18", "mufakesrw3b18", "mufakesrw4b18"]
+    '''
+    poi_list = ["dy_xsec","nlo_sys", "muISOBAR18", "muISOEND18", "muIDSYS", "muIDEND18", "muISOSYS", "muIDBAR18", "mufakesrw1b16", "mufakesrw2b16", "mufakesrw3b16", "mufakesrw4b16"]
+    
     poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
      "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
       "MCStatBin24", "MCStatBin29", "MCStatBin30", "MCStatBin31", "MCStatBin35", "MCStatBin36", "MCStatBin37", 
       "MCStatBin41", "MCStatBin42", "MCStatBin43", "MCStatBin44", "MCStatBin49", "MCStatBin50", "MCStatBin51", 
       "MCStatBin55", "MCStatBin56", "MCStatBin57",
       ]
-
+    
     for i in range(1,61):
         poi_list.append("pdf" + str(i))
 
 
     for i in range(1,61):
         poi_list.append("prop_binY18_bin" + str(i))
-
+    '''
     for poi in poi_list:
         for i,cmd in enumerate(cmds):
         #for m in range(1000,9500,500):

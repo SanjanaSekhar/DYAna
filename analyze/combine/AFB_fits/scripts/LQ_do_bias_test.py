@@ -197,11 +197,11 @@ else:
                     h_pull_yLQ2.Draw()
 
                     if is_vec: 
-                        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
                         h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
                         c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
                     else: 
-                        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
                         h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
                         c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
 
@@ -222,11 +222,11 @@ else:
                     if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
                     h_res_yLQ2.Draw()
                     if is_vec: 
-                        h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
                         h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
                         c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ, options.yLQ, options.chan, options.q,ending))
                     else: 
-                        h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,mLQ/1000.,options.freezeGroups))
+                        h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
                         h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
                         c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir,options.mLQ, options.yLQ, options.chan, options.q,ending))
 

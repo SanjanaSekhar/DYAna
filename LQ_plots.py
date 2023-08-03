@@ -40,7 +40,7 @@ def constants(flag):
 
 
 
-def LQ_cost(flag, cost, s, prnt = False):
+def LQ_cost(flag, cost, s, m_lq, prnt = False):
         cvl,cal,cvq,caq,Q_q = constants(flag)
         SM_part = SM_cost(flag,cost, s)
 
@@ -133,30 +133,37 @@ x_axis = np.linspace(-1,1,1000) # 1000 linearly spaced numbers
 #SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
 #sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #pylab.plot(x_axis,sm_v2,'b',label='SM')
-y_lq_list = np.linspace(0.,1.,30)
+y_lq_list = np.linspace(-1.,1.,60)
+y_lqsq_list = [x*x for x in y_lq_list]
 m_ll_list = np.linspace(500,5000,300)
 cost_list = np.linspace(-1,1,300)
 flag = 1
 
 for mLQ in [500,1000,2000,3000]:
+    print("======= mLQ = %i ======="%mLQ)
+    avg_xsec, avg_xsec_err = [],[]
     for y_lq in y_lq_list:
         f_list = []
+	#y_lq = sqrt(abs(y_lq2))
+	print('doing y_lq = %.3f'%y_lq)
         for m_ll in m_ll_list:
             for cost in cost_list:
                 
 
                 s = m_ll*m_ll
-                f_list.append(LQ_cost(flag,cost,s))
+                f_list.append(LQ_cost(flag,cost,s,mLQ))
 
-        avg_xsec.append(np.mean(f_list))
-        avg_xsec_err.append(np.std(f_list))
-    
-    plt.plot(y_lq_list, avg_xsec, label = 'mLQ=%i GeV'%mLQ)
+        avg_xsec.append(np.mean(f_list)/1e-11)
+        avg_xsec_err.append(np.std(f_list)/1e-11)
+    print(np.amin(avg_xsec), np.amax(avg_xsec))
+    pylab.plot(y_lq_list, avg_xsec, label = 'mLQ=%i GeV'%mLQ)
 
-plt.title('LQ angular distribution averaged over s and cost')
-plt.ylabel('LQ xsec averaged over s and cost')
-plt.xlabel('yLQ (mu-d)')
-plt.savefig("xsec_vs_yLQ_dm.png")
+pylab.ylim(0.5,35)
+pylab.title('LQ angular distribution averaged over s and cost')
+pylab.ylabel('(LQ xsec averaged over s and cost)/1e-11')
+pylab.xlabel('yLQ (mu-d)')
+pylab.legend()
+pylab.savefig("xsec_vs_yLQ_dm.png")
 
 '''
 

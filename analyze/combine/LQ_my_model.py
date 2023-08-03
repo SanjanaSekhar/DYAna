@@ -10,9 +10,9 @@ class LQ_YLQ_SQ(PhysicsModel):
         """Create POI and other parameters, and define the POI set."""
 
         self.modelBuilder.doVar("A4[1.61, -2.0, 2.0]");
-        self.modelBuilder.doVar("A0[0.04, -0.2, 0.2]");
+        self.modelBuilder.doVar("A0[0.05, -0.2, 0.2]");
         self.modelBuilder.doVar("yLQ2[0.001, -5., 5.]");
-        self.modelBuilder.doSet("POI","yLQ2")
+        self.modelBuilder.doSet("POI","yLQ2,A4")
         self.modelBuilder.doVar('expr::yLQ("((TMath::Abs(@0))**(0.5))",yLQ2)')
         #self.modelBuilder.doVar("POI","yLQ")
 	#self.modelBuilder.factory_('expr::yLQ2("(@0*@0)",yLQ)')
@@ -33,8 +33,9 @@ class LQ_YLQ_SQ(PhysicsModel):
         if 'LQpure' in process: return "yLQ4"
         elif 'LQint_u' in process or 'LQint_c' in process: return "yLQ2"
 	elif 'LQint_d_vec' in process or 'LQint_s_vec' in process: return "minusyLQ2"
-	elif 'LQint_d' in process or 'LQint_s' in process: return "yLQ2"
-        elif 'alpha' in process: return "RAlph"
+	#elif 'LQint_d' in process or 'LQint_s' in process: return "yLQ2"
+        elif 'LQint_d' in process or 'LQint_s' in process: return "yLQ2"
+	elif 'alpha' in process: return "RAlph"
         elif 'pl' in process: return "Rpl"
         elif 'mn' in process : return "Rmn"
         else:
