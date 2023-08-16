@@ -70,10 +70,11 @@ if not options.plot:
         print("Sampling toys based on postfit")
         if(not options.reuse_fit):
             print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i   -n _%i" % (workspace, extra_params,123457+options.job,123457+options.job))
-    count = 0
-    for i in range(options.nToys):
-
-        if(not options.prefit):
+    nToys_generated = 0
+    #for i in range(options.nToys):
+    while nToys_generated < options.nToys:
+        i = nToys_generated
+	if(not options.prefit):
             fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = 123457+options.job)
             if(options.no_sys):
                 print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f,A4=1.6,A0=0.05 " % (i,yLQ2))
@@ -103,11 +104,11 @@ if not options.plot:
             #A0 = myargs.find("A0").getVal()
             #A0_err = myargs.find("A0").getError()
             if yLQ2_err_hi == 0. or yLQ2_err_lo == 0. :
-                count += 1 
-                print("FIT FAILED, SKIPPING TOY %i"%count)
+                print("FIT FAILED, SKIPPING TOY ")
                 continue
             print("yLQ2 %.3f err %.3f %.3f" % (yLQ2_fit, yLQ2_err_hi, yLQ2_err_lo))
-            res_yLQ2.append(yLQ2_fit - yLQ2)
+            res_yLQ2.append(yLQ2_fit - yLQ2) 
+            nToys_generated += 1
             if (yLQ2_fit - yLQ2) < 0 and yLQ2_err_hi > 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/ yLQ2_err_hi)
             elif (yLQ2_fit - yLQ2) > 0 and yLQ2_err_lo < 0.: pull_yLQ2.append((yLQ2_fit-yLQ2)/abs(yLQ2_err_lo))
             
@@ -139,7 +140,7 @@ else:
 
     for options.chan in ["mumu","ee"]:
         for options.q in ["u","d"]:
-            for options.mLQ in [1000,2500,3500,5000,9000]:
+            for options.mLQ in [1000,2500,3500]:
                 for options.yLQ in [0.0,0.25,0.5]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
@@ -148,7 +149,7 @@ else:
 
                     respull = []
 
-                    for job_idx in [0,1,2,3,4,5,6,7,8,9]:
+                    for job_idx in range(0,25):
                         if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""),ending, options.odir,options.mLQ))
                         else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending, options.odir,options.mLQ))
                         filename = '%s%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending)
