@@ -65,25 +65,25 @@ if not options.plot:
     res_yLQ2 = []
     pull_yLQ2 = []
 
-
+    seed = i = 3457 * (options.job+1)
     if(not options.prefit):
         print("Sampling toys based on postfit")
         if(not options.reuse_fit):
-            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i   -n _%i" % (workspace, extra_params,3457+options.job,3457+options.job))
-    nToys_generated = 0
+            print_and_do("combine -M MultiDimFit -d %s --saveFit --saveWorkspace --robustFit 1 %s -s %i   -n _%i" % (workspace, extra_params,seed,seed))
+    nToys_generated = 0 
     #for i in range(options.nToys):
     while nToys_generated < options.nToys:
-        i = nToys_generated
+        i += 1
 	if(not options.prefit):
-            fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = 3457+options.job)
+            fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
             if(options.no_sys):
-                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f,A4=1.6,A0=0.05 " % (i,yLQ2))
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%f,A4=1.6,A0=0.05 " % (i,yLQ2))
 
             else:
-                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%.2f,A4=1.6,A0=0.05 " % (i,yLQ2))
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%f,A4=1.6,A0=0.05 " % (i,yLQ2))
         else:
 
-            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%.2f,A4=1.6,A0=0.05 "% (workspace, i, yLQ2))
+            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%f,A4=1.6,A0=0.05 "% (workspace, i, yLQ2))
 
         #print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s -n _%i --freezeParameters A4,A0 --robustHesse=1" %(workspace,  i, extra_params, i))
         if no_sys: print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult -t 1 --toysNoSystematics --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root   --robustFit 1  --forceRecreateNLL %s -n _%i " %(workspace,  i, extra_params, i))
@@ -140,7 +140,7 @@ else:
 
     for options.chan in ["mumu","ee"]:
         for options.q in ["u","d"]:
-            for options.mLQ in [5000]:
+            for options.mLQ in [1000,2500,3500,5000]:
                 for options.yLQ in [0.0,0.25,0.5]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True

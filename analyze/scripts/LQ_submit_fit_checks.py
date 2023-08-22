@@ -22,29 +22,30 @@ date = options.ending
 
 
 if options.bias_tests:
-    #mLQ_list = [2500]
-    mLQ_list = [1000,2500,3500,5000,9000]
+    #mLQ_list = [5000,9000]
+    mLQ_list = [1000,2500,3500,5000]
     for mLQ in mLQ_list:
-        cmds = [
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        
+	cmds = [
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         
         ]
-
+	
         labels = [
                 "bias_test_yLQ0.0_ee_d_m",  "bias_test_yLQ0.25_ee_d_m",  "bias_test_yLQ0.5_ee_d_m",  #"bias_test_yLQ0.6_ee_d_m", 
 		
@@ -53,6 +54,18 @@ if options.bias_tests:
 		"bias_test_yLQ0.0_mumu_d_vec_m", "bias_test_yLQ0.25_mumu_d_vec_m", "bias_test_yLQ0.5_mumu_d_vec_m",# "bias_test_yLQ0.6_mumu_d_vec_m"
                 
         ]
+	'''
+	cmds = [
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q u  --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d  --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q d  --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        ]
+	labels = [ "bias_test_yLQ0.25_mumu_u_m",
+	"bias_test_yLQ0.5_ee_d_m","bias_test_yLQ0.25_ee_d_m",
+	"bias_test_yLQ0.5_mumu_d_vec_m"
+	]
+	'''
         #sys = ["MCStatBin16,MCStatBin17,MCStatBin18,autoMCStats","elScales16,elScales17,elScales18","RFscales16,RFscales1718","elHLTs16,elHLTs17,elHLTs18"]
         #sys = ["xsecs","MCStatBin16,MCStatBin17,MCStatBin18,autoMCStats","RFscales16,RFscales1718","muIDs16,muIDs17,muIDs18","muHLTs16,muHLTs17,muHLTs18","pdfs"]
         sys = [""]
@@ -62,7 +75,7 @@ if options.bias_tests:
 
         for i,cmd in enumerate(cmds):
 
-            for job_idx in range(total_jobs/50):
+            for job_idx in range(total_jobs/10):
                 for s in sys:
                     #regular templates
                     script_name = "scripts/script3.sh"

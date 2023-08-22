@@ -111,10 +111,10 @@ else:
         sym_i = get_sym_bin(i-1, 60)
         if sym_i < i: continue
         pars_comb.append("MCStatBin%i"%i)
-    '''
+    
     for i in range(1,61):
         pars_comb.append("pdf" + str(i))
-
+    '''
     for par in all_sys:
         if(par not in correlate_all): 
             pars16.append(par + "16")
@@ -187,12 +187,12 @@ else:
         extra_params += " --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist -t 1" % s
 
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s  --freezeParameters A4,A0 --robustHesse=1" % (workspace, extra_params))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doInitialFit --robustFit 1 %s   --robustHesse=1" % (workspace, extra_params))
 
     #if(options.expected):
     print_and_do("cp higgsCombine_initialFit_Test.MultiDimFit.mH125.%i.root higgsCombine_initialFit_Test.MultiDimFit.mH125.root" % s)
 
-    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s  --freezeParameters A4,A0 --robustHesse=1" % (workspace, par_str, options.nThreads, extra_params))
+    print_and_do("combineTool.py -M Impacts -m 125 -d %s --doFits --named %s --parallel %i %s  --robustFit 1 --robustHesse=1" % (workspace, par_str, options.nThreads, extra_params))
 
     #if(options.expected):
     print("Renaming sys fits")

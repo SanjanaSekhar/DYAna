@@ -1,4 +1,5 @@
 analyze/condor_jobs/
+analyze/combine/AFB_fits/signal_injection/condor/*/*.txt
 *.pyc
 *.swo
 *.root
