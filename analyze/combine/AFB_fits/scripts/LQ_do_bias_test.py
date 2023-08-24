@@ -138,9 +138,9 @@ if not options.plot:
 
 else:
 
-    for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee","mumu"]:
         for options.q in ["u","d"]:
-            for options.mLQ in [1000,2500,3500,5000]:
+            for options.mLQ in [9000]:
                 for options.yLQ in [0.0,0.25,0.5]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
@@ -166,7 +166,9 @@ else:
                     res_yLQ2 = res_yLQ2.tolist()
                     pull_yLQ2 = pull_yLQ2.tolist()
                     print("No. of toys in residuals: ", len(res_yLQ2))
+		    print(res_yLQ2)
                     print("No. of toys in pulls: ", len(pull_yLQ2))
+		    print(pull_yLQ2)
                     if len(res_yLQ2) != len(pull_yLQ2): print("REDO TESTS for channel %s %s - yLQ = %.2f - mLQ = %s ",options.chan, options.q, options.yLQ, options.mLQ)
 
                     n_bins = 25
