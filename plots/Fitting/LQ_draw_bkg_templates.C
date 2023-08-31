@@ -408,14 +408,14 @@ void LQ_draw_bkg_templates(){
         h1_elel_alpha->SetLineColor(kGreen);
 	
 
-	h1_mumu_pl->Scale(0.5);
-        h1_mumu_mn->Scale(0.5);
+	//h1_mumu_pl->Scale(0.5);
+        //h1_mumu_mn->Scale(0.5);
         Double_t alpha= 0.04;
         double norm = 3./4./(2.+alpha);
         h1_mumu_alpha->Scale(norm);
 		
-	h1_elel_pl->Scale(0.5);
-        h1_elel_mn->Scale(0.5);
+	//h1_elel_pl->Scale(0.5);
+        //h1_elel_mn->Scale(0.5);
         h1_elel_alpha->Scale(norm);
 
         char mu_title2[100], el_title2[100];

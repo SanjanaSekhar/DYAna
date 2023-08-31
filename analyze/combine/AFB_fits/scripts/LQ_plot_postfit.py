@@ -4,7 +4,7 @@ from contextlib import contextmanager
 import os, pickle, subprocess, time,random
 import math
 from math import sqrt
-import array
+from array import array
 from optparse import OptionParser
 import CMS_lumi, tdrstyle
 
@@ -303,10 +303,10 @@ gROOT.SetBatch(1)
 #                 else: CMS_loc = 11
 #                 CMS_lumi.CMS_lumi(thisPad, year, CMS_loc)
 
-	if rootfile:
-		myCan.Print(tag+'/'+name+'.root','root')
-	else:
-		myCan.Print(tag+'/'+name+'_m'+str(mLQ)+'.png','png')
+#	if rootfile:
+#		myCan.Print(tag+'/'+name+'.root','root')
+#	else:
+#		myCan.Print(tag+'/'+name+'_m'+str(mLQ)+'.png','png')
 
 
 
@@ -997,21 +997,21 @@ for year in years:
 				if(name == "dy"):
 					h_dy = f_in.Get(dir_ + "fpl")
 					if(h_dy != None):
-					h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
-					h = f_in.Get(dir_ + "fmn")
+						h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
+						h = f_in.Get(dir_ + "fmn")
 					if(h != None):
-					h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
-					h_dy.Add(h)
-					h = f_in.Get(dir_ + "alpha")
+						h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
+						h_dy.Add(h)
+						h = f_in.Get(dir_ + "alpha")
 					if(h != None):
-					h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
-					h_dy.Add(h)
+						h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
+						h_dy.Add(h)
 					
-					h = h_dy
+						h = h_dy
 			#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 				elif name=="LQ":
 					h_tot_sig = f_in.Get(dir_ + "TotalSig")
-            		h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 				else:
 					h = f_in.Get(dir_ + name)
 					if(h != None):

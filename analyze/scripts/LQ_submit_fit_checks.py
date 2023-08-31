@@ -23,35 +23,35 @@ date = options.ending
 
 if options.bias_tests:
     #mLQ_list = [5000,9000]
-    mLQ_list = [1000,2500,3500,5000]
+    mLQ_list = [6000]
     for mLQ in mLQ_list:
         
 	cmds = [
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 1.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 2.0 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ  2.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 0.9 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 1.3 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 1.5 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.25 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 2.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 1.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 2.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         
         ]
 	
         labels = [
-                "bias_test_yLQ0.0_ee_d_m",  "bias_test_yLQ0.25_ee_d_m",  "bias_test_yLQ0.5_ee_d_m",  #"bias_test_yLQ0.6_ee_d_m", 
+                "bias_test_yLQ1.5_ee_d_m",  "bias_test_yLQ2.0_ee_d_m",  "bias_test_yLQ2.5_ee_d_m",  #"bias_test_yLQ0.6_ee_d_m", 
 		
-                "bias_test_yLQ0.0_ee_u_vec_m", "bias_test_yLQ0.25_ee_u_vec_m","bias_test_yLQ0.5_ee_u_vec_m", #"bias_test_yLQ0.6_ee_u_vec_m",
-        	"bias_test_yLQ0.0_mumu_u_m", "bias_test_yLQ0.25_mumu_u_m", "bias_test_yLQ0.5_mumu_u_m",#"bias_test_yLQ0.6_mumu_u_m",  
-		"bias_test_yLQ0.0_mumu_d_vec_m", "bias_test_yLQ0.25_mumu_d_vec_m", "bias_test_yLQ0.5_mumu_d_vec_m",# "bias_test_yLQ0.6_mumu_d_vec_m"
+                "bias_test_yLQ0.5_ee_u_vec_m", "bias_test_yLQ0.9_ee_u_vec_m","bias_test_yLQ1.3_ee_u_vec_m", #"bias_test_yLQ0.6_ee_u_vec_m",
+        	"bias_test_yLQ1.0_mumu_u_m", "bias_test_yLQ1.5_mumu_u_m", "bias_test_yLQ2.0_mumu_u_m",#"bias_test_yLQ0.6_mumu_u_m",  
+		"bias_test_yLQ1.0_mumu_d_vec_m", "bias_test_yLQ1.5_mumu_d_vec_m", "bias_test_yLQ2.0_mumu_d_vec_m",# "bias_test_yLQ0.6_mumu_d_vec_m"
                 
         ]
 	'''
