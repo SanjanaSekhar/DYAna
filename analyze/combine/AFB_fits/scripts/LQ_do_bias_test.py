@@ -140,14 +140,14 @@ else:
     
     for options.yLQ in [0.0,0.25,0.5]:
         c4 = TCanvas("c4", "", 900, 900)
-        leg = TLegend()
+        leg = TLegend(0.6,0.6,0.9,0.9)
         leg.SetHeader("Channel","C")
 	mg = TMultiGraph()
-        l1 = TLine(900,-1,5500,-1)
-        l2 = TLine(900,-0.5,5500,-0.5)
-        l3 = TLine(900,0,5500,0)
-        l4 = TLine(900,0.5,5500,0.5)
-        l5 = TLine(900,1,5500,1)
+        l1 = TLine(800,-1,5200,-1)
+        l2 = TLine(800,-0.5,5200,-0.5)
+        l3 = TLine(800,0,5200,0)
+        l4 = TLine(800,0.5,5200,0.5)
+        l5 = TLine(800,1,5200,1)
         l1.SetLineStyle(9)
         l2.SetLineStyle(9)
         l3.SetLineStyle(9)
@@ -279,18 +279,23 @@ else:
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
 	        gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
-                gr[i].SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
+                #mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	        gr[i].SetName('gr%i'%i)
 	        gr[i].SetMarkerStyle(20);
 	        gr[i].SetMarkerColor(mcolor)
-	        leg.AddEntry('gr%i'%i, chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep') 
+	        leg.AddEntry('gr%i'%i, chan_label+"-"+options.q+"%s"%("-vec" if is_vec else "")) 
 	        mg.Add(gr[i])
 	        #gr[i].GetYaxis().SetRangeUser(-3.,3.)
                 mcolor+=1
 		i+=1
-
+	
+	mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
     	mg.Draw("AP")
 	mg.GetYaxis().SetRangeUser(-3.,3.)
+	leg.AddEntry('gr0','e-u-vec','lep')
+	leg.AddEntry('gr1','e-d','lep')
+	leg.AddEntry('gr2','#mu-u','lep')
+	leg.AddEntry('gr3','#mu-d-vec','lep')
         leg.Draw("same")
         l1.Draw("same")
         l2.Draw("same")
