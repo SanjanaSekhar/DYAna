@@ -138,27 +138,28 @@ if not options.plot:
 
 else:
     
-    c4 = TCanvas("c4", "", 900, 900)
-    leg = TLegend()
-    leg.SetHeader("Channel","C")
-    l1 = TLine(900,-1,5500,-1)
-    l2 = TLine(900,-0.5,5500,-0.5)
-    l3 = TLine(900,0,5500,0)
-    l4 = TLine(900,0.5,5500,0.5)
-    l5 = TLine(900,1,5500,1)
-    l1.SetLineStyle(9)
-    l2.SetLineStyle(9)
-    l3.SetLineStyle(9)
-    l4.SetLineStyle(9)
-    l5.SetLineStyle(9)
+    for options.yLQ in [0.0,0.25,0.5]:
+        c4 = TCanvas("c4", "", 900, 900)
+        leg = TLegend()
+        leg.SetHeader("Channel","C")
+        l1 = TLine(900,-1,5500,-1)
+        l2 = TLine(900,-0.5,5500,-0.5)
+        l3 = TLine(900,0,5500,0)
+        l4 = TLine(900,0.5,5500,0.5)
+        l5 = TLine(900,1,5500,1)
+        l1.SetLineStyle(9)
+        l2.SetLineStyle(9)
+        l3.SetLineStyle(9)
+        l4.SetLineStyle(9)
+        l5.SetLineStyle(9)
+        mcolor = 5
+        for options.chan in ["ee","mumu"]:
+            for options.q in ["u","d"]:
 
-    for options.chan in ["ee","mumu"]:
-        for options.q in ["u","d"]:
-
-	    pull_mean, pull_sigma, m_list = array("d"),array("d"),array("d")
+	        pull_mean, pull_sigma, m_list = array("d"),array("d"),array("d")
             
-	    for options.mLQ in [1000,2500,3500,5000]:
-                for options.yLQ in [0.0]:
+	        for options.mLQ in [1000,2500,3500,5000]:
+                #for options.yLQ in [0.0,0.25,0.5]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
                     else: is_vec = False
@@ -268,25 +269,25 @@ else:
 		    #q_list.append(options.q)
 		    #yLQ_list.append(options.yLQ)
 	
-	    c4.cd()
-	    #draw the list of pulls for 1 channel
-            #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	    gr = TGraphErrors(4, m_list, pull_mean, array("d",[0,0,0,0]), pull_sigma)
-            gr.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
-	    gr.SetName('gr')
-	    leg.AddEntry('gr', chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep')
-	    gr.GetYaxis().SetRange(-3,3)
-	    gr.SetMarkerStyle(20);
-	    
-	    gr.Draw("AP PMC same")
-	    #del gr
-
-    leg.Draw("same")
-    l1.Draw("same")
-    l2.Draw("same")
-    l3.Draw("same")
-    l4.Draw("same")
-    l5.Draw("same")
-    c4.Print("bias_summary_yLQ%.2f_%s.png"%(options.yLQ,ending))
-    c4.Close()
+	        c4.cd()
+	        #draw the list of pulls for 1 channel
+                #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
+	        gr = TGraphErrors(4, m_list, pull_mean, array("d",[0,0,0,0]), pull_sigma)
+                gr.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
+	        gr.SetName('gr')
+	        gr.SetMarkerStyle(20);
+	        gr.SetMarkerColor(mcolor)
+	        leg.AddEntry('gr', chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep') 
+	        gr.Draw("AP same")
+	        gr.GetYaxis().SetLimits(-3.,3.)
+                mcolor+=1
+    
+        leg.Draw("same")
+        l1.Draw("same")
+        l2.Draw("same")
+        l3.Draw("same")
+        l4.Draw("same")
+        l5.Draw("same")
+        c4.Print("bias_summary_yLQ%.2f_%s.png"%(options.yLQ,ending))
+        c4.Close()
 	
