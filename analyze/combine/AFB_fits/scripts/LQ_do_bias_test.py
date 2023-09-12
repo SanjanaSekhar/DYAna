@@ -153,6 +153,8 @@ else:
         l4.SetLineStyle(9)
         l5.SetLineStyle(9)
         mcolor = 5
+	i = 0
+	gr = []
         for options.chan in ["ee","mumu"]:
             for options.q in ["u","d"]:
 
@@ -272,15 +274,16 @@ else:
 	        c4.cd()
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	        gr = TGraphErrors(4, m_list, pull_mean, array("d",[0,0,0,0]), pull_sigma)
-                gr.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
-	        gr.SetName('gr')
-	        gr.SetMarkerStyle(20);
-	        gr.SetMarkerColor(mcolor)
+	        gr.append(TGraphErrors(4, m_list, pull_mean, array("d",[0,0,0,0]), pull_sigma))
+                gr[i].SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
+	        gr[i].SetName('gr')
+	        gr[i].SetMarkerStyle(20);
+	        gr[i].SetMarkerColor(mcolor)
 	        leg.AddEntry('gr', chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep') 
-	        gr.Draw("AP same")
-	        gr.GetYaxis().SetLimits(-3.,3.)
+	        gr[i].Draw("AP same")
+	        gr[i].GetYaxis().SetLimits(-3.,3.)
                 mcolor+=1
+		i+=1
     
         leg.Draw("same")
         l1.Draw("same")
