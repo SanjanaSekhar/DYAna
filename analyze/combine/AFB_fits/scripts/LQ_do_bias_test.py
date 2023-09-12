@@ -138,10 +138,10 @@ if not options.plot:
 
 else:
 
-    for options.chan in ["mumu"]:
-        for options.q in ["u"]:
+    for options.chan in ["ee","mumu"]:
+        for options.q in ["u","d"]:
             for options.mLQ in [9000]:
-                for options.yLQ in [2.0,2.5,3.0]:
+                for options.yLQ in [5.0,5.5,6.0]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
                     else: is_vec = False

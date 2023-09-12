@@ -330,7 +330,7 @@ gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 
 
 
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='Data',bkgNames=[],signalNames=[],
-		logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 5, ratio_range = None, NDiv = 205, prelim = False):  
+		logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 6, ratio_range = None, NDiv = 205, prelim = False):  
 
 	# histlist is just the generic list but if bkglist is specified (non-empty)
 	# then this function will stack the backgrounds and compare against histlist as if 
@@ -581,7 +581,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "   #splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 1.5]}}", 
 							"#splitline{   #bf{|y| #epsilon}}{#bf{[1.5, 2.4]}}"]
 				else:
-					line_vals = [8, 16]
+					line_vals = [8, 14, 20, 28, 34, 40, 48, 54, 60]
 					text_center_bins = [4, 12, 19]
 					text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
 
@@ -615,7 +615,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <= 5):
 					latext.SetTextSize(0.050);    
 				else:
-					latext.SetTextSize(0.06);    
+					latext.SetTextSize(0.03);    
 				text_y = 0.43
 
 				l_margin = gPad.GetLeftMargin();
