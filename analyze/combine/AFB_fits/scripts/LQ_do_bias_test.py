@@ -276,7 +276,7 @@ else:
 	    gr.SetName('gr')
 	    leg.AddEntry('gr', chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep')
 	    gr.Draw("AP same")
-	    del gr
+	    #del gr
 
     leg.Draw("same")
     l1.Draw("same")
