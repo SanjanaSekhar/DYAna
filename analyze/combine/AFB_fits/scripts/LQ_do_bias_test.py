@@ -154,12 +154,15 @@ else:
         l5.SetLineStyle(9)
         mcolor = 5
 	i = 0
-	gr = []
+	gr, pull_mean, pull_sigma = [],[],[]
         for options.chan in ["ee","mumu"]:
             for options.q in ["u","d"]:
 
-	        pull_mean, pull_sigma, m_list = array("d"),array("d"),array("d")
-            
+	        #pull_mean, pull_sigma = [],[]
+		m_list = array("d")
+		pull_mean.append(array("d"))
+		pull_sigma.append(array("d"))
+                    
 	        for options.mLQ in [1000,2500,3500,5000]:
                 #for options.yLQ in [0.0,0.25,0.5]:
 
@@ -219,8 +222,8 @@ else:
                     fit_yLQ2= h_pull_yLQ2.GetFunction("gaus")
                     if(fit_yLQ2): fit_yLQ2.SetLineColor(kBlue)
                     h_pull_yLQ2.Draw()
-		    pull_mean.append(fit_yLQ2.GetParameter(1))
-		    pull_sigma.append(fit_yLQ2.GetParameter(2))
+		    pull_mean[i].append(fit_yLQ2.GetParameter(1))
+		    pull_sigma[i].append(fit_yLQ2.GetParameter(2))
                     if is_vec: 
                         h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
                         h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
@@ -274,14 +277,14 @@ else:
 	        c4.cd()
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	        gr.append(TGraphErrors(4, m_list, pull_mean, array("d",[0,0,0,0]), pull_sigma))
+	        gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
                 gr[i].SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	        gr[i].SetName('gr')
 	        gr[i].SetMarkerStyle(20);
 	        gr[i].SetMarkerColor(mcolor)
 	        leg.AddEntry('gr', chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep') 
 	        gr[i].Draw("AP same")
-	        gr[i].GetYaxis().SetLimits(-3.,3.)
+	        gr[i].GetYaxis().SetRangeUser(-3.,3.)
                 mcolor+=1
 		i+=1
     
