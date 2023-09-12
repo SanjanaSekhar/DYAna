@@ -141,11 +141,11 @@ else:
     c4 = TCanvas("c4", "", 900, 900)
     leg = TLegend()
     leg.SetHeader("Channel","C")
-    l1 = TLine(0,-1,9500,-1)
-    l2 = TLine(0,-0.5,9500,-0.5)
-    l3 = TLine(0,0,9500,0)
-    l4 = TLine(0,0.5,9500,0.5)
-    l5 = TLine(0,1,9500,1)
+    l1 = TLine(900,-1,5500,-1)
+    l2 = TLine(900,-0.5,5500,-0.5)
+    l3 = TLine(900,0,5500,0)
+    l4 = TLine(900,0.5,5500,0.5)
+    l5 = TLine(900,1,5500,1)
     l1.SetLineStyle(9)
     l2.SetLineStyle(9)
     l3.SetLineStyle(9)
@@ -275,7 +275,10 @@ else:
             gr.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	    gr.SetName('gr')
 	    leg.AddEntry('gr', chan_label+"-"+options.q+"%s"%("-vec" if is_vec else ""), 'lep')
-	    gr.Draw("AP same")
+	    gr.GetYaxis().SetRange(-3,3)
+	    gr.SetMarkerStyle(20);
+	    
+	    gr.Draw("AP PMC same")
 	    #del gr
 
     leg.Draw("same")
