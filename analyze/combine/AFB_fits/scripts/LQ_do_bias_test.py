@@ -279,7 +279,7 @@ else:
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
 	        if len(pull_mean) < 2 or len(pull_sigma) < 2 or len(m_list) < 2: continue
-		gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",np.zeros(len(m_list))), pull_sigma[i]))
+		gr.append(TGraphErrors(2, m_list, pull_mean[i], array("d",[0,0]), pull_sigma[i]))
                 #mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	        gr[i].SetName('gr%i'%i)
 	        gr[i].SetMarkerStyle(20);
@@ -292,7 +292,7 @@ else:
 	
 	mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
     	mg.Draw("AP")
-	mg.GetYaxis().SetRangeUser(-3.,3.)
+	#mg.GetYaxis().SetRangeUser(-3.,3.)
 	leg.AddEntry('gr0','e-u-vec','lep')
 	leg.AddEntry('gr1','e-d','lep')
 	leg.AddEntry('gr2','#mu-u','lep')
