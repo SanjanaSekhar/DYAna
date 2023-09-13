@@ -278,7 +278,7 @@ else:
 	        c4.cd()
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	        if len(pull_mean) < 4 or len(pull_sigma) < 4: continue
+	        if len(pull_mean) < 2 or len(pull_sigma) < 2: continue
 		gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
                 #mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	        gr[i].SetName('gr%i'%i)
