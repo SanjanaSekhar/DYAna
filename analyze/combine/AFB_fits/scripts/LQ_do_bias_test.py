@@ -140,7 +140,7 @@ else:
     
     for options.yLQ in [3.0]:
         c4 = TCanvas("c4", "", 900, 900)
-        leg = TLegend(0.75,0.75,0.95,0.95)
+        leg = TLegend(0.9,0.9,1.0,1.0)
         leg.SetHeader("Channel","C")
 	mg = TMultiGraph()
         l1 = TLine(5000,-1,7000,-1)
