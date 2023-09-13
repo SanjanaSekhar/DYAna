@@ -173,10 +173,13 @@ else:
 
                     respull = []
 		    #pull_mean, pull_sigma, m_list, q_list, chan_list, yLQ_list = [],[],[],[],[],[]
-                    for job_idx in range(0,50):
-                        if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""),ending, options.odir,options.mLQ))
+                    
+		    for job_idx in range(0,50):
+                        '''
+			if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""),ending, options.odir,options.mLQ))
                         else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending, options.odir,options.mLQ))
-                        filename = '%s%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending)
+                        '''
+			filename = '%s%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending)
                         
                         if os.path.isfile(filename):
                             with open(filename, 'r') as f:
@@ -227,11 +230,11 @@ else:
 		    pull_sigma[i].append(fit_yLQ2.GetParameter(2))
                     if is_vec: 
                         h_pull_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
-                        h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^2"%(chan_label,options.q))
+                        h_pull_yLQ2.GetXaxis().SetTitle("Pull g_{%s %s}^{2}"%(chan_label,options.q))
                         c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
                     else: 
                         h_pull_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
-                        h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^2"%(chan_label,options.q))
+                        h_pull_yLQ2.GetXaxis().SetTitle("Pull y_{%s %s}^{2}"%(chan_label,options.q))
                         c1.Print("%s%s/bias_test_pull_yLQ%.1f_%s_%s_%s.png" %(options.odir, options.mLQ,options.yLQ, options.chan, options.q,ending))
 
 
@@ -253,11 +256,11 @@ else:
                     h_res_yLQ2.Draw()
                     if is_vec: 
                         h_res_yLQ2.SetTitle("Signal Inject Test : Inject g_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
-                        h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^2"%(chan_label,options.q))
+                        h_res_yLQ2.GetXaxis().SetTitle("#Delta g_{%s %s}^{2}"%(chan_label,options.q))
                         c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_vec_%s.png" %(options.odir, options.mLQ, options.yLQ, options.chan, options.q,ending))
                     else: 
                         h_res_yLQ2.SetTitle("Signal Inject Test : Inject y_{%s %s} = %.1f (M_{LQ} = %.1f TeV); freeze: %s" % (chan_label,options.q,options.yLQ,options.mLQ/1000.,options.freezeGroups))
-                        h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^2"%(chan_label,options.q))
+                        h_res_yLQ2.GetXaxis().SetTitle("#Delta y_{%s %s}^{2}"%(chan_label,options.q))
                         c3.Print("%s%s/bias_test_res_yLQ%.1f_%s_%s_%s.png" %(options.odir,options.mLQ, options.yLQ, options.chan, options.q,ending))
 
 
@@ -295,7 +298,7 @@ else:
 	mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
     	mg.Draw("AP")
 	mg.GetYaxis().SetRangeUser(-3.,3.)
-	mg.GetYaxis().SetTitle("[y_{LQ}^2 (fit) - y_{LQ}^2 (true)]/#sigma")
+	mg.GetYaxis().SetTitle("[y_{LQ}^{2}(fit) - y_{LQ}^{2}(true)]/#sigma")
 	mg.GetXaxis().SetTitle("m_{LQ} (GeV)")
 	leg.AddEntry('gr0','e-u-vec','lep')
 	leg.AddEntry('gr1','e-d','lep')
