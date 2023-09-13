@@ -447,8 +447,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				#    CMS_align_right = True
 				if not logy: 
 					y_end = 0.88
-					y_size = 0.2 + 0.03*(len(bkglist[0])+len(signals))
-					x_size = 0.5
+					y_size = 0.1 + 0.03*(len(bkglist[0])+len(signals))
+					x_size = 0.4
 					if(leg_align_right):
 						x_start = 0.42
 					else:
@@ -634,16 +634,16 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextColor(kBlue);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
-				line_vals = [20,40,60]
+				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				text_strs = ["#splitline{   #bf{m_{ll} #epsilon}}{#bf{[500, 700] GeV}}", "#splitline{   #bf{m_{ll} #epsilon}}{#bf{[700, 1000] GeV}}", "#bf{m_{ll} #> 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.1, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.03, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
-				legends[hist_index].SetTextSize(0.05)
+				legends[hist_index].SetTextSize(0.03)
 				
 				for entry in legends_list[hist_index][::-1]:
 					legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
