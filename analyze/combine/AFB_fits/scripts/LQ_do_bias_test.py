@@ -138,7 +138,7 @@ if not options.plot:
 
 else:
     
-    for options.yLQ in [3.0]:
+    for options.yLQ in [0.0, 0.25, 0.5]:
         c4 = TCanvas("c4", "", 900, 900)
         leg = TLegend(0.9,0.9,1.0,1.0)
         leg.SetHeader("Channel","C")
@@ -153,7 +153,7 @@ else:
         l3.SetLineStyle(9)
         l4.SetLineStyle(9)
         l5.SetLineStyle(9)
-        mcolor = 5
+        mcolor = 2
 	i = 0
 	gr, pull_mean, pull_sigma = [],[],[]
         for options.chan in ["ee","mumu"]:
@@ -164,8 +164,8 @@ else:
 		pull_mean.append(array("d"))
 		pull_sigma.append(array("d"))
                     
-	        for options.mLQ in [6000,6500]:
-                #for options.yLQ in [0.0,0.25,0.5]:
+	        #for options.mLQ in [5500,6000,6500]:
+                for options.mLQ in [1000,2500,3500,5000]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
                     else: is_vec = False
@@ -278,9 +278,11 @@ else:
 	        c4.cd()
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	        if len(pull_mean) < 2 or len(pull_sigma) < 2 or len(m_list) < 2: continue
-		gr.append(TGraphErrors(2, m_list, pull_mean[i], array("d",[0,0]), pull_sigma[i]))
-                #mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
+	        if options.mLQ <= 5000 and (len(pull_mean) < 4 or len(pull_sigma) < 4 or len(m_list) < 4): continue
+		elif (options.mLQ > 5000 and len(pull_mean) < 2 or len(pull_sigma) < 2 or len(m_list) < 2): continue
+		if options.mLQ <= 5000: gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
+                else: gr.append(TGraphErrors(2, m_list, pull_mean[i], array("d",[0,0]), pull_sigma[i]))
+		#mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	        gr[i].SetName('gr%i'%i)
 	        gr[i].SetMarkerStyle(20);
 	        gr[i].SetMarkerColor(mcolor)
