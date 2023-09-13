@@ -601,7 +601,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					if line_vals[idx] == 20 or line_vals[idx] == 40: l.SetLineColor(ROOT.kBlue)
 					else: l.SetLineColor(ROOT.kBlack)
 					l.SetLineStyle(lstyle)
-					l.SetLineWidth(lwidth)
+					if line_vals[idx] == 20 or line_vals[idx] == 40: l.SetLineWidth(2)
+					else: l.SetLineWidth(lwidth)
 					l.Draw()
 					lines.append(l)
 
@@ -627,12 +628,18 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
 					latext.DrawLatex(text_center, text_y, text_str)
 				# mass bin labels
+				#text labels
+                                latext2 = TLatex()
+                                latext2.SetNDC();
+                                latext2.SetTextColor(kBlue);
+                                latext2.SetTextAlign(22); #center
+                                latext2.SetTextFont(42);
 				line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				text_strs = ["#splitline{   #bf{m_{ll} #epsilon}}{#bf{[500, 700] GeV}}", "#splitline{   #bf{m_{ll} #epsilon}}{#bf{[700, 1000] GeV}}", "#bf{m_{ll} #> 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext.DrawLatex(text_center, text_y, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.1, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
