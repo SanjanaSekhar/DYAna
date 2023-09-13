@@ -295,6 +295,8 @@ else:
 	mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
     	mg.Draw("AP")
 	mg.GetYaxis().SetRangeUser(-3.,3.)
+	mg.GetYaxis().SetTitle("y_{LQ}^2(fit) - y_{LQ}^2(true)/#sigma")
+	mg.GetXaxis().SetTitle("m_{LQ} (GeV)")
 	leg.AddEntry('gr0','e-u-vec','lep')
 	leg.AddEntry('gr1','e-d','lep')
 	leg.AddEntry('gr2','#mu-u','lep')
