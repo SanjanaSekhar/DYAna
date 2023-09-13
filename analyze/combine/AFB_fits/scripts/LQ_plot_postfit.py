@@ -450,7 +450,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					y_size = 0.2 + 0.03*(len(bkglist[0])+len(signals))
 					x_size = 0.4
 					if(leg_align_right):
-						x_start = 0.6
+						x_start = 0.55
 					else:
 						x_start = 0.2
 
