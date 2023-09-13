@@ -138,16 +138,16 @@ if not options.plot:
 
 else:
     
-    for options.yLQ in [0.0,0.25,0.5]:
+    for options.yLQ in [3.0]:
         c4 = TCanvas("c4", "", 900, 900)
         leg = TLegend(0.6,0.6,0.9,0.9)
         leg.SetHeader("Channel","C")
 	mg = TMultiGraph()
-        l1 = TLine(800,-1,5200,-1)
-        l2 = TLine(800,-0.5,5200,-0.5)
-        l3 = TLine(800,0,5200,0)
-        l4 = TLine(800,0.5,5200,0.5)
-        l5 = TLine(800,1,5200,1)
+        l1 = TLine(5000,-1,7000,-1)
+        l2 = TLine(5000,-0.5,7000,-0.5)
+        l3 = TLine(5000,0,7000,0)
+        l4 = TLine(5000,0.5,7000,0.5)
+        l5 = TLine(5000,1,7000,1)
         l1.SetLineStyle(9)
         l2.SetLineStyle(9)
         l3.SetLineStyle(9)
@@ -164,7 +164,7 @@ else:
 		pull_mean.append(array("d"))
 		pull_sigma.append(array("d"))
                     
-	        for options.mLQ in [1000,2500,3500,5000]:
+	        for options.mLQ in [6000,6500]:
                 #for options.yLQ in [0.0,0.25,0.5]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
@@ -190,9 +190,9 @@ else:
                     res_yLQ2 = res_yLQ2.tolist()
                     pull_yLQ2 = pull_yLQ2.tolist()
                     #print("No. of toys in residuals: ", len(res_yLQ2))
-		    #print(res_yLQ2)
+		    print(res_yLQ2)
                     #print("No. of toys in pulls: ", len(pull_yLQ2))
-		    #print(pull_yLQ2)
+		    print(pull_yLQ2)
                     if len(res_yLQ2) != len(pull_yLQ2): print("REDO TESTS for channel %s %s - yLQ = %.2f - mLQ = %s ",options.chan, options.q, options.yLQ, options.mLQ)
 
                     n_bins = 25
@@ -278,12 +278,13 @@ else:
 	        c4.cd()
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	        gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
+	        if len(pull_mean) < 4 or len(pull_sigma) < 4: continue
+		gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
                 #mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
 	        gr[i].SetName('gr%i'%i)
 	        gr[i].SetMarkerStyle(20);
 	        gr[i].SetMarkerColor(mcolor)
-	        leg.AddEntry('gr%i'%i, chan_label+"-"+options.q+"%s"%("-vec" if is_vec else "")) 
+		gr[i].SetMarkerSize(1.0)
 	        mg.Add(gr[i])
 	        #gr[i].GetYaxis().SetRangeUser(-3.,3.)
                 mcolor+=1
