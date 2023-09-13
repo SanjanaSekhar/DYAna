@@ -581,9 +581,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "   #splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 1.5]}}", 
 							"#splitline{   #bf{|y| #epsilon}}{#bf{[1.5, 2.4]}}"]
 				else:
-					line_vals = [8, 14, 20, 28, 34, 40, 48, 54, 60]
-					text_center_bins = [4, 12, 19]
-					text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
+					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
+					text_center_bins = [4, 11, 17]
+					text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
 
 
 				lstyle = 7
@@ -598,7 +598,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
 					l = TLine(line_x, 0, line_x, line_max)
-					l.SetLineColor(ROOT.kBlack)
+					if line_vals[idx] == 20 or line_vals[idx] == 40: l.SetLineColor(ROOT.kBlue)
+					else: l.SetLineColor(ROOT.kBlack)
 					l.SetLineStyle(lstyle)
 					l.SetLineWidth(lwidth)
 					l.Draw()
@@ -625,7 +626,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
 					latext.DrawLatex(text_center, text_y, text_str)
-
+				# mass bin labels
+				line_vals = [20,40,60]
+				text_center_bins = [10,30,50]
+				text_strs = ["#splitline{   #bf{m_{ll} #epsilon}}{#bf{[500, 700] GeV}}", "#splitline{   #bf{m_{ll} #epsilon}}{#bf{[700, 1000] GeV}}", "#bf{m_{ll} #> 1000 GeV}"]
+				for idx,text_str in enumerate(text_strs):
+                                        text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
+                                        latext.DrawLatex(text_center, text_y, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
@@ -670,7 +677,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						ratio_range = (0.45, 1.55)
 						NDiv = 203
 					elif(mbin ==6 or mbin == 7):
-						ratio_range = (0.1, 1.9)
+						ratio_range = (0.0, 2.0)
 						NDiv = 303
 
 
