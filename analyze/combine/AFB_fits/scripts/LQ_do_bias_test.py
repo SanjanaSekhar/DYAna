@@ -278,8 +278,8 @@ else:
 	        c4.cd()
 	        #draw the list of pulls for 1 channel
                 #print(m_list,pull_mean,[0,0,0,0],pull_sigma)
-	        if options.mLQ <= 5000 and (len(pull_mean) < 4 or len(pull_sigma) < 4 or len(m_list) < 4): continue
-		elif (options.mLQ > 5000 and len(pull_mean) < 2 or len(pull_sigma) < 2 or len(m_list) < 2): continue
+	        if options.mLQ <= 5000 and (len(pull_mean[i]) < 4 or len(pull_sigma[i]) < 4 or len(m_list) < 4): continue
+		elif (options.mLQ > 5000 and len(pull_mean[i]) < 2 or len(pull_sigma[i]) < 2 or len(m_list) < 2): continue
 		if options.mLQ <= 5000: gr.append(TGraphErrors(4, m_list, pull_mean[i], array("d",[0,0,0,0]), pull_sigma[i]))
                 else: gr.append(TGraphErrors(2, m_list, pull_mean[i], array("d",[0,0]), pull_sigma[i]))
 		#mg.SetTitle("Pulls: Injection y_{LQ} (g_{LQ}) = %.2f"%options.yLQ)
