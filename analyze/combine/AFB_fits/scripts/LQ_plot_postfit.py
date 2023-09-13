@@ -447,7 +447,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				#    CMS_align_right = True
 				if not logy: 
 					y_end = 0.88
-					y_size = 0.1555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555 + 0.03*(len(bkglist[0])+len(signals))
+					y_size = 0.2 + 0.03*(len(bkglist[0])+len(signals))
 					x_size = 0.4
 					if(leg_align_right):
 						x_start = 0.6
@@ -637,7 +637,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				latext2.SetTextSize(0.03)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
-				text_strs = ["#splitline{   #bf{m_{ll} #epsilon}}{#bf{[500, 700] GeV}}", "#splitline{   #bf{m_{ll} #epsilon}}{#bf{[700, 1000] GeV}}", "#bf{m_{ll} #> 1000 GeV}"]
+				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
                                         latext2.DrawLatex(text_center, text_y+0.05, text_str)
