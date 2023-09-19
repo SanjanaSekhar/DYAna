@@ -12,8 +12,11 @@ import numpy as np
 import json
 from math import sqrt
 from CombineHarvester.CombineTools.plotting import *
+import CMS_lumi, tdrstyle
+
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
+
 
 def print_and_do(s):
     print("Exec: " + s)
@@ -67,8 +70,9 @@ def plotLimits(channel):
      
      
 # Standard CMS logo
-    DrawCMSLogo(pads[0], 'CMS', '138 fb^{-1}', 11, 0.045, 0.035, 1.2, '', 0.8)
-     
+    #DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
+    tdrstyle.setTDRStyle()
+    CMS_lumi.CMS_lumi(pads[0], -1, 11) 
     #canv.Print('.pdf')
     if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_%s.png'%(channel,channel,options.ending))
     else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_%s.png'%(channel,channel,options.ending))
