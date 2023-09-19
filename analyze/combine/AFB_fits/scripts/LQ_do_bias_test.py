@@ -77,13 +77,13 @@ if not options.plot:
 	if(not options.prefit):
             fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
             if(options.no_sys):
-                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%f,A4=1.6,A0=0.05 " % (i,yLQ2))
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i  --snapshotName initialFit --toysNoSystematics --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%f " % (i,yLQ2))
 
             else:
-                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%f,A4=1.6,A0=0.05 " % (i,yLQ2))
+                print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root -s %i --snapshotName initialFit --toysFrequentist --bypassFrequentistFit --saveToys -t 1  --setParameters yLQ2=%f " % (i,yLQ2))
         else:
 
-            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%f,A4=1.6,A0=0.05 "% (workspace, i, yLQ2))
+            print_and_do("combine -M GenerateOnly -d %s -s %i  --saveToys -t 1 --toysFrequentist --setParameters yLQ2=%f "% (workspace, i, yLQ2))
 
         #print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s -n _%i --freezeParameters A4,A0 --robustHesse=1" %(workspace,  i, extra_params, i))
         if no_sys: print_and_do("combine -M MultiDimFit -d %s --saveWorkspace --saveFitResult -t 1 --toysNoSystematics --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root   --robustFit 1  --forceRecreateNLL %s -n _%i " %(workspace,  i, extra_params, i))
@@ -138,16 +138,16 @@ if not options.plot:
 
 else:
     
-    for options.yLQ in [0.0, 0.25, 0.5]:
+    for options.yLQ in [3.0, 3.5]:
         c4 = TCanvas("c4", "", 900, 900)
         leg = TLegend(0.75,0.75,0.95,0.95)
         leg.SetHeader("Channel","C")
 	mg = TMultiGraph()
-        l1 = TLine(800,-1,5200,-1)
-        l2 = TLine(800,-0.5,5200,-0.5)
-        l3 = TLine(800,0,5200,0)
-        l4 = TLine(800,0.5,5200,0.5)
-        l5 = TLine(800,1,5200,1)
+        l1 = TLine(4100,-1,5900,-1)
+        l2 = TLine(4100,-0.5,5900,-0.5)
+        l3 = TLine(4100,0,5900,0)
+        l4 = TLine(4100,0.5,5900,0.5)
+        l5 = TLine(4100,1,5900,1)
         l1.SetLineStyle(9)
         l2.SetLineStyle(9)
         l3.SetLineStyle(9)
@@ -156,16 +156,16 @@ else:
         mcolor = 2
 	i = 0
 	gr, pull_mean, pull_sigma = [],[],[]
-        for options.chan in ["ee","mumu"]:
-            for options.q in ["u","d"]:
+        for options.chan in ["mumu"]:
+            for options.q in ["d"]:
 
 	        #pull_mean, pull_sigma = [],[]
 		m_list = array("d")
 		pull_mean.append(array("d"))
 		pull_sigma.append(array("d"))
                     
-	        #for options.mLQ in [5500,6000,6500]:
-                for options.mLQ in [1000,2500,3500,5000]:
+	        for options.mLQ in [5500,6500,7000]:
+                #for options.mLQ in [1000,2500,3500,5000]:
 
                     if (options.chan == "ee" and options.q == "u") or (options.chan == "mumu" and options.q == "d"): is_vec = True
                     else: is_vec = False
@@ -175,10 +175,10 @@ else:
 		    #pull_mean, pull_sigma, m_list, q_list, chan_list, yLQ_list = [],[],[],[],[],[]
                     
 		    for job_idx in range(0,50):
-                        '''
+                        
 			if options.yLQ == 0.25: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.2f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q, ("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""),ending, options.odir,options.mLQ))
                         else: print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/bias_test_yLQ%.1f_%s_%s%s_m%s_no%s_%i_%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt %s%s" % (options.yLQ, options.chan, options.q,("_vec" if is_vec else ""), options.mLQ, (options.freezeGroups).replace(",",""),job_idx, ending[-6:],options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending, options.odir,options.mLQ))
-                        '''
+                        
 			filename = '%s%s/respull_%s_%s_%i_yLQ%.1f%s_%s.txt'%(options.odir,options.mLQ,options.chan,options.q,job_idx,options.yLQ,("_vec" if is_vec else ""), ending)
                         
                         if os.path.isfile(filename):

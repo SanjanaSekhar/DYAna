@@ -67,7 +67,7 @@ def plotLimits(channel):
      
      
 # Standard CMS logo
-    DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
+    DrawCMSLogo(pads[0], 'CMS', '138 fb^{-1}', 11, 0.045, 0.035, 1.2, '', 0.8)
      
     #canv.Print('.pdf')
     if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_%s.png'%(channel,channel,options.ending))
@@ -177,7 +177,7 @@ if options.hadd:
             print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
     else:
 	limits = {}
-        for m in range(1000,9500,500):
+        for m in range(1000,5500,500):
             # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json/limits_%s%s_m%i.json"
                 %(options.chan, options.q, ("_vec" if is_vec else ""), m, options.ending, channel, m, channel, channel, ("_vec" if is_vec else ""), m))

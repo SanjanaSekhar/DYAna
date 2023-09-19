@@ -23,35 +23,36 @@ date = options.ending
 
 if options.bias_tests:
     #mLQ_list = [5000,9000]
-    mLQ_list = [6000]
+    mLQ_list = [5500,6500,7000]
     for mLQ in mLQ_list:
         
 	cmds = [
-        "python scripts/LQ_do_bias_test.py  --yLQ 1.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 2.0 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 2.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 3.0 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ  2.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.5 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 0.9 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	#"python scripts/LQ_do_bias_test.py  --yLQ 3.5 --chan ee --q d --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 2.5 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 3.0 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan ee --q u --is_vec True --nToys 50 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 1.3 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 1.5 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	#"python scripts/LQ_do_bias_test.py  --yLQ 3.5 --chan ee --q u --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 2.5 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 3.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 2.0 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 1.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-        "python scripts/LQ_do_bias_test.py  --yLQ 1.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	#"python scripts/LQ_do_bias_test.py  --yLQ 3.5 --chan mumu --q u --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        #"python scripts/LQ_do_bias_test.py  --yLQ 2.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+        "python scripts/LQ_do_bias_test.py  --yLQ 3.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         #"python scripts/LQ_do_bias_test.py  --yLQ 0.35 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
-	"python scripts/LQ_do_bias_test.py  --yLQ 2.0 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
+	"python scripts/LQ_do_bias_test.py  --yLQ 3.5 --chan mumu --q d --is_vec True --nToys 10 -o temp/ --mLQ %i --ending %s"%(mLQ,date),
         
         ]
 	
         labels = [
-                "bias_test_yLQ1.5_ee_d_m",  "bias_test_yLQ2.0_ee_d_m",  "bias_test_yLQ2.5_ee_d_m",  #"bias_test_yLQ0.6_ee_d_m", 
+                #"bias_test_yLQ2.5_ee_d_m",  "bias_test_yLQ3.0_ee_d_m",  "bias_test_yLQ3.5_ee_d_m",  #"bias_test_yLQ0.6_ee_d_m", 
 		
-                "bias_test_yLQ0.5_ee_u_vec_m", "bias_test_yLQ0.9_ee_u_vec_m","bias_test_yLQ1.3_ee_u_vec_m", #"bias_test_yLQ0.6_ee_u_vec_m",
-        	"bias_test_yLQ1.0_mumu_u_m", "bias_test_yLQ1.5_mumu_u_m", "bias_test_yLQ2.0_mumu_u_m",#"bias_test_yLQ0.6_mumu_u_m",  
-		"bias_test_yLQ1.0_mumu_d_vec_m", "bias_test_yLQ1.5_mumu_d_vec_m", "bias_test_yLQ2.0_mumu_d_vec_m",# "bias_test_yLQ0.6_mumu_d_vec_m"
+                #"bias_test_yLQ2.5_ee_u_vec_m", "bias_test_yLQ3.0_ee_u_vec_m","bias_test_yLQ3.5_ee_u_vec_m", #"bias_test_yLQ0.6_ee_u_vec_m",
+        	#"bias_test_yLQ2.5_mumu_u_m", "bias_test_yLQ3.0_mumu_u_m", "bias_test_yLQ3.5_mumu_u_m",#"bias_test_yLQ0.6_mumu_u_m",  
+		#"bias_test_yLQ2.5_mumu_d_vec_m", 
+		"bias_test_yLQ3.0_mumu_d_vec_m", "bias_test_yLQ3.5_mumu_d_vec_m",# "bias_test_yLQ0.6_mumu_d_vec_m"
                 
         ]
 	'''
@@ -93,29 +94,29 @@ if options.bias_tests:
 if options.limits:
     cmds = [
   
-    #"python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
-    #"python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
-    #"python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
-    #"python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
-    #"python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
-    #"python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
  
     ]
 
     labels = [
-        #"limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
-        #"limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
+        "limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
+        "limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
-        "limits_ee_d_vec","limits_mumu_d_vec"
+        #"limits_ee_d_vec","limits_mumu_d_vec"
     ]
 
 
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	   for m in range(1000,9500,500):
+	   for m in range(5000,5500,500):
 	    #for point in np.arange(0.28,1.5,0.005):
 	    #for q in [0.025,0.16,0.5,0.84,0.975]:
             #regular templates
