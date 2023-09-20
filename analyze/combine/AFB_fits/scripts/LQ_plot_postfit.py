@@ -1107,8 +1107,19 @@ for year in years:
 
 ratio_range = (0.25, 1.75)
 NDiv = 405
-				
-makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False) 
+
+h_data_pois = h_data.Clone("h_data_c%i_y%i" %(idx, year))
+h_data_pois.Reset()
+h_tot_dir = h_tot.Clone("h_tot_sig_c%i_comb" %(idx))
+h_tot_dir.Reset()
+for b in range(h_data.GetXaxis().GetNbins() + 1):
+	h_data_pois.SetBinContent(b, h_data.GetBinContent(b))
+
+for b in range(h_tot.GetXaxis().GetNbins() + 1):
+	h_tot_dir.SetBinContent(b, h_tot.GetBinContent(b))
+	h_tot_dir.SetBinError(b, h_tot.GetBinError(b))
+		
+makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False) 
 
 for key in fracs.keys():
 	fracs[key] /= (len(years)*len(dirs))
