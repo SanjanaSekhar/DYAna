@@ -1,0 +1,5 @@
+
+Attaching file multidimfitTest.root as _file0...
+(TFile *) 0x230afb0
+0.0409685 0.0470396 -0.0470396
+1.61154 0.0817683 -0.0897688

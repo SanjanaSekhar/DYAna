@@ -30,8 +30,8 @@ for y in [-1]:
         for options.q in ["u","d"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2000]
-	    is_vec = True
-	    statuncs = False
+	    is_vec = False
+	    statuncs = True
 	    #options.gen_level = False
             extra_params=""
 #            options.chan="mumu"
@@ -65,7 +65,7 @@ for y in [-1]:
             #No analytic minimization of MC stats nuisances
             #extra_params += "  --freezeParameters A4,A0 "
 	    #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
-	    if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
+	    #if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
             fit_name = options.chan
             if(options.no_sys): 
@@ -104,9 +104,13 @@ for y in [-1]:
                 
 		print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0" %(workspace, extra_params))
-                #print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
-                if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
+                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0" %(workspace, extra_params))
+                else:
+		    print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
+		    print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1   --cminDefaultMinimizerStrategy 0  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
+		#print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
+                
+		if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
                 if(not options.no_plot):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
