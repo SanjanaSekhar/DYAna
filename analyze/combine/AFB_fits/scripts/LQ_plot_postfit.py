@@ -996,8 +996,8 @@ for year in years:
 		#mbin_low = m_bins[options.mbin]
 		#mbin_high = m_bins[options.mbin+1]
 
-		if(options.chan=="mumu"): title = "Muons %i GeV mLQ = %i" % (year, mLQ)
-		if(options.chan=="ee"): title = "Electrons %i  GeV mLQ = %i" % (year,mLQ)
+		if(options.chan=="mumu"): title = "#mu#mu channel, %s_{#mu%s} mass = %i GeV" % (("V" if options.vec else "S"),options.q,mLQ)
+		if(options.chan=="ee"): title = "ee channel, %s_{e%s} mass = %i GeV" % (("V" if options.vec else "S"),options.q,mLQ)
 		#if(idx == 2): title = "Electrons Samesign %i  GeV" % (year)
 		if(options.gen_level): title = "Channel: Electrons, SM only, y_eu = %.1f" %(yLQ) 
 		#if(idx == 2): name_list = h_ss_names
@@ -1008,40 +1008,71 @@ for year in years:
 		label_list = []
 
 		if not options.gen_level:
-			for name in name_list:
-				if(name == "dy"):
-					h_dy = f_in.Get(dir_ + "fpl")
-					if(h_dy != None):
-						h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
-						h = f_in.Get(dir_ + "fmn")
-					if(h != None):
-						h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
-						h_dy.Add(h)
-						h = f_in.Get(dir_ + "alpha")
-					if(h != None):
-						h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
-						h_dy.Add(h)
-					
-						h = h_dy
-			#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
-				elif name=="LQ":
-					h_tot_sig = f_in.Get(dir_ + "TotalSig")
-            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
-				else:
-					h = f_in.Get(dir_ + name)
-					if(h != None):
-						h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
-				if(h != None):
-					h.Print()
-					hist_list.append(h)
-					label_list.append(label_color_map[name][0])
-					color_list.append(label_color_map[name][1])
+			for i,name in enumerate(name_list):
 
-					if("gam" in name):
-						this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
-						print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
-						fracs[name] += this_frac
-		
+				if year == 2016:
+					if(name == "dy"):
+						h_dy = f_in.Get(dir_ + "fpl")
+						if(h_dy != None):
+							h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
+							h = f_in.Get(dir_ + "fmn")
+						if(h != None):
+							h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
+							h_dy.Add(h)
+							h = f_in.Get(dir_ + "alpha")
+						if(h != None):
+							h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
+							h_dy.Add(h)
+						
+							h = h_dy
+				#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
+					elif name=="LQ":
+						h_tot_sig = f_in.Get(dir_ + "TotalSig")
+	            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+					else:
+						h = f_in.Get(dir_ + name)
+						if(h != None):
+							h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
+					if(h != None):
+						h.Print()
+						hist_list.append(h)
+						label_list.append(label_color_map[name][0])
+						color_list.append(label_color_map[name][1])
+
+						# if("gam" in name):
+						# 	this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
+						# 	print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
+						# 	fracs[name] += this_frac
+				else:
+
+					if(name == "dy"):
+						h_dy = f_in.Get(dir_ + "fpl")
+						if(h_dy != None):
+							h_dy = h_dy.Clone("h_fpl_c%i_y%i" %(idx, year))
+							h = f_in.Get(dir_ + "fmn")
+						if(h != None):
+							h = h.Clone("h_fmn_c%i_y%i" %(idx, year))
+							h_dy.Add(h)
+							h = f_in.Get(dir_ + "alpha")
+						if(h != None):
+							h = h.Clone("h_alpha_c%i_y%i" %(idx, year))
+							h_dy.Add(h)
+						
+							h = h_dy
+				#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
+					elif name=="LQ":
+						h_tot_sig = f_in.Get(dir_ + "TotalSig")
+	            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+					else:
+						h = f_in.Get(dir_ + name)
+						if(h != None):
+							h = h.Clone("h_%s_c%i_y%i" %(name, idx, year))
+					if(h != None):
+						h.Print()
+						hist_list[i].Add(h)
+						#label_list.append(label_color_map[name][0])
+						#color_list.append(label_color_map[name][1])
+			
 		else:
 			
 			h_sig = h_tot_sig.Clone("h_LQ_c%i_y%i" %(idx, year))
@@ -1066,8 +1097,10 @@ for year in years:
 			label_list.append(label_color_map["dy"][0])
 			color_list.append(label_color_map["dy"][1])
 
+ratio_range = (0.25, 1.75)
+NDiv = 405
 				
-		makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle) 
+makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = None, NDiv = 205, prelim = False) 
 
 for key in fracs.keys():
 	fracs[key] /= (len(years)*len(dirs))
