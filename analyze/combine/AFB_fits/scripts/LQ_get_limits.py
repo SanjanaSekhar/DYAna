@@ -26,6 +26,9 @@ def print_and_do(s):
 def plotLimits(channel):
      # Style and pads
     ModTDRStyle()
+    ROOT.gStyle.SetPadTickY(1)
+    ROOT.gStyle.SetPadTickX(1)
+
     canv = ROOT.TCanvas('limit', 'limit')
     pads = OnePad()
      
