@@ -918,7 +918,7 @@ parser.add_option("--chan", "-c", type = 'string', default = "", help="ee or mum
 parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for all) ")
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
-parser.add_option("--vec", default = False, help="is vec?")
+parser.add_option("--vec", default=False, help="is vec?")
 (options, args) = parser.parse_args()
 yLQ = 0.0
 mLQ = options.mLQ

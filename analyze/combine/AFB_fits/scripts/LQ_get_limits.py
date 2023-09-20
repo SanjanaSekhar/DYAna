@@ -16,7 +16,8 @@ import CMS_lumi, tdrstyle
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
-
+ROOT.gStyle.SetPadTickY(1)
+ROOT.gStyle.SetPadTickX(1)
 
 def print_and_do(s):
     print("Exec: " + s)
