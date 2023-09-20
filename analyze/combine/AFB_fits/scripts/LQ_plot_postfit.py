@@ -981,6 +981,9 @@ dirs = ["Y%i_postfit/"]
 #if(options.ss): dirs =  ["Y%i_mumu%i_postfit/", "Y%i_ee%i_postfit/", "Y%i_ee%i_ss_postfit/"]
 print ("\n file from where the h_tot is being pulled= ",options.input)
 f_in = TFile.Open(options.input)
+hist_list = []
+color_list = []
+label_list = []
 for year in years:
 	for idx, dir_name in enumerate(dirs):
 		dir_ = dir_name % ( year % 2000)
@@ -1003,13 +1006,13 @@ for year in years:
 		#if(idx == 2): name_list = h_ss_names
 		#else: 
 		name_list = h_names
-		hist_list = []
-		color_list = []
-		label_list = []
+		#hist_list = []
+		#color_list = []
+		#label_list = []
 
 		if not options.gen_level:
 			for i,name in enumerate(name_list):
-
+				print(i,name)
 				if year == 2016:
 					if(name == "dy"):
 						h_dy = f_in.Get(dir_ + "fpl")
