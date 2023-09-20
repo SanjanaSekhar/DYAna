@@ -988,14 +988,19 @@ for year in years:
 	for idx, dir_name in enumerate(dirs):
 		dir_ = dir_name % ( year % 2000)
 		print ("\n dir_ = ", dir_)
-		h_tot = f_in.Get(dir_ + "TotalProcs")
-		h_tot = h_tot.Clone("h_tot_c%i_y%i" %(idx, year))
-		h_data = f_in.Get(dir_ + "data_obs")
-		h_data = h_data.Clone("h_data_c%i_y%i" %(idx, year))
-
+		h_totx = f_in.Get(dir_ + "TotalProcs")
+		#h_totx = h_totx.Clone("h_tot_c%i_y%i" %(idx, year))
+		h_datax = f_in.Get(dir_ + "data_obs")
+		#h_datax = h_datax.Clone("h_data_c%i_y%i" %(idx, year))
+		
 		h_tot_sig = f_in.Get(dir_ + "TotalSig")
-		h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
-
+		#h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+		if year == 2016:
+			h_data = h_datax.Clone("h_data_c%i_comb" %(idx))
+			h_tot = h_totx.Clone("h_tot_c%i_comb" %(idx))
+		else:
+			h_data.Add(h_datax)
+			h_tot.Add(h_totx)
 		#mbin_low = m_bins[options.mbin]
 		#mbin_high = m_bins[options.mbin+1]
 
@@ -1103,7 +1108,7 @@ for year in years:
 ratio_range = (0.25, 1.75)
 NDiv = 405
 				
-makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = None, NDiv = 205, prelim = False) 
+makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False) 
 
 for key in fracs.keys():
 	fracs[key] /= (len(years)*len(dirs))
