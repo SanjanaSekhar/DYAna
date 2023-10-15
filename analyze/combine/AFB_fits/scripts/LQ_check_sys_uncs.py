@@ -121,7 +121,7 @@ else:
 
 
 	make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,True, False)
-	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s --robustHesse=1" % (workspace, extra_params))
+	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s " % (workspace, extra_params))
 	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
 	if(options.expected):
@@ -154,7 +154,7 @@ else:
 		#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
 			  #  % (freeze_str,s, indi_par, extra_params))
 		#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
-		print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s --robustHesse=1""" % (freeze_str,s, indi_par, extra_params))
+		print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ % (freeze_str,s, indi_par, extra_params))
 		sys_unc = compute_sys("nom", indi_par, s)
 		#sys_unc = compute_sys("nom", indi_par, s)
 		d[indi_par] = sys_unc
@@ -167,10 +167,10 @@ else:
 		#       (freeze_str, s, group_par, extra_params))
 		#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
 		if group_par == 'autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18': 
-			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s --robustHesse=1""" %(freeze_str, s, 'mcstats', extra_params))
+			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, 'mcstats', extra_params))
 			sys_unc = compute_sys("nom", "mcstats", s)
 		else:
-			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s --robustHesse=1""" %(freeze_str, s, group_par, extra_params))
+			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, group_par, extra_params))
 			sys_unc = compute_sys("nom", group_par, s)
 		#sys_unc = compute_sys("nom", indi_par, s)
 		d[group_par] =sys_unc
