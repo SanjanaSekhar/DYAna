@@ -133,6 +133,7 @@ x_axis = np.linspace(-1,1,1000) # 1000 linearly spaced numbers
 #SM_norm = quad(lambda x: SM_cost(flag,x,s), -1., 1.)[0]
 #sm_v2 = SM_cost(flag,x_axis,s)/SM_norm
 #pylab.plot(x_axis,sm_v2,'b',label='SM')
+'''
 y_lq_list = np.linspace(-1.,1.,60)
 y_lqsq_list = [x*x for x in y_lq_list]
 m_ll_list = np.linspace(500,5000,300)
@@ -379,4 +380,3 @@ for m_ll in [500]:
     pylab.close()
 
 
-'''
