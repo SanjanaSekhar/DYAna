@@ -96,18 +96,18 @@ if options.limits:
   
     "python scripts/LQ_get_limits.py --chan ee --q u  -o limits/ --ending %s  "%date,
     "python scripts/LQ_get_limits.py --chan ee --q d  -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
     "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
  
     ]
 
     labels = [
-        "limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
-        "limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
+        "limits_ee_u","limits_ee_d",#"limits_mumu_u","limits_mumu_d",
+        "limits_ee_u_vec","limits_ee_d_vec",#"limits_mumu_u_vec","limits_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
         #"limits_ee_d_vec","limits_mumu_d_vec"
     ]
@@ -116,7 +116,7 @@ if options.limits:
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	   for m in range(5000,5500,500):
+	   for m in range(1000,5500,500):
 	    #for point in np.arange(0.28,1.5,0.005):
 	    #for q in [0.025,0.16,0.5,0.84,0.975]:
             #regular templates

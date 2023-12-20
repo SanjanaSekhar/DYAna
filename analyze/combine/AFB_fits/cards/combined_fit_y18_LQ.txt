@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm2000_merge_templates18_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm1000_merge_templates18_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 
 bin             ee18  
@@ -60,27 +60,27 @@ elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 elScales18 group = elScaleStat18  elScaleGain18  elScaleSyst   elSmear
 
 
-elHLTBARPTHIGH18     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTHIGH18   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTBARPTLOW18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTLOW18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
+elHLTBARPT18     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPT18   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTBARPT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTENDPT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTs18 group = elHLTENDPTHIGH18  elHLTBARPTLOW18   elHLTENDPTLOW18 elHLTBARPTHIGH18
+elHLTs18 group = elHLTENDPT18  elHLTBARPT18   
 
-elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
+elIDs group = elIDBARPT elIDENDPT
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
-elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOENDPT   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOBARPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
+elRECOs group = elRECOBARPT elRECOENDPT
 
 alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        

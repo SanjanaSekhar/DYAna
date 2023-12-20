@@ -60,27 +60,27 @@ elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 elScalesYR group = elScaleStatYR  elScaleGainYR  elScaleSyst   elSmear
 
 
-elHLTBARPTHIGHYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTHIGHYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTBARPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
+elHLTBARPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPTYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTBARPTYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTENDPTYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTsYR group = elHLTENDPTHIGHYR  elHLTBARPTLOWYR   elHLTENDPTLOWYR elHLTBARPTHIGHYR
+elHLTsYR group = elHLTENDPTYR  elHLTBARPTYR   
 
-elIDBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTHIGH elIDBARPTLOW elIDENDPTHIGH elIDENDPTLOW
+elIDs group = elIDBARPT elIDENDPT
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
-elRECOBARPTHIGH     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTHIGH   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elRECOENDPT   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOBARPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elRECOs group = elRECOBARPTHIGH elRECOBARPTLOW  elRECOENDPTLOW elRECOENDPTHIGH 
+elRECOs group = elRECOBARPT elRECOENDPT
 
 alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
