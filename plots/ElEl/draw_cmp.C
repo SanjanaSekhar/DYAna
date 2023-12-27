@@ -104,17 +104,29 @@ for(int year = 2016; year <= 2018; year++){
     TH1F *WJets_phi = new TH1F("WJets_phi", "WJets", n_phi_bins, -4,4);
     TH1F *wt_phi = new TH1F("wt_phi", "tw + #bar{t}w", n_phi_bins, -4,4);
 
-    int n_rap_bins = 20;
-    float rap_bin_size = 5. / n_rap_bins;
-    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
-    TH1F *dy_rap = new TH1F("dy_rap", "dy Signal (qqbar, qglu, qbarglu)", n_rap_bins, -2.5,2.5);
-    TH1F *dy_tautau_rap = new TH1F("dy_tautau_rap", "dy no signal (qq, gluglu qbarqbar)", n_rap_bins, -2.5,2.5);
-    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.5,2.5);
-    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
-    TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
-    TH1F *gg_rap = new TH1F("gg_rap", "QCD", n_rap_bins, -2.5,2.5);
-    TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
-    TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
+    int n_rap_bins = 6;
+    //float rap_bin_size = 5. / n_rap_bins;
+    //TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, -2.5,2.5);
+    //TH1F *dy_rap = new TH1F("dy_rap", "dy Signal (qqbar, qglu, qbarglu)", n_rap_bins, -2.5,2.5);
+    //TH1F *dy_tautau_rap = new TH1F("dy_tautau_rap", "dy no signal (qq, gluglu qbarqbar)", n_rap_bins, -2.5,2.5);
+    //TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, -2.5,2.5);
+    //TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, -2.5,2.5);
+    //TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, -2.5,2.5);
+    //TH1F *gg_rap = new TH1F("gg_rap", "QCD", n_rap_bins, -2.5,2.5);
+    //TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, -2.5,2.5);
+    //TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, -2.5,2.5);
+    Float_t rapbins1[] = {-2.4, -1., -0.6, 0., 0.6, 1., 2.4} ;     
+    TH1F *data_rap = new TH1F("data_rap", "Data", n_rap_bins, rapbins1);
+    TH1F *dy_rap = new TH1F("dy_rap", "dy Signal (qqbar, qglu, qbarglu)", n_rap_bins, rapbins1);
+    TH1F *dy_tautau_rap = new TH1F("dy_tautau_rap", "dy no signal (qq, gluglu qbarqbar)", n_rap_bins, rapbins1);
+    TH1F *ttbar_rap = new TH1F("ttbar_rap", "TTbar Background", n_rap_bins, rapbins1);
+    TH1F *diboson_rap = new TH1F("diboson_rap", "DiBoson (WW, WZ,ZZ)", n_rap_bins, rapbins1);
+    TH1F *QCD_rap = new TH1F("QCD_rap", "QCD", n_rap_bins, rapbins1);
+    TH1F *gg_rap = new TH1F("gg_rap", "QCD", n_rap_bins, rapbins1);
+    TH1F *WJets_rap = new TH1F("WJets_rap", "WJets", n_rap_bins, rapbins1);
+    TH1F *wt_rap = new TH1F("wt_rap", "tw + #bar{t}w", n_rap_bins, rapbins1);
+
+
 
     dy_tautau_cost->SetFillColor(tautau_c);
     dy_tautau_m->SetFillColor(tautau_c);
@@ -409,7 +421,7 @@ for(int year = 2016; year <= 2018; year++){
     leg6->SetY1(y_start_c);
     leg6->SetY2(y_start_c+y_size);
 
-    sprintf(y_ax_label, "Events/%.2f", rap_bin_size);
+    sprintf(y_ax_label, "Events");
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg6, "rap", "dielectron rapidity",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_rap, year, 33);
     sprintf(plt_file, "%sElEl%i_rap_cmp.pdf", plot_dir, year % 2000);

@@ -47,7 +47,7 @@ void binwidth_normalize(TH1 *h, float base = 1.){
         float content = h->GetBinContent(i);
         float error = h->GetBinError(i);
         float width = h->GetBinWidth(i);
-	printf("i = %i, bin content = %i\n", i, content);
+	//printf("i = %i, bin content = %i\n", i, content);
         h->SetBinContent(i, base*content/width);
         h->SetBinError(i, base*error/width);
     }
@@ -383,13 +383,13 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
     TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
-    // pad1->SetTopMargin(0.07);
-    // pad1->SetBottomMargin(0);
-    // pad1->SetRightMargin(0.03);
-    // pad1->Draw();
-    // pad1->cd();
-    // if(logy) pad1->SetLogy();
-    // if(logx) pad1->SetLogx();
+    pad1->SetTopMargin(0.07);
+    pad1->SetBottomMargin(0);
+    pad1->SetRightMargin(0.03);
+    pad1->Draw();
+    pad1->cd();
+    if(logy) pad1->SetLogy();
+    if(logx) pad1->SetLogx();
     if(logy) c->SetLogy();
     if(logx) c->SetLogx();
     h_stack->Draw("hist");
@@ -496,7 +496,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_stack->GetXaxis()->SetTitleOffset(rTOffset + 0.45);
     h_stack->GetXaxis()->SetLabelSize(rLS);
 
-    /*
+    
     c->cd();
     TPad *pad2 = new TPad("pad2", "pad2", 0.,0,.98,0.3);
     //pad2->SetTopMargin(0);
@@ -579,7 +579,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         pad2->cd();
         latext.DrawLatex(1-1.2*r, 1-2.2*t ,chi2_label);
     }
-    */
+    
     printf("Made ratio plot for label %s chi2/dof = %.1f/%i \n", label.Data(), chi2, n_bins);
     return std::make_pair(c, pad1);
 }

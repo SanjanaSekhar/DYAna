@@ -554,7 +554,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		tm.setup();
 
 		float max_obs = 0.;
-
+		int n_pt75 = 0, n_uq = 0, n_dq = 0;
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
 			tm.doCorrections();
@@ -563,7 +563,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 			
 			if(pass){
-
+				
 	//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
 				//tm.doCorrections();
 				if(ptcut) pass = (tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.); 
@@ -571,7 +571,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				if(pass){
 				tm.getEvtWeight(false);//incl_btag_SFs=false
 				n++;
-
+				if((tm.do_electrons and tm.el1_pt >= 40. and tm.el1_pt < 75.) or (tm.do_muons and tm.mu1_pt >= 40. and tm.mu1_pt < 75.)) n_pt75++;
+				if((tm.do_electrons and tm.el2_pt >= 40. and tm.el2_pt < 75.) or (tm.do_muons and tm.mu2_pt >= 40. and tm.mu2_pt < 75.)) n_pt75++;
 				//fix RF norm per mass point
 
 				int bin_i = find_bin(m_bins, tm.m);
@@ -667,6 +668,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 							//dLQ temps
 					if(flag_q==1){
+						n_dq++;
 					//scalar
 						h_LQpure_d->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * RFfactor); 
 						h_LQpure_d->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight * RFfactor );
@@ -680,6 +682,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 					}
 							//uLQ temps
 					if(flag_q==2){
+						n_uq++;
 					//scalar
 						h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * RFfactor ); 
 						h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight * RFfactor);
@@ -716,7 +719,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 //	fixup_template_sum(h_sym, h_asym);
 		t1->ResetBranchAddresses();
 		printf("MC templates generated from %i events. LQpure_u_vec integral is %.1f \n \n", n, h_LQpure_u_vec->Integral()); 
-
+		printf("No of events with pT >= 40 and pT < 75 is %i\n",n_pt75);
+		printf("No. of u events = %i, no. of d events = %i, ratio of u:d = %f, u+d/total = %f\n",n_uq,n_dq,float(n_uq)/float(n_dq),float(n_uq+n_dq)/n);
 		return 0;
 	}
 
