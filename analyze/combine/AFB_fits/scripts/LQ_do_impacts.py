@@ -49,8 +49,8 @@ else:
     #all_sys =   ["METJEC", "BTAGCOR","BTAGUNCOR", "BTAGLIGHT" , 
 	
         all_sys =   ["elScaleSyst", "elScaleStat","elScaleGain", "elSmear", "Pu",
-                    "elHLTBARPTHIGH", "elIDBARPTHIGH", "elRECOBARPTHIGH", "elHLTENDPTHIGH", "elIDENDPTHIGH", "elRECOENDPTHIGH",
-                    "elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
+                    "elHLTBARPT", "elIDBARPT", "elRECOBARPT", "elHLTENDPT", "elIDENDPT", "elRECOENDPT",
+                    #"elHLTBARPTLOW", "elIDBARPTLOW", "elRECOBARPTLOW", "elHLTENDPTLOW", "elIDENDPTLOW", "elRECOENDPTLOW",
                     #"ptrw1b", "ptrw2b", "ptrw3b", "ptrw4b", "ptrw5b", "ptrw6b", "ptrw7b",
                     "emucostrw1b", "emucostrw2b", "emucostrw3b", "emucostrw4b",
                     "elfakesrw1b", "elfakesrw2b", "elfakesrw3b", "elfakesrw4b",
@@ -59,8 +59,8 @@ else:
                     "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC", "lumiGS" ,"lumi", 
                     ]
 
-        correlate_all = ["elScaleSyst", "elSmear", "Pu", "elRECOBARPTHIGH", "elRECOENDPTHIGH", "elRECOBARPTLOW", "elRECOENDPTLOW",
-                         "elIDBARPTHIGH", "elIDENDPTHIGH", "elIDBARPTLOW", "elIDENDPTLOW", 
+        correlate_all = ["elScaleSyst", "elSmear", "Pu", "elRECOBARPT", "elRECOENDPT", #"elRECOBARPTLOW", "elRECOENDPTLOW",
+                         "elIDBARPT", "elIDENDPT", 
                          "nlo_sys","dy_xsec","db_xsec"  ,"top_xsec","gam_xsec",
                          "lumiXY" ,"lumiLS" ,"lumiDB" ,"lumiBC" , "lumiGS",
                          ] 
