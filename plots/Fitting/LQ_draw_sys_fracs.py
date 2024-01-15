@@ -6,7 +6,7 @@ from optparse import OptionGroup
 from string import digits
 import copy
 
-sys_keys = ["pdf", "refac", "el_scale","lep_eff", "mc_xsec", "fakes",  "pileup", "emucostrw", "other","nlo_sys"]
+sys_keys = ["pdf", "refac", "el_scale","lep_eff", "mc_xsec", "fakes", "lumi",  "pileup", "emucostrw", "other","nlo_sys"]
 
 color_dict = dict()
 color_dict["pdf"] = kGreen +3
@@ -16,7 +16,7 @@ color_dict["mc_xsec"] = kBlue
 color_dict["fakes"] = kRed -7 
 color_dict["other"] = kGray
 color_dict["el_scale"] = kGreen
-color_dict["ptrw"] = kOrange
+color_dict["lumi"] = kOrange
 color_dict["pileup"] =  kCyan
 color_dict["emucostrw"] = kMagenta + 4
 color_dict["nlo_sys"] = kYellow+2
@@ -29,7 +29,7 @@ name_dict["mc_xsec"] = "MC Cross Sections + Lumi"
 name_dict["fakes"] = "Fakes Estimate"
 name_dict["other"] = "Other"
 name_dict["el_scale"] = "Electron Momentum Scale"
-#name_dict["ptrw"] = "DY p_{T} Reweighting"
+name_dict["lumi"] = "Luminosity"
 name_dict["pileup"] =  "Pileup"
 name_dict["emucostrw"] = "e#mu Shape Correction"
 name_dict["nlo_sys"] = "LQ LO reweighting"
@@ -92,7 +92,7 @@ def add_sys(d, fracs, sys_name):
     elif("Scale" in sys_name): key_name = "el_scale"
     elif("xsec" in sys_name and "fakes" not in sys_name): key_name = "mc_xsec"
     elif("fakes" in sys_name): key_name = "fakes"
-    #elif("ptrw" in sys_name): key_name = "ptrw"
+    elif("lumi" in sys_name): key_name = "lumi"
     elif("Pu" in sys_name): key_name = "pileup"
     elif("emu" in sys_name): key_name = "emucostrw"
     #elif("BTAG" in sys_name): key_name = "btag"
@@ -133,10 +133,12 @@ def get_sys_dict(year, chan, q, mLQ):
     ee_base_strs = [ 'ee%i_fpl', 'ee%i_top', 'ee%i_db', 'ee%i_qcd', 'ee%i_gam' , 'ee%i_LQpure_u', 'ee%i_LQint_u' ]
     mumu_base_strs = [ 'mumu%i_fpl', 'mumu%i_top', 'mumu%i_db', 'mumu%i_qcd', 'mumu%i_gam' ,'mumu%i_LQpure_u', 'mumu%i_LQint_u' ]
     #combine these names into a single systematic
-    removes = ['Up', 'Down', 'PTHIGH', 'PTLOW', 'BAR', 'END']
+    removes = ['Up', 'Down', 'BAR', 'END']
     #plus template gets factor of 3/4s in norm
     xsec_uncs = [0.03 * 0.75, 0.05, 0.04, 0.5, 0.4, 0.0, 0.0]
-    lumi_unc = 0.025
+    if year == 16: lumi_unc = 0.022
+    elif year == 17: lumi_unc = 0.02
+    else: lumi_unc = 0.015
     mumu_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'mumu_fakes_xsec', 'gamgam_xsec','','']
     ee_xsec_names = ['DY_xsec', 'top_xsec', 'diboson_xsec', 'ee_fakes_xsec', 'gamgam_xsec','','']
     nlo_unc = [0.0, 0.0, 0.0, 0.0, 0.0, 1.2, 0.6]
@@ -186,7 +188,7 @@ def get_sys_dict(year, chan, q, mLQ):
 
 
         #do xsec uncertainties
-        xsec_unc = (xsec_uncs[idx]**2 + lumi_unc**2)**(0.5)
+        xsec_unc = xsec_uncs[idx]
         xsec_frac = np.array([xsec_unc * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
         xsec_frac = (2*xsec_frac)**2#factor of 2 to be consistent with up/down averaging
         #print(xsec_names[idx], xsec_unc, h_base.Integral(), h_tot.Integral())
@@ -195,6 +197,14 @@ def get_sys_dict(year, chan, q, mLQ):
         else: 
             s_key = "mc_xsec"
         add_sys(sys_dict, xsec_frac, s_key)  
+	
+	#do lumi uncertainties
+        
+        lumi_frac = np.array([lumi_unc * h_base.Integral()/h_tot.Integral()] *nBins, dtype=np.float64)
+        lumi_frac = (2*lumi_frac)**2#factor of 2 to be consistent with up/down averaging
+        #print(xsec_names[idx], xsec_unc, h_base.Integral(), h_tot.Integral())
+        
+        add_sys(sys_dict, lumi_frac, 'lumi')	
 	
 	# do nlo sys
 	#if "LQpure" in base:
