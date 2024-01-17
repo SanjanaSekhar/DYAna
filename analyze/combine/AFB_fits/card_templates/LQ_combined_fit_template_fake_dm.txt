@@ -21,7 +21,7 @@ dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
-nlo_sys         lnN      -       -        -      -        -        -       -            -        2.20    1.60
+nlo_sys         lnN      -       -        -      -        -        -       -            -        NLO_SYS4    NLO_SYS2
 
 muFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
 

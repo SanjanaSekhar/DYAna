@@ -8,26 +8,24 @@ kmax *
 -------------------------------------------------------------------------------
 shapes * * LQm1000_merge_templates18_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-
-bin             ee18  
+bin             mumu18  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee18    ee18    ee18    ee18     ee18    ee18     ee18 	ee18    ee18      ee18 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+bin                      mumu18  mumu18  mumu18  mumu18   mumu18  mumu18   mumu18 	mumu18   mumu18    mumu18 	 
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
+nlo_sys         lnN      -       -        -      -        -        -       -            -        2.200000    1.600000
 
-nlo_sys         lnN      -       -        -      -        -        -       -            -        2.20    1.60
+muFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
-elFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
-
-xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys elFakes16 elFakes17 elFakes18
+xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys muFakes16 muFakes17 muFakes18
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi18           lnN     1.015    1.015     1.015   1.015     1.015   1.015     -			1.015    	1.015	1.015		
@@ -35,14 +33,14 @@ lumiXY           lnN     1.020    1.020     1.020   1.020     1.020   1.020     
 lumiLS           lnN     1.002    1.002     1.002   1.002     1.002   1.002     - 		1.002    	1.002	1.002		  
 lumiDB           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
 lumiBC           lnN     1.002    1.002     1.002   1.002     1.002   1.002     -			1.002    	1.002	1.002	 
-lumiGS           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  		  
+lumiGS           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	  
 
 lumis18 group = lumi18 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
-prefire18       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+muPref1718       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
 #METJEC18         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
 #METHEM18        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
                                                                                                                                          
@@ -51,37 +49,21 @@ prefire18       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1
 #BTAGLIGHT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
 #BTAGS18 group = BTAGUNCOR18 BTAGCOR BTAGLIGHT18
-                                                                                                                                          
-elScaleStat18    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleGain18    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+                                                                                                                                           
 
-elScales18 group = elScaleStat18  elScaleGain18  elScaleSyst   elSmear
+muRC18       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDBAR18    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOBAR18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTBAR18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDEND18    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOEND18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTEND18   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
 
-
-elHLTBARPT18     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPT18   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elHLTBARPT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elHLTENDPT18      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
-
-elHLTs18 group = elHLTENDPT18  elHLTBARPT18   
-
-elIDBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-
-elIDs group = elIDBARPT elIDENDPT
-#elIDs group =  elIDENDPTHIGH elIDENDPTLOW
-
-elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elRECOENDPT   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOBARPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-
-elRECOs group = elRECOBARPT elRECOENDPT
-
+muIDs18 group  = muIDBAR18 muISOBAR18 muIDEND18 muISOEND18 muIDSYS muISOSYS
+muHLTs18 group = muHLTBAR18 muHLTEND18
+                                                                                                                                  
 alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC1718               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -96,13 +78,13 @@ emucostrw3b1718        shape    -       -        -     1.0      1.0     -      -
 emucostrw4b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws1718 group = emucostrw1b1718 emucostrw3b1718 emucostrw4b1718 emucostrw2b1718
-##fakes cost reweighting                                                                                                 
-elfakesrw1b18          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw2b18          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw3b18          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw4b18          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-elfakesrws18 group = elfakesrw1b18 elfakesrw2b18 elfakesrw4b18 elfakesrw3b18
+mufakesrw1b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw2b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw3b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw4b18         shape    -       -        -      -        -      -      1.0       -       -       -         
+
+mufakesrws18 group = mufakesrw1b18 mufakesrw2b18 mufakesrw3b18 mufakesrw4b18
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
@@ -179,7 +161,7 @@ pdf59                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
 # MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_d LQint_d
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_u LQint_u
 
 MCStatBin1y18             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin2y18             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0

@@ -136,7 +136,8 @@ print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
 if(year > 0): years = [year % 2000]
 else: years = [16,17,18]
-
+if mass <= 1500: nlo_sys = 0.3
+else: nlo_sys = 0.3 - 0.04*((mass-1500)/1000)
 for yr in years:
     if(yr == 16):
         comb_yr = 16
@@ -149,6 +150,8 @@ for yr in years:
     print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
     print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
     print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mass, card))
+    print_and_do("""sed -i "s/NLO_SYS2/%f/g" %s""" % (1.+(nlo_sys*2), card))
+    print_and_do("""sed -i "s/NLO_SYS4/%f/g" %s""" % (1.+(nlo_sys*4), card))
     if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (channel[0], card))
     else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (channel[0], card))
     if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))

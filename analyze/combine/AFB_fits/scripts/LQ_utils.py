@@ -170,6 +170,8 @@ def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False,
     if(year > 0): years = [year % 2000]
     else: years = [16,17,18]
 
+    if mLQ <= 1500: nlo_sys = 0.3
+    else: nlo_sys = 0.3 - 0.04*((mLQ-1500)/1000)
     for yr in years:
         if(yr == 16):
             comb_yr = 16
@@ -182,11 +184,12 @@ def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False,
         print_and_do("""sed -i "s/YRC/%i/g" %s""" % (comb_yr, card))
         print_and_do("""sed -i "s/YR/%i/g" %s""" % (yr, card))
         print_and_do("""sed -i "s/MASS/%i/g" %s""" % (mLQ, card))
+	print_and_do("""sed -i "s/NLO_SYS2/%f/g" %s""" % (1.+(nlo_sys*2), card))
+	print_and_do("""sed -i "s/NLO_SYS4/%f/g" %s""" % (1.+(nlo_sys*4), card))
         if not is_vec: print_and_do("""sed -i "s/QUARK/%s/g" %s""" % (q, card))
         else: print_and_do("""sed -i "s/QUARK/%s_vec/g" %s""" % (q, card))
         if(yr == 16 or yr == 17): print_and_do("""sed -i "s/#prefire/prefire/g" %s""" % (card))
         #if(yr == 18): print_and_do("""sed -i "s/#METHEM/METHEM/g" %s""" % (card))
-
 
     if(year < 0 ):
         print_and_do("combineCards.py Y16=cards/combined_fit_y16_LQ.txt Y17=cards/combined_fit_y17_LQ.txt Y18=cards/combined_fit_y18_LQ.txt > %s" % (comb_card))
