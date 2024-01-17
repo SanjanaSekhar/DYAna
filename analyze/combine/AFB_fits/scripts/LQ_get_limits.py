@@ -64,7 +64,8 @@ def plotLimits(channel):
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
     DrawLimitBand(pads[0], graphs, legend=legend)
-    if channel=='ue' or channel=='de': 
+    if channel=='ue' or channel=='de':
+	line_e.SetLineWidth(3) 
 	line_e.Draw("same")
     	legend.AddEntry(line_e,"CMS Limit from arXiv:1509.03750")
     legend.Draw()
