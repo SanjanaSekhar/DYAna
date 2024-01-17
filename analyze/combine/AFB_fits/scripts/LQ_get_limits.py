@@ -38,6 +38,7 @@ def plotLimits(channel):
     del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
+    line_e = ROOT.TLine(1000,1,1755,1)
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('m_{V_{#mu %s}} (GeV)'%(channel[0]))
@@ -52,6 +53,8 @@ def plotLimits(channel):
         else: 
 		axis.GetXaxis().SetTitle('m_{S_{e %s}} (GeV)'%(channel[0]))
 		axis.GetYaxis().SetTitle('Limits on y_{e %s}'%(channel[0]))
+		line_e.SetLineColor(kBlue)
+		
     pads[0].cd()
     axis.Draw('axis')
      
@@ -61,12 +64,14 @@ def plotLimits(channel):
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
     DrawLimitBand(pads[0], graphs, legend=legend)
+    if channel=='ue' or channel=='de': 
+	line_e.Draw("same")
+    	legend.AddEntry(line_e,"CMS Limit from arXiv:1509.03750")
     legend.Draw()
      
      # Re-draw the frame and tick marks
     pads[0].RedrawAxis()
     pads[0].GetFrame().Draw()
-     
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
