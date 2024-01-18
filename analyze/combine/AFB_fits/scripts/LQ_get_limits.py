@@ -40,7 +40,7 @@ def plotLimits(channel):
     axis = CreateAxisHist(graphs.values()[0])
     line_sp = ROOT.TLine(1000,1,1755,1)
     line_sp2 = ROOT.TLine(1755,0.,1755,1.)
-    line_pp = ROOT.TLine(1435,0.,1435,5.55555)
+    line_pp = ROOT.TLine(1435,0.,1435,5.3)
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('m_{V_{#mu %s}} (GeV)'%(channel[0]))
