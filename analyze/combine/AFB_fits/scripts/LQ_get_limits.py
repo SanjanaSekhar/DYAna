@@ -38,7 +38,9 @@ def plotLimits(channel):
     del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
-    line_e = ROOT.TLine(1000,1,1755,1)
+    line_sp = ROOT.TLine(1000,1,1755,1)
+    line_sp2 = ROOT.TLine(1755,0.,1755,1.)
+    line_pp = ROOT.TLine(1435,0.,1435,5.)
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('m_{V_{#mu %s}} (GeV)'%(channel[0]))
@@ -53,7 +55,6 @@ def plotLimits(channel):
         else: 
 		axis.GetXaxis().SetTitle('m_{S_{e %s}} (GeV)'%(channel[0]))
 		axis.GetYaxis().SetTitle('Limits on y_{e %s}'%(channel[0]))
-		line_e.SetLineColor(kBlue)
 		
     pads[0].cd()
     axis.Draw('axis')
@@ -65,9 +66,17 @@ def plotLimits(channel):
     StyleLimitBand(graphs)
     DrawLimitBand(pads[0], graphs, legend=legend)
     if channel=='ue' or channel=='de':
-	line_e.SetLineWidth(3) 
-	line_e.Draw("same")
-    	legend.AddEntry(line_e,"CMS Limit from arXiv:1509.03750")
+	line_sp.SetLineWidth(3)
+	line_sp2.SetLineWidth(3)
+	line_pp.SetLineWidth(3)
+	line_sp.SetLineColor(kBlue)
+	line_sp2.SetLineColor(kBlue)
+	line_pp.SetLineColor(kRed+3)
+	line_pp.Draw("same") 
+	line_sp.Draw("same")
+	line_sp2.Draw("same")
+	legend.AddEntry(line_pp,"CMS Limit from arXiv:1811.01197")
+    	legend.AddEntry(line_sp,"CMS Limit from arXiv:1509.03750")
     legend.Draw()
      
      # Re-draw the frame and tick marks
