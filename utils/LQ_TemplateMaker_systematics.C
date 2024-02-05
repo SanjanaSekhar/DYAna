@@ -253,6 +253,18 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		else tm.do_electrons = true;
 		tm.setup();
 
+		int n_events = 0;
+		for (int i=0; i<tm.nEntries; i++) {
+			tm.getEvent(i);
+			tm.doCorrections();
+			if( (tm.m >= lq_m_bins[0]) && tm.not_cosmic){ //tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
+				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
+					n_events++;
+				}
+			}
+		}
+		printf("Select %i events out of %i for unblinding data\n",n_events/10,n_events);
+		int n = 1;
 		TRandom *rand;
 		float sign = 1.;
 		if(scramble_data) rand = new TRandom3();
@@ -262,51 +274,55 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			if( (tm.m >= lq_m_bins[0]) && tm.not_cosmic){ //tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
 				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
 				//tm.doCorrections();
-				float var1 = abs(tm.cm.Rapidity());
-				if(use_xF)  var1 = tm.xF;
+					float var1 = abs(tm.cm.Rapidity());
+					if(use_xF)  var1 = tm.xF;
 
-				n++;
-				if(!ss){
-					if(scramble_data){
+					n++;
+					if(!ss){
+						if(scramble_data){
 										//switch + and - back and forth
 										//tm.cost = sign * std::fabs(tm.cost); 
 										//sign *= -1.;
 										//randomly flip data events
-						if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
-						else tm.cost = -std::fabs(tm.cost);
-					}
-								h->Fill(tm.m, var1, tm.cost, 1); //is tm.m ok here
+									if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
+									else tm.cost = -std::fabs(tm.cost);
+								}
+								if(n == 10) { //select every 10th event to unblind
+									h->Fill(tm.m, var1, tm.cost, 1);
+									n = 1
+								} 
 							}
 							else{
 								h->Fill(tm.m, var1, -abs(tm.cost), 1);
 							}
 							nEvents++;
+							n++;
 						}
 
-  
+
 					}
 				}
-					tm.finish();
-					return nEvents;
+				tm.finish();
+				return nEvents;
 			}
 
-				float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
+	float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
 // if(test_sign)cal = crl - cll;
 
 
 
-					float color_factor = 3.;
-					float XS1 = (M_PI*pow(alpha_run,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
-		//pure Z0 term
+		float color_factor = 3.;
+		float XS1 = (M_PI*pow(alpha_run,2)*pow(Q_q,2)*(pow(gen_cost,2)+1))/(2*color_factor*s);
+//pure Z0 term
 // float XS2_num = ((((cal*caq*pow(gen_cost,2)+ cal*caq+ 8*gen_cost*cvl*cvq)*caq +(pow(gen_cost,2)+1)*cal*pow(cvq,2))*cal+(pow(caq,2)+pow(cvq,2))*(pow(gen_cost,2)+1)*pow(cvl,2))*pow(G_F,2)*pow(m_Z0,4)*s);
-					float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F_run,2)*pow(m_Z0,4)*s;
-					float XS2_denom = (256*color_factor*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
-					float XS2 = XS2_num/ XS2_denom;
-		//Z0 gamma interference
- //float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
-					float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha_run*G_F_run*m_Z0*m_Z0*Q_q;
-					float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
-					float XS45 = XS45_num/XS45_denom;
+		float XS2_num = (pow(cvl,2)+pow(cal,2))*(pow(caq,2)+pow(cvq,2))*(1+pow(gen_cost,2))*pow(G_F_run,2)*pow(m_Z0,4)*s;
+		float XS2_denom = (256*color_factor*M_PI*(pow((m_Z0*m_Z0-s),2) + pow(g_z*m_Z0,2)));
+		float XS2 = XS2_num/ XS2_denom;
+//Z0 gamma interference
+//float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq + 2*cal*caq*gen_cost) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
+		float XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (s- m_Z0*m_Z0) * alpha_run*G_F_run*m_Z0*m_Z0*Q_q;
+		float XS45_denom = (8*color_factor*sqrt(2)*(pow((m_Z0*m_Z0-s),2)+pow((g_z*m_Z0),2)));
+		float XS45 = XS45_num/XS45_denom;
 
 
 //use events twice and make denom symmetric only
@@ -499,52 +515,52 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 				h_alpha->Fill(tm.m, var1, tm.cost, reweight_alpha * tm.evt_weight * RFfactor); 
 				h_alpha->Fill(tm.m, var1, -tm.cost, reweight_alpha * tm.evt_weight * RFfactor); 
-				}
 			}
 		}
-		tm.finish();
+	}
+	tm.finish();
 		//int mbin = find_bin(m_bins, m_low + 0.1);
 	 // tm.fixRFNorm(h_sym, mbin); //not done for LQ
 		//tm.fixRFNorm(h_asym, mbin);
 	 // tm.fixRFNorm(h_alpha, mbin,year);
 
 
-		h_sym->Scale(0.5);
-		h_asym->Scale(0.5);
-		h_alpha->Scale(0.5);
-		
+	h_sym->Scale(0.5);
+	h_asym->Scale(0.5);
+	h_alpha->Scale(0.5);
+
 
 		//cleanup_template(h_sym);
-		fixup_template_sum(h_sym, h_asym);
-		t1->ResetBranchAddresses();
-		printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); 
+	fixup_template_sum(h_sym, h_asym);
+	t1->ResetBranchAddresses();
+	printf("MC templates generated from %i events. Sym integral is %.1f \n \n", n, h_sym->Integral()); 
 
-		return 0;
-	}
+	return 0;
+}
 
-	int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpure_d, TH3F *h_LQint_d,TH3F *h_LQpure_u_vec, TH3F *h_LQint_u_vec,TH3F *h_LQpure_d_vec, TH3F *h_LQint_d_vec,
-		int year, float m_LQ, int flag1 = FLAG_MUONS, bool make_ud = true, bool ptcut = false, bool use_xF = false, const string &sys_label = "" ){
+int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpure_d, TH3F *h_LQint_d,TH3F *h_LQpure_u_vec, TH3F *h_LQint_u_vec,TH3F *h_LQpure_d_vec, TH3F *h_LQint_d_vec,
+	int year, float m_LQ, int flag1 = FLAG_MUONS, bool make_ud = true, bool ptcut = false, bool use_xF = false, const string &sys_label = "" ){
 
-		printf("Making LQ mc template for sys %s \n", sys_label.c_str());
+	printf("Making LQ mc template for sys %s \n", sys_label.c_str());
 
-		
 
-		
-		h_LQpure_u->Sumw2();
-		h_LQint_u->Sumw2();
-		h_LQpure_d->Sumw2();
-		h_LQint_d->Sumw2();
-		h_LQpure_u_vec->Sumw2();
-		h_LQint_u_vec->Sumw2();
-		h_LQpure_d_vec->Sumw2();
-		h_LQint_d_vec->Sumw2();
 
-		int n = 0;
 
-		TempMaker tm(t1, false, year);
-		if(flag1 == FLAG_MUONS) tm.do_muons = true;
-		else tm.do_electrons = true;
-		tm.is_gen_level = true;
+	h_LQpure_u->Sumw2();
+	h_LQint_u->Sumw2();
+	h_LQpure_d->Sumw2();
+	h_LQint_d->Sumw2();
+	h_LQpure_u_vec->Sumw2();
+	h_LQint_u_vec->Sumw2();
+	h_LQpure_d_vec->Sumw2();
+	h_LQint_d_vec->Sumw2();
+
+	int n = 0;
+
+	TempMaker tm(t1, false, year);
+	if(flag1 == FLAG_MUONS) tm.do_muons = true;
+	else tm.do_electrons = true;
+	tm.is_gen_level = true;
 		tm.do_ptrw = false; // turned DY pt correction off for AN comment
 
 		//tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
@@ -640,8 +656,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 					if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
 					if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
 				}
-					if(flag_q!=0){ 
-						
+				if(flag_q!=0){ 
+
 					set_running_couplings(s,flag_q);
 
 					float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq);
@@ -695,54 +711,54 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 						h_LQint_u_vec->Fill(tm.m, var1, -tm.cost, reweight_LQint_neg_vec * tm.evt_weight * RFfactor);
 					}
 				}
-				}
 			}
 		}
-		tm.finish();
+	}
+	tm.finish();
 		//int mbin = find_bin(m_bins, m_low + 0.1);
 	 // tm.fixRFNorm(h_sym, mbin); //not done for LQ
 		//tm.fixRFNorm(h_asym, mbin);
 	 // tm.fixRFNorm(h_alpha, mbin,year);
 
 
-		h_LQpure_u->Scale(0.5);
-		h_LQint_u->Scale(0.5);
-		h_LQpure_d->Scale(0.5);
-		h_LQint_d->Scale(0.5);
-		h_LQpure_u_vec->Scale(0.5);
-		h_LQint_u_vec->Scale(0.5);
-		h_LQpure_d_vec->Scale(0.5);
-		h_LQint_d_vec->Scale(0.5);
+	h_LQpure_u->Scale(0.5);
+	h_LQint_u->Scale(0.5);
+	h_LQpure_d->Scale(0.5);
+	h_LQint_d->Scale(0.5);
+	h_LQpure_u_vec->Scale(0.5);
+	h_LQint_u_vec->Scale(0.5);
+	h_LQpure_d_vec->Scale(0.5);
+	h_LQint_d_vec->Scale(0.5);
 
 
 		//cleanup_template(h_sym);
 //	fixup_template_sum(h_sym, h_asym);
-		t1->ResetBranchAddresses();
-		printf("MC templates generated from %i events. LQpure_u_vec integral is %.1f \n \n", n, h_LQpure_u_vec->Integral()); 
-		printf("No of events with pT >= 40 and pT < 75 is %i\n",n_pt75);
-		printf("No. of u events = %i, no. of d events = %i, ratio of u:d = %f, u+d/total = %f\n",n_uq,n_dq,float(n_uq)/float(n_dq),float(n_uq+n_dq)/n);
-		return 0;
-	}
+	t1->ResetBranchAddresses();
+	printf("MC templates generated from %i events. LQpure_u_vec integral is %.1f \n \n", n, h_LQpure_u_vec->Integral()); 
+	printf("No of events with pT >= 40 and pT < 75 is %i\n",n_pt75);
+	printf("No. of u events = %i, no. of d events = %i, ratio of u:d = %f, u+d/total = %f\n",n_uq,n_dq,float(n_uq)/float(n_dq),float(n_uq+n_dq)/n);
+	return 0;
+}
 
-	int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
-		int year,  int flag1 = FLAG_MUONS, 
-		bool ss =false, bool use_xF = false,  bool emu_reweight = false, const string &sys_label = ""){
-		h->Sumw2();
+int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,  
+	int year,  int flag1 = FLAG_MUONS, 
+	bool ss =false, bool use_xF = false,  bool emu_reweight = false, const string &sys_label = ""){
+	h->Sumw2();
 
-		int nEvents = 0;
+	int nEvents = 0;
 
-		for(int i=0; i<nTrees; i++){
-			printf("Tree %i \n", i);
-			TTree *t1 = ts[i];
+	for(int i=0; i<nTrees; i++){
+		printf("Tree %i \n", i);
+		TTree *t1 = ts[i];
 
-			TempMaker tm(t1, false, year);
-			if(flag1 == FLAG_MUONS) tm.do_muons = true;
-			else tm.do_electrons = true;
-			tm.is_gen_level = false;
-			tm.do_emu_costrw = emu_reweight;
+		TempMaker tm(t1, false, year);
+		if(flag1 == FLAG_MUONS) tm.do_muons = true;
+		else tm.do_electrons = true;
+		tm.is_gen_level = false;
+		tm.do_emu_costrw = emu_reweight;
 
-			auto hname = h->GetName();
-			tm.btag_mc_eff_idx = 0;
+		auto hname = h->GetName();
+		tm.btag_mc_eff_idx = 0;
 				/*
 				if(string(hname).find("top") != string::npos) tm.btag_mc_eff_idx = 0; //idx for ttbar MC btag effs
 				else if(string(hname).find("gam") != string::npos) tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
@@ -750,233 +766,233 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 				printf("h %s : btag mc idx %i \n", h->GetName(), tm.btag_mc_eff_idx);
 				*/
-				tm.setup_systematic(sys_label);
-				tm.setup();
+		tm.setup_systematic(sys_label);
+		tm.setup();
 
 
-				for (int i=0; i<tm.nEntries; i++) {
-					tm.getEvent(i);
-					tm.doCorrections();
+		for (int i=0; i<tm.nEntries; i++) {
+			tm.getEvent(i);
+			tm.doCorrections();
 					bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
 					if(pass){
 		//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){	
 					//tm.doCorrections();
-					if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){	
+						if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){	
 					tm.getEvtWeight(false);//incl_btag_SFs=false
 
-						float var1 = abs(tm.cm.Rapidity());
-						if(use_xF)  var1 = tm.xF;
-						nEvents++;
-						if(!ss) h->Fill(tm.m, var1, tm.cost, tm.evt_weight);
-						else{
-							h->Fill(tm.m, var1, -abs(tm.cost), tm.evt_weight);
-						}
+					float var1 = abs(tm.cm.Rapidity());
+					if(use_xF)  var1 = tm.xF;
+					nEvents++;
+					if(!ss) h->Fill(tm.m, var1, tm.cost, tm.evt_weight);
+					else{
+						h->Fill(tm.m, var1, -abs(tm.cost), tm.evt_weight);
 					}
 				}
-				}
-				tm.finish();
 			}
-
-
-			printf("Performing templ. cleanup (removing neg. bins) \n");
-			cleanup_template(h);
-			printf("Tot Weight is %.2f from %i events \n", h->Integral(), nEvents);
-			return 0;
 		}
+		tm.finish();
+	}
 
-		int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy, 
-			int year, float m_LQ, float yLQ = 1.0, int flag_q = 2, bool vec = false, int flag1 = FLAG_MUONS, bool make_ud = true, bool use_xF = false, 
-			const string &sys_label = "" ){
 
-			int n_var1_bins = n_y_bins;
-			Float_t *var1_bins = y_bins;
-			if(use_xF){
-				n_var1_bins = n_xf_bins;
-				var1_bins = xf_bins;
-			}
+	printf("Performing templ. cleanup (removing neg. bins) \n");
+	cleanup_template(h);
+	printf("Tot Weight is %.2f from %i events \n", h->Integral(), nEvents);
+	return 0;
+}
 
-			TH3F h_sym = TH3F("h_sym", "Symmetric template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_sym.SetDirectory(0);
-			TH3F h_alpha = TH3F("h_alpha", "Gauge boson polarization template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_alpha.SetDirectory(0);
-			TH3F h_asym = TH3F("h_asym", "Asymmetric template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_asym.SetDirectory(0);
+int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy, 
+	int year, float m_LQ, float yLQ = 1.0, int flag_q = 2, bool vec = false, int flag1 = FLAG_MUONS, bool make_ud = true, bool use_xF = false, 
+	const string &sys_label = "" ){
+
+	int n_var1_bins = n_y_bins;
+	Float_t *var1_bins = y_bins;
+	if(use_xF){
+		n_var1_bins = n_xf_bins;
+		var1_bins = xf_bins;
+	}
+
+	TH3F h_sym = TH3F("h_sym", "Symmetric template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_sym.SetDirectory(0);
+	TH3F h_alpha = TH3F("h_alpha", "Gauge boson polarization template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_alpha.SetDirectory(0);
+	TH3F h_asym = TH3F("h_asym", "Asymmetric template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_asym.SetDirectory(0);
 		// uLQ
-			TH3F h_LQpure_u = TH3F("h_LQpure_u", "LQpure template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQpure_u.SetDirectory(0);
-			TH3F h_LQint_u = TH3F("h_LQint_u", "LQint template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQint_u.SetDirectory(0);
-			TH3F h_LQpure_u_vec = TH3F("h_LQpure_u_vec", "LQpure template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQpure_u_vec.SetDirectory(0);
-			TH3F h_LQint_u_vec = TH3F("h_LQint_u_vec", "LQint template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQint_u_vec.SetDirectory(0);
+	TH3F h_LQpure_u = TH3F("h_LQpure_u", "LQpure template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQpure_u.SetDirectory(0);
+	TH3F h_LQint_u = TH3F("h_LQint_u", "LQint template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQint_u.SetDirectory(0);
+	TH3F h_LQpure_u_vec = TH3F("h_LQpure_u_vec", "LQpure template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQpure_u_vec.SetDirectory(0);
+	TH3F h_LQint_u_vec = TH3F("h_LQint_u_vec", "LQint template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQint_u_vec.SetDirectory(0);
 		//dLQ
-			TH3F h_LQpure_d = TH3F("h_LQpure_d_vec", "LQpure template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQpure_d.SetDirectory(0);
-			TH3F h_LQint_d = TH3F("h_LQint_d_vec", "LQint template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQint_d.SetDirectory(0);
-			TH3F h_LQpure_d_vec = TH3F("h_LQpure_d_vec", "LQpure template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQpure_d_vec.SetDirectory(0);
-			TH3F h_LQint_d_vec = TH3F("h_LQint_d_vec", "LQint template of mc",
-				n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-			h_LQint_d_vec.SetDirectory(0);
+	TH3F h_LQpure_d = TH3F("h_LQpure_d_vec", "LQpure template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQpure_d.SetDirectory(0);
+	TH3F h_LQint_d = TH3F("h_LQint_d_vec", "LQint template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQint_d.SetDirectory(0);
+	TH3F h_LQpure_d_vec = TH3F("h_LQpure_d_vec", "LQpure template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQpure_d_vec.SetDirectory(0);
+	TH3F h_LQint_d_vec = TH3F("h_LQint_d_vec", "LQint template of mc",
+		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+	h_LQint_d_vec.SetDirectory(0);
 		//includes m_LQ
 			//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
-			gen_mc_SM_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
-			gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, make_ud, false, false, sys_label );
+	gen_mc_SM_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
+	gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, make_ud, false, false, sys_label );
 
-			float alpha = 2.* a0/ (2. - a0);
-			double norm = 3./4./(2.+alpha);
+	float alpha = 2.* a0/ (2. - a0);
+	double norm = 3./4./(2.+alpha);
 
-			TH3F *h_pl = (TH3F *) h_sym.Clone("h_pl");
-			TH3F *h_mn = (TH3F *) h_sym.Clone("h_mn");
-			h_pl->Reset();
-			h_mn->Reset();
-			make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
+	TH3F *h_pl = (TH3F *) h_sym.Clone("h_pl");
+	TH3F *h_mn = (TH3F *) h_sym.Clone("h_mn");
+	h_pl->Reset();
+	h_mn->Reset();
+	make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
 
 
 
 
 			//h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
-			h_alpha.Scale(norm * alpha);
+	h_alpha.Scale(norm * alpha);
 			//h_dy->Add(&h_alpha);
 
-			if(flag_q == 1){	
+	if(flag_q == 1){	
 
-				if(vec){
-						h_LQpure_d_vec.Scale(pow(yLQ,4));
-						h_LQint_d_vec.Scale(pow(yLQ,2));
+		if(vec){
+			h_LQpure_d_vec.Scale(pow(yLQ,4));
+			h_LQint_d_vec.Scale(pow(yLQ,2));
 
-						h_dy->Add(&h_LQpure_d_vec);
-						h_dy->Add(&h_LQint_d_vec);
-					}
-				else{	
-						h_LQpure_d.Scale(pow(yLQ,4));
-						h_LQint_d.Scale(pow(yLQ,2));
+			h_dy->Add(&h_LQpure_d_vec);
+			h_dy->Add(&h_LQint_d_vec);
+		}
+		else{	
+			h_LQpure_d.Scale(pow(yLQ,4));
+			h_LQint_d.Scale(pow(yLQ,2));
 
-						h_dy->Add(&h_LQpure_d);
-						h_dy->Add(&h_LQint_d);
-				}
-			}
-			
-			if(flag_q == 2){		
-				
-				if(vec){
-					h_LQpure_u_vec.Scale(pow(yLQ,4));
-					h_LQint_u_vec.Scale(pow(yLQ,2));
+			h_dy->Add(&h_LQpure_d);
+			h_dy->Add(&h_LQint_d);
+		}
+	}
 
-					h_dy->Add(&h_LQpure_u_vec);
-					h_dy->Add(&h_LQint_u_vec);
-				}
-				else{
-					h_LQpure_u.Scale(pow(yLQ,4));
-					h_LQint_u.Scale(pow(yLQ,2));
+	if(flag_q == 2){		
 
-					h_dy->Add(&h_LQpure_u);
-					h_dy->Add(&h_LQint_u);
-				}
-				
+		if(vec){
+			h_LQpure_u_vec.Scale(pow(yLQ,4));
+			h_LQint_u_vec.Scale(pow(yLQ,2));
 
-			}
+			h_dy->Add(&h_LQpure_u_vec);
+			h_dy->Add(&h_LQint_u_vec);
+		}
+		else{
+			h_LQpure_u.Scale(pow(yLQ,4));
+			h_LQint_u.Scale(pow(yLQ,2));
 
-			
-			return 1;
+			h_dy->Add(&h_LQpure_u);
+			h_dy->Add(&h_LQint_u);
 		}
 
 
+	}
 
 
-		void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH3F *h, 
-			int year, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false, string sys_label = ""){
-			h->Sumw2();
+	return 1;
+}
 
-			int shape_sys = 0;
 
-			if(!sys_label.empty()){
-				printf("Making fakes template for sys %s \n", sys_label.c_str());
-				int sys_shift = 0;
 
-				if(sys_label.find("Up") != string::npos){
-					sys_shift = 1;
-				}
-				else if(sys_label.find("Down") != string::npos){
-					sys_shift = -1;
-				}
-				if(sys_label.find("fakesrw") != string::npos){
-					int foo;
 
-					if(sys_shift > 0){
-						if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iUp", &shape_sys, &foo);
-						else sscanf(sys_label.c_str(), "_elfakesrw%ib%iUp", &shape_sys, &foo);
+void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH3F *h, 
+	int year, int flag1 = FLAG_MUONS, bool incl_ss = true, bool ss_binning = false, bool use_xF = false, string sys_label = ""){
+	h->Sumw2();
 
-					}
-					else{
-						if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iDown", &shape_sys, &foo);
-						else sscanf(sys_label.c_str(), "_elfakesrw%ib%iDown", &shape_sys, &foo);
-						shape_sys *= -1;
-					}
-					printf("Doing fakes costrw sys %i \n", shape_sys);
-				}
+	int shape_sys = 0;
+
+	if(!sys_label.empty()){
+		printf("Making fakes template for sys %s \n", sys_label.c_str());
+		int sys_shift = 0;
+
+		if(sys_label.find("Up") != string::npos){
+			sys_shift = 1;
+		}
+		else if(sys_label.find("Down") != string::npos){
+			sys_shift = -1;
+		}
+		if(sys_label.find("fakesrw") != string::npos){
+			int foo;
+
+			if(sys_shift > 0){
+				if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iUp", &shape_sys, &foo);
+				else sscanf(sys_label.c_str(), "_elfakesrw%ib%iUp", &shape_sys, &foo);
+
 			}
+			else{
+				if(flag1 == FLAG_MUONS) sscanf(sys_label.c_str(), "_mufakesrw%ib%iDown", &shape_sys, &foo);
+				else sscanf(sys_label.c_str(), "_elfakesrw%ib%iDown", &shape_sys, &foo);
+				shape_sys *= -1;
+			}
+			printf("Doing fakes costrw sys %i \n", shape_sys);
+		}
+	}
 
-			float eta1,eta2,pt1,pt2;
+	float eta1,eta2,pt1,pt2;
 
 
-			TH2D *h_err;
-			TLorentzVector *lep_p=0;
-			TLorentzVector *lep_m=0;
-			float pt;
-			FakeRate FR;
-			double tot_weight_os = 0.;
-			double tot_weight_ss = 0.;
-			if(flag1 == FLAG_MUONS) setup_new_mu_fakerate(&FR, year);
-			else setup_new_el_fakerate(&FR, year);
+	TH2D *h_err;
+	TLorentzVector *lep_p=0;
+	TLorentzVector *lep_m=0;
+	float pt;
+	FakeRate FR;
+	double tot_weight_os = 0.;
+	double tot_weight_ss = 0.;
+	if(flag1 == FLAG_MUONS) setup_new_mu_fakerate(&FR, year);
+	else setup_new_el_fakerate(&FR, year);
 		//TH2D *FR;
-			h_err = (TH2D *) FR.h->Clone("h_err");
-			h_err->Reset();
-			for (int l=0; l<=3; l++){
-				TTree *t;
-				bool is_data, is_one_iso;
-				if (l==0){
-					t = t_WJets;
-					is_data =true;
-					is_one_iso = true;
-				}
-				if (l==1){
-					t = t_QCD;
-					is_data =true;
-					is_one_iso = false;
-				}
-				if (l==2){
-					t = t_WJets_contam;
-					is_data =false;
-					is_one_iso = true;
-				}
-				if (l==3){
-					t = t_QCD_contam;
-					is_data =false;
-					is_one_iso = false;
-				}
-				TempMaker tm(t, is_data, year);
-				tm.is_one_iso = is_one_iso;
-				if(flag1 == FLAG_MUONS) tm.do_muons = true;
-				else tm.do_electrons = true;
-				tm.setup();
-				bool incl_btag_SFs = false;
-				for (int i=0; i<tm.nEntries; i++) {
-					tm.getEvent(i);
+	h_err = (TH2D *) FR.h->Clone("h_err");
+	h_err->Reset();
+	for (int l=0; l<=3; l++){
+		TTree *t;
+		bool is_data, is_one_iso;
+		if (l==0){
+			t = t_WJets;
+			is_data =true;
+			is_one_iso = true;
+		}
+		if (l==1){
+			t = t_QCD;
+			is_data =true;
+			is_one_iso = false;
+		}
+		if (l==2){
+			t = t_WJets_contam;
+			is_data =false;
+			is_one_iso = true;
+		}
+		if (l==3){
+			t = t_QCD_contam;
+			is_data =false;
+			is_one_iso = false;
+		}
+		TempMaker tm(t, is_data, year);
+		tm.is_one_iso = is_one_iso;
+		if(flag1 == FLAG_MUONS) tm.do_muons = true;
+		else tm.do_electrons = true;
+		tm.setup();
+		bool incl_btag_SFs = false;
+		for (int i=0; i<tm.nEntries; i++) {
+			tm.getEvent(i);
 
 					bool pass = (tm.m >= lq_m_bins[0]) &&  tm.not_cosmic ;//tm.met_pt < met_cut  && tm.has_no_bjets && tm.not_cosmic;
 
@@ -988,99 +1004,99 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 					if(pass){
 		//				if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
 						if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
-						double evt_reweight = 0.;
+							double evt_reweight = 0.;
 
-						if(flag1 == FLAG_MUONS){
-							float mu1_fakerate, mu2_fakerate; 
-							if(l==0){
-								if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
-								if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
+							if(flag1 == FLAG_MUONS){
+								float mu1_fakerate, mu2_fakerate; 
+								if(l==0){
+									if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
+									if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
 
-								evt_reweight = mu1_fakerate/(1-mu1_fakerate);
+									evt_reweight = mu1_fakerate/(1-mu1_fakerate);
 
-								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 1);
-								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 1);
+									if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 1);
+									if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 1);
+								}
+
+								if(l==1){
+									mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
+									mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
+									evt_reweight = -(mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+
+									h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(mu2_fakerate/(1-mu2_fakerate)));
+									h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f),  -0.5*(mu1_fakerate/(1-mu1_fakerate)));
+								}
+								if(l==2){
+									if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
+									if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
+									evt_reweight = -(mu1_fakerate )/(1-mu1_fakerate);
+
+									if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
+									if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
+								}
+								if(l==3){
+									mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
+									mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
+									evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+									h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight(incl_btag_SFs) * (mu2_fakerate/(1-mu2_fakerate)));
+									h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight(incl_btag_SFs) * (mu1_fakerate/(1-mu1_fakerate)));
+								}
+							}
+							else{
+								float el1_fakerate, el2_fakerate; 
+								if(l==0){
+									if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
+									if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
+									evt_reweight = el1_fakerate/(1-el1_fakerate);
+
+									if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 1);
+									if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), 1);
+								}
+								if(l==1){
+									el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
+									el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
+									evt_reweight = -(el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
+
+									h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -0.5*(el2_fakerate/(1-el2_fakerate)));
+									h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -0.5*(el1_fakerate/(1-el1_fakerate)));
+
+								}
+								if(l==2){
+
+									if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
+									if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
+									evt_reweight = -(el1_fakerate )/(1-el1_fakerate);
+
+
+									if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
+									if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
+								}
+								if(l==3){
+
+									el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
+									el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
+									evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
+
+									h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight(incl_btag_SFs) * (el2_fakerate/(1-el2_fakerate)));
+									h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight(incl_btag_SFs) * (el1_fakerate/(1-el1_fakerate)));
+								}
+							}
+							double tot_evt_weight = 0.;
+							if(is_data) tot_evt_weight = evt_reweight; 
+							else{
+								tot_evt_weight = evt_reweight * tm.getEvtWeight(incl_btag_SFs);
 							}
 
-							if(l==1){
-								mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
-								mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
-								evt_reweight = -(mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
+							float var1 = abs(tm.cm.Rapidity());
+							if(use_xF)  var1 = tm.xF;
 
-								h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f),  -0.5*(mu2_fakerate/(1-mu2_fakerate)));
-								h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f),  -0.5*(mu1_fakerate/(1-mu1_fakerate)));
+							if(!ss_binning) h->Fill(tm.m, var1, tm.cost, tot_evt_weight);
+							else{
+								h->Fill(tm.m, var1, -abs(tm.cost), tot_evt_weight);
 							}
-							if(l==2){
-								if(tm.iso_lep ==1) mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
-								if(tm.iso_lep ==0) mu1_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
-								evt_reweight = -(mu1_fakerate )/(1-mu1_fakerate);
-
-								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
-								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
-							}
-							if(l==3){
-								mu1_fakerate = get_new_fakerate_prob(tm.mu1_pt, tm.mu1_eta, FR.h);
-								mu2_fakerate = get_new_fakerate_prob(tm.mu2_pt, tm.mu2_eta, FR.h);
-								evt_reweight = (mu1_fakerate/(1-mu1_fakerate)) * (mu2_fakerate/(1-mu2_fakerate));
-								h_err->Fill(min(abs(tm.mu1_eta), 2.3f), min(tm.mu1_pt, 150.f), 0.5*tm.getEvtWeight(incl_btag_SFs) * (mu2_fakerate/(1-mu2_fakerate)));
-								h_err->Fill(min(abs(tm.mu2_eta), 2.3f), min(tm.mu2_pt, 150.f), 0.5*tm.getEvtWeight(incl_btag_SFs) * (mu1_fakerate/(1-mu1_fakerate)));
-							}
+							if(opp_sign) tot_weight_os += tot_evt_weight;
+							else tot_weight_ss += tot_evt_weight;
 						}
-						else{
-							float el1_fakerate, el2_fakerate; 
-							if(l==0){
-								if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
-								if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
-								evt_reweight = el1_fakerate/(1-el1_fakerate);
-
-								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), 1);
-								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), 1);
-							}
-							if(l==1){
-								el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
-								el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
-								evt_reweight = -(el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
-
-								h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -0.5*(el2_fakerate/(1-el2_fakerate)));
-								h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -0.5*(el1_fakerate/(1-el1_fakerate)));
-
-							}
-							if(l==2){
-
-								if(tm.iso_lep ==1) el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
-								if(tm.iso_lep ==0) el1_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
-								evt_reweight = -(el1_fakerate )/(1-el1_fakerate);
-
-
-								if(tm.iso_lep ==1) h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
-								if(tm.iso_lep ==0) h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f), -tm.getEvtWeight(incl_btag_SFs));
-							}
-							if(l==3){
-
-								el1_fakerate = get_new_fakerate_prob(tm.el1_pt, tm.el1_eta, FR.h);
-								el2_fakerate = get_new_fakerate_prob(tm.el2_pt, tm.el2_eta, FR.h);
-								evt_reweight = (el1_fakerate/(1-el1_fakerate)) * (el2_fakerate/(1-el2_fakerate));
-
-								h_err->Fill(min(abs(tm.el1_eta), 2.3f), min(tm.el1_pt, 150.f),  0.5*tm.getEvtWeight(incl_btag_SFs) * (el2_fakerate/(1-el2_fakerate)));
-								h_err->Fill(min(abs(tm.el2_eta), 2.3f), min(tm.el2_pt, 150.f),  0.5*tm.getEvtWeight(incl_btag_SFs) * (el1_fakerate/(1-el1_fakerate)));
-							}
-						}
-						double tot_evt_weight = 0.;
-						if(is_data) tot_evt_weight = evt_reweight; 
-						else{
-							tot_evt_weight = evt_reweight * tm.getEvtWeight(incl_btag_SFs);
-						}
-
-						float var1 = abs(tm.cm.Rapidity());
-						if(use_xF)  var1 = tm.xF;
-
-						if(!ss_binning) h->Fill(tm.m, var1, tm.cost, tot_evt_weight);
-						else{
-							h->Fill(tm.m, var1, -abs(tm.cost), tot_evt_weight);
-						}
-						if(opp_sign) tot_weight_os += tot_evt_weight;
-						else tot_weight_ss += tot_evt_weight;
-					}
 
 					}
 				}

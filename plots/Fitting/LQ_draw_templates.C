@@ -95,7 +95,7 @@ void LQ_draw_templates(){
     bool draw_muons = true;
     bool draw_electrons = true;
     const string sys_label = "";
-
+    bool scramble_data = false;
         //char *plot_dir = "Paper_plots/template_plots";
     char *plot_dir = "AN_plots/LQ_templates/";
     int i_start = 1; 
@@ -202,6 +202,11 @@ void LQ_draw_templates(){
             auto h_mumu_LQint_d_vec = new TH3F(title, "LQint template of mc",
                 n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_mumu_LQint_d_vec->SetDirectory(0);
+            // data
+            sprintf(title, "mumu%i_data%s", year %2000, sys_label.c_str());
+            auto h_mumu_data = new TH3F(title, "Data template",
+                n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+            h_mumu_data->SetDirectory(0);
 
             if(make_ud){
             sprintf(mu_fname1, "%s/%i/Mu%i_Sum_m%i.png", plot_dir, year,year%2000, int(m_LQ));
@@ -210,6 +215,7 @@ void LQ_draw_templates(){
             sprintf(mu_fname4, "%s/%i/Mu%i_Vum_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
             sprintf(mu_fname5, "%s/%i/Mu%i_Vdm_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
             sprintf(mu_fname6, "%s/%i/Mu%i_Vdm_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname7, "%s/%i/Mu%i_0.1data.png", plot_dir, year,year%2000);
             }
             else{
             sprintf(mu_fname1, "%s/%i/Mu%i_Scm_m%i.png", plot_dir, year,year%2000, int(m_LQ));
@@ -218,10 +224,11 @@ void LQ_draw_templates(){
             sprintf(mu_fname4, "%s/%i/Mu%i_Vcm_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
             sprintf(mu_fname5, "%s/%i/Mu%i_Vsm_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
             sprintf(mu_fname6, "%s/%i/Mu%i_Vsm_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
+            sprintf(mu_fname7, "%s/%i/Mu%i_0.1data.png", plot_dir, year,year%2000);
             }
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, false,  use_xF, sys_label );
-
+            gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
             
             auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
             auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
@@ -231,6 +238,7 @@ void LQ_draw_templates(){
             auto h1_mumu_LQint_u_vec = convert3d(h_mumu_LQint_u_vec);
             auto h1_mumu_LQpure_d_vec = convert3d(h_mumu_LQpure_d_vec);
             auto h1_mumu_LQint_d_vec = convert3d(h_mumu_LQint_d_vec);
+            auto h1_mumu_data = convert3d(h_mumu_data);
 
             printf("========= h_mumu_LQpure_d =========\n");
             h1_mumu_LQpure_d->Print("range");
@@ -256,6 +264,7 @@ void LQ_draw_templates(){
             h1_mumu_LQint_u_vec->SetLineWidth(2);
             h1_mumu_LQpure_d_vec->SetLineWidth(2);
             h1_mumu_LQint_d_vec->SetLineWidth(2);
+            h1_mumu_data->SetLineWidth(2);
 
             if(make_ud) sprintf(mu_title, "Channel : Muons %i, %.1f TeV S_{#mu u}", year, m_LQ/1000);
             else sprintf(mu_title, "Channel : Muons %i, %.1f TeV S_{#mu c}", year, m_LQ/1000);
@@ -396,6 +405,21 @@ void LQ_draw_templates(){
             c_mumu6->Print(mu_fname6);
             delete c_mumu6;
 
+            sprintf(mu_title, "Channel : Muons %i Data", year);
+            TCanvas *c_mumu7 = new TCanvas("c_mumu7", "Histograms", 200, 10, 900, 700);
+            h1_mumu_data->SetTitle(mu_title);
+        //h1_mumu_LQint_d_vec->SetMinimum(0.);
+            h1_mumu_data->Draw("hist");
+            //h1_mumu_LQint_u->Draw("hist same");
+
+            ymax = h1_mumu_data->GetMaximum();
+            ymin = h1_mumu_data->GetMinimum();
+            set_line_attributes(ymin, ymax, make_ud);
+
+            
+            c_mumu7->Print(mu_fname7);
+            delete c_mumu7;
+
         }
 
         if(draw_electrons){
@@ -456,7 +480,7 @@ void LQ_draw_templates(){
 
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud,false, use_xF, sys_label );
-
+            gen_data_template(t_elel_data, h_elel_data,  year, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
             
             auto h1_elel_LQpure_u = convert3d(h_elel_LQpure_u);
             auto h1_elel_LQint_u = convert3d(h_elel_LQint_u);
@@ -466,7 +490,7 @@ void LQ_draw_templates(){
             auto h1_elel_LQint_u_vec = convert3d(h_elel_LQint_u_vec);
             auto h1_elel_LQpure_d_vec = convert3d(h_elel_LQpure_d_vec);
             auto h1_elel_LQint_d_vec = convert3d(h_elel_LQint_d_vec);
-
+            auto h1_elel_data = convert3d(h_elel_data);
 
             h1_elel_LQpure_u->SetLineColor(kBlue);
             h1_elel_LQint_u->SetLineColor(kRed);
@@ -487,6 +511,7 @@ void LQ_draw_templates(){
             h1_elel_LQint_u_vec->SetLineWidth(2);
             h1_elel_LQpure_d_vec->SetLineWidth(2);
             h1_elel_LQint_d_vec->SetLineWidth(2);
+            h1_elel_data->SetLineWidth(2);
 
             if(make_ud) sprintf(el_title, "Channel : Electrons %i, %.1f TeV S_{eu}",year, m_LQ/1000);
             else sprintf(el_title, "Channel : Electrons %i, %.1f TeV S_{ec}",year, m_LQ/1000);
@@ -625,6 +650,22 @@ void LQ_draw_templates(){
             
             c_elel6->Print(el_fname6);
             delete c_elel6;
+
+            sprintf(el_title, "Channel : Electrons %i Data", year);
+            TCanvas *c_elel7 = new TCanvas("c_elel7", "Histograms", 200, 10, 900, 700);
+            h1_elel_data->SetTitle(el_title);
+        //h1_mumu_LQint_d_vec->SetMinimum(0.);
+            h1_elel_data->Draw("hist");
+            //h1_mumu_LQint_u->Draw("hist same");
+
+            ymax = h1_elel_data->GetMaximum();
+            ymin = h1_elel_data->GetMinimum();
+            set_line_attributes(ymin, ymax, make_ud);
+
+            
+            c_elel7->Print(el_fname7);
+            delete c_elel7;
+
 
         }
 
