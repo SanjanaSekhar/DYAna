@@ -2,7 +2,7 @@ from LQ_utils import *
 
 import ROOT
 from ROOT import *
-
+from array import array
 import subprocess
 import sys, commands, os, fnmatch
 from optparse import OptionParser
@@ -38,8 +38,12 @@ def plotLimits(channel):
     del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
-    line_sp = ROOT.TLine(1000,1,1755,1)
-    line_sp2 = ROOT.TLine(1755,0.,1755,1.)
+    #line_sp = ROOT.TLine(1000,1,1755,1)
+    #line_sp2 = ROOT.TLine(1755,1.,1755,5.3)
+    x = array('d',[860,1175,1355,1755])
+    y = array('d',[0.4,0.6,0.8,1.0])
+    line_sp = ROOT.TGraph(4,x,y)
+
     line_pp = ROOT.TLine(1435,0.,1435,5.3)
     if is_vec:
 	if 'm' in channel: 
@@ -67,17 +71,17 @@ def plotLimits(channel):
     DrawLimitBand(pads[0], graphs, legend=legend)
     if channel=='ue' or channel=='de':
 	line_sp.SetLineWidth(2)
-	line_sp2.SetLineWidth(2)
+	#line_sp2.SetLineWidth(2)
 	line_pp.SetLineWidth(2)
 	line_sp.SetLineColor(kBlue)
-	line_sp2.SetLineColor(kBlue)
+	#line_sp2.SetLineColor(kBlue)
 	line_pp.SetLineColor(kRed+2)
 	line_sp.SetLineStyle(9)
-	line_sp2.SetLineStyle(9)
+	#line_sp2.SetLineStyle(9)
 	line_pp.SetLineStyle(9)
 	line_pp.Draw("same") 
 	line_sp.Draw("same")
-	line_sp2.Draw("same")
+	#line_sp2.Draw("same")
 	legend.AddEntry(line_pp,"CMS Limit from arXiv:1811.01197","L")
     	legend.AddEntry(line_sp,"CMS Limit from arXiv:1509.03750","L")
     legend.Draw()
