@@ -247,12 +247,12 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 		int year, int flag1 = FLAG_MUONS, bool scramble_data = true, bool ss = false, bool use_xF = false){
 		h->Sumw2();
 		int nEvents = 0;
-		int n=0;
+		
 		TempMaker tm(t1, true, year);
 		if(flag1 == FLAG_MUONS) tm.do_muons = true;
 		else tm.do_electrons = true;
 		tm.setup();
-
+		/*
 		int n_events = 0;
 		for (int i=0; i<tm.nEntries; i++) {
 			tm.getEvent(i);
@@ -262,8 +262,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 					n_events++;
 				}
 			}
-		}
+		}}
+		
 		printf("Select %i events out of %i for unblinding data\n",n_events/10,n_events);
+		*/
 		int n = 1;
 		TRandom *rand;
 		float sign = 1.;
@@ -277,7 +279,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 					float var1 = abs(tm.cm.Rapidity());
 					if(use_xF)  var1 = tm.xF;
 
-					n++;
+					
 					if(!ss){
 						if(scramble_data){
 										//switch + and - back and forth
@@ -287,10 +289,10 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 									if(rand->Uniform(1.) > 0.5) tm.cost = std::fabs(tm.cost);
 									else tm.cost = -std::fabs(tm.cost);
 								}
-								if(n == 10) { //select every 10th event to unblind
+								//if(n == 10) { //select every 10th event to unblind
 									h->Fill(tm.m, var1, tm.cost, 1);
-									n = 1
-								} 
+									//n = 1;
+								//} 
 							}
 							else{
 								h->Fill(tm.m, var1, -abs(tm.cost), 1);

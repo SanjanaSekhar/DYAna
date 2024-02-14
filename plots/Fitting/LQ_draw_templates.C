@@ -160,7 +160,7 @@ void LQ_draw_templates(){
         char title[100];
 
         char mu_title[100], el_title[100];
-        char mu_fname1[100], mu_fname2[100], mu_fname3[100], mu_fname4[100], mu_fname5[100], mu_fname6[100], el_fname1[100], el_fname2[100], el_fname3[100], el_fname4[100], el_fname5[100], el_fname6[100];
+        char mu_fname1[100], mu_fname2[100], mu_fname3[100], mu_fname4[100], mu_fname5[100], mu_fname6[100], mu_fname7[100], el_fname1[100], el_fname2[100], el_fname3[100], el_fname4[100], el_fname5[100], el_fname6[100], el_fname7[100];
 
 
 
@@ -228,7 +228,7 @@ void LQ_draw_templates(){
             }
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, false,  use_xF, sys_label );
-            gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
+            int n_data = gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
             
             auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
             auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
@@ -240,10 +240,10 @@ void LQ_draw_templates(){
             auto h1_mumu_LQint_d_vec = convert3d(h_mumu_LQint_d_vec);
             auto h1_mumu_data = convert3d(h_mumu_data);
 
-            printf("========= h_mumu_LQpure_d =========\n");
-            h1_mumu_LQpure_d->Print("range");
-            printf("========= h_mumu_LQint_d =========\n");
-            h1_mumu_LQint_d->Print("range");
+            printf("========= h_mumu_data =========\n");
+            h1_mumu_data->Print("range");
+            //printf("========= h_mumu_LQint_d =========\n");
+            //h1_mumu_LQint_d->Print("range");
 
             h1_mumu_LQpure_u->SetLineColor(kBlue);
             h1_mumu_LQint_u->SetLineColor(kRed);
@@ -460,6 +460,11 @@ void LQ_draw_templates(){
             auto h_elel_LQint_d_vec = new TH3F(title, "LQint template of mc",
                 n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
             h_elel_LQint_d_vec->SetDirectory(0);
+	    // data
+	    sprintf(title, "mumu%i_data%s", year %2000, sys_label.c_str());
+	    auto h_elel_data = new TH3F(title, "Data template",
+	        n_lq_m_bins, lq_m_bins, n_y_bins, y_bins, n_cost_bins, cost_bins);
+	    h_elel_data->SetDirectory(0);
 
             if(make_ud){
             sprintf(el_fname1, "%s/%i/El%i_Sue_m%i.png", plot_dir, year,year%2000, int(m_LQ));
@@ -468,7 +473,8 @@ void LQ_draw_templates(){
             sprintf(el_fname4, "%s/%i/El%i_Vue_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
             sprintf(el_fname5, "%s/%i/El%i_Vde_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
             sprintf(el_fname6, "%s/%i/El%i_Vde_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            }
+            sprintf(el_fname7, "%s/%i/El%i_0.1data.png", plot_dir, year,year%2000);
+		}
             else{
             sprintf(el_fname1, "%s/%i/El%i_Sce_m%i.png", plot_dir, year,year%2000, int(m_LQ));
             sprintf(el_fname2, "%s/%i/El%i_Sse_m%i.png", plot_dir, year,year%2000, int(m_LQ));
@@ -476,11 +482,12 @@ void LQ_draw_templates(){
             sprintf(el_fname4, "%s/%i/El%i_Vce_int_m%i.png", plot_dir,year, year%2000, int(m_LQ));
             sprintf(el_fname5, "%s/%i/El%i_Vse_pure_m%i.png", plot_dir, year,year%2000, int(m_LQ));
             sprintf(el_fname6, "%s/%i/El%i_Vse_int_m%i.png", plot_dir, year,year%2000, int(m_LQ));
-            }
+            sprintf(el_fname7, "%s/%i/El%i_0.1data.png", plot_dir, year,year%2000);
+		}
 
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud,false, use_xF, sys_label );
-            gen_data_template(t_elel_data, h_elel_data,  year, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
+            int n_data = gen_data_template(t_elel_data, h_elel_data,  year, FLAG_ELECTRONS,  scramble_data, ss, use_xF);
             
             auto h1_elel_LQpure_u = convert3d(h_elel_LQpure_u);
             auto h1_elel_LQint_u = convert3d(h_elel_LQint_u);
@@ -491,6 +498,9 @@ void LQ_draw_templates(){
             auto h1_elel_LQpure_d_vec = convert3d(h_elel_LQpure_d_vec);
             auto h1_elel_LQint_d_vec = convert3d(h_elel_LQint_d_vec);
             auto h1_elel_data = convert3d(h_elel_data);
+
+	    printf("========= h_elel_data =========\n");
+            h1_elel_data->Print("range");
 
             h1_elel_LQpure_u->SetLineColor(kBlue);
             h1_elel_LQint_u->SetLineColor(kRed);

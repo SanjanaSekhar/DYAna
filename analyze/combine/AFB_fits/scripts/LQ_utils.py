@@ -170,8 +170,8 @@ def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False,
     if(year > 0): years = [year % 2000]
     else: years = [16,17,18]
 
-    if mLQ <= 1500: nlo_sys = 0.3
-    else: nlo_sys = 0.3 - 0.04*((mLQ-1500)/1000)
+    nlo_sys = 0.3
+    #else: nlo_sys = 0.3 - 0.04*((mLQ-1500)/1000)
     for yr in years:
         if(yr == 16):
             comb_yr = 16

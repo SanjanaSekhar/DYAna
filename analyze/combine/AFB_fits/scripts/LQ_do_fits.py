@@ -24,17 +24,17 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [-1]:
+for y in [2016]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["ee"]:
-        for options.q in ["u","d"]:
+        for options.q in ["u"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
 	    is_vec = False
 	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
-#            options.chan="mumu"
+            
 #            options.q="u"
             print("options.gen_level = ",options.gen_level);
 	    options.no_sys = False
@@ -73,7 +73,7 @@ for y in [-1]:
                 #extra_params += " --freezeParameters allConstrainedNuisances"
             if(not options.noSymMCStats):
                 fit_name += "_SymMC"
-            if(options.fake_data): fit_name +="_fake_data"
+            #if(options.fake_data): fit_name +="_fake_data"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
             fit_name+="_"+options.q

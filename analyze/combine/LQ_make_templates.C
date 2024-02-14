@@ -734,10 +734,10 @@ void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, 
    
    // year =2016;
     if(fout_name_temp == "") fout_name_temp = string("combine/templates/test.root");
-    if(year == -1) year = 2017;
+    if(year == -1) year = 2016;
 
     bool scramble_data =false ;
-    bool fake_data =true; //use mc instead of data
+    bool fake_data = false; // unblinding
     use_xF = false;
 
     
@@ -756,7 +756,8 @@ void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, 
     
     //m_LQ = 1000.;   
     char templates_name[200];
-    sprintf(templates_name,"output_files/LQm%i_nonsys_templates%i.root",int(m_LQ),year%2000);
+    //sprintf(templates_name,"output_files/LQm%i_data_templates%i.root",int(m_LQ),year%2000);
+    sprintf(templates_name,"combine/templates/LQ_data_templates%i.root",year%2000);
     string fout_name = string(templates_name,200);
     TFile * fout = TFile::Open(fout_name.c_str(), "RECREATE");
 
@@ -791,15 +792,15 @@ void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, 
         //make_ss_qcd_templates(year);
 
         string sys_label = string("");
-        make_qcd_templates(year,sys_label);
-        make_mc_templates(year, m_LQ, sys_label);
-        convert_mc_templates(year, sys_label);
+        //make_qcd_templates(year,sys_label);
+        //make_mc_templates(year, m_LQ, sys_label);
+        //convert_mc_templates(year, sys_label);
 
         fout->cd();
         gDirectory->cd(dirname);
         write_out_non_sys_templates();
         //write_out_ss_templates();
-        write_out_templates(sys_label);
+        //write_out_templates(sys_label);
         //write_groups(year, f_log);
    // }
 
