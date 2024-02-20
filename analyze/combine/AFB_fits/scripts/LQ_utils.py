@@ -11,7 +11,7 @@ import numpy as np
 
 def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
     ROOT.ROOT.EnableImplicitMT()
-    f2 = TFile.Open("higgsCombineTest.GoodnessOfFit.mH120.root")
+    f2 = TFile.Open("higgsCombine.GoodnessOfFit.mH120.root")
 
     t_data = f2.Get("limit")
     #array = np.squeeze(t_data.AsMatrix(columns=['limit']))
@@ -20,7 +20,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
     t_obs = array[0]
     f2.Close()
 
-    f1 = TFile.Open("higgsCombineTest.GoodnessOfFit.mH120.123456.root")
+    f1 = TFile.Open("higgsCombine.GoodnessOfFit.mH120.123456.root")
 
 
     toys = f1.Get("limit")
