@@ -132,6 +132,53 @@ if options.limits:
             print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_%s"  % (n_m_bins, script_name, labels[i], m, date))
             print_and_do("rm scripts/script3.sh")
 
+if options.gof:
+
+    nToys = 300
+    
+    for mLQ in range(1000,5500,500):
+
+
+        cmds = [
+      
+        "python scripts/LQ_do_gof.py --chan ee --q u  "
+        "python scripts/LQ_do_gof.py --chan ee --q d  "
+        "python scripts/LQ_do_gof.py --chan mumu --q u "
+        "python scripts/LQ_do_gof.py --chan mumu --q d "
+        "python scripts/LQ_do_gof.py --chan ee --q u --vec True "
+        "python scripts/LQ_do_gof.py --chan ee --q d --vec True "
+        "python scripts/LQ_do_gof.py --chan mumu --q u --vec True "
+        "python scripts/LQ_do_gof.py --chan mumu --q d --vec True "
+     
+        ]
+
+        labels = [
+            "gof_ee_u","gof_ee_d","gof_mumu_u","gof_mumu_d",
+            "gof_ee_u_vec","gof_ee_d_vec","gof_mumu_u_vec","gof_mumu_d_vec"
+            #"gof_ee_s","gof_mumu_s",
+            #"gof_ee_d_vec","gof_mumu_d_vec"
+        ]
+
+
+        cpy_cmd = "xrdcp -f gof/* $1 \n"
+
+        for i,cmd in enumerate(cmds):
+       
+        #for point in np.arange(0.28,1.5,0.005):
+        #for q in [0.025,0.16,0.5,0.84,0.975]:
+            #regular templates
+            script_name = "scripts/script3.sh"
+            print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+            script_file = open(script_name, 'a+')
+            script_file.write("mkdir gof\n")
+            script_file.write(cmd+" -o gof/ --mLQ %i --nToys %i\n"%(mLQ, nToys))
+            script_file.write(cpy_cmd)
+            script_file.close()
+            #print_and_do("cat %s" % script_name)
+            print_and_do("chmod +x %s" % script_name)
+            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i"  % (n_m_bins, script_name, labels[i], mLQ))
+            print_and_do("rm scripts/script3.sh")
+
 if options.combine_review:
 
     cmds = [
