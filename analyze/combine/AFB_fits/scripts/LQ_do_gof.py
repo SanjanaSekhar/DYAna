@@ -22,6 +22,7 @@ parser.add_option("--chan",  default="ee", type="string", help="What channels to
 parser.add_option("--q",  default="u", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 parser.add_option("--vec",  default=True, help="is vec?")
+parser.add_option("--plot",  default=False, help="copy plots from eos to local")
 #parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
 
 (options, args) = parser.parse_args()
@@ -51,6 +52,15 @@ if(options.mask_mumu):
 A4 = 1.61
 yLQ2 = 0.0
 seed = 780865
+
+if options.plot:
+
+    for chan in ['ee','mumu']:
+        for q in ['u','d']:
+            for mLQ in range(1000,5500,500):
+                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i/gof_%s_mLQ%i_%i.png gof/"%(chan, q, mLQ, chan[0]+q+('_vec' if vec is_vec else ''), mLQ, options.year))
+
+
 
 workspace = "workspaces/LQ_%s_gof_tests_%i.root" % (chan,options.year)
 if(not options.prefit):
