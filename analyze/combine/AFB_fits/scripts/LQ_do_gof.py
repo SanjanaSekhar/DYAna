@@ -21,8 +21,8 @@ parser.add_option("--noSymMCStats", default = True, action="store_true",  help="
 parser.add_option("--chan",  default="ee", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
 parser.add_option("--q",  default="u", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
-parser.add_option("--vec",  default=True, help="is vec?")
-parser.add_option("--plot",  default=False, help="copy plots from eos to local")
+parser.add_option("--vec",  default=False, help="is vec?")
+parser.add_option("--plot",  default=True, help="copy plots from eos to local")
 #parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
 
 (options, args) = parser.parse_args()
@@ -58,7 +58,7 @@ if options.plot:
     for chan in ['ee','mumu']:
         for q in ['u','d']:
             for mLQ in range(1000,5500,500):
-                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i/gof_%s_mLQ%i_%i.png gof/"%(chan, q, mLQ, chan[0]+q+('_vec' if vec is_vec else ''), mLQ, options.year))
+                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i/gof_%s_mLQ%i_%i.png gof/"%(chan, q+('_vec' if is_vec else ''), mLQ, chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
 
 
 
