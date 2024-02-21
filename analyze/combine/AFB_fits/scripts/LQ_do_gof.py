@@ -6,7 +6,7 @@ from LQ_utils import *
 gROOT.SetBatch(True)
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
-parser.add_option("--nToys",  default=100, type='int', help="How many toys to run")
+parser.add_option("--nToys",  default=1, type='int', help="How many toys to run")
 parser.add_option("--mbin",  default=0, type='int', help="Which mass bin to run on ")
 parser.add_option("--teststat", default="saturated", help="Which gof test to use (saturated,KS,AD)")
 parser.add_option("--mask_ee_ss", default=False, action="store_true", help="Mask ee_ss channels from gof calculation (not from fit)")
@@ -16,13 +16,13 @@ parser.add_option("--prefit", default=False, action="store_true", help="Sample t
 parser.add_option("--notfreq", default=False, action="store_true", help="Don't use toysFrequentist option")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
-parser.add_option("-o", "--odir", default="", help = "output directory")
+parser.add_option("-o", "--odir", default="gof", help = "output directory")
 parser.add_option("--noSymMCStats", default = True, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--chan",  default="ee", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
 parser.add_option("--q",  default="u", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
-parser.add_option("--vec",  default=False, help="is vec?")
-parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
+parser.add_option("--vec",  default=True, help="is vec?")
+#parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
 
 (options, args) = parser.parse_args()
 
@@ -58,11 +58,11 @@ if(not options.prefit):
         make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, no_LQ, no_sys, fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
         print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i" %(workspace, extra_params, seed, seed))
 
-    fitted_afb, fitted_a0 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
-    print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
+    fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
+    print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s -n _%s" % (workspace,options.teststat, extra_params,options.chan[0]+options.q+('_vec' if is_vec else '')))
     print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters yLQ2=%.2f,A4=%.2f" 
             % (toys_freq, options.nToys, yLQ2, A4))
-    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombine.GenerateOnly.mH120.123456.root -t %i %s %s" %(workspace, options.teststat, options.nToys, toys_freq, extra_params))
+    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i %s %s -n _%s" %(workspace, options.teststat, options.nToys, toys_freq, extra_params, options.chan[0]+options.q+('_vec' if is_vec else '')))
 else:
     make_workspace(workspace, options.mbin, year = options.year, symMCStats = not (options.noSymMCStats) )
     print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
@@ -76,7 +76,7 @@ else:
     print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root -s %i %s -t %i %s" 
             %(workspace, options.teststat, s, s, toys_freq, options.nToys, extra_params))
 
-gof_helper(chan, mbin = options.mbin, odir = options.odir, teststat = options.teststat)
+gof_helper(chan, options.q, mLQ, is_vec, options.year, odir = options.odir, teststat = options.teststat)
 
 
 #print_and_do("mv higgsCombineTest.GoodnessOfFit.mH120.123456.root %s%s_bin%i_toys.root" % (options.odir, chan, options.mbin))

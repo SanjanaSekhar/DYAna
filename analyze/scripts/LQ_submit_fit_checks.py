@@ -15,6 +15,7 @@ parser.add_option("--combine_review",  default=False, help="do review")
 parser.add_option("--impacts",  default=False, help="do impacts")
 parser.add_option("--sys_uncs",  default=False, help="do sys uncs")
 parser.add_option("--likelihood",  default=False, help="do like scans")
+parser.add_option("--gof",  default=False, help="do gof")
 (options, args) = parser.parse_args()
 
 n_m_bins = 1
@@ -141,19 +142,19 @@ if options.gof:
 
         cmds = [
       
-        "python scripts/LQ_do_gof.py --chan ee --q u  "
-        "python scripts/LQ_do_gof.py --chan ee --q d  "
-        "python scripts/LQ_do_gof.py --chan mumu --q u "
-        "python scripts/LQ_do_gof.py --chan mumu --q d "
-        "python scripts/LQ_do_gof.py --chan ee --q u --vec True "
-        "python scripts/LQ_do_gof.py --chan ee --q d --vec True "
-        "python scripts/LQ_do_gof.py --chan mumu --q u --vec True "
-        "python scripts/LQ_do_gof.py --chan mumu --q d --vec True "
+        #"python scripts/LQ_do_gof.py --chan ee --q u  ",
+        #"python scripts/LQ_do_gof.py --chan ee --q d  ",
+        #"python scripts/LQ_do_gof.py --chan mumu --q u ",
+        #"python scripts/LQ_do_gof.py --chan mumu --q d ",
+        "python scripts/LQ_do_gof.py --chan ee --q u --vec True ",
+        "python scripts/LQ_do_gof.py --chan ee --q d --vec True ",
+        "python scripts/LQ_do_gof.py --chan mumu --q u --vec True ",
+        "python scripts/LQ_do_gof.py --chan mumu --q d --vec True ",
      
         ]
 
         labels = [
-            "gof_ee_u","gof_ee_d","gof_mumu_u","gof_mumu_d",
+            #"gof_ee_u","gof_ee_d","gof_mumu_u","gof_mumu_d",
             "gof_ee_u_vec","gof_ee_d_vec","gof_mumu_u_vec","gof_mumu_d_vec"
             #"gof_ee_s","gof_mumu_s",
             #"gof_ee_d_vec","gof_mumu_d_vec"

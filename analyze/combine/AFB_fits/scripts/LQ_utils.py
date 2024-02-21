@@ -9,9 +9,9 @@ from itertools import product
 import numpy as np
 
 
-def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
+def gof_helper(chan = "ee", q = "u", mLQ = 1000, vec = False, year = -1, odir = "gof/", teststat = 'saturated'):
     ROOT.ROOT.EnableImplicitMT()
-    f2 = TFile.Open("higgsCombine.GoodnessOfFit.mH120.root")
+    f2 = TFile.Open("higgsCombine_%s.GoodnessOfFit.mH120.root"%(chan[0]+q+('_vec' if vec else '')))
 
     t_data = f2.Get("limit")
     #array = np.squeeze(t_data.AsMatrix(columns=['limit']))
@@ -20,7 +20,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
     t_obs = array[0]
     f2.Close()
 
-    f1 = TFile.Open("higgsCombine.GoodnessOfFit.mH120.123456.root")
+    f1 = TFile.Open("higgsCombine_%s.GoodnessOfFit.mH120.123456.root"%(chan[0]+q+('_vec' if vec else '')))
 
 
     toys = f1.Get("limit")
@@ -34,7 +34,7 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
 
     my_min = min(toy_min, t_obs)*0.8
 
-    h_test = TH1D("h_toys", "Goodness of fit (%s): Mass bin %i" % (teststat, mbin), 30, my_min, my_max)
+    h_test = TH1D("h_toys", "Goodness of fit (%s): %s channel, %i, %s mLQ = %.2f TeV" % (teststat, chan[0]+q, year, ("vector" if vec else "scalar"),mLQ/1000. ), 30, my_min, my_max)
     np_toys = np.array([])
     for toy in toys:
         np_toys = np.append(np_toys, toy.limit)
@@ -55,13 +55,13 @@ def gof_helper(chan, mbin=0, odir = "GoodnessOfFit/", teststat = 'saturated'):
     n_above = np_toys[np_above].shape[0]
     np_p_val = float(n_above) / tot
 
-    print("Data gof is %f p-value (integral) is %.3f based on %.0f toys" %(t_obs, p_val, integral))
+    print("Data gof for %s channel with %s mLQ=%i is %f , p-value (integral) is %.3f based on %.0f toys" %(chan[0]+q, ("vector" if vec else "scalar"), mLQ, t_obs, p_val, integral))
     print("Numpy version: %i out of %i above t_obs (p-val %.3f) " % (n_above, tot, float(n_above) / tot))
 
     p_val = np_p_val
 
 
-    fout_name = "%sgof_%s_bin%i.png" % (odir, chan, mbin)
+    fout_name = "%s/gof_%s_mLQ%i_%i.png" % (odir, chan[0]+q+("_vec" if vec else ""), mLQ, year)
     draw_max = h_test.GetMaximum()
     c = TCanvas("c", "", 800, 800)
     h_test.Draw("hist")

@@ -16,11 +16,6 @@ for year in [2016]:
 	
 	for mLQ in range(1000,5500,500):
 
-		fin = "combine/templates/LQ_data_templates%i.root"%(year-2000)
-		f = ROOT.TFile.Open(fin, "UPDATE")
-		f.cd("LQ")
-		h_ee_data = ROOT.gDirectory.Get("ee%i_data_obs"%(year-2000))
-		h_mumu_data = ROOT.gDirectory.Get("mumu%i_data_obs"%(year-2000))
 
 		#f.Close()
 		#del f
