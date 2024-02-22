@@ -58,35 +58,35 @@ if options.plot:
     for chan in ['ee','mumu']:
         for q in ['u','d']:
             for mLQ in range(1000,5500,500):
-                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i/gof_%s_mLQ%i_%i.png gof/"%(chan, q+('_vec' if is_vec else ''), mLQ, chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
+                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i/gof_%s_mLQ%i_%i.png gof_b_only/"%(chan, q+('_vec' if is_vec else ''), mLQ, chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
 
-
-
-workspace = "workspaces/LQ_%s_gof_tests_%i.root" % (chan,options.year)
-if(not options.prefit):
-    if(not options.reuse_fit):
-        make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, no_LQ, no_sys, fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-        print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i" %(workspace, extra_params, seed, seed))
-
-    fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
-    print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s -n _%s" % (workspace,options.teststat, extra_params,options.chan[0]+options.q+('_vec' if is_vec else '')))
-    print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters yLQ2=%.2f,A4=%.2f" 
-            % (toys_freq, options.nToys, yLQ2, A4))
-    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i %s %s -n _%s" %(workspace, options.teststat, options.nToys, toys_freq, extra_params, options.chan[0]+options.q+('_vec' if is_vec else '')))
 else:
-    make_workspace(workspace, options.mbin, year = options.year, symMCStats = not (options.noSymMCStats) )
-    print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
-    s = 123456
-    #Do in 1 step (equivalent)
-    #print_and_do("combine -M GoodnessOfFit -m 121 -d %s --algo=%s -s %i %s --saveToys -t %i --setParameters Afb=%.2f,A0=%.2f %s "
-    #        % (workspace, options.teststat, s, toys_freq, options.nToys,  afb, a0, extra_params))
-    #Do in 2 steps
-    print_and_do("combine -M GenerateOnly -d %s -s %i %s --saveToys -t %i --setParameters Afb=%.2f,A0=%.2f" 
+
+    workspace = "workspaces/LQ_%s_gof_tests_%i.root" % (chan,options.year)
+    if(not options.prefit):
+        if(not options.reuse_fit):
+            make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, no_LQ, no_sys, fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
+            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i --setParameters yLQ2=%.2f,A4=%.2f" %(workspace, extra_params, seed, seed, yLQ2, A4))
+
+        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
+        print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s -n _%s" % (workspace,options.teststat, extra_params,options.chan[0]+options.q+('_vec' if is_vec else '')))
+        print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters yLQ2=%.2f,A4=%.2f" 
+            % (toys_freq, options.nToys, yLQ2, A4))
+        print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.123456.root -t %i %s %s -n _%s" %(workspace, options.teststat, options.nToys, toys_freq, extra_params, options.chan[0]+options.q+('_vec' if is_vec else '')))
+    else:
+        make_workspace(workspace, options.mbin, year = options.year, symMCStats = not (options.noSymMCStats) )
+        print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s" % (workspace,options.teststat, extra_params))
+        s = 123456
+        #Do in 1 step (equivalent)
+        #print_and_do("combine -M GoodnessOfFit -m 121 -d %s --algo=%s -s %i %s --saveToys -t %i --setParameters Afb=%.2f,A0=%.2f %s "
+        #        % (workspace, options.teststat, s, toys_freq, options.nToys,  afb, a0, extra_params))
+        #Do in 2 steps
+        print_and_do("combine -M GenerateOnly -d %s -s %i %s --saveToys -t %i --setParameters Afb=%.2f,A0=%.2f" 
             % (workspace, s, toys_freq, options.nToys, afb, a0))
-    print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root -s %i %s -t %i %s" 
+        print_and_do("combine -M GoodnessOfFit -d %s --algo=%s --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root -s %i %s -t %i %s" 
             %(workspace, options.teststat, s, s, toys_freq, options.nToys, extra_params))
 
-gof_helper(chan, options.q, mLQ, is_vec, options.year, odir = options.odir, teststat = options.teststat)
+    gof_helper(chan, options.q, mLQ, is_vec, options.year, odir = options.odir, teststat = options.teststat)
 
 
 #print_and_do("mv higgsCombineTest.GoodnessOfFit.mH120.123456.root %s%s_bin%i_toys.root" % (options.odir, chan, options.mbin))
