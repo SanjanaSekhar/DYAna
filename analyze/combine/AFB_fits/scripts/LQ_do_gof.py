@@ -22,7 +22,7 @@ parser.add_option("--chan",  default="ee", type="string", help="What channels to
 parser.add_option("--q",  default="u", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 parser.add_option("--vec",  default=False, help="is vec?")
-parser.add_option("--plot",  default=True, help="copy plots from eos to local")
+parser.add_option("--plot",  default=False, help="copy plots from eos to local")
 #parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
 
 (options, args) = parser.parse_args()
@@ -66,9 +66,9 @@ else:
     if(not options.prefit):
         if(not options.reuse_fit):
             make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, no_LQ, no_sys, fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i --setParameters yLQ2=%.2f,A4=%.2f" %(workspace, extra_params, seed, seed, yLQ2, A4))
+            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i --setParameters yLQ2=%.2f,A4=%.2f --freezeParameters yLQ2,A4" %(workspace, extra_params, seed, seed, yLQ2, A4))
 
-        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed)
+        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed, freeze = True)
         print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s -n _%s" % (workspace,options.teststat, extra_params,options.chan[0]+options.q+('_vec' if is_vec else '')))
         print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters yLQ2=%.2f,A4=%.2f" 
             % (toys_freq, options.nToys, yLQ2, A4))
