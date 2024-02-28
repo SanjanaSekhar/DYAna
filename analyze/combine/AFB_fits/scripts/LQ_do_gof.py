@@ -28,7 +28,7 @@ parser.add_option("--plot",  default=False, help="copy plots from eos to local")
 (options, args) = parser.parse_args()
 
 chan = options.chan
-options.year = 2016
+#options.year = 2016
 options.gen_level = False
 is_vec = options.vec 
 mLQ = options.mLQ 
@@ -66,9 +66,9 @@ else:
     if(not options.prefit):
         if(not options.reuse_fit):
             make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, no_LQ, no_sys, fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i --setParameters yLQ2=%.2f,A4=%.2f --freezeParameters yLQ2,A4" %(workspace, extra_params, seed, seed, yLQ2, A4))
+            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i " %(workspace, extra_params, seed, seed))
 
-        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed, freeze = True)
+        fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed, freeze = False)
         print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s -n _%s" % (workspace,options.teststat, extra_params,options.chan[0]+options.q+('_vec' if is_vec else '')))
         print_and_do("combine -M GenerateOnly -d initialFitWorkspace.root --snapshotName initialFit %s --bypassFrequentistFit --saveToys -t %i  --setParameters yLQ2=%.2f,A4=%.2f" 
             % (toys_freq, options.nToys, yLQ2, A4))

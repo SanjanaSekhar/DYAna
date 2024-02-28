@@ -35,7 +35,7 @@ def plotLimits(channel):
      # Get limit TGraphs as a dictionary
     graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s%s_%s.json'%(channel,channel,("_vec" if is_vec else ""),options.ending))
     print(graphs)
-    del graphs['obs']    
+    #del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     #line_sp = ROOT.TLine(1000,1,1755,1)
@@ -116,6 +116,7 @@ parser.add_option("--ntoys",  default=10, type='int', help="no of toys")
 parser.add_option("--iterations",  default=10, type='int', help="no of iterations")
 parser.add_option("--hadd",  default=False, help="hadd")
 parser.add_option("--HybridNew",  default=False, help="use HybridNew instead of AsymptoticLimits")
+parser.add_option("--year",  default=-1,type='int', help="year")
 (options, args) = parser.parse_args()
 
 
@@ -125,7 +126,7 @@ mass = options.mLQ
 extra_params=""
 no_sys=False
 fake_data=True
-year = -1
+year = options.year
 
 
 print("nosys =%s"%(no_sys))
@@ -158,8 +159,8 @@ print_and_do("mkdir -p LQ_cards/%s/%i/"%(channel,mass))
 
 if(year > 0): years = [year % 2000]
 else: years = [16,17,18]
-if mass <= 1500: nlo_sys = 0.3
-else: nlo_sys = 0.3 - 0.04*((mass-1500)/1000)
+nlo_sys = 0.3
+#else: nlo_sys = 0.3 - 0.04*((mass-1500)/1000)
 for yr in years:
     if(yr == 16):
         comb_yr = 16
