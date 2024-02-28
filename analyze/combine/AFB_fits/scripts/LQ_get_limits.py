@@ -33,7 +33,8 @@ def plotLimits(channel):
     pads = OnePad()
      
      # Get limit TGraphs as a dictionary
-    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s%s_%s.json'%(channel,channel,("_vec" if is_vec else ""),options.ending))
+    #graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s%s_%s.json'%(channel,channel,("_vec" if is_vec else ""),options.ending))
+    graphs = StandardLimitsFromJSONFile('LQ_cards/%s/limit_json/limits_%s%s_%s_y%i.json'%(channel,channel, ("_vec" if is_vec else ""),options.ending,year-2000))
     print(graphs)
     #del graphs['obs']    
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
@@ -100,8 +101,8 @@ def plotLimits(channel):
     tdrstyle.setTDRStyle()
     CMS_lumi.CMS_lumi(pads[0], -1, 11) 
     #canv.Print('.pdf')
-    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_%s.png'%(channel,channel,options.ending))
-    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_%s.png'%(channel,channel,options.ending))
+    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_y%i_%s.png'%(channel,channel,year-2000, options.ending))
+    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_y%i_%s.png'%(channel,channel,year-2000, options.ending))
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
@@ -213,10 +214,10 @@ if options.hadd:
 	limits = {}
         for m in range(1000,5500,500):
             # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s%s_m%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json/limits_%s%s_m%i.json"
-                %(options.chan, options.q, ("_vec" if is_vec else ""), m, options.ending, channel, m, channel, channel, ("_vec" if is_vec else ""), m))
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s%s_m%i_y%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json/limits_%s%s_m%i_y%i.json"
+                %(options.chan, options.q, ("_vec" if is_vec else ""), m, year-2000,options.ending, channel, m, channel, channel, ("_vec" if is_vec else ""), m, year-2000))
             
-	    with open("LQ_cards/%s/limit_json/limits_%s%s_m%i.json"%(channel,channel, ("_vec" if is_vec else ""),m), 'r+') as f:
+	    with open("LQ_cards/%s/limit_json/limits_%s%s_m%i_y%i.json"%(channel,channel, ("_vec" if is_vec else ""),m, year-2000), 'r+') as f:
                 data = json.load(f)
                 #for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
                 for lim in data[str(m)+".0"]:
@@ -226,7 +227,7 @@ if options.hadd:
                 f.seek(0)        # <--- should reset file position to the beginning.
                 json.dump(data, f, indent=4)
                 f.truncate()     # remove remaining part
-	with open("LQ_cards/%s/limit_json/limits_%s%s_%s.json"%(channel,channel, ("_vec" if is_vec else ""),options.ending), 'w') as f:
+	with open("LQ_cards/%s/limit_json/limits_%s%s_%s_y%i.json"%(channel,channel, ("_vec" if is_vec else ""),options.ending,year-2000), 'w') as f:
 	    f.seek(0)
 	    json.dump(limits, f, indent=4)
 	    

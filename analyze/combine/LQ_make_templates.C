@@ -734,7 +734,7 @@ void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, 
    
    // year =2016;
     if(fout_name_temp == "") fout_name_temp = string("combine/templates/test.root");
-    if(year == -1) year = 2016;
+    if(year == -1) year = 2018;
 
     bool scramble_data =false ;
     bool fake_data = false; // unblinding

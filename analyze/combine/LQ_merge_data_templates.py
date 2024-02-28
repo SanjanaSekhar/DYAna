@@ -7,7 +7,7 @@ from optparse import OptionGroup
 
 ext = "020923"
 
-for year in [2016]:
+for year in [2017,2018]:
 	fin = "combine/templates/LQ_data_templates%i.root"%(year-2000)
 	f = ROOT.TFile.Open(fin, "UPDATE")
 	f.cd("LQ")
