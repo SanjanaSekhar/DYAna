@@ -386,8 +386,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						ratio_range = (0.45, 1.55)
 						NDiv = 203
 					elif(mbin ==6 or mbin == 7):
-						ratio_range = (0.0, 2.5)
-						NDiv = 350
+						ratio_range = (0.0, 3.)
+						NDiv = 303
 
 
 
