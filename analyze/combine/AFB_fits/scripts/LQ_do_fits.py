@@ -84,7 +84,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="unblinded"
+            fit_name+="_unblinded"
 	    print("\n fit_name = ", fit_name)
 	    
 	    
