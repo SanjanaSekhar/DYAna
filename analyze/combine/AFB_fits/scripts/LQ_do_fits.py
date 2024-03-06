@@ -24,10 +24,10 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [2016]:
+for y in [-1]:
     #for options.chan in ["mumu","ee"]:
-    for options.chan in ["ee"]:
-        for options.q in ["u"]:
+    for options.chan in ["mumu",'ee']:
+        for options.q in ["u",'d']:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
 	    is_vec = False
@@ -84,7 +84,7 @@ for y in [2016]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+=""
+            fit_name+="unblinded"
 	    print("\n fit_name = ", fit_name)
 	    
 	    
