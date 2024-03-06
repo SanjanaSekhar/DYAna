@@ -63,10 +63,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 		padx = 2
 		pady = 2
 	elif len(histlist) == 6 or len(histlist) == 5:
-		width = 1600
-		height = 1000
-		padx = 3
-		pady = 2
+		width = 2000
+		height = 2000
+		padx = 2.5
+		pady = 2.5
 	else:
 		print 'histlist of size ' + str(len(histlist)) + ' not currently supported'
 		print histlist
@@ -386,8 +386,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						ratio_range = (0.45, 1.55)
 						NDiv = 203
 					elif(mbin ==6 or mbin == 7):
-						ratio_range = (0.0, 2.0)
-						NDiv = 303
+						ratio_range = (0.0, 2.5)
+						NDiv = 350
 
 
 
@@ -837,7 +837,7 @@ def plot_yearly():
 				color_list.append(label_color_map["dy"][1])
 
 					
-			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle) 
+			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle, logy=True) 
 
 
 

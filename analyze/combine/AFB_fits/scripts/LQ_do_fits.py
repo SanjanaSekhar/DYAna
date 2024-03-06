@@ -31,7 +31,7 @@ for y in [-1]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
 	    is_vec = False
-	    statuncs = True
+	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
             
@@ -119,7 +119,7 @@ for y in [-1]:
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s  %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,("--vec True" if is_vec else "")))
                     #print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1 " % (workspace, extra_params)) #only to get prefit, probably a better way
-                    #print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
+                    print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
