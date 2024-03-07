@@ -157,7 +157,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.2,0.11,0.45,0.2+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.2,0.11,0.45,0.2+0.05*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -373,7 +373,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				LS = mLS * 0.7/0.3
 				#title size given as fraction of pad width, scale up to have same size as main pad
-				YTS =  mTS * 0.3/0.3
+				YTS =  mTS * 0.7/0.3
 				XTS =  mTS * 0.7/0.3
 				lTOffset = TOffset * 0.27 / 0.7
 
@@ -387,7 +387,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						NDiv = 203
 					elif(mbin ==6 or mbin == 7):
 						ratio_range = (-1, 2.5)
-						NDiv = 323
+						NDiv = 303
 
 
 
