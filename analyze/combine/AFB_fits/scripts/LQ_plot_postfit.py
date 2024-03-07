@@ -157,7 +157,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.2,0.11,0.45,0.2+0.05*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.2,0.11,0.7,0.2+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -222,7 +222,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						h.SetMinimum(0.)
 
 				
-				mLS = 0.07
+				mLS = 0.04
 				mTS = 0.1
 				TOffset = 1.
 				if(mbin > 5):
@@ -387,7 +387,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						NDiv = 203
 					elif(mbin ==6 or mbin == 7):
 						ratio_range = (-1, 2.5)
-						NDiv = 303
+						NDiv = 313
 
 
 
