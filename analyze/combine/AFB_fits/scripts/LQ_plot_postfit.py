@@ -113,7 +113,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 			if 'pe' in datastyle.lower():
 				hist.SetMarkerColorAlpha(kBlack,alpha)
 				hist.SetMarkerStyle(8)
-				hist.SetMarkerSize(10)
+				hist.SetMarkerSize(2.5)
 			if 'hist' in datastyle.lower():
 				hist.SetFillColorAlpha(0,0)
 
