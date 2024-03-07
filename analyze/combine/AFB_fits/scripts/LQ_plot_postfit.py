@@ -113,6 +113,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 			if 'pe' in datastyle.lower():
 				hist.SetMarkerColorAlpha(kBlack,alpha)
 				hist.SetMarkerStyle(8)
+				hist.SetMarkerSize(1)
 			if 'hist' in datastyle.lower():
 				hist.SetFillColorAlpha(0,0)
 
@@ -266,7 +267,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				totlist[hist_index].SetFillColor(kBlack)
 				totlist[hist_index].SetFillStyle(3354)
 				totlist[hist_index].SetMarkerStyle(20)
-				totlist[hist_index].SetMarkerSize(0.8)
+				totlist[hist_index].SetMarkerSize(0.05)
 
 				totlist[hist_index].Draw('e2 same')
 
