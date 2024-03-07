@@ -373,7 +373,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				LS = mLS * 0.7/0.3
 				#title size given as fraction of pad width, scale up to have same size as main pad
-				YTS =  mTS * 0.7/0.3
+				YTS =  mTS * 0.5/0.3
 				XTS =  mTS * 0.7/0.3
 				lTOffset = TOffset * 0.27 / 0.7
 
