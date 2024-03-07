@@ -223,7 +223,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				
 				mLS = 0.04
-				mTS = 0.1
+				mTS = 0.05
 				TOffset = 1.
 				if(mbin > 5):
 					TOffset = 0.9
@@ -266,7 +266,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				totlist[hist_index].SetFillColor(kBlack)
 				totlist[hist_index].SetFillStyle(3354)
 				totlist[hist_index].SetMarkerStyle(20)
-				totlist[hist_index].SetMarkerSize(0.01)
+				totlist[hist_index].SetMarkerSize(0.02)
 
 				totlist[hist_index].Draw('e2 same')
 
