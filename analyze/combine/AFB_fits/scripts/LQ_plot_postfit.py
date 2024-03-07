@@ -43,23 +43,23 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 	if len(histlist) == 1:
-		width = 800
-		height = 700
-		padx = 1
-		pady = 1
+		width = 2000
+		height = 2000
+		padx = 2
+		pady = 2
 	elif len(histlist) == 2:
-		width = 1200
-		height = 700
+		width = 2000
+		height = 2000
 		padx = 2
 		pady = 1
 	elif len(histlist) == 3:
-		width = 1600
-		height = 700
+		width = 2000
+		height = 2000
 		padx = 3
 		pady = 1
 	elif len(histlist) == 4:
-		width = 1200
-		height = 1000
+		width = 2000
+		height = 2000
 		padx = 2
 		pady = 2
 	elif len(histlist) == 6 or len(histlist) == 5:
