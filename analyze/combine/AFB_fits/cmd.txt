@@ -1,7 +1,7 @@
 auto a=fit_mdf->floatParsFinal();
-auto A0=(RooRealVar *) a.at(0);
+auto A0=(RooRealVar *) a.at(396);
 std::cout  << A0->getValV() << ' '  << A0->getErrorHi() << ' ' << A0->getErrorLo() << std::endl;
-auto Afb=(RooRealVar *) a.at(1);
+auto Afb=(RooRealVar *) a.at(397);
 std::cout  << Afb->getValV() << ' '  << Afb->getErrorHi() << ' ' << Afb->getErrorLo() << std::endl;
-auto yLQ=(RooRealVar *) a.at(348);
+auto yLQ=(RooRealVar *) a.at(398);
 std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;

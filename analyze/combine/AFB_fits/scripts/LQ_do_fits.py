@@ -26,7 +26,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
-    for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee"]:
         for options.q in ["u","d"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
@@ -104,7 +104,7 @@ for y in [-1]:
                 
 		print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --robustHesse=1" %(workspace, extra_params))
+                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s --robustHesse=1 " %(workspace, extra_params))
                 else:
 		    print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
 		    print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1   --robustHesse=1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
@@ -132,14 +132,14 @@ for y in [-1]:
                 print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
 		
 		print_and_do(""" echo "auto a=fit_mdf->floatParsFinal();" > cmd.txt """)
-		print_and_do(""" echo "auto A0=(RooRealVar *) a.at(0);" >> cmd.txt """)
+		print_and_do(""" echo "auto A0=(RooRealVar *) a.at(396);" >> cmd.txt """)
 		print_and_do(""" echo "std::cout  << A0->getValV() << ' '  << A0->getErrorHi() << ' ' << A0->getErrorLo() << std::endl;" >> cmd.txt """)
 		
-                print_and_do(""" echo "auto Afb=(RooRealVar *) a.at(1);" >> cmd.txt """)
+                print_and_do(""" echo "auto Afb=(RooRealVar *) a.at(397);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << Afb->getValV() << ' '  << Afb->getErrorHi() << ' ' << Afb->getErrorLo() << std::endl;" >> cmd.txt """)
-		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(348);" >> cmd.txt """)
+		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(398);" >> cmd.txt """)
 		if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(192);" >> cmd.txt """) 
-		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(342);" >> cmd.txt """)
+		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(402);" >> cmd.txt """)
 		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(186);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;" >> cmd.txt """)
 		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
