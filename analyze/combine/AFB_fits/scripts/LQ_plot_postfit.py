@@ -749,7 +749,7 @@ def plot_combined():
 		h_tot_dir.SetBinContent(b, h_tot.GetBinContent(b))
 		h_tot_dir.SetBinError(b, h_tot.GetBinError(b))
 			
-	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False) 
+	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
 def plot_yearly():
 	for year in years:
