@@ -1,6 +1,6 @@
 
 Attaching file multidimfitTest.root as _file0...
-(TFile *) 0x2ea0320
+(TFile *) 0x3f968d0
 
   RooFitResult: minimized FCN value: -13.6786, estimated distance to minimum: 7.75534e-05
                 covariance matrix quality: Unknown, matrix was externally provided
