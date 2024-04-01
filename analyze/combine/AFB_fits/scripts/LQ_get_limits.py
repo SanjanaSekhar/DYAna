@@ -99,7 +99,7 @@ def plotLimits(channel):
 # Standard CMS logo
     #DrawCMSLogo(pads[0], 'CMS', 'Internal', 11, 0.045, 0.035, 1.2, '', 0.8)
     tdrstyle.setTDRStyle()
-    CMS_lumi.CMS_lumi(pads[0], -1, 11) 
+    CMS_lumi.CMS_lumi(pads[0], year, 11) 
     #canv.Print('.pdf')
     if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_y%i_%s.png'%(channel,channel,year-2000, options.ending))
     else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_y%i_%s.png'%(channel,channel,year-2000, options.ending))

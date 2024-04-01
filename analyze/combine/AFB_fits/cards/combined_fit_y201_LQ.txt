@@ -6,115 +6,119 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1000_merge_templates17_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQmMASS_merge_templatesYR_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
-
-bin             ee17  
+bin             eeYR  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
-bin                      ee17    ee17    ee17    ee17     ee17    ee17     ee17 	ee17    ee17      ee17 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d_vec  LQint_d_vec	
-process                  1      2       3      4        5      6        7       8        -1        -2		
+bin                      eeYR    eeYR    eeYR    eeYR     eeYR    eeYR     eeYR 	eeYR    eeYR      eeYR 	 
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_QUARK  LQint_QUARK	
+process                  1      2       3      4        5      6        7	8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
+
+
+
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -    	  -		
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
+nlo_sys         lnN      -       -        -      -        -        -       -            -        NLO_SYS4    NLO_SYS2
 
-nlo_sys         lnN      -       -        -      -        -        -       -            -        2.200000    1.600000
-
-elFakes17       lnN      -       -        -      -        -       -       1.5		-         -       -		
+elFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
 #xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys elFakes16 elFakes17 elFakes18
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
-lumi17           lnN     1.020    1.020     1.020   1.020     1.020   1.020     -			1.020    	1.020	1.020		
-lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     -			1.009    	1.009	1.009		
-lumiLS           lnN     1.003    1.003     1.003   1.003     1.003   1.003     - 		1.003    	1.003	1.003		  
-lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
-lumiBC           lnN     1.003    1.003     1.003   1.003     1.003   1.003     -			1.003    	1.003	1.003	 
-lumiGS           lnN     1.001    1.001     1.001   1.001     1.001   1.001     -			1.001    	1.001	1.001		  
+lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	LYRV	LYRV		
+lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     -			LXYV    	LXYV	LXYV		
+lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 			LLSV    	LLSV	LLSV		  
+lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     -			LDBV    	LDBV	LDBV		  
+lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     -			LBCV    	LBCV	LBCV	 
+lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     -			LGSV    	LGSV	LGSV		  
 
-#lumis17 group = lumi17 lumiXY lumiLS lumiDB lumiBC lumiGS      
+#lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 ## prefire only for 16,17, hem only 18                                                                                
 Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
-prefire17       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
-#METJEC17         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
-#METHEM17        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+prefireYR       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+#METJECYR         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
+#METHEMYR        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
                                                                                                                                          
-#BTAGUNCOR17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGUNCORYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 #BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
-#BTAGLIGHT17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGLIGHTYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
 
-#BTAGS17 group = BTAGUNCOR17 BTAGCOR BTAGLIGHT17
+#BTAGSYR group = BTAGUNCORYR BTAGCOR BTAGLIGHTYR
                                                                                                                                           
-elScaleStat17    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elScaleGain17    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elScaleStatYR    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elScaleGainYR    shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elScaleSyst      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elSmear          shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elScales17 group = elScaleStat17  elScaleGain17  elScaleSyst   elSmear
+elScalesYR group = elScaleStatYR  elScaleGainYR  elScaleSyst   elSmear
 
 
-elHLTBARPT17     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elHLTENDPT17   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elHLTBARPT17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elHLTENDPT17      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
+elHLTBARPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elHLTENDPTYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTBARPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTENDPTLOWYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
-elHLTs17 group = elHLTENDPT17  elHLTBARPT17   
+elHLTsYR group = elHLTENDPTYR  elHLTBARPTYR   
 
 elIDBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
 elIDs group = elIDBARPT elIDENDPT
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPT   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOBARPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+  
 
 elRECOs group = elRECOBARPT elRECOENDPT
+                                                                                                                                  
+alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
+FACYRC               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
+REFACYRC             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 
-alphaS1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-RENORM1718            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
-FAC1718               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
-REFAC1718             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-
-RFscales1718 group = alphaS1718 RENORM1718 FAC1718 REFAC1718
+RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
                                                                                                                                   
 #emu cost reweighting                                                                                                 
-emucostrw1b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
-emucostrw2b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -         
-emucostrw3b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -         
-emucostrw4b1718        shape    -       -        -     1.0      1.0     -      -       -       -       -        
+emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
+emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw3bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw4bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
-emucostrws1718 group = emucostrw1b1718 emucostrw3b1718 emucostrw4b1718 emucostrw2b1718
+emucostrwsYRC group = emucostrw1bYRC emucostrw3bYRC emucostrw4bYRC emucostrw2bYRC
+
 ##fakes cost reweighting                                                                                                 
-elfakesrw1b17          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw2b17          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw3b17          shape    -       -        -      -        -      -     1.0      -       -       -        
-elfakesrw4b17          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw1bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw2bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw3bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
+elfakesrw4bYR          shape    -       -        -      -        -      -     1.0      -       -       -        
 
-elfakesrws17 group = elfakesrw1b17 elfakesrw2b17 elfakesrw4b17 elfakesrw3b17
+elfakesrwsYR group = elfakesrw1bYR elfakesrw2bYR elfakesrw4bYR elfakesrw3bYR
+
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
-#ptrw1b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
-#ptrw2b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-#ptrw3b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
-#ptrw4b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-#ptrw5b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
-#ptrw6b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
-#ptrw7b1718              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw1bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
+#ptrw2bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw3bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw5bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw6bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
+#ptrw7bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
 
-#ptrws1718 group = ptrw1b1718 ptrw2b1718 ptrw3b1718 ptrw5b1718 ptrw6b1718 ptrw7b1718 ptrw4b1718
+#ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC ptrw4bYRC
                                                                                                                                    
 #pdf unc                                                                                                                           
 pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
@@ -179,49 +183,51 @@ pdf59                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
 # MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_d_vec LQint_d_vec
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_QUARK LQint_QUARK
 
-MCStatBin1y17             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin2y17             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin3y17             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin4y17             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin1yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin2yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin3yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin4yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin9y17             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin10y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin11y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin9yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin10yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin11yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin15y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin16y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin17y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin15yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin16yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin17yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin21y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin22y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin23y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin24y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin21yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin22yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin23yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin24yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin29y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin30y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin31y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin29yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin30yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin31yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin35y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin36y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin37y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin35yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin36yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin37yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin41y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin42y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin43y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin44y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin41yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin42yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin43yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin44yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin49y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin50y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin51y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin49yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin50yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin51yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin55y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin56y17            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin57y17          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin55yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin56yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin57yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin17 group = MCStatBin1y17  MCStatBin2y17  MCStatBin3y17  MCStatBin4y17  MCStatBin9y17  MCStatBin10y17  MCStatBin11y17  MCStatBin15y17  MCStatBin16y17  MCStatBin17y17  MCStatBin21y17  MCStatBin22y17  MCStatBin23y17  MCStatBin24y17  MCStatBin29y17  MCStatBin30y17  MCStatBin31y17  MCStatBin35y17  MCStatBin36y17  MCStatBin37y17  MCStatBin41y17  MCStatBin42y17  MCStatBin43y17  MCStatBin44y17  MCStatBin49y17  MCStatBin50y17  MCStatBin51y17  MCStatBin55y17  MCStatBin56y17  MCStatBin57y17 
+MCStatBinYR group = MCStatBin1yYR  MCStatBin2yYR  MCStatBin3yYR  MCStatBin4yYR  MCStatBin9yYR  MCStatBin10yYR  MCStatBin11yYR  MCStatBin15yYR  MCStatBin16yYR  MCStatBin17yYR  MCStatBin21yYR  MCStatBin22yYR  MCStatBin23yYR  MCStatBin24yYR  MCStatBin29yYR  MCStatBin30yYR  MCStatBin31yYR  MCStatBin35yYR  MCStatBin36yYR  MCStatBin37yYR  MCStatBin41yYR  MCStatBin42yYR  MCStatBin43yYR  MCStatBin44yYR  MCStatBin49yYR  MCStatBin50yYR  MCStatBin51yYR  MCStatBin55yYR  MCStatBin56yYR  MCStatBin57yYR 
 
 * autoMCStats 1 0 1
 
 pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60
+
+
