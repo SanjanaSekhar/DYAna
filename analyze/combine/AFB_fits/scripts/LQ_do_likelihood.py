@@ -88,7 +88,7 @@ if options.plot:
         respull = np.asarray(respull, dtype=float)
         poi_list = respull[:,0].tolist()
         deltaNLL = respull[:,1].tolist()
-        plt.xlim(-1,1)
+        #plt.xlim(-1,1)
         plt.ylim(0,5)          
         plt.plot(poi_list,deltaNLL,label='mLQ=%s GeV'%mLQ)
         plt.plot(poi_list,len(poi_list)*[1],linestyle='dashed')
