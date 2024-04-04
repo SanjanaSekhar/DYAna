@@ -27,7 +27,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["mumu","ee"]:
-        for options.q in ["u","d"]:
+        for options.q in ["d"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
 	    is_vec = True
@@ -41,10 +41,10 @@ for y in [-1]:
             if not options.gen_level and not options.no_sys: options.fake_data = True
             options.no_LQ = False
             options.year = y
-            likelihood_scan = False
+            likelihood_scan = True
 	    if likelihood_scan: 
-		poi = 'nlo_sys'
-		ending = "freezeA0A4_%s"%poi
+		poi = 'yLQ2'
+		ending = "%s"%poi
             '''
             if(options.chan == "ee"):
                 print("Chan is ee, will mask mumu channels")
@@ -86,7 +86,7 @@ for y in [-1]:
 	    if statuncs: fit_name += "_statuncs"
             fit_name+="_unblinded"
 	    print("\n fit_name = ", fit_name)
-	    
+	    #if y > -1: extra_args = "--combined False"
 	    
             for mLQ in mLQ_list:
             #for mLQ in [1000]:
@@ -104,10 +104,10 @@ for y in [-1]:
                 
 		print_and_do("[ -e %s ] && rm -r %s" % (plotdir, plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s --robustHesse=1 " %(workspace, extra_params))
+                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  " %(workspace, extra_params))
                 else:
 		    print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
-		    print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1   --robustHesse=1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
+		    print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1     --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
 		#print_and_do("combine %s -M MultiDimFit --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params))
                 
 		if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
@@ -117,6 +117,7 @@ for y in [-1]:
                             % (fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
+                    
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s  %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,("--vec True" if is_vec else "")))
                     #print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1 " % (workspace, extra_params)) #only to get prefit, probably a better way
                     print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))

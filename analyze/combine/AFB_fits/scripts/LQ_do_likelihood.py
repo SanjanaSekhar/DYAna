@@ -15,7 +15,7 @@ parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit
 parser.add_option("--fake_data",  default=True, action="store_true", help="Use fit template without any shape systematics and no fakes")
 parser.add_option("--vec",  default=False, action="store_true", help="vec")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
-parser.add_option("--mLQ", default = 2000, type='int', help="LQ mass")
+parser.add_option("--mLQ", default = 2500, type='int', help="LQ mass")
 parser.add_option("--poi", default = 'yLQ2', type='string', help="poi to run the likelihood_scan")
 parser.add_option("--ending", default = 'yLQ2', type='string', help="ending string")
 parser.add_option("--statuncs", default = False,  help="freeze allConstrainedNuisances")
@@ -107,7 +107,7 @@ else:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
 
-    print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --freezeParameters A4,A0  --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
+    print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
 
     #print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))

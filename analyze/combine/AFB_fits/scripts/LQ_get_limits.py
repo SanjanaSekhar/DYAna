@@ -223,6 +223,7 @@ if options.hadd:
                 for lim in data[str(m)+".0"]:
                     yLQ2 = data[str(m)+".0"][lim]
                     data[str(m)+".0"][lim] = sqrt(yLQ2)
+		    print(yLQ2,sqrt(yLQ2))
 	 	limits[str(m)+".0"]=data[str(m)+".0"]
                 f.seek(0)        # <--- should reset file position to the beginning.
                 json.dump(data, f, indent=4)
