@@ -26,8 +26,29 @@ parser.add_option("--no_LQ",  default=False, action="store_true", help="For sani
 parser.add_option("-o", "--odir", default="likelihood_scans/", help = "output directory")
 (options, args) = parser.parse_args()
 
+def save_likelihoods(f,label):
+    deltaNLL, poi_list = [],[]
 
+    limit_tree = f.Get("limit")
+    poi_value = array('f',[0])
+    limit_tree.SetBranchAddress("%s"%poi, poi_value)
 
+    for i in range(limit_tree.GetEntries()):
+
+        limit_tree.GetEntry(i)
+        deltaNLL.append(limit_tree.deltaNLL)
+        poi_list.append(poi_value[0])
+        print(poi_value)
+    f.Close()
+    #print(poi_list)
+    #print(deltaNLL)
+    idx = np.argsort(np.array(poi_list))
+    poi_list = np.array(poi_list)[idx]
+    deltaNLL = np.array(deltaNLL)[idx]
+    with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan,options.q,("_vec" if is_vec else ""), mLQ, poi), 'w') as f:
+        for ylq,dnll in zip(poi_list, deltaNLL):
+            f.write("%f %f\n" %(ylq,2*dnll))
+        #print(np.amax(poi_list),np.amin(poi_list))
 
 is_vec = options.vec
 statuncs = options.statuncs
@@ -79,23 +100,35 @@ if options.plot:
 
         #print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
         #            %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-
+        label = ""
         respull = []
-        with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
+        with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
             for line in f.readlines():
                 respull.append(line.split(' '))
 
         respull = np.asarray(respull, dtype=float)
         poi_list = respull[:,0].tolist()
         deltaNLL = respull[:,1].tolist()
+        label = "expected_"
+        respull = []
+        with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
+            for line in f.readlines():
+                respull.append(line.split(' '))
+
+        respull = np.asarray(respull, dtype=float)
+        poi_list_exp = respull[:,0].tolist()
+        deltaNLL_exp = respull[:,1].tolist()
+
         #plt.xlim(-1,1)
         plt.ylim(0,5)          
-        plt.plot(poi_list,deltaNLL,label='mLQ=%s GeV'%mLQ)
-        plt.plot(poi_list,len(poi_list)*[1],linestyle='dashed')
+        plt.plot(poi_list,deltaNLL,label='data')
+        plt.plot(poi_list_exp,deltaNLL_exp,label='asimov dataset')
+        plt.plot(poi_list,len(poi_list)*[1],linestyle='dashed',c='g')
+        plt.plot(poi_list,len(poi_list)*[2],linestyle='dashed',c='g')
         plt.xlabel("%s"%poi)
         plt.ylabel("-2deltaLL")
         plt.legend()
-        plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
+        plt.title("Likelihood Scan: channel %s %s, mLQ = %.2f TeV"%(options.chan,options.q,mLQ))
         plt.savefig("%s/like_scan_%s_%s_%s.jpg"%(options.odir,options.chan,options.q,poi))
         plt.close()
 
@@ -106,40 +139,20 @@ else:
 
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
-
+    
+    label = "expected_"
+    print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1" %(workspace, poi,  extra_params))
+    print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q))
+    f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q),"READ")
+    save_likelihoods(f,label)
+    
+    label = ""
     print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
-
-    #print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
-            
-            
     print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.%s_%s_%s.root"%(poi,options.chan,options.q))
-
-
-    deltaNLL, poi_list = [],[]
-
-    f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s_%s_%s.root"%(poi,options.chan,options.q),"READ")
-    limit_tree = f.Get("limit")
-    poi_value = array('f',[0])
-    limit_tree.SetBranchAddress("%s"%poi, poi_value)
-
-    for i in range(limit_tree.GetEntries()):
-
-        limit_tree.GetEntry(i)
-        deltaNLL.append(limit_tree.deltaNLL)
-        poi_list.append(poi_value[0])
-    	print(poi_value)	
-    f.Close()
-    #print(poi_list)
-    #print(deltaNLL)
-    idx = np.argsort(np.array(poi_list))
-    poi_list = np.array(poi_list)[idx]
-    deltaNLL = np.array(deltaNLL)[idx]
-    with open('%s/like_scan_%s_%s%s_m%i_%s.txt'%(options.odir, options.chan,options.q,("_vec" if is_vec else ""), mLQ, poi), 'w') as f:
-        for ylq,dnll in zip(poi_list, deltaNLL):
-            f.write("%f %f\n" %(ylq,2*dnll)) 
-        #print(np.amax(poi_list),np.amin(poi_list))
-
+    f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q),"READ")
+    save_likelihoods(f,label)
+     
 	    
 
     
