@@ -80,7 +80,8 @@ if statuncs: fit_name += "_statuncs"
 print("\n fit_name = ", fit_name)
 
 if options.plot:
-    poi_list=["yLQ2"]
+
+    poi = "yLQ2"
     '''
     poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
      "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
@@ -96,11 +97,16 @@ if options.plot:
     for i in range(1,61):
         poi_list.append("prop_binY18_bin" + str(i))
     '''
-    for poi in poi_list:
-
-        #print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s_%s%s_m%s_%s.txt %s"
-        #            %(options.chan, options.q, ("_vec" if is_vec else ""),  poi, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-        label = ""
+    
+    for options.year in [2016,2017,2018,-1]:
+        # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
+        label = "expected_%i_" % options.year
+        print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                    %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+        label = "%i_" % options.year
+        print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                    %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+        label = "%i_" % options.year
         respull = []
         with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
             for line in f.readlines():
@@ -109,7 +115,7 @@ if options.plot:
         respull = np.asarray(respull, dtype=float)
         poi_list = respull[:,0].tolist()
         deltaNLL = respull[:,1].tolist()
-        label = "expected_"
+        label = "expected_%i_" % options.year
         respull = []
         with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
             for line in f.readlines():
@@ -128,8 +134,8 @@ if options.plot:
         plt.xlabel("%s"%poi)
         plt.ylabel("-2deltaLL")
         plt.legend()
-        plt.title("Likelihood Scan: channel %s %s, mLQ = %.2f TeV"%(options.chan,options.q,mLQ))
-        plt.savefig("%s/like_scan_%s_%s_%s.jpg"%(options.odir,options.chan,options.q,poi))
+        plt.title("Likelihood Scan: channel %s %s, mLQ = %.2f TeV, %s"%(options.chan,options.q,mLQ,(options.year if options.year > 0 else "2016,2017,2018")))
+        plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_%s.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,poi,options.year))
         plt.close()
 
         
@@ -140,16 +146,16 @@ else:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
     
-    label = "expected_"
+    label = "expected_%i_" % options.year
     print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1" %(workspace, poi,  extra_params))
     print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q))
     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q),"READ")
     save_likelihoods(f,label)
     
-    label = ""
+    label = "%i_" % options.year
     print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
-    print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.%s_%s_%s.root"%(poi,options.chan,options.q))
+    print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q))
     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q),"READ")
     save_likelihoods(f,label)
      
