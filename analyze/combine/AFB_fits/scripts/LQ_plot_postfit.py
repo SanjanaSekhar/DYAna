@@ -259,6 +259,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					if logy == True:
 						signals[hist_index].SetMinimum(1e-3)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
+					else: this_sig_name = signalNames[0]
 					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
 					signals[hist_index].Draw('hist same')
 
@@ -614,6 +615,7 @@ def plot_combined():
 	hist_list = []
 	color_list = []
 	label_list = []
+	signals, signalNames = [],[]
 	for year in years:
 		for idx, dir_name in enumerate(dirs):
 			dir_ = dir_name % ( year % 2000)
@@ -666,7 +668,10 @@ def plot_combined():
 					#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
-		            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+							h_tot_sig.Scale(10)
+		            				#h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+							signals.append(h_tot_sig)
+							signalNames.append(label_color_map[name][0])
 						else:
 							h = f_in.Get(dir_ + name)
 							if(h != None):
@@ -749,7 +754,7 @@ def plot_combined():
 		h_tot_dir.SetBinContent(b, h_tot.GetBinContent(b))
 		h_tot_dir.SetBinError(b, h_tot.GetBinError(b))
 			
-	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
+	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
 def plot_yearly():
 	for year in years:
@@ -853,7 +858,7 @@ parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 parser.add_option("--vec", default=False, help="is vec?")
-parser.add_option("--combined", default=False, help="plot all 3 years combined")
+parser.add_option("--combined", default=True, help="plot all 3 years combined")
 (options, args) = parser.parse_args()
 yLQ = 0.0
 mLQ = options.mLQ

@@ -26,8 +26,8 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
-    for options.chan in ["mumu","ee"]:
-        for options.q in ["d"]:
+    for options.chan in ["mumu"]:
+        for options.q in ["u"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
 	    is_vec = True
@@ -41,7 +41,7 @@ for y in [-1]:
             if not options.gen_level and not options.no_sys: options.fake_data = True
             options.no_LQ = False
             options.year = y
-            likelihood_scan = True
+            likelihood_scan = False
 	    if likelihood_scan: 
 		poi = 'yLQ2'
 		ending = "%s"%poi
