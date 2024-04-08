@@ -2,9 +2,8 @@
 from LQ_utils import *
 import ROOT
 from ROOT import *
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from array import array
-plt.ioff()
 
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
@@ -24,11 +23,11 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-#for y in [2016,2017,2018]:
-for y in [-1]:
+for y in [2016,2017,2018]:
+    #for y in [-1]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["mumu","ee"]:
-        for options.q in ["u","d"]:
+        for options.q in ["d"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
 	    is_vec = True
@@ -180,6 +179,7 @@ for y in [-1]:
 	     		for ylq,dnll in zip(yLQ2_list, deltaNLL):
          		    f.write("%f %f\n" %(ylq,2*dnll)) 
 		    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
+            '''
 	    if likelihood_scan: 
 	        for mLQ in mLQ_list:	    
 	            respull = []
@@ -198,4 +198,4 @@ for y in [-1]:
             	plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
             	plt.savefig("like_scan_%s_%s_%s.jpg"%(options.chan,options.q,ending))
             	plt.close()
-		    
+	    '''	    
