@@ -888,7 +888,7 @@ parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 parser.add_option("--vec", default=False, help="is vec?")
-parser.add_option("--combined", default=False, help="plot all 3 years combined")
+parser.add_option("--combined", default=True, help="plot all 3 years combined")
 (options, args) = parser.parse_args()
 yLQ = 0.0
 mLQ = options.mLQ
