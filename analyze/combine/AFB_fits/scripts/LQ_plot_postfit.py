@@ -626,6 +626,13 @@ def plot_combined():
 			#h_datax = h_datax.Clone("h_data_c%i_y%i" %(idx, year))
 			
 			h_tot_sig = f_in.Get(dir_ + "TotalSig")
+			flag = -1
+			for bin in range(1,h_tot_sig.GetNbinsX()+1):
+				if h_tot_sig.GetBinContent(bin) > 0.: 
+					flag = 0
+					break
+			if flag < 0: scale = flag*10
+			else: scale = 10
 			#h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 			if year == 2016:
 				h_data = h_datax.Clone("h_data_c%i_comb" %(idx))
@@ -669,7 +676,7 @@ def plot_combined():
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
 		            				h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
-							h_sig.Scale(10)
+							h_sig.Scale(scale)
 							h_sig.Print("range")
 							signals.append(h_sig)
 							signalNames.append(label_color_map[name][0])
@@ -682,7 +689,7 @@ def plot_combined():
 							hist_list.append(h)
 							label_list.append(label_color_map[name][0])
 							color_list.append(label_color_map[name][1])
-
+							if name == "LQ": LQ_index = i
 							# if("gam" in name):
 							# 	this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
 							# 	print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
@@ -707,7 +714,7 @@ def plot_combined():
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
 		            				h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
-							h_sig.Scale(10)
+							h_sig.Scale(scale)
 							signals[0].Add(h_sig)
 						else:
 							h = f_in.Get(dir_ + name)
@@ -756,6 +763,10 @@ def plot_combined():
 	for b in range(h_tot.GetXaxis().GetNbins() + 1):
 		h_tot_dir.SetBinContent(b, h_tot.GetBinContent(b))
 		h_tot_dir.SetBinError(b, h_tot.GetBinError(b))
+	
+	del hist_list[LQ_index]
+	del label_list[LQ_index]
+	del color_list[LQ_index]
 			
 	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
