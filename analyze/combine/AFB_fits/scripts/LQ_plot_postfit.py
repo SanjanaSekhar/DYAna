@@ -185,8 +185,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for bkg_index,bkg in enumerate(bkglist[hist_index]):     # Won't loop if bkglist is empty
 					# bkg.Sumw2()
 					bkg.SetLineColor(kBlack)
-					if logy:
-						bkg.SetMinimum(1e-3)
+					#if logy:
+						#bkg.SetMinimum(1e-3)
 
 					if colors[bkg_index] != None:
 						bkg.SetFillColor(colors[bkg_index])
@@ -242,8 +242,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				hist.SetLineWidth(2)
 
 
-				if logy == True:
-					hist.SetMinimum(1e-3)
+				#if logy == True:
+					#hist.SetMinimum(1e-3)
 
 				hist.SetBinErrorOption(ROOT.TH1.kPoisson)
 				hist.Draw(datastyle)
@@ -256,8 +256,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if len(signals) > 0: 
 					signals[hist_index].SetLineColor(kRed)
 					signals[hist_index].SetLineWidth(4)
-					if logy == True:
-						signals[hist_index].SetMinimum(1e-3)
+					#if logy == True:
+						#signals[hist_index].SetMinimum(1e-3)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
 					else: this_sig_name = signalNames[0]
 					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
@@ -675,9 +675,9 @@ def plot_combined():
 					#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
+							h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 		            				h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 							h_sig.Scale(scale)
-							h_sig.Print("range")
 							signals.append(h_sig)
 							signalNames.append(label_color_map[name][0])
 						else:
@@ -713,6 +713,7 @@ def plot_combined():
 					#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
+							h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 		            				h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
 							h_sig.Scale(scale)
 							signals[0].Add(h_sig)
@@ -764,9 +765,9 @@ def plot_combined():
 		h_tot_dir.SetBinContent(b, h_tot.GetBinContent(b))
 		h_tot_dir.SetBinError(b, h_tot.GetBinError(b))
 	
-	del hist_list[LQ_index]
-	del label_list[LQ_index]
-	del color_list[LQ_index]
+	#del hist_list[LQ_index]
+	#del label_list[LQ_index]
+	#del color_list[LQ_index]
 			
 	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
