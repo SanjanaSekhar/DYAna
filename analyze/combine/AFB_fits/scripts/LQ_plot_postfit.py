@@ -656,7 +656,7 @@ def plot_combined():
 
 			if not options.gen_level:
 				for i,name in enumerate(name_list):
-					print(i,name)
+					#print(i,name)
 					if year == 2016:
 						if(name == "dy"):
 							h_dy = f_in.Get(dir_ + "fpl")
@@ -772,6 +772,7 @@ def plot_combined():
 	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
 def plot_yearly():
+	signals, signalNames = [],[]
 	for year in years:
 		for idx, dir_name in enumerate(dirs):
 			dir_ = dir_name % ( year % 2000)
@@ -805,7 +806,7 @@ def plot_yearly():
 			label_list = []
 
 			if not options.gen_level:
-				for name in name_list:
+				for i,name in enumerate(name_list):
 					if(name == "dy"):
 						h_dy = f_in.Get(dir_ + "fpl")
 						if(h_dy != None):
@@ -872,7 +873,7 @@ def plot_yearly():
 			del label_list[LQ_index]
 			del color_list[LQ_index]
 		
-			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle, logy=True) 
+			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, signals = signals, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle, logy=True) 
 
 
 
@@ -887,7 +888,7 @@ parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 parser.add_option("--vec", default=False, help="is vec?")
-parser.add_option("--combined", default=True, help="plot all 3 years combined")
+parser.add_option("--combined", default=False, help="plot all 3 years combined")
 (options, args) = parser.parse_args()
 yLQ = 0.0
 mLQ = options.mLQ

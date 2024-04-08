@@ -1,14 +1,16 @@
 
-Attaching file multidimfitTest.root as _file0...
-(TFile *) 0x3d30d80
+Attaching file multidimfit.mumu_u_2017.root as _file0...
+(TFile *) 0xe5edf0
 
-  RooFitResult: minimized FCN value: -15.4903, estimated distance to minimum: 2.81156e-05
-                covariance matrix quality: Unknown, matrix was externally provided
-                Status : 
+  RooFitResult: minimized FCN value: 0, estimated distance to minimum: 0.00011367
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MINIMIZE=0 HESSE=0 
 
     Floating Parameter    FinalValue +/-  Error   
   --------------------  --------------------------
-               FAC1718    2.9522e-01 +/-  9.15e-01
+                    A0    6.8355e-02 +/-  8.90e-02
+                    A4    1.4109e+00 +/-  1.16e-01
+               FAC1718    2.9522e-01 +/-  9.85e-01
         MCStatBin10y17   -2.0010e-01 +/-  9.73e-01
         MCStatBin11y17   -3.8924e-01 +/-  9.79e-01
         MCStatBin15y17   -2.2408e-01 +/-  9.74e-01
@@ -23,11 +25,11 @@ Attaching file multidimfitTest.root as _file0...
          MCStatBin2y17    5.6663e-01 +/-  9.76e-01
         MCStatBin30y17   -3.6006e-02 +/-  9.95e-01
         MCStatBin31y17   -1.0116e-01 +/-  9.96e-01
-        MCStatBin35y17   -9.1603e-02 +/-  9.92e-01
-        MCStatBin36y17    4.9483e-02 +/-  9.91e-01
+        MCStatBin35y17   -9.1603e-02 +/-  9.93e-01
+        MCStatBin36y17    4.9483e-02 +/-  9.92e-01
         MCStatBin37y17    4.6207e-02 +/-  9.94e-01
          MCStatBin3y17    4.7955e-02 +/-  9.74e-01
-        MCStatBin41y17    4.6583e-02 +/-  9.98e-01
+        MCStatBin41y17    4.6583e-02 +/-  9.99e-01
         MCStatBin42y17    3.0315e-02 +/-  9.97e-01
         MCStatBin43y17   -5.0686e-02 +/-  9.98e-01
         MCStatBin44y17   -5.7690e-02 +/-  9.98e-01
@@ -39,26 +41,26 @@ Attaching file multidimfitTest.root as _file0...
         MCStatBin56y17   -1.4452e-01 +/-  9.98e-01
         MCStatBin57y17    1.4853e-02 +/-  9.97e-01
          MCStatBin9y17   -1.6574e-01 +/-  9.83e-01
-                    Pu   -4.7802e-01 +/-  9.96e-01
-             REFAC1718    6.8737e-01 +/-  9.64e-01
-            RENORM1718    3.1559e-01 +/-  1.02e+00
+                    Pu   -4.7802e-01 +/-  9.81e-01
+             REFAC1718    6.8737e-01 +/-  9.74e-01
+            RENORM1718    3.1559e-01 +/-  9.96e-01
             alphaS1718    0.0000e+00 +/-  1.00e+00
                db_xsec    1.4990e-01 +/-  1.00e+00
                dy_xsec    6.5541e-01 +/-  8.80e-01
-       emucostrw1b1718    9.3735e-01 +/-  7.90e-01
-       emucostrw2b1718    3.1663e-01 +/-  9.89e-01
+       emucostrw1b1718    9.3735e-01 +/-  7.89e-01
+       emucostrw2b1718    3.1663e-01 +/-  9.90e-01
        emucostrw3b1718    6.6249e-03 +/-  9.93e-01
        emucostrw4b1718    1.0838e-02 +/-  9.98e-01
               gam_xsec    4.9695e-02 +/-  1.00e+00
                 lumi17    8.4140e-01 +/-  9.12e-01
                 lumiBC    1.2763e-01 +/-  9.98e-01
-                lumiDB    1.7015e-01 +/-  9.97e-01
+                lumiDB    1.7015e-01 +/-  9.96e-01
                 lumiGS    4.2577e-02 +/-  1.00e+00
                 lumiLS    1.2763e-01 +/-  9.98e-01
                 lumiXY    3.8293e-01 +/-  9.83e-01
              muFakes17   -1.4864e-02 +/-  9.88e-01
-            muHLTBAR17    2.6246e-02 +/-  9.98e-01
-            muHLTEND17    4.6250e-02 +/-  9.87e-01
+            muHLTBAR17    2.6246e-02 +/-  9.97e-01
+            muHLTEND17    4.6250e-02 +/-  9.85e-01
              muIDBAR17    5.0209e-01 +/-  9.59e-01
              muIDEND17    1.1770e-01 +/-  9.82e-01
                muIDSYS    1.1770e-01 +/-  9.82e-01
@@ -66,16 +68,16 @@ Attaching file multidimfitTest.root as _file0...
             muISOEND17    1.4393e-02 +/-  9.99e-01
               muISOSYS    1.4393e-02 +/-  9.99e-01
             muPref1718   -4.7640e-02 +/-  1.00e+00
-                muRC17    1.0854e-05 +/-  9.32e-01
-         mufakesrw1b17   -1.5049e-02 +/-  9.98e-01
+                muRC17    1.0854e-05 +/-  1.01e+00
+         mufakesrw1b17   -1.5049e-02 +/-  1.00e+00
          mufakesrw2b17   -2.1343e-02 +/-  1.00e+00
          mufakesrw3b17    1.5329e-02 +/-  9.99e-01
          mufakesrw4b17    1.8256e-02 +/-  1.00e+00
-               nlo_sys    7.7430e-03 +/-  9.98e-01
+               nlo_sys    7.7430e-03 +/-  1.00e+00
                   pdf1    3.8051e-03 +/-  1.00e+00
                  pdf10    2.6569e-02 +/-  1.00e+00
                  pdf11   -3.1930e-02 +/-  1.00e+00
-                 pdf12   -3.2390e-02 +/-  1.00e+00
+                 pdf12   -3.2390e-02 +/-  9.99e-01
                  pdf13    3.5918e-02 +/-  1.00e+00
                  pdf14   -5.8913e-02 +/-  1.00e+00
                  pdf15   -4.2822e-02 +/-  1.01e+00
@@ -95,13 +97,13 @@ Attaching file multidimfitTest.root as _file0...
                  pdf28   -3.6904e-02 +/-  9.99e-01
                  pdf29    5.0826e-03 +/-  1.00e+00
                   pdf3    6.9325e-03 +/-  9.99e-01
-                 pdf30    2.3066e-02 +/-  1.00e+00
+                 pdf30    2.3066e-02 +/-  1.01e+00
                  pdf31    1.2202e-02 +/-  1.01e+00
                  pdf32    2.0610e-02 +/-  9.99e-01
                  pdf33   -5.4885e-02 +/-  1.01e+00
                  pdf34    1.7326e-02 +/-  1.00e+00
                  pdf35    3.7738e-03 +/-  1.00e+00
-                 pdf36   -1.1541e-04 +/-  9.99e-01
+                 pdf36   -1.1541e-04 +/-  1.00e+00
                  pdf37   -1.5589e-03 +/-  1.00e+00
                  pdf38    7.9445e-03 +/-  1.00e+00
                  pdf39    1.5401e-02 +/-  1.00e+00
@@ -120,7 +122,7 @@ Attaching file multidimfitTest.root as _file0...
                  pdf50   -4.2781e-03 +/-  1.00e+00
                  pdf51   -9.9309e-03 +/-  1.00e+00
                  pdf52    7.1366e-02 +/-  1.00e+00
-                 pdf53    1.6631e-02 +/-  1.00e+00
+                 pdf53    1.6631e-02 +/-  1.01e+00
                  pdf54    1.7815e-02 +/-  1.00e+00
                  pdf55   -4.0645e-02 +/-  9.99e-01
                  pdf56   -3.1654e-02 +/-  1.00e+00
@@ -128,21 +130,12 @@ Attaching file multidimfitTest.root as _file0...
                  pdf58    2.4420e-02 +/-  9.99e-01
                  pdf59   -3.5341e-02 +/-  9.99e-01
                   pdf6    1.4889e-02 +/-  1.00e+00
-                 pdf60    2.0532e-03 +/-  9.98e-01
+                 pdf60    2.0532e-03 +/-  9.97e-01
                   pdf7    4.3162e-02 +/-  1.01e+00
                   pdf8    3.0484e-02 +/-  9.99e-01
                   pdf9    2.6877e-02 +/-  1.00e+00
-              top_xsec    7.9050e-01 +/-  9.61e-01
       prop_binY17_bin0    5.6844e-01 +/-  9.31e-01
       prop_binY17_bin1    5.7557e-01 +/-  9.57e-01
-      prop_binY17_bin2    2.0524e-01 +/-  9.66e-01
-      prop_binY17_bin3   -1.6841e-01 +/-  9.76e-01
-      prop_binY17_bin4    2.3088e-01 +/-  9.74e-01
-      prop_binY17_bin5   -1.3808e-01 +/-  9.73e-01
-      prop_binY17_bin6    3.9642e-01 +/-  9.64e-01
-      prop_binY17_bin7    1.4754e-01 +/-  9.42e-01
-      prop_binY17_bin8   -2.3520e-01 +/-  9.28e-01
-      prop_binY17_bin9    4.5709e-02 +/-  9.63e-01
      prop_binY17_bin10   -7.7266e-01 +/-  9.81e-01
      prop_binY17_bin11    2.4727e-01 +/-  9.73e-01
      prop_binY17_bin12   -3.4174e-01 +/-  9.78e-01
@@ -153,6 +146,7 @@ Attaching file multidimfitTest.root as _file0...
      prop_binY17_bin17    4.4979e-01 +/-  9.78e-01
      prop_binY17_bin18    1.5881e-01 +/-  9.79e-01
      prop_binY17_bin19   -1.5663e-01 +/-  9.76e-01
+      prop_binY17_bin2    2.0524e-01 +/-  9.66e-01
      prop_binY17_bin20    1.5042e-02 +/-  9.50e-01
      prop_binY17_bin21    2.6590e-01 +/-  9.78e-01
      prop_binY17_bin22    4.7603e-02 +/-  9.85e-01
@@ -160,9 +154,10 @@ Attaching file multidimfitTest.root as _file0...
      prop_binY17_bin24    1.7286e-01 +/-  9.88e-01
      prop_binY17_bin25   -3.6555e-03 +/-  9.90e-01
      prop_binY17_bin26   -1.7941e-01 +/-  9.87e-01
-     prop_binY17_bin27   -1.4102e-01 +/-  9.59e-01
+     prop_binY17_bin27   -1.4102e-01 +/-  9.60e-01
      prop_binY17_bin28    2.3424e-01 +/-  9.59e-01
      prop_binY17_bin29    8.8114e-03 +/-  9.87e-01
+      prop_binY17_bin3   -1.6841e-01 +/-  9.76e-01
      prop_binY17_bin30   -1.1752e-01 +/-  9.92e-01
      prop_binY17_bin31   -5.6611e-02 +/-  9.95e-01
      prop_binY17_bin32   -7.5315e-02 +/-  9.92e-01
@@ -173,18 +168,20 @@ Attaching file multidimfitTest.root as _file0...
      prop_binY17_bin37    6.3685e-02 +/-  9.95e-01
      prop_binY17_bin38    5.9139e-02 +/-  9.92e-01
      prop_binY17_bin39   -6.9778e-02 +/-  9.86e-01
+      prop_binY17_bin4    2.3088e-01 +/-  9.74e-01
      prop_binY17_bin40    4.4576e-01 +/-  9.52e-01
      prop_binY17_bin41    2.6723e-01 +/-  9.87e-01
      prop_binY17_bin42   -6.9618e-02 +/-  9.97e-01
      prop_binY17_bin43   -1.8743e-02 +/-  9.98e-01
      prop_binY17_bin44   -6.9860e-02 +/-  9.98e-01
-     prop_binY17_bin45   -1.4702e-02 +/-  9.97e-01
+     prop_binY17_bin45   -1.4702e-02 +/-  9.98e-01
      prop_binY17_bin46   -1.8798e-01 +/-  9.96e-01
      prop_binY17_bin47   -1.3960e-01 +/-  9.71e-01
      prop_binY17_bin48   -3.3453e-01 +/-  9.97e-01
      prop_binY17_bin49   -1.5999e-01 +/-  9.99e-01
+      prop_binY17_bin5   -1.3808e-01 +/-  9.73e-01
      prop_binY17_bin50    4.2671e-02 +/-  9.96e-01
-     prop_binY17_bin51    7.6788e-02 +/-  9.96e-01
+     prop_binY17_bin51    7.6788e-02 +/-  9.97e-01
      prop_binY17_bin52   -1.3736e-02 +/-  9.98e-01
      prop_binY17_bin53   -2.4381e-02 +/-  9.91e-01
      prop_binY17_bin54   -1.3194e-02 +/-  9.90e-01
@@ -193,7 +190,10 @@ Attaching file multidimfitTest.root as _file0...
      prop_binY17_bin57   -4.2176e-02 +/-  9.97e-01
      prop_binY17_bin58   -3.0219e-01 +/-  9.99e-01
      prop_binY17_bin59    2.6904e-02 +/-  9.96e-01
-                    A0    6.8355e-02 +/-  9.27e-02
-                    A4    1.4109e+00 +/-  1.16e-01
-                  yLQ2   -9.7510e-02 +/-  2.63e-01
+      prop_binY17_bin6    3.9642e-01 +/-  9.64e-01
+      prop_binY17_bin7    1.4754e-01 +/-  9.42e-01
+      prop_binY17_bin8   -2.3520e-01 +/-  9.27e-01
+      prop_binY17_bin9    4.5709e-02 +/-  9.63e-01
+              top_xsec    7.9050e-01 +/-  9.61e-01
+                  yLQ2   -9.7510e-02 +/-  2.66e-01
 

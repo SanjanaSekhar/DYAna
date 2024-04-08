@@ -24,6 +24,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
+#for y in [2016,2017,2018]:
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["mumu","ee"]:
@@ -101,26 +102,28 @@ for y in [-1]:
                 #make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
                 print("\n plotdir = ", plotdir)
-                if not os.listdir(plotdir):
-			make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-			#print_and_do("rm -r %s" % (plotdir, plotdir))
-                	print_and_do("mkdir %s" % (plotdir))
-                	if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  " %(workspace, extra_params))
-                	else:
-		    		print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
-		    		print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1     --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
+                #if not os.path.isdir(plotdir) or not os.listdir(plotdir):
+
+		#print("Folder %s NOT FOUND"% plotdir)
+		make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
+		print_and_do("rm -r %s" % (plotdir))
+                print_and_do("mkdir %s" % (plotdir))
+                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+                else:
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
+		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1     --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
                 
 		if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
-
-                if(not options.no_plot):
-                    print_and_do("PostFitShapesFromWorkspace -w higgsCombineTest.MultiDimFit.mH120.root -f multidimfitTest.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
-                            % (fit_name))
+		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
+                if(not statuncs):
+                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
+                            % (options.chan,options.q,("_vec" if is_vec else ""),options.year,options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
                     
                     print_and_do("python scripts/LQ_plot_postfit.py -i %s_fit_shapes_LQ.root -o %s  %s --mLQ %i --chan %s --q %s  %s" % (fit_name, plotdir, extra_args,mLQ,options.chan,options.q,("--vec True" if is_vec else "")))
                     #print_and_do("combine %s -M FitDiagnostics --skipBOnlyFit %s  --robustFit 1 " % (workspace, extra_params)) #only to get prefit, probably a better way
-                    print_and_do("python scripts/my_diffNuisances.py multidimfitTest.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (mLQ, plotdir))
+                    print_and_do("python scripts/my_diffNuisances.py multidimfit.%s_%s%s_%i.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
@@ -130,7 +133,7 @@ for y in [-1]:
 		print_and_do(""" cat cmd.txt """)
                 print_and_do("""echo ".q" >> cmd.txt """)
                 #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
-                print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
+                print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
 		
 		print_and_do(""" echo "auto a=fit_mdf->floatParsFinal();" > cmd.txt """)
 		print_and_do(""" echo "auto A0=(RooRealVar *) a.at(396);" >> cmd.txt """)
@@ -143,7 +146,7 @@ for y in [-1]:
 		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(402);" >> cmd.txt """)
 		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(186);" >> cmd.txt """)
                 print_and_do(""" echo "std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;" >> cmd.txt """)
-		print_and_do("root -l -b multidimfitTest.root < cmd.txt > %s/results_%s_m%i.txt" % (plotdir,fit_name,mLQ))
+		print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > %s/results_%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,plotdir,fit_name,mLQ))
                 
                 
 		print_and_do("rm -f cards/sed*")
