@@ -185,8 +185,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for bkg_index,bkg in enumerate(bkglist[hist_index]):     # Won't loop if bkglist is empty
 					# bkg.Sumw2()
 					bkg.SetLineColor(kBlack)
-					#if logy:
-						#bkg.SetMinimum(1e-3)
+					if logy:
+						bkg.SetMinimum(1e-3)
 
 					if colors[bkg_index] != None:
 						bkg.SetFillColor(colors[bkg_index])
@@ -242,8 +242,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				hist.SetLineWidth(2)
 
 
-				#if logy == True:
-					#hist.SetMinimum(1e-3)
+				if logy == True:
+					hist.SetMinimum(1e-3)
 
 				hist.SetBinErrorOption(ROOT.TH1.kPoisson)
 				hist.Draw(datastyle)
@@ -254,10 +254,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				# Do the signals
 				if len(signals) > 0: 
-					signals[hist_index].SetLineColor(kRed)
+					signals[hist_index].SetLineColor(kBlue)
 					signals[hist_index].SetLineWidth(4)
-					#if logy == True:
-						#signals[hist_index].SetMinimum(1e-3)
+					if logy == True:
+						signals[hist_index].SetMinimum(1e-3)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
 					else: this_sig_name = signalNames[0]
 					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
@@ -765,9 +765,9 @@ def plot_combined():
 		h_tot_dir.SetBinContent(b, h_tot.GetBinContent(b))
 		h_tot_dir.SetBinError(b, h_tot.GetBinError(b))
 	
-	#del hist_list[LQ_index]
-	#del label_list[LQ_index]
-	#del color_list[LQ_index]
+	del hist_list[LQ_index]
+	del label_list[LQ_index]
+	del color_list[LQ_index]
 			
 	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
@@ -783,7 +783,13 @@ def plot_yearly():
 
 			h_tot_sig = f_in.Get(dir_ + "TotalSig")
 			h_tot_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
-
+			flag = -1
+			for bin in range(1,h_tot_sig.GetNbinsX()+1):
+				if h_tot_sig.GetBinContent(bin) > 0.:
+					flag = 0
+					break
+			if flag < 0: scale = flag*10
+			else: scale = 10
 			#mbin_low = m_bins[options.mbin]
 			#mbin_high = m_bins[options.mbin+1]
 
@@ -817,7 +823,11 @@ def plot_yearly():
 				#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 					elif name=="LQ":
 						h_tot_sig = f_in.Get(dir_ + "TotalSig")
-	            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+						h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+						h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+						h_sig.Scale(scale)
+						signals.append(h_sig)
+						signalNames.append(label_color_map[name][0])
 					else:
 						h = f_in.Get(dir_ + name)
 						if(h != None):
@@ -827,7 +837,7 @@ def plot_yearly():
 						hist_list.append(h)
 						label_list.append(label_color_map[name][0])
 						color_list.append(label_color_map[name][1])
-
+						if name == "LQ": LQ_index = i
 						if("gam" in name):
 							this_frac = h.Integral()/(h_tot_sig.Integral() + h.Integral())
 							print("Chan %i Year %i Name %s frac %.3f \n" % (idx, year, name, this_frac))
@@ -857,7 +867,11 @@ def plot_yearly():
 				label_list.append(label_color_map["dy"][0])
 				color_list.append(label_color_map["dy"][1])
 
-					
+			
+			del hist_list[LQ_index]
+			del label_list[LQ_index]
+			del color_list[LQ_index]
+		
 			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle, logy=True) 
 
 
