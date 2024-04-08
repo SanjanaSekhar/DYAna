@@ -254,8 +254,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				# Do the signals
 				if len(signals) > 0: 
-					signals[hist_index].SetLineColor(kBlue)
-					signals[hist_index].SetLineWidth(2)
+					signals[hist_index].SetLineColor(kRed)
+					signals[hist_index].SetLineWidth(4)
 					if logy == True:
 						signals[hist_index].SetMinimum(1e-3)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
@@ -899,7 +899,7 @@ if options.gen_level and options.q == "u":
 
 
 #m_bins = [150, 171, 200,  250, 320, 510, 700, 1000, 14000]
-
+scale = 10
 
 label_color_map = dict()
 label_color_map['dy'] = ("DY", DY_c)
@@ -908,7 +908,7 @@ label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
 label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", gamgam_c)
 label_color_map['qcd'] = ("WJets + QCD", qcd_c)
-label_color_map['LQ'] = ("%s_%s Signal"%("V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), tautau_c)
+label_color_map['LQ'] = ("%i * %s_%s Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), tautau_c)
 label_color_map['alpha'] = ("alpha", kGreen)
 label_color_map['fmn'] = ("DY minus", kBlue)
 label_color_map['fpl'] = ("DY plus", kRed)
