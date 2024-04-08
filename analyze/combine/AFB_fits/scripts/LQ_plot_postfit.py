@@ -668,9 +668,10 @@ def plot_combined():
 					#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
-							h_tot_sig.Scale(10)
-		            				#h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
-							signals.append(h_tot_sig)
+		            				h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+							h_sig.Scale(10)
+							h_sig.Print("range")
+							signals.append(h_sig)
 							signalNames.append(label_color_map[name][0])
 						else:
 							h = f_in.Get(dir_ + name)
@@ -705,7 +706,9 @@ def plot_combined():
 					#h = h_tot_sig.Clone("h_%s_c%i_y%i" %(name, idx, year))
 						elif name=="LQ":
 							h_tot_sig = f_in.Get(dir_ + "TotalSig")
-		            				h = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+		            				h_sig = h_tot_sig.Clone("h_tot_sig_c%i_y%i" %(idx, year))
+							h_sig.Scale(10)
+							signals[0].Add(h_sig)
 						else:
 							h = f_in.Get(dir_ + name)
 							if(h != None):
