@@ -70,7 +70,7 @@ def plotLimits(channel):
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
     DrawLimitBand(pads[0], graphs, legend=legend)
-    if not is_vec and (channel=='ue' or channel=='de'):
+    if year < 0 and not is_vec and (channel=='ue' or channel=='de'):
 	line_sp.SetLineWidth(2)
 	line_sp2.SetLineWidth(2)
 	line_pp.SetLineWidth(2)
