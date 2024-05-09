@@ -108,12 +108,13 @@ if options.limits:
 
     labels = [
         "limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
-        "limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
+        "limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec",
+        "limits_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
         #"limits_ee_d_vec","limits_mumu_d_vec"
     ]
-
-
+    
+    year = 2018
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
@@ -125,43 +126,43 @@ if options.limits:
             print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
             script_file = open(script_name, 'a+')
             script_file.write("mkdir limits\n")
-            script_file.write(cmd+" --mLQ %i \n"%(m))
+            script_file.write(cmd+" --mLQ %i --year %i\n"%(m,year))
             script_file.write(cpy_cmd)
             script_file.close()
             #print_and_do("cat %s" % script_name)
             print_and_do("chmod +x %s" % script_name)
-            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_%s"  % (n_m_bins, script_name, labels[i], m, date))
+            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_y%i_%s"  % (n_m_bins, script_name, labels[i], m, year-2000, date))
             print_and_do("rm scripts/script3.sh")
 
 if options.gof:
 
     nToys = 300
-    
-    for mLQ in range(1000,5500,500):
+    year = 2017    
+    for mLQ in [5000]:
 
 
         cmds = [
       
-        #"python scripts/LQ_do_gof.py --chan ee --q u  ",
-        #"python scripts/LQ_do_gof.py --chan ee --q d  ",
+        "python scripts/LQ_do_gof.py --chan ee --q u  ",
+        "python scripts/LQ_do_gof.py --chan ee --q d  ",
         #"python scripts/LQ_do_gof.py --chan mumu --q u ",
         #"python scripts/LQ_do_gof.py --chan mumu --q d ",
-        "python scripts/LQ_do_gof.py --chan ee --q u --vec True ",
-        "python scripts/LQ_do_gof.py --chan ee --q d --vec True ",
-        "python scripts/LQ_do_gof.py --chan mumu --q u --vec True ",
-        "python scripts/LQ_do_gof.py --chan mumu --q d --vec True ",
+        #"python scripts/LQ_do_gof.py --chan ee --q u --vec True ",
+        #"python scripts/LQ_do_gof.py --chan ee --q d --vec True ",
+        #"python scripts/LQ_do_gof.py --chan mumu --q u --vec True ",
+        #"python scripts/LQ_do_gof.py --chan mumu --q d --vec True ",
      
         ]
 
         labels = [
-            #"gof_ee_u","gof_ee_d","gof_mumu_u","gof_mumu_d",
-            "gof_ee_u_vec","gof_ee_d_vec","gof_mumu_u_vec","gof_mumu_d_vec"
+            "gof_ee_u","gof_ee_d",#"gof_mumu_u","gof_mumu_d",
+            #"gof_ee_u_vec","gof_ee_d_vec","gof_mumu_u_vec","gof_mumu_d_vec"
             #"gof_ee_s","gof_mumu_s",
             #"gof_ee_d_vec","gof_mumu_d_vec"
         ]
 
 
-        cpy_cmd = "xrdcp -f gof/* $1 \n"
+        cpy_cmd = "xrdcp -f gof_b_only/* $1 \n"
 
         for i,cmd in enumerate(cmds):
        
@@ -171,13 +172,13 @@ if options.gof:
             script_name = "scripts/script3.sh"
             print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
             script_file = open(script_name, 'a+')
-            script_file.write("mkdir gof\n")
-            script_file.write(cmd+" -o gof/ --mLQ %i --nToys %i\n"%(mLQ, nToys))
+            script_file.write("mkdir gof_b_only\n")
+            script_file.write(cmd+" -o gof_b_only/ --mLQ %i --nToys %i --year %i\n"%(mLQ, nToys, year))
             script_file.write(cpy_cmd)
             script_file.close()
             #print_and_do("cat %s" % script_name)
             print_and_do("chmod +x %s" % script_name)
-            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i"  % (n_m_bins, script_name, labels[i], mLQ))
+            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_y%i"  % (n_m_bins, script_name, labels[i], mLQ, year-2000))
             print_and_do("rm scripts/script3.sh")
 
 if options.combine_review:
@@ -227,20 +228,20 @@ if options.impacts:
 
     cmds = [
   
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u -o imps --ending %s \n"%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d -o imps --ending %s \n "%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q u --vec True -o imps --ending %s \n "%date,
-    "python scripts/LQ_do_impacts.py --mLQ 2000 --chan ee --q d --vec True -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q u --vec True -o imps --ending %s  \n"%date,
-    #"python scripts/LQ_do_impacts.py --mLQ 2000 --chan mumu --q d --vec True -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan ee --q u -o imps --ending %s \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan ee --q d -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan mumu --q u -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan mumu --q d -o imps --ending %s \n "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan ee --q u --vec True -o imps --ending %s \n "%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan ee --q d --vec True -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan mumu --q u --vec True -o imps --ending %s  \n"%date,
+    "python scripts/LQ_do_impacts.py --mLQ 2500 --chan mumu --q d --vec True -o imps --ending %s  \n"%date,
  
     ]
 
     labels = [
-        "imps_ee_u","imps_ee_d",#"imps_mumu_u","imps_mumu_d",
-        "imps_ee_u_vec","imps_ee_d_vec",#"imps_mumu_u_vec", "imps_mumu_d_vec"
+        "imps_ee_u","imps_ee_d","imps_mumu_u","imps_mumu_d",
+        "imps_ee_u_vec","imps_ee_d_vec","imps_mumu_u_vec", "imps_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
         #"limits_ee_s_vec","limits_mumu_s_vec"
     ]
@@ -269,14 +270,14 @@ if options.sys_uncs:
 
     cmds = [
   
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q u -o sys --ending %s \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q d -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q u -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q d -o sys --ending %s \n "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q u --vec True -o sys --ending %s \n "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan ee --q d --vec True -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q u --vec True -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2000 --chan mumu --q d --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u -o sys --ending %s \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d -o sys --ending %s \n "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u --vec True -o sys --ending %s \n "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d --vec True -o sys --ending %s  \n"%date,
  
     ]
 
@@ -312,19 +313,25 @@ if options.likelihood:
 
     cmds = [
   
-
-    "python scripts/LQ_do_likelihood.py --mLQ 2000 --chan mumu --q d -o likelihood_scans ",
+    
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u  -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d  -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u --vec true -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d --vec true -o likelihood_scans ",
 
  
     ]
 
     labels = [
-        "likelihood_mumu_d"
+     "likelihood_ee_u","likelihood_ee_d","likelihood_ee_u_vec","likelihood_ee_d_vec"
     ]
 
 
     cpy_cmd = "xrdcp -f likelihood_scans/* $1 \n"
-    poi_list = ["muISOBAR17", "muISOEND17","muIDEND17","muIDBAR17", "mufakesrw1b17", "mufakesrw2b17", "mufakesrw3b17", "mufakesrw4b17", "muISOBAR16", "muISOEND16","muIDEND16","muIDBAR16", "mufakesrw1b18", "mufakesrw2b18", "mufakesrw3b18", "mufakesrw4b18"]
+    
+    poi = "yLQ2"
+ 
+    #["muISOBAR17", "muISOEND17","muIDEND17","muIDBAR17", "mufakesrw1b17", "mufakesrw2b17", "mufakesrw3b17", "mufakesrw4b17", "muISOBAR16", "muISOEND16","muIDEND16","muIDBAR16", "mufakesrw1b18", "mufakesrw2b18", "mufakesrw3b18", "mufakesrw4b18"]
     '''
     poi_list = ["dy_xsec","nlo_sys", "muISOBAR18", "muISOEND18", "muIDSYS", "muIDEND18", "muISOSYS", "muIDBAR18", "mufakesrw1b16", "mufakesrw2b16", "mufakesrw3b16", "mufakesrw4b16"]
     
@@ -342,7 +349,7 @@ if options.likelihood:
     for i in range(1,61):
         poi_list.append("prop_binY18_bin" + str(i))
     '''
-    for poi in poi_list:
+    for year in [-1]:
         for i,cmd in enumerate(cmds):
         #for m in range(1000,9500,500):
         #for point in np.arange(0.28,1.5,0.005):
@@ -352,10 +359,10 @@ if options.likelihood:
             print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
             script_file = open(script_name, 'a+')
             script_file.write("mkdir likelihood_scans\n")
-            script_file.write(cmd + " --poi %s \n "%poi)
+            script_file.write(cmd + " --poi %s --year %i\n "%(poi,year))
             script_file.write(cpy_cmd)
             script_file.close()
             #print_and_do("cat %s" % script_name)
             print_and_do("chmod +x %s" % script_name)
-            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s"  % (n_m_bins, script_name, labels[i], poi))
+            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s"  % (n_m_bins, script_name, labels[i], year))
             print_and_do("rm scripts/script3.sh")

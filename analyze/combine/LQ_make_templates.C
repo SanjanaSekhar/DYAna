@@ -729,15 +729,15 @@ void write_out_templates(const string &sys_label){
 
 }
 
-void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, Double_t m_LQ=1000.){
+void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, Double_t m_LQ=2500.){
  
    
    // year =2016;
     if(fout_name_temp == "") fout_name_temp = string("combine/templates/test.root");
-    if(year == -1) year = 2018;
+    if(year == -1) year = 2016;
 
     bool scramble_data =false ;
-    bool fake_data = false; // unblinding
+    bool fake_data = true; // unblinding
     use_xF = false;
 
     
@@ -757,7 +757,7 @@ void LQ_make_templates(int year = -1, string fout_name_temp = "", int iJob =-1, 
     //m_LQ = 1000.;   
     char templates_name[200];
     //sprintf(templates_name,"output_files/LQm%i_data_templates%i.root",int(m_LQ),year%2000);
-    sprintf(templates_name,"combine/templates/LQ_data_templates%i.root",year%2000);
+    sprintf(templates_name,"combine/templates/LQ_fakedata_templates%i.root",year%2000);
     string fout_name = string(templates_name,200);
     TFile * fout = TFile::Open(fout_name.c_str(), "RECREATE");
 

@@ -10,8 +10,8 @@ class LQ_YLQ_SQ(PhysicsModel):
         """Create POI and other parameters, and define the POI set."""
 
         self.modelBuilder.doVar("A4[1.61, -0., 2.]");
-        self.modelBuilder.doVar("A0[0.05, -0.1, 0.1]");
-        self.modelBuilder.doVar("yLQ2[0.001, -3., 3.]");
+        self.modelBuilder.doVar("A0[0.05, -0.2, 0.2]");
+        self.modelBuilder.doVar("yLQ2[0.0001, -3., 3.]");
         self.modelBuilder.doSet("POI","yLQ2,A4")
         self.modelBuilder.doVar('expr::yLQ("((TMath::Abs(@0))**(0.5))",yLQ2)')
         #self.modelBuilder.doVar("POI","yLQ")

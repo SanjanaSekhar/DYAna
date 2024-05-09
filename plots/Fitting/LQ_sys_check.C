@@ -67,10 +67,10 @@ void LQ_sys_check(){
         char *date;
         if(flag_q==2) {date = "u"; if(vec) date = "u_vec";}
         else {date = "d"; if(vec) date = "d_vec";}
-
+        char mu_title[100], el_title[100];
         char mu_fname1[100],  el_fname1[100];
-        sprintf(mu_fname1, "%s/mumu_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys_label, date);
-        sprintf(el_fname1, "%s/ee_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys_label, date);
+        sprintf(mu_fname1, "%s/mumu_yLQ%.1f_%s_chk_%s.png", plot_dir, yLQ, sys_label, date);
+        sprintf(el_fname1, "%s/ee_yLQ%.1f_%s_chk_%s.png", plot_dir, yLQ, sys_label, date);
         
 
         
@@ -122,7 +122,7 @@ void LQ_sys_check(){
 
             TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
             TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
-            char mu_title[100], el_title[100];
+            //char mu_title[100], el_title[100];
 
             
             if(do_muons){

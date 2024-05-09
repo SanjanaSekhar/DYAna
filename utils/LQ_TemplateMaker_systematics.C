@@ -541,7 +541,7 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 }
 
 int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpure_d, TH3F *h_LQint_d,TH3F *h_LQpure_u_vec, TH3F *h_LQint_u_vec,TH3F *h_LQpure_d_vec, TH3F *h_LQint_d_vec,
-	int year, float m_LQ, int flag1 = FLAG_MUONS, bool make_ud = true, bool ptcut = false, bool use_xF = false, const string &sys_label = "" ){
+	int year, float m_LQ, int flag1 = FLAG_MUONS, bool make_ud = true, bool metcut = false, bool use_xF = false, const string &sys_label = "" ){
 
 	printf("Making LQ mc template for sys %s \n", sys_label.c_str());
 
@@ -565,8 +565,8 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 	tm.is_gen_level = true;
 		tm.do_ptrw = false; // turned DY pt correction off for AN comment
 
-		//tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
-		tm.btag_mc_eff_idx = 0;
+		if(metcut) tm.btag_mc_eff_idx = 1; //idx for DY MC btag effs
+		else tm.btag_mc_eff_idx = 0;
 
 		tm.setup_systematic(sys_label);
 		tm.setup();
@@ -577,20 +577,22 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 			tm.getEvent(i);
 			tm.doCorrections();
 			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets;
-			//pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
+			if(metcut) pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic && (tm.met_pt < met_cut)  && tm.has_no_bjets;
 
 			
 			if(pass){
 				
 	//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
 				//tm.doCorrections();
-				if(ptcut) pass = (tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.); 
-				else pass = true;
-				if(pass){
+				//if(ptcut) pass = (tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.); 
+				//if(metcut) pass = (tm.met_pt < met_cut)  && tm.has_no_bjets;
+				//else pass = true;
+				//if(pass){
 				tm.getEvtWeight(false);//incl_btag_SFs=false
+				if(metcut) tm.getEvtWeight(true);
 				n++;
-				if((tm.do_electrons and tm.el1_pt >= 40. and tm.el1_pt < 75.) or (tm.do_muons and tm.mu1_pt >= 40. and tm.mu1_pt < 75.)) n_pt75++;
-				if((tm.do_electrons and tm.el2_pt >= 40. and tm.el2_pt < 75.) or (tm.do_muons and tm.mu2_pt >= 40. and tm.mu2_pt < 75.)) n_pt75++;
+				//if((tm.do_electrons and tm.el1_pt >= 40. and tm.el1_pt < 75.) or (tm.do_muons and tm.mu1_pt >= 40. and tm.mu1_pt < 75.)) n_pt75++;
+				//if((tm.do_electrons and tm.el2_pt >= 40. and tm.el2_pt < 75.) or (tm.do_muons and tm.mu2_pt >= 40. and tm.mu2_pt < 75.)) n_pt75++;
 				//fix RF norm per mass point
 
 				int bin_i = find_bin(m_bins, tm.m);
@@ -715,7 +717,7 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 				}
 			}
 		}
-	}
+	//}
 	tm.finish();
 		//int mbin = find_bin(m_bins, m_low + 0.1);
 	 // tm.fixRFNorm(h_sym, mbin); //not done for LQ
@@ -849,8 +851,8 @@ int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 	TH3F h_LQint_d_vec = TH3F("h_LQint_d_vec", "LQint template of mc",
 		n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 	h_LQint_d_vec.SetDirectory(0);
-		//includes m_LQ
-			//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
+	//includes m_LQ
+	//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
 	gen_mc_SM_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
 	gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, make_ud, false, false, sys_label );
@@ -867,9 +869,9 @@ int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 
 
 
-			//h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
+	//h_dy->Add(h_pl, h_mn, (norm + afb), (norm - afb));
 	h_alpha.Scale(norm * alpha);
-			//h_dy->Add(&h_alpha);
+	//h_dy->Add(&h_alpha);
 
 	if(flag_q == 1){	
 
@@ -877,14 +879,14 @@ int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 			h_LQpure_d_vec.Scale(pow(yLQ,4));
 			h_LQint_d_vec.Scale(pow(yLQ,2));
 
-			h_dy->Add(&h_LQpure_d_vec);
+			h_dy = (TH3F*)h_LQpure_d_vec.Clone();
 			h_dy->Add(&h_LQint_d_vec);
 		}
 		else{	
 			h_LQpure_d.Scale(pow(yLQ,4));
 			h_LQint_d.Scale(pow(yLQ,2));
 
-			h_dy->Add(&h_LQpure_d);
+			h_dy = (TH3F*)h_LQpure_d.Clone();
 			h_dy->Add(&h_LQint_d);
 		}
 	}
@@ -895,14 +897,14 @@ int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 			h_LQpure_u_vec.Scale(pow(yLQ,4));
 			h_LQint_u_vec.Scale(pow(yLQ,2));
 
-			h_dy->Add(&h_LQpure_u_vec);
+			h_dy = (TH3F*)h_LQpure_u_vec.Clone();
 			h_dy->Add(&h_LQint_u_vec);
 		}
 		else{
 			h_LQpure_u.Scale(pow(yLQ,4));
 			h_LQint_u.Scale(pow(yLQ,2));
 
-			h_dy->Add(&h_LQpure_u);
+			h_dy = (TH3F*)h_LQpure_u.Clone();
 			h_dy->Add(&h_LQint_u);
 		}
 
