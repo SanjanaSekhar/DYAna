@@ -88,69 +88,74 @@ void LQ_sys_check(){
 
             for(int i = 0; i< num_sys; i++){
 
-             const char *sys = sys_array[i].c_str();
-             string sys_up = string(sys) + string("Up");
-             string sys_down = string(sys) + string("Down");
-
-             
-
-            TH3F * h_elel_bkg = new TH3F("elel_bkg", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_bkg_up = new TH3F("elel_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_bkg_down = new TH3F("elel_bkg_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_plain = new TH3F("elel_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_sys_up = new TH3F("elel_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_sys_down = new TH3F("elel_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_qcd = new TH3F("elel_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_qcd_up = new TH3F("elel_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_elel_qcd_down = new TH3F("elel_qcd_down", "",n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-
-            TH3F * h_mumu_bkg = new TH3F("mumu_bkg", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_bkg_up = new TH3F("mumu_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_bkg_down = new TH3F("mumu_bkg_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_plain = new TH3F("mumu_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_sys_up = new TH3F("mumu_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_sys_down = new TH3F("mumu_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_qcd = new TH3F("mumu_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_qcd_up = new TH3F("mumu_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            TH3F * h_mumu_qcd_down = new TH3F("mumu_qcd_down", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-
-
-            bool ss = false;
+               const char *sys = sys_array[i].c_str();
+               string sys_up = string(sys) + string("Up");
+               string sys_down = string(sys) + string("Down");
 
 
 
+               TH3F * h_elel_bkg = new TH3F("elel_bkg", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_bkg_up = new TH3F("elel_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_bkg_down = new TH3F("elel_bkg_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_plain = new TH3F("elel_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_sys_up = new TH3F("elel_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_sys_down = new TH3F("elel_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_qcd = new TH3F("elel_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_qcd_up = new TH3F("elel_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_elel_qcd_down = new TH3F("elel_qcd_down", "",n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
 
-            TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
-            TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
+               TH3F * h_mumu_bkg = new TH3F("mumu_bkg", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_bkg_up = new TH3F("mumu_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_bkg_down = new TH3F("mumu_bkg_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_plain = new TH3F("mumu_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_sys_up = new TH3F("mumu_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_sys_down = new TH3F("mumu_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_qcd = new TH3F("mumu_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_qcd_up = new TH3F("mumu_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+               TH3F * h_mumu_qcd_down = new TH3F("mumu_qcd_down", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+
+
+               bool ss = false;
+
+
+
+
+               TTree *elel_ts[3] = {t_elel_ttbar, t_elel_wt, t_elel_diboson};
+               TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
             //char mu_title[100], el_title[100];
 
-            
-            if(do_muons){
+
+               if(do_muons){
                 printf("Making mumu temps \n");
                 one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS,make_ud,  use_xf, "");
                 one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_up);
                 one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_down);
                 
                 //if(i==0 and year==2016){
-                    TH1F* h1_mumu_plain = convert3d(h_mumu_plain);
-                    TH1F* h1_mumu_sys_up = convert3d(h_mumu_sys_up);
-                    TH1F* h1_mumu_sys_down = convert3d(h_mumu_sys_down);
+                TH1F* h1_mumu_plain = convert3d(h_mumu_plain);
+                TH1F* h1_mumu_sys_up = convert3d(h_mumu_sys_up);
+                TH1F* h1_mumu_sys_down = convert3d(h_mumu_sys_down);
 
-                    h1_mumu_plain->SetLineColor(kBlack);
-                    h1_mumu_plain->SetLineWidth(2);
+                h1_mumu_plain->SetLineColor(kBlack);
+                h1_mumu_plain->SetLineWidth(2);
 
 
-                    h1_mumu_sys_up->SetLineColor(kBlue);
-                    h1_mumu_sys_up->SetLineWidth(2);
-                    h1_mumu_sys_down->SetLineColor(kGreen+3);
-                    h1_mumu_sys_down->SetLineWidth(2);
+                h1_mumu_sys_up->SetLineColor(kBlue);
+                h1_mumu_sys_up->SetLineWidth(2);
+                h1_mumu_sys_down->SetLineColor(kGreen+3);
+                h1_mumu_sys_down->SetLineWidth(2);
                 
-               
-                    h1_mumu_plain_comb->Add(convert3d(h_mumu_plain));
-                    h1_mumu_sys_up_comb->Add(convert3d(h_mumu_sys_up));
-                    h1_mumu_sys_down_comb->Add(convert3d(h_mumu_sys_down));
+                if(i==0 and year==2016){
+                 h1_mumu_plain_comb = (TH1F*)h1_mumu_plain->Clone();
+                 h1_mumu_sys_up_comb = (TH1F*)h1_mumu_sys_up->Clone();
+                 h1_mumu_sys_down_comb = (TH1F*)h1_mumu_sys_down->Clone(); 
+                } else {
+
+                h1_mumu_plain_comb->Add(h1_mumu_plain);
+                h1_mumu_sys_up_comb->Add(h1_mumu_sys_up);
+                h1_mumu_sys_down_comb->Add(h1_mumu_sys_down);
                 
-                
+                }
 
                 
 
@@ -219,250 +224,250 @@ void LQ_sys_check(){
                 one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_down);
 
                 //if(i==0 and year==2016){
-                    TH1F *h1_elel_plain = convert3d(h_elel_plain);
-                    TH1F *h1_elel_sys_up = convert3d(h_elel_sys_up);
-                    TH1F *h1_elel_sys_down = convert3d(h_elel_sys_down);
-		    printf("i=0, y=2016, elel: nom %f, up %f, down %f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
-                    h1_elel_plain->SetLineColor(kBlack);
-                    h1_elel_plain->SetLineWidth(2);
+                TH1F *h1_elel_plain = convert3d(h_elel_plain);
+                TH1F *h1_elel_sys_up = convert3d(h_elel_sys_up);
+                TH1F *h1_elel_sys_down = convert3d(h_elel_sys_down);
+                printf("i=0, y=2016, elel: nom %f, up %f, down %f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
+                h1_elel_plain->SetLineColor(kBlack);
+                h1_elel_plain->SetLineWidth(2);
 
 
-                    h1_elel_sys_up->SetLineColor(kBlue);
-                    h1_elel_sys_up->SetLineWidth(2);
-                    h1_elel_sys_down->SetLineColor(kGreen+3);
-                    h1_elel_sys_down->SetLineWidth(2);
+                h1_elel_sys_up->SetLineColor(kBlue);
+                h1_elel_sys_up->SetLineWidth(2);
+                h1_elel_sys_down->SetLineColor(kGreen+3);
+                h1_elel_sys_down->SetLineWidth(2);
                 
-                    if(i==0 and year==2016){
-			h1_elel_plain_comb = (TH1F*)h1_elel_plain->Clone();
-			h1_elel_sys_up_comb = (TH1F*)h1_elel_sys_up->Clone();
-			h1_elel_sys_down_comb = (TH1F*)h1_elel_sys_down->Clone(); 
-		    } else {
-                    h1_elel_plain_comb->Add(convert3d(h_elel_plain));
-                    h1_elel_sys_up_comb->Add(convert3d(h_elel_sys_up));
-                    h1_elel_sys_down_comb->Add(convert3d(h_elel_sys_down));
-                    }
+                if(i==0 and year==2016){
+                 h1_elel_plain_comb = (TH1F*)h1_elel_plain->Clone();
+                 h1_elel_sys_up_comb = (TH1F*)h1_elel_sys_up->Clone();
+                 h1_elel_sys_down_comb = (TH1F*)h1_elel_sys_down->Clone(); 
+             } else {
+                h1_elel_plain_comb->Add(h1_elel_plain);
+                h1_elel_sys_up_comb->Add(h1_elel_sys_up);
+                h1_elel_sys_down_comb->Add(h1_elel_sys_down);
+            }
 
-                printf("elel comb: nom %f, up %f, down %f \n", h1_elel_plain_comb->Integral(), h1_elel_sys_up_comb->Integral(), h1_elel_sys_down_comb->Integral());
+            printf("elel comb: nom %f, up %f, down %f \n", h1_elel_plain_comb->Integral(), h1_elel_sys_up_comb->Integral(), h1_elel_sys_down_comb->Integral());
 
-                if(do_bkg){
-                    bool emu_reweight = false;
-                    gen_combined_background_template(3, elel_ts, h_elel_bkg, year, FLAG_ELECTRONS,  ss, use_xf,  emu_reweight,"");
-                    gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, FLAG_ELECTRONS,  ss, use_xf, emu_reweight, sys_up);
-                    gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, FLAG_ELECTRONS,  ss, use_xf,emu_reweight, sys_down);
+            if(do_bkg){
+                bool emu_reweight = false;
+                gen_combined_background_template(3, elel_ts, h_elel_bkg, year, FLAG_ELECTRONS,  ss, use_xf,  emu_reweight,"");
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_up, year, FLAG_ELECTRONS,  ss, use_xf, emu_reweight, sys_up);
+                gen_combined_background_template(3, elel_ts, h_elel_bkg_down, year, FLAG_ELECTRONS,  ss, use_xf,emu_reweight, sys_down);
 
-                    symmetrize3d(h_elel_bkg);
-                    symmetrize3d(h_elel_bkg_up);
-                    symmetrize3d(h_elel_bkg_down);
-                    h1_elel_bkg = convert3d(h_elel_bkg);
-                    h1_elel_bkg_up = convert3d(h_elel_bkg_up);
-                    h1_elel_bkg_down = convert3d(h_elel_bkg_down);
+                symmetrize3d(h_elel_bkg);
+                symmetrize3d(h_elel_bkg_up);
+                symmetrize3d(h_elel_bkg_down);
+                h1_elel_bkg = convert3d(h_elel_bkg);
+                h1_elel_bkg_up = convert3d(h_elel_bkg_up);
+                h1_elel_bkg_down = convert3d(h_elel_bkg_down);
 
-                    h1_elel_bkg->SetLineColor(kRed);
-                    h1_elel_bkg->SetLineWidth(2);
-                    h1_elel_bkg_up->SetLineColor(kMagenta);
-                    h1_elel_bkg_up->SetLineWidth(2);
-                    h1_elel_bkg_down->SetLineColor(kRed-7);
-                    h1_elel_bkg_down->SetLineWidth(2);
-                    printf("elel Bkg: nom %.0f, up %.0f, down %.0f \n", h_elel_bkg->Integral(), h_elel_bkg_up->Integral(), h_elel_bkg_down->Integral());
-                }
-                if(do_qcd){
-                    bool incl_ss = true;
-                    bool ss_binning = false;
-                    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, 
-                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
-                    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_up, year, 
-                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_up);
-                    gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_down, year, 
-                        FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_down);
+                h1_elel_bkg->SetLineColor(kRed);
+                h1_elel_bkg->SetLineWidth(2);
+                h1_elel_bkg_up->SetLineColor(kMagenta);
+                h1_elel_bkg_up->SetLineWidth(2);
+                h1_elel_bkg_down->SetLineColor(kRed-7);
+                h1_elel_bkg_down->SetLineWidth(2);
+                printf("elel Bkg: nom %.0f, up %.0f, down %.0f \n", h_elel_bkg->Integral(), h_elel_bkg_up->Integral(), h_elel_bkg_down->Integral());
+            }
+            if(do_qcd){
+                bool incl_ss = true;
+                bool ss_binning = false;
+                gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd, year, 
+                    FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, "");
+                gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_up, year, 
+                    FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_up);
+                gen_fakes_template(t_elel_WJets, t_elel_QCD, t_elel_WJets_contam, t_elel_QCD_contam, h_elel_qcd_down, year, 
+                    FLAG_ELECTRONS, incl_ss, ss_binning, use_xF, sys_down);
 
-                    symmetrize3d(h_elel_qcd);
-                    symmetrize3d(h_elel_qcd_up);
-                    symmetrize3d(h_elel_qcd_down);
+                symmetrize3d(h_elel_qcd);
+                symmetrize3d(h_elel_qcd_up);
+                symmetrize3d(h_elel_qcd_down);
 
 
-                    h1_elel_qcd = convert3d(h_elel_qcd);
-                    h1_elel_qcd_up = convert3d(h_elel_qcd_up);
-                    h1_elel_qcd_down = convert3d(h_elel_qcd_down);
+                h1_elel_qcd = convert3d(h_elel_qcd);
+                h1_elel_qcd_up = convert3d(h_elel_qcd_up);
+                h1_elel_qcd_down = convert3d(h_elel_qcd_down);
 
-                    h1_elel_qcd->SetLineColor(kGray);
-                    h1_elel_qcd->SetLineWidth(2);
-                    h1_elel_qcd_up->SetLineColor(kOrange + 3);
-                    h1_elel_qcd_up->SetLineWidth(2);
-                    h1_elel_qcd_down->SetLineColor(kOrange +1);
-                    h1_elel_qcd_down->SetLineWidth(2);
-                    printf("elel fakes: nom %.0f, up %.0f, down %.0f \n", h_elel_qcd->Integral(), h_elel_qcd_up->Integral(), h_elel_qcd_down->Integral());
-                }
-
+                h1_elel_qcd->SetLineColor(kGray);
+                h1_elel_qcd->SetLineWidth(2);
+                h1_elel_qcd_up->SetLineColor(kOrange + 3);
+                h1_elel_qcd_up->SetLineWidth(2);
+                h1_elel_qcd_down->SetLineColor(kOrange +1);
+                h1_elel_qcd_down->SetLineWidth(2);
+                printf("elel fakes: nom %.0f, up %.0f, down %.0f \n", h_elel_qcd->Integral(), h_elel_qcd_up->Integral(), h_elel_qcd_down->Integral());
             }
 
         }
 
-
-    }/*           
-    if(do_muons){
-
-        if(flag_q == 2) {
-            sprintf(mu_title, "%s, #m_{LQ} = %.1f TeV, #y_{#mu u} = %.1f, Channel: #mu-u 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
-            if(vec) sprintf(mu_title, "%s, #m_{LQ} = %.1f TeV, #g_{#mu u} = %.1f, Channel: #mu-u-vec 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
-        }
-        else {
-            sprintf(mu_title, "%s, #m_{LQ} = %.1f TeV, #y_{#mu d} = %.1f, Channel: #mu-d : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
-            if(vec) sprintf(mu_title, "%s, #m_{LQ} = %.1f TeV, #g_{#mu d} = %.1f, Channel: #mu-d-vec : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
-        }
-        TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
-        TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
-        pad1->SetBottomMargin(0);
-        pad1->Draw();
-        pad1->cd();
-        h1_mumu_sys_up->SetMaximum(h1_mumu_sys_up->GetMaximum()*1.5);
-        h1_mumu_sys_up->SetTitle(mu_title);
-        h1_mumu_sys_up->Draw("hist");
-        h1_mumu_plain->Draw("hist same");
-        h1_mumu_sys_down->Draw("hist same");
-
-        gStyle->SetLegendBorderSize(0);
-        TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
-        leg1->AddEntry(h1_mumu_plain, "Nominal LQ Signal template", "l");
-        leg1->AddEntry(h1_mumu_sys_up, "Sys Up Template", "l");
-        leg1->AddEntry(h1_mumu_sys_down, "Sys Down Template", "l");
-
-        c_mumu1->cd();
-        TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
-            //pad2->SetTopMargin(0);
-        pad2->SetBottomMargin(0.2);
-        pad2->SetGridy();
-        pad2->Draw();
-        pad2->cd();
-        TH1F *ratio_up, *ratio_down;
-
-        ratio_up = (TH1F *) h1_mumu_sys_up->Clone("h_ratio_up");
-        ratio_up->Sumw2();
-        ratio_up->SetStats(0);
-        ratio_up->Divide(h1_mumu_plain);
-
-        ratio_down = (TH1F *) h1_mumu_sys_down->Clone("h_ratio_down");
-        ratio_down->Sumw2();
-        ratio_down->SetStats(0);
-        ratio_down->Divide(h1_mumu_plain);
-
-            //ratio_up->SetMarkerStyle(21);
-        ratio_down->SetMinimum(0.8);
-        ratio_down->SetMaximum(1.2);
-        ratio_down->SetTitle("");
-        ratio_down->SetLineColor(kGreen+3);
-        ratio_down->Draw("hist");
-           // ratio_down->SetMarkerStyle(21);
-        ratio_up->SetLineColor(kBlue);
-        ratio_up->Draw("hist same");
-
-        c_mumu1->cd();
-
-        if(do_bkg){
-            h1_mumu_bkg->Draw("hist same");
-            h1_mumu_bkg_up->Draw("hist same");
-            h1_mumu_bkg_down->Draw("hist same");
-        }
-        if(do_qcd){
-            h1_mumu_qcd->Draw("hist same");
-            h1_mumu_qcd_up->Draw("hist same");
-            h1_mumu_qcd_down->Draw("hist same");
-        }
-
-        if(do_bkg){
-            leg1->AddEntry(h1_mumu_bkg, "Nominal Bkg Template", "l");
-            leg1->AddEntry(h1_mumu_bkg_up, "Sys Up Bkg Template", "l");
-            leg1->AddEntry(h1_mumu_bkg_down, "Sys Down Bkg Template", "l");
-        }
-        if(do_qcd){
-            leg1->AddEntry(h1_mumu_qcd, "Nominal qcd Template", "l");
-            leg1->AddEntry(h1_mumu_qcd_up, "Sys Up qcd Template", "l");
-            leg1->AddEntry(h1_mumu_qcd_down, "Sys Down qcd Template", "l");
-        }
-        leg1->Draw();
-
-        c_mumu1->Print(mu_fname1);
     }
 
-    if(do_electrons){
-        if(flag_q == 2) {
-            sprintf(el_title, "%s, #m_{LQ} = %.1f TeV, #y_{eu} = %.1f, Channel: e-u 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
-            if(vec) sprintf(el_title, "%s, #m_{LQ} = %.1f TeV, #g_{eu} = %.1f, Channel: e-u-vec 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
-        }
-        else {
-            sprintf(el_title, "%s, #m_{LQ} = %.1f TeV, #y_{ed} = %.1f, Channel: e-d : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
-            if(vec) sprintf(el_title, "%s, #m_{LQ} = %.1f TeV, #g_{ed} = %.1f, Channel: e-d-vec : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
-        }
-        TCanvas *c_elel1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
-        TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
-        pad1->SetBottomMargin(0);
-        pad1->Draw();
-        pad1->cd();
-        h1_elel_sys_up->SetMaximum(h1_elel_sys_up->GetMaximum()*1.5);
-        h1_elel_sys_up->SetTitle(el_title);
-        h1_elel_sys_up->Draw("hist");
-        h1_elel_plain->Draw("hist same");
-        h1_elel_sys_down->Draw("hist same");
 
-        gStyle->SetLegendBorderSize(0);
-        TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
-        leg1->AddEntry(h1_elel_plain, "Nominal LQ Signal template", "l");
-        leg1->AddEntry(h1_elel_sys_up, "Sys Up Template", "l");
-        leg1->AddEntry(h1_elel_sys_down, "Sys Down Template", "l");
+}          
+if(do_muons){
 
-        c_elel1->cd();
-        TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
-        pad2->SetBottomMargin(0.2);
-        pad2->SetGridy();
-        pad2->Draw();
-        pad2->cd();
-        TH1F *ratio_up, *ratio_down;
+    if(flag_q == 2) {
+        sprintf(mu_title, "%s, m_{LQ} = %.1f TeV, y_{#mu u} = %.1f, Channel: #mu-u 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
+        if(vec) sprintf(mu_title, "%s, m_{LQ} = %.1f TeV, g_{#mu u} = %.1f, Channel: #mu-u-vec 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
+    }
+    else {
+        sprintf(mu_title, "%s, m_{LQ} = %.1f TeV, y_{#mu d} = %.1f, Channel: #mu-d : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
+        if(vec) sprintf(mu_title, "%s, m_{LQ} = %.1f TeV, g_{#mu d} = %.1f, Channel: #mu-d-vec : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
+    }
+    TCanvas *c_mumu1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
+    TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
+    pad1->SetBottomMargin(0);
+    pad1->Draw();
+    pad1->cd();
+    h1_mumu_sys_up_comb->SetMaximum(h1_mumu_sys_up_comb->GetMaximum()*1.5);
+    h1_mumu_sys_up_comb->SetTitle(mu_title);
+    h1_mumu_sys_up_comb->Draw("hist");
+    h1_mumu_plain_comb->Draw("hist same");
+    h1_mumu_sys_down_comb->Draw("hist same");
 
-        ratio_up = (TH1F *) h1_elel_sys_up->Clone("h_ratio_up");
-        ratio_up->Sumw2();
-        ratio_up->SetStats(0);
-        ratio_up->Divide(h1_elel_plain);
+    gStyle->SetLegendBorderSize(0);
+    TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
+    leg1->AddEntry(h1_mumu_plain_comb, "Nominal LQ Signal template", "l");
+    leg1->AddEntry(h1_mumu_sys_up_comb, "Sys Up Template", "l");
+    leg1->AddEntry(h1_mumu_sys_down_comb, "Sys Down Template", "l");
 
-        ratio_down = (TH1F *) h1_elel_sys_down->Clone("h_ratio_down");
-        ratio_down->Sumw2();
-        ratio_down->SetStats(0);
-        ratio_down->Divide(h1_elel_plain);
-        ratio_down->SetMinimum(0.8);
-        ratio_down->SetMaximum(1.2);
-        ratio_down->SetTitle("");
-        ratio_down->SetLineColor(kGreen+3);
-        ratio_down->Draw("hist");
+    c_mumu1->cd();
+    TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
+            //pad2->SetTopMargin(0);
+    pad2->SetBottomMargin(0.2);
+    pad2->SetGridy();
+    pad2->Draw();
+    pad2->cd();
+    TH1F *ratio_up, *ratio_down;
+
+    ratio_up = (TH1F *) h1_mumu_sys_up_comb->Clone("h_ratio_up");
+    ratio_up->Sumw2();
+    ratio_up->SetStats(0);
+    ratio_up->Divide(h1_mumu_plain_comb);
+
+    ratio_down = (TH1F *) h1_mumu_sys_down_comb->Clone("h_ratio_down");
+    ratio_down->Sumw2();
+    ratio_down->SetStats(0);
+    ratio_down->Divide(h1_mumu_plain_comb);
+
+            //ratio_up->SetMarkerStyle(21);
+    ratio_down->SetMinimum(0.8);
+    ratio_down->SetMaximum(1.2);
+    ratio_down->SetTitle("");
+    ratio_down->SetLineColor(kGreen+3);
+    ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
-        ratio_up->SetLineColor(kBlue);
-        ratio_up->Draw("hist same");
+    ratio_up->SetLineColor(kBlue);
+    ratio_up->Draw("hist same");
 
-        c_elel1->cd(); 
+    c_mumu1->cd();
+
+    if(do_bkg){
+        h1_mumu_bkg->Draw("hist same");
+        h1_mumu_bkg_up->Draw("hist same");
+        h1_mumu_bkg_down->Draw("hist same");
+    }
+    if(do_qcd){
+        h1_mumu_qcd->Draw("hist same");
+        h1_mumu_qcd_up->Draw("hist same");
+        h1_mumu_qcd_down->Draw("hist same");
+    }
+
+    if(do_bkg){
+        leg1->AddEntry(h1_mumu_bkg, "Nominal Bkg Template", "l");
+        leg1->AddEntry(h1_mumu_bkg_up, "Sys Up Bkg Template", "l");
+        leg1->AddEntry(h1_mumu_bkg_down, "Sys Down Bkg Template", "l");
+    }
+    if(do_qcd){
+        leg1->AddEntry(h1_mumu_qcd, "Nominal qcd Template", "l");
+        leg1->AddEntry(h1_mumu_qcd_up, "Sys Up qcd Template", "l");
+        leg1->AddEntry(h1_mumu_qcd_down, "Sys Down qcd Template", "l");
+    }
+    leg1->Draw();
+
+    c_mumu1->Print(mu_fname1);
+}
+
+if(do_electrons){
+    if(flag_q == 2) {
+        sprintf(el_title, "%s, m_{LQ} = %.1f TeV, y_{eu} = %.1f, Channel: e-u 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
+        if(vec) sprintf(el_title, "%s, m_{LQ} = %.1f TeV, g_{eu} = %.1f, Channel: e-u-vec 2016,2017,2018", plot_title, m_LQ/1000, yLQ);
+    }
+    else {
+        sprintf(el_title, "%s, m_{LQ} = %.1f TeV, y_{ed} = %.1f, Channel: e-d : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
+        if(vec) sprintf(el_title, "%s, m_{LQ} = %.1f TeV, g_{ed} = %.1f, Channel: e-d-vec : 2016,2017,2018 ", plot_title, m_LQ/1000, yLQ);
+    }
+    TCanvas *c_elel1 = new TCanvas("c_mumu", "Muons", 200, 10, 900, 700);
+    TPad *pad1 = new TPad("p1", "pad1", 0.,0.3,0.98,1.);
+    pad1->SetBottomMargin(0);
+    pad1->Draw();
+    pad1->cd();
+    h1_elel_sys_up_comb->SetMaximum(h1_elel_sys_up_comb->GetMaximum()*1.5);
+    h1_elel_sys_up_comb->SetTitle(el_title);
+    h1_elel_sys_up_comb->Draw("hist");
+    h1_elel_plain_comb->Draw("hist same");
+    h1_elel_sys_down_comb->Draw("hist same");
+
+    gStyle->SetLegendBorderSize(0);
+    TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
+    leg1->AddEntry(h1_elel_plain_comb, "Nominal LQ Signal template", "l");
+    leg1->AddEntry(h1_elel_sys_up_comb, "Sys Up Template", "l");
+    leg1->AddEntry(h1_elel_sys_down_comb, "Sys Down Template", "l");
+
+    c_elel1->cd();
+    TPad *pad2 = new TPad("p2", "pad2", 0.,0,.98,0.3);
+    pad2->SetBottomMargin(0.2);
+    pad2->SetGridy();
+    pad2->Draw();
+    pad2->cd();
+    TH1F *ratio_up, *ratio_down;
+
+    ratio_up = (TH1F *) h1_elel_sys_up_comb->Clone("h_ratio_up");
+    ratio_up->Sumw2();
+    ratio_up->SetStats(0);
+    ratio_up->Divide(h1_elel_plain_comb);
+
+    ratio_down = (TH1F *) h1_elel_sys_down_comb->Clone("h_ratio_down");
+    ratio_down->Sumw2();
+    ratio_down->SetStats(0);
+    ratio_down->Divide(h1_elel_plain_comb);
+    ratio_down->SetMinimum(0.8);
+    ratio_down->SetMaximum(1.2);
+    ratio_down->SetTitle("");
+    ratio_down->SetLineColor(kGreen+3);
+    ratio_down->Draw("hist");
+           // ratio_down->SetMarkerStyle(21);
+    ratio_up->SetLineColor(kBlue);
+    ratio_up->Draw("hist same");
+
+    c_elel1->cd(); 
 
 
-        if(do_bkg){
-            h1_elel_bkg->Draw("hist same");
-            h1_elel_bkg_up->Draw("hist same");
-            h1_elel_bkg_down->Draw("hist same");
-        }
-        if(do_qcd){
-            h1_elel_qcd->Draw("hist same");
-            h1_elel_qcd_up->Draw("hist same");
-            h1_elel_qcd_down->Draw("hist same");
-        }
+    if(do_bkg){
+        h1_elel_bkg->Draw("hist same");
+        h1_elel_bkg_up->Draw("hist same");
+        h1_elel_bkg_down->Draw("hist same");
+    }
+    if(do_qcd){
+        h1_elel_qcd->Draw("hist same");
+        h1_elel_qcd_up->Draw("hist same");
+        h1_elel_qcd_down->Draw("hist same");
+    }
 
-        if(do_bkg){
-            leg1->AddEntry(h1_elel_bkg, "Nominal Bkg Template", "l");
-            leg1->AddEntry(h1_elel_bkg_up, "Sys Up Bkg Template", "l");
-            leg1->AddEntry(h1_elel_bkg_down, "Sys Down Bkg Template", "l");
-        }
-        if(do_qcd){
-            leg1->AddEntry(h1_elel_qcd, "Nominal qcd Template", "l");
-            leg1->AddEntry(h1_elel_qcd_up, "Sys Up qcd Template", "l");
-            leg1->AddEntry(h1_elel_qcd_down, "Sys Down qcd Template", "l");
-        }
-        leg1->Draw();
+    if(do_bkg){
+        leg1->AddEntry(h1_elel_bkg, "Nominal Bkg Template", "l");
+        leg1->AddEntry(h1_elel_bkg_up, "Sys Up Bkg Template", "l");
+        leg1->AddEntry(h1_elel_bkg_down, "Sys Down Bkg Template", "l");
+    }
+    if(do_qcd){
+        leg1->AddEntry(h1_elel_qcd, "Nominal qcd Template", "l");
+        leg1->AddEntry(h1_elel_qcd_up, "Sys Up qcd Template", "l");
+        leg1->AddEntry(h1_elel_qcd_down, "Sys Down qcd Template", "l");
+    }
+    leg1->Draw();
 
-        c_elel1->Print(el_fname1);
-    }*/
+    c_elel1->Print(el_fname1);
+}
 
 }
 
