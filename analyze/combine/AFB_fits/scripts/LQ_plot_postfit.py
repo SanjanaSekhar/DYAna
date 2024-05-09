@@ -223,7 +223,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						h.SetMinimum(0.)
 
 				
-				mLS = 0.03
+				mLS = 0.05
 				mTS = 0.05
 				TOffset = 1.
 				if(mbin > 5):
@@ -347,7 +347,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
-				legends[hist_index].SetTextSize(0.03)
+				legends[hist_index].SetTextSize(0.05)
 				
 				for entry in legends_list[hist_index][::-1]:
 					legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
