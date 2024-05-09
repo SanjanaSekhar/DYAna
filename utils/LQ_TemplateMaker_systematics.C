@@ -879,14 +879,16 @@ void one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 			h_LQpure_d_vec.Scale(pow(yLQ,4));
 			h_LQint_d_vec.Scale(pow(yLQ,2));
 
-			h_dy = (TH3F*)h_LQpure_d_vec.Clone();
+			//h_dy = (TH3F*)h_LQpure_d_vec.Clone();
+			h_dy->Add(&h_LQpure_d_vec);
 			h_dy->Add(&h_LQint_d_vec);
 		}
 		else{	
 			h_LQpure_d.Scale(pow(yLQ,4));
 			h_LQint_d.Scale(pow(yLQ,2));
 
-			h_dy = (TH3F*)h_LQpure_d.Clone();
+			//h_dy = (TH3F*)h_LQpure_d.Clone();
+			h_dy->Add(&h_LQpure_d);
 			h_dy->Add(&h_LQint_d);
 		}
 	}
@@ -897,14 +899,16 @@ void one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 			h_LQpure_u_vec.Scale(pow(yLQ,4));
 			h_LQint_u_vec.Scale(pow(yLQ,2));
 
-			h_dy = (TH3F*)h_LQpure_u_vec.Clone();
+			//h_dy = (TH3F*)h_LQpure_u_vec.Clone();
+			h_dy->Add(&h_LQpure_u_vec);
 			h_dy->Add(&h_LQint_u_vec);
 		}
 		else{
 			h_LQpure_u.Scale(pow(yLQ,4));
 			h_LQint_u.Scale(pow(yLQ,2));
-
-			h_dy = (TH3F*)h_LQpure_u.Clone();
+			
+			h_dy->Add(&h_LQpure_u);
+			//h_dy = (TH3F*)h_LQpure_u.Clone();
 			h_dy->Add(&h_LQint_u);
 		}
 
