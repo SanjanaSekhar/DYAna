@@ -37,8 +37,9 @@ void LQ_sys_check(){
     const int num_sys = 4;
     //string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_muRC"};
     string sys_array[num_sys] = {"_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear"};
-    const char *sys_label = ("momentum_scale").c_str();
-    const char *plot_title = ("Electron Momentum Scale").c_str();
+    string sys_l = "momentum_scale", plot_t = "Electron Momentum Scale";
+    const char *sys_label = sys_l.c_str();
+    const char *plot_title = plot_t.c_str();
     char *plot_dir = "AN_plots/Systematics/UpDown";
     float m_LQ = 2500.;
     Double_t alpha_denom = (amc_alpha[5]+amc_alpha[6]+amc_alpha[7])/3.;
@@ -62,6 +63,7 @@ void LQ_sys_check(){
         bool do_muons = false;
         bool vec = false;
         bool make_ud = true;
+        float yLQ = 1.0;
         char *date;
         if(flag_q==2) {date = "u"; if(vec) date = "u_vec";}
         else {date = "d"; if(vec) date = "d_vec";}
@@ -71,11 +73,13 @@ void LQ_sys_check(){
         sprintf(el_fname1, "%s/ee_yLQ%.1f_%s_chk_%s.png", plot_dir, year, yLQ, sys_label, date);
         
 
-        float yLQ = 1.0;
+        
 
         
         TH1F *h1_elel_plain, TH1F *h1_elel_sys_up, TH1F *h1_elel_sys_down;
         TH1F *h1_mumu_plain, TH1F *h1_mumu_sys_up, TH1F *h1_mumu_sys_down;
+        TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
+        TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         
         for(int year = 2016; year <= 2018; year++){
 
@@ -120,8 +124,7 @@ void LQ_sys_check(){
             TTree *mumu_ts[3] = {t_mumu_ttbar, t_mumu_wt, t_mumu_diboson};
             char mu_title[100], el_title[100];
 
-            TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
-            TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
+            
             if(do_muons){
                 printf("Making mumu temps \n");
                 one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_plain, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS,make_ud,  use_xf, "");
