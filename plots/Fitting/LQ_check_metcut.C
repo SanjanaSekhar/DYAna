@@ -13,11 +13,11 @@ void LQ_check_metcut(){
         bool use_xF =false;
         //bool use_LQ_denom=true;
         bool draw_muons = true;
-        bool draw_electrons = true;
+        bool draw_electrons = false;
         const string sys_label = "";
         
         //char *plot_dir = "Paper_plots/template_plots";
-        char *plot_dir = "AN_plots/LQ_templates/pTcut";
+        char *plot_dir = "AN_plots/LQ_templates/METcut";
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.1;
@@ -131,10 +131,10 @@ void LQ_check_metcut(){
 
             bool make_ud = true;
 
-           bool ptcut = false;
+           bool metcut = false;
 
             //gen_mc_SM_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
-            gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, ptcut, use_xF, sys_label );
+            gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, metcut, use_xF, sys_label );
 
             
            auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
@@ -155,11 +155,11 @@ void LQ_check_metcut(){
            h_mumu_LQpure_d_vec->Reset();
            h_mumu_LQint_d_vec->Reset();
 
-           ptcut = true;
-           //metcut = true;
+           //ptcut = true;
+           metcut = true;
 
             //gen_mc_SM_template(t_mumu_mc,  h_mumu_sym, h_mumu_asym, h_mumu_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
-            gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, ptcut, use_xF, sys_label );
+            gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, metcut, use_xF, sys_label );
 
             
            auto h1_mumu_LQpure_u_metcut = convert3d(h_mumu_LQpure_u);
@@ -211,10 +211,18 @@ void LQ_check_metcut(){
             h1_mumu_LQpure_d_vec_metcut->SetLineWidth(2);
             h1_mumu_LQint_d_vec_metcut->SetLineWidth(2);
 
-         
-            
+            float acc = (h1_mumu_LQpure_u->GetEntries()-h1_mumu_LQpure_u_metcut->GetEntries())/h1_mumu_LQpure_u->GetEntries();
+	    printf("Decrease in acceptance after removing met and anti-bjet cut for mu-u channel = %f\n",acc);
+	    printf("h1_mumu_LQpure_u->GetEntries() = %f, h1_mumu_LQpure_u_metcut->GetEntries() = %f", h1_mumu_LQpure_u->GetEntries(),h1_mumu_LQpure_u_metcut->GetEntries()); 
+ 	    acc = (h1_mumu_LQpure_d->GetEntries()-h1_mumu_LQpure_d_metcut->GetEntries())/h1_mumu_LQpure_d->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for mu-d channel = %f\n",acc);          
+	
+	    acc = (h1_mumu_LQpure_u_vec->GetEntries()-h1_mumu_LQpure_u_vec_metcut->GetEntries())/h1_mumu_LQpure_u_vec->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for mu-u-vec channel = %f\n",acc);
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}",m_LQ/1000,year);
+	    acc = (h1_mumu_LQpure_d_vec->GetEntries()-h1_mumu_LQpure_d_vec_metcut->GetEntries())/h1_mumu_LQpure_d_vec->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for mu-d-vec channel = %f\n",acc);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu1 = new TCanvas("c_mumu", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_u->SetTitle(mu_title); 
                h1_mumu_LQpure_u->Draw("hist");
@@ -225,8 +233,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-                leg1->AddEntry(h1_mumu_LQpure_u, "Pure LQ Template", "l");
-                leg1->AddEntry(h1_mumu_LQpure_u_metcut, "Pure LQ Template (mu_pt > 40 GeV)", "l");
+                leg1->AddEntry(h1_mumu_LQpure_u, "#LQ_{pure}", "l");
+                leg1->AddEntry(h1_mumu_LQpure_u_metcut, "#LQ_{pure}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -234,7 +242,7 @@ void LQ_check_metcut(){
                 c_mumu1->Print(mu_fname1);
                 delete c_mumu1;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu u}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu2 = new TCanvas("c_mumu2", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_u->SetTitle(mu_title); 
                h1_mumu_LQint_u->Draw("hist");
@@ -245,8 +253,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-                leg2->AddEntry(h1_mumu_LQint_u, "Intereference LQ Template", "l");
-                leg2->AddEntry(h1_mumu_LQint_u_metcut, "Intereference LQ Template (mu_pt > 40 GeV)", "l");
+                leg2->AddEntry(h1_mumu_LQint_u, "#LQ_{int}", "l");
+                leg2->AddEntry(h1_mumu_LQint_u_metcut, "#LQ_{int}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -255,85 +263,85 @@ void LQ_check_metcut(){
                 delete c_mumu2;
                 
                 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu3 = new TCanvas("c_mumu3", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_d->SetTitle(mu_title);
                 h1_mumu_LQpure_d->Draw("hist");
                 h1_mumu_LQpure_d_metcut->Draw("hist same");
 
                 TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-                leg3->AddEntry(h1_mumu_LQpure_d,"Pure LQ Template","l");
-                leg3->AddEntry(h1_mumu_LQpure_d_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
+                leg3->AddEntry(h1_mumu_LQpure_d,"#LQ_{pure}","l");
+                leg3->AddEntry(h1_mumu_LQpure_d_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg3->Draw();
 
                 c_mumu3->Print(mu_fname3);
                 delete c_mumu3;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV S_{#mu d}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu4 = new TCanvas("c_mumu4", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_d->SetTitle(mu_title);
                 h1_mumu_LQint_d->Draw("hist");
                 h1_mumu_LQint_d_metcut->Draw("hist same");
 
                 TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
-                leg4->AddEntry(h1_mumu_LQint_d,"Interference LQ Template","l");
-                leg4->AddEntry(h1_mumu_LQint_d_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
+                leg4->AddEntry(h1_mumu_LQint_d,"#LQ_{int}","l");
+                leg4->AddEntry(h1_mumu_LQint_d_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
                 leg4->Draw();
 
                 c_mumu4->Print(mu_fname4);
                 delete c_mumu4;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu5 = new TCanvas("c_mumu5", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_u_vec->SetTitle(mu_title);
                 h1_mumu_LQpure_u_vec->Draw("hist");
                 h1_mumu_LQpure_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
-                leg5->AddEntry(h1_mumu_LQpure_u_vec,"Pure LQ Template","l");
-                leg5->AddEntry(h1_mumu_LQpure_u_vec_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
+                leg5->AddEntry(h1_mumu_LQpure_u_vec,"#LQ_{pure}","l");
+                leg5->AddEntry(h1_mumu_LQpure_u_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg5->Draw();
                 
                 c_mumu5->Print(mu_fname5);
                 delete c_mumu5;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu u}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu6 = new TCanvas("c_mumu6", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_u_vec->SetTitle(mu_title);
                 h1_mumu_LQint_u_vec->Draw("hist");
                 h1_mumu_LQint_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
-                leg6->AddEntry(h1_mumu_LQint_u_vec,"Interference LQ Template","l");
-                leg6->AddEntry(h1_mumu_LQint_u_vec_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
+                leg6->AddEntry(h1_mumu_LQint_u_vec,"#LQ_{int}","l");
+                leg6->AddEntry(h1_mumu_LQint_u_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
                 leg6->Draw();
                 
                 c_mumu6->Print(mu_fname6);
                 delete c_mumu6;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu7 = new TCanvas("c_mumu7", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQpure_d_vec->SetTitle(mu_title);
                 h1_mumu_LQpure_d_vec->Draw("hist");
                 h1_mumu_LQpure_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg7 = new TLegend(x_start, y_start, x_end, y_end);
-                leg7->AddEntry(h1_mumu_LQpure_d_vec,"Pure LQ Template","l");
-                leg7->AddEntry(h1_mumu_LQpure_d_vec_metcut,"Pure LQ Template (mu_pt > 40 GeV)","l");
+                leg7->AddEntry(h1_mumu_LQpure_d_vec,"#LQ_{pure}","l");
+                leg7->AddEntry(h1_mumu_LQpure_d_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg7->Draw();
                 
                 c_mumu7->Print(mu_fname7);
                 delete c_mumu7;
 
-                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}",m_LQ/1000,year);
+                sprintf(mu_title, "Channel : Muons, %.1f TeV V_{#mu d}, %i",m_LQ/1000,year);
                 TCanvas *c_mumu8 = new TCanvas("c_mumu8", "Histograms", 200, 10, 900, 700);
                 h1_mumu_LQint_d_vec->SetTitle(mu_title);
                 h1_mumu_LQint_d_vec->Draw("hist");
                 h1_mumu_LQint_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg8 = new TLegend(x_start, y_start, x_end, y_end);
-                leg8->AddEntry(h1_mumu_LQint_d_vec,"Interference LQ Template","l");
-                leg8->AddEntry(h1_mumu_LQint_d_vec_metcut,"Interference LQ Template (mu_pt > 40 GeV)","l");
+                leg8->AddEntry(h1_mumu_LQint_d_vec,"#LQ_{int}","l");
+                leg8->AddEntry(h1_mumu_LQint_d_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
                 leg8->Draw();
                 
                 c_mumu8->Print(mu_fname8);
@@ -392,10 +400,10 @@ void LQ_check_metcut(){
 
             bool make_ud = true;
 
-           bool  ptcut = false;
+           bool  metcut = false;
 
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
-            gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, ptcut, use_xF, sys_label );
+            gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, metcut, use_xF, sys_label );
 
             
            auto h1_elel_LQpure_u = convert3d(h_elel_LQpure_u);
@@ -416,10 +424,10 @@ void LQ_check_metcut(){
            h_elel_LQpure_d_vec->Reset();
            h_elel_LQint_d_vec->Reset();
 
-           ptcut = true;
+           metcut = true;
 
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
-            gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, ptcut, use_xF, sys_label );
+            gen_mc_LQ_template(t_elel_mc,  h_elel_LQpure_u, h_elel_LQint_u, h_elel_LQpure_d, h_elel_LQint_d, h_elel_LQpure_u_vec, h_elel_LQint_u_vec, h_elel_LQpure_d_vec, h_elel_LQint_d_vec, year, m_LQ, FLAG_ELECTRONS, make_ud, metcut, use_xF, sys_label );
 
             
            auto h1_elel_LQpure_u_metcut = convert3d(h_elel_LQpure_u);
@@ -471,7 +479,17 @@ void LQ_check_metcut(){
             h1_elel_LQpure_d_vec_metcut->SetLineWidth(2);
             h1_elel_LQint_d_vec_metcut->SetLineWidth(2);
 
-         
+            float acc = (h1_elel_LQpure_u->GetEntries()-h1_elel_LQpure_u_metcut->GetEntries())/h1_elel_LQpure_u->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for e-u channel = %f\n",acc);
+
+            acc = (h1_elel_LQpure_d->GetEntries()-h1_elel_LQpure_d_metcut->GetEntries())/h1_elel_LQpure_d->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for e-d channel = %f\n",acc);
+
+            acc = (h1_elel_LQpure_u_vec->GetEntries()-h1_elel_LQpure_u_vec_metcut->GetEntries())/h1_elel_LQpure_u_vec->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for e-u-vec channel = %f\n",acc);
+
+            acc = (h1_elel_LQpure_d_vec->GetEntries()-h1_elel_LQpure_d_vec_metcut->GetEntries())/h1_elel_LQpure_d_vec->GetEntries();
+            printf("Decrease in acceptance after removing met and anti-bjet cut for e-d-vec channel = %f\n",acc);
             
 
                 sprintf(el_title, "Channel : Electrons, %.1f TeV S_{eu}",m_LQ/1000,year);
