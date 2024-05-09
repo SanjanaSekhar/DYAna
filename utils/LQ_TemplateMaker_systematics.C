@@ -805,7 +805,7 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 	return 0;
 }
 
-int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy, 
+void one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy, 
 	int year, float m_LQ, float yLQ = 1.0, int flag_q = 2, bool vec = false, int flag1 = FLAG_MUONS, bool make_ud = true, bool use_xF = false, 
 	const string &sys_label = "" ){
 
@@ -854,17 +854,17 @@ int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 	//includes m_LQ
 	//gen_mc_template(t1, &h_sym, &h_asym, &h_alpha, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, year, m_LQ, flag1,  use_xF,sys_label);
 
-	gen_mc_SM_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
+	//gen_mc_SM_template(t1, &h_sym, &h_asym, &h_alpha, year, flag1,  use_xF, sys_label);
 	gen_mc_LQ_template(t1, &h_LQpure_u, &h_LQint_u, &h_LQpure_d, &h_LQint_d, &h_LQpure_u_vec, &h_LQint_u_vec, &h_LQpure_d_vec, &h_LQint_d_vec, year, m_LQ, flag1, make_ud, false, false, sys_label );
 
 	float alpha = 2.* a0/ (2. - a0);
 	double norm = 3./4./(2.+alpha);
 
-	TH3F *h_pl = (TH3F *) h_sym.Clone("h_pl");
-	TH3F *h_mn = (TH3F *) h_sym.Clone("h_mn");
-	h_pl->Reset();
-	h_mn->Reset();
-	make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
+	//TH3F *h_pl = (TH3F *) h_sym.Clone("h_pl");
+	//TH3F *h_mn = (TH3F *) h_sym.Clone("h_mn");
+	//h_pl->Reset();
+	//h_mn->Reset();
+	//make_pl_mn_templates(&h_sym, &h_asym, h_pl, h_mn);
 
 
 
@@ -910,12 +910,10 @@ int one_mc_template(TTree *t1, float a0, float afb, TH3F* h_dy,
 
 
 	}
+        printf("h_dy->Integral() = %f\n", h_dy->Integral());
 
-
-	return 1;
+	
 }
-
-
 
 
 void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTree* t_QCD_contam, TH3F *h, 

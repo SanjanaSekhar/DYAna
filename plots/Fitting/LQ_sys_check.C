@@ -76,8 +76,8 @@ void LQ_sys_check(){
         
 
         
-        TH1F *h1_elel_plain, *h1_elel_sys_up, *h1_elel_sys_down;
-        TH1F *h1_mumu_plain, *h1_mumu_sys_up, *h1_mumu_sys_down;
+        TH1F *h1_elel_plain_comb, *h1_elel_sys_up_comb, *h1_elel_sys_down_comb;
+        TH1F *h1_mumu_plain_comb, *h1_mumu_sys_up_comb, *h1_mumu_sys_down_comb;
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
         TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         
@@ -131,10 +131,10 @@ void LQ_sys_check(){
                 one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_up);
                 one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_down);
                 
-                if(i==0 and year==2016){
-                    h1_mumu_plain = convert3d(h_mumu_plain);
-                    h1_mumu_sys_up = convert3d(h_mumu_sys_up);
-                    h1_mumu_sys_down = convert3d(h_mumu_sys_down);
+                //if(i==0 and year==2016){
+                    TH1F* h1_mumu_plain = convert3d(h_mumu_plain);
+                    TH1F* h1_mumu_sys_up = convert3d(h_mumu_sys_up);
+                    TH1F* h1_mumu_sys_down = convert3d(h_mumu_sys_down);
 
                     h1_mumu_plain->SetLineColor(kBlack);
                     h1_mumu_plain->SetLineWidth(2);
@@ -144,12 +144,12 @@ void LQ_sys_check(){
                     h1_mumu_sys_up->SetLineWidth(2);
                     h1_mumu_sys_down->SetLineColor(kGreen+3);
                     h1_mumu_sys_down->SetLineWidth(2);
-                }
-                else{
-                    h1_mumu_plain->Add(convert3d(h_mumu_plain));
-                    h1_mumu_sys_up->Add(convert3d(h_mumu_sys_up));
-                    h1_mumu_sys_down->Add(convert3d(h_mumu_sys_down));
-                }
+                
+               
+                    h1_mumu_plain_comb->Add(convert3d(h_mumu_plain));
+                    h1_mumu_sys_up_comb->Add(convert3d(h_mumu_sys_up));
+                    h1_mumu_sys_down_comb->Add(convert3d(h_mumu_sys_down));
+                
                 
 
                 
@@ -218,11 +218,11 @@ void LQ_sys_check(){
                 one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_up);
                 one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_down);
 
-                if(i==0 and year==2016){
-                    h1_elel_plain = convert3d(h_elel_plain);
-                    h1_elel_sys_up = convert3d(h_elel_sys_up);
-                    h1_elel_sys_down = convert3d(h_elel_sys_down);
-
+                //if(i==0 and year==2016){
+                    TH1F *h1_elel_plain = convert3d(h_elel_plain);
+                    TH1F *h1_elel_sys_up = convert3d(h_elel_sys_up);
+                    TH1F *h1_elel_sys_down = convert3d(h_elel_sys_down);
+		    printf("i=0, y=2016, elel: nom %f, up %f, down %f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
                     h1_elel_plain->SetLineColor(kBlack);
                     h1_elel_plain->SetLineWidth(2);
 
@@ -231,14 +231,18 @@ void LQ_sys_check(){
                     h1_elel_sys_up->SetLineWidth(2);
                     h1_elel_sys_down->SetLineColor(kGreen+3);
                     h1_elel_sys_down->SetLineWidth(2);
-                }
-                else{
-                    h1_elel_plain->Add(convert3d(h_elel_plain));
-                    h1_elel_sys_up->Add(convert3d(h_elel_sys_up));
-                    h1_elel_sys_down->Add(convert3d(h_elel_sys_down));
-                }
+                
+                    if(i==0 and year==2016){
+			h1_elel_plain_comb = (TH1F*)h1_elel_plain->Clone();
+			h1_elel_sys_up_comb = (TH1F*)h1_elel_sys_up->Clone();
+			h1_elel_sys_down_comb = (TH1F*)h1_elel_sys_down->Clone(); 
+		    } else {
+                    h1_elel_plain_comb->Add(convert3d(h_elel_plain));
+                    h1_elel_sys_up_comb->Add(convert3d(h_elel_sys_up));
+                    h1_elel_sys_down_comb->Add(convert3d(h_elel_sys_down));
+                    }
 
-                printf("elel: nom %.0f, up %.0f, down %.0f \n", h_elel_plain->Integral(), h_elel_sys_up->Integral(), h_elel_sys_down->Integral());
+                printf("elel comb: nom %f, up %f, down %f \n", h1_elel_plain_comb->Integral(), h1_elel_sys_up_comb->Integral(), h1_elel_sys_down_comb->Integral());
 
                 if(do_bkg){
                     bool emu_reweight = false;
@@ -294,7 +298,7 @@ void LQ_sys_check(){
         }
 
 
-    }           
+    }/*           
     if(do_muons){
 
         if(flag_q == 2) {
@@ -458,7 +462,7 @@ void LQ_sys_check(){
         leg1->Draw();
 
         c_elel1->Print(el_fname1);
-    }
+    }*/
 
 }
 
