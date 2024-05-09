@@ -76,8 +76,8 @@ void LQ_sys_check(){
         
 
         
-        TH1F *h1_elel_plain, TH1F *h1_elel_sys_up, TH1F *h1_elel_sys_down;
-        TH1F *h1_mumu_plain, TH1F *h1_mumu_sys_up, TH1F *h1_mumu_sys_down;
+        TH1F *h1_elel_plain, *h1_elel_sys_up, *h1_elel_sys_down;
+        TH1F *h1_mumu_plain, *h1_mumu_sys_up, *h1_mumu_sys_down;
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
         TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         
