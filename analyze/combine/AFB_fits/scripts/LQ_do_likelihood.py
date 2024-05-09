@@ -98,12 +98,15 @@ if options.plot:
         poi_list.append("prop_binY18_bin" + str(i))
     '''
     
-    for options.year in [2016,2017,2018,-1]:
+    for options.year in [-1]:
         # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
-        label = "expected_%i_" % options.year
+        #label = "expected_%i_" % options.year
+        label = "%i_" % options.year
+        is_vec = True
         print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
         label = "%i_" % options.year
+        is_vec = False
         print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
         label = "%i_" % options.year
@@ -115,8 +118,9 @@ if options.plot:
         respull = np.asarray(respull, dtype=float)
         poi_list = respull[:,0].tolist()
         deltaNLL = respull[:,1].tolist()
-        label = "expected_%i_" % options.year
+        #label = "expected_%i_" % options.year
         respull = []
+        is_vec = True
         with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
             for line in f.readlines():
                 respull.append(line.split(' '))
@@ -127,15 +131,15 @@ if options.plot:
 
         #plt.xlim(-1,1)
         plt.ylim(0,5)          
-        plt.plot(poi_list,deltaNLL,label='data')
-        plt.plot(poi_list_exp,deltaNLL_exp,label='asimov dataset')
+        plt.plot(poi_list,deltaNLL,label='scalar LQ')
+        plt.plot(poi_list_exp,deltaNLL_exp,label='vector LQ')
         plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[1],linestyle='dashed',c='g')
         plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[2],linestyle='dashed',c='g')
         plt.xlabel("%s"%poi)
         plt.ylabel("-2deltaLL")
         plt.legend()
         plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV, %s"%(options.chan,options.q,mLQ,(options.year if options.year > 0 else "2016,2017,2018")))
-        plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_%s.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,poi,options.year))
+        plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_%s_cmp.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,poi,options.year))
         plt.close()
 
         
@@ -145,13 +149,13 @@ else:
 
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
-    
+    '''
     label = "expected_%i_" % options.year
     print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1" %(workspace, poi,  extra_params))
     print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q))
     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi,options.chan,options.q),"READ")
     save_likelihoods(f,label)
-    
+    '''
     label = "%i_" % options.year
     print_and_do("combine %s -M MultiDimFit  --algo grid --points 300 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 
