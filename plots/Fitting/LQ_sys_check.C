@@ -160,7 +160,7 @@ void LQ_sys_check(){
                 
                 h1_mumu_sys_up->SetLineColor(kRed);
                 h1_mumu_sys_up->SetLineWidth(2);
-                h1_mumu_sys_down->SetLineColor(kGreen);
+                h1_mumu_sys_down->SetLineColor(kGreen+1);
                 h1_mumu_sys_down->SetLineWidth(2);
                 
                 if(year==2016){
@@ -278,7 +278,7 @@ void LQ_sys_check(){
 
             h1_elel_sys_up->SetLineColor(kRed);
             h1_elel_sys_up->SetLineWidth(2);
-            h1_elel_sys_down->SetLineColor(kGreen);
+            h1_elel_sys_down->SetLineColor(kGreen+1);
             h1_elel_sys_down->SetLineWidth(2);
 
             if(year==2016){
@@ -370,12 +370,14 @@ if(do_muons){
     pad1->cd();
     h1_mumu_sys_up_comb->SetMaximum(h1_mumu_sys_up_comb->GetMaximum()*1.5);
     h1_mumu_sys_up_comb->SetTitle(mu_title);
+    h1_mumu_sys_up_comb->GetYaxis()->SetLabelSize(0.04);
     h1_mumu_sys_up_comb->Draw("hist");
     h1_mumu_plain_comb->Draw("hist same");
     h1_mumu_sys_down_comb->Draw("hist same");
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
+    leg1->SetTextSize(0.04);
     leg1->AddEntry(h1_mumu_plain_comb, "Nominal LQ Signal template", "l");
     leg1->AddEntry(h1_mumu_sys_up_comb, "Sys Up Template", "l");
     leg1->AddEntry(h1_mumu_sys_down_comb, "Sys Down Template", "l");
@@ -403,12 +405,14 @@ if(do_muons){
     ratio_down->SetMinimum(0.8);
     ratio_down->SetMaximum(1.2);
     ratio_down->SetTitle("");
-    ratio_down->SetLineColor(kGreen+3);
+    ratio_down->SetLineColor(kGreen+1);
+    ratio_down->GetXaxis()->SetLabelSize(0.04);
+    ratio_down->GetYaxis()->SetLabelSize(0.04);
     ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
     ratio_up->SetLineColor(kBlue);
     ratio_up->Draw("hist same");
-
+    
     c_mumu1->cd();
 
     if(do_bkg){
@@ -453,12 +457,14 @@ if(do_electrons){
     pad1->cd();
     h1_elel_sys_up_comb->SetMaximum(h1_elel_sys_up_comb->GetMaximum()*1.5);
     h1_elel_sys_up_comb->SetTitle(el_title);
+    h1_elel_sys_up_comb->GetYaxis()->SetLabelSize(0.04);
     h1_elel_sys_up_comb->Draw("hist");
     h1_elel_plain_comb->Draw("hist same");
     h1_elel_sys_down_comb->Draw("hist same");
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.7, 0.75, 0.9, 0.9);
+    leg1->SetTextSize(0.04);
     leg1->AddEntry(h1_elel_plain_comb, "Nominal LQ Signal template", "l");
     leg1->AddEntry(h1_elel_sys_up_comb, "Sys Up Template", "l");
     leg1->AddEntry(h1_elel_sys_down_comb, "Sys Down Template", "l");
@@ -483,7 +489,9 @@ if(do_electrons){
     ratio_down->SetMinimum(0.8);
     ratio_down->SetMaximum(1.2);
     ratio_down->SetTitle("");
-    ratio_down->SetLineColor(kGreen+3);
+    ratio_down->SetLineColor(kGreen+1);
+    ratio_down->GetXaxis()->SetLabelSize(0.04);
+    ratio_down->GetYaxis()->SetLabelSize(0.04);
     ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
     ratio_up->SetLineColor(kBlue);
