@@ -178,7 +178,7 @@ void LQ_sys_check(){
 
 
             printf("MuMu: nom %.0f, up %.0f, down %.0f \n", h1_mumu_plain->Integral(), h1_mumu_sys_up->Integral(), h1_mumu_sys_down->Integral());
-
+            /*
             if(do_bkg){
                 bool emu_reweight = false;
                 gen_combined_background_template(3, mumu_ts, h_mumu_bkg, year, FLAG_MUONS,  ss, use_xf, emu_reweight, "");
@@ -229,6 +229,7 @@ void LQ_sys_check(){
                 printf("mumu fakes: nom %.0f, up %.0f, down %.0f \n", h_mumu_qcd->Integral(), h_mumu_qcd_up->Integral(), h_mumu_qcd_down->Integral());
                 h1_mumu_qcd->Print("range");
             }
+            */
 
 
         }
@@ -244,7 +245,7 @@ void LQ_sys_check(){
             //just for initializing TH1F
             TH1F* h1_elel_sys_up = convert3d(h_elel_plain);
             TH1F* h1_elel_sys_down = convert3d(h_elel_plain);
-            int nbins = h1_elel_plain->GetNbinsX()
+            int nbins = h1_elel_plain->GetNbinsX();
             float up_diff[nbins] = {0.};
             float down_diff[nbins] = {0.};
             float up = 0, down = 0;
@@ -262,12 +263,12 @@ void LQ_sys_check(){
                 TH1F* h1_elel_sys_up = convert3d(h_elel_sys_up);
                 TH1F* h1_elel_sys_down = convert3d(h_elel_sys_down);
 
-                for(int j = 1; j <= h1_elel_sys_up->GetNbinsX(), j++){
+                for(int j = 1; j <= h1_elel_sys_up->GetNbinsX(); j++){
                     up_diff[j] += h1_elel_sys_up->GetBinContent(j) - h1_elel_plain->GetBinContent(j);
                     down_diff[j] += h1_elel_plain->GetBinContent(j) - h1_elel_sys_down->GetBinContent(j);
                 }
             }
-            for(int i = 1; i <= h1_elel_plain->GetNbinsX(), i++){
+            for(int i = 1; i <= h1_elel_plain->GetNbinsX(); i++){
 
                 up = h1_elel_plain->GetBinContent(i) + up_diff[i];
                 down = h1_elel_plain->GetBinContent(i) - down_diff[i];
@@ -295,6 +296,7 @@ void LQ_sys_check(){
 
 
         printf("MuMu: nom %.0f, up %.0f, down %.0f \n", h1_elel_plain->Integral(), h1_elel_sys_up->Integral(), h1_elel_sys_down->Integral());
+        /*
         if(do_bkg){
             bool emu_reweight = false;
             gen_combined_background_template(3, elel_ts, h_elel_bkg, year, FLAG_ELECTRONS,  ss, use_xf,  emu_reweight,"");
@@ -343,6 +345,7 @@ void LQ_sys_check(){
             h1_elel_qcd_down->SetLineWidth(2);
             printf("elel fakes: nom %.0f, up %.0f, down %.0f \n", h_elel_qcd->Integral(), h_elel_qcd_up->Integral(), h_elel_qcd_down->Integral());
         }
+        */
 
     }
 
