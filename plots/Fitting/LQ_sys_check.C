@@ -101,7 +101,7 @@ void LQ_sys_check(){
             TH3F * h_mumu_bkg_up = new TH3F("mumu_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_bkg_down = new TH3F("mumu_bkg_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_plain = new TH3F("mumu_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-            
+
             TH3F * h_mumu_qcd = new TH3F("mumu_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_qcd_up = new TH3F("mumu_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_qcd_down = new TH3F("mumu_qcd_down", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -124,8 +124,12 @@ void LQ_sys_check(){
                 h1_mumu_plain->SetLineColor(kBlack);
                 h1_mumu_plain->SetLineWidth(2);
 
-                float up_diff[h1_mumu_plain->GetNbinsX()] = {0.};
-                float down_diff[h1_mumu_plain->GetNbinsX()] = {0.};
+                //just for initializing TH1F
+                TH1F* h1_mumu_sys_up = convert3d(h_mumu_plain);
+                TH1F* h1_mumu_sys_down = convert3d(h_mumu_plain);
+                int nbins = h1_mumu_plain->GetNbinsX();
+                float up_diff[nbins] = {0.};
+                float down_diff[nbins] = {0.};
                 float up = 0, down = 0;
 
                 for(int i = 0; i< num_sys; i++){
@@ -137,16 +141,16 @@ void LQ_sys_check(){
                     string sys_down = string(sys) + string("Down");
                     one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_up);
                     one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_down);
-                    
-                    TH1F* h1_mumu_sys_up = convert3d(h_mumu_sys_up);
-                    TH1F* h1_mumu_sys_down = convert3d(h_mumu_sys_down);
 
-                    for(int j = 1; j <= h1_mumu_sys_up->GetNbinsX(), j++){
+                    h1_mumu_sys_up = convert3d(h_mumu_sys_up);
+                    h1_mumu_sys_down = convert3d(h_mumu_sys_down);
+
+                    for(int j = 1; j <= h1_mumu_sys_up->GetNbinsX(); j++){
                         up_diff[j] += h1_mumu_sys_up->GetBinContent(j) - h1_mumu_plain->GetBinContent(j);
                         down_diff[j] += h1_mumu_plain->GetBinContent(j) - h1_mumu_sys_down->GetBinContent(j);
                     }
                 }
-                for(int i = 1; i <= h1_mumu_plain->GetNbinsX(), i++){
+                for(int i = 1; i <= h1_mumu_plain->GetNbinsX(); i++){
 
                     up = h1_mumu_plain->GetBinContent(i) + up_diff[i];
                     down = h1_mumu_plain->GetBinContent(i) - down_diff[i];
@@ -171,7 +175,7 @@ void LQ_sys_check(){
                 
             }
 
-            
+
 
             printf("MuMu: nom %.0f, up %.0f, down %.0f \n", h1_mumu_plain->Integral(), h1_mumu_sys_up->Integral(), h1_mumu_sys_down->Integral());
 
@@ -237,8 +241,12 @@ void LQ_sys_check(){
             h1_elel_plain->SetLineColor(kBlack);
             h1_elel_plain->SetLineWidth(2);
 
-            float up_diff[h1_elel_plain->GetNbinsX()] = {0.};
-            float down_diff[h1_elel_plain->GetNbinsX()] = {0.};
+            //just for initializing TH1F
+            TH1F* h1_elel_sys_up = convert3d(h_elel_plain);
+            TH1F* h1_elel_sys_down = convert3d(h_elel_plain);
+            int nbins = h1_elel_plain->GetNbinsX()
+            float up_diff[nbins] = {0.};
+            float down_diff[nbins] = {0.};
             float up = 0, down = 0;
 
             for(int i = 0; i< num_sys; i++){
@@ -250,7 +258,7 @@ void LQ_sys_check(){
                 string sys_down = string(sys) + string("Down");
                 one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_up);
                 one_mc_template(t_elel_mc, alpha_denom, afb, h_elel_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_ELECTRONS, make_ud, use_xf, sys_down);
-                
+
                 TH1F* h1_elel_sys_up = convert3d(h_elel_sys_up);
                 TH1F* h1_elel_sys_down = convert3d(h_elel_sys_down);
 
@@ -266,12 +274,12 @@ void LQ_sys_check(){
                 h1_elel_sys_up->SetBinContent(i, up);
                 h1_elel_sys_down->SetBinContent(i, down);
             }
-            
+
             h1_elel_sys_up->SetLineColor(kBlue);
             h1_elel_sys_up->SetLineWidth(2);
             h1_elel_sys_down->SetLineColor(kGreen);
             h1_elel_sys_down->SetLineWidth(2);
-            
+
             if(year==2016){
                h1_elel_plain_comb = (TH1F*)h1_elel_plain->Clone();
                h1_elel_sys_up_comb = (TH1F*)h1_elel_sys_up->Clone();
@@ -281,10 +289,10 @@ void LQ_sys_check(){
             h1_elel_plain_comb->Add(h1_elel_plain);
             h1_elel_sys_up_comb->Add(h1_elel_sys_up);
             h1_elel_sys_down_comb->Add(h1_elel_sys_down);
-            
+
         }
 
-        
+
 
         printf("MuMu: nom %.0f, up %.0f, down %.0f \n", h1_elel_plain->Integral(), h1_elel_sys_up->Integral(), h1_elel_sys_down->Integral());
         if(do_bkg){
