@@ -81,7 +81,7 @@ void LQ_sys_check(){
         TH1F *h1_elel_bkg, *h1_mumu_bkg, *h1_elel_bkg_up, *h1_elel_bkg_down, *h1_mumu_bkg_up, *h1_mumu_bkg_down;
         TH1F *h1_elel_qcd, *h1_mumu_qcd, *h1_elel_qcd_up, *h1_elel_qcd_down, *h1_mumu_qcd_up, *h1_mumu_qcd_down;
         
-        for(int year = 2016; year <= 2016; year++){
+        for(int year = 2016; year <= 2018; year++){
 
             init(year);
             setup_all_SFs(year);
@@ -376,8 +376,8 @@ if(do_muons){
     h1_mumu_sys_down_comb->Draw("hist same");
 
     gStyle->SetLegendBorderSize(0);
-    TLegend *leg1 = new TLegend(0.6, 0.75, 0.9, 0.9);
-    leg1->SetTextSize(0.03);
+    TLegend *leg1 = new TLegend(0.5, 0.75, 0.9, 0.9);
+    leg1->SetTextSize(0.025);
     leg1->AddEntry(h1_mumu_plain_comb, "Nominal LQ Signal template", "l");
     leg1->AddEntry(h1_mumu_sys_up_comb, "Sys Up Template", "l");
     leg1->AddEntry(h1_mumu_sys_down_comb, "Sys Down Template", "l");
@@ -410,7 +410,7 @@ if(do_muons){
     ratio_down->GetYaxis()->SetLabelSize(0.1);
     ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
-    ratio_up->SetLineColor(kBlue);
+    ratio_up->SetLineColor(kRed);
     ratio_up->Draw("hist same");
     
     c_mumu1->cd();
@@ -464,7 +464,7 @@ if(do_electrons){
 
     gStyle->SetLegendBorderSize(0);
     TLegend *leg1 = new TLegend(0.6, 0.75, 0.9, 0.9);
-    leg1->SetTextSize(0.03);
+    leg1->SetTextSize(0.025);
     leg1->AddEntry(h1_elel_plain_comb, "Nominal LQ Signal template", "l");
     leg1->AddEntry(h1_elel_sys_up_comb, "Sys Up Template", "l");
     leg1->AddEntry(h1_elel_sys_down_comb, "Sys Down Template", "l");
@@ -494,7 +494,7 @@ if(do_electrons){
     ratio_down->GetYaxis()->SetLabelSize(0.1);
     ratio_down->Draw("hist");
            // ratio_down->SetMarkerStyle(21);
-    ratio_up->SetLineColor(kBlue);
+    ratio_up->SetLineColor(kRed);
     ratio_up->Draw("hist same");
 
     c_elel1->cd(); 
