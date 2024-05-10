@@ -290,7 +290,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 				lstyle = 7
-				lwidth = 1
+				lwidth = 2
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
@@ -320,7 +320,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <= 5):
 					latext.SetTextSize(0.050);    
 				else:
-					latext.SetTextSize(0.03);    
+					latext.SetTextSize(0.04);    
 				text_y = 0.43
 
 				l_margin = gPad.GetLeftMargin();
@@ -337,7 +337,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextColor(kBlue);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
-				latext2.SetTextSize(0.03)
+				latext2.SetTextSize(0.04)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
@@ -347,7 +347,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
-				legends[hist_index].SetTextSize(0.05)
+				legends[hist_index].SetTextSize(0.04)
 				
 				for entry in legends_list[hist_index][::-1]:
 					legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
@@ -373,7 +373,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				subs[hist_index].cd()
 				# Build the pull
 
-				LS = mLS * 0.7/0.3
+				LS = mLS * 0.85/0.3
 				#title size given as fraction of pad width, scale up to have same size as main pad
 				YTS =  mTS * 0.7/0.3
 				XTS =  mTS * 0.7/0.3

@@ -128,8 +128,8 @@ void LQ_sys_check(){
                 TH1F* h1_mumu_sys_up = convert3d(h_mumu_plain);
                 TH1F* h1_mumu_sys_down = convert3d(h_mumu_plain);
                 int nbins = h1_mumu_plain->GetNbinsX();
-                float up_diff[nbins] = {0.};
-                float down_diff[nbins] = {0.};
+                float up_diff[60] = {0.};
+                float down_diff[60] = {0.};
                 float up = 0, down = 0;
 
                 for(int i = 0; i< num_sys; i++){
@@ -158,7 +158,7 @@ void LQ_sys_check(){
                     h1_mumu_sys_down->SetBinContent(i, down);
                 }
                 
-                h1_mumu_sys_up->SetLineColor(kBlue);
+                h1_mumu_sys_up->SetLineColor(kRed);
                 h1_mumu_sys_up->SetLineWidth(2);
                 h1_mumu_sys_down->SetLineColor(kGreen);
                 h1_mumu_sys_down->SetLineWidth(2);
@@ -246,8 +246,8 @@ void LQ_sys_check(){
             TH1F* h1_elel_sys_up = convert3d(h_elel_plain);
             TH1F* h1_elel_sys_down = convert3d(h_elel_plain);
             int nbins = h1_elel_plain->GetNbinsX();
-            float up_diff[nbins] = {0.};
-            float down_diff[nbins] = {0.};
+            float up_diff[60] = {0.};
+            float down_diff[60] = {0.};
             float up = 0, down = 0;
 
             for(int i = 0; i< num_sys; i++){
@@ -276,7 +276,7 @@ void LQ_sys_check(){
                 h1_elel_sys_down->SetBinContent(i, down);
             }
 
-            h1_elel_sys_up->SetLineColor(kBlue);
+            h1_elel_sys_up->SetLineColor(kRed);
             h1_elel_sys_up->SetLineWidth(2);
             h1_elel_sys_down->SetLineColor(kGreen);
             h1_elel_sys_down->SetLineWidth(2);
