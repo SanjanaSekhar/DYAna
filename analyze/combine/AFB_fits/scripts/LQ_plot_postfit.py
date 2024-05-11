@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.16,0.11,0.7,0.22+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.2,0.09,0.8,0.22+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -373,7 +373,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				subs[hist_index].cd()
 				# Build the pull
 
-				LS = mLS * 0.8/0.3
+				LS = mLS * 0.75/0.3
 				#title size given as fraction of pad width, scale up to have same size as main pad
 				YTS =  mTS * 0.7/0.3
 				XTS =  mTS * 0.7/0.3
@@ -411,7 +411,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				ratio_sys_unc.GetXaxis().SetTitle(xtitle)
 				ratio_sys_unc.GetXaxis().SetTickLength(0.06)
 
-
+				ratio_sys_unc.SetMarkerSize(2)
 				#ratio_sys_unc.SetFillColor(ROOT.kBlack)
 				#ratio_sys_unc.SetFillStyle(3015)
 				ratio_sys_unc.SetLineColor(ROOT.kGray)
