@@ -35,9 +35,9 @@ void LQ_sys_check(){
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1); 
     const int num_sys = 4;
-    //string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_muRC"};
-    string sys_array[num_sys] = {"_elScaleSyst", "_elScaleStat","_elScaleGain", "_elSmear"};
-    string sys_l = "momentum_scale", plot_t = "Electron Momentum Scale";
+    string sys_array[num_sys] = {"_RENORM","_REFAC","_FAC","_alphaS"};
+    //string sys_array[num_sys] = {"_elIDBARPT","_elIDENDPT"};
+    string sys_l = "alpha_refac", plot_t = "Muon #alpha_S + Renormalization/Factorization Scales";
     const char *sys_label = sys_l.c_str();
     const char *plot_title = plot_t.c_str();
     char *plot_dir = "AN_plots/Systematics/UpDown";
@@ -59,9 +59,9 @@ void LQ_sys_check(){
 
         bool do_bkg = false;
         bool do_qcd = false;
-        bool do_electrons = true;
-        bool do_muons = false;
-        bool vec = false;
+        bool do_electrons = false;
+        bool do_muons = true;
+        bool vec = true;
         bool make_ud = true;
         float yLQ = 1.0;
         char *date;
