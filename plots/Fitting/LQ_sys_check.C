@@ -101,7 +101,8 @@ void LQ_sys_check(){
             TH3F * h_mumu_bkg_up = new TH3F("mumu_bkg_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_bkg_down = new TH3F("mumu_bkg_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_plain = new TH3F("mumu_plain", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
-
+	    TH3F * h_mumu_sys_up = new TH3F("mumu_up", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
+            TH3F * h_mumu_sys_down = new TH3F("mumu_down", "", n_lq_m_bins, lq_m_bins, n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_qcd = new TH3F("mumu_qcd", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_qcd_up = new TH3F("mumu_qcd_up", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
             TH3F * h_mumu_qcd_down = new TH3F("mumu_qcd_down", "", n_lq_m_bins, lq_m_bins,n_var1_bins, var1_bins, n_cost_bins, cost_bins);
@@ -142,8 +143,8 @@ void LQ_sys_check(){
                     one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_up, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_up);
                     one_mc_template(t_mumu_mc, alpha_denom, afb, h_mumu_sys_down, year, m_LQ, yLQ , flag_q, vec, FLAG_MUONS, make_ud, use_xf, sys_down);
 
-                    h1_mumu_sys_up = convert3d(h_mumu_sys_up);
-                    h1_mumu_sys_down = convert3d(h_mumu_sys_down);
+                    TH1F* h1_mumu_sys_up = convert3d(h_mumu_sys_up);
+                    TH1F* h1_mumu_sys_down = convert3d(h_mumu_sys_down);
 
                     for(int j = 1; j <= h1_mumu_sys_up->GetNbinsX(); j++){
                         up_diff[j] += h1_mumu_sys_up->GetBinContent(j) - h1_mumu_plain->GetBinContent(j);
