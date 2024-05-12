@@ -149,7 +149,9 @@ void LQ_sys_check(){
                     for(int j = 1; j <= h1_mumu_sys_up->GetNbinsX(); j++){
                         up_diff[j] += h1_mumu_sys_up->GetBinContent(j) - h1_mumu_plain->GetBinContent(j);
                         down_diff[j] += h1_mumu_plain->GetBinContent(j) - h1_mumu_sys_down->GetBinContent(j);
+			printf("j = %0.1f %0.1f ",up_diff[j],down_diff[j]);
                     }
+			printf("\n");
                 }
                 for(int i = 1; i <= h1_mumu_plain->GetNbinsX(); i++){
 
@@ -157,8 +159,9 @@ void LQ_sys_check(){
                     down = h1_mumu_plain->GetBinContent(i) - down_diff[i];
                     h1_mumu_sys_up->SetBinContent(i, up);
                     h1_mumu_sys_down->SetBinContent(i, down);
+		    printf("i = %0.1f %0.1f ",up,down);
                 }
-                
+                printf("\n");
                 h1_mumu_sys_up->SetLineColor(kRed);
                 h1_mumu_sys_up->SetLineWidth(2);
                 h1_mumu_sys_down->SetLineColor(kBlue);
