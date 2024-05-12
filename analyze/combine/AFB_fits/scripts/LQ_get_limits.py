@@ -83,7 +83,7 @@ def plotLimits(channel):
 	line_pp.Draw("same") 
 	line_sp.Draw("same")
 	line_sp2.Draw("same")
-	legend.SetTextSize(0.3)
+	legend.SetTextSize(0.03)
 	legend.AddEntry(line_pp,"CMS Limit from arXiv:1811.01197","L")
     	legend.AddEntry(line_sp,"CMS Limit from arXiv:1509.03750","L")
     legend.Draw()
