@@ -42,17 +42,13 @@ if options.hadd:
 else:
 	if chan == "ee":
 				
-		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
+		individual_pars = ["nlo_sys", "dy_xsec"]#, "db_xsec",  "top_xsec", "gam_xsec",  "elFakesYR",  "Pu", "prefireYR"]
 		
-		group_pars =[  "RFscalesYRC", "emucostrwsYRC",  "pdfs", "lumisYR","elScalesYR", "elHLTsYR", "elIDs", "elRECOs", "elfakesrwsYR", "autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18"] 
-		#"BTAGSYR","muPrefYRC","METJECYR",
-		'''
-		individual_pars = ["dy_xsec"]
-		group_pars = []
-		'''
+		group_pars =[  "RFscalesYRC", "elScalesYR", "elHLTsYR", "elIDs"] #, "emucostrwsYRC",  "pdfs", "lumisYR", "elRECOs", "elfakesrwsYR", "autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18"] 
+		
 	else:
-		individual_pars = ["nlo_sys", "dy_xsec", "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
-		group_pars =[  "RFscalesYRC", "emucostrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", "mufakesrwsYR", "autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18"] 
+		individual_pars = ["nlo_sys", "dy_xsec"]#, "db_xsec",  "top_xsec", "gam_xsec",  "muFakesYR", "Pu", "muPrefYRC",  "muRCYR", ]
+		group_pars =[  "RFscalesYRC"]#, "emucostrwsYRC", "pdfs", "lumisYR","muIDsYR", "muHLTsYR", "mufakesrwsYR", "autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18"] 
 
 	sys_name_conv = dict()
 	sys_name_conv['nlo_sys'] = "LQ LO reweighting"
@@ -125,12 +121,12 @@ else:
 	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
 	if(options.expected):
-		print("Will inject AFB %.2f A0 %.2f for all toys " %(options.Afb, options.A0))
+		print("Will inject A4=1.61 yLQ2=0 for all toys " %(options.Afb, options.A0))
 
 
 		print_and_do(("combine -M GenerateOnly -d higgsCombine_base.MultiDimFit.mH120.root --snapshotName MultiDimFit --toysFrequentist"
-		" --bypassFrequentistFit --saveToys -t 1 -s %i  --setParameters Afb=%.2f,A0=%.2f")
-				% (s, options.Afb, options.A0))
+		" --bypassFrequentistFit --saveToys -t 1 -s %i  --setParameters A4=1.61,yLQ2=0.")
+				% (s))
 
 		print_and_do(("combine -M MultiDimFit -d %s -n _nom --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root " +
 		"--toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s") %(workspace, s, extra_params))
@@ -139,8 +135,8 @@ else:
 
 	else:
 		print_and_do("cp higgsCombine_base.MultiDimFit.mH120.%i.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s,s))
-	#print_and_do("cp higgsCombine_base.FitDiagnostics.mH120.%i.root higgsCombine_nom.FitDiagnostics.mH120.%i.root" % (s,s))
-	print_and_do("cp multidimfit_base.root multidimfit_nom.root")
+		#print_and_do("cp higgsCombine_base.FitDiagnostics.mH120.%i.root higgsCombine_nom.FitDiagnostics.mH120.%i.root" % (s,s))
+		print_and_do("cp multidimfit_base.root multidimfit_nom.root")
 	#print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _nom1 %s """ % (s,extra_params))
 	#print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w --snapshotName FitDiagnostics -n _nom1 %s """ % (s,extra_params))
 
