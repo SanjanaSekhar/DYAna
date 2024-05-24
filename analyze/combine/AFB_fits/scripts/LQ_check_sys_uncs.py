@@ -15,6 +15,7 @@ parser.add_option("-o", "--odir", default="sys_uncs/", help = "output directory"
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("--diff", default=False, action="store_true", help="Diff")
 parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
+parser.add_option("--nToys",  default=5, type='int', help="no. of toys for expected uncs")
 parser.add_option("--vec",  default=False, help="is vec?")
 parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
 parser.add_option("--q",  default="u", help=" channel u,d")
@@ -123,76 +124,130 @@ else:
 	if(options.expected):
 		print("Will inject A4=1.61 yLQ2=0 for all toys ")
 
+		for i in range(1,options.nToys+1):
+			s += (i-1)
+			print_and_do(("combine -M GenerateOnly -d higgsCombine_base.MultiDimFit.mH120.%s.root --snapshotName MultiDimFit --toysFrequentist"
+			" --bypassFrequentistFit --saveToys -t 1 -s %i  --setParameters A4=1.61,yLQ2=0.")
+					% (s,s))
 
-		print_and_do(("combine -M GenerateOnly -d higgsCombine_base.MultiDimFit.mH120.%s.root --snapshotName MultiDimFit --toysFrequentist"
-		" --bypassFrequentistFit --saveToys -t 1 -s %i  --setParameters A4=1.61,yLQ2=0.")
-				% (s,s))
+			print_and_do(("combine -M MultiDimFit -d %s -n _nom --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root " +
+			"--toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s") %(workspace, s, extra_params))
 
-		print_and_do(("combine -M MultiDimFit -d %s -n _nom --saveWorkspace --saveFitResult --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root " +
-		"--toysFrequentist  -t 1 --robustFit 1 --forceRecreateNLL %s") %(workspace, s, extra_params))
+			extra_params += " --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist -t 1" % s
 
-		extra_params += " --toysFile higgsCombineTest.GenerateOnly.mH120.%i.root --toysFrequentist -t 1" % s
+			d = dict()
+			n = 0
+			for indi_par in individual_pars:
+				n+=1
+				freeze_str = par_to_freezestr(indi_par)
+				#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+					#  % (freeze_str,s, indi_par, extra_params))
+				#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+				print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ % (freeze_str,s, indi_par, extra_params))
+				sys_unc = compute_sys("nom", indi_par, s)
+				#sys_unc = compute_sys("nom", indi_par, s)
+				d[indi_par] = sys_unc
+				#if(n>2): break
+
+			for group_par in group_pars:
+				n+=1
+				freeze_str = par_to_freezestr(group_par)
+				#print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % 
+				#       (freeze_str, s, group_par, extra_params))
+				#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
+				if group_par == 'autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18': 
+					print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, 'mcstats', extra_params))
+					sys_unc = compute_sys("nom", "mcstats", s)
+				else:
+					print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, group_par, extra_params))
+					sys_unc = compute_sys("nom", group_par, s)
+				#sys_unc = compute_sys("nom", indi_par, s)
+				d[group_par] =sys_unc
+				#if(n>4): break
+
+			print(d)
+			sum_uncs2 = 0
+			os.system("mkdir %s \n" % options.odir)
+			with open("%s/%s_%s_m%s_sys_uncs_%s_toy%i.txt" % (options.odir, chan, q, options.mLQ,ending, i), 'w') as f_out:
+				sorted_d = sorted(d.items(), key=operator.itemgetter(1))
+				f_out.write("Systematic uncertainties for %s-%s%s channel, mLQ = %s, toy = %i\n"%(chan, q, ("-vec" if is_vec else ""), options.mLQ, i))
+				
+				for sys_name, val in sorted_d[::-1]:
+					# if (sys_name in sys_name_conv.keys()):
+					# 	out_name = sys_name_conv[sys_name]
+					# else:
+					# 	out_name = sys_name
+					sum_uncs2 += (val*val)
+
+				for sys_name, val in sorted_d[::-1]:
+					if (sys_name in sys_name_conv.keys()):
+						out_name = sys_name_conv[sys_name]
+					else:
+						out_name = sys_name
+					f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, ((val*val)*100)/sum_uncs2))
+				
+				f_out.write("Total Uncertainty & %.2f  \\\\ \n" % (np.sqrt(sum_uncs2)))
+
+			#print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
 
 	else:
 		print_and_do("cp higgsCombine_base.MultiDimFit.mH120.%i.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s,s))
 		#print_and_do("cp higgsCombine_base.FitDiagnostics.mH120.%i.root higgsCombine_nom.FitDiagnostics.mH120.%i.root" % (s,s))
 		print_and_do("cp multidimfit_base.root multidimfit_nom.root")
+
+		d = dict()
+		n = 0
+		for indi_par in individual_pars:
+			n+=1
+			freeze_str = par_to_freezestr(indi_par)
+			#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+				#  % (freeze_str,s, indi_par, extra_params))
+			#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
+			print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ % (freeze_str,s, indi_par, extra_params))
+			sys_unc = compute_sys("nom", indi_par, s)
+			#sys_unc = compute_sys("nom", indi_par, s)
+			d[indi_par] = sys_unc
+			#if(n>2): break
+
+		for group_par in group_pars:
+			n+=1
+			freeze_str = par_to_freezestr(group_par)
+			#print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % 
+			#       (freeze_str, s, group_par, extra_params))
+			#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
+			if group_par == 'autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18': 
+				print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, 'mcstats', extra_params))
+				sys_unc = compute_sys("nom", "mcstats", s)
+			else:
+				print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, group_par, extra_params))
+				sys_unc = compute_sys("nom", group_par, s)
+			#sys_unc = compute_sys("nom", indi_par, s)
+			d[group_par] =sys_unc
+			#if(n>4): break
+
+		print(d)
+		sum_uncs2 = 0
+		os.system("mkdir %s \n" % options.odir)
+		with open("%s/%s_%s_m%s_sys_uncs_%s.txt" % (options.odir, chan, q, options.mLQ,ending), 'w') as f_out:
+			sorted_d = sorted(d.items(), key=operator.itemgetter(1))
+			f_out.write("Systematic uncertainties for bin %i\n" % options.mbin)
+			
+			for sys_name, val in sorted_d[::-1]:
+				# if (sys_name in sys_name_conv.keys()):
+				# 	out_name = sys_name_conv[sys_name]
+				# else:
+				# 	out_name = sys_name
+				sum_uncs2 += (val*val)
+
+			for sys_name, val in sorted_d[::-1]:
+				if (sys_name in sys_name_conv.keys()):
+					out_name = sys_name_conv[sys_name]
+				else:
+					out_name = sys_name
+				f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, ((val*val)*100)/sum_uncs2))
+			
+			f_out.write("Total Uncertainty & %.2f  \\\\ \n" % (np.sqrt(sum_uncs2)))
+
+			#print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
 	#print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit -n _nom1 %s """ % (s,extra_params))
 	#print_and_do("""combine -M FitDiagnostics -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w --snapshotName FitDiagnostics -n _nom1 %s """ % (s,extra_params))
-
-
-
-	d = dict()
-	n = 0
-	for indi_par in individual_pars:
-		n+=1
-		freeze_str = par_to_freezestr(indi_par)
-		#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
-			  #  % (freeze_str,s, indi_par, extra_params))
-		#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
-		print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ % (freeze_str,s, indi_par, extra_params))
-		sys_unc = compute_sys("nom", indi_par, s)
-		#sys_unc = compute_sys("nom", indi_par, s)
-		d[indi_par] = sys_unc
-		#if(n>2): break
-
-	for group_par in group_pars:
-		n+=1
-		freeze_str = par_to_freezestr(group_par)
-		#print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % 
-		#       (freeze_str, s, group_par, extra_params))
-		#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
-		if group_par == 'autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18': 
-			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, 'mcstats', extra_params))
-			sys_unc = compute_sys("nom", "mcstats", s)
-		else:
-			print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, group_par, extra_params))
-			sys_unc = compute_sys("nom", group_par, s)
-		#sys_unc = compute_sys("nom", indi_par, s)
-		d[group_par] =sys_unc
-		#if(n>4): break
-
-	print(d)
-	sum_uncs2 = 0
-	os.system("mkdir %s \n" % options.odir)
-	with open("%s/%s_%s_m%s_sys_uncs_%s.txt" % (options.odir, chan, q, options.mLQ,ending), 'w') as f_out:
-		sorted_d = sorted(d.items(), key=operator.itemgetter(1))
-		f_out.write("Systematic uncertainties for bin %i\n" % options.mbin)
-		
-		for sys_name, val in sorted_d[::-1]:
-			# if (sys_name in sys_name_conv.keys()):
-			# 	out_name = sys_name_conv[sys_name]
-			# else:
-			# 	out_name = sys_name
-			sum_uncs2 += (val*val)
-
-		for sys_name, val in sorted_d[::-1]:
-			if (sys_name in sys_name_conv.keys()):
-				out_name = sys_name_conv[sys_name]
-			else:
-				out_name = sys_name
-			f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, ((val*val)*100)/sum_uncs2))
-		
-		f_out.write("Total Uncertainty & %.2f  \\\\ \n" % (np.sqrt(sum_uncs2)))
-
-	#print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
