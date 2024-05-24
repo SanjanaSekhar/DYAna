@@ -41,7 +41,7 @@ def get_sym_bin(idx, nBins):
 
     return sym_bin+1
 
-for mLQ in range(1000,5500,500):
+for mLQ in [2500]:
 	for year in [2016,2017,2018]:
 
 		fin = "combine/templates/LQm%i_merge_templates%i_%s.root"%(mLQ,year-2000,ext)

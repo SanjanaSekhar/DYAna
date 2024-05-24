@@ -15,7 +15,7 @@ parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 mLQ = options.mLQ
 chan = "ee"
 
-for mLQ in range(1000,5500,500):
+for mLQ in [2500]:
 	for year in [2016,2017,2018]:
 
 		fin = "combine/templates/LQm%i_merge_templates%i_%s.root"%(mLQ,year-2000,ext)
