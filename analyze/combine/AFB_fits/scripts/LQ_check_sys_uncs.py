@@ -37,7 +37,7 @@ if is_vec: ending+="_vec"
 extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
 if options.hadd:
-	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s/%s_%s_m%s_sys_uncs_%s.txt sys_uncs/"%(chan, q, ("_vec" if is_vec else ""), chan, q, options.mLQ, ending))
+	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_exp/%s_%s_m%s_sys_uncs_%s.txt sys_uncs/"%(chan, q, ("_vec" if is_vec else ""), chan, q, options.mLQ, ending))
 
 else:
 	if chan == "ee":
