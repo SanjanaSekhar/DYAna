@@ -144,8 +144,8 @@ if options.tar:
     if options.DY:
         print "Using DY tarball options"
         excludeList = ['LQ_Analysis/DYAna/analyze/input_files', 'LQ_Analysis/DYAna/analyze/condor_jobs', 'LQ_Analysis/DYAna/analyze/output_files', 'LQ_Analysis/DYAna/generator_stuff', 
-                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results', #'LQ_Analysis/DYAna/analyze/combine/templates',
-                       'LQ_Analysis/DYAna/analyze/combine/AFB_fits/postfit_plots' ]
+                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results', 'LQ_Analysis/DYAna/analyze/combine/LQ_cards',
+                       'LQ_Analysis/DYAna/analyze/combine/AFB_fits/postfit_plots','LQ_Analysis/DYAna/analyze/combine/AFB_fits/combine_review/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/gofs/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/gof_b_only/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/signal_injection/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/impacts/' ,'LQ_Analysis/DYAna/analyze/combine/AFB_fits/likelihood_scans/']
         options.tarname = "LQ_Analysis"
         for item in excludeList:
             #tar_cmd += " --exclude='`%s`' " % ("echo $CMSSW_BASE/src/" + item)

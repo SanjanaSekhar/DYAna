@@ -270,14 +270,14 @@ if options.sys_uncs:
 
     cmds = [
   
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u -o sys --ending %s \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d -o sys --ending %s \n "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u --vec True -o sys --ending %s \n "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d --vec True -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u --vec True -o sys --ending %s  \n"%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d --vec True -o sys --ending %s  \n"%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u -o sys --ending %s "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d --vec True -o sys --ending %s  "%date,
  
     ]
 
@@ -300,12 +300,12 @@ if options.sys_uncs:
         print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
         script_file = open(script_name, 'a+')
         script_file.write("mkdir sys\n")
-        script_file.write(cmd)
+        script_file.write(cmd+" --expected true \n")
         script_file.write(cpy_cmd)
         script_file.close()
         #print_and_do("cat %s" % script_name)
         print_and_do("chmod +x %s" % script_name)
-        print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s"  % (n_m_bins, script_name, labels[i]))
+        print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_exp"  % (n_m_bins, script_name, labels[i]))
         print_and_do("rm scripts/script3.sh")
 
 
@@ -318,23 +318,29 @@ if options.likelihood:
     "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d  -o likelihood_scans ",
     "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u --vec true -o likelihood_scans ",
     "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d --vec true -o likelihood_scans ",
-
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u  -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d  -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u --vec true -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d --vec true -o likelihood_scans ",
  
     ]
 
     labels = [
-     "likelihood_ee_u","likelihood_ee_d","likelihood_ee_u_vec","likelihood_ee_d_vec"
+     "likelihood_ee_u","likelihood_ee_d",
+     "likelihood_ee_u_vec","likelihood_ee_d_vec",
+     "likelihood_mumu_u","likelihood_mumu_d","likelihood_mumu_u_vec","likelihood_mumu_d_vec"
     ]
 
 
     cpy_cmd = "xrdcp -f likelihood_scans/* $1 \n"
     
-    poi = "yLQ2"
+    #poi = "RFscales16,RFscales1718"
  
     #["muISOBAR17", "muISOEND17","muIDEND17","muIDBAR17", "mufakesrw1b17", "mufakesrw2b17", "mufakesrw3b17", "mufakesrw4b17", "muISOBAR16", "muISOEND16","muIDEND16","muIDBAR16", "mufakesrw1b18", "mufakesrw2b18", "mufakesrw3b18", "mufakesrw4b18"]
+    #poi_list = ["elScaleStat16", "elSmear", "elScaleGain16", "elScaleSyst","elScaleStat17","elScaleGain17","elScaleGain18", "elScaleStat17"]
+    #poi_list = ["elIDENDPT", "elIDBARPT"]
+    poi_list=["RENORM16", "alphaS16", "REFAC16", "FAC16","REFAC1718", "RENORM1718", "FAC1718", "alphaS1718"]
     '''
-    poi_list = ["dy_xsec","nlo_sys", "muISOBAR18", "muISOEND18", "muIDSYS", "muIDEND18", "muISOSYS", "muIDBAR18", "mufakesrw1b16", "mufakesrw2b16", "mufakesrw3b16", "mufakesrw4b16"]
-    
     poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
      "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
       "MCStatBin24", "MCStatBin29", "MCStatBin30", "MCStatBin31", "MCStatBin35", "MCStatBin36", "MCStatBin37", 
@@ -349,20 +355,21 @@ if options.likelihood:
     for i in range(1,61):
         poi_list.append("prop_binY18_bin" + str(i))
     '''
-    for year in [-1]:
-        for i,cmd in enumerate(cmds):
-        #for m in range(1000,9500,500):
-        #for point in np.arange(0.28,1.5,0.005):
-        #for q in [0.025,0.16,0.5,0.84,0.975]:
-            #regular templates
-            script_name = "scripts/script3.sh"
-            print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
-            script_file = open(script_name, 'a+')
-            script_file.write("mkdir likelihood_scans\n")
-            script_file.write(cmd + " --poi %s --year %i\n "%(poi,year))
-            script_file.write(cpy_cmd)
-            script_file.close()
-            #print_and_do("cat %s" % script_name)
-            print_and_do("chmod +x %s" % script_name)
-            print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s"  % (n_m_bins, script_name, labels[i], year))
-            print_and_do("rm scripts/script3.sh")
+    for poi in poi_list:
+        for year in [-1]:
+           for i,cmd in enumerate(cmds):
+               #for m in range(1000,9500,500):
+               #for point in np.arange(0.28,1.5,0.005):
+               #for q in [0.025,0.16,0.5,0.84,0.975]:
+               #regular templates
+               script_name = "scripts/script3.sh"
+               print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+               script_file = open(script_name, 'a+')
+               script_file.write("mkdir likelihood_scans\n")
+               script_file.write(cmd + " --poi %s --year %i\n "%(poi,year))
+               script_file.write(cpy_cmd)
+               script_file.close()
+               #print_and_do("cat %s" % script_name)
+               print_and_do("chmod +x %s" % script_name)
+               print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s_%s"  % (n_m_bins, script_name, labels[i], year,poi))
+               print_and_do("rm scripts/script3.sh")
