@@ -1,0 +1,7 @@
+Systematic uncertainties for bin 0
+LQ LO reweighting & 0.34588 & 85.90  \\ 
+$\ttbar$ Cross Section & 0.10273 & 7.58  \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 0.08064 & 4.67  \\ 
+Muon Identification/Isolation & 0.04878 & 1.71  \\ 
+DY Cross Section & 0.01430 & 0.15  \\ 
+Total Uncertainty & 0.37  \\ 

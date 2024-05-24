@@ -1,0 +1,8 @@
+Systematic uncertainties for bin 0
+$\alpha_s$ + Renormalization/Factorization Scales & 0.85251 & 35.52  \\ 
+Electron Momentum Scale & 0.85008 & 35.32  \\ 
+Electron Identification/Isolation & 0.51694 & 13.06  \\ 
+LQ LO reweighting & 0.49646 & 12.05  \\ 
+$\ttbar$ Cross Section & 0.27882 & 3.80  \\ 
+DY Cross Section & 0.07238 & 0.26  \\ 
+Total Uncertainty & 1.43  \\ 
