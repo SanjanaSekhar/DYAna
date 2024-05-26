@@ -24,6 +24,7 @@ parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
 parser.add_option("--q",  default="u", help=" channel u,d")
 parser.add_option("--hadd",  default=False, help="hadd")
 parser.add_option("--ending", default="041123", help="date")
+parser.add_option("-s","--seed",  default=3456, type='int', help="random seed")
 (options, args) = parser.parse_args()
 
 chan = options.chan
@@ -36,7 +37,7 @@ year = -1
 is_vec = options.vec
 extra_params = ""
 ending = options.ending
-s = 3456
+s = options.seed
 if is_vec: ending+="_vec"
 extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
@@ -129,7 +130,7 @@ else:
 
 
 	make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,True, False)
-	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  %s " % (workspace, extra_params))
+	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  -s 3456 " % (workspace))
 	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
 	if(options.expected):
