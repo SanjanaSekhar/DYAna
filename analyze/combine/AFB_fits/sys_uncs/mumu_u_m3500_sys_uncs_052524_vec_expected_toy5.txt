@@ -1,0 +1,19 @@
+Systematic uncertainties for mumu-u-vec channel, mLQ = 3500, toy = 5
+LQ LO reweighting & 0.05204 & 45.96  \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 0.03079 & 16.09  \\ 
+$\ttbar$ Cross Section & 0.02059 & 7.19  \\ 
+Luminosity & 0.01901 & 6.13  \\ 
+PDFs & 0.01823 & 5.64  \\ 
+DY Cross Section & 0.01685 & 4.82  \\ 
+Muon Momentum Scale & 0.01684 & 4.82  \\ 
+MC and MisID Backgrounds Statistical Uncertainty & 0.01319 & 2.95  \\ 
+$e\mu$ Shape Corrections & 0.01030 & 1.80  \\ 
+Pileup & 0.00866 & 1.27  \\ 
+$\PGg\PGg$ Cross Section & 0.00723 & 0.89  \\ 
+Diboson Cross Section & 0.00655 & 0.73  \\ 
+Muon Trigger & 0.00550 & 0.51  \\ 
+Muon Identification/Isolation & 0.00497 & 0.42  \\ 
+Muon MisID Shape & 0.00459 & 0.36  \\ 
+Muon Trigger Prefire Correction & 0.00404 & 0.28  \\ 
+Muon MisID Normalization & 0.00289 & 0.14  \\ 
+Total Uncertainty & 0.08  \\ 

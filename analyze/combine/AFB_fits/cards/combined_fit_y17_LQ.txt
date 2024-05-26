@@ -28,7 +28,7 @@ nlo_sys         lnN      -       -        -      -        -        -       -    
 
 elFakes17       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
-#xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys elFakes16 elFakes17 elFakes18
+xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys elFakes16 elFakes17 elFakes18
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi17           lnN     1.020    1.020     1.020   1.020     1.020   1.020     -			1.020    	1.020	1.020		
@@ -38,7 +38,7 @@ lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     
 lumiBC           lnN     1.003    1.003     1.003   1.003     1.003   1.003     -			1.003    	1.003	1.003	 
 lumiGS           lnN     1.001    1.001     1.001   1.001     1.001   1.001     -			1.001    	1.001	1.001		  
 
-#lumis17 group = lumi17 lumiXY lumiLS lumiDB lumiBC lumiGS      
+lumis17 group = lumi17 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 ## prefire only for 16,17, hem only 18                                                                                

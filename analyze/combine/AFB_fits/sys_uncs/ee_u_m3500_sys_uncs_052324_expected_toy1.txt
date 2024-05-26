@@ -1,0 +1,3 @@
+Systematic uncertainties for ee-u channel, mLQ = 3500, toy = 1
+LQ LO reweighting & 0.86226 & 100.00  \\ 
+Total Uncertainty & 0.86  \\ 

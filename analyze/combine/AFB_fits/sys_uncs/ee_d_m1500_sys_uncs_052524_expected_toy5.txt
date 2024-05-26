@@ -1,0 +1,20 @@
+Systematic uncertainties for ee-d channel, mLQ = 1500, toy = 5
+LQ LO reweighting & 0.22721 & 45.99  \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 0.14274 & 18.15  \\ 
+Electron Identification/Isolation & 0.12984 & 15.02  \\ 
+MC and MisID Backgrounds Statistical Uncertainty & 0.11141 & 11.06  \\ 
+$\ttbar$ Cross Section & 0.04772 & 2.03  \\ 
+Electron Momentum Scale & 0.04614 & 1.90  \\ 
+DY Cross Section & 0.03534 & 1.11  \\ 
+Electron Trigger Prefire Correction & 0.03527 & 1.11  \\ 
+Pileup & 0.03365 & 1.01  \\ 
+Luminosity & 0.03267 & 0.95  \\ 
+Electron Trigger & 0.02582 & 0.59  \\ 
+$e\mu$ Shape Corrections & 0.01926 & 0.33  \\ 
+Electron Reconstruction & 0.01747 & 0.27  \\ 
+Electron MisID Normalization & 0.01327 & 0.16  \\ 
+Diboson Cross Section & 0.01171 & 0.12  \\ 
+Electron MisID Shape & 0.01012 & 0.09  \\ 
+PDFs & 0.00928 & 0.08  \\ 
+$\PGg\PGg$ Cross Section & 0.00677 & 0.04  \\ 
+Total Uncertainty & 0.34  \\ 
