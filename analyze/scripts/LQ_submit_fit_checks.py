@@ -270,14 +270,14 @@ if options.sys_uncs:
 
     cmds = [
   
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u -o sys --ending %s "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q u --vec True -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan ee --q d --vec True -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q u --vec True -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py --mLQ 2500 --chan mumu --q d --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan ee --q u -o sys --ending %s "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan ee --q d -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan mumu --q u -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan mumu --q d -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan ee --q u --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan ee --q d --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan mumu --q u --vec True -o sys --ending %s  "%date,
+    "python scripts/LQ_check_sys_uncs.py  --chan mumu --q d --vec True -o sys --ending %s  "%date,
  
     ]
 
@@ -288,26 +288,28 @@ if options.sys_uncs:
         #"limits_ee_s_vec","limits_mumu_s_vec"
     ]
 
-
+    ntoys = 10
+    seed = 1234
     cpy_cmd = "xrdcp -f sys/* $1 \n"
-
-    for i,cmd in enumerate(cmds):
-    #for m in range(1000,9500,500):
-    #for point in np.arange(0.28,1.5,0.005):
-    #for q in [0.025,0.16,0.5,0.84,0.975]:
-        #regular templates
-        script_name = "scripts/script3.sh"
-        print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
-        script_file = open(script_name, 'a+')
-        script_file.write("mkdir sys\n")
-        script_file.write(cmd+" --expected true \n")
-        script_file.write(cpy_cmd)
-        script_file.close()
-        #print_and_do("cat %s" % script_name)
-        print_and_do("chmod +x %s" % script_name)
-        print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_exp"  % (n_m_bins, script_name, labels[i]))
-        print_and_do("rm scripts/script3.sh")
-
+    for mass in [1000,1500,2000,2500,3000,3500]:
+	for toy in range(1,ntoys+1):
+            for i,cmd in enumerate(cmds):
+            #for m in range(1000,9500,500):
+            #for point in np.arange(0.28,1.5,0.005):
+            #for q in [0.025,0.16,0.5,0.84,0.975]:
+            #regular templates
+                script_name = "scripts/script3.sh"
+                print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+                script_file = open(script_name, 'a+')
+                script_file.write("mkdir sys\n")
+                script_file.write(cmd+" --expected true --mLQ %i --nToys 1 -s %i\n"%(mass,seed))
+                script_file.write(cpy_cmd)
+                script_file.close()
+                #print_and_do("cat %s" % script_name)
+                print_and_do("chmod +x %s" % script_name)
+                print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%i_exp_toy%i"  % (n_m_bins, script_name, labels[i], mass, toy+5))
+                print_and_do("rm scripts/script3.sh")
+                seed+=1
 
 if options.likelihood:
 
