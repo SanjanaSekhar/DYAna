@@ -4,6 +4,9 @@ from ROOT import *
 from LQ_utils import *
 from add_group_impact import *
 import numpy as np
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt 
 gROOT.SetBatch(True)
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
@@ -38,10 +41,16 @@ if is_vec: ending+="_vec"
 extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
 if options.hadd:
-	for options.mLQ in [1000,1500,2000,2500,3000,3500]:
-		for i in range(1,options.nToys+1):
-			print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp/%s_%s_m%s_sys_uncs_%s_toy%i.txt sys_uncs/"%(chan, q, ("_vec" if is_vec else ""),options.mLQ, chan, q, options.mLQ, ending, i))
-		
+
+	for is_vec in [False, True]:
+		for chan in ["ee","mumu"]:
+			for q in ["u","d"]:
+				for options.mLQ in [1000,1500,2000,2500,3000,3500]:
+					for i in range(1,options.nToys+1):
+						
+						#print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp/%s_%s_m%s_sys_uncs_%s_toy%i.txt sys_uncs/"%(chan, q, ("_vec" if is_vec else ""),options.mLQ, chan, q, options.mLQ, ending, i))
+						df1 = pd.read_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, options.mLQ, ending, i),delimiter="&",names=["Sys name","Contri","%% Contri"])
+						print(df1)
 else:
 	if chan == "ee":
 		#individual_pars, group_pars = ["nlo_sys"],[]		
