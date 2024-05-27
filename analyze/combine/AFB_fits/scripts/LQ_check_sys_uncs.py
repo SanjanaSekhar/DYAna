@@ -43,7 +43,7 @@ extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
 if options.hadd:
 
-	
+	'''
 	for chan in ["mumu","ee"]:
 		for q in ["u","d"]:
 			plt.figure(figsize=(9,9))
@@ -77,7 +77,7 @@ if options.hadd:
 			plt.xticks(rotation=90,fontsize=7)
 			plt.savefig("sys_uncs/%s_%s_sys_uncs_%s_allmLQ.png"%(chan, q, ending))
 			plt.close()
-	
+	'''
 	for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 		for chan in ["mumu","ee"]:
 			plt.figure(figsize=(9,9))
@@ -102,7 +102,7 @@ if options.hadd:
 				df_all["Sys name"] = df_all["Sys name"].str.replace("\PGg","\gamma",regex=False)
 				#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
 				print(df_all[['Sys name','Mean','Std']])						
-				plt.errorbar(df_all['Sys name'],df_all['Mean'], yerr=[-df_all["Std"],df_all["Std"]],linestyle=None, marker='o', label="%s-%s%s"%(chan,q,("-vec" if is_vec else "")))
+				plt.errorbar(df_all['Sys name'],df_all['Mean'], yerr=df_all["Std"],linestyle='none', marker='o',ecolor='black', label="%s-%s%s"%(chan,q,("-vec" if is_vec else "")))
 			plt.legend()
 			plt.title("%% contribution of systematics to %s%s channels, mLQ=%i GeV"%(chan,("-vec" if is_vec else ""),options.mLQ))
 			plt.xlabel("Systematic")
