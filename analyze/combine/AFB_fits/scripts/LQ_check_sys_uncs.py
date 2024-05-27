@@ -44,7 +44,7 @@ if options.expected: ending += "_expected"
 if options.hadd:
 
 	for is_vec in [True]:
-		for chan in ["ee"]:
+		for chan in ["mumu","ee"]:
 			for q in ["u","d"]:
 				for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 					for i in range(1,options.nToys+1):
@@ -67,8 +67,9 @@ if options.hadd:
 					#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
 					print(df_all[['Sys name','Mean']])						
 					df_all.to_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_alltoys.txt"%(chan, q, options.mLQ, ending),sep=' ',index=False)
-					plt.scatter(df_all['Sys name'],df_all['Mean'], label="%s-%s%s, mLQ=%i"%(chan,q,("-vec" if is_vec else ""),options.mLQ))
+					plt.scatter(df_all['Sys name'],df_all['Mean'], label="mLQ=%i GeV"%(options.mLQ))
 				plt.legend()
+				plt.figure(figsize=(10,7))
 				plt.title("%% contribution of systematics to %s-%s%s channel"%(chan,q,("-vec" if is_vec else "")))
 				plt.xlabel("Systematic")
 				plt.ylabel("%% contribution averaged over 15 toys")
