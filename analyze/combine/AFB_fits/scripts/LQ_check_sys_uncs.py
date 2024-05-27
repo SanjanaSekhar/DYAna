@@ -102,7 +102,7 @@ if options.hadd:
 				df_all["Sys name"] = df_all["Sys name"].str.replace("\PGg","\gamma",regex=False)
 				#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
 				print(df_all[['Sys name','Mean','Std']])						
-				plt.errorbar(df_all['Sys name'],df_all['Mean'], yerr=df_all["Std"],linestyle='none', marker='o',ecolor='black', label="%s-%s%s"%(chan,q,("-vec" if is_vec else "")))
+				plt.errorbar(df_all['Sys name'],df_all['Mean'], yerr=df_all["Std"],linestyle='none', marker='o', label="%s-%s%s"%(chan,q,("-vec" if is_vec else "")))
 			plt.legend()
 			plt.title("%% contribution of systematics to %s%s channels, mLQ=%i GeV"%(chan,("-vec" if is_vec else ""),options.mLQ))
 			plt.xlabel("Systematic")
