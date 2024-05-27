@@ -1,0 +1,19 @@
+Systematic uncertainties for mumu-d channel, mLQ = 1500, toy = 1
+LQ LO reweighting & 0.34801 & 22.43  \\ 
+DY Cross Section & 0.32646 & 19.74  \\ 
+Muon Momentum Scale & 0.32449 & 19.50  \\ 
+Luminosity & 0.32253 & 19.27  \\ 
+$\ttbar$ Cross Section & 0.19535 & 7.07  \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 0.18796 & 6.54  \\ 
+MC and MisID Backgrounds Statistical Uncertainty & 0.12332 & 2.82  \\ 
+PDFs & 0.08065 & 1.20  \\ 
+$e\mu$ Shape Corrections & 0.07160 & 0.95  \\ 
+Muon MisID Normalization & 0.02267 & 0.10  \\ 
+Diboson Cross Section & 0.02233 & 0.09  \\ 
+Pileup & 0.02223 & 0.09  \\ 
+Muon Identification/Isolation & 0.01999 & 0.07  \\ 
+Muon MisID Shape & 0.01905 & 0.07  \\ 
+$\PGg\PGg$ Cross Section & 0.01180 & 0.03  \\ 
+Muon Trigger & 0.00795 & 0.01  \\ 
+Muon Trigger Prefire Correction & 0.00671 & 0.01  \\ 
+Total Uncertainty & 0.73  \\ 

@@ -1,0 +1,20 @@
+Systematic uncertainties for ee-d-vec channel, mLQ = 3000, toy = 1
+LQ LO reweighting & 0.09615 & 47.53  \\ 
+Electron Identification/Isolation & 0.05641 & 16.36  \\ 
+MC and MisID Backgrounds Statistical Uncertainty & 0.04535 & 10.58  \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 0.03279 & 5.53  \\ 
+$e\mu$ Shape Corrections & 0.02561 & 3.37  \\ 
+Electron Momentum Scale & 0.02526 & 3.28  \\ 
+PDFs & 0.02401 & 2.96  \\ 
+$\ttbar$ Cross Section & 0.02202 & 2.49  \\ 
+Electron Reconstruction & 0.01891 & 1.84  \\ 
+Electron MisID Shape & 0.01743 & 1.56  \\ 
+Electron Trigger Prefire Correction & 0.01618 & 1.35  \\ 
+DY Cross Section & 0.01391 & 1.00  \\ 
+Electron MisID Normalization & 0.01258 & 0.81  \\ 
+Luminosity & 0.00952 & 0.47  \\ 
+Electron Trigger & 0.00758 & 0.30  \\ 
+Diboson Cross Section & 0.00703 & 0.25  \\ 
+Pileup & 0.00650 & 0.22  \\ 
+$\PGg\PGg$ Cross Section & 0.00440 & 0.10  \\ 
+Total Uncertainty & 0.14  \\ 

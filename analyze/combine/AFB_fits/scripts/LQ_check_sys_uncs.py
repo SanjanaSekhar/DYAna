@@ -43,15 +43,30 @@ extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
 if options.hadd:
 
-	for is_vec in [False, True]:
+	for is_vec in [True]:
 		for chan in ["ee","mumu"]:
 			for q in ["u","d"]:
 				for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 					for i in range(1,options.nToys+1):
-						
+						print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp_toy%i/%s_%s_m%s_sys_uncs_%s_toy1.txt sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, ("_vec" if is_vec else ""),options.mLQ,(i+5), chan, q, options.mLQ, ending,  chan, q, options.mLQ, ending, (i+5) ))
 						#print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp/%s_%s_m%s_sys_uncs_%s_toy%i.txt sys_uncs/"%(chan, q, ("_vec" if is_vec else ""),options.mLQ, chan, q, options.mLQ, ending, i))
-						df1 = pd.read_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, options.mLQ, ending, i),delimiter="&",names=["Sys name","Contri","%% Contri"])
-						print(df1)
+						'''
+						df1 = pd.read_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, options.mLQ, ending, i),delimiter="&",names=["Sys name","Contri","%% Contri"],dtype='string')
+						df1.drop(index=[0,len(df1)-1], inplace=True)
+						df1["%% Contri"] = df1["%% Contri"].str.replace("\\","")
+						#df1["Contri"] = pd.to_numeric(df1["Contri"])
+						df1.drop(columns="Contri", inplace=True)
+						df1["%% Contri"] = pd.to_numeric(df1["%% Contri"])
+						if i==1: df_all = df1.copy()
+						else: 
+							#df_all = pd.concat([df_all,df1])
+							df_all = pd.merge(df_all, df1, on="Sys name")
+						'''
+					#df_all["Mean"] = df_all.mean(axis=1)
+					#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
+					#print(df_all[['Sys name','Mean']])						
+
+					
 else:
 	if chan == "ee":
 		#individual_pars, group_pars = ["nlo_sys"],[]		
