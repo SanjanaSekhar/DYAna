@@ -44,13 +44,13 @@ if options.expected: ending += "_expected"
 if options.hadd:
 
 	for is_vec in [True]:
-		for chan in ["ee","mumu"]:
+		for chan in ["ee"]:
 			for q in ["u","d"]:
 				for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 					for i in range(1,options.nToys+1):
-						print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp_toy%i/%s_%s_m%s_sys_uncs_%s_toy1.txt sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, ("_vec" if is_vec else ""),options.mLQ,(i+5), chan, q, options.mLQ, ending,  chan, q, options.mLQ, ending, (i+5) ))
+						#print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp_toy%i/%s_%s_m%s_sys_uncs_%s_toy1.txt sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, ("_vec" if is_vec else ""),options.mLQ,(i+5), chan, q, options.mLQ, ending,  chan, q, options.mLQ, ending, (i+5) ))
 						#print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp/%s_%s_m%s_sys_uncs_%s_toy%i.txt sys_uncs/"%(chan, q, ("_vec" if is_vec else ""),options.mLQ, chan, q, options.mLQ, ending, i))
-						'''
+						
 						df1 = pd.read_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, options.mLQ, ending, i),delimiter="&",names=["Sys name","Contri","%% Contri"],dtype='string')
 						df1.drop(index=[0,len(df1)-1], inplace=True)
 						df1["%% Contri"] = df1["%% Contri"].str.replace("\\","")
@@ -61,11 +61,19 @@ if options.hadd:
 						else: 
 							#df_all = pd.concat([df_all,df1])
 							df_all = pd.merge(df_all, df1, on="Sys name")
-						'''
-					#df_all["Mean"] = df_all.mean(axis=1)
+						
+					df_all["Mean"] = df_all.mean(axis=1)
+					df_all["Sys name"] = df_all["Sys name"].str.replace("\PGg","\gamma",regex=False)
 					#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
-					#print(df_all[['Sys name','Mean']])						
-
+					print(df_all[['Sys name','Mean']])						
+					df_all.to_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_alltoys.txt"%(chan, q, options.mLQ, ending),sep=' ',index=False)
+					plt.plot(df_all['Sys name'],df_all['Mean'], label="%s-%s%s, mLQ=%i"%(chan,q,("-vec" if is_vec else ""),options.mLQ))
+				plt.legend()
+				plt.title("%% contribution of systematics to %s-%s%s channel"%(chan,q,("-vec" if is_vec else "")))
+				plt.xlabel("Systematic")
+				plt.ylabel("%% contribution averaged over 15 toys")
+				plt.savefig("sys_uncs/%s_%s_sys_uncs_%s_allmLQ.png"%(chan, q, ending))
+				plt.close()
 					
 else:
 	if chan == "ee":
