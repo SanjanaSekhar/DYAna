@@ -67,11 +67,12 @@ if options.hadd:
 					#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
 					print(df_all[['Sys name','Mean']])						
 					df_all.to_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_alltoys.txt"%(chan, q, options.mLQ, ending),sep=' ',index=False)
-					plt.plot(df_all['Sys name'],df_all['Mean'], label="%s-%s%s, mLQ=%i"%(chan,q,("-vec" if is_vec else ""),options.mLQ))
+					plt.scatter(df_all['Sys name'],df_all['Mean'], label="%s-%s%s, mLQ=%i"%(chan,q,("-vec" if is_vec else ""),options.mLQ))
 				plt.legend()
 				plt.title("%% contribution of systematics to %s-%s%s channel"%(chan,q,("-vec" if is_vec else "")))
 				plt.xlabel("Systematic")
 				plt.ylabel("%% contribution averaged over 15 toys")
+				plt.xticks(rotation=90)
 				plt.savefig("sys_uncs/%s_%s_sys_uncs_%s_allmLQ.png"%(chan, q, ending))
 				plt.close()
 					
