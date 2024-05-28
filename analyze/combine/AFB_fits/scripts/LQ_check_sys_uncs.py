@@ -43,10 +43,10 @@ extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
 if options.hadd:
 
-	'''
+	
 	for chan in ["mumu","ee"]:
 		for q in ["u","d"]:
-			plt.figure(figsize=(9,9))
+			plt.figure(figsize=(9,10))
 			for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 				for i in range(1,options.nToys+1):
 					#print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp_toy%i/%s_%s_m%s_sys_uncs_%s_toy1.txt sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, ("_vec" if is_vec else ""),options.mLQ,(i+5), chan, q, options.mLQ, ending,  chan, q, options.mLQ, ending, (i+5) ))
@@ -66,21 +66,21 @@ if options.hadd:
 				df_all["Mean"] = df_all.mean(axis=1)
 				df_all["Std"] = df_all.std(axis=1)
 				df_all["Sys name"] = df_all["Sys name"].str.replace("\PGg","\gamma",regex=False)
-				#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
-				print(df_all[['Sys name','Mean']])						
+				print("Average uncs for all mLQ: ",chan, q)
+				#print(df_all[['Sys name','Mean']])						
 				df_all.to_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_alltoys.txt"%(chan, q, options.mLQ, ending),sep=' ',index=False)
-				plt.errorbar(df_all['Sys name'],df_all['Mean'],yerr=[-df_all["Std"],df_all["Std"]], linestyle=None, marker='o',label="mLQ=%i GeV"%(options.mLQ))
-			plt.legend()
+				plt.errorbar(df_all['Sys name'],df_all['Mean'],yerr=[-df_all["Std"],df_all["Std"]], linestyle='none', marker='o',label="mLQ=%i GeV"%(options.mLQ))
+			plt.legend(fontsize='large')
 			plt.title("%% contribution of systematics to %s-%s%s channel"%(chan,q,("-vec" if is_vec else "")))
 			plt.xlabel("Systematic",fontsize=10)
 			plt.ylabel("%% contribution averaged over 15 toys")
 			plt.xticks(rotation=90,fontsize=7)
 			plt.savefig("sys_uncs/%s_%s_sys_uncs_%s_allmLQ.png"%(chan, q, ending))
 			plt.close()
-	'''
+	
 	for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 		for chan in ["mumu","ee"]:
-			plt.figure(figsize=(9,9))
+			plt.figure(figsize=(9,10))
 			for q in ["u","d"]:
 				for i in range(1,options.nToys+1):
 					#print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s_exp_toy%i/%s_%s_m%s_sys_uncs_%s_toy1.txt sys_uncs/%s_%s_m%s_sys_uncs_%s_toy%i.txt"%(chan, q, ("_vec" if is_vec else ""),options.mLQ,(i+5), chan, q, options.mLQ, ending,  chan, q, options.mLQ, ending, (i+5) ))
@@ -100,10 +100,10 @@ if options.hadd:
 				df_all["Mean"] = df_all.mean(axis=1)
 				df_all["Std"] = df_all.std(axis=1)
 				df_all["Sys name"] = df_all["Sys name"].str.replace("\PGg","\gamma",regex=False)
-				#print(df_all.loc[df_all['Sys name'].str.contains("LQ")])
-				print(df_all[['Sys name','Mean','Std']])						
+				print("Average uncs for all channels: ", chan, options.mLQ)
+				#print(df_all[['Sys name','Mean','Std']])						
 				plt.errorbar(df_all['Sys name'],df_all['Mean'], yerr=df_all["Std"],linestyle='none', marker='o', label="%s-%s%s"%(chan,q,("-vec" if is_vec else "")))
-			plt.legend()
+			plt.legend(fontsize='large')
 			plt.title("%% contribution of systematics to %s%s channels, mLQ=%i GeV"%(chan,("-vec" if is_vec else ""),options.mLQ))
 			plt.xlabel("Systematic")
 			plt.ylabel("%% contribution averaged over 15 toys")
