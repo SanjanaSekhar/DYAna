@@ -69,12 +69,13 @@ if options.hadd:
 				print("Average uncs for all mLQ: ",chan, q)
 				#print(df_all[['Sys name','Mean']])						
 				df_all.to_csv("sys_uncs/%s_%s_m%s_sys_uncs_%s_alltoys.txt"%(chan, q, options.mLQ, ending),sep=' ',index=False)
-				plt.errorbar(df_all['Sys name'],df_all['Mean'],yerr=[-df_all["Std"],df_all["Std"]], linestyle='none', marker='o',label="mLQ=%i GeV"%(options.mLQ))
+				plt.errorbar(df_all['Sys name'],df_all['Mean'],yerr=df_all["Std"], linestyle='none', marker='o',label="mLQ=%i GeV"%(options.mLQ))
 			plt.legend(fontsize='large')
 			plt.title("%% contribution of systematics to %s-%s%s channel"%(chan,q,("-vec" if is_vec else "")))
 			plt.xlabel("Systematic",fontsize=10)
 			plt.ylabel("%% contribution averaged over 15 toys")
 			plt.xticks(rotation=90,fontsize=7)
+			plt.tight_layout()
 			plt.savefig("sys_uncs/%s_%s_sys_uncs_%s_allmLQ.png"%(chan, q, ending))
 			plt.close()
 	
@@ -108,6 +109,7 @@ if options.hadd:
 			plt.xlabel("Systematic")
 			plt.ylabel("%% contribution averaged over 15 toys")
 			plt.xticks(rotation=90,fontsize=7)
+			plt.tight_layout()
 			plt.savefig("sys_uncs/%s_sys_uncs_%s_m%i.png"%(chan, ending,options.mLQ))
 			plt.close()	
 else:
