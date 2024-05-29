@@ -352,7 +352,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(3)
 				legends[hist_index].SetTextSize(0.04)
-				legends[hist_index].SetLegendFillColor(-1)
+				legends[hist_index].SetFillColor(-1)
 				
 				for entry in legends_list[hist_index][::-1]:
 					legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
