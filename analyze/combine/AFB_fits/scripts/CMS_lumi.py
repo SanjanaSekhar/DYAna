@@ -132,16 +132,16 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
     if( not outOfFrame ):
         if( drawLogo ):
             posX_ =   l + 0.045*(1-l-r)*W/H
-            posY_ = 1-t + 0.245*(1-t-b)
+            posY_ = 1-t - 0.045*(1-t-b)
             xl_0 = posX_
-            yl_0 = posY_ + 0.55
+            yl_0 = posY_ - 0.15
             xl_1 = posX_ + 0.15*H/W
             yl_1 = posY_
             CMS_logo = rt.TASImage("CMS-BW-label.png")
             pad_logo =  rt.TPad("logo","logo", xl_0, yl_0, xl_1, yl_1 )
             pad_logo.Draw()
             pad_logo.cd()
-            CMS_logo.Draw("X")
+            #CMS_logo.Draw("X")
             pad_logo.Modified()
             pad.cd()          
         else:

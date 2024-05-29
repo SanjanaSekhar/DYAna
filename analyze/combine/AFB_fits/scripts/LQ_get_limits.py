@@ -40,12 +40,12 @@ def plotLimits(channel):
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     #line_sp = ROOT.TLine(1000,1,1755,1)
-    line_sp2 = ROOT.TLine(1755,1.,1755,3.1)
+    line_sp2 = ROOT.TLine(1755,1.,1755,3.)
     x = array('d',[860,1175,1355,1755])
     y = array('d',[0.4,0.6,0.8,1.0])
     line_sp = ROOT.TGraph(4,x,y)
 
-    line_pp = ROOT.TLine(1435,0.,1435,3.1)
+    line_pp = ROOT.TLine(1435,0.,1435,3.)
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('m_{V_{#mu %s}} (GeV)'%(channel[0]))
@@ -65,7 +65,7 @@ def plotLimits(channel):
     axis.Draw('axis')
      
      # Create a legend in the top left
-    legend = PositionedLegend(0.3, 0.2, 3, 0.015)
+    legend = PositionedLegend(0.35, 0.2, 3, 0.015)
      
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
@@ -77,13 +77,14 @@ def plotLimits(channel):
 	line_sp.SetLineColor(kBlue)
 	line_sp2.SetLineColor(kBlue)
 	line_pp.SetLineColor(kRed+2)
-	line_sp.SetLineStyle(10)
-	line_sp2.SetLineStyle(10)
-	line_pp.SetLineStyle(10)
+	line_sp.SetLineStyle(7)
+	line_sp2.SetLineStyle(7)
+	line_pp.SetLineStyle(7)
 	line_pp.Draw("same") 
 	line_sp.Draw("same")
 	line_sp2.Draw("same")
-	legend.SetTextSize(0.05)
+	
+	legend.SetTextSize(0.04)
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
     legend.Draw()
