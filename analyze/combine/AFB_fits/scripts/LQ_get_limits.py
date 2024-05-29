@@ -48,17 +48,17 @@ def plotLimits(channel):
     line_pp = ROOT.TLine(1435,0.,1435,3.05)
     if is_vec:
 	if 'm' in channel: 
-		axis.GetXaxis().SetTitle('m_{V_{#mu %s}} (GeV)'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(V_{#mu %s}) (GeV)'%(channel[0]))
 		axis.GetYaxis().SetTitle('Limits on g_{#mu %s}'%(channel[0]))
 	else: 
-		axis.GetXaxis().SetTitle('m_{V_{e %s}} (GeV)'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(V_{e %s}) (GeV)'%(channel[0]))
 		axis.GetYaxis().SetTitle('Limits on g_{e %s}'%(channel[0]))
     else:
 	if 'm' in channel: 
-		axis.GetXaxis().SetTitle('m_{S_{#mu %s}} (GeV)'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(S_{#mu %s}) (GeV)'%(channel[0]))
 		axis.GetYaxis().SetTitle('Limits on y_{#mu %s}'%(channel[0]))
         else: 
-		axis.GetXaxis().SetTitle('m_{S_{e %s}} (GeV)'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(S_{e %s}) (GeV)'%(channel[0]))
 		axis.GetYaxis().SetTitle('Limits on y_{e %s}'%(channel[0]))
 		
     pads[0].cd()
@@ -87,11 +87,18 @@ def plotLimits(channel):
 	legend.SetTextSize(0.035)
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
+    
+    
     legend.Draw()
      
      # Re-draw the frame and tick marks
+    #pads[0].GetFrame().GetXaxis().SetTickLength(0.05)
+    #pads[0].GetFrame().GetYaxis().SetTickLength(0.05)
+    #pads[0].GetFrame().GetXaxis().SetLabelSize(0.05)
+    #pads[0].GetFrame().GetYaxis().SetLabelSize(0.05)
     pads[0].RedrawAxis()
     pads[0].GetFrame().Draw()
+ 
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
