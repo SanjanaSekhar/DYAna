@@ -113,7 +113,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 			if 'pe' in datastyle.lower():
 				hist.SetMarkerColorAlpha(kBlack,alpha)
 				hist.SetMarkerStyle(8)
-				hist.SetMarkerSize(2)
+				hist.SetMarkerSize(4)
 			if 'hist' in datastyle.lower():
 				hist.SetFillColorAlpha(0,0)
 
@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.2,0.09,0.8,0.22+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.8,0.5,0.8,0.82+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -186,7 +186,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					# bkg.Sumw2()
 					bkg.SetLineColor(kBlack)
 					if logy:
-						bkg.SetMinimum(1e-3)
+						bkg.SetMinimum(1e-1)
 
 					if colors[bkg_index] != None:
 						bkg.SetFillColor(colors[bkg_index])
@@ -218,7 +218,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for h in histList:
 					h.SetMaximum(yMax*max_scaling)
 					if logy == True:
-						h.SetMaximum(yMax*15)
+						h.SetMaximum(yMax*100)
 					else:
 						h.SetMinimum(1e-3)
 
@@ -232,8 +232,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				data_leg_title = hist.GetTitle()
 				if len(titles) > 0:
 					hist.SetTitle(titles[hist_index])
-				hist.GetYaxis().SetTitleOffset(TOffset+0.35)
-				hist.GetXaxis().SetTitleOffset(1.35)
+				hist.GetYaxis().SetTitleOffset(TOffset+0.5)
+				hist.GetXaxis().SetTitleOffset(1.5)
 				hist.GetYaxis().SetTitle('Events / bin')
 				hist.GetYaxis().SetLabelSize(mLS)
 				hist.GetYaxis().SetTitleSize(mTS)
@@ -243,7 +243,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 				#if logy == True:
-				hist.SetMinimum(1e-3)
+				hist.SetMinimum(1e-1)
 
 				hist.SetBinErrorOption(ROOT.TH1.kPoisson)
 				hist.Draw(datastyle)
@@ -257,7 +257,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					signals[hist_index].SetLineColor(kBlue)
 					signals[hist_index].SetLineWidth(5)
 					#if logy == True:
-					signals[hist_index].SetMinimum(1e-3)
+					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
 					else: this_sig_name = signalNames[0]
 					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
@@ -350,13 +350,14 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                         latext2.DrawLatex(text_center, text_y+0.37, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
-				legends[hist_index].SetNColumns(2)
+				legends[hist_index].SetNColumns(3)
 				legends[hist_index].SetTextSize(0.04)
+				legends[hist_index].SetLegendFillColor(-1)
 				
 				for entry in legends_list[hist_index][::-1]:
 					legends[hist_index].AddEntry(entry[0], entry[1], entry[2])
 
-				legends[hist_index].AddEntry(totlist[hist_index], "Sys. unc.", "f")
+				#legends[hist_index].AddEntry(totlist[hist_index], "Sys. unc.", "f")
 
 
 				ratio, ratio_sys_unc = makeRatio(hist,totlist[hist_index])
@@ -365,7 +366,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					#chi2 += pull.GetBinContent(i)**2;
 				#print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pull.GetNbinsX()))
 
-				legends[hist_index].AddEntry(ratio_sys_unc, "Total fit. unc.", "f")
+				legends[hist_index].AddEntry(ratio_sys_unc, "Total fit unc.", "f")
 
 
 
@@ -773,7 +774,8 @@ def plot_combined():
 	del label_list[LQ_index]
 	del color_list[LQ_index]
 			
-	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=False) 
+	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, 
+		signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
 def plot_yearly():
 	signals, signalNames = [],[]
