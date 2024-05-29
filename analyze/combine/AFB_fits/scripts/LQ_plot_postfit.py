@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.3,0.7,0.8,0.82+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.37,0.7,0.8,0.72+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -218,7 +218,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for h in histList:
 					h.SetMaximum(yMax*max_scaling)
 					if logy == True:
-						h.SetMaximum(yMax*100)
+						h.SetMaximum(yMax*1000)
 					else:
 						h.SetMinimum(1e-3)
 
@@ -233,7 +233,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if len(titles) > 0:
 					hist.SetTitle(titles[hist_index])
 				hist.GetYaxis().SetTitleOffset(TOffset+0.5)
-				hist.GetXaxis().SetTitleOffset(1.5)
+				hist.GetXaxis().SetTitleOffset(1.3)
 				hist.GetYaxis().SetTitle('Events / bin')
 				hist.GetYaxis().SetLabelSize(mLS)
 				hist.GetYaxis().SetTitleSize(mTS)
@@ -255,7 +255,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				# Do the signals
 				if len(signals) > 0: 
 					signals[hist_index].SetLineColor(kBlue)
-					signals[hist_index].SetLineWidth(5)
+					signals[hist_index].SetLineWidth(7)
 					#if logy == True:
 					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
@@ -290,7 +290,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 				lstyle = 7
-				lwidth = 2
+				lwidth = 4
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
@@ -305,7 +305,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						l = TLine(line_x, 0, line_x, line_max+0.3)
 						l.SetLineColor(ROOT.kRed)
 						l.SetLineStyle(9)
-						l.SetLineWidth(3)
+						l.SetLineWidth(5)
 					else: 
 						l.SetLineColor(ROOT.kBlack)
 						l.SetLineStyle(lstyle)
@@ -405,7 +405,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 							 
 				ratio_sys_unc.GetYaxis().SetLabelSize(LS)
 				ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
-				ratio_sys_unc.GetYaxis().SetNdivisions(NDiv+5)
+				ratio_sys_unc.GetYaxis().SetNdivisions(NDiv)
 				ratio_sys_unc.GetYaxis().SetTitle("Data / fit")
 
 				ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
@@ -416,7 +416,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				ratio_sys_unc.GetXaxis().SetTitle(xtitle)
 				ratio_sys_unc.GetXaxis().SetTickLength(0.06)
 
-				ratio_sys_unc.SetMarkerSize(5)
+				ratio_sys_unc.SetMarkerSize(15)
 				#ratio_sys_unc.SetFillColor(ROOT.kBlack)
 				#ratio_sys_unc.SetFillStyle(3015)
 				ratio_sys_unc.SetLineColor(ROOT.kGray)
