@@ -48,18 +48,18 @@ def plotLimits(channel):
     line_pp = ROOT.TLine(1435,0.,1435,3.05)
     if is_vec:
 	if 'm' in channel: 
-		axis.GetXaxis().SetTitle('m(V_{#mu %s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on g_{#mu %s}'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(V_{#mu%s}) (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('Limits on g_{#mu%s}'%(channel[0]))
 	else: 
-		axis.GetXaxis().SetTitle('m(V_{e %s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on g_{e %s}'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(V_{e%s}) (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('Limits on g_{e%s}'%(channel[0]))
     else:
 	if 'm' in channel: 
-		axis.GetXaxis().SetTitle('m(S_{#mu %s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on y_{#mu %s}'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(S_{#mu%s}) (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('Limits on y_{#mu%s}'%(channel[0]))
         else: 
-		axis.GetXaxis().SetTitle('m(S_{e %s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on y_{e %s}'%(channel[0]))
+		axis.GetXaxis().SetTitle('m(S_{e%s}) (GeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('Limits on y_{e%s}'%(channel[0]))
 		
     pads[0].cd()
     axis.Draw('axis')
