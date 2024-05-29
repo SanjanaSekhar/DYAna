@@ -43,8 +43,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 	if len(histlist) == 1:
-		width = 2000
-		height = 2000
+		width = 3000
+		height = 3000
 		padx = 1
 		pady = 1
 	elif len(histlist) == 2:
@@ -218,7 +218,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for h in histList:
 					h.SetMaximum(yMax*max_scaling)
 					if logy == True:
-						h.SetMaximum(yMax*10)
+						h.SetMaximum(yMax*15)
 					else:
 						h.SetMinimum(0.)
 
@@ -238,7 +238,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				hist.GetYaxis().SetLabelSize(mLS)
 				hist.GetYaxis().SetTitleSize(mTS)
 				hist.GetYaxis().SetNdivisions(505)
-				hist.GetXaxis().SetLabelOffset(999)
+				hist.GetXaxis().SetLabelOffset(0.3)
 				hist.SetLineWidth(2)
 
 
