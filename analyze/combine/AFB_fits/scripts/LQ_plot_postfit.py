@@ -773,7 +773,7 @@ def plot_combined():
 	del label_list[LQ_index]
 	del color_list[LQ_index]
 			
-	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
+	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=False) 
 
 def plot_yearly():
 	signals, signalNames = [],[]
