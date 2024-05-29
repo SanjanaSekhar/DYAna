@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.8,0.5,0.8,0.82+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.3,0.7,0.8,0.82+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -400,23 +400,23 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 				ratio_sys_unc.GetYaxis().SetRangeUser(ratio_range[0], ratio_range[1])
-				ratio_sys_unc.GetYaxis().SetTitleOffset(lTOffset)
+				ratio_sys_unc.GetYaxis().SetTitleOffset(lTOffset+0.111)
 				ratio_sys_unc.GetYaxis().SetTickLength(0.04)
 							 
 				ratio_sys_unc.GetYaxis().SetLabelSize(LS)
 				ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
-				ratio_sys_unc.GetYaxis().SetNdivisions(NDiv)
+				ratio_sys_unc.GetYaxis().SetNdivisions(NDiv+5)
 				ratio_sys_unc.GetYaxis().SetTitle("Data / fit")
 
 				ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
-				ratio_sys_unc.GetXaxis().SetTitleOffset(1.)
-				ratio_sys_unc.GetXaxis().SetLabelOffset(0.05)
+				ratio_sys_unc.GetXaxis().SetTitleOffset(1.5)
+				ratio_sys_unc.GetXaxis().SetLabelOffset(0.04)
 				ratio_sys_unc.GetXaxis().SetLabelSize(LS)
 				ratio_sys_unc.GetXaxis().SetTitleSize(XTS)
 				ratio_sys_unc.GetXaxis().SetTitle(xtitle)
 				ratio_sys_unc.GetXaxis().SetTickLength(0.06)
 
-				ratio_sys_unc.SetMarkerSize(2)
+				ratio_sys_unc.SetMarkerSize(5)
 				#ratio_sys_unc.SetFillColor(ROOT.kBlack)
 				#ratio_sys_unc.SetFillStyle(3015)
 				ratio_sys_unc.SetLineColor(ROOT.kGray)
