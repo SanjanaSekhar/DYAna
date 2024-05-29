@@ -84,8 +84,8 @@ def plotLimits(channel):
 	line_sp.Draw("same")
 	line_sp2.Draw("same")
 	legend.SetTextSize(0.03)
-	legend.AddEntry(line_pp,"CMS Limit from arXiv:1811.01197","L")
-    	legend.AddEntry(line_sp,"CMS Limit from arXiv:1509.03750","L")
+	legend.AddEntry(line_pp,"arXiv:1811.01197","L")
+    	legend.AddEntry(line_sp,"arXiv:1509.03750","L")
     legend.Draw()
      
      # Re-draw the frame and tick marks
@@ -94,7 +94,7 @@ def plotLimits(channel):
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
-    FixBothRanges(pads[0], 0, 0, 3., 0.25)
+    FixBothRanges(pads[0], 0, 0, 2., 0.25)
      
      
 # Standard CMS logo
