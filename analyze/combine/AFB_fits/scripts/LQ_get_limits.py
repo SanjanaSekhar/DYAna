@@ -65,7 +65,7 @@ def plotLimits(channel):
     axis.Draw('axis')
      
      # Create a legend in the top left
-    legend = PositionedLegend(0.55, 0.2, 3, 0.015)
+    legend = PositionedLegend(0.75, 0.2, 3, 0.015)
      
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
@@ -94,7 +94,7 @@ def plotLimits(channel):
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
-    FixBothRanges(pads[0], 0, 0, 2.5, 0.25)
+    FixBothRanges(pads[0], 0, 0, 2.3, 0.25)
      
      
 # Standard CMS logo
