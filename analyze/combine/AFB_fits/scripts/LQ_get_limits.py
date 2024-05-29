@@ -102,8 +102,8 @@ def plotLimits(channel):
     tdrstyle.setTDRStyle()
     CMS_lumi.CMS_lumi(pads[0], year, 11) 
     #canv.Print('.pdf')
-    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_y%i_%s.png'%(channel,channel,year-2000, options.ending))
-    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_y%i_%s.png'%(channel,channel,year-2000, options.ending))
+    if(is_vec): canv.Print('LQ_cards/%s/limit_plots/limits_%s_vec_y%i_%s.pdf'%(channel,channel,year-2000, options.ending))
+    else: canv.Print('LQ_cards/%s/limit_plots/limits_%s_y%i_%s.pdf'%(channel,channel,year-2000, options.ending))
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
