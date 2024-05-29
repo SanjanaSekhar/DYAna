@@ -220,7 +220,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					if logy == True:
 						h.SetMaximum(yMax*15)
 					else:
-						h.SetMinimum(0.)
+						h.SetMinimum(1e-3)
 
 				
 				mLS = 0.05
@@ -232,18 +232,18 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				data_leg_title = hist.GetTitle()
 				if len(titles) > 0:
 					hist.SetTitle(titles[hist_index])
-				hist.GetYaxis().SetTitleOffset(TOffset)
-				hist.GetXaxis().SetTitleOffset(1.2)
+				hist.GetYaxis().SetTitleOffset(TOffset+0.35)
+				hist.GetXaxis().SetTitleOffset(1.35)
 				hist.GetYaxis().SetTitle('Events / bin')
 				hist.GetYaxis().SetLabelSize(mLS)
 				hist.GetYaxis().SetTitleSize(mTS)
 				hist.GetYaxis().SetNdivisions(505)
-				hist.GetXaxis().SetLabelOffset(0.3)
+				hist.GetXaxis().SetLabelOffset(999)
 				hist.SetLineWidth(2)
 
 
-				if logy == True:
-					hist.SetMinimum(1e-3)
+				#if logy == True:
+				hist.SetMinimum(1e-3)
 
 				hist.SetBinErrorOption(ROOT.TH1.kPoisson)
 				hist.Draw(datastyle)
@@ -256,8 +256,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if len(signals) > 0: 
 					signals[hist_index].SetLineColor(kBlue)
 					signals[hist_index].SetLineWidth(5)
-					if logy == True:
-						signals[hist_index].SetMinimum(1e-3)
+					#if logy == True:
+					signals[hist_index].SetMinimum(1e-3)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
 					else: this_sig_name = signalNames[0]
 					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
@@ -268,7 +268,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				totlist[hist_index].SetFillColor(kBlack)
 				totlist[hist_index].SetFillStyle(3354)
 				totlist[hist_index].SetMarkerStyle(20)
-				totlist[hist_index].SetMarkerSize(0.03)
+				totlist[hist_index].SetMarkerSize(0.05)
 
 				totlist[hist_index].Draw('e2 same')
 
@@ -301,11 +301,15 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
 					l = TLine(line_x, 0, line_x, line_max)
-					if line_vals[idx] == 20 or line_vals[idx] == 40: l.SetLineColor(ROOT.kBlue)
-					else: l.SetLineColor(ROOT.kBlack)
-					l.SetLineStyle(lstyle)
-					if line_vals[idx] == 20 or line_vals[idx] == 40: l.SetLineWidth(2)
-					else: l.SetLineWidth(lwidth)
+					if line_vals[idx] == 20 or line_vals[idx] == 40: 
+						l = TLine(line_x, 0, line_x, line_max+0.3)
+						l.SetLineColor(ROOT.kRed)
+						l.SetLineStyle(9)
+						l.SetLineWidth(3)
+					else: 
+						l.SetLineColor(ROOT.kBlack)
+						l.SetLineStyle(lstyle)
+						l.SetLineWidth(lwidth)
 					l.Draw()
 					lines.append(l)
 
