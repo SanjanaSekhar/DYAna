@@ -94,7 +94,7 @@ def plotLimits(channel):
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
-    FixBothRanges(pads[0], 0, 0, 2., 0.25)
+    FixBothRanges(pads[0], 0, 0, 2.5, 0.25)
      
      
 # Standard CMS logo
