@@ -40,12 +40,12 @@ def plotLimits(channel):
  # Create an empty TH1 from the first TGraph to serve as the pad axis and frame
     axis = CreateAxisHist(graphs.values()[0])
     #line_sp = ROOT.TLine(1000,1,1755,1)
-    line_sp2 = ROOT.TLine(1755,1.,1755,3.)
+    line_sp2 = ROOT.TLine(1755,1.,1755,3.05)
     x = array('d',[860,1175,1355,1755])
     y = array('d',[0.4,0.6,0.8,1.0])
     line_sp = ROOT.TGraph(4,x,y)
 
-    line_pp = ROOT.TLine(1435,0.,1435,3.)
+    line_pp = ROOT.TLine(1435,0.,1435,3.05)
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('m_{V_{#mu %s}} (GeV)'%(channel[0]))
@@ -84,7 +84,7 @@ def plotLimits(channel):
 	line_sp.Draw("same")
 	line_sp2.Draw("same")
 	
-	legend.SetTextSize(0.04)
+	legend.SetTextSize(0.035)
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
     legend.Draw()
