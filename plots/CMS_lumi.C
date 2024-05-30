@@ -103,7 +103,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
   latex.SetTextAlign(31); 
   //latex.SetTextSize(lumiTextSize*t);    
   latex.SetTextSize(0.05);
-  latex.DrawLatex(1-r,1-t+lumiTextOffset*t,lumiText);
+  latex.DrawLatex(1-r,1-t+lumiTextOffset*t-0.02,lumiText);
 
   if( outOfFrame )
     {
@@ -152,7 +152,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       latex.SetTextFont(cmsTextFont);
       latex.SetTextSize(cmsTextSize*t);
       latex.SetTextAlign(align_);
-      if(draw_CMS) latex.DrawLatex(posX_, posY_+0.1, cmsText);
+      if(draw_CMS) latex.DrawLatex(posX_, posY_+0.08, cmsText);
       if( writeExtraText ) 
         {
           latex.SetTextFont(extraTextFont);
