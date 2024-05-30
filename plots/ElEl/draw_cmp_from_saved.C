@@ -427,8 +427,9 @@ void draw_cmp_from_saved(){
     float hmin = 0.001;
     sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
-    CMS_lumi(p_m, year, 11 );
-    //CMS_lumi(c_m, year, 11 );
+    //CMS_lumi(p_m, year, 11 );
+    CMS_lumi(c_m, year, 11 );
+    p_m->cd();
     LQu_m->Draw("hist  same");
     LQu_m->Print("range");
     LQu_vec_m->Draw("hist  same");
@@ -463,8 +464,9 @@ void draw_cmp_from_saved(){
 
     sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos #theta_{R}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_cost, year, 11);
-    //CMS_lumi(c_cost, year, 11 );
+    //CMS_lumi(p_cost, year, 11);
+    CMS_lumi(c_cost, year, 11 );
+    p_cost->cd();
     LQu_cost->Draw("hist  same");
     LQu_vec_cost->Draw("hist  same");
     sprintf(plt_file, "%sElElComb_cost_cmp.png", plot_dir);
@@ -492,8 +494,9 @@ void draw_cmp_from_saved(){
 
     sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "Dielectron rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_rap, year, 11);
-    //CMS_lumi(c_rap, year, 11 );
+    //CMS_lumi(p_rap, year, 11);
+    CMS_lumi(c_rap, year, 11 );
+    p_rap->cd();
     LQu_rap->Draw("hist  same");
     LQu_vec_rap->Draw("hist  same");
     sprintf(plt_file, "%sElElComb_rap_cmp.png", plot_dir);
