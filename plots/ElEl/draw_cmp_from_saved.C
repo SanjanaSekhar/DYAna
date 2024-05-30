@@ -409,8 +409,8 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_start_m = 0.34;
-    float y_start_m = 0.6;
+    float x_start_m = 0.2;
+    float y_start_m = 0.55;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
@@ -418,7 +418,7 @@ void draw_cmp_from_saved(){
 
 
     int year = -1;
-    float hmax = 1000;
+    float hmax = 7000;
     //if(year == 2016)
     //    hmax *= 0.625;
     //if(year == 2017)
@@ -440,8 +440,8 @@ void draw_cmp_from_saved(){
     
     //float x_start_c = 0.57 - x_size/2;
     //float y_start_c = 0.14;
-    float x_start_c = 0.34;
-    float y_start_c = 0.6;
+    float x_start_c = 0.2;
+    float y_start_c = 0.55;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
     leg2->SetY1(y_start_c);
