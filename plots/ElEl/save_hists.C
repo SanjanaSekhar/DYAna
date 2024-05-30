@@ -46,7 +46,7 @@ void save_hists(){
         init(year);
         init_indv_bkgs(year);
 
-        float yLQ = 5.0; float gLQ = 3.0;
+        float yLQ = 3.0; float gLQ = 2.0;
         float m_LQ = 2500.;
         int n_pt_bins1 = 7;
         Float_t pt_bins1[] = {0., 10., 20., 30., 50., 70., 100., 300., 700. };
