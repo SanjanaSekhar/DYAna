@@ -307,8 +307,8 @@ void draw_cmp_from_saved(){
     m_stack->Add(QCD_m);
     m_stack->Add(top_m);
     m_stack->Add(dy_m);
-     m_stack->Add(LQu_m);
-     m_stack->Add(LQu_vec_m);
+     //m_stack->Add(LQu_m);
+     //m_stack->Add(LQu_vec_m);
 
 
     THStack *cost_stack = new THStack("cost_stack", "Cos(#theta) Distribution: Data vs MC; Cos(#theta)_{r}");
@@ -317,8 +317,8 @@ void draw_cmp_from_saved(){
     cost_stack->Add(QCD_cost);
     cost_stack->Add(top_cost);
     cost_stack->Add(dy_cost);
-    cost_stack->Add(LQu_cost);
-    cost_stack->Add(LQu_vec_cost);
+    //cost_stack->Add(LQu_cost);
+    //cost_stack->Add(LQu_vec_cost);
 
 
     THStack *rap_stack = new THStack("rap_stack", "DiElectron Rapidity Distribution: Data vs MC; y");
@@ -327,8 +327,8 @@ void draw_cmp_from_saved(){
     rap_stack->Add(QCD_rap);
     rap_stack->Add(top_rap);
     rap_stack->Add(dy_rap);
-    rap_stack->Add(LQu_rap);
-    rap_stack->Add(LQu_vec_rap);
+    //rap_stack->Add(LQu_rap);
+    //rap_stack->Add(LQu_vec_rap);
 
 
 
