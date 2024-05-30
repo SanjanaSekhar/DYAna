@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.3,0.7,0.9,0.8+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.3,0.7,0.9,0.75+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -218,7 +218,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for h in histList:
 					h.SetMaximum(yMax*max_scaling)
 					if logy == True:
-						h.SetMaximum(yMax*1000)
+						h.SetMaximum(yMax*7000)
 					else:
 						h.SetMinimum(1e-3)
 
