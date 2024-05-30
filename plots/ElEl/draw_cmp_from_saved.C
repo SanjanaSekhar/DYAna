@@ -448,7 +448,7 @@ void draw_cmp_from_saved(){
     leg2->SetY2(y_start_c+y_size);
 
     
-    logy = true;
+    logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
     hmax = 1300;
