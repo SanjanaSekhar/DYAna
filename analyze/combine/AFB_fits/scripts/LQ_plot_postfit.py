@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.3,0.65,0.9,0.72+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.35,0.65,0.9,0.73+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -294,7 +294,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
-				line_max = 2e3
+				line_max = 5e3
 				lines = []
 				texts = []
 
@@ -302,7 +302,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					line_x = line_vals[idx] + line_eps
 					l = TLine(line_x, 0, line_x, line_max)
 					if line_vals[idx] == 20 or line_vals[idx] == 40: 
-						l = TLine(line_x, 0, line_x, 1e4)
+						l = TLine(line_x, 0, line_x, 2e4)
 						l.SetLineColor(ROOT.kRed)
 						l.SetLineStyle(9)
 						l.SetLineWidth(3)
