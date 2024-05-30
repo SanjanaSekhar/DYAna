@@ -51,7 +51,7 @@ void save_hists(){
         setup_all_SFs(year);
 
         float yLQ = 2.0; float gLQ =1.0;
-        float m_LQ = 2000.;
+        float m_LQ = 2500.;
 
         int n_pt_bins1 = 7;
         float pt_low = 0.;

@@ -337,7 +337,7 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_size = 0.5;
+    float x_size = 0.7;
     float y_size = 0.3;
 
 
@@ -358,9 +358,9 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg1->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=2.0)");
-    leg1->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=1.0)");
-    leg1->SetTextSize(0.04);
+    leg1->AddEntry(LQu_m, "2.5 TeV S_{#mu u} (y_{#mu u}=2.0)");
+    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{#mu u} (g_{#mu u}=1.0)");
+    leg1->SetTextSize(0.05);
 
 
     leg2->AddEntry(dy_m, "DY", "f");
@@ -368,9 +368,9 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg2->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=2.0)");
-    leg2->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=1.0)");
-    leg2->SetTextSize(0.04);
+    leg2->AddEntry(LQu_m, "2.5 TeV S_{#mu u} (y_{#mu u}=2.0)");
+    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{#mu u} (g_{#mu u}=1.0)");
+    leg2->SetTextSize(0.05);
 
 
     leg3->AddEntry(dy_m, "DY", "f");
@@ -378,9 +378,9 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg3->AddEntry(LQu_m, "2 TeV S_{#mu u} (y_{#mu u}=2.0)");
-    leg3->AddEntry(LQu_vec_m, "2 TeV V_{#mu u} (g_{#mu u}=1.0)");
-    leg3->SetTextSize(0.04);
+    leg3->AddEntry(LQu_m, "2.5 TeV S_{#mu u} (y_{#mu u}=2.0)");
+    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{#mu u} (g_{#mu u}=1.0)");
+    leg3->SetTextSize(0.05);
 
 
     leg1->SetX1NDC(0.7);
@@ -423,8 +423,8 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_start_m = 0.325;
-    float y_start_m = 0.6;
+    float x_start_m = 0.2;
+    float y_start_m = 0.55;
     leg1->SetX1(x_start_m);
     leg1->SetX2(x_start_m+x_size);
     leg1->SetY1(y_start_m);
@@ -432,7 +432,7 @@ void draw_cmp_from_saved(){
 
 
     float hmax = 1000;
-    float hmin = 0.1;
+    float hmin = 0.001;
     // if(year == 2016)
     //     hmax *= 0.25;
     // if(year == 2017)
@@ -442,7 +442,8 @@ void draw_cmp_from_saved(){
 
     sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
-    CMS_lumi(p_m, year, 11 );
+    CMS_lumi(c_m, year, 11 );
+    p_m->cd();
     LQu_m->Draw("hist  same");
     LQu_vec_m->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_m_cmp.png", plot_dir, file_label );
@@ -453,8 +454,8 @@ void draw_cmp_from_saved(){
     
     //float x_start_c = 0.57 - x_size/2;
     //float y_start_c = 0.14;
-    float x_start_c = 0.325;
-    float y_start_c = 0.6;
+    float x_start_c = 0.2;
+    float y_start_c = 0.55;
     leg2->SetX1(x_start_c);
     leg2->SetX2(x_start_c+x_size);
     leg2->SetY1(y_start_c);
@@ -477,7 +478,8 @@ void draw_cmp_from_saved(){
 
     sprintf(y_ax_label, "Events / %.1f", cost_bin_size);
     std::tie(c_cost, p_cost) = make_stack_ratio_plot(data_cost, cost_stack, leg2, "cost", "cos #theta_{R}",y_ax_label, plot_label,  hmax, logy,logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_cost, year, 11);
+    CMS_lumi(c_cost, year, 11);
+    p_cost->cd();
     LQu_cost->Draw("hist  same");
     LQu_vec_cost->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_cost_cmp.png", plot_dir, file_label);
@@ -505,7 +507,8 @@ void draw_cmp_from_saved(){
     //ratio_range = 0.2;
     sprintf(y_ax_label, "Events / %.2f", rap_bin_size);
     std::tie(c_rap, p_rap) = make_stack_ratio_plot(data_rap, rap_stack, leg3, "rap", "Dimuon rapidity",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range);
-    CMS_lumi(p_rap, year, 11);
+    CMS_lumi(c_rap, year, 11);
+    p_rap->cd();
     LQu_rap->Draw("hist  same");
     LQu_vec_rap->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_rap_cmp.png", plot_dir, file_label);

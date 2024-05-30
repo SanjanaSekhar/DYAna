@@ -361,8 +361,8 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg1->AddEntry(LQu_m, "2 TeV S_{eu} (y_{eu}=2.0)");
-    leg1->AddEntry(LQu_vec_m, "2 TeV V_{eu} (g_{eu}=1.0)");
+    leg1->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}=2.0)");
+    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}=1.0)");
     leg1->SetTextSize(0.05);
 
 
