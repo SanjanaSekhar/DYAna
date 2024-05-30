@@ -285,9 +285,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 							"#splitline{   #bf{|y| #epsilon}}{#bf{[1.5, 2.4]}}"]
 				else:
 					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
-					text_center_bins = [4, 11, 17]
+					text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
 					text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
-
+					text_strs+=text_strs
 
 				lstyle = 7
 				lwidth = 4
@@ -300,9 +300,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
-					l = TLine(line_x, 0, line_x, line_max)
+					l = TLine(line_x, 0, line_x, line_max+0.5)
 					if line_vals[idx] == 20 or line_vals[idx] == 40: 
-						l = TLine(line_x, 0, line_x, line_max+0.3)
+						l = TLine(line_x, 0, line_x, line_max+0.7)
 						l.SetLineColor(ROOT.kRed)
 						l.SetLineStyle(9)
 						l.SetLineWidth(5)
@@ -333,7 +333,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y, text_str)
+					latext.DrawLatex(text_center, text_y+0.27, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
@@ -347,7 +347,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.37, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.3, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(3)
@@ -423,7 +423,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				ratio_sys_unc.SetFillColor(ROOT.kGray)
 				#ratio_sys_unc.SetFillStyle(3015)
 
-
+				ratio.SetMarkerSize(4)
 				ratio.SetLineStyle(1)
 				ratio.SetLineWidth(2)
 				ratio_sys_unc.Draw("A3 same")
