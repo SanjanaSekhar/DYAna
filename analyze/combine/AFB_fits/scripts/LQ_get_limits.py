@@ -88,7 +88,7 @@ def plotLimits(channel):
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
     
-    
+    legend.SetFillColorAlpha(0,1) 
     legend.Draw()
      
      # Re-draw the frame and tick marks
