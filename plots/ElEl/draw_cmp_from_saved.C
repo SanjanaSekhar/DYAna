@@ -372,8 +372,8 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg2->AddEntry(LQu_m, "2 TeV S_{eu} (y_{eu}=2.0)");
-    leg2->AddEntry(LQu_vec_m, "2 TeV V_{eu} (g_{eu}=1.0)");
+    leg2->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}=2.0)");
+    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}=1.0)");
     leg2->SetTextSize(0.05);
 
 
@@ -383,8 +383,8 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     //leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg3->AddEntry(LQu_m, "2 TeV S_{eu} (y_{eu}=2.0)");
-    leg3->AddEntry(LQu_vec_m, "2 TeV V_{eu} (g_{eu}=1.0)");
+    leg3->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}=2.0)");
+    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}=1.0)");
     leg3->SetTextSize(0.05);
 
     leg1->SetX1NDC(0.7);
@@ -401,7 +401,7 @@ void draw_cmp_from_saved(){
 
 
 
-    bool logy = false;
+    bool logy = true;
 
     bool logx = false;
     bool draw_sys_uncs = true;
@@ -448,7 +448,7 @@ void draw_cmp_from_saved(){
     leg2->SetY2(y_start_c+y_size);
 
     
-    logy = false;
+    logy = true;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
     hmax = 1300;
