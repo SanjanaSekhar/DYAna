@@ -136,7 +136,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       posX_ =   l + 0.045*(1-l-r)*W/H;
       posY_ = 1-t - 0.045*(1-t-b);
       float xl_0 = posX_;
-      float yl_0 = posY_ - 0.15;
+      float yl_0 = posY_ + 0.15;
       float xl_1 = posX_ + 0.15*H/W;
       float yl_1 = posY_;
       TASImage* CMS_logo = new TASImage("CMS-BW-label.png");
@@ -158,7 +158,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
           latex.SetTextFont(extraTextFont);
           latex.SetTextAlign(align_);
           latex.SetTextSize(extraTextSize*t);
-          latex.DrawLatex(posX_, posY_- relExtraDY*cmsTextSize*t+0.1, extraText);
+          latex.DrawLatex(posX_, posY_+ relExtraDY*cmsTextSize*t, extraText);
         }
     }
     }
