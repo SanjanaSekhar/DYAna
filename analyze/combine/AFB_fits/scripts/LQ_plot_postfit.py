@@ -113,7 +113,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 			if 'pe' in datastyle.lower():
 				hist.SetMarkerColorAlpha(kBlack,alpha)
 				hist.SetMarkerStyle(8)
-				hist.SetMarkerSize(4)
+				hist.SetMarkerSize(3.5)
 			if 'hist' in datastyle.lower():
 				hist.SetFillColorAlpha(0,0)
 
@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.5,0.7,0.8,0.72+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.5,0.7,0.9,0.82+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -233,7 +233,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if len(titles) > 0:
 					hist.SetTitle(titles[hist_index])
 				hist.GetYaxis().SetTitleOffset(TOffset+0.5)
-				hist.GetXaxis().SetTitleOffset(1.3)
+				hist.GetXaxis().SetTitleOffset(1.2)
 				hist.GetYaxis().SetTitle('Events / bin')
 				hist.GetYaxis().SetLabelSize(mLS)
 				hist.GetYaxis().SetTitleSize(mTS)
@@ -268,7 +268,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				totlist[hist_index].SetFillColor(kBlack)
 				totlist[hist_index].SetFillStyle(3354)
 				totlist[hist_index].SetMarkerStyle(20)
-				totlist[hist_index].SetMarkerSize(0.05)
+				totlist[hist_index].SetMarkerSize(0.08)
 
 				totlist[hist_index].Draw('e2 same')
 
@@ -290,7 +290,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					text_strs+=(text_strs+text_strs)
 
 				lstyle = 7
-				lwidth = 4
+				lwidth = 2
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
@@ -305,7 +305,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						l = TLine(line_x, 0, line_x, 1e4)
 						l.SetLineColor(ROOT.kRed)
 						l.SetLineStyle(9)
-						l.SetLineWidth(5)
+						l.SetLineWidth(3)
 					else: 
 						l.SetLineColor(ROOT.kBlack)
 						l.SetLineStyle(lstyle)
@@ -338,7 +338,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				#text labels
                                 latext2 = TLatex()
                                 latext2.SetNDC();
-                                latext2.SetTextColor(kBlue);
+                                latext2.SetTextColor(kRed+1);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
 				latext2.SetTextSize(0.035)
@@ -439,6 +439,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					l.SetLineColor(ROOT.kBlack)
 					l.SetLineStyle(lstyle)
 					l.SetLineWidth(lwidth)
+					if line_vals[idx] == 20 or line_vals[idx] == 40:
+						l.SetLineColor(ROOT.kRed)
+						l.SetLineStyle(9)
+						l.SetLineWidth(3) 
 					l.Draw()
 					lines.append(l)
 
