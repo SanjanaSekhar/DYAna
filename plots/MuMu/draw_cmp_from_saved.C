@@ -358,8 +358,8 @@ void draw_cmp_from_saved(){
     leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg1->AddEntry(LQu_m, "2.5 TeV S_{#mu u} (y_{#mu u}=2.0)");
-    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{#mu u} (g_{#mu u}=1.0)");
+    leg1->AddEntry(LQu_m, "2.5 TeV S_{#muu} (y_{#muu}=2.0)");
+    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{#muu} (g_{#muu}=1.0)");
     leg1->SetTextSize(0.05);
 
 
@@ -368,8 +368,8 @@ void draw_cmp_from_saved(){
     leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg2->AddEntry(LQu_m, "2.5 TeV S_{#mu u} (y_{#mu u}=2.0)");
-    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{#mu u} (g_{#mu u}=1.0)");
+    leg2->AddEntry(LQu_m, "2.5 TeV S_{#muu} (y_{#muu}=2.0)");
+    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{#muu} (g_{#muu}=1.0)");
     leg2->SetTextSize(0.05);
 
 
@@ -378,8 +378,8 @@ void draw_cmp_from_saved(){
     leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
     leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
-    leg3->AddEntry(LQu_m, "2.5 TeV S_{#mu u} (y_{#mu u}=2.0)");
-    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{#mu u} (g_{#mu u}=1.0)");
+    leg3->AddEntry(LQu_m, "2.5 TeV S_{#muu} (y_{#muu}=2.0)");
+    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{#muu} (g_{#muu}=1.0)");
     leg3->SetTextSize(0.05);
 
 
@@ -465,7 +465,7 @@ void draw_cmp_from_saved(){
     logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
-    hmax = 5000;
+    hmax = 4000;
 
     // if(year == 2016)
     //     hmax *= 0.25;
