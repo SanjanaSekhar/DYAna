@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.2,0.75,0.9,0.8+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.3,0.7,0.9,0.8+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -255,7 +255,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				# Do the signals
 				if len(signals) > 0: 
 					signals[hist_index].SetLineColor(kBlue)
-					signals[hist_index].SetLineWidth(4)
+					signals[hist_index].SetLineWidth(3)
 					#if logy == True:
 					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
@@ -294,7 +294,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
-				line_max = 4e3
+				line_max = 2e3
 				lines = []
 				texts = []
 
@@ -324,7 +324,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <= 5):
 					latext.SetTextSize(0.050);    
 				else:
-					latext.SetTextSize(0.03);    
+					latext.SetTextSize(0.029);    
 				text_y = 0.43
 
 				l_margin = gPad.GetLeftMargin();
@@ -341,13 +341,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextColor(kRed+1);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
-				latext2.SetTextSize(0.035)
+				latext2.SetTextSize(0.032)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.25, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.28, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
