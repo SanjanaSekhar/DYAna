@@ -333,7 +333,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y+0.2, text_str)
+					latext.DrawLatex(text_center, text_y+0.1, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
@@ -347,7 +347,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.25, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.15, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
