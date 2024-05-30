@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.3,0.7,0.9,0.78+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.3,0.65,0.9,0.72+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -333,7 +333,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y+0.1, text_str)
+					latext.DrawLatex(text_center, text_y+0.13, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
@@ -347,7 +347,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.15, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.18, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
@@ -932,7 +932,7 @@ label_color_map['dy'] = ("DY", DY_c)
 label_color_map['top'] = ("t#bar{t} + Single Top ", ttbar_c)
 label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
-label_color_map['gam'] = ("#gamma#gamma #rightarrow #ell#ell ", gamgam_c)
+label_color_map['gam'] = ("#gamma#gamma ", gamgam_c)
 label_color_map['qcd'] = ("W+Jets + QCD", qcd_c)
 label_color_map['LQ'] = ("%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), tautau_c)
 label_color_map['alpha'] = ("alpha", kGreen)
