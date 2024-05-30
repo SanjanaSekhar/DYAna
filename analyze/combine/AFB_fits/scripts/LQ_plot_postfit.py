@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.37,0.7,0.8,0.72+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.5,0.7,0.8,0.72+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -287,22 +287,22 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
 					text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
 					text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
-					text_strs+=text_strs
+					text_strs+=(text_strs+text_strs)
 
 				lstyle = 7
 				lwidth = 4
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
-				line_max = yMax * 1.5
+				line_max = 5e3
 				lines = []
 				texts = []
 
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
-					l = TLine(line_x, 0, line_x, line_max+0.5)
+					l = TLine(line_x, 0, line_x, line_max+1)
 					if line_vals[idx] == 20 or line_vals[idx] == 40: 
-						l = TLine(line_x, 0, line_x, line_max+0.7)
+						l = TLine(line_x, 0, line_x, 1e4)
 						l.SetLineColor(ROOT.kRed)
 						l.SetLineStyle(9)
 						l.SetLineWidth(5)
@@ -333,7 +333,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y+0.27, text_str)
+					latext.DrawLatex(text_center, text_y+0.2, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
@@ -347,10 +347,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.3, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.25, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
-				legends[hist_index].SetNColumns(3)
+				legends[hist_index].SetNColumns(2)
 				legends[hist_index].SetTextSize(0.04)
 				legends[hist_index].SetFillColor(-1)
 				
@@ -456,7 +456,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 	if rootfile:
 		myCan.Print(tag+'/'+name+'.root','root')
 	else:
-		myCan.Print(tag+'/'+name+'_m'+str(mLQ)+'.png','png')
+		myCan.Print(tag+'/'+name+'_m'+str(mLQ)+'.pdf','pdf')
 
 
 
