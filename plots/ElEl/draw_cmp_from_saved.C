@@ -337,7 +337,7 @@ void draw_cmp_from_saved(){
 
 
 
-    float x_size = 0.5;
+    float x_size = 0.6;
     float y_size = 0.3;
 
 
