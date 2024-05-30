@@ -401,7 +401,7 @@ void draw_cmp_from_saved(){
 
 
 
-    bool logy = true;
+    bool logy = false;
 
     bool logx = false;
     bool draw_sys_uncs = true;
@@ -430,6 +430,7 @@ void draw_cmp_from_saved(){
     //CMS_lumi(p_m, year, 11 );
     CMS_lumi(c_m, year, 11 );
     LQu_m->Draw("hist  same");
+    LQu_m->Print("range");
     LQu_vec_m->Draw("hist  same");
     sprintf(plt_file, "%sElElComb_m_cmp.png", plot_dir);
     if(write_out) c_m->Print(plt_file);
@@ -447,7 +448,7 @@ void draw_cmp_from_saved(){
     leg2->SetY2(y_start_c+y_size);
 
     
-    logy = true;
+    logy = false;
     int n_cost_bins = 10;
     float cost_bin_size = 2./n_cost_bins;
     hmax = 3200;
