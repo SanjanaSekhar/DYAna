@@ -255,7 +255,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				# Do the signals
 				if len(signals) > 0: 
 					signals[hist_index].SetLineColor(kBlue)
-					signals[hist_index].SetLineWidth(4.5)
+					signals[hist_index].SetLineWidth(4)
 					#if logy == True:
 					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
