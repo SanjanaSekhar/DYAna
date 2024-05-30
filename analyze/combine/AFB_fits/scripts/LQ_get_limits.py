@@ -65,7 +65,7 @@ def plotLimits(channel):
     axis.Draw('axis')
      
      # Create a legend in the top left
-    legend = PositionedLegend(0.55, 0.25, 2, 0.02)
+    legend = PositionedLegend(0.25, 0.25, 1, 0.03, 0.2)
      
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
