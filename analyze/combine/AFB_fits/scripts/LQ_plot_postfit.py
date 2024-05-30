@@ -158,7 +158,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 					legends.append(TLegend(x_start,y_end - y_size,x_start + x_size,y_end))
 				else: 
-					legends.append(TLegend(0.5,0.7,0.9,0.82+0.02*(len(bkglist[0])+len(signals))))
+					legends.append(TLegend(0.2,0.75,0.9,0.8+0.02*(len(bkglist[0])+len(signals))))
 
 				stacks.append(THStack(hist.GetName()+'_stack',hist.GetName()+'_stack'))
 				legends_list.append([])
@@ -255,7 +255,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				# Do the signals
 				if len(signals) > 0: 
 					signals[hist_index].SetLineColor(kBlue)
-					signals[hist_index].SetLineWidth(7)
+					signals[hist_index].SetLineWidth(4.5)
 					#if logy == True:
 					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
@@ -294,13 +294,13 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				line_eps = 0.05
 
 				#line_max = gPad.GetY2()
-				line_max = 5e3
+				line_max = 4e3
 				lines = []
 				texts = []
 
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
-					l = TLine(line_x, 0, line_x, line_max+1)
+					l = TLine(line_x, 0, line_x, line_max)
 					if line_vals[idx] == 20 or line_vals[idx] == 40: 
 						l = TLine(line_x, 0, line_x, 1e4)
 						l.SetLineColor(ROOT.kRed)
@@ -423,7 +423,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				ratio_sys_unc.SetFillColor(ROOT.kGray)
 				#ratio_sys_unc.SetFillStyle(3015)
 
-				ratio.SetMarkerSize(4)
+				ratio.SetMarkerSize(3)
 				ratio.SetLineStyle(1)
 				ratio.SetLineWidth(2)
 				ratio_sys_unc.Draw("A3 same")
@@ -932,9 +932,9 @@ label_color_map['dy'] = ("DY", DY_c)
 label_color_map['top'] = ("t#bar{t} + Single Top ", ttbar_c)
 label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
-label_color_map['gam'] = ("\\gamma\\gamma \\rightarrow \\ell\\ell ", gamgam_c)
-label_color_map['qcd'] = ("WJets + QCD", qcd_c)
-label_color_map['LQ'] = ("%i * %s_%s Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), tautau_c)
+label_color_map['gam'] = ("#gamma#gamma #rightarrow #ell#ell ", gamgam_c)
+label_color_map['qcd'] = ("W+Jets + QCD", qcd_c)
+label_color_map['LQ'] = ("%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), tautau_c)
 label_color_map['alpha'] = ("alpha", kGreen)
 label_color_map['fmn'] = ("DY minus", kBlue)
 label_color_map['fpl'] = ("DY plus", kRed)
