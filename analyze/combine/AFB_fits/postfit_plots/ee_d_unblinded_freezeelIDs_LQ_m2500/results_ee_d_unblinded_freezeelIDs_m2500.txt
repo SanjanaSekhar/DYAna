@@ -1,0 +1,4 @@
+
+Attaching file multidimfit.ee_d_-1.root as _file0...
+(TFile *) 0x126cc20
+-0.0874654 0.22806 -0.261652

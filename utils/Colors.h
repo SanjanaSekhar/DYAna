@@ -25,6 +25,14 @@ Color_t qcd_c = 2055;
 Color_t tautau_c = 2066;
 Color_t gamgam_c = 2077;
 
+Color_t DY_color = TColor::GetColor("#3f90da");
+Color_t ttbar_color = TColor::GetColor("#ffa90e");
+Color_t diboson_color = TColor::GetColor("#bd1f01");
+Color_t qcd_color = TColor::GetColor("#94a4a2");
+Color_t tautau_color = TColor::GetColor("#832db6");
+Color_t gamgam_color = TColor::GetColor("#a96b59");
+Color_t LQ_color = TColor::GetColor("#b9ac70");
+Color_t LQvec_color = TColor::GetColor("#92dadd");
 
 // https://stackoverflow.com/questions/57153428/r-plot-color-combinations-that-are-colorblind-accessible
 //

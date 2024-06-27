@@ -25,12 +25,12 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 #for y in [2016,2017,2018]:
 for y in [-1]:
-    for options.chan in ["mumu","ee"]:
-    #for options.chan in ["ee"]:
+    #for options.chan in ["mumu","ee"]:
+    for options.chan in ["ee"]:
         for options.q in ["u","d"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
-	    is_vec = True
+	    is_vec = False
 	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
@@ -84,7 +84,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_unblinded"
+            fit_name+="_unblinded_freezeelIDs"
 	    print("\n fit_name = ", fit_name)
 	    #if y > -1: extra_args = "--combined False"
 	    
@@ -107,7 +107,7 @@ for y in [-1]:
 		#make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
 		print_and_do("rm -r %s" % (plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i --freezeNuisanceGroups elIDs" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1     --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")

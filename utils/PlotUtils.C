@@ -381,8 +381,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_ratio->Divide(sum);
 
 
-    TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 10, 900, 700);
-    TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,1.);
+    TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 50, 1000, 900);
+    TPad *pad1 = new TPad("pad1" + label, "pad1", 0.,0.3,0.98,0.98);
     pad1->SetTopMargin(0.07);
     pad1->SetBottomMargin(0);
     pad1->SetRightMargin(0.03);
@@ -400,10 +400,10 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         hmin = 0.1;
         if(logy && h_stack->GetMinimum() > 0.1) hmin = 10.;
     }
-    if(hmax <= 0. ) hmax = 1.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
-    if(logy) hmax *=100;
+    if(hmax <= 0. ) hmax = 10.2 * std::max(h_stack->GetMaximum(), h_data->GetMaximum());
+    if(logy) hmax *=1000;
     h_stack->SetMaximum(hmax);
-    h_stack->SetMinimum(1e-2);
+    h_stack->SetMinimum(1e-3);
 
     if(draw_sys_unc){
         gStyle->SetHatchesLineWidth(2);
@@ -424,7 +424,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     gStyle->SetEndErrorSize(0);
     h_data->SetMarkerStyle(kFullCircle);
     h_data->SetMarkerColor(1);
-    h_data->SetMarkerSize(1.3);
+    h_data->SetMarkerSize(1.5);
     h_data->SetLineWidth(2.5);
     if(const_size){
         printf("const size\n");
@@ -457,7 +457,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     latext.SetTextColor(kBlack);
     latext.SetTextAlign(22); //center
     latext.SetTextFont(42);
-    latext.SetTextSize(0.05);    
+    latext.SetTextSize(0.04);    
 
 
     float H = pad1->GetWh();
@@ -475,26 +475,26 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     float y_title_offset = 1.5;
 
 
-    float TS = 0.1;
+    float TS = 0.07;
     float TOffset = 0.8;
-    float LS = 0.06;
+    float LS = 0.07;
 
     float rTS = TS * 0.7/0.3;
     float rLS = LS * 0.7/0.3;
     float rTOffset = TOffset * 0.3 / 0.7 - 0.05;
 
     h_stack->GetYaxis()->SetTitle(ylabel);
-    h_stack->GetYaxis()->SetNdivisions(305);
+    h_stack->GetYaxis()->SetNdivisions(310);
     h_stack->GetYaxis()->SetTitleSize(TS);
-    h_stack->GetYaxis()->SetTitleOffset(TOffset);
+    h_stack->GetYaxis()->SetTitleOffset(TOffset + 0.3);
     h_stack->GetYaxis()->SetLabelSize(LS);
 
-    h_stack->GetXaxis()->SetNdivisions(808);
+    h_stack->GetXaxis()->SetNdivisions(807);
     h_stack->GetXaxis()->SetTickLength(0.06);
     h_stack->GetXaxis()->SetTitle(xlabel);
-    h_stack->GetXaxis()->SetTitleSize(rTS);
-    h_stack->GetXaxis()->SetTitleOffset(rTOffset + 0.45);
-    h_stack->GetXaxis()->SetLabelSize(rLS);
+    h_stack->GetXaxis()->SetTitleSize(TS);
+    h_stack->GetXaxis()->SetTitleOffset(rTOffset + 0.55);
+    h_stack->GetXaxis()->SetLabelSize(LS);
 
     
     c->cd();
@@ -523,17 +523,18 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_ratio->SetTitle("");
     h_ratio->GetYaxis()->SetTitle("Obs/exp");
     h_ratio->GetYaxis()->SetNdivisions(205);
-    h_ratio->GetYaxis()->SetTitleSize(rTS);
-    h_ratio->GetYaxis()->SetLabelSize(rLS);
-    h_ratio->GetYaxis()->SetTitleOffset(rTOffset);
+    h_ratio->GetYaxis()->SetTitleSize(TS+0.1);
+    h_ratio->GetYaxis()->SetLabelSize(LS+0.08);
+    h_ratio->GetYaxis()->SetTitleOffset(rTOffset+0.1);
+    h_ratio->GetYaxis()->SetLabelOffset(0.02);
 
-    h_ratio->GetXaxis()->SetNdivisions(808);
+    h_ratio->GetXaxis()->SetNdivisions(807);
     h_ratio->GetXaxis()->SetTickLength(0.06);
     h_ratio->GetXaxis()->SetTitle(xlabel);
-    h_ratio->GetXaxis()->SetTitleSize(rTS);
-    h_ratio->GetXaxis()->SetTitleOffset(rTOffset + 0.45);
-    h_ratio->GetXaxis()->SetLabelSize(rLS);
-
+    h_ratio->GetXaxis()->SetTitleSize(TS+0.1);
+    h_ratio->GetXaxis()->SetTitleOffset(rTOffset + 0.55);
+    h_ratio->GetXaxis()->SetLabelSize(LS+0.08);
+    h_ratio->GetXaxis()->SetLabelOffset(0.04);
 
 
 

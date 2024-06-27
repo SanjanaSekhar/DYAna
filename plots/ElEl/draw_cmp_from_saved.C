@@ -198,67 +198,66 @@ void draw_cmp_from_saved(){
 
 
 
-    dy_cost->SetFillColor(DY_c);
-    dy_m->SetFillColor(DY_c);
-    dy_rap->SetFillColor(DY_c);
+    dy_cost->SetFillColor(DY_color);
+    dy_m->SetFillColor(DY_color);
+    dy_rap->SetFillColor(DY_color);
 
-    top_cost->SetFillColor(ttbar_c);
-    top_m->SetFillColor(ttbar_c);
-    top_rap->SetFillColor(ttbar_c);
+    top_cost->SetFillColor(ttbar_color);
+    top_m->SetFillColor(ttbar_color);
+    top_rap->SetFillColor(ttbar_color);
 
 
     wt_cost->SetFillColor(wt_c);
     wt_m->SetFillColor(wt_c);
     wt_rap->SetFillColor(wt_c);
 
-    diboson_cost->SetFillColor(diboson_c);
-    diboson_m->SetFillColor(diboson_c);
-    diboson_rap->SetFillColor(diboson_c);
+    diboson_cost->SetFillColor(diboson_color);
+    diboson_m->SetFillColor(diboson_color);
+    diboson_rap->SetFillColor(diboson_color);
 
-    QCD_cost->SetFillColor(qcd_c);
-    QCD_m->SetFillColor(qcd_c);
-    QCD_rap->SetFillColor(qcd_c);
+    QCD_cost->SetFillColor(qcd_color);
+    QCD_m->SetFillColor(qcd_color);
+    QCD_rap->SetFillColor(qcd_color);
 
-    gg_cost->SetFillColor(gamgam_c);
-    gg_m->SetFillColor(gamgam_c);
-    gg_rap->SetFillColor(gamgam_c);
-
-
+    gg_cost->SetFillColor(gamgam_color);
+    gg_m->SetFillColor(gamgam_color);
+    gg_rap->SetFillColor(gamgam_color);
 
 
-    dy_cost->SetLineColor(DY_c);
-    dy_m->SetLineColor(DY_c);
-    dy_rap->SetLineColor(DY_c);
 
-    top_cost->SetLineColor(ttbar_c);
-    top_m->SetLineColor(ttbar_c);
-    top_rap->SetLineColor(ttbar_c);
+    dy_cost->SetLineColor(DY_color);
+    dy_m->SetLineColor(DY_color);
+    dy_rap->SetLineColor(DY_color);
+
+    top_cost->SetLineColor(ttbar_color);
+    top_m->SetLineColor(ttbar_color);
+    top_rap->SetLineColor(ttbar_color);
 
 
     wt_cost->SetLineColor(wt_c);
     wt_m->SetLineColor(wt_c);
     wt_rap->SetLineColor(wt_c);
 
-    diboson_cost->SetLineColor(diboson_c);
-    diboson_m->SetLineColor(diboson_c);
-    diboson_rap->SetLineColor(diboson_c);
+    diboson_cost->SetLineColor(diboson_color);
+    diboson_m->SetLineColor(diboson_color);
+    diboson_rap->SetLineColor(diboson_color);
 
-    QCD_cost->SetLineColor(qcd_c);
-    QCD_m->SetLineColor(qcd_c);
-    QCD_rap->SetLineColor(qcd_c);
+    QCD_cost->SetLineColor(qcd_color);
+    QCD_m->SetLineColor(qcd_color);
+    QCD_rap->SetLineColor(qcd_color);
 
-    gg_cost->SetLineColor(gamgam_c);
-    gg_m->SetLineColor(gamgam_c);
-    gg_rap->SetLineColor(gamgam_c);
+    gg_cost->SetLineColor(gamgam_color);
+    gg_m->SetLineColor(gamgam_color);
+    gg_rap->SetLineColor(gamgam_color);
 
 
-    LQu_m->SetLineColor(kGreen);
-    LQu_cost->SetLineColor(kGreen);
-    LQu_rap->SetLineColor(kGreen);
+    LQu_m->SetLineColor(LQ_color);
+    LQu_cost->SetLineColor(LQ_color);
+    LQu_rap->SetLineColor(LQ_color);
 
-    LQu_vec_m->SetLineColor(kRed);
-    LQu_vec_cost->SetLineColor(kRed);
-    LQu_vec_rap->SetLineColor(kRed);
+    LQu_vec_m->SetLineColor(LQvec_color);
+    LQu_vec_cost->SetLineColor(LQvec_color);
+    LQu_vec_rap->SetLineColor(LQvec_color);
 
     LQu_m->SetLineWidth(4);
     LQu_cost->SetLineWidth(4);
