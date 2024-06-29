@@ -70,6 +70,7 @@ def plotLimits(channel):
      # Set the standard green and yellow colors and draw
     StyleLimitBand(graphs)
     DrawLimitBand(pads[0], graphs, legend=legend)
+    '''
     if year < 0 and not is_vec and (channel=='ue' or channel=='de'):
 	line_sp.SetLineWidth(2)
 	line_sp2.SetLineWidth(2)
@@ -87,7 +88,7 @@ def plotLimits(channel):
 	legend.SetTextSize(0.035)
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
-    
+    '''
     legend.SetFillColorAlpha(0,1) 
     legend.Draw()
      
@@ -221,6 +222,7 @@ if options.hadd:
             print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
     else:
 	limits = {}
+	'''
         for m in range(1000,5500,500):
             # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s%s_m%i_y%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json/limits_%s%s_m%i_y%i.json"
@@ -241,7 +243,7 @@ if options.hadd:
 	    f.seek(0)
 	    json.dump(limits, f, indent=4)
 	    
-
+	'''
         print("\n========= making limit plot for channel %s =========\n"%(channel))
         # #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
         plotLimits(channel)
