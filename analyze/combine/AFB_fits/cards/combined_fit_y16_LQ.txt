@@ -6,24 +6,23 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm1000_merge_templates16_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2500_merge_templates16_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+
 
 bin             ee16  
 observation     -1         
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      ee16    ee16    ee16    ee16     ee16    ee16     ee16 	ee16    ee16      ee16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
-process                  1      2       3      4        5      6        7	8        -1        -2		
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d_vec  LQint_d_vec	
+process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -    	  -		
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
+
 nlo_sys         lnN      -       -        -      -        -        -       -            -        2.200000    1.600000
 
 elFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
@@ -33,7 +32,7 @@ xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys elFakes16 elFakes17 elFa
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     -			1.022    	1.022	1.022		
 lumiXY           lnN     1.009    1.009     1.009   1.009     1.009   1.009     -			1.009    	1.009	1.009		
-lumiLS           lnN       -        -         -       -         -       -       - 			  -      	  -  	  -  		  
+lumiLS           lnN       -        -         -       -         -       -       - 		  -      	  -  	  -  		  
 lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
 lumiBC           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	 
 lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004		  
@@ -63,27 +62,26 @@ elScales16 group = elScaleStat16  elScaleGain16  elScaleSyst   elSmear
 
 elHLTBARPT16     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elHLTENDPT16   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elHLTBARPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elHLTENDPTLOW16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
+#elHLTBARPT16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elHLTENDPT16      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0     
 
 elHLTs16 group = elHLTENDPT16  elHLTBARPT16   
 
 elIDBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDBARPTLOW   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elIDENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
 elIDs group = elIDBARPT elIDENDPT
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 elRECOENDPT   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOBARPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elRECOENDPTLOW      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-  
+#elRECOBARPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elRECOENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
 elRECOs group = elRECOBARPT elRECOENDPT
-                                                                                                                                  
+
 alphaS16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 RENORM16            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
 FAC16               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
@@ -98,7 +96,6 @@ emucostrw3b16        shape    -       -        -     1.0      1.0     -      -  
 emucostrw4b16        shape    -       -        -     1.0      1.0     -      -       -       -       -        
 
 emucostrws16 group = emucostrw1b16 emucostrw3b16 emucostrw4b16 emucostrw2b16
-
 ##fakes cost reweighting                                                                                                 
 elfakesrw1b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 elfakesrw2b16          shape    -       -        -      -        -      -     1.0      -       -       -        
@@ -106,7 +103,6 @@ elfakesrw3b16          shape    -       -        -      -        -      -     1.
 elfakesrw4b16          shape    -       -        -      -        -      -     1.0      -       -       -        
 
 elfakesrws16 group = elfakesrw1b16 elfakesrw2b16 elfakesrw4b16 elfakesrw3b16
-
                                                                                                                                   
                                                                                                                                           
 #pt reweighting                                                                                                                   
@@ -183,7 +179,7 @@ pdf59                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
 # MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_u LQint_u
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_d_vec LQint_d_vec
 
 MCStatBin1y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin2y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
@@ -229,5 +225,3 @@ MCStatBin16 group = MCStatBin1y16  MCStatBin2y16  MCStatBin3y16  MCStatBin4y16  
 * autoMCStats 1 0 1
 
 pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60
-
-

@@ -45,7 +45,8 @@ if options.hadd:
 
 	
 	for chan in ["mumu","ee"]:
-		for q in ["u","d"]:
+		if is_vec: ending+="_vec"
+        for q in ["u","d"]:
 			plt.figure(figsize=(9,10))
 			for options.mLQ in [1000,1500,2000,2500,3000,3500]:
 				for i in range(1,options.nToys+1):
