@@ -110,12 +110,14 @@ for is_vec in [False,True]:
 
             sum_uncs2 = stat_unc**2 #variable to store total unc, not just sum of sys uncs
 
-            for val in df1["Contri"]:
+            for i,val in enumerate(df1["Contri"]):
+                print("adding to full uncs**2 -> ",df1.at[i,"Sys name"])
                 sum_uncs2+=val**2
 
             df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc, (stat_unc**2*100)/sum_uncs2]
             for i in range(1,len(df1.index)):
-                df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]**2)/sum_uncs2
+                print("computing \% contri -> ",df1.at[i,"Sys name"])
+                df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]**2*100)/sum_uncs2
 	    
 	    #print(df1)
 	    print("Background cross sections: ", df1.loc[df1["Sys name"].str.contains("Section")])
