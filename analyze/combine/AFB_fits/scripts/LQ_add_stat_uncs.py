@@ -5,6 +5,7 @@ from LQ_utils import *
 from add_group_impact import *
 gROOT.SetBatch(True)
 import pandas as pd
+import math
 
 fake_data = True
 no_sys = False
@@ -16,7 +17,7 @@ ending = "040324_unblinding"
 s = 3456
 extra_params = " -s %i" % s
 
-for is_vec in [False,True]:
+for is_vec in [False]:
     if is_vec: ending+="_vec"
     for chan in ["mumu","ee"]:
         for q in ["u","d"]:
@@ -97,27 +98,28 @@ for is_vec in [False,True]:
             print_and_do("cp higgsCombine_base.MultiDimFit.mH120.%i.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s,s))
 	    print_and_do("cp multidimfit_base.root multidimfit_nom.root")
 
-            print_and_do("""combine -M MultiDimFit --freezeParameters allConstrainedNuisances -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(s, 'statuncs', extra_params))
-	    
+            print_and_do("""combine -M MultiDimFit --freezeParameters allConstrainedNuisances -d higgsCombine_nom.MultiDimFit.mH120.%i.root --saveWorkspace  --saveFitResult --robustFit 1 -n _%s %s --snapshotName MultiDimFit """ %(s, 'statuncs', extra_params))
 	    stat_unc = compute_sys("nom", "statuncs", s)
 
             df1 = pd.read_csv("%s_%s_m%s_sys_uncs_%s.txt"%(chan, q, mLQ, ending),delimiter="&",names=["Sys name","Contri","%% Contri"],dtype='string')
 	    df1.drop(index=[0,len(df1)-1], inplace=True)
-	    #print(df1)
+	    print(df1)
             df1["%% Contri"] = df1["%% Contri"].str.replace("\\","")
             df1["Contri"] = pd.to_numeric(df1["Contri"])
             df1["%% Contri"] = pd.to_numeric(df1["%% Contri"])
 
             sum_uncs2 = stat_unc**2 #variable to store total unc, not just sum of sys uncs
+	    sum_sys_uncs2 = 0
 
             for i,val in enumerate(df1["Contri"]):
-                print("adding to full uncs**2 -> ",df1.at[i,"Sys name"])
+                print("adding to full uncs**2 -> ",df1.at[i+1,"Sys name"])
                 sum_uncs2+=val**2
+		sum_sys_uncs2+=val**2
 
             df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc, (stat_unc**2*100)/sum_uncs2]
             for i in range(1,len(df1.index)):
                 print("computing \% contri -> ",df1.at[i,"Sys name"])
-                df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]**2*100)/sum_uncs2
+                df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]**2*100)/(sum_uncs2)
 	    
 	    #print(df1)
 	    print("Background cross sections: ", df1.loc[df1["Sys name"].str.contains("Section")])
@@ -130,7 +132,7 @@ for is_vec in [False,True]:
 	    df1.loc[len(df1.index)+2] = ["Background Cross Sections",df_xsec["Contri"].sum(),df_xsec["%% Contri"].sum()]
 	    df1.loc[len(df1.index)+3] = ["Trigger & Prefire",df_trigger["Contri"].sum(),df_trigger["%% Contri"].sum()]
 	    df1.loc[len(df1.index)+4] = ["MisID shape and normalization",df_misid["Contri"].sum(),df_misid["%% Contri"].sum()]
-	    
+	    df1.loc[len(df1.index)+5] = ["Total systematic uncertainty", math.sqrt(sum_sys_uncs2),sum_sys_uncs2*100/(sum_uncs2)] 
 	    print(df1)
 	    df1.to_csv("%s_%s_m%s_sys_uncs_%s_statuncs.txt"%(chan, q, mLQ, ending),sep=' ',index=False)
 

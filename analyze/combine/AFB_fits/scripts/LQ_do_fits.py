@@ -26,12 +26,12 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 #for y in [2016,2017,2018]:
 for y in [-1]:
     #for options.chan in ["mumu","ee"]:
-    for options.chan in ["ee"]:
-        for options.q in ["u","d"]:
+    for options.chan in ["mumu"]:
+        for options.q in ["u"]:
             #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
-	    is_vec = False
-	    statuncs = False
+	    is_vec = True
+	    statuncs = True
 	    #options.gen_level = False
             extra_params=""
             
@@ -41,39 +41,15 @@ for y in [-1]:
             if not options.gen_level and not options.no_sys: options.fake_data = True
             options.no_LQ = False
             options.year = y
-            likelihood_scan = False
-	    if likelihood_scan: 
-		poi = 'yLQ2'
-		ending = "%s"%poi
-            '''
-            if(options.chan == "ee"):
-                print("Chan is ee, will mask mumu channels")
-                if(options.year < 0): 
-                    extra_params += " --setParameters mask_Y16_mumu16=1,mask_Y17_mumu17=1,mask_Y18_mumu18=1" 
-                else:
-                    extra_params += " --setParameters mask_Y%i_mumu%i=1" % (options.year % 2000, options.year % 2000)
-            elif(options.chan == "mumu"):
-                print("Chan is mumu, will mask ee and ee_ss channels")
-                if(options.year < 0):
-                    extra_params += " --setParameters mask_Y16_ee16=1,mask_Y17_ee17=1,mask_Y18_ee18=1,mask_Y16_ee16_ss=1,mask_Y17_ee17_ss=1,mask_Y18_ee18_ss=1" 
-                else:
-                    extra_params += " --setParameters mask_Y%i_ee%i=1,mask_Y%i_ee%i_ss=1" % (options.year % 2000, options.year % 2000, options.year % 2000, options.year % 2000)
-            '''
             if(options.verbose > 0):
         	extra_params +=" --verbose %i" % options.verbose
 
-            #No analytic minimization of MC stats nuisances
-            #extra_params += "  --freezeParameters A4,A0 "
-	    #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
-	    #if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
             
             fit_name = options.chan
             if(options.no_sys): 
                 fit_name +="_nosys"
-                #extra_params += " --freezeParameters allConstrainedNuisances"
             if(not options.noSymMCStats):
                 fit_name += "_SymMC"
-            #if(options.fake_data): fit_name +="_fake_data"
 
             if(options.year > 0): fit_name +="_y%i" % (options.year % 2000)
             fit_name+="_"+options.q
@@ -84,7 +60,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_unblinded_freezeelIDs"
+            fit_name+="_unblinded"
 	    print("\n fit_name = ", fit_name)
 	    #if y > -1: extra_args = "--combined False"
 	    
@@ -107,15 +83,14 @@ for y in [-1]:
 		#make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
 		print_and_do("rm -r %s" % (plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i --freezeNuisanceGroups elIDs" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
-		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  --cminDefaultMinimizerStrategy 0 -n .snapshot" %(workspace, extra_params))
-		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.root  --saveWorkspace --saveFitResult --robustFit 1     --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit")
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
+		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
                 
-		if likelihood_scan: print_and_do("combine %s -M MultiDimFit --algo grid --points 200 --squareDistPoiStep  --autoRange 2 -P %s --floatOtherPOIs 1 --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, poi,  extra_params))
 		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
                 if(not statuncs):
-                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
+                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
                             % (options.chan,options.q,("_vec" if is_vec else ""),options.year,options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
@@ -134,6 +109,8 @@ for y in [-1]:
                 #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
                 print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
 		
+		if(statuncs): print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
+		
 		print_and_do(""" echo "auto a=fit_mdf->floatParsFinal();" > cmd.txt """)
 		print_and_do(""" echo "auto A0=(RooRealVar *) a.at(396);" >> cmd.txt """)
 		print_and_do(""" echo "std::cout  << A0->getValV() << ' '  << A0->getErrorHi() << ' ' << A0->getErrorLo() << std::endl;" >> cmd.txt """)
@@ -149,53 +126,3 @@ for y in [-1]:
                 
                 
 		print_and_do("rm -f cards/sed*")
-                if likelihood_scan: print_and_do("cp higgsCombineTest.MultiDimFit.mH120.root higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q))
-                #if(not options.no_cleanup): print_and_do("rm cmd.txt combine_logger.out higgsCombineTest.MultiDimFit.mH120.root multidimfit.root")
-                 
-                if likelihood_scan:
-
-                    deltaNLL, yLQ2_list = [],[]
-		    
-                    f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit._%s_%s.root"%(options.chan,options.q),"READ")
-                    limit_tree = f.Get("limit")
-		    poi_value = array('f',[0])
-		    limit_tree.SetBranchAddress("%s"%poi, poi_value)
-
-                    for i in range(limit_tree.GetEntries()):
-			
-                        limit_tree.GetEntry(i)
-                        deltaNLL.append(limit_tree.deltaNLL)
-                        yLQ2_list.append(poi_value[0])
-			print(poi_value)
-			#if limit_tree.quantileExpected > 0.49 and limit_tree.quantileExpected < 0.51: print(limit_tree.yLQ,limit_tree.deltaNLL)
-			#if limit_tree.quantileExpected > 0.83 and limit_tree.quantileExpected < 0.86: print(limit_tree.yLQ,limit_tree.deltaNLL)	
-                    f.Close()
-		    #print(yLQ2_list)
-		    #print(deltaNLL)
-		    idx = np.argsort(np.array(yLQ2_list))
-		    yLQ2_list = np.array(yLQ2_list)[idx]
-		    deltaNLL = np.array(deltaNLL)[idx]
-                    with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'w') as f:
-	     		for ylq,dnll in zip(yLQ2_list, deltaNLL):
-         		    f.write("%f %f\n" %(ylq,2*dnll)) 
-		    #print(np.amax(yLQ2_list),np.amin(yLQ2_list))
-            '''
-	    if likelihood_scan: 
-	        for mLQ in mLQ_list:	    
-	            respull = []
-	            with open('like_scan_%s_%s_m%i_%s.txt'%(options.chan,options.q,mLQ,ending), 'r') as f:
-    	                for line in f.readlines():
-                            respull.append(line.split(' '))
-
-	            respull = np.asarray(respull, dtype=float)
-	            yLQ2_list = respull[:,0].tolist()
-	            deltaNLL = respull[:,1].tolist()
-	            plt.ylim(0,10)		    
-	            plt.plot(yLQ2_list,deltaNLL,label='mLQ=%s GeV'%mLQ)
-            	plt.xlabel("%s"%poi)
-            	plt.ylabel("-2deltaLL")
-            	plt.legend()
-            	plt.title("Likelihood Scan: channel %s %s"%(options.chan,options.q))
-            	plt.savefig("like_scan_%s_%s_%s.jpg"%(options.chan,options.q,ending))
-            	plt.close()
-	    '''	    

@@ -1,5 +1,6 @@
 
-Attaching file multidimfitTest.root as _file0...
-(TFile *) 0x29841f0
-0.0120326 0.0386201 -0.0386201
-1.63647 0.0559472 -0.056354
+Attaching file multidimfit.mumu_u_vec_-1.root as _file0...
+(TFile *) 0x27a6b90
+0.0151499 0.994781 -0.994781
+0.408851 0.958158 -0.958158
+-0.0999451 0.0478959 -0.0838368

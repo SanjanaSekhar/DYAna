@@ -1,23 +1,24 @@
 "Sys name" Contri "%% Contri"
-"Electron Identification/Isolation " 0.00331 0.00124714260625189
-"Electron Momentum Scale " 0.0027600000000000003 0.000867118182326229
-"MC and MisID Backgrounds Statistical Uncertainty " 0.00158 0.0002841674320467336
-"DY Cross Section " 0.00148 0.00024933517992115257
-"LQ LO reweighting " 0.00148 0.00024933517992115257
-"Luminosity " 0.00147 0.00024597716868682366
-"PDFs " 0.0014 0.00022310854302659742
-"Electron Trigger Prefire Correction " 0.00132 0.00019833894151507315
-"$\alpha_s$ + Renormalization/Factorization Scales " 0.0009699999999999999 0.00010710348374169669
-"$e\mu$ Shape Corrections " 0.00064 4.6625132256986906e-05
-"$\ttbar$ Cross Section " 0.00064 4.6625132256986906e-05
-"Electron Reconstruction " 0.00064 4.6625132256986906e-05
-"Electron Trigger " 0.00064 4.6625132256986906e-05
-"Electron MisID Shape " 0.00037999999999999997 1.6437180414816667e-05
+"Electron Identification/Isolation " 0.00331 0.166605111166713
+"Electron Momentum Scale " 0.0027600000000000003 0.11583785241313545
+"MC and MisID Backgrounds Statistical Uncertainty " 0.00158 0.0379617746749831
+"DY Cross Section " 0.00148 0.033308552815287204
+"LQ LO reweighting " 0.00148 0.033308552815287204
+"Luminosity " 0.00147 0.03285995789744071
+"PDFs " 0.0014 0.02980495047386912
+"Electron Trigger Prefire Correction " 0.00132 0.026495992706974267
+"$\alpha_s$ + Renormalization/Factorization Scales " 0.0009699999999999999 0.01430789688819564
+"$e\mu$ Shape Corrections " 0.00064 0.0062286263847432626
+"$\ttbar$ Cross Section " 0.00064 0.0062286263847432626
+"Electron Reconstruction " 0.00064 0.0062286263847432626
+"Electron Trigger " 0.00064 0.0062286263847432626
+"Electron MisID Shape " 0.00037999999999999997 0.0021958341063401535
 "Diboson Cross Section " 0.0 0.0
 "$\PGg\PGg$ Cross Section " 0.0 0.0
 "Electron MisID Normalization " 0.0 0.0
 "Pileup " 0.0 0.0
-"Statistical Uncertainty" 0.09354637232760835 99.61254355731204
-"Background Cross Sections" 0.00212 0.00029596031217813946
-"Trigger & Prefire" 0.00196 0.00024496407377206004
-"MisID shape and normalization" 0.00196 0.0003006046124615503
+"Statistical Uncertainty" 0.0808829454618871 99.48239901850279
+"Background Cross Sections" 0.00212 0.03953717920003047
+"Trigger & Prefire" 0.00196 0.03272461909171753
+"MisID shape and normalization" 0.00196 0.040157608781323254
+"Total systematic uncertainty" 0.00583420088786802 0.5176009814971988

@@ -14,7 +14,7 @@ observation     -1
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      ee16    ee16    ee16    ee16     ee16    ee16     ee16 	ee16    ee16      ee16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d_vec  LQint_d_vec	
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
 process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ pdf59                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
 # MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_d_vec LQint_d_vec
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_d LQint_d
 
 MCStatBin1y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin2y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
