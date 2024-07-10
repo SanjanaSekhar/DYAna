@@ -424,7 +424,7 @@ void draw_cmp_from_saved(){
     //    hmax *= 0.75;
 
     float hmin = 0.001;
-    sprintf(y_ax_label, "Events / %.0f GeV", mbin_base);
+    sprintf(y_ax_label, "Events / GeV");
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     //CMS_lumi(p_m, year, 11 );
     CMS_lumi(c_m, year, 11 );

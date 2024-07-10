@@ -76,16 +76,16 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       lumiText += lumi_sqrtS;
     }
   else if(iPeriod==2016){
-      lumiText += "2016 (36 fb^{-1})";
+      lumiText += "2016 (36 fb^{##minus1})";
   }
   else if(iPeriod==2017){
-      lumiText += "2017 (42 fb^{-1})";
+      lumiText += "2017 (42 fb^{#minus1})";
   }
   else if(iPeriod==2018){
-      lumiText += "2018 (59 fb^{-1})";
+      lumiText += "2018 (59 fb^{#minus1})";
   }
   else if(iPeriod == -1){
-      lumiText += "138 fb^{-1} (13 TeV)";
+      lumiText += "138 fb^{#minus1} (13 TeV)";
   }
 
 
@@ -158,7 +158,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
           latex.SetTextFont(extraTextFont);
           latex.SetTextAlign(align_);
           latex.SetTextSize(extraTextSize*t);
-          latex.DrawLatex(posX_, posY_+ relExtraDY*cmsTextSize*t, extraText);
+          latex.DrawLatex(posX_-0.03, posY_+0.09+ relExtraDY*cmsTextSize*t, extraText);
         }
     }
     }
