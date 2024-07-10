@@ -152,18 +152,20 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       latex.SetTextFont(cmsTextFont);
       latex.SetTextSize(cmsTextSize*t);
       latex.SetTextAlign(align_);
-      if(draw_CMS) latex.DrawLatex(posX_-0.03, posY_+0.09, cmsText);
+      if(draw_CMS) latex.DrawLatex(posX_-0.03, posY_+0.09, cmsText+extraText);
       if( writeExtraText ) 
         {
+	  
           latex.SetTextFont(extraTextFont);
           latex.SetTextAlign(align_);
           latex.SetTextSize(extraTextSize*t);
-          latex.DrawLatex(posX_-0.03, posY_+0.09+cmsTextSize*t, extraText);
+          latex.DrawLatex(posX_-0.03, posY_+0.09, extraText);
         }
     }
     }
   else if( writeExtraText )
     {
+	printf("writeExtraText");
       if( iPosX==0) 
     {
       posX_ =   l +  relPosX*(1-l-r);
