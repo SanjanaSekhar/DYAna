@@ -122,7 +122,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 			if 'pe' in datastyle.lower():
 				hist.SetMarkerColorAlpha(kBlack,alpha)
 				hist.SetMarkerStyle(8)
-				hist.SetMarkerSize(4)
+				hist.SetMarkerSize(4.5)
 			if 'hist' in datastyle.lower():
 				hist.SetFillColorAlpha(0,0)
 
@@ -290,12 +290,16 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <=5):
 					line_vals = [8, 16, 22]
 					text_center_bins = [4, 12, 19, 25]
-					text_strs = ["#bf{|y| #epsilon [0, 0.6]}", "#bf{|y| #epsilon [0.6, 1.0]}", "   #splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 1.5]}}", 
-							"#splitline{   #bf{|y| #epsilon}}{#bf{[1.5, 2.4]}}"]
+					text_strs = ["#bf{|y|} #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}", "#bf{|y|} #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}", "    #bf{|y|} #splitline{#bf{ #epsilon [1.0,}}{#bf{ 1.5]}}", 
+							" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
 				else:
 					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
 					text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
-					text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
+					#text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
+					text_strs = ["#bf{|y|} #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}", 
+						"#bf{|y|} #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}", 
+						"#bf{|y|} #splitline{#bf{ #epsilon [1.0,}}{#bf{ 2.4]}}"]
+						#" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
 					text_strs+=(text_strs+text_strs)
 
 				lstyle = 7
