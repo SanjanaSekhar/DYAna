@@ -25,9 +25,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 #for y in [2016,2017,2018]:
 for y in [-1]:
-    #for options.chan in ["mumu","ee"]:
-    for options.chan in ["mumu"]:
-        for options.q in ["u"]:
+    for options.chan in ["mumu","ee"]:
+    #for options.chan in ["mumu"]:
+        for options.q in ["u","d"]:
             mLQ_list = [2500]
             #mLQ_list = [3500,4000,4500,5000]
 	    is_vec = True
@@ -84,7 +84,7 @@ for y in [-1]:
 		#print_and_do("rm -r %s" % (plotdir))
                 #print_and_do("mkdir %s" % (plotdir))
                 if not statuncs:
-		   a=1 #print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")

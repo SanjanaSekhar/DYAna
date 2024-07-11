@@ -337,7 +337,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <= 5):
 					latext.SetTextSize(0.050);    
 				else:
-					latext.SetTextSize(0.04);    
+					latext.SetTextSize(0.034);    
 				text_y = 0.43
 
 				l_margin = gPad.GetLeftMargin();
@@ -346,7 +346,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y+0.16, text_str)
+					latext.DrawLatex(text_center, text_y+0.15, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
