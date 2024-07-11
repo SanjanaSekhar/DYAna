@@ -30,7 +30,7 @@ for y in [-1]:
         for options.q in ["u","d"]:
             mLQ_list = [2500]
             #mLQ_list = [3500,4000,4500,5000]
-	    is_vec = True
+	    is_vec = False
 	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
