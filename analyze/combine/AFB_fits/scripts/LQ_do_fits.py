@@ -81,9 +81,10 @@ for y in [-1]:
 
 		#print("Folder %s NOT FOUND"% plotdir)
 		#make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-		print_and_do("rm -r %s" % (plotdir))
-                print_and_do("mkdir %s" % (plotdir))
-                if not statuncs: print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+		#print_and_do("rm -r %s" % (plotdir))
+                #print_and_do("mkdir %s" % (plotdir))
+                if not statuncs:
+		   a=1 #print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
