@@ -52,7 +52,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 	if len(histlist) == 1:
-		width = 4000
+		width = 4500
 		height = 4000
 		padx = 1
 		pady = 1
@@ -263,7 +263,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				# Do the signals
 				if len(signals) > 0: 
-					signals[hist_index].SetLineColor(kBlue)
+					signals[hist_index].SetLineColor(LQ_co)
 					signals[hist_index].SetLineWidth(3)
 					#if logy == True:
 					signals[hist_index].SetMinimum(1e-1)
