@@ -30,13 +30,13 @@ tautau_co = ROOT.TColor(tautau_c,  19./255., 58./255., 54./255., "tautau_co", 1)
 gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 1);
 
 
-LQ_co = TColor.GetColor("#3f90da");
+LQ_co = TColor.GetColor("#ffa90e");
 LQvec_co = TColor.GetColor("#ffa90e");
-DY_co = TColor.GetColor("#bd1f01");
-ttbar_co = TColor.GetColor("#94a4a2");
-diboson_co = TColor.GetColor("#832db6");
-qcd_co = TColor.GetColor("#a96b59");
-gamgam_co = TColor.GetColor("#b9ac70");
+DY_co = TColor.GetColor("#832db6");
+ttbar_co = TColor.GetColor("#b9ac70");
+diboson_co = TColor.GetColor("#e76300");
+qcd_co = TColor.GetColor("#717581");
+gamgam_co = TColor.GetColor("#92dadd");
 tautau_co = TColor.GetColor("#92dadd");
 
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='Data',bkgNames=[],signalNames=[],
@@ -52,7 +52,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 	if len(histlist) == 1:
-		width = 3000
+		width = 4000
 		height = 4000
 		padx = 1
 		pady = 1
