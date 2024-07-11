@@ -296,9 +296,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
 					text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
 					#text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
-					text_strs = ["#bf{|y|} #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}", 
-						"#bf{|y|} #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}", 
-						"#bf{|y|} #splitline{#bf{ #epsilon [1.0,}}{#bf{ 2.4]}}"]
+					text_strs = ["#splitline{#bf{|y|}}{ #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}}", 
+						"#splitline{#bf{|y|}}{ #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}}", 
+						"#splitline{#bf{|y|}}{ #splitline{#bf{ #epsilon [1.0,}}{#bf{ 2.4]}}}"]
 						#" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
 					text_strs+=(text_strs+text_strs)
 
@@ -354,7 +354,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextColor(kRed+1);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
-				latext2.SetTextSize(0.032)
+				latext2.SetTextSize(0.04)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
