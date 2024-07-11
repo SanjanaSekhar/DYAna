@@ -296,9 +296,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
 					text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
 					#text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
-					text_strs = ["#splitline{#bf{|y|}}{ #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}}", 
-						"#splitline{#bf{|y|}}{ #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}}", 
-						"#splitline{#bf{|y|}}{ #splitline{#bf{ #epsilon [1.0,}}{#bf{ 2.4]}}}"]
+					text_strs = ["#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[0,}}{#bf{ 0.6]}}}", 
+						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[0.6,}}{#bf{ 1.0]}}}", 
+						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[1.0,}}{#bf{ 2.4]}}}"]
 						#" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
 					text_strs+=(text_strs+text_strs)
 
@@ -337,7 +337,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <= 5):
 					latext.SetTextSize(0.050);    
 				else:
-					latext.SetTextSize(0.029);    
+					latext.SetTextSize(0.04);    
 				text_y = 0.43
 
 				l_margin = gPad.GetLeftMargin();
@@ -346,7 +346,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y+0.18, text_str)
+					latext.DrawLatex(text_center, text_y+0.16, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
