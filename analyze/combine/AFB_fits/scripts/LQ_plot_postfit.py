@@ -30,6 +30,15 @@ tautau_co = ROOT.TColor(tautau_c,  19./255., 58./255., 54./255., "tautau_co", 1)
 gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 1);
 
 
+LQ_co = TColor.GetColor("#3f90da");
+LQvec_co = TColor.GetColor("#ffa90e");
+DY_co = TColor.GetColor("#bd1f01");
+ttbar_co = TColor.GetColor("#94a4a2");
+diboson_co = TColor.GetColor("#832db6");
+qcd_co = TColor.GetColor("#a96b59");
+gamgam_co = TColor.GetColor("#b9ac70");
+tautau_co = TColor.GetColor("#92dadd");
+
 def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],titles=[],dataName='Data',bkgNames=[],signalNames=[],
 		logy=False,rootfile=False,xtitle='',ytitle='',dataOff=False,datastyle='pe',year=1, mbin = 6, ratio_range = None, NDiv = 205, prelim = False):  
 
@@ -44,7 +53,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 	if len(histlist) == 1:
 		width = 3000
-		height = 3000
+		height = 4000
 		padx = 1
 		pady = 1
 	elif len(histlist) == 2:
@@ -333,7 +342,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx,text_str in enumerate(text_strs):
 					text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-					latext.DrawLatex(text_center, text_y+0.13, text_str)
+					latext.DrawLatex(text_center, text_y+0.18, text_str)
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
@@ -347,7 +356,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
-                                        latext2.DrawLatex(text_center, text_y+0.18, text_str)
+                                        latext2.DrawLatex(text_center, text_y+0.25, text_str)
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
@@ -928,13 +937,13 @@ if options.gen_level and options.q == "u":
 scale = 10
 
 label_color_map = dict()
-label_color_map['dy'] = ("DY", DY_c)
-label_color_map['top'] = ("t#bar{t} + Single Top ", ttbar_c)
-label_color_map['db'] = ("WW + WZ + ZZ",  diboson_c)
-label_color_map['tautau'] = ("DY #tau#tau Bkg.", kMagenta + 4)
-label_color_map['gam'] = ("#gamma#gamma ", gamgam_c)
-label_color_map['qcd'] = ("W+Jets + QCD", qcd_c)
-label_color_map['LQ'] = ("%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), tautau_c)
+label_color_map['dy'] = ("DY", DY_co)
+label_color_map['top'] = ("t#bar{t} + Single Top ", ttbar_co)
+label_color_map['db'] = ("WW + WZ + ZZ",  diboson_co)
+label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_co)
+label_color_map['gam'] = ("#gamma#gamma ", gamgam_co)
+label_color_map['qcd'] = ("W+Jets + QCD", qcd_co)
+label_color_map['LQ'] = ("%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), LQ_c)
 label_color_map['alpha'] = ("alpha", kGreen)
 label_color_map['fmn'] = ("DY minus", kBlue)
 label_color_map['fpl'] = ("DY plus", kRed)

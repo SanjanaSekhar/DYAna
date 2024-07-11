@@ -1,0 +1,6 @@
+
+Attaching file multidimfit.mumu_u_vec_-1.root as _file0...
+(TFile *) 0x2dadd40
+0.0148663 0.994442 -0.994442
+0.408535 0.957734 -0.957734
+-0.310052 0.147816 -0.259112

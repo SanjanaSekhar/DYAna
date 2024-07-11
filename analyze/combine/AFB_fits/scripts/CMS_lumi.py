@@ -25,9 +25,9 @@ relExtraDY = 1.0
 
 extraOverCmsTextSize  = 0.7
 
-lumi_13TeV = "35.9 fb^{-1}"
-lumi_8TeV  = "19.7 fb^{-1}" 
-lumi_7TeV  = "5.1 fb^{-1}"
+lumi_13TeV = "35.9 fb^{#minus 1}"
+lumi_8TeV  = "19.7 fb^{#minus 1}" 
+lumi_7TeV  = "5.1 fb^{#minus 1}"
 lumi_sqrtS = ""
 
 drawLogo      = False
@@ -94,7 +94,7 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
     elif(iPeriod==2018):
         lumiText += "2018 (59 fb^{-1})"
     elif(iPeriod==-1):
-      lumiText += "138 fb^{-1} (13 TeV)"
+      lumiText += "138 fb^{#minus 1} (13 TeV)"
             
     print iPeriod, lumiText
 
@@ -149,11 +149,11 @@ def CMS_lumi(pad,  iPeriod,  iPosX ):
             latex.SetTextSize(cmsTextSize*t)
             latex.SetTextAlign(align_)
             latex.DrawLatex(posX_, posY_+0.1, cmsText)
-            if( writeExtraText ) :
-                latex.SetTextFont(extraTextFont)
-                latex.SetTextAlign(align_)
-                latex.SetTextSize(extraTextSize*t)
-                latex.DrawLatex(posX_, posY_- relExtraDY*cmsTextSize*t, extraText)
+            
+            latex.SetTextFont(extraTextFont)
+            latex.SetTextAlign(align_)
+            latex.SetTextSize(extraTextSize*t)
+            latex.DrawLatex(posX_+0.1, posY_- relExtraDY*cmsTextSize*t, extraText)
     elif( writeExtraText ):
         if( iPosX==0):
             posX_ =   l +  relPosX*(1-l-r)

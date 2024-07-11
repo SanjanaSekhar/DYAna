@@ -28,10 +28,10 @@ for y in [-1]:
     #for options.chan in ["mumu","ee"]:
     for options.chan in ["mumu"]:
         for options.q in ["u"]:
-            #mLQ_list = [500,1000,2000,3000]
             mLQ_list = [2500]
+            #mLQ_list = [3500,4000,4500,5000]
 	    is_vec = True
-	    statuncs = True
+	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
             
