@@ -3,6 +3,7 @@
 #include "../CMS_lumi.C"
 #include "../../utils/root_files.h"
 #include "../../analyze/combine/LQ_TemplateUtils.h"
+#include "../../utils/LQ_TemplateMaker_systematics.C"
 #include <iostream>
 
 TLine *line1, *line2, *line3, *line4, *line5, *line6, *line7, *line8;
@@ -93,7 +94,7 @@ void LQ_draw_templates(){
     bool use_xF =false;
         //bool use_LQ_denom=true;
     bool draw_muons = true;
-    bool draw_electrons = true;
+    bool draw_electrons = false;
     const string sys_label = "";
     bool scramble_data = false;
         //char *plot_dir = "Paper_plots/template_plots";
@@ -151,7 +152,7 @@ void LQ_draw_templates(){
 
 
         //int year = 2017;
-    for (int year = 2016; year <= 2018; year++)
+    for (int year = 2016; year <= 2016; year++)
     {
 
         init(year);
@@ -228,7 +229,17 @@ void LQ_draw_templates(){
             }
             //gen_mc_SM_template(t_elel_mc,  h_elel_sym, h_elel_asym, h_elel_alpha, year, FLAG_ELECTRONS, use_xF, sys_label );
             gen_mc_LQ_template(t_mumu_mc,  h_mumu_LQpure_u, h_mumu_LQint_u, h_mumu_LQpure_d, h_mumu_LQint_d, h_mumu_LQpure_u_vec, h_mumu_LQint_u_vec, h_mumu_LQpure_d_vec, h_mumu_LQint_d_vec, year, m_LQ, FLAG_MUONS, make_ud, false,  use_xF, sys_label );
-            int n_data = gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
+            
+	    float s = 600*600;
+	    float LQ_denom, reweight_LQpure_pos, reweight_LQint_pos;
+            for(float c = -1.; c <= 1; c+=0.1){
+		set_running_couplings(s,2);
+		LQ_denom = get_LQ_denom(c, s, 2/3., -1., 0.384);
+		reweight_LQpure_pos = get_LQ_scalar_num(c, s, 2./3., -1., 0.384, 2500., false, false);
+		reweight_LQint_pos = get_LQ_scalar_num(c, s, 2./3., -1., 0.384, 2500., true, false);
+		printf("LQ_denom = %f, reweight_LQpure_pos = %f, reweight_LQint_pos = %f\n", LQ_denom, reweight_LQpure_pos, reweight_LQint_pos);
+	    }
+	    int n_data = gen_data_template(t_mumu_data, h_mumu_data,  year,  FLAG_MUONS, scramble_data, ss, use_xF);
             
             auto h1_mumu_LQpure_u = convert3d(h_mumu_LQpure_u);
             auto h1_mumu_LQint_u = convert3d(h_mumu_LQint_u);
@@ -241,7 +252,7 @@ void LQ_draw_templates(){
             auto h1_mumu_data = convert3d(h_mumu_data);
 
             printf("========= h_mumu_data =========\n");
-            h1_mumu_data->Print("range");
+            //h1_mumu_data->Print("range");
             //printf("========= h_mumu_LQint_d =========\n");
             //h1_mumu_LQint_d->Print("range");
 
