@@ -336,6 +336,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
  //   }
 
 		float LQ_denom = (XS1 + XS2 + XS45); //new LQdenom is basically just LO SM
+		//printf("XS1 = %lf, XS2 =  %lf, XS45 =  %lf, LQ_denom = %lf \n",XS1, XS2, XS45, LQ_denom);
+
 		return LQ_denom;
 	}
 
@@ -349,13 +351,14 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 
 		float reweight_LQint_norm1 = ((alpha_run*Q_q)/(16*color_factor*s));
 		float  reweight_LQint_norm2_num = ((s - m_Z0*m_Z0)*(cal+cvl)*(caq-cvq)*m_Z0*m_Z0*G_F_run);
-		
+			
 		float reweight_LQint_norm2_denom = (128*color_factor*1.4142*M_PI*((m_Z0*m_Z0-s)*(m_Z0*m_Z0-s)+(g_z*g_z*m_Z0*m_Z0)));
 		float reweight_LQint_norm2 = (reweight_LQint_norm2_num/reweight_LQint_norm2_denom);
 						 // float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*n_conv*LQ_jacobian;
 		float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2);
 		float reweight_LQ_num, reweight_LQpure_num1, reweight_LQpure_denom1, reweight_LQpure_num, reweight_LQint_num1, reweight_LQint_denom1, reweight_LQint_num;
-
+		
+		//if(interference and !negcos)printf("reweight_LQint_norm1 = %f, reweight_LQint_norm2 = %f, reweight_LQint_norm = %f \n",reweight_LQint_norm1,reweight_LQint_norm2,reweight_LQint_norm); 
 		if(!interference and !negcos){
 			
 							//weight(cost)
@@ -574,6 +577,7 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 		float max_obs = 0.;
 		int n_pt75 = 0, n_uq = 0, n_dq = 0;
 		for (int i=0; i<tm.nEntries; i++) {
+		//for (int i=0; i<5; i++) {
 			tm.getEvent(i);
 			tm.doCorrections();
 			bool pass = (tm.m >= lq_m_bins[0]) && tm.not_cosmic;// && (tm.met_pt < met_cut)  && tm.has_no_bjets;
@@ -582,7 +586,8 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 			
 			if(pass){
 				
-	//			if(tm.do_muons || (tm.do_electrons and tm.el1_pt >= 35.)){
+	//			if((tm.do_muons and tm.el1_pt >= 40.) || (tm.do_electrons and tm.el1_pt >= 40.)){
+				
 				//tm.doCorrections();
 				//if(ptcut) pass = (tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.); 
 				//if(metcut) pass = (tm.met_pt < met_cut)  && tm.has_no_bjets;
@@ -660,18 +665,24 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 					if((tm.inc_id1 == 3 && tm.inc_id2 == -3)||(tm.inc_id1 == -3 && tm.inc_id2 == 3)) flag_q=1;
 					if((tm.inc_id1 == 4 && tm.inc_id2 == -4)||(tm.inc_id1 == -4 && tm.inc_id2 == 4)) flag_q=2;
 				}
-				if(flag_q!=0){ 
+				if(flag_q==1 or flag_q==2){ 
 
 					set_running_couplings(s,flag_q);
-
+				        //printf("s = %f, flag_q = %i, gen_cost = %f, Q_q = %f, caq = %f, cvq = %f \n", s,flag_q,gen_cost,Q_q,caq,cvq);
 					float LQ_denom = get_LQ_denom(gen_cost, s, Q_q, caq, cvq);
-
+					//printf("LQ_denom (N_SM) = %f\n", LQ_denom);
+						
 				// scalar
-					float reweight_LQpure_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false)/LQ_denom;
-
+					float reweight_LQpure_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false);
+					//printf("N_pure = %f",reweight_LQpure_pos);
+					reweight_LQpure_pos/= LQ_denom;
+					
+					
 					float reweight_LQpure_neg = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, true)/LQ_denom;
 
-					float reweight_LQint_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false)/LQ_denom;
+					float reweight_LQint_pos = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false);
+					//printf("N_int = %f\n",reweight_LQint_pos);
+					reweight_LQint_pos/= LQ_denom;
 
 					float reweight_LQint_neg = get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, true)/LQ_denom;
 				// vector
@@ -703,6 +714,14 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 							//uLQ temps
 					if(flag_q==2){
 						n_uq++;
+						/*
+						printf("LQ_denom = %f\n", LQ_denom);
+						printf("reweight_LQpure_pos_num = %f, ", get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, false, false));
+						printf("reweight_LQint_pos_num = %f, ", get_LQ_scalar_num(gen_cost, s, Q_q, caq, cvq, m_LQ, true, false));
+						
+						printf("reweight_LQpure_pos (Npure/NSM * costfactors) = %f, ",reweight_LQpure_pos);
+						printf("reweight_LQint_pos (Nint/NSM * costfactors) = %f \n",reweight_LQint_pos);
+						*/
 					//scalar
 						h_LQpure_u->Fill(tm.m, var1, tm.cost, reweight_LQpure_pos * tm.evt_weight * RFfactor ); 
 						h_LQpure_u->Fill(tm.m, var1, -tm.cost, reweight_LQpure_neg * tm.evt_weight * RFfactor);

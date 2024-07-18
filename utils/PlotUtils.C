@@ -379,6 +379,12 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         h_ratio->Add(sum, -1.);
     }
     h_ratio->Divide(sum);
+    // only showing statistical uncertainties in the data in the ratio
+    for(int i = 1; i <= h_ratio->GetNbinsX(); i++){
+	float err = h_data->GetBinError(i)/h_data->GetBinContent(i);
+	std::cout << "bin " << i << ": " << err << std::endl;
+	h_ratio->SetBinError(i, err);
+    }
 
 
     TCanvas *c = new TCanvas("c_" + label, "Histograms", 200, 50, 1000, 900);
@@ -414,7 +420,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
         h_stack_err->SetMarkerStyle(0);
         h_stack_err->SetMarkerSize(0.001);
         h_stack_err->Draw("e2 same");
-
+	std::cout << "h_stack_err" << std::endl;
+	h_stack_err->Print("range");
          leg->AddEntry(h_stack_err, "Sys. unc.", "f");
     }
 
@@ -447,6 +454,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     else{
         printf("not const size\n");
         h_data->Draw("P E0 same");
+	std::cout << "h_data" << std::endl;
+	h_data->Print("range");
     }
 
     leg->Draw();
@@ -511,7 +520,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
 
     ratio_unc->SetFillColor(kGray);
     //ratio_unc->SetFillStyle(3010);
-    //ratio_unc->Print("all");
+    std::cout<< "ratio_unc" << std::endl;
+    ratio_unc->Print("range");
 
 
 
@@ -521,7 +531,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     h_ratio->GetYaxis()->SetRangeUser(ratio_min, ratio_max);
 
     h_ratio->SetTitle("");
-    h_ratio->GetYaxis()->SetTitle("Obs/exp");
+    h_ratio->GetYaxis()->SetTitle("Obs. / Exp.");
     h_ratio->GetYaxis()->SetNdivisions(205);
     h_ratio->GetYaxis()->SetTitleSize(TS+0.1);
     h_ratio->GetYaxis()->SetLabelSize(LS+0.08);
@@ -553,7 +563,9 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(const_size) h_ratio->Draw("EPX0 same");
     else h_ratio->Draw("EP same");
     gPad->RedrawAxis();
-
+    std::cout << "h_ratio" << std::endl;
+    h_ratio->Print("range"); 
+   
     float chi2 = computeChi2(h_ratio);
     int n_bins = h_ratio->GetNbinsX();
 

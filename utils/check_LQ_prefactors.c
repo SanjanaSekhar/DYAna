@@ -1,5 +1,5 @@
 #include <cmath>
-
+#include <stdio.h>
 float alpha = 1/127.9;
 float m_Z0 = 91.1875;
 float m_W = 80.379;
@@ -44,9 +44,15 @@ void set_running_couplings(float s, int quark_id){
 	alpha_run = (g2_run*g2_run)*sin2_thetaw_run/(4*M_PI);
 	G_F_run = (sqrt(2)*(g1_run*g1_run))/(8*m_Z0*m_Z0*sin2_thetaw_run);
 			//use coupling definitions from Quigg edition 1
+	
+	//sin2_thetaw_run = sin2_thetaw;
+	//alpha_run =alpha;
+	//G_F_run = G_F;
+
 	float crl = 2 * sin2_thetaw_run;
 	float cll = 2 * sin2_thetaw_run - 1;
-
+	
+		
 	cvl = crl + cll;
 	cal = crl - cll;
 //up quark
@@ -103,7 +109,7 @@ float get_LQ_denom(float gen_cost,float s,float Q_q, float caq, float cvq){
  //     XS45_num =  - ((gen_cost*gen_cost+1)*cvl*cvq) * (m_Z0*m_Z0-s) * alpha*G_F*m_Z0*m_Z0*Q_q;
  //     XS45 = XS45_num/XS45_denom;
  //   }
-
+		//printf("XS1 = %f, XS2 = %f, XS45 = %f\n",XS1, XS2, XS45);
 		float LQ_denom = (XS1 + XS2 + XS45); //new LQdenom is basically just LO SM
 		return LQ_denom;
 	}
@@ -124,7 +130,8 @@ float get_LQ_scalar_num(float gen_cost,float s,float Q_q, float caq, float cvq, 
 						 // float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2)*n_conv*LQ_jacobian;
 		float reweight_LQint_norm = (reweight_LQint_norm1 + reweight_LQint_norm2);
 		float reweight_LQ_num, reweight_LQpure_num1, reweight_LQpure_denom1, reweight_LQpure_num, reweight_LQint_num1, reweight_LQint_denom1, reweight_LQint_num;
-
+		
+		printf("reweight_LQint_norm1 = %f, reweight_LQint_norm2 = %f\n",reweight_LQint_norm1*1e11, reweight_LQint_norm2*1e11);
 		if(!interference and !negcos){
 			
 							//weight(cost)
@@ -214,18 +221,18 @@ void check_LQ_prefactors(){
     printf("For scalar up quark case\n");
     for(float c = -1.; c <= 1; c+=0.1){
         set_running_couplings(s,2);
-        LQ_denom = get_LQ_denom(c, s, 2./3., -1., 0.384);
-        reweight_LQpure_pos = get_LQ_scalar_num(c, s, 2./3., -1., 0.384, 2500., false, false);
-        reweight_LQint_pos = get_LQ_scalar_num(c, s, 2./3., -1., 0.384, 2500., true, false);
+        LQ_denom = get_LQ_denom(c, s, 2./3., -1., 0.384)*1e11;
+        reweight_LQpure_pos = get_LQ_scalar_num(c, s, 2./3., -1., 0.384, 2500., false, false)*1e11;
+        reweight_LQint_pos = get_LQ_scalar_num(c, s, 2./3., -1., 0.384, 2500., true, false)*1e11;
         printf("LQ_denom = %f, reweight_LQpure_pos = %f, reweight_LQint_pos = %f\n", LQ_denom, reweight_LQpure_pos, reweight_LQint_pos);
     }
 
     printf("For scalar down quark case\n");
     for(float c = -1.; c <= 1; c+=0.1){
         set_running_couplings(s,1);
-        LQ_denom = get_LQ_denom(c, s, -1./3., 1., -0.692);
-        reweight_LQpure_pos = get_LQ_scalar_num(c, s, -1./3., 1., -0.692, 2500., false, false);
-        reweight_LQint_pos = get_LQ_scalar_num(c, s, -1./3., 1., -0.692, 2500., true, false);
-        printf("LQ_denom = %f, reweight_LQpure_pos = %f, reweight_LQint_pos = %f\n", LQ_denom, reweight_LQpure_pos, reweight_LQint_pos);
+        LQ_denom = get_LQ_denom(c, s, -1./3., 1., -0.692)*1e11;
+        reweight_LQpure_pos = get_LQ_scalar_num(c, s, -1./3., 1., -0.692, 2500., false, false)*1e11;
+        reweight_LQint_pos = get_LQ_scalar_num(c, s, -1./3., 1., -0.692, 2500., true, false)*1e11;
+        printf("LQ_denom = %f, reweight_LQpure_pos = %f, reweight_LQint_pos = %f\n",LQ_denom, reweight_LQpure_pos, reweight_LQint_pos);
     }
 }
