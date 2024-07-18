@@ -12,7 +12,7 @@ void LQ_check_metcut(){
         bool ss = false;
         bool use_xF =false;
         //bool use_LQ_denom=true;
-        bool draw_muons = false;
+        bool draw_muons = true;
         bool draw_electrons = true;
         const string sys_label = "";
         
@@ -21,8 +21,8 @@ void LQ_check_metcut(){
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.1;
-        float x_end = 0.3;
-        float y_start = 0.75;
+        float x_end = 0.5;
+        float y_start = 0.7;
         float y_end = 0.9;
        
        // std::cout << "enter m_LQ:";        
@@ -55,7 +55,7 @@ void LQ_check_metcut(){
 
      // for(int i=i_start;i<=i_end;i++)
       // {
-        Double_t m_LQ=2000.;
+        Double_t m_LQ=2500.;
         printf("=========================\n m_LQ = %f, draw_muons = %d, draw_electrons = %d \n=========================\n",m_LQ,draw_muons,draw_electrons );
 
         TH1F *h16_mumu_LQpure_u, *h16_mumu_LQint_u, *h16_mumu_LQpure_d, *h16_mumu_LQint_d;
@@ -68,7 +68,7 @@ void LQ_check_metcut(){
 
         
         //int year = 2017;
-        for (int year = 2016; year<=2018; year++)
+        for (int year = 2017; year<=2017; year++)
         {
 
         init(year);
@@ -503,8 +503,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-                leg1->AddEntry(h1_elel_LQpure_u, "Pure LQ Template", "l");
-                leg1->AddEntry(h1_elel_LQpure_u_metcut, "Pure LQ Template (el_pt > 40 GeV)", "l");
+                leg1->AddEntry(h1_elel_LQpure_u, "#LQ_{pure}", "l");
+                leg1->AddEntry(h1_elel_LQpure_u_metcut, "#LQ_{pure}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
@@ -523,8 +523,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-                leg2->AddEntry(h1_elel_LQint_u, "Intereference LQ Template", "l");
-                leg2->AddEntry(h1_elel_LQint_u_metcut, "Intereference LQ Template (el_pt > 40 GeV)", "l");
+                leg2->AddEntry(h1_elel_LQint_u, "#LQ_{int}", "l");
+                leg2->AddEntry(h1_elel_LQint_u_metcut, "#LQ_{int}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
@@ -540,8 +540,8 @@ void LQ_check_metcut(){
                 h1_elel_LQpure_d_metcut->Draw("hist same");
 
                 TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-                leg3->AddEntry(h1_elel_LQpure_d,"Pure LQ Template","l");
-                leg3->AddEntry(h1_elel_LQpure_d_metcut,"Pure LQ Template (el_pt > 40 GeV)","l");
+                leg3->AddEntry(h1_elel_LQpure_d,"#LQ_{pure}","l");
+                leg3->AddEntry(h1_elel_LQpure_d_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg3->Draw();
 
                 c_elel3->Print(el_fname3);
@@ -554,8 +554,8 @@ void LQ_check_metcut(){
                 h1_elel_LQint_d_metcut->Draw("hist same");
 
                 TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
-                leg4->AddEntry(h1_elel_LQint_d,"Interference LQ Template","l");
-                leg4->AddEntry(h1_elel_LQint_d_metcut,"Interference LQ Template (el_pt > 40 GeV)","l");
+                leg4->AddEntry(h1_elel_LQint_d,"#LQ_{int}","l");
+                leg4->AddEntry(h1_elel_LQint_d_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
                 leg4->Draw();
 
                 c_elel4->Print(el_fname4);
@@ -568,8 +568,8 @@ void LQ_check_metcut(){
                 h1_elel_LQpure_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
-                leg5->AddEntry(h1_elel_LQpure_u_vec,"Pure LQ Template","l");
-                leg5->AddEntry(h1_elel_LQpure_u_vec_metcut,"Pure LQ Template (el_pt > 40 GeV)","l");
+                leg5->AddEntry(h1_elel_LQpure_u_vec,"#LQ_{pure}","l");
+                leg5->AddEntry(h1_elel_LQpure_u_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg5->Draw();
                 
                 c_elel5->Print(el_fname5);
@@ -582,8 +582,8 @@ void LQ_check_metcut(){
                 h1_elel_LQint_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
-                leg6->AddEntry(h1_elel_LQint_u_vec,"Interference LQ Template","l");
-                leg6->AddEntry(h1_elel_LQint_u_vec_metcut,"Interference LQ Template (el_pt > 40 GeV)","l");
+                leg6->AddEntry(h1_elel_LQint_u_vec,"#LQ_{int}","l");
+                leg6->AddEntry(h1_elel_LQint_u_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
                 leg6->Draw();
                 
                 c_elel6->Print(el_fname6);
@@ -596,8 +596,8 @@ void LQ_check_metcut(){
                 h1_elel_LQpure_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg7 = new TLegend(x_start, y_start, x_end, y_end);
-                leg7->AddEntry(h1_elel_LQpure_d_vec,"Pure LQ Template","l");
-                leg7->AddEntry(h1_elel_LQpure_d_vec_metcut,"Pure LQ Template (el_pt > 40 GeV)","l");
+                leg7->AddEntry(h1_elel_LQpure_d_vec,"#LQ_{pure}","l");
+                leg7->AddEntry(h1_elel_LQpure_d_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg7->Draw();
                 
                 c_elel7->Print(el_fname7);
@@ -610,14 +610,17 @@ void LQ_check_metcut(){
                 h1_elel_LQint_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg8 = new TLegend(x_start, y_start, x_end, y_end);
-                leg8->AddEntry(h1_elel_LQint_d_vec,"Interference LQ Template","l");
-                leg8->AddEntry(h1_elel_LQint_d_vec_metcut,"Interference LQ Template (el_pt > 40 GeV)","l");
+                leg8->AddEntry(h1_elel_LQint_d_vec,"#LQ_{int}","l");
+                leg8->AddEntry(h1_elel_LQint_d_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
                 leg8->Draw();
                 
                 c_elel8->Print(el_fname8);
                 delete c_elel8;
         
-
+		/*
+ 		leg3->AddEntry(h1_mumu_LQpure_d,"#LQ_{pure}","l");
+                leg3->AddEntry(h1_mumu_LQpure_d_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
+		*/
                 
             
 
