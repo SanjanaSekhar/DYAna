@@ -21,8 +21,8 @@ void LQ_check_metcut(){
         int i_start = 1; 
         int i_end = 4;
         float x_start = 0.1;
-        float x_end = 0.5;
-        float y_start = 0.7;
+        float x_end = 0.6;
+        float y_start = 0.75;
         float y_end = 0.9;
        
        // std::cout << "enter m_LQ:";        
@@ -233,8 +233,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-                leg1->AddEntry(h1_mumu_LQpure_u, "#LQ_{pure}", "l");
-                leg1->AddEntry(h1_mumu_LQpure_u_metcut, "#LQ_{pure}(w/o MET cut and anti btag)", "l");
+                leg1->AddEntry(h1_mumu_LQpure_u, "LQ_{pure}", "l");
+                leg1->AddEntry(h1_mumu_LQpure_u_metcut, "LQ_{pure}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -253,8 +253,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-                leg2->AddEntry(h1_mumu_LQint_u, "#LQ_{int}", "l");
-                leg2->AddEntry(h1_mumu_LQint_u_metcut, "#LQ_{int}(w/o MET cut and anti btag)", "l");
+                leg2->AddEntry(h1_mumu_LQint_u, "LQ_{int}", "l");
+                leg2->AddEntry(h1_mumu_LQint_u_metcut, "LQ_{int}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_mumu_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_mumu_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_mumu_alpha, "alpha Template", "l");
@@ -284,8 +284,8 @@ void LQ_check_metcut(){
                 h1_mumu_LQint_d_metcut->Draw("hist same");
 
                 TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
-                leg4->AddEntry(h1_mumu_LQint_d,"#LQ_{int}","l");
-                leg4->AddEntry(h1_mumu_LQint_d_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
+                leg4->AddEntry(h1_mumu_LQint_d,"LQ_{int}","l");
+                leg4->AddEntry(h1_mumu_LQint_d_metcut,"LQ_{int}(w/o MET cut and anti btag)","l");
                 leg4->Draw();
 
                 c_mumu4->Print(mu_fname4);
@@ -298,8 +298,8 @@ void LQ_check_metcut(){
                 h1_mumu_LQpure_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
-                leg5->AddEntry(h1_mumu_LQpure_u_vec,"#LQ_{pure}","l");
-                leg5->AddEntry(h1_mumu_LQpure_u_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
+                leg5->AddEntry(h1_mumu_LQpure_u_vec,"LQ_{pure}","l");
+                leg5->AddEntry(h1_mumu_LQpure_u_vec_metcut,"LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg5->Draw();
                 
                 c_mumu5->Print(mu_fname5);
@@ -312,8 +312,8 @@ void LQ_check_metcut(){
                 h1_mumu_LQint_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
-                leg6->AddEntry(h1_mumu_LQint_u_vec,"#LQ_{int}","l");
-                leg6->AddEntry(h1_mumu_LQint_u_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
+                leg6->AddEntry(h1_mumu_LQint_u_vec,"LQ_{int}","l");
+                leg6->AddEntry(h1_mumu_LQint_u_vec_metcut,"LQ_{int}(w/o MET cut and anti btag)","l");
                 leg6->Draw();
                 
                 c_mumu6->Print(mu_fname6);
@@ -326,8 +326,8 @@ void LQ_check_metcut(){
                 h1_mumu_LQpure_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg7 = new TLegend(x_start, y_start, x_end, y_end);
-                leg7->AddEntry(h1_mumu_LQpure_d_vec,"#LQ_{pure}","l");
-                leg7->AddEntry(h1_mumu_LQpure_d_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
+                leg7->AddEntry(h1_mumu_LQpure_d_vec,"LQ_{pure}","l");
+                leg7->AddEntry(h1_mumu_LQpure_d_vec_metcut,"LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg7->Draw();
                 
                 c_mumu7->Print(mu_fname7);
@@ -340,8 +340,8 @@ void LQ_check_metcut(){
                 h1_mumu_LQint_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg8 = new TLegend(x_start, y_start, x_end, y_end);
-                leg8->AddEntry(h1_mumu_LQint_d_vec,"#LQ_{int}","l");
-                leg8->AddEntry(h1_mumu_LQint_d_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
+                leg8->AddEntry(h1_mumu_LQint_d_vec,"LQ_{int}","l");
+                leg8->AddEntry(h1_mumu_LQint_d_vec_metcut,"LQ_{int}(w/o MET cut and anti btag)","l");
                 leg8->Draw();
                 
                 c_mumu8->Print(mu_fname8);
@@ -503,8 +503,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg1 = new TLegend(x_start, y_start, x_end, y_end);
-                leg1->AddEntry(h1_elel_LQpure_u, "#LQ_{pure}", "l");
-                leg1->AddEntry(h1_elel_LQpure_u_metcut, "#LQ_{pure}(w/o MET cut and anti btag)", "l");
+                leg1->AddEntry(h1_elel_LQpure_u, "LQ_{pure}", "l");
+                leg1->AddEntry(h1_elel_LQpure_u_metcut, "LQ_{pure}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
@@ -523,8 +523,8 @@ void LQ_check_metcut(){
                 
 
                 TLegend *leg2 = new TLegend(x_start, y_start, x_end, y_end);
-                leg2->AddEntry(h1_elel_LQint_u, "#LQ_{int}", "l");
-                leg2->AddEntry(h1_elel_LQint_u_metcut, "#LQ_{int}(w/o MET cut and anti btag)", "l");
+                leg2->AddEntry(h1_elel_LQint_u, "LQ_{int}", "l");
+                leg2->AddEntry(h1_elel_LQint_u_metcut, "LQ_{int}(w/o MET cut and anti btag)", "l");
                //leg1->AddEntry(h1_elel_pl, "Plus Template", "l");
                //leg1->AddEntry(h1_elel_mn, "Minus Template", "l");
                 //leg1->AddEntry(h1_elel_alpha, "alpha Template", "l");
@@ -540,8 +540,8 @@ void LQ_check_metcut(){
                 h1_elel_LQpure_d_metcut->Draw("hist same");
 
                 TLegend *leg3 = new TLegend(x_start, y_start, x_end, y_end);
-                leg3->AddEntry(h1_elel_LQpure_d,"#LQ_{pure}","l");
-                leg3->AddEntry(h1_elel_LQpure_d_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
+                leg3->AddEntry(h1_elel_LQpure_d,"LQ_{pure}","l");
+                leg3->AddEntry(h1_elel_LQpure_d_metcut,"LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg3->Draw();
 
                 c_elel3->Print(el_fname3);
@@ -554,8 +554,8 @@ void LQ_check_metcut(){
                 h1_elel_LQint_d_metcut->Draw("hist same");
 
                 TLegend *leg4 = new TLegend(x_start, y_start, x_end, y_end);
-                leg4->AddEntry(h1_elel_LQint_d,"#LQ_{int}","l");
-                leg4->AddEntry(h1_elel_LQint_d_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
+                leg4->AddEntry(h1_elel_LQint_d,"LQ_{int}","l");
+                leg4->AddEntry(h1_elel_LQint_d_metcut,"LQ_{int}(w/o MET cut and anti btag)","l");
                 leg4->Draw();
 
                 c_elel4->Print(el_fname4);
@@ -568,8 +568,8 @@ void LQ_check_metcut(){
                 h1_elel_LQpure_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg5 = new TLegend(x_start, y_start, x_end, y_end);
-                leg5->AddEntry(h1_elel_LQpure_u_vec,"#LQ_{pure}","l");
-                leg5->AddEntry(h1_elel_LQpure_u_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
+                leg5->AddEntry(h1_elel_LQpure_u_vec,"LQ_{pure}","l");
+                leg5->AddEntry(h1_elel_LQpure_u_vec_metcut,"LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg5->Draw();
                 
                 c_elel5->Print(el_fname5);
@@ -582,8 +582,8 @@ void LQ_check_metcut(){
                 h1_elel_LQint_u_vec_metcut->Draw("hist same");
 
                 TLegend *leg6 = new TLegend(x_start, y_start, x_end, y_end);
-                leg6->AddEntry(h1_elel_LQint_u_vec,"#LQ_{int}","l");
-                leg6->AddEntry(h1_elel_LQint_u_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
+                leg6->AddEntry(h1_elel_LQint_u_vec,"LQ_{int}","l");
+                leg6->AddEntry(h1_elel_LQint_u_vec_metcut,"LQ_{int}(w/o MET cut and anti btag)","l");
                 leg6->Draw();
                 
                 c_elel6->Print(el_fname6);
@@ -596,8 +596,8 @@ void LQ_check_metcut(){
                 h1_elel_LQpure_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg7 = new TLegend(x_start, y_start, x_end, y_end);
-                leg7->AddEntry(h1_elel_LQpure_d_vec,"#LQ_{pure}","l");
-                leg7->AddEntry(h1_elel_LQpure_d_vec_metcut,"#LQ_{pure}(w/o MET cut and anti btag)","l");
+                leg7->AddEntry(h1_elel_LQpure_d_vec,"LQ_{pure}","l");
+                leg7->AddEntry(h1_elel_LQpure_d_vec_metcut,"LQ_{pure}(w/o MET cut and anti btag)","l");
                 leg7->Draw();
                 
                 c_elel7->Print(el_fname7);
@@ -610,8 +610,8 @@ void LQ_check_metcut(){
                 h1_elel_LQint_d_vec_metcut->Draw("hist same");
 
                 TLegend *leg8 = new TLegend(x_start, y_start, x_end, y_end);
-                leg8->AddEntry(h1_elel_LQint_d_vec,"#LQ_{int}","l");
-                leg8->AddEntry(h1_elel_LQint_d_vec_metcut,"#LQ_{int}(w/o MET cut and anti btag)","l");
+                leg8->AddEntry(h1_elel_LQint_d_vec,"LQ_{int}","l");
+                leg8->AddEntry(h1_elel_LQint_d_vec_metcut,"LQ_{int}(w/o MET cut and anti btag)","l");
                 leg8->Draw();
                 
                 c_elel8->Print(el_fname8);
