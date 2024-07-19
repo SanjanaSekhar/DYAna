@@ -13,19 +13,19 @@ observation     -1
 -------------------------------------------------------------------------------
 # Add the processes contributing to the data expectation
 bin                      mumu16  mumu16  mumu16  mumu16   mumu16  mumu16   mumu16 	mumu16   mumu16    mumu16 	 
-process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_d  LQint_d	
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_u  LQint_u	
 process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -		
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
-top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
+top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 nlo_sys         lnN      -       -        -      -        -        -       -            -        2.200000    1.600000
 
 muFakes16       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
-xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys muFakes16 muFakes17 muFakes18
+#xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys muFakes16 muFakes17 muFakes18
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi16           lnN     1.022    1.022     1.022   1.022     1.022   1.022     -			1.022    	1.022	1.022		
@@ -35,7 +35,7 @@ lumiDB           lnN     1.004    1.004     1.004   1.004     1.004   1.004     
 lumiBC           lnN       -        -         -       -         -       -       -			  -      	  -  	  -  	 
 lumiGS           lnN     1.004    1.004     1.004   1.004     1.004   1.004     -			1.004    	1.004	1.004	  
 
-lumis16 group = lumi16 lumiXY lumiLS lumiDB lumiBC lumiGS      
+#lumis16 group = lumi16 lumiXY lumiLS lumiDB lumiBC lumiGS      
 
 
 ## prefire only for 16,17, hem only 18                                                                                
@@ -161,7 +161,7 @@ pdf59                 shape    1.0     1.0     1.0     -        -      -      - 
 pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
 
 # MC Stats
-# process                      alpha fpl fmn top db gam qcd tautau LQpure_d LQint_d
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_u LQint_u
 
 MCStatBin1y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin2y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
