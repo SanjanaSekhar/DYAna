@@ -431,7 +431,7 @@ dy_cost->SetLineColor(DY_color);
     leg1->SetY2(y_start_m+y_size);
 
 
-    float hmax = 2000;
+    float hmax = 2500;
     float hmin = 0.001;
     // if(year == 2016)
     //     hmax *= 0.25;
