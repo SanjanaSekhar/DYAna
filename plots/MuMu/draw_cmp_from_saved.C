@@ -47,7 +47,7 @@ void draw_cmp_from_saved(){
     TFile *fin = new TFile(fin_name, "READ");
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
-    int year_start = 2016;
+    int year_start = 2018;
     int year_stop = 2018;
 
     for(int year = year_start; year <= year_stop; year++){
@@ -447,9 +447,9 @@ dy_cost->SetLineColor(DY_color);
     //LQu_m->Draw("hist  same");
     //LQu_vec_m->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_m_cmp_1TeV.png", plot_dir, file_label );
-    if(write_out) c_m->Print(plt_file);
+    //if(write_out) c_m->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_m_cmp_1TeV.pdf", plot_dir, file_label );
-    if(write_out) c_m->Print(plt_file);
+    //if(write_out) c_m->Print(plt_file);
 
     
     //float x_start_c = 0.57 - x_size/2;
@@ -483,9 +483,9 @@ dy_cost->SetLineColor(DY_color);
     //LQu_cost->Draw("hist  same");
     //LQu_vec_cost->Draw("hist  same");
     sprintf(plt_file, "%sMuMu%s_cost_cmp_1TeV.png", plot_dir, file_label);
-    if(write_out) c_cost->Print(plt_file);
+    //if(write_out) c_cost->Print(plt_file);
     sprintf(plt_file, "%sMuMu%s_cost_cmp_1TeV.pdf", plot_dir, file_label);
-    if(write_out) c_cost->Print(plt_file);
+    //if(write_out) c_cost->Print(plt_file);
 
 
     leg3->SetX1(x_start_c);
@@ -496,7 +496,7 @@ dy_cost->SetLineColor(DY_color);
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 200;
+    hmax = 100;
     // if(year == 2016)
     //     hmax *= 0.25;
     // if(year == 2017)
@@ -511,8 +511,8 @@ dy_cost->SetLineColor(DY_color);
     //p_rap->cd();
     //LQu_rap->Draw("hist  same");
     //LQu_vec_rap->Draw("hist  same");
-    sprintf(plt_file, "%sMuMu%s_rap_cmp_1TeV.png", plot_dir, file_label);
+    sprintf(plt_file, "%sMuMu%s_rap_cmp_2018_1TeV.png", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
-    sprintf(plt_file, "%sMuMu%s_rap_cmp_1TeV.pdf", plot_dir, file_label);
+    sprintf(plt_file, "%sMuMu%s_rap_cmp_2018_1TeV.pdf", plot_dir, file_label);
     if(write_out) c_rap->Print(plt_file);
 }
