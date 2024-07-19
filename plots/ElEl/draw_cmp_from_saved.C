@@ -47,7 +47,7 @@ void draw_cmp_from_saved(){
     TFile *fin = new TFile(fin_name, "READ");
     gStyle->SetOptStat(0);
     gROOT->SetBatch(1);
-    for(int year = 2016; year <= 2017; year++){
+    for(int year = 2016; year <= 2018; year++){
 
         char year_str[80];
         sprintf(year_str, "y%i", year);

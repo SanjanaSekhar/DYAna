@@ -25,7 +25,7 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 #for y in [2016,2017,2018]:
 for y in [-1]:
-    for options.chan in ["mumu","ee"]:
+    for options.chan in ["mumu"]:
     #for options.chan in ["mumu"]:
         for options.q in ["u","d"]:
             mLQ_list = [2500]
@@ -60,7 +60,7 @@ for y in [-1]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_unblinded"
+            fit_name+="_unblinded_bonly"
 	    print("\n fit_name = ", fit_name)
 	    #if y > -1: extra_args = "--combined False"
 	    
@@ -81,17 +81,17 @@ for y in [-1]:
 
 		#print("Folder %s NOT FOUND"% plotdir)
 		#make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-		#print_and_do("rm -r %s" % (plotdir))
-                #print_and_do("mkdir %s" % (plotdir))
+		print_and_do("rm -r %s" % (plotdir))
+                print_and_do("mkdir %s" % (plotdir))
                 if not statuncs:
-		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_bonly_%i -s 3456 --setParameters yLQ2=0 --freezeParameters yLQ2" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
                 
 		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
                 if(not statuncs):
-                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
+                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_bonly_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
                             % (options.chan,options.q,("_vec" if is_vec else ""),options.year,options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year

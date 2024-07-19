@@ -144,7 +144,7 @@ void save_hists(){
 
 
 
-        float m_low = 500.;
+        float m_low = 1000.;
         float m_high = 13000;
         bool ss = false;
 
