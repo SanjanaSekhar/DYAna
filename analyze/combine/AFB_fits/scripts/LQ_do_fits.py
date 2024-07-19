@@ -74,7 +74,7 @@ for y in [-1]:
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 		
                 workspace="workspaces/%s_LQ.root" % (options.chan)
-                make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
+                #make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
                 print("\n plotdir = ", plotdir)
                 #if not os.path.isdir(plotdir) or not os.listdir(plotdir):
@@ -83,8 +83,8 @@ for y in [-1]:
 		#make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
 		print_and_do("rm -r %s" % (plotdir))
                 print_and_do("mkdir %s" % (plotdir))
-                if not statuncs:
-		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_bonly_%i -s 3456 --setParameters yLQ2=0 --freezeParameters yLQ2" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+                if not statuncs: a=1
+		   #print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_bonly_%i -s 3456 --setParameters yLQ2=0 --freezeParameters yLQ2" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
@@ -108,7 +108,7 @@ for y in [-1]:
 		print_and_do(""" cat cmd.txt """)
                 print_and_do("""echo ".q" >> cmd.txt """)
                 #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
-                print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
+                print_and_do("root -l -b multidimfit.%s_%s%s_bonly_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
 		
 		if(statuncs): print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
 		

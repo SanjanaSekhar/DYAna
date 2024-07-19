@@ -269,8 +269,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
 					else: this_sig_name = signalNames[0]
-					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
-					signals[hist_index].Draw('hist same')
+					#legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
+					#signals[hist_index].Draw('hist same')
 
 				gStyle.SetHatchesLineWidth(2)
 				totlist[hist_index].SetLineColor(kWhite)
