@@ -1,0 +1,240 @@
+# Shape-based analysis setup for combined AFB
+#let combine figure this out
+imax * 
+jmax * 
+kmax * 
+-------------------------------------------------------------------------------
+# Next declare how to find the histograms in the file
+-------------------------------------------------------------------------------
+shapes * * LQmMASS_merge_templatesYR_071924_splitrap.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+
+bin             mumuYR  
+observation     -1         
+-------------------------------------------------------------------------------
+# Add the processes contributing to the data expectation
+bin                      mumuYR  mumuYR  mumuYR  mumuYR   mumuYR  mumuYR   mumuYR 	mumuYR   mumuYR    mumuYR 	 
+process                  alpha   fpl     fmn     top      db      gam      qcd		tautau   LQpure_QUARK  LQint_QUARK	
+process                  1      2       3      4        5      6        7       8        -1        -2		
+rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
+---------------------------------------------------------------------------------------------------------------------------------------
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -			
+db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
+top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
+gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
+nlo_sys         lnN      -       -        -      -        -        -       -            -        NLO_SYS4    NLO_SYS2
+
+muFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
+
+#xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys muFakes16 muFakes17 muFakes18
+
+#Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
+lumiYR           lnN     LYRV    LYRV     LYRV   LYRV     LYRV   LYRV     -			LYRV    	LYRV	LYRV		
+lumiXY           lnN     LXYV    LXYV     LXYV   LXYV     LXYV   LXYV     -			LXYV    	LXYV	LXYV		
+lumiLS           lnN     LLSV    LLSV     LLSV   LLSV     LLSV   LLSV     - 		LLSV    	LLSV	LLSV		  
+lumiDB           lnN     LDBV    LDBV     LDBV   LDBV     LDBV   LDBV     -			LDBV    	LDBV	LDBV		  
+lumiBC           lnN     LBCV    LBCV     LBCV   LBCV     LBCV   LBCV     -			LBCV    	LBCV	LBCV	 
+lumiGS           lnN     LGSV    LGSV     LGSV   LGSV     LGSV   LGSV     -			LGSV    	LGSV	LGSV	  
+
+#lumisYR group = lumiYR lumiXY lumiLS lumiDB lumiBC lumiGS      
+
+
+## prefire only for 16,17, hem only 18                                                                                
+Pu               shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0        
+muPrefYRC       shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+#METJECYR         shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0          
+#METHEMYR        shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0      
+                                                                                                                                         
+#BTAGUNCORYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGCOR          shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+#BTAGLIGHTYR      shape    1.0     1.0     1.0     1.0      1.0    1.0    -      1.0     1.0     1.0       
+
+#BTAGSYR group = BTAGUNCORYR BTAGCOR BTAGLIGHTYR
+                                                                                                                                           
+
+muRCYR       shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDBARYR    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTBARYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDENDYR    shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muHLTENDYR   shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muIDSYS      shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       1.0      1.0   	1.0
+
+muIDsYR group  = muIDBARYR muISOBARYR muIDENDYR muISOENDYR muIDSYS muISOSYS
+muHLTsYR group = muHLTBARYR muHLTENDYR
+                                                                                                                                  
+alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
+FACYRC               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
+REFACYRC             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+
+RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
+                                                                                                                                  
+#emu cost reweighting                                                                                                 
+emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
+emucostrw2bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw3bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -         
+emucostrw4bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
+
+emucostrwsYRC group = emucostrw1bYRC emucostrw3bYRC emucostrw4bYRC emucostrw2bYRC
+
+mufakesrw1bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw2bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw3bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
+mufakesrw4bYR         shape    -       -        -      -        -      -      1.0       -       -       -         
+
+mufakesrwsYR group = mufakesrw1bYR mufakesrw2bYR mufakesrw3bYR mufakesrw4bYR
+                                                                                                                                  
+                                                                                                                                          
+#pt reweighting                                                                                                                   
+#ptrw1bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0        
+#ptrw2bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw3bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+#ptrw4bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw5bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0      
+#ptrw6bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0     
+#ptrw7bYRC              shape    1.0     1.0     1.0     -        -      -      -      1.0     1.0     1.0       
+
+#ptrwsYRC group = ptrw1bYRC ptrw2bYRC ptrw3bYRC ptrw5bYRC ptrw6bYRC ptrw7bYRC ptrw4bYRC
+                                                                                                                                   
+#pdf unc                                                                                                                           
+pdf1                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0          
+pdf2                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf3                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf4                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf5                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf6                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf7                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf8                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf9                  shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf10                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf11                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf12                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf13                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf14                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf15                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf16                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf17                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf18                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf19                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf20                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf21                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf22                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf23                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf24                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf25                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf26                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf27                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf28                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf29                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf30                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0   
+pdf31                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf32                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf33                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf34                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf35                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf36                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf37                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf38                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf39                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf40                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf41                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf42                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf43                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf44                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf45                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf46                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf47                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0     
+pdf48                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf49                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf50                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf51                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf52                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf53                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf54                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+pdf55                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0      
+pdf56                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf57                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf58                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf59                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0       
+pdf60                 shape    1.0     1.0     1.0     -        -      -      -      -     1.0     1.0        
+
+# MC Stats
+# process                      alpha fpl fmn top db gam qcd tautau LQpure_QUARK LQint_QUARK
+
+MCStatBin1yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin2yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin3yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin7yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin8yYR             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin9yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin13yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin14yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin15yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin19yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin20yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin21yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin25yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin26yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin27yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin31yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin32yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin33yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin37yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin38yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin39yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin43yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin44yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin45yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin49yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin50yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin51yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin55yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin56yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin57yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin61yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin62yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin63yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin67yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin68yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin69yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin73yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin74yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin75yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin79yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin80yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin81yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin85yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin86yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin87yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin91yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin92yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin93yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin97yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin98yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin99yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin103yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin104yYR            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin105yYR          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+* autoMCStats 1 0 1
+
+pdfs group =  pdf1 pdf2 pdf3 pdf4 pdf5 pdf6 pdf7 pdf8 pdf9 pdf10 pdf11 pdf12 pdf13 pdf14 pdf15 pdf16 pdf17 pdf18 pdf19 pdf20 pdf21 pdf22 pdf23 pdf24 pdf25 pdf26 pdf27 pdf28 pdf29 pdf30 pdf31 pdf32 pdf33 pdf34 pdf35 pdf36 pdf37 pdf38 pdf39 pdf40 pdf41 pdf42 pdf43 pdf44 pdf45 pdf46 pdf47 pdf48 pdf49 pdf50 pdf51 pdf52 pdf53 pdf54 pdf55 pdf56 pdf57 pdf58 pdf59 pdf60
