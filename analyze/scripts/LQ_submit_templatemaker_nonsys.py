@@ -9,12 +9,12 @@ def print_and_do(s):
 
 #masses=[1000.,1500.,2000.,2500.,3000.,3500.,4000.,4500.,5000.]#
 #masses = [5500.,6000.,6500.,7000.,7500.,8000.,8500.,9000.]
-masses=[500.]
+masses=[2500.]
 years = [2016,2017,2018]
 #types = [1]
 #labels = ["sys"]
 njobs = 1
-ending = "020923"
+ending = "071924_splitrap"
 for mass in masses:
     for year in years:
             script_name = "scripts/script2.sh"

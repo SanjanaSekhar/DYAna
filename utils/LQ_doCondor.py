@@ -125,6 +125,8 @@ def submit_jobs(lofjobs):
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write("Transfer_Input_Files = %s, %s \n" %(script_location, sub_file))
         condor_file.write('WhenToTransferOutput = ON_EXIT \n')
+        condor_file.write('+DesiredOS = SL7 \n')
+        condor_file.write('+ApptainerImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7" \n')
         #condor_file.write('use_x509userproxy = true\n')
         #condor_file.write('x509userproxy = $ENV(X509_USER_PROXY)\n')
         condor_file.write('Output = %s.stdout\n' % os.path.abspath(condor_file.name))

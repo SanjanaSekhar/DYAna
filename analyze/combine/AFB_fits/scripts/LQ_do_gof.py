@@ -60,7 +60,7 @@ if options.plot:
             for mLQ in [2500]:
 		#Condor_outputs/gof_ee_u_m4000_y-2001//gof_eu_mLQ4000_-1.png
 		# wrong -> Condor_outputs/gof_mumu_d_m5000_y-2001/gof_md_mLQ5000_-2001.png gof/
-                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i_y%i/gof_%s_mLQ%i_%i.png gof/gof_%s_mLQ%i_%i_48bins.png"%(chan, q+('_vec' if is_vec else ''), mLQ, options.year-2000,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
+                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i_y%i/gof_%s_mLQ%i_%i.png gof/gof_%s_mLQ%i_%i_splitrap.png"%(chan, q+('_vec' if is_vec else ''), mLQ, options.year-2000,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
 
 else:
 

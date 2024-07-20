@@ -5,7 +5,7 @@ from optparse import OptionParser
 from optparse import OptionGroup
 #from AFB_fits.scripts.LQ_utils import *
 
-ext = "020923"
+ext = "071924_splitrap"
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
@@ -16,7 +16,7 @@ mLQ = options.mLQ
 def get_sym_bin(idx, nBins):
     # 3 mass bins, 8+6+6 cost bins
     #print("nBins = ",nBins)
-    if nBins < 20:
+    if nBins < 20 or nBins > 60:
         n_cos_bins = 6
         cos_bin = idx % n_cos_bins
         eta_bin = idx / n_cos_bins
@@ -71,7 +71,7 @@ for mLQ in [2500]:
 					h.SetBinError(sym_bin,1e-6)
 					new_name = proc_name.replace(proc_name,  proc_name + "_MCStatBin%iy%s"%(idx, str(year)[2:4]))
 					new_name2 = proc_name.replace(proc_name,  proc_name + "_MCStatBin%iy%s"%(sym_bin,str(year)[2:4]))
-					print("New names: %s and %s"%(new_name,new_name2))	
+					#print("New names: %s and %s"%(new_name,new_name2))	
 					#if((new_name+"Up" in keys) or (new_name+"Down" in keys) or (new_name2+"Up" in keys) or (new_name2+"Down" in keys)): continue
 					#print("Creating %s"%new_name)
 					#flag = 0

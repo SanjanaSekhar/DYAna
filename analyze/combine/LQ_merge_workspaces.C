@@ -33,7 +33,7 @@ void LQ_merge_workspaces(){
         int mLQ = 1000*i;
         for(int year=16;year<=18;year++){
 
-            char *ending="020923";
+            char *ending="071924_splitrap";
             char f1_s[180];
             sprintf(f1_s,"root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/templ%i_nonsys_%s_m%i/file_0.root", year, ending, mLQ);
             char fout_s[180];
@@ -76,7 +76,7 @@ void LQ_merge_workspaces(){
                 savedir->cd();
                 for(auto f_name = fs.begin(); f_name !=fs.end(); f_name++){
                     TFile *f2 = TFile::Open(f_name->c_str(), "READ");
-                    printf("Opening file: %s \n\n\n", f_name->c_str());
+                    //printf("Opening file: %s \n\n\n", f_name->c_str());
                     f2->cd();
                     f2->cd(dirname);
                     TDirectory *source_dir = gDirectory;

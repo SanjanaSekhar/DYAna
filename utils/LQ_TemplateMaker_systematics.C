@@ -276,7 +276,9 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 			if( (tm.m >= lq_m_bins[0]) && tm.not_cosmic){ //tm.met_pt < met_cut && tm.has_no_bjets && tm.not_cosmic){
 				if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){
 				//tm.doCorrections();
-					float var1 = abs(tm.cm.Rapidity());
+					//float var1 = abs(tm.cm.Rapidity());
+					
+					float var1 = (tm.cm.Rapidity());
 					if(use_xF)  var1 = tm.xF;
 
 					
@@ -486,7 +488,8 @@ void fixup_template_sum(TH3F *h_sym, TH3F *h_asym){
 				float RFfactor = tm.fixRFNorm(bin_i, year); 
 
 				float gen_cost = tm.cost_st;
-				float var1 = abs(tm.cm.Rapidity());
+				//float var1 = abs(tm.cm.Rapidity());
+				float var1 = (tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
 
 				
@@ -604,7 +607,8 @@ int gen_mc_LQ_template(TTree *t1, TH3F *h_LQpure_u, TH3F *h_LQint_u,TH3F *h_LQpu
 				float RFfactor = tm.fixRFNorm(bin_i, year); 
 
 				float gen_cost = tm.cost_st;
-				float var1 = abs(tm.cm.Rapidity());
+				//float var1 = abs(tm.cm.Rapidity());
+				float var1 = (tm.cm.Rapidity());
 				if(use_xF)  var1 = tm.xF;
 
 				
@@ -804,7 +808,8 @@ int gen_combined_background_template(int nTrees, TTree **ts, TH3F* h,
 						if((tm.do_electrons and  tm.el1_pt >= 40.) or (tm.do_muons and tm.mu1_pt >= 40.)){	
 					tm.getEvtWeight(false);//incl_btag_SFs=false
 
-					float var1 = abs(tm.cm.Rapidity());
+					//float var1 = abs(tm.cm.Rapidity());
+					float var1 = (tm.cm.Rapidity());
 					if(use_xF)  var1 = tm.xF;
 					nEvents++;
 					if(!ss) h->Fill(tm.m, var1, tm.cost, tm.evt_weight);
@@ -1112,7 +1117,8 @@ void gen_fakes_template(TTree *t_WJets, TTree *t_QCD, TTree *t_WJets_contam, TTr
 								tot_evt_weight = evt_reweight * tm.getEvtWeight(incl_btag_SFs);
 							}
 
-							float var1 = abs(tm.cm.Rapidity());
+							//float var1 = abs(tm.cm.Rapidity());
+							float var1 = (tm.cm.Rapidity());
 							if(use_xF)  var1 = tm.xF;
 
 							if(!ss_binning) h->Fill(tm.m, var1, tm.cost, tot_evt_weight);

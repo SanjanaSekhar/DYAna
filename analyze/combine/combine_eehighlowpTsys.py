@@ -6,7 +6,7 @@ from optparse import OptionGroup
 #from AFB_fits.scripts.LQ_utils import *
 from math import sqrt
 
-ext = "020923"
+ext = "071924_splitrap"
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")

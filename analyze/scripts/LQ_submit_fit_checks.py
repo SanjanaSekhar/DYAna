@@ -137,32 +137,33 @@ if options.limits:
 if options.gof:
 
     nToys = 300
-    year = 2017    
-    for mLQ in [5000]:
+    year = -1    
+    for mLQ in [2500]:
 
 
         cmds = [
       
-        "python scripts/LQ_do_gof.py --chan ee --q u  ",
-        "python scripts/LQ_do_gof.py --chan ee --q d  ",
+        #"python scripts/LQ_do_gof.py --chan ee --q u  ",
+        #"python scripts/LQ_do_gof.py --chan ee --q d  ",
         #"python scripts/LQ_do_gof.py --chan mumu --q u ",
         #"python scripts/LQ_do_gof.py --chan mumu --q d ",
         #"python scripts/LQ_do_gof.py --chan ee --q u --vec True ",
         #"python scripts/LQ_do_gof.py --chan ee --q d --vec True ",
-        #"python scripts/LQ_do_gof.py --chan mumu --q u --vec True ",
+        "python scripts/LQ_do_gof.py --chan mumu --q u --vec True ",
         #"python scripts/LQ_do_gof.py --chan mumu --q d --vec True ",
      
         ]
 
         labels = [
-            "gof_ee_u","gof_ee_d",#"gof_mumu_u","gof_mumu_d",
-            #"gof_ee_u_vec","gof_ee_d_vec","gof_mumu_u_vec","gof_mumu_d_vec"
+            #"gof_ee_u","gof_ee_d",#"gof_mumu_u","gof_mumu_d",
+            #"gof_ee_u_vec","gof_ee_d_vec",
+	    "gof_mumu_u_vec"#,"gof_mumu_d_vec"
             #"gof_ee_s","gof_mumu_s",
             #"gof_ee_d_vec","gof_mumu_d_vec"
         ]
 
 
-        cpy_cmd = "xrdcp -f gof_b_only/* $1 \n"
+        cpy_cmd = "xrdcp -f gof/* $1 \n"
 
         for i,cmd in enumerate(cmds):
        
@@ -173,7 +174,7 @@ if options.gof:
             print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
             script_file = open(script_name, 'a+')
             script_file.write("mkdir gof_b_only\n")
-            script_file.write(cmd+" -o gof_b_only/ --mLQ %i --nToys %i --year %i\n"%(mLQ, nToys, year))
+            script_file.write(cmd+" -o gof/ --mLQ %i --nToys %i --year %i\n"%(mLQ, nToys, year))
             script_file.write(cpy_cmd)
             script_file.close()
             #print_and_do("cat %s" % script_name)
