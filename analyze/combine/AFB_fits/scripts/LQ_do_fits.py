@@ -23,14 +23,14 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [2016,2017,2018]:
-#for y in [-1]:
-    for options.chan in ["ee","mumu"]:
+#for y in [2016,2017,2018]:
+for y in [-1]:
+    for options.chan in ["mumu"]:
     #for options.chan in ["mumu"]:
         for options.q in ["u"]:
             mLQ_list = [2500]
             #mLQ_list = [3500,4000,4500,5000]
-	    is_vec = False
+	    is_vec = True
 	    statuncs = False
 	    #options.gen_level = False
             extra_params=""
@@ -60,7 +60,7 @@ for y in [2016,2017,2018]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_unblinded_bonly"
+            fit_name+="_unblinded_48bins"
 	    print("\n fit_name = ", fit_name)
 	    #if y > -1: extra_args = "--combined False"
 	    
@@ -77,21 +77,18 @@ for y in [2016,2017,2018]:
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
                 print("\n plotdir = ", plotdir)
-                #if not os.path.isdir(plotdir) or not os.listdir(plotdir):
 
-		#print("Folder %s NOT FOUND"% plotdir)
-		#make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
 		print_and_do("rm -r %s" % (plotdir))
                 print_and_do("mkdir %s" % (plotdir))
                 if not statuncs:
-		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_bonly_%i -s 3456 --setParameters yLQ2=0 --freezeParameters yLQ2" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456 " %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
                 
 		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
                 if(not statuncs):
-                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_bonly_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_bonly_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
+                    print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
                             % (options.chan,options.q,("_vec" if is_vec else ""),options.year,options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name))
                     extra_args = ""
                     if(options.year > 0): extra_args = " -y %i " % options.year
@@ -102,28 +99,47 @@ for y in [2016,2017,2018]:
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
+	        f = ROOT.TFile.Open("multidimfit.%s_%s%s_%i.root"%(options.chan,options.q,("_vec" if is_vec else ""),options.year), 'READ')
+		fit_mdf = f.Get("fit_mdf")
+		a = fit_mdf.floatParsFinal()
+		idx = a.index("A0")
+		A0 = a.at(idx)
+		idx = a.index("A4")
+		A4 = a.at(idx)
+		idx = a.index("yLQ2")
+		yLQ2 = a.at(idx)
+		c = [A0.getValV(), A4.getValV(), yLQ2.getValV()]
+		m = [A0.getErrorLo(), A4.getErrorLo(), yLQ2.getErrorLo()]
+		p = [A0.getErrorHi(), A4.getErrorHi(), yLQ2.getErrorHi()]
+		lohi_results = np.vstack((c,m,p)).T	
+		np.savetxt("%s/results_%s_m%i.txt"%(plotdir,fit_name,mLQ),lohi_results)
+		f.Close()
 		
                 #print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
 		print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
 		print_and_do(""" cat cmd.txt """)
                 print_and_do("""echo ".q" >> cmd.txt """)
                 #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
-                print_and_do("root -l -b multidimfit.%s_%s%s_bonly_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
+                print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
 		
 		if(statuncs): print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
+		'''
+		print_and_do(""" echo "RooArgSet const& a=fit_mdf->floatParsFinal();" > cmd.txt """)
+		#print_and_do(""" echo "auto A0=(RooRealVar *) a.at(396);" >> cmd.txt """)
 		
-		print_and_do(""" echo "auto a=fit_mdf->floatParsFinal();" > cmd.txt """)
-		print_and_do(""" echo "auto A0=(RooRealVar *) a.at(396);" >> cmd.txt """)
-		print_and_do(""" echo "std::cout  << A0->getValV() << ' '  << A0->getErrorHi() << ' ' << A0->getErrorLo() << std::endl;" >> cmd.txt """)
-		
-                print_and_do(""" echo "auto Afb=(RooRealVar *) a.at(397);" >> cmd.txt """)
-                print_and_do(""" echo "std::cout  << Afb->getValV() << ' '  << Afb->getErrorHi() << ' ' << Afb->getErrorLo() << std::endl;" >> cmd.txt """)
-		if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(398);" >> cmd.txt """)
-		if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(192);" >> cmd.txt """) 
-		if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(402);" >> cmd.txt """)
-		if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(186);" >> cmd.txt """)
-                print_and_do(""" echo "std::cout  << yLQ->getValV() << ' '  << yLQ->getErrorHi() << ' ' << yLQ->getErrorLo() << std::endl;" >> cmd.txt """)
+		print_and_do(""" echo "auto& A0=static_cast<RooRealVar&>(a['A0']);" >> cmd.txt """)
+		print_and_do(""" echo "std::cout  << A0.getValV() << ' '  << A0.getErrorLo() << ' ' << A0.getErrorHi() << std::endl;" >> cmd.txt """)
+		        
+                print_and_do(""" echo "auto& Afb=static_cast<RooRealVar&>(a['A4']);" >> cmd.txt """)
+                print_and_do(""" echo "std::cout  << Afb.getValV() << ' '  << Afb.getErrorLo() << ' ' << Afb.getErrorHi() << std::endl;" >> cmd.txt """)
+		#if options.chan == "ee" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(398);" >> cmd.txt """)
+		#if options.chan == 'ee' and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(192);" >> cmd.txt """) 
+		#if options.chan == "mumu" and options.q != 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(402);" >> cmd.txt """)
+		#if options.chan == "mumu" and options.q == 's': print_and_do(""" echo "auto yLQ=(RooRealVar *) a.at(186);" >> cmd.txt """)
+                
+		print_and_do(""" echo "auto& yLQ2=static_cast<RooRealVar&>(a['yLQ2']);" >> cmd.txt """)
+		print_and_do(""" echo "std::cout  << yLQ2.getValV() << ' '  << yLQ2.getErrorLo() << ' ' << yLQ2.getErrorHi() << std::endl;" >> cmd.txt """)
 		print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > %s/results_%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,plotdir,fit_name,mLQ))
                 
-                
+                '''
 		print_and_do("rm -f cards/sed*")

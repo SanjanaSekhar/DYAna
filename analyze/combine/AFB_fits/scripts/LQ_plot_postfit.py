@@ -269,8 +269,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					signals[hist_index].SetMinimum(1e-1)
 					if signalNames == []: this_sig_name = signals[hist_index].GetName().split('_')[0]
 					else: this_sig_name = signalNames[0]
-					#legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
-					#signals[hist_index].Draw('hist same')
+					legends_list[hist_index].append((signals[hist_index],this_sig_name,'L'))
+					signals[hist_index].Draw('hist same')
 
 				gStyle.SetHatchesLineWidth(2)
 				totlist[hist_index].SetLineColor(kWhite)
@@ -911,7 +911,7 @@ parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 parser.add_option("--vec", default=False, help="is vec?")
-parser.add_option("--combined", default=False, help="plot all 3 years combined")
+parser.add_option("--combined", default=True, help="plot all 3 years combined")
 (options, args) = parser.parse_args()
 yLQ = 0.0
 mLQ = options.mLQ

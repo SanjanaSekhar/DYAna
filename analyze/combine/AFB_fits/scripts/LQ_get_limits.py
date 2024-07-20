@@ -123,8 +123,8 @@ parser.add_option("--q",  default="u", help=" channel u,d,c,s ")
 parser.add_option("--ending",  default="102022", help=" date ")
 parser.add_option("--inject_yLQ2",  default=0.2, type='float', help="r=X")
 parser.add_option("--quantile",  default=0.5, type='float', help="quantile expected")
-parser.add_option("--ntoys",  default=10, type='int', help="no of toys")
-parser.add_option("--iterations",  default=10, type='int', help="no of iterations")
+parser.add_option("--ntoys",  default=5, type='int', help="no of toys")
+parser.add_option("--iterations",  default=1, type='int', help="no of iterations")
 parser.add_option("--hadd",  default=False, help="hadd")
 parser.add_option("--HybridNew",  default=False, help="use HybridNew instead of AsymptoticLimits")
 parser.add_option("--year",  default=-1,type='int', help="year")
@@ -264,9 +264,11 @@ else:
         print_and_do("cp LQ_cards/%s/%i/limits_%s.json %s/limits_%s_m%i.json"%(channel,mass,channel,options.odir,channel,mass))
     
     else:
-        print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f --clsAcc 0 -s -1  --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 -T %i -i %i  --X-rtd MINIMIZER_no_analytic --expectedFromGrid=%f --saveHybridResult "
-            %(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations,options.quantile))
-        print_and_do("cp *.root %s"%(options.odir))
+        #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f   -s -1  -T %i -i %i --saveHybridResult "
+        #    %(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations))
+        print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i  -s -1  --saveHybridResult -v 2"
+		%(workspace,mass))
+	print_and_do("cp *.root %s"%(options.odir))
    
 
 
