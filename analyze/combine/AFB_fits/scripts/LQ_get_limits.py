@@ -154,7 +154,7 @@ if channel=='de' or channel=='se':
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
 if channel=='um' or channel=='cm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
-    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um_splitrap.txt"
 if channel=='dm' or channel=='sm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"

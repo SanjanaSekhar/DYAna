@@ -23,11 +23,11 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [2016,2017,2018]:
-#for y in [-1]:
-    for options.chan in ["mumu"]:
+#for y in [2016,2017,2018]:
+for y in [-1]:
     #for options.chan in ["mumu"]:
-        for options.q in ["u"]:
+    for options.chan in ["mumu", "ee"]:
+        for options.q in ["u", "d"]:
             mLQ_list = [2500]
             #mLQ_list = [3500,4000,4500,5000]
 	    is_vec = True
@@ -60,7 +60,7 @@ for y in [2016,2017,2018]:
 		
 	    if is_vec: fit_name+="_vec"
 	    if statuncs: fit_name += "_statuncs"
-            fit_name+="_unblinded_splitrap"
+            fit_name+="_unblinded"
 	    print("\n fit_name = ", fit_name)
 	    #if y > -1: extra_args = "--combined False"
 	    
@@ -99,8 +99,9 @@ for y in [2016,2017,2018]:
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
 
-	        f = ROOT.TFile.Open("multidimfit.%s_%s%s_%i.root"%(options.chan,options.q,("_vec" if is_vec else ""),options.year), 'READ')
-		fit_mdf = f.Get("fit_mdf")
+	        if not statuncs: f = ROOT.TFile.Open("multidimfit.%s_%s%s_%i.root"%(options.chan,options.q,("_vec" if is_vec else ""),options.year), 'READ')
+		else: f = ROOT.TFile.Open("multidimfitTest.root",'READ')
+                fit_mdf = f.Get("fit_mdf")
 		a = fit_mdf.floatParsFinal()
 		idx = a.index("A0")
 		A0 = a.at(idx)
@@ -120,7 +121,7 @@ for y in [2016,2017,2018]:
 		print_and_do(""" cat cmd.txt """)
                 print_and_do("""echo ".q" >> cmd.txt """)
                 #print_and_do("root -l -b multidimfit.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
-                print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
+                if not statuncs: print_and_do("root -l -b multidimfit.%s_%s%s_%i.root < cmd.txt > fit_results/%s_m%i.txt" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,fit_name,mLQ))
 		
 		if(statuncs): print_and_do("root -l -b multidimfitTest.root < cmd.txt > fit_results/%s_m%i.txt" % (fit_name,mLQ))
 		'''

@@ -293,14 +293,14 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					text_strs = ["#bf{|y|} #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}", "#bf{|y|} #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}", "    #bf{|y|} #splitline{#bf{ #epsilon [1.0,}}{#bf{ 1.5]}}", 
 							" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
 				else:
-					#line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
-					line_vals = range(6,107,6)
-					#text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
-					text_center_bins = range(3,107,6)
+					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
+					#line_vals = range(6,107,6)
+					text_center_bins = [4, 11, 17, 24, 31, 37, 44, 51, 57]
+					#text_center_bins = range(3,107,6)
 					#text_strs = ["#splitline{   #bf{|y| #epsilon}}{#bf{[0.0, 0.6]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[0.6, 1.0]}}", "#splitline{   #bf{|y| #epsilon}}{#bf{[1.0, 2.4]}}"]
-					text_strs = ["#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-2.4,}}{#bf{ -1]}}}",
-                                                "#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-1,}}{#bf{ -0.6]}}}",
-                                                "#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-0.6,}}{#bf{ 0]}}}",
+					text_strs = [#"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-2.4,}}{#bf{ -1]}}}",
+                                 #               "#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-1,}}{#bf{ -0.6]}}}",
+                                 #               "#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-0.6,}}{#bf{ 0]}}}",
 						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[0,}}{#bf{ 0.6]}}}", 
 						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[0.6,}}{#bf{ 1]}}}", 
 						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[1,}}{#bf{ 2.4]}}}"]
@@ -319,8 +319,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
 					l = TLine(line_x, 0, line_x, line_max)
-					#if line_vals[idx] == 20 or line_vals[idx] == 40:
-					if line_vals[idx] == 36 or line_vals[idx] == 72 : 
+					if line_vals[idx] == 20 or line_vals[idx] == 40:
+					#if line_vals[idx] == 36 or line_vals[idx] == 72 : 
 						l = TLine(line_x, 0, line_x, 2e4)
 						l.SetLineColor(ROOT.kRed)
 						l.SetLineStyle(9)
@@ -362,8 +362,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextFont(42);
 				latext2.SetTextSize(0.04)
 				#line_vals = [20,40,60]
-				#text_center_bins = [10,30,50]
-				text_center_bins = [18,54,90]
+				text_center_bins = [10,30,50]
+				#text_center_bins = [18,54,90]
 				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
@@ -918,7 +918,7 @@ parser.add_option("--year", "-y", type = 'int', default = -1, help="Year (-1 for
 parser.add_option("--ss",   default = False, action='store_true',  help="Fit was done with ee_ss region too")
 parser.add_option("--gen_level", default = False, action='store_true', help="generator level fits")
 parser.add_option("--vec", default=False, help="is vec?")
-parser.add_option("--combined", default=False, help="plot all 3 years combined")
+parser.add_option("--combined", default=True, help="plot all 3 years combined")
 (options, args) = parser.parse_args()
 yLQ = 0.0
 mLQ = options.mLQ
