@@ -1,103 +1,103 @@
-Combination of Y16=cards/combined_fit_y16_LQ.txt
+Combination of Y18=cards/combined_fit_y18_LQ.txt
 imax 1 number of bins
 jmax 9 number of processes minus 1
 kmax 147 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y16  cards/LQm2500_merge_templates16_071924_splitrap.root LQ/mumu16_$PROCESS LQ/mumu16_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm2500_merge_templates18_071924_splitrap.root LQ/mumu18_$PROCESS LQ/mumu18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
-bin          Y16  
+bin          Y18  
 observation  -1   
 ----------------------------------------------------------------------------------------------------------------------------------
-bin                                  Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y16           Y16         
+bin                                  Y18           Y18           Y18           Y18           Y18           Y18           Y18           Y18           Y18           Y18         
 process                              LQpure_u_vec  LQint_u_vec   fpl           top           db            fmn           gam           tautau        qcd           alpha       
 process                              -1            0             1             2             3             4             5             6             7             8           
 rate                                 -1            -1            -1            -1            -1            -1            -1            -1            -1            -1          
 ----------------------------------------------------------------------------------------------------------------------------------
-FAC16                   shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
-MCStatBin103y16         shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin104y16         shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin105y16         shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin13y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin14y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin15y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin19y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin1y16           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin20y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin21y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin25y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin26y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin27y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin2y16           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin31y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin32y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin33y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin37y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin38y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin39y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin3y16           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin43y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin44y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin45y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin49y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin50y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin51y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin55y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin56y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin57y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin61y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin62y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin63y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin67y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin68y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin69y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin73y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin74y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin75y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin79y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin7y16           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin80y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin81y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin85y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin86y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin87y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin8y16           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin91y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin92y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin93y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin97y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin98y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin99y16          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
-MCStatBin9y16           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+FAC1718                 shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
+MCStatBin103y18         shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin104y18         shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin105y18         shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin13y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin14y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin15y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin19y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin1y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin20y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin21y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin25y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin26y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin27y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin2y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin31y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin32y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin33y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin37y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin38y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin39y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin3y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin43y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin44y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin45y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin49y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin50y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin51y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin55y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin56y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin57y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin61y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin62y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin63y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin67y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin68y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin69y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin73y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin74y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin75y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin79y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin7y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin80y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin81y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin85y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin86y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin87y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin8y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin91y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin92y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin93y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin97y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin98y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin99y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin9y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 Pu                      shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-REFAC16                 shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
-RENORM16                shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
-alphaS16                shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
+REFAC1718               shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
+RENORM1718              shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
+alphaS1718              shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
 db_xsec                 lnN          -             -             -             -             1.05          -             -             -             -             -           
 dy_xsec                 lnN          -             -             1.03          -             -             1.03          -             1.03          -             1.03        
-emucostrw1b16           shape        -             -             -             1.0           1.0           -             -             -             -             -           
-emucostrw2b16           shape        -             -             -             1.0           1.0           -             -             -             -             -           
-emucostrw3b16           shape        -             -             -             1.0           1.0           -             -             -             -             -           
-emucostrw4b16           shape        -             -             -             1.0           1.0           -             -             -             -             -           
+emucostrw1b1718         shape        -             -             -             1.0           1.0           -             -             -             -             -           
+emucostrw2b1718         shape        -             -             -             1.0           1.0           -             -             -             -             -           
+emucostrw3b1718         shape        -             -             -             1.0           1.0           -             -             -             -             -           
+emucostrw4b1718         shape        -             -             -             1.0           1.0           -             -             -             -             -           
 gam_xsec                lnN          -             -             -             -             -             -             1.05          -             -             -           
-lumi16                  lnN          1.022         1.022         1.022         1.022         1.022         1.022         1.022         1.022         -             1.022       
-lumiDB                  lnN          1.004         1.004         1.004         1.004         1.004         1.004         1.004         1.004         -             1.004       
-lumiGS                  lnN          1.004         1.004         1.004         1.004         1.004         1.004         1.004         1.004         -             1.004       
-lumiXY                  lnN          1.009         1.009         1.009         1.009         1.009         1.009         1.009         1.009         -             1.009       
-muFakes16               lnN          -             -             -             -             -             -             -             -             1.5           -           
-muHLTBAR16              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muHLTEND16              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muIDBAR16               shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muIDEND16               shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+lumi18                  lnN          1.015         1.015         1.015         1.015         1.015         1.015         1.015         1.015         -             1.015       
+lumiBC                  lnN          1.002         1.002         1.002         1.002         1.002         1.002         1.002         1.002         -             1.002       
+lumiLS                  lnN          1.002         1.002         1.002         1.002         1.002         1.002         1.002         1.002         -             1.002       
+lumiXY                  lnN          1.02          1.02          1.02          1.02          1.02          1.02          1.02          1.02          -             1.02        
+muFakes18               lnN          -             -             -             -             -             -             -             -             1.5           -           
+muHLTBAR18              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+muHLTEND18              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+muIDBAR18               shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+muIDEND18               shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 muIDSYS                 shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muISOBAR16              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muISOEND16              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+muISOBAR18              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+muISOEND18              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 muISOSYS                shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muPref16                shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-muRC16                  shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-mufakesrw1b16           shape        -             -             -             -             -             -             -             -             1.0           -           
-mufakesrw2b16           shape        -             -             -             -             -             -             -             -             1.0           -           
-mufakesrw3b16           shape        -             -             -             -             -             -             -             -             1.0           -           
-mufakesrw4b16           shape        -             -             -             -             -             -             -             -             1.0           -           
+muPref1718              shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+muRC18                  shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+mufakesrw1b18           shape        -             -             -             -             -             -             -             -             1.0           -           
+mufakesrw2b18           shape        -             -             -             -             -             -             -             -             1.0           -           
+mufakesrw3b18           shape        -             -             -             -             -             -             -             -             1.0           -           
+mufakesrw4b18           shape        -             -             -             -             -             -             -             -             1.0           -           
 nlo_sys                 lnN          2.2           1.6           -             -             -             -             -             -             -             -           
 pdf1                    shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 pdf10                   shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
@@ -160,10 +160,10 @@ pdf7                    shape        1.0           1.0           1.0           -
 pdf8                    shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 pdf9                    shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 top_xsec                lnN          -             -             -             1.05          -             -             -             -             -             -           
-mufakesrws16 group = mufakesrw1b16 mufakesrw2b16 mufakesrw3b16 mufakesrw4b16
-emucostrws16 group = emucostrw1b16 emucostrw2b16 emucostrw3b16 emucostrw4b16
-muHLTs16 group = muHLTBAR16 muHLTEND16
+mufakesrws18 group = mufakesrw3b18 mufakesrw4b18 mufakesrw1b18 mufakesrw2b18
+RFscales1718 group = REFAC1718 alphaS1718 RENORM1718 FAC1718
+muIDs18 group = muISOBAR18 muISOEND18 muIDSYS muIDEND18 muISOSYS muIDBAR18
+emucostrws1718 group = emucostrw1b1718 emucostrw4b1718 emucostrw2b1718 emucostrw3b1718
+muHLTs18 group = muHLTEND18 muHLTBAR18
 pdfs group = pdf13 pdf14 pdf15 pdf34 pdf18 pdf17 pdf21 pdf20 pdf23 pdf22 pdf25 pdf24 pdf27 pdf26 pdf29 pdf28 pdf49 pdf48 pdf43 pdf42 pdf41 pdf40 pdf47 pdf60 pdf45 pdf44 pdf54 pdf35 pdf33 pdf19 pdf31 pdf30 pdf8 pdf9 pdf2 pdf3 pdf1 pdf6 pdf7 pdf4 pdf5 pdf32 pdf55 pdf56 pdf57 pdf50 pdf37 pdf52 pdf53 pdf10 pdf36 pdf12 pdf39 pdf58 pdf59 pdf16 pdf46 pdf11 pdf51 pdf38
-muIDs16 group = muIDBAR16 muIDEND16 muIDSYS muISOEND16 muISOSYS muISOBAR16
-RFscales16 group = RENORM16 alphaS16 REFAC16 FAC16
-Y16 autoMCStats 1 0 1
+Y18 autoMCStats 1 0 1
