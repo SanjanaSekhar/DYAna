@@ -55,12 +55,12 @@ seed = 780865
 
 if options.plot:
 
-    for chan in ['ee','mumu']:
-        for q in ['u','d']:
-            for mLQ in range(1000,5500,500):
+    for chan in ['mumu']:
+        for q in ['u']:
+            for mLQ in [2500]:
 		#Condor_outputs/gof_ee_u_m4000_y-2001//gof_eu_mLQ4000_-1.png
 		# wrong -> Condor_outputs/gof_mumu_d_m5000_y-2001/gof_md_mLQ5000_-2001.png gof/
-                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i_y%i/gof_%s_mLQ%i_%i.png gof/"%(chan, q+('_vec' if is_vec else ''), mLQ, options.year-2000,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
+                print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/sasekhar/Condor_outputs/gof_%s_%s_m%i_y%i/gof_%s_mLQ%i_%i.png gof/gof_%s_mLQ%i_%i_48bins.png"%(chan, q+('_vec' if is_vec else ''), mLQ, options.year-2000,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year,chan[0]+q+('_vec' if is_vec else ''), mLQ, options.year))
 
 else:
 
@@ -68,7 +68,7 @@ else:
     if(not options.prefit):
         if(not options.reuse_fit):
             make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, no_LQ, no_sys, fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
-            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  --cminDefaultMinimizerStrategy 0 -s %i   -n _%i " %(workspace, extra_params, seed, seed))
+            print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s   -s %i   -n _%i " %(workspace, extra_params, seed, seed))
 
         fitted_yLQ2 = setSnapshot(yLQ2_val = -1., mdf = True, s = seed, freeze = False)
         print_and_do("combine -M GoodnessOfFit -d %s  --algo=%s %s -n _%s" % (workspace,options.teststat, extra_params,options.chan[0]+options.q+('_vec' if is_vec else '')))

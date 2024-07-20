@@ -6,7 +6,7 @@ kmax *
 -------------------------------------------------------------------------------
 # Next declare how to find the histograms in the file
 -------------------------------------------------------------------------------
-shapes * * LQm2500_merge_templates16_020923.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
+shapes * * LQm2500_merge_templates16_071924_splitrap.root  LQ/$CHANNEL_$PROCESS LQ/$CHANNEL_$PROCESS_$SYSTEMATIC
 
 bin             mumu16  
 observation     -1         
@@ -166,33 +166,34 @@ pdf60                 shape    1.0     1.0     1.0     -        -      -      - 
 MCStatBin1y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin2y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin3y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin4y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin9y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin10y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin11y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin7y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin8y16             shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin9y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
+MCStatBin13y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin14y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin15y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin16y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin17y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
+MCStatBin19y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin20y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin21y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin22y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin23y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin24y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin29y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin30y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin25y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin26y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin27y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
 MCStatBin31y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin32y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin33y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin35y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin36y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin37y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin38y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin39y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin41y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
-MCStatBin42y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin43y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin44y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin45y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
 MCStatBin49y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin50y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
@@ -202,7 +203,37 @@ MCStatBin55y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  
 MCStatBin56y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 MCStatBin57y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
-MCStatBin16 group = MCStatBin1y16  MCStatBin2y16  MCStatBin3y16  MCStatBin4y16  MCStatBin9y16  MCStatBin10y16  MCStatBin11y16  MCStatBin15y16  MCStatBin16y16  MCStatBin17y16  MCStatBin21y16  MCStatBin22y16  MCStatBin23y16  MCStatBin24y16  MCStatBin29y16  MCStatBin30y16  MCStatBin31y16  MCStatBin35y16  MCStatBin36y16  MCStatBin37y16  MCStatBin41y16  MCStatBin42y16  MCStatBin43y16  MCStatBin44y16  MCStatBin49y16  MCStatBin50y16  MCStatBin51y16  MCStatBin55y16  MCStatBin56y16  MCStatBin57y16 
+MCStatBin61y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin62y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin63y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin67y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin68y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin69y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin73y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin74y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin75y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin79y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin80y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin81y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin85y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin86y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin87y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin91y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin92y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin93y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin97y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin98y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin99y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+
+MCStatBin103y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin104y16            shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
+MCStatBin105y16          shape    1.0  1.0  1.0   -    -    -    -    -   1.0  1.0
 
 * autoMCStats 1 0 1
 

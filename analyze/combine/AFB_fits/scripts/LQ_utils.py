@@ -154,7 +154,9 @@ def make_workspace(workspace, gen_level, chan, q, is_vec = False, no_LQ = False,
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_ee_noLQ.txt"
     if chan=="mumu" and (q=="u" or q=="c"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
-        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
+        #if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
+        
+        if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um_splitrap.txt"
         if(fake_data) and no_LQ: template_card = "card_templates/LQ_combined_fit_template_fake_mumu_noLQ.txt"
     if chan=="mumu" and (q=="d" or q=="s"):
         if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
