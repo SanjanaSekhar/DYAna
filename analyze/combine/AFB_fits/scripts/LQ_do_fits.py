@@ -23,8 +23,8 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-#for y in [2016,2017,2018]:
-for y in [-1]:
+for y in [2016,2017,2018]:
+#for y in [-1]:
     for options.chan in ["mumu"]:
     #for options.chan in ["mumu"]:
         for options.q in ["u"]:
