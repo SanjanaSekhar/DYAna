@@ -154,7 +154,7 @@ if channel=='de' or channel=='se':
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_de.txt"
 if channel=='um' or channel=='cm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_um.txt"
-    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um_splitrap.txt"
+    if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_um.txt"
 if channel=='dm' or channel=='sm':
     if(no_sys): template_card = "card_templates/LQ_combined_fit_template_nosys_fake_dm.txt"
     if(fake_data): template_card = "card_templates/LQ_combined_fit_template_fake_dm.txt"
@@ -264,11 +264,17 @@ else:
         print_and_do("cp LQ_cards/%s/%i/limits_%s.json %s/limits_%s_m%i.json"%(channel,mass,channel,options.odir,channel,mass))
     
     else:
-        #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i --singlePoint %f   -s -1  -T %i -i %i --saveHybridResult "
-        #    %(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations))
-        print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i  -s -1  --saveHybridResult -v 2"
-		%(workspace,mass))
-	print_and_do("cp *.root %s"%(options.odir))
+        #options.ntoys = 10
+        #options.iterations = 1
+        #for options.inject_yLQ2 in np.linspace(0.01, 0.05, 10):
+ 
+        print_and_do("combineTool.py %s -M HybridNew  --LHCmode LHC-limits -m %i --clsAcc 0 --singlePoint %f -s -1  -T %i -i %i --saveHybridResult -n .approval"
+        %(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations))
+	#print_and_do("hadd merged.root *.approval*")
+	#print_and_do("combineTool.py %s -M HybridNew  --LHCmode LHC-limits --readHybridResults --grid=merged.root"%(workspace))        
+        #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i  -s -1  --saveHybridResult -v 2"
+	#	%(workspace,mass))
+	print_and_do("cp *.approval* %s"%(options.odir))
    
 
 
