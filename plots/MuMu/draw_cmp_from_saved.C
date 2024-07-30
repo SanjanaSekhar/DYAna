@@ -496,7 +496,7 @@ dy_cost->SetLineColor(DY_color);
     int n_rap_bins = 20;
     float rap_bin_size = 5. / n_rap_bins;
 
-    hmax = 100;
+    hmax = 3000;
     // if(year == 2016)
     //     hmax *= 0.25;
     // if(year == 2017)
