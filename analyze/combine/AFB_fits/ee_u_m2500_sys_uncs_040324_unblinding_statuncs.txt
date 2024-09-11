@@ -1,24 +1,24 @@
 "Sys name" Contri "%% Contri"
-"Electron Identification/Isolation " 0.01755 3.9074777340338107
-"Electron Momentum Scale " 0.017 3.6664022699029117
-"LQ LO reweighting " 0.01625 3.3500323508520333
-"MC and MisID Backgrounds Statistical Uncertainty " 0.01145 1.6632335764358008
-"Luminosity " 0.00732 0.6797738165634801
-"Electron Trigger Prefire Correction " 0.00725 0.6668348419092449
-"$e\mu$ Shape Corrections " 0.0070599999999999994 0.6323414815921548
-"$\alpha_s$ + Renormalization/Factorization Scales " 0.00644 0.5261553674084616
-"$\ttbar$ Cross Section " 0.006 0.45671446960728307
-"Electron MisID Normalization " 0.00556 0.39218578965699175
-"PDFs " 0.0053100000000000005 0.3577101904581644
-"DY Cross Section " 0.00458 0.2661173722297281
-"Electron MisID Shape " 0.00325 0.13400129403408131
-"Electron Trigger " 0.00316 0.1266824446586246
-"Diboson Cross Section " 0.0029 0.10669357470547917
-"Electron Reconstruction " 0.00229 0.06652934305743202
-"Pileup " 0.00053 0.003563641514241272
-"$\PGg\PGg$ Cross Section " 0.00037 0.0017367836358121403
-"Statistical Uncertainty" 0.0808829454618871 82.99581365774425
-"Background Cross Sections" 0.01385 0.8312622001783024
-"Trigger & Prefire" 0.01041 0.7935172865678695
-"MisID shape and normalization" 0.02026 2.1894206601268738
-"Total systematic uncertainty" 0.03661059546087717 17.004186342255736
+"Electron Identification/Isolation " 0.01755 10.64796243259055
+"Electron Momentum Scale " 0.017 10.314265604218768
+"LQ LO reweighting " 0.01625 9.859224474620879
+"MC and MisID Backgrounds Statistical Uncertainty " 0.01145 6.946961245194404
+"Luminosity " 0.00732 4.441201424875374
+"Electron Trigger Prefire Correction " 0.00725 4.398730919446239
+"$e\mu$ Shape Corrections " 0.0070599999999999994 4.28345383328144
+"$\alpha_s$ + Renormalization/Factorization Scales " 0.00644 3.907286499480521
+"$\ttbar$ Cross Section " 0.006 3.640329036783094
+"Electron MisID Normalization " 0.00556 3.3733715740856667
+"PDFs " 0.0053100000000000005 3.2216911975530382
+"DY Cross Section " 0.00458 2.7787844980777616
+"Electron MisID Shape " 0.00325 1.971844894924176
+"Electron Trigger " 0.00316 1.9172399593724296
+"Diboson Cross Section " 0.0029 1.7594923677784953
+"Electron Reconstruction " 0.00229 1.3893922490388808
+"Pileup " 0.00053 0.3215623982491733
+"$\PGg\PGg$ Cross Section " 0.00037 0.2244869572682908
+"Statistical Uncertainty" 0.1607027827043035 97.50183436172
+"Background Cross Sections" 0.00809464637893466 4.911196042621162
+"Trigger & Prefire" 0.00790873567645297 4.798400021205688
+"MisID shape and normalization" 0.013136917446646301 7.970450339141492
+"Total systematic uncertainty" 0.03661059546087717 22.212435618358416

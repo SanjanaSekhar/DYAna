@@ -17,7 +17,7 @@ ending = "040324_unblinding"
 s = 3456
 extra_params = " -s %i" % s
 
-for is_vec in [False]:
+for is_vec in [True]:
     if is_vec: ending+="_vec"
     for chan in ["mumu","ee"]:
         for q in ["u","d"]:
@@ -99,14 +99,14 @@ for is_vec in [False]:
 	    print_and_do("cp multidimfit_base.root multidimfit_nom.root")
 
             print_and_do("""combine -M MultiDimFit --freezeParameters allConstrainedNuisances -d higgsCombine_nom.MultiDimFit.mH120.%i.root --saveWorkspace  --saveFitResult --robustFit 1 -n _%s %s --snapshotName MultiDimFit """ %(s, 'statuncs', extra_params))
-	    stat_unc = compute_sys("nom", "statuncs", s)
-        _file1 = TFile.Open("multidimfit_%s.root" % (statuncs))
-        fit_mdf = _file1.Get("fit_mdf")
-        sys = fit_mdf.floatParsFinal()
-        sys_index_yLQ2 = sys.index("yLQ2")
-        sys_vals = sys.at(sys_index_yLQ2)
-        stat_unc = sys_vals.getError()
-
+	    #stat_unc = compute_sys("nom", "statuncs", s)
+            _file1 = TFile.Open("multidimfit_statuncs.root")
+            fit_mdf = _file1.Get("fit_mdf")
+            sys = fit_mdf.floatParsFinal()
+            sys_index_yLQ2 = sys.index("yLQ2")
+            sys_vals = sys.at(sys_index_yLQ2)
+            stat_unc = sys_vals.getError()
+	    print("Statistical uncertainty = ", stat_unc)
             df1 = pd.read_csv("%s_%s_m%s_sys_uncs_%s.txt"%(chan, q, mLQ, ending),delimiter="&",names=["Sys name","Contri","%% Contri"],dtype='string')
 	    df1.drop(index=[0,len(df1)-1], inplace=True)
 	    print(df1)
@@ -121,7 +121,8 @@ for is_vec in [False]:
                 print("adding to full uncs**2 -> ",df1.at[i+1,"Sys name"])
                 sum_uncs2+=val**2
 		sum_sys_uncs2+=val**2
-
+	    print("Total uncertainty = ", sum_uncs2**0.5)
+	    print("Systematic uncertainty = ", sum_sys_uncs2**0.5)
             df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc, (stat_unc*100)/(sum_uncs2**0.5)]
             for i in range(1,len(df1.index)):
                 print("computing \% contri -> ",df1.at[i,"Sys name"])
