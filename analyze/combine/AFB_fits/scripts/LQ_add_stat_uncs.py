@@ -100,6 +100,12 @@ for is_vec in [False]:
 
             print_and_do("""combine -M MultiDimFit --freezeParameters allConstrainedNuisances -d higgsCombine_nom.MultiDimFit.mH120.%i.root --saveWorkspace  --saveFitResult --robustFit 1 -n _%s %s --snapshotName MultiDimFit """ %(s, 'statuncs', extra_params))
 	    stat_unc = compute_sys("nom", "statuncs", s)
+        _file1 = TFile.Open("multidimfit_%s.root" % (statuncs))
+        fit_mdf = _file1.Get("fit_mdf")
+        sys = fit_mdf.floatParsFinal()
+        sys_index_yLQ2 = sys.index("yLQ2")
+        sys_vals = sys.at(sys_index_yLQ2)
+        stat_unc = sys_vals.getError()
 
             df1 = pd.read_csv("%s_%s_m%s_sys_uncs_%s.txt"%(chan, q, mLQ, ending),delimiter="&",names=["Sys name","Contri","%% Contri"],dtype='string')
 	    df1.drop(index=[0,len(df1)-1], inplace=True)
@@ -116,10 +122,10 @@ for is_vec in [False]:
                 sum_uncs2+=val**2
 		sum_sys_uncs2+=val**2
 
-            df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc, (stat_unc**2*100)/sum_uncs2]
+            df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc, (stat_unc*100)/(sum_uncs2**0.5)]
             for i in range(1,len(df1.index)):
                 print("computing \% contri -> ",df1.at[i,"Sys name"])
-                df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]**2*100)/(sum_uncs2)
+                df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]*100)/(sum_uncs2**0.5)
 	    
 	    #print(df1)
 	    print("Background cross sections: ", df1.loc[df1["Sys name"].str.contains("Section")])
@@ -128,11 +134,12 @@ for is_vec in [False]:
 	    df_misid = df1.loc[df1["Sys name"].str.contains("MisID")]
 	    print("Trigger: ", df1.loc[df1["Sys name"].str.contains("Trigger")])
 	    df_trigger = df1.loc[df1["Sys name"].str.contains("Trigger")]
-	   
-	    df1.loc[len(df1.index)+2] = ["Background Cross Sections",df_xsec["Contri"].sum(),df_xsec["%% Contri"].sum()]
-	    df1.loc[len(df1.index)+3] = ["Trigger & Prefire",df_trigger["Contri"].sum(),df_trigger["%% Contri"].sum()]
-	    df1.loc[len(df1.index)+4] = ["MisID shape and normalization",df_misid["Contri"].sum(),df_misid["%% Contri"].sum()]
-	    df1.loc[len(df1.index)+5] = ["Total systematic uncertainty", math.sqrt(sum_sys_uncs2),sum_sys_uncs2*100/(sum_uncs2)] 
+
+	    
+	    df1.loc[len(df1.index)+2] = ["Background Cross Sections",((df_xsec["Contri"]**2).sum())**0.5,((df_xsec["%% Contri"]**2).sum())**0.5]
+	    df1.loc[len(df1.index)+3] = ["Trigger & Prefire",((df_trigger["Contri"]**2).sum())**0.5,((df_trigger["%% Contri"]**2).sum())**0.5]
+	    df1.loc[len(df1.index)+4] = ["MisID shape and normalization",((df_misid["Contri"]**2).sum())**0.5,((df_misid["%% Contri"]**2).sum())**0.5]
+	    df1.loc[len(df1.index)+5] = ["Total systematic uncertainty", sum_sys_uncs2**0.5,sum_sys_uncs2**0.5*100/(sum_uncs2**0.5)] 
 	    print(df1)
 	    df1.to_csv("%s_%s_m%s_sys_uncs_%s_statuncs.txt"%(chan, q, mLQ, ending),sep=' ',index=False)
 
