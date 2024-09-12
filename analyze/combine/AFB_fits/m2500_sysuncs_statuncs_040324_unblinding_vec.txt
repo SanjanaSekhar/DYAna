@@ -1,0 +1,23 @@
+"Sys name" Percent_ee_u Percent Percent_mumu_u_vec Percent_mumu_d_vec
+"DY Cross Section " 5.31 18.34 44.91 46.9
+"LQ LO reweighting " 5.31 26.03 53.29 40.81
+"Luminosity " 5.27 22.65 31.65 39.02
+"$\alpha_s$ + Renormalization/Factorization Scales " 3.48 18.53 28.37 32.14
+"MC and MisID Backgrounds Statistical Uncertainty " 5.67 32.96 30.82 29.85
+"$\ttbar$ Cross Section " 2.3 13.85 29.65 18.8
+"Muon Identification/Isolation "   11.88 15.75
+"PDFs " 5.02 9.45 10.94 11.91
+"$e\mu$ Shape Corrections " 2.3 6.89 15.82 8.1
+"Diboson Cross Section " 0.0 5.22 8.43 7.15
+"Pileup " 0.0 5.92 5.15 6.61
+"Muon Momentum Scale "   14.51 6.24
+"Muon MisID Normalization "   2.78 5.8
+"Muon Trigger Prefire Correction "   2.49 4.88
+"Muon Trigger "   3.52 4.69
+"Muon MisID Shape "   3.23 4.36
+"$\PGg\PGg$ Cross Section " 0.0 0.45 3.08 1.46
+"Statistical Uncertainty" 97.79 47.22 25.35 40.55
+"Background Cross Sections" 5.78 23.57 54.55 51.06
+"Trigger & Prefire" 5.26 9.26 4.32 6.77
+"MisID shape and normalization" 5.83 37.67 31.11 30.72
+"Total systematic uncertainty" 20.92 88.15 96.73 91.41
