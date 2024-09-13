@@ -275,28 +275,28 @@ if options.sys_uncs:
     cmds = [
   
     "python scripts/LQ_check_sys_uncs.py  --chan ee --q u -o sys --ending %s "%date,
-    "python scripts/LQ_check_sys_uncs.py  --chan ee --q d -o sys --ending %s  "%date,
+    #"python scripts/LQ_check_sys_uncs.py  --chan ee --q d -o sys --ending %s  "%date,
     "python scripts/LQ_check_sys_uncs.py  --chan mumu --q u -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py  --chan mumu --q d -o sys --ending %s  "%date,
+    #"python scripts/LQ_check_sys_uncs.py  --chan mumu --q d -o sys --ending %s  "%date,
     "python scripts/LQ_check_sys_uncs.py  --chan ee --q u --vec True -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py  --chan ee --q d --vec True -o sys --ending %s  "%date,
+    #"python scripts/LQ_check_sys_uncs.py  --chan ee --q d --vec True -o sys --ending %s  "%date,
     "python scripts/LQ_check_sys_uncs.py  --chan mumu --q u --vec True -o sys --ending %s  "%date,
-    "python scripts/LQ_check_sys_uncs.py  --chan mumu --q d --vec True -o sys --ending %s  "%date,
+    #"python scripts/LQ_check_sys_uncs.py  --chan mumu --q d --vec True -o sys --ending %s  "%date,
  
     ]
 
     labels = [
-        "sys_ee_u","sys_ee_d","sys_mumu_u","sys_mumu_d",
-        "sys_ee_u_vec","sys_ee_d_vec","sys_mumu_u_vec","sys_mumu_d_vec"
+        "sys_ee_u","sys_mumu_u",
+        "sys_ee_u_vec","sys_mumu_u_vec"
         #"limits_ee_s","limits_mumu_s",
         #"limits_ee_s_vec","limits_mumu_s_vec"
     ]
 
-    ntoys = 10
-    seed = 1234
+    #ntoys = 10
+    seed = 3456
     cpy_cmd = "xrdcp -f sys/* $1 \n"
-    for mass in [1000,1500,2000,2500,3000,3500]:
-	for toy in range(1,ntoys+1):
+    for mass in [2500]:
+	for toy in range(1):
             for i,cmd in enumerate(cmds):
             #for m in range(1000,9500,500):
             #for point in np.arange(0.28,1.5,0.005):
@@ -306,14 +306,14 @@ if options.sys_uncs:
                 print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
                 script_file = open(script_name, 'a+')
                 script_file.write("mkdir sys\n")
-                script_file.write(cmd+" --expected true --mLQ %i --nToys 1 -s %i\n"%(mass,seed))
+                script_file.write(cmd+"  --mLQ %i \n"%(mass))
                 script_file.write(cpy_cmd)
                 script_file.close()
                 #print_and_do("cat %s" % script_name)
                 print_and_do("chmod +x %s" % script_name)
-                print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%i_exp_toy%i"  % (n_m_bins, script_name, labels[i], mass, toy+5))
+                print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%i"  % (n_m_bins, script_name, labels[i], mass))
                 print_and_do("rm scripts/script3.sh")
-                seed+=1
+                
 
 if options.likelihood:
 
