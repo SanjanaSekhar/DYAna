@@ -1,0 +1,20 @@
+Systematic uncertainties for bin 0
+Electron Identification/Isolation & 0.06219   \\ 
+LQ LO reweighting & 0.04086   \\ 
+Electron Momentum Scale & 0.03225   \\ 
+MC and MisID Backgrounds Statistical Uncertainty & 0.02908   \\ 
+Luminosity & 0.02492   \\ 
+DY Cross Section & 0.01613   \\ 
+Electron Trigger Prefire Correction & 0.01593   \\ 
+$\alpha_s$ + Renormalization/Factorization Scales & 0.01386   \\ 
+Electron MisID Normalization & 0.01355   \\ 
+$e\mu$ Shape Corrections & 0.01337   \\ 
+Pileup & 0.01310   \\ 
+Electron Trigger & 0.01304   \\ 
+Electron Reconstruction & 0.01273   \\ 
+$\ttbar$ Cross Section & 0.01142   \\ 
+PDFs & 0.01129   \\ 
+Diboson Cross Section & 0.01041   \\ 
+Electron MisID Shape & 0.00255   \\ 
+$\PGg\PGg$ Cross Section & 0.00082   \\ 
+Total Uncertainty & 0.10  \\ 

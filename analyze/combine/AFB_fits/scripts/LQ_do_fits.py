@@ -26,8 +26,8 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 #for y in [2016,2017,2018]:
 for y in [-1]:
     #for options.chan in ["mumu"]:
-    for options.chan in ["mumu", "ee"]:
-        for options.q in ["u", "d"]:
+    for options.chan in ["ee"]:
+        for options.q in ["u"]:
             mLQ_list = [2500]
             #mLQ_list = [3500,4000,4500,5000]
 	    is_vec = True

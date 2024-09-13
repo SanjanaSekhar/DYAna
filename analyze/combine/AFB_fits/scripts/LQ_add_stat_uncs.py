@@ -13,14 +13,14 @@ gen_level = False
 no_LQ = False
 year = -1
 mLQ = 2500
-ending = "040324_unblinding"
+ending = "091224"
 s = 3456
 extra_params = " -s %i" % s
 
-for is_vec in [True]:
+for is_vec in [False, True]:
     if is_vec: ending+="_vec"
-    for chan in ["mumu","ee"]:
-        for q in ["u","d"]:
+    for chan in ["ee","mumu"]:
+        for q in ["u"]:
 
             if chan == "ee":
                 #individual_pars, group_pars = ["nlo_sys"],[]		
@@ -93,26 +93,26 @@ for is_vec in [True]:
             workspace = "workspaces/%s_%s_sys_uncs_m%i.root" % (chan, q, mLQ)
 
             make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, mLQ, year,True, False)
-            print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  -s 3456 " % (workspace))
+            print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base_%s_%s%s --robustFit 1  -s 3456 " % (workspace,chan,q,("_vec" if is_vec else "")))
+	    #higgsCombine_base.MultiDimFit.mH120.3456.root
+            print_and_do("cp higgsCombine_base_%s_%s%s.MultiDimFit.mH120.%i.root higgsCombine_nom_%s_%s%s.MultiDimFit.mH120.%i.root" % (chan,q,("_vec" if is_vec else ""),s,chan,q,("_vec" if is_vec else ""),s))
+	    print_and_do("cp multidimfit_base_%s_%s%s.root multidimfit_nom_%s_%s%s.root"%(chan,q,("_vec" if is_vec else ""),chan,q,("_vec" if is_vec else "")))
 
-            print_and_do("cp higgsCombine_base.MultiDimFit.mH120.%i.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s,s))
-	    print_and_do("cp multidimfit_base.root multidimfit_nom.root")
-
-            print_and_do("""combine -M MultiDimFit --freezeParameters allConstrainedNuisances -d higgsCombine_nom.MultiDimFit.mH120.%i.root --saveWorkspace  --saveFitResult --robustFit 1 -n _%s %s --snapshotName MultiDimFit """ %(s, 'statuncs', extra_params))
+            print_and_do("""combine -M MultiDimFit --freezeParameters allConstrainedNuisances -d higgsCombine_nom_%s_%s%s.MultiDimFit.mH120.%i.root --saveWorkspace  --saveFitResult --robustFit 1 -n _%s_%s_%s%s %s --snapshotName MultiDimFit """ %(chan,q,("_vec" if is_vec else ""),s, 'statuncs',chan,q,("_vec" if is_vec else ""), extra_params))
 	    #stat_unc = compute_sys("nom", "statuncs", s)
-            _file1 = TFile.Open("multidimfit_statuncs.root")
+            _file1 = TFile.Open("multidimfit_statuncs_%s_%s%s.root"%(chan,q,("_vec" if is_vec else "")))
             fit_mdf = _file1.Get("fit_mdf")
             sys = fit_mdf.floatParsFinal()
             sys_index_yLQ2 = sys.index("yLQ2")
             sys_vals = sys.at(sys_index_yLQ2)
             stat_unc = sys_vals.getError()
 	    print("Statistical uncertainty = ", stat_unc)
-            df1 = pd.read_csv("%s_%s_m%s_sys_uncs_%s.txt"%(chan, q, mLQ, ending),delimiter="&",names=["Sys name","Contri","%% Contri"],dtype='string')
+            df1 = pd.read_csv("%s_%s_m%s_sys_uncs_%s.txt"%(chan, q, mLQ, ending),delimiter="&",names=["Sys name","Contri"],dtype='string')
 	    df1.drop(index=[0,len(df1)-1], inplace=True)
 	    print(df1)
-            df1["%% Contri"] = df1["%% Contri"].str.replace("\\","")
+            df1["Contri"] = df1["Contri"].str.replace("\\","")
             df1["Contri"] = pd.to_numeric(df1["Contri"])
-            df1["%% Contri"] = pd.to_numeric(df1["%% Contri"])
+            #df1["%% Contri"] = pd.to_numeric(df1["%% Contri"])
 
             sum_uncs2 = stat_unc**2 #variable to store total unc, not just sum of sys uncs
 	    sum_sys_uncs2 = 0
@@ -123,12 +123,13 @@ for is_vec in [True]:
 		sum_sys_uncs2+=val**2
 	    print("Total uncertainty = ", sum_uncs2**0.5)
 	    print("Systematic uncertainty = ", sum_sys_uncs2**0.5)
-            df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc, (stat_unc*100)/(sum_uncs2**0.5)]
+            df1.loc[len(df1.index)+1] = ["Statistical Uncertainty", stat_unc]
+	    df1.at[len(df1.index),"%% Contri"] = (stat_unc*100)/(sum_uncs2**0.5)
             for i in range(1,len(df1.index)):
                 print("computing \% contri -> ",df1.at[i,"Sys name"])
                 df1.at[i,"%% Contri"] = (df1.at[i,"Contri"]*100)/(sum_uncs2**0.5)
 	    
-	    #print(df1)
+	    print(df1)
 	    print("Background cross sections: ", df1.loc[df1["Sys name"].str.contains("Section")])
 	    df_xsec = df1.loc[df1["Sys name"].str.contains("Section")]
             print("MisID: ", df1.loc[df1["Sys name"].str.contains("MisID")])

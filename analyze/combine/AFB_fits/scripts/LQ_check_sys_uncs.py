@@ -6,7 +6,7 @@ from add_group_impact import *
 import numpy as np
 import pandas as pd 
 import numpy as np
-import matplotlib.pyplot as plt 
+#import matplotlib.pyplot as plt 
 gROOT.SetBatch(True)
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
@@ -17,7 +17,7 @@ parser.add_option("--A0",  default=0.05, type='float', help="A0 value to inject 
 parser.add_option("-o", "--odir", default="sys_uncs/", help = "output directory")
 parser.add_option("--reuse_fit", default=False, action="store_true", help="Reuse initial fit from previous run to save time")
 parser.add_option("--diff", default=False, action="store_true", help="Diff")
-parser.add_option("--mLQ",  default=2000, type='int', help="mLQ")
+parser.add_option("--mLQ",  default=2500, type='int', help="mLQ")
 parser.add_option("--nToys",  default=5, type='int', help="no. of toys for expected uncs")
 parser.add_option("--vec",  default=False, help="is vec?")
 parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
@@ -42,7 +42,8 @@ if is_vec: ending+="_vec"
 extra_params += " -s %i" % s
 if options.expected: ending += "_expected"
 if options.hadd:
-
+	print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/sys_%s_%s%s_%s/%s_%s_m%s_sys_uncs_%s.txt sys_uncs/%s_%s_m%s_sys_uncs_%s.txt"%(chan, q, ("_vec" if is_vec else ""),options.mLQ, chan, q, options.mLQ, ending,  chan, q, options.mLQ, ending))
+	'''
 	
 	for chan in ["mumu","ee"]:
 		if is_vec: ending+="_vec"
@@ -115,6 +116,7 @@ if options.hadd:
 			plt.tight_layout()
 			plt.savefig("sys_uncs/%s_sys_uncs_%s_m%i.png"%(chan, ending,options.mLQ))
 			plt.close()	
+	'''	
 else:
 	if chan == "ee":
 		#individual_pars, group_pars = ["nlo_sys"],[]		
@@ -193,7 +195,7 @@ else:
 
 
 	make_workspace(workspace, gen_level, chan, q, is_vec, no_LQ , no_sys, fake_data, options.mLQ, year,True, False)
-	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base --robustFit 1  -s 3456 " % (workspace))
+	print_and_do("combine -M MultiDimFit -d %s --saveFitResult --saveWorkspace -n _base_%s_%s%s --robustFit 1  -s 3456 " % (workspace,chan,q,("_vec" if is_vec else "")))
 	#print_and_do("combine -M FitDiagnostics -d %s  --saveWorkspace -n _base --robustFit 1  %s"     % (workspace, extra_params))
 
 	if(options.expected):
@@ -266,20 +268,21 @@ else:
 			#print_and_do("rm higgsCombine* fitDiagnostics* multidimfit*")
 
 	else:
-		print_and_do("cp higgsCombine_base.MultiDimFit.mH120.%i.root higgsCombine_nom.MultiDimFit.mH120.%i.root" % (s,s))
+		print_and_do("cp higgsCombine_base_%s_%s%s.MultiDimFit.mH120.%i.root higgsCombine_nom_%s_%s%s.MultiDimFit.mH120.%i.root" % (chan,q,("_vec" if is_vec else ""),s,chan,q,("_vec" if is_vec else ""),s))
 		#print_and_do("cp higgsCombine_base.FitDiagnostics.mH120.%i.root higgsCombine_nom.FitDiagnostics.mH120.%i.root" % (s,s))
-		print_and_do("cp multidimfit_base.root multidimfit_nom.root")
+		print_and_do("cp multidimfit_base_%s_%s%s.root multidimfit_nom_%s_%s%s.root"%(chan,q,("_vec" if is_vec else ""),chan,q,("_vec" if is_vec else "")))
 
 		d = dict()
 		n = 0
+		
 		for indi_par in individual_pars:
 			n+=1
 			freeze_str = par_to_freezestr(indi_par)
 			#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root -w w --snapshotName MultiDimFit --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
 				#  % (freeze_str,s, indi_par, extra_params))
 			#print_and_do("""combine -M FitDiagnostics --freezeParameters %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" % (freeze_str,s, indi_par, extra_params))
-			print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ % (freeze_str,s, indi_par, extra_params))
-			sys_unc = compute_sys("nom", indi_par, s)
+			print_and_do("""combine -M MultiDimFit --freezeParameters %s -d higgsCombine_nom_%s_%s%s.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s_%s_%s%s %s """ % (freeze_str, chan,q,("_vec" if is_vec else ""), s, indi_par,chan,q,("_vec" if is_vec else ""), extra_params))
+			sys_unc = compute_sys("nom_%s_%s%s"% (chan,q,("_vec" if is_vec else "")), "%s_%s_%s%s"% (indi_par, chan,q,("_vec" if is_vec else "")), s)
 			#sys_unc = compute_sys("nom", indi_par, s)
 			d[indi_par] = sys_unc
 			#if(n>2): break
@@ -291,11 +294,11 @@ else:
 			#       (freeze_str, s, group_par, extra_params))
 			#print_and_do("""combine -M FitDiagnostics --freezeNuisanceGroups %s -d higgsCombine_nom.FitDiagnostics.mH120.%i.root -w w  --robustFit 1 -n _%s %s""" %  (freeze_str, s, group_par, extra_params))
 			if group_par == 'autoMCStats,MCStatBin16,MCStatBin17,MCStatBin18': 
-				print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, 'mcstats', extra_params))
-				sys_unc = compute_sys("nom", "mcstats", s)
+				print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom_%s_%s%s.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s_%s_%s%s %s """ %(freeze_str, chan,q,("_vec" if is_vec else ""), s, 'mcstats', chan,q,("_vec" if is_vec else ""), extra_params))
+				sys_unc = compute_sys("nom_%s_%s%s"%(chan,q,("_vec" if is_vec else "")), "mcstats_%s_%s%s"%(chan,q,("_vec" if is_vec else "")), s)
 			else:
-				print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s %s """ %(freeze_str, s, group_par, extra_params))
-				sys_unc = compute_sys("nom", group_par, s)
+				print_and_do("""combine -M MultiDimFit --freezeNuisanceGroups %s -d higgsCombine_nom_%s_%s%s.MultiDimFit.mH120.%i.root  --saveFitResult --robustFit 1 -n _%s_%s_%s%s %s """ %(freeze_str,chan,q,("_vec" if is_vec else "") ,s, group_par, chan,q,("_vec" if is_vec else ""),extra_params))
+				sys_unc = compute_sys("nom_%s_%s%s"% (chan,q,("_vec" if is_vec else "")), "%s_%s_%s%s"%(group_par,chan,q,("_vec" if is_vec else "")), s)
 			#sys_unc = compute_sys("nom", indi_par, s)
 			d[group_par] =sys_unc
 			#if(n>4): break
@@ -319,7 +322,7 @@ else:
 					out_name = sys_name_conv[sys_name]
 				else:
 					out_name = sys_name
-				f_out.write("%s & %.5f & %.2f  \\\\ \n" % (out_name, val, ((val*val)*100)/sum_uncs2))
+				f_out.write("%s & %.5f   \\\\ \n" % (out_name, val))
 			
 			f_out.write("Total Uncertainty & %.2f  \\\\ \n" % (np.sqrt(sum_uncs2)))
 

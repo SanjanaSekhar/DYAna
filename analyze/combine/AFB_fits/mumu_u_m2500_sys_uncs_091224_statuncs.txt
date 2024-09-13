@@ -1,0 +1,23 @@
+"Sys name" Contri "%% Contri"
+"LQ LO reweighting " 0.0485 26.83499951576674
+"$\ttbar$ Cross Section " 0.04413 24.41708306455229
+"$\alpha_s$ + Renormalization/Factorization Scales " 0.036489999999999995 20.189879017120166
+"DY Cross Section " 0.03639 20.13454912121137
+"Luminosity " 0.03606 19.951960464712343
+"$e\mu$ Shape Corrections " 0.03071 16.99181103359168
+"MC and MisID Backgrounds Statistical Uncertainty " 0.02482 13.732880164563513
+"Muon Identification/Isolation " 0.01798 9.948315284401772
+"Pileup " 0.01722 9.527808075494912
+"PDFs " 0.01285 7.109891624280466
+"Diboson Cross Section " 0.01229 6.8000442071912
+"$\PGg\PGg$ Cross Section " 0.01215 6.722582352918883
+"Muon Momentum Scale " 0.01025 5.671314330651733
+"Muon MisID Normalization " 0.007359999999999999 4.072280338887488
+"Muon MisID Shape " 0.00624 3.4525855047089573
+"Muon Trigger " 0.00409 2.2629927426698133
+"Muon Trigger Prefire Correction " 0.00202 1.1176638973577073
+"Statistical Uncertainty" 0.1467900763901977 81.21879647114056
+"Background Cross Sections" 0.059752452669325634 33.060969864891305
+"Trigger & Prefire" 0.004561633479358025 2.523947055869648
+"MisID shape and normalization" 0.026629675176389214 14.734171555947011
+"Total systematic uncertainty" 0.10543953385708797 58.33958432984796

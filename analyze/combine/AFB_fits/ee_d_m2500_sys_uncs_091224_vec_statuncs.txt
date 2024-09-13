@@ -1,0 +1,24 @@
+"Sys name" Contri "%% Contri"
+"Electron Identification/Isolation " 0.10321 56.80137918750343
+"MC and MisID Backgrounds Statistical Uncertainty " 0.10162 55.92632645125568
+"LQ LO reweighting " 0.050089999999999996 27.566912929968478
+"DY Cross Section " 0.03588 19.746473067024738
+"Luminosity " 0.03482 19.1631045761929
+"$\alpha_s$ + Renormalization/Factorization Scales " 0.03466 19.07504895493527
+"Electron MisID Normalization " 0.02806 15.442754578057807
+"Electron Momentum Scale " 0.02265 12.465373884284011
+"$\ttbar$ Cross Section " 0.017509999999999998 9.636587051382472
+"Electron Trigger " 0.01182 6.505109020407815
+"Pileup " 0.01034 5.6905945237746876
+"PDFs " 0.00845 4.650437497668869
+"$e\mu$ Shape Corrections " 0.00793 4.3642567285815534
+"Electron MisID Shape " 0.00687 3.78088823774972
+"Diboson Cross Section " 0.00596 3.280071891846918
+"Electron Reconstruction " 0.0057 3.136981507303261
+"Electron Trigger Prefire Correction " 0.00555 3.054429362374228
+"$\PGg\PGg$ Cross Section " 0.0036 1.9812514782967963
+"Statistical Uncertainty" 0.06066440597242728 33.38651222579682
+"Background Cross Sections" 0.04052722665073444 22.304063253621372
+"Trigger & Prefire" 0.01305813539522393 7.186513904329759
+"MisID shape and normalization" 0.10564650917091392 58.142306242158135
+"Total systematic uncertainty" 0.17127735285203355 94.26208570468151
