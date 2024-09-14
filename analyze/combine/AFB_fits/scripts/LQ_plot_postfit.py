@@ -949,7 +949,7 @@ scale = 10
 
 label_color_map = dict()
 label_color_map['dy'] = ("DY", DY_co)
-label_color_map['top'] = ("t#bar{t} + Single Top ", ttbar_co)
+label_color_map['top'] = ("t#bar{t} + Single t", ttbar_co)
 label_color_map['db'] = ("WW + WZ + ZZ",  diboson_co)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_co)
 label_color_map['gam'] = ("#gamma#gamma ", gamgam_co)
