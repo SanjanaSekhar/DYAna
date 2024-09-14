@@ -152,7 +152,7 @@ CMS_lumi( TPad* pad, int iPeriod, int iPosX )
       latex.SetTextFont(cmsTextFont);
       latex.SetTextSize(cmsTextSize*t);
       latex.SetTextAlign(align_);
-      if(draw_CMS) latex.DrawLatex(posX_+0.55, posY_-0.01, cmsText);
+      if(draw_CMS) latex.DrawLatex(posX_+0.6, posY_-0.01, cmsText);
       
         
 	  
