@@ -529,9 +529,9 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     float ratio_min = center - ratio_range;
     float ratio_max = center + ratio_range;
     h_ratio->GetYaxis()->SetRangeUser(ratio_min, ratio_max);
-
+    //h_ratio->GetYaxis()->SetRangeUser(0.8,1.3);
     h_ratio->SetTitle("");
-    h_ratio->GetYaxis()->SetTitle("Obs. / Exp.");
+    h_ratio->GetYaxis()->SetTitle("Data / Exp.");
     h_ratio->GetYaxis()->SetNdivisions(205);
     h_ratio->GetYaxis()->SetTitleSize(TS+0.1);
     h_ratio->GetYaxis()->SetLabelSize(LS+0.08);
