@@ -1,0 +1,24 @@
+"Sys name" Percent_mumu_u Percent Percent_ee_u_vec Percent_ee_d_vec
+"Electron Identification/Isolation "   62.0 56.8
+"MC and MisID Backgrounds Statistical Uncertainty " 30.82 46.43 35.39 55.93
+"LQ LO reweighting " 53.29 36.84 28.27 27.57
+"DY Cross Section " 44.91 46.09 15.82 19.75
+"Luminosity " 31.65 37.71 19.41 19.16
+"$\alpha_s$ + Renormalization/Factorization Scales " 28.37 31.76 15.02 19.08
+"Electron MisID Normalization "   12.49 15.44
+"Electron Momentum Scale "   29.62 12.47
+"$\ttbar$ Cross Section " 29.65 12.67 16.84 9.64
+"Electron Trigger "   10.85 6.51
+"Pileup " 5.15 6.04 5.11 5.69
+"PDFs " 10.94 8.82 8.79 4.65
+"$e\mu$ Shape Corrections " 15.82 11.45 11.46 4.36
+"Electron MisID Shape "   7.38 3.78
+"Diboson Cross Section " 8.43 5.45 3.84 3.28
+"Electron Reconstruction "   7.21 3.14
+"Electron Trigger Prefire Correction "   16.3 3.05
+"$\PGg\PGg$ Cross Section " 3.08 5.82 0.7 1.98
+"Statistical Uncertainty" 25.35 32.09 34.57 33.39
+"Background Cross Sections" 54.55 48.46 23.43 22.3
+"Trigger & Prefire" 4.32 6.26 19.59 7.19
+"MisID shape and normalization" 31.11 47.47 38.24 58.14
+"Total systematic uncertainty" 96.73 94.71 93.83 94.26
