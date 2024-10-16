@@ -16,9 +16,10 @@ for i in range(len(m)-1):
 	    if y[j] >= 0.6 and (c[k] == -0.75 or c[k] == 0.75): continue
             m_str.append("%i-%i" % (m[i], m[i+1]))
             y_str.append("%.1f-%0.1f" % (y[j], y[j+1]))
-            c_str.append("%.2f-%.2f" % (c[k],c[k+1]))
+            if j>=1 and (k==0 or k==6): c_str.append("%.2f-%.2f" % (c[k],c[k+2]))
+	    else: c_str.append("%.2f-%.2f" % (c[k],c[k+1]))
 
-vec = True
+vec = False
 for chan in ["ee","mumu"]:
     for q in ["u","d"]:
         f_in = TFile.Open("analyze/combine/AFB_fits/postfit_plots/%s_%s%s_unblinded_LQ_m2500/%s_%s%s_unblinded_fit_shapes_LQ.root"%(chan,q,"_vec" if vec else "",chan,q,"_vec" if vec else ""))
@@ -50,7 +51,7 @@ for chan in ["ee","mumu"]:
             total_proc_err.append(h_tot.GetBinError(i))
 
             data.append(h_data.GetBinContent(i))
-            data_err.append(h_data.GetBinContent(i))
+            data_err.append(h_data.GetBinError(i))
 
             sig.append(h_sig.GetBinContent(i))
             sig_err.append(h_sig.GetBinError(i))
@@ -70,7 +71,7 @@ for chan in ["ee","mumu"]:
         })
 	df = df[['mass (GeV)','rapidity','cos(theta_R)','Background','Background err','LQ template yield','LQ template yield err','Observed data','Observed data err']]
         print(df)
-        df.to_csv("hepdata/%s_%s%s_postfit_table.txt" % (chan, q, "_vec" if vec else ""),sep=' ',index=False)
+        df.to_csv("hepdata/%s_%s%s_postfit_table.txt" % (chan, q, "_vec" if vec else ""),sep=' ',index=False, header=False)
                 
 
 
