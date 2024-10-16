@@ -67,7 +67,7 @@ for chan in ["ee","mumu"]:
             'Observed data': data,
             'Observed data err': data_err
         })
-	df = df[['mass (GeV)','rapidity','cos(theta_R)','Background','Background err','LQ template yield','LQ template yield err','Observed data','Observed data err']]
+	df = df[['Bin index','Background','Background err','LQ template yield','LQ template yield err','Observed data','Observed data err']]
         print(df)
         df.to_csv("hepdata/%s_%s%s_postfit_table.txt" % (chan, q, "_vec" if vec else ""),sep=' ',index=False, header=False)
                 
