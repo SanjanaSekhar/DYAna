@@ -59,9 +59,7 @@ for chan in ["ee","mumu"]:
         f_in.Close()
 
         df = pd.DataFrame({
-            'mass (GeV)': m_str,
-            'rapidity': y_str,
-            'cos(theta_R)' : c_str,
+            'Bin index': range(1,61),
             'Background': total_proc,
             'Background err': total_proc_err,
             'LQ template yield': sig,
