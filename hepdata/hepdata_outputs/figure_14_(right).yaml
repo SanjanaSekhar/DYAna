@@ -1,0 +1,120 @@
+dependent_variables:
+- header:
+    name: Expected limit on $|g_{\mu d}|$
+  values:
+  - errors:
+    - asymerror:
+        minus: -0.059482
+        plus: 0.096396
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.090738
+        plus: 0.17075
+      label: 2 s.d.
+    value: 0.23028
+  - errors:
+    - asymerror:
+        minus: -0.080938
+        plus: 0.13192
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.1252
+        plus: 0.23368
+      label: 2 s.d.
+    value: 0.31515
+  - errors:
+    - asymerror:
+        minus: -0.10403
+        plus: 0.16956
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.16091
+        plus: 0.30034
+      label: 2 s.d.
+    value: 0.40505
+  - errors:
+    - asymerror:
+        minus: -0.12741
+        plus: 0.20766
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.19708
+        plus: 0.36784
+      label: 2 s.d.
+    value: 0.49608
+  - errors:
+    - asymerror:
+        minus: -0.15225
+        plus: 0.24655
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.23398
+        plus: 0.43671
+      label: 2 s.d.
+    value: 0.58896
+  - errors:
+    - asymerror:
+        minus: -0.17666
+        plus: 0.28589
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.27353
+        plus: 0.5064
+      label: 2 s.d.
+    value: 0.68294
+  - errors:
+    - asymerror:
+        minus: -0.20115
+        plus: 0.32552
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.31145
+        plus: 0.5766
+      label: 2 s.d.
+    value: 0.77762
+  - errors:
+    - asymerror:
+        minus: -0.22542
+        plus: 0.36479
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.34902
+        plus: 0.64616
+      label: 2 s.d.
+    value: 0.87142
+  - errors:
+    - asymerror:
+        minus: -0.25374
+        plus: 0.40532
+      label: 1 s.d.
+    - asymerror:
+        minus: -0.3878
+        plus: 0.71795
+      label: 2 s.d.
+    value: 0.96825
+- header:
+    name: Observed limit on $|g_{\mu d}|$
+  values:
+  - value: 0.30419
+  - value: 0.4231
+  - value: 0.54406
+  - value: 0.66655
+  - value: 0.7903
+  - value: 0.91496
+  - value: 1.0403
+  - value: 1.166
+  - value: 1.292
+independent_variables:
+- header:
+    name: $V_{\mu d}$ Mass
+    units: GeV
+  values:
+  - value: 1000.0
+  - value: 1500.0
+  - value: 2000.0
+  - value: 2500.0
+  - value: 3000.0
+  - value: 3500.0
+  - value: 4000.0
+  - value: 4500.0
+  - value: 5000.0

@@ -1,0 +1,313 @@
+---
+additional_resources:
+- description: Created with hepdata_lib 0.17.0
+  location: https://doi.org/10.5281/zenodo.1217998
+- description: Webpage with all figures and tables
+  location: https://cms-results.web.cern.ch/cms-results/public-results/preliminary-results/EXO-22-013/
+comment: '  A search for $t$-channel exchange of leptoquarks (LQs) is performed using
+  proton-proton collision data collected at $\sqrt{s}=13$ TeV with the CMS detector
+  at the CERN LHC. The data correspond to an integrated luminosity of $138\text{ fb}^{-1}$.
+  Eight scenarios are considered, in which nonresonant scalar or vector LQs couple
+  up or down quarks to electrons or muons, for dilepton invariant masses above $500$
+  GeV. LQ masses are probed up to $5$ TeV, heavier than those probed by previous pair-production
+  and single-production searches. The differential distributions of dilepton events
+  are fit to templates constructed from simulated standard model events that are reweighted
+  to the form of the Drell-Yan cross section with LQ exchange. Limits are set on LQ-fermion
+  coupling strengths for various LQ masses at $95\%$ confidence level (CL). For scalar
+  LQs with masses in the $1-5$ TeV range, coupling values greater than $0.3-1.0$ $(0.4-1.3)$
+  are excluded for LQs coupled to an electron/muon and an up (down) quark.  For vector
+  LQs, coupling values greater than $0.1-0.5$ $(0.3-1.4)$ are excluded for LQs coupled
+  to an electron/muon and an up (down) quark.'
+data_license:
+  description: CC0 enables reusers to distribute, remix, adapt, and build upon the
+    material in any medium or format, with no conditions.
+  name: CC0
+  url: https://creativecommons.org/publicdomain/zero/1.0/
+---
+data_file: figure_3.yaml
+description: The observed data in the dielectron channel and the fitted signal-plus-background
+  templates, shown for the $S_{e u}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> E+ E-
+location: Data from Figure 3
+name: Figure 3
+---
+data_file: figure_11_(left).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{e u}|$, versus
+  $m_{LQ}$ for scalar LQs coupled to electrons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> E+ E-
+location: Data from Figure 11 (left)
+name: Figure 11 (left)
+---
+data_file: figure_4.yaml
+description: The observed data in the dielectron channel and the fitted signal-plus-background
+  templates, shown for the $S_{e d}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> E+ E-
+location: Data from Figure 4
+name: Figure 4
+---
+data_file: figure_11_(right).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{e d}|$, versus
+  $m_{LQ}$ for scalar LQs coupled to electrons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> E+ E-
+location: Data from Figure 11 (right)
+name: Figure 11 (right)
+---
+data_file: figure_5.yaml
+description: The observed data in the dimuon channel and the fitted signal-plus-background
+  templates, shown for the $S_{\mu u}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 5
+name: Figure 5
+---
+data_file: figure_12_(left).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{\mu u}|$,
+  versus $m_{LQ}$ for scalar LQs coupled to muons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 12 (left)
+name: Figure 12 (left)
+---
+data_file: figure_6.yaml
+description: The observed data in the dimuon channel and the fitted signal-plus-background
+  templates, shown for the $S_{\mu d}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 6
+name: Figure 6
+---
+data_file: figure_12_(right).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{\mu d}|$,
+  versus $m_{LQ}$ for scalar LQs coupled to muons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 12 (right)
+name: Figure 12 (right)
+---
+data_file: figure_7.yaml
+description: The observed data in the dielectron channel and the fitted signal-plus-background
+  templates, shown for the $V_{e u}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> E+ E-
+location: Data from Figure 7
+name: Figure 7
+---
+data_file: figure_13_(left).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{e u}|$, versus
+  $m_{LQ}$ for vector LQs coupled to electrons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> E+ E-
+location: Data from Figure 13 (left)
+name: Figure 13 (left)
+---
+data_file: figure_8.yaml
+description: The observed data in the dielectron channel and the fitted signal-plus-background
+  templates, shown for the $V_{e d}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> E+ E-
+location: Data from Figure 8
+name: Figure 8
+---
+data_file: figure_13_(right).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{e d}|$, versus
+  $m_{LQ}$ for vector LQs coupled to electrons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> E+ E-
+location: Data from Figure 13 (right)
+name: Figure 13 (right)
+---
+data_file: figure_9.yaml
+description: The observed data in the dimuon channel and the fitted signal-plus-background
+  templates, shown for the $V_{\mu u}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 9
+name: Figure 9
+---
+data_file: figure_14_(left).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{\mu u}|$,
+  versus $m_{LQ}$ for vector LQs coupled to muons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - UQ UQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 14 (left)
+name: Figure 14 (left)
+---
+data_file: figure_10.yaml
+description: The observed data in the dimuon channel and the fitted signal-plus-background
+  templates, shown for the $V_{\mu d}$ scenario with a candidate LQ mass of 2.5 TeV.
+  Distributions of events are binned in the reconstructed dilepton mass, rapidity,
+  and cosine theta.
+keywords:
+- name: observables
+  values:
+  - D3N/DM/DYRAP/DTHETA
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 10
+name: Figure 10
+---
+data_file: figure_14_(right).yaml
+description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{\mu d}|$,
+  versus $m_{LQ}$ for vector LQs coupled to muons.
+keywords:
+- name: observables
+  values:
+  - CLS
+- name: cmenergies
+  values:
+  - 13000
+- name: reactions
+  values:
+  - P P --> LQ* --> LEPTON+ LEPTON-
+  - DQ DQBAR --> LQ* --> MU+ MU-
+location: Data from Figure 14 (right)
+name: Figure 14 (right)
