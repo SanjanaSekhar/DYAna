@@ -19,7 +19,7 @@ for i in range(len(m)-1):
             if j>=1 and (k==0 or k==6): c_str.append("%.2f-%.2f" % (c[k],c[k+2]))
 	    else: c_str.append("%.2f-%.2f" % (c[k],c[k+1]))
 
-vec = True
+vec = False
 for chan in ["ee","mumu"]:
     for q in ["u","d"]:
         f_in = TFile.Open("analyze/combine/AFB_fits/postfit_plots/%s_%s%s_unblinded_LQ_m2500/%s_%s%s_unblinded_fit_shapes_LQ.root"%(chan,q,"_vec" if vec else "",chan,q,"_vec" if vec else ""))
