@@ -130,7 +130,7 @@ TH1F* convert3d(TH3F *h_3d){
             h_1d->SetBinContent(gbin, content_1d + content);
             h_1d->SetBinError(gbin, std::pow(error_1d*error_1d + error*error, 0.5));
                 
-        printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
+        //printf("(%i,%i,%i) => gbin = %i, content = %f, error = %f\n",k,i,j,gbin, h_1d->GetBinContent(gbin), h_1d->GetBinError(gbin) );
         }
         }
     }
