@@ -45,7 +45,7 @@ for chan in ["ee","mumu"]:
         data, data_err = [],[]
         sig, sig_err = [],[]
 
-        for i in range(h_tot.GetNbinsX()+1):
+        for i in range(1,h_tot.GetNbinsX()+1):
 
             total_proc.append(h_tot.GetBinContent(i))
             total_proc_err.append(h_tot.GetBinError(i))
