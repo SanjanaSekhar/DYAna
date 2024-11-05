@@ -338,7 +338,7 @@ for(int year = 2016; year <= 2018; year++){
 
     TLegend *leg1 = new TLegend(0.3,0.7,0.7,0.95);
     leg1->SetNColumns(2);
-    leg1->SetHeader("Dielectron Signal Region");
+    leg1->SetHeader("Dielectron SR");
     leg1->AddEntry(data_m, "data", "p");
     leg1->AddEntry(dy_m, "DY Signal", "f");
     leg1->AddEntry(dy_tautau_m, "DY #rightarrow #tau#tau", "f");
@@ -376,7 +376,7 @@ for(int year = 2016; year <= 2018; year++){
     leg1->SetY1(y_start_m);
     leg1->SetY2(y_start_m+y_size);
 
-    sprintf(y_ax_label, "Events/%.0f GeV", mbin_base);
+    sprintf(y_ax_label, "<Events/%.0f GeV>", mbin_base);
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "M_{ee} (GeV)",y_ax_label, plot_label, -1., logy, logx, draw_sys_uncs, ratio_range);
     CMS_lumi(p_m, year, 33 );
     sprintf(plt_file, "%sElEl%i_m_cmp.pdf", plot_dir, year % 2000);
