@@ -46,21 +46,23 @@ def plotLimits(channel):
     line_sp = ROOT.TGraph(4,x,y)
 
     line_pp = ROOT.TLine(1435,0.,1435,3.05)
+    axis.GetXaxis().SetTitleOffset(1.2)
     if is_vec:
 	if 'm' in channel: 
-		axis.GetXaxis().SetTitle('m(V_{#mu%s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on |g_{#mu%s}|'%(channel[0]))
+		axis.GetXaxis().SetTitle('V_{#mu%s} mass (TeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('|g_{#mu%s}|'%(channel[0]))
 	else: 
-		axis.GetXaxis().SetTitle('m(V_{e%s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on |g_{e%s}|'%(channel[0]))
+		axis.GetXaxis().SetTitle('V_{e%s} mass (TeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('|g_{e%s}|'%(channel[0]))
     else:
 	if 'm' in channel: 
-		axis.GetXaxis().SetTitle('m(S_{#mu%s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on |y_{#mu%s}|'%(channel[0]))
+		axis.GetXaxis().SetTitle('S_{#mu%s} mass (TeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('|y_{#mu%s}|'%(channel[0]))
         else: 
-		axis.GetXaxis().SetTitle('m(S_{e%s}) (GeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('Limits on |y_{e%s}|'%(channel[0]))
-		
+		axis.GetXaxis().SetTitle('S_{e%s} mass (TeV)'%(channel[0]))
+		axis.GetYaxis().SetTitle('|y_{e%s}|'%(channel[0]))
+	
+    
     pads[0].cd()
     axis.Draw('axis')
      
@@ -89,6 +91,7 @@ def plotLimits(channel):
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
     '''
+    legend.SetHeader("95\% CL upper limits")
     legend.SetFillColorAlpha(0,1) 
     legend.Draw()
      
@@ -222,7 +225,7 @@ if options.hadd:
             print_and_do("combine %s -M HybridNew --LHCmode LHC-limits --readHybridResults --grid=merged_%s_q%.3f_m%i.root --expectedFromGrid %.3f"%(workspace,channel,q_string,mass,q_string))
     else:
 	limits = {}
-	'''
+	
         for m in range(1000,5500,500):
             # /store/user/ssekhar/Condor_outputs/limits_ee_u_m9000_032823
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/limits_%s_%s%s_m%i_y%i_%s/limits_%s_m%i.json LQ_cards/%s/limit_json/limits_%s%s_m%i_y%i.json"
@@ -235,7 +238,7 @@ if options.hadd:
                     yLQ2 = data[str(m)+".0"][lim]
                     data[str(m)+".0"][lim] = sqrt(yLQ2)
 		    print(yLQ2,sqrt(yLQ2))
-	 	limits[str(m)+".0"]=data[str(m)+".0"]
+	 	limits[str(m/1000.)]=data[str(m)+".0"]
                 f.seek(0)        # <--- should reset file position to the beginning.
                 json.dump(data, f, indent=4)
                 f.truncate()     # remove remaining part
@@ -243,7 +246,7 @@ if options.hadd:
 	    f.seek(0)
 	    json.dump(limits, f, indent=4)
 	    
-	'''
+	
         print("\n========= making limit plot for channel %s =========\n"%(channel))
         # #print_and_do("plotLimits.py LQ_cards/%s/limits_%s.json --auto-style exp"%(channel,channel))
         plotLimits(channel)
