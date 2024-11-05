@@ -30,7 +30,7 @@ tautau_co = ROOT.TColor(tautau_c,  19./255., 58./255., 54./255., "tautau_co", 1)
 gamgam_co = ROOT.TColor(gamgam_c,  240./255., 228./255., 66./255., "gamgam_co", 1);
 
 
-LQ_co = TColor.GetColor("#ffa90e");
+LQ_co = TColor.GetColor("#fff600");
 LQvec_co = TColor.GetColor("#ffa90e");
 DY_co = TColor.GetColor("#832db6");
 ttbar_co = TColor.GetColor("#b9ac70");
@@ -241,7 +241,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				data_leg_title = hist.GetTitle()
 				if len(titles) > 0:
 					hist.SetTitle(titles[hist_index])
-				hist.GetYaxis().SetTitleOffset(TOffset+0.5)
+				hist.GetYaxis().SetTitleOffset(TOffset+0.3)
 				hist.GetXaxis().SetTitleOffset(1.2)
 				hist.GetYaxis().SetTitle('Events / bin')
 				hist.GetYaxis().SetLabelSize(mLS)
@@ -371,7 +371,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
-				legends[hist_index].SetTextSize(0.04)
+				legends[hist_index].SetTextSize(0.035)
 				legends[hist_index].SetFillColor(-1)
 				
 				for entry in legends_list[hist_index][::-1]:
@@ -419,7 +419,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 
-				ratio_sys_unc.GetYaxis().SetRangeUser(ratio_range[0], ratio_range[1])
+				# ratio_sys_unc.GetYaxis().SetRangeUser(ratio_range[0], ratio_range[1])
+				ratio_sys_unc.GetYaxis().SetRangeUser(0.5, 1.5)
 				ratio_sys_unc.GetYaxis().SetTitleOffset(lTOffset+0.111)
 				ratio_sys_unc.GetYaxis().SetTickLength(0.04)
 							 
@@ -672,8 +673,8 @@ def plot_combined():
 			#mbin_low = m_bins[options.mbin]
 			#mbin_high = m_bins[options.mbin+1]
 
-			if(options.chan=="mumu"): title = "#mu#mu channel, %s_{#mu%s} mass = %i GeV" % (("V" if options.vec else "S"),options.q,mLQ)
-			if(options.chan=="ee"): title = "ee channel, %s_{e%s} mass = %i GeV" % (("V" if options.vec else "S"),options.q,mLQ)
+			if(options.chan=="mumu"): title = "#mu#mu channel, %s_{#mu%s} mass = %.1f TeV" % (("V" if options.vec else "S"),options.q,mLQ/1000.)
+			if(options.chan=="ee"): title = "ee channel, %s_{e%s} mass = %.1f TeV" % (("V" if options.vec else "S"),options.q,mLQ/1000.)
 			#if(idx == 2): title = "Electrons Samesign %i  GeV" % (year)
 			if(options.gen_level): title = "Channel: Electrons, SM only, y_eu = %.1f" %(yLQ) 
 			#if(idx == 2): name_list = h_ss_names
@@ -799,7 +800,7 @@ def plot_combined():
 	del color_list[LQ_index]
 			
 	makeCan("Postfit_%s%s"%(options.q,options.chan[0]), options.output, [h_data_pois], signals = signals, bkglist=[hist_list], totlist=[h_tot_dir], colors = color_list, 
-		signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
+		signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template bins" ,year = -1, datastyle=datastyle, ratio_range = ratio_range, NDiv = NDiv, prelim = False, logy=True) 
 
 def plot_yearly():
 	signals, signalNames = [],[]
@@ -903,7 +904,7 @@ def plot_yearly():
 			del label_list[LQ_index]
 			del color_list[LQ_index]
 		
-			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, signals = signals, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template Bins" ,year = year, datastyle=datastyle, logy=True) 
+			makeCan(dir_[:-1], options.output, [h_data], bkglist=[hist_list], totlist=[h_tot], colors = color_list, signals = signals, signalNames = signalNames, bkgNames = label_list, titles = [title], xtitle = "Template bins" ,year = year, datastyle=datastyle, logy=True) 
 
 
 
@@ -954,7 +955,7 @@ label_color_map['db'] = ("WW + WZ + ZZ",  diboson_co)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_co)
 label_color_map['gam'] = ("#gamma#gamma ", gamgam_co)
 label_color_map['qcd'] = ("W+Jets + QCD", qcd_co)
-label_color_map['LQ'] = ("%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), LQ_co)
+label_color_map['LQ'] = ("-%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), LQ_co)
 label_color_map['alpha'] = ("alpha", kGreen)
 label_color_map['fmn'] = ("DY minus", kBlue)
 label_color_map['fpl'] = ("DY plus", kRed)
