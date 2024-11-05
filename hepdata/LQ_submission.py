@@ -22,7 +22,7 @@ for vec in [False,True]:
             pf[i].keywords["observables"] = ["D3N/DM/DYRAP/DTHETA"]
             pf[i].keywords["cmenergies"] = [13000]
             pf[i].keywords["reactions"] = ["P P --> LQ* --> LEPTON+ LEPTON-","%sQ %sQBAR --> LQ* --> %s+ %s-"%(q.upper(),q.upper(),chan.upper(),chan.upper())]
-            data = np.loadtxt("hepdata_inputs/%s_%s%s_postfit_table.txt"%(chan+chan,q,("_vec" if vec else "")), skiprows=1)
+            data = np.loadtxt("hepdata_inputs/%s_%s%s_postfit_table.txt"%(chan+chan,q,("_vec" if vec else "")))
             # df[['Bin index','Background','Background err','LQ template yield','LQ template yield err','Observed data','Observed data err']]
             bin = Variable("Bin index", is_independent=True, is_binned=True, units="")
             bin.values = [(i,i+1) for i in range(1,61)]
@@ -55,7 +55,7 @@ for vec in [False,True]:
             lim_df.sort_index(ascending=True, inplace=True)
 
             lim = Table("Figure %i (%s)"%((j+11),("left" if i%2==0 else "right")))
-            lim.description = "Upper limits at $95\%%$ CL on the LQ-fermion couplings, $|%s_{%s %s}|$, versus $m_{LQ}$ for %s LQs coupled to %s." %(("g" if vec else "y"), ("e" if chan=='e' else '\mu'), q, ("vector" if vec else "scalar"), ("electrons" if chan=='e' else "muons")) 
+            lim.description = "Upper limits at $95\%%$ CL on the LQ-fermion couplings, $|%s_{%s %s}|$, versus $%s_{%s %s}$ mass for %s LQs coupled to %s." %(("g" if vec else "y"), ("e" if chan=='e' else '\mu'), q, ("V" if vec else "S"), ("e" if chan=='e' else '\mu'), q, ("vector" if vec else "scalar"), ("electrons" if chan=='e' else "muons")) 
             lim.location = "Data from Figure %i (%s)"%((j+11),("left" if i%2==0 else "right"))
             lim.keywords["observables"] = ["CLS"]
             lim.keywords["cmenergies"] = [13000]
@@ -87,58 +87,63 @@ for vec in [False,True]:
             if i%2 != 0: j+=1
             i+=1
 
-acc = Table("Acceptance x Efficiency fractions for the dielectron channel")
-acc.description = "Acceptance x efficiency for the dielectron channel for 2016, 2017 and 2018. Electrons are required to have opposite charge, and one of two electrons in the event must pass the high level trigger with $p_T > 27/35/32$ GeV for each year. We apply an offline selection of $p_T > 40$ GeV for the leading electron, and $p_T > 15$ GeV for the subleading electron. We require that both electrons have $|\eta| < 1.44$ or $1.56 <|\eta| < 2.5$ and $m_{\ell\ell} > 500$ GeV. Additionally, the electrons are subject to the tight working points of cut-based identification and isolation. Distributions of events are binned in the generator level dilepton mass, rapidity, and cosine theta."
+# acc = Table("Acceptance x Efficiency fractions for the dielectron channel")
+# acc.description = "Acceptance x efficiency for the dielectron channel for 2016, 2017 and 2018. Electrons are required to have opposite charge, and one of two electrons in the event must pass the high level trigger with $p_T > 27/35/32$ GeV for each year. We apply an offline selection of $p_T > 40$ GeV for the leading electron, and $p_T > 15$ GeV for the subleading electron. We require that both electrons have $|\eta| < 1.44$ or $1.56 <|\eta| < 2.5$ and $m_{\ell\ell} > 500$ GeV. Additionally, the electrons are subject to the tight working points of cut-based identification and isolation. Distributions of events are binned in the generator level dilepton mass, rapidity, and cosine theta."
 
-acc.keywords["observables"] = ["ACC, EFF"]
-acc.keywords["cmenergies"] = [13000]
-acc.keywords["reactions"] = ["P P --> LQ* --> E+ E-"]
+# acc.keywords["observables"] = ["ACC, EFF"]
+# acc.keywords["cmenergies"] = [13000]
+# acc.keywords["reactions"] = ["P P --> LQ* --> E+ E-"]
            
-data = np.loadtxt("hepdata_inputs/elel_acc_eff_y16.txt")
-bin = Variable("Bin index", is_independent=True, is_binned=True, units="")
-bin.values = [(i,i+1) for i in range(1,61)]
-acc_16 = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2016)", is_independent=False, is_binned=False, units="")
-acc_16.values = data[:,4]
-data = np.loadtxt("hepdata_inputs/elel_acc_eff_y17.txt")
-acc_17 = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2017)", is_independent=False, is_binned=False, units="")
-acc_17.values = data[:,4]
-data = np.loadtxt("hepdata_inputs/elel_acc_eff_y18.txt")
-acc_18 = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2018)", is_independent=False, is_binned=False, units="")
-acc_18.values = data[:,4]
+# data = np.loadtxt("hepdata_inputs/elel_acc_eff_y16.txt")
+# bin = Variable("Bin index", is_independent=True, is_binned=True, units="")
+# bin.values = [(i,i+1) for i in range(1,61)]
+# acc_16 = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2016)", is_independent=False, is_binned=False, units="")
+# acc_16.values = data[:,4]
+# data = np.loadtxt("hepdata_inputs/elel_acc_eff_y17.txt")
+# acc_17 = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2017)", is_independent=False, is_binned=False, units="")
+# acc_17.values = data[:,4]
+# data = np.loadtxt("hepdata_inputs/elel_acc_eff_y18.txt")
+# acc_18 = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2018)", is_independent=False, is_binned=False, units="")
+# acc_18.values = data[:,4]
 
-acc.add_variable(bin)
-acc.add_variable(acc_16)
-acc.add_variable(acc_17)
-acc.add_variable(acc_18)
+# acc.add_variable(bin)
+# acc.add_variable(acc_16)
+# acc.add_variable(acc_17)
+# acc.add_variable(acc_18)
 
-sub.add_table(acc)    
+# sub.add_table(acc)    
 
-acc_mu = Table("Acceptance x Efficiency fractions for the dimuon channel")
-acc_mu.description = "Acceptance x efficiency for the dimuon channel for 2016, 2017 and 2018. Muon are required to have opposite charge, and one of two muons in the event must pass the high level trigger with $p_T > 24/27/24$ GeV for each year. We apply an offline selection of $p_T > 40$ GeV for the leading muon, and $p_T > 15$ GeV for the subleading muon. We require that both muon have $|\eta| < 2.4$ and $m_{\ell\ell} > 500$ GeV. Additionally, the muons are subject to the tight working points of cut-based identification and isolation. Distributions of events are binned in the generator level dilepton mass, rapidity, and cosine theta."
+# acc_mu = Table("Acceptance x Efficiency fractions for the dimuon channel")
+# acc_mu.description = "Acceptance x efficiency for the dimuon channel for 2016, 2017 and 2018. Muon are required to have opposite charge, and one of two muons in the event must pass the high level trigger with $p_T > 24/27/24$ GeV for each year. We apply an offline selection of $p_T > 40$ GeV for the leading muon, and $p_T > 15$ GeV for the subleading muon. We require that both muon have $|\eta| < 2.4$ and $m_{\ell\ell} > 500$ GeV. Additionally, the muons are subject to the tight working points of cut-based identification and isolation, and the angle between the muons is required to be $\pi - 0.005$. Distributions of events are binned in the generator level dilepton mass, rapidity, and cosine theta."
 
-acc_mu.keywords["observables"] = ["ACC, EFF"]
-acc_mu.keywords["cmenergies"] = [13000]
-acc_mu.keywords["reactions"] = ["P P --> LQ* --> MU+ MU-"]
+# acc_mu.keywords["observables"] = ["ACC, EFF"]
+# acc_mu.keywords["cmenergies"] = [13000]
+# acc_mu.keywords["reactions"] = ["P P --> LQ* --> MU+ MU-"]
            
-data = np.loadtxt("hepdata_inputs/mumu_acc_eff_y16.txt")
-bin_mu = Variable("Bin index", is_independent=True, is_binned=True, units="")
-bin_mu.values = [(i,i+1) for i in range(1,61)]
-acc_16_mu = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2016)", is_independent=False, is_binned=False, units="")
-acc_16_mu.values = data[:,4]
-data = np.loadtxt("hepdata_inputs/mumu_acc_eff_y17.txt")
-acc_17_mu = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2017)", is_independent=False, is_binned=False, units="")
-acc_17_mu.values = data[:,4]
-data = np.loadtxt("hepdata_inputs/mumu_acc_eff_y18.txt")
-acc_18_mu = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2018)", is_independent=False, is_binned=False, units="")
-acc_18_mu.values = data[:,4]
+# data = np.loadtxt("hepdata_inputs/mumu_acc_eff_y16.txt")
+# bin_mu = Variable("Bin index", is_independent=True, is_binned=True, units="")
+# bin_mu.values = [(i,i+1) for i in range(1,61)]
+# acc_16_mu = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2016)", is_independent=False, is_binned=False, units="")
+# acc_16_mu.values = data[:,4]
+# data = np.loadtxt("hepdata_inputs/mumu_acc_eff_y17.txt")
+# acc_17_mu = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2017)", is_independent=False, is_binned=False, units="")
+# acc_17_mu.values = data[:,4]
+# data = np.loadtxt("hepdata_inputs/mumu_acc_eff_y18.txt")
+# acc_18_mu = Variable("Acc. x eff. fraction after $p_T$ and $\eta$ cuts (2018)", is_independent=False, is_binned=False, units="")
+# acc_18_mu.values = data[:,4]
 
-acc_mu.add_variable(bin_mu)
-acc_mu.add_variable(acc_16_mu)
-acc_mu.add_variable(acc_17_mu)
-acc_mu.add_variable(acc_18_mu)
+# acc_mu.add_variable(bin_mu)
+# acc_mu.add_variable(acc_16_mu)
+# acc_mu.add_variable(acc_17_mu)
+# acc_mu.add_variable(acc_18_mu)
 
-sub.add_table(acc_mu)     
+# sub.add_table(acc_mu)     
 
+# 2017-18_dyellell012j_5f_NLO_FXFX_M500to700_run_card.dat
+
+sub.add_additional_resource("MG5 and Pythia settings for DY to LL + jets","hepdata_inputs/DYtoLL_cards.txt", copy_file=True)
+sub.add_additional_resource("MG5 card for DY to LL + jets (2016)","hepdata_inputs/2016_dyellell012j_5f_NLO_FXFX_M500to700_run_card.dat", copy_file=True)
+sub.add_additional_resource("MG5 card for DY to LL + jets (2017-18)","hepdata_inputs/2017-18_dyellell012j_5f_NLO_FXFX_M500to700_run_card.dat", copy_file=True)
 
 outdir="hepdata_outputs/"
 sub.create_files(outdir)

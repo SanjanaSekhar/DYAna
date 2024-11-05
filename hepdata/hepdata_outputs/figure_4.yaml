@@ -238,6 +238,10 @@ dependent_variables:
     - label: ''
       symerror: 0.91548
     value: 23.308
+  - errors:
+    - label: ''
+      symerror: 1.4949
+    value: 50.47
 - header:
     name: LQ template yield
   values:
@@ -477,6 +481,10 @@ dependent_variables:
     - label: ''
       symerror: 0.062602
     value: -0.019221
+  - errors:
+    - label: ''
+      symerror: 0.061056
+    value: -0.020183
 - header:
     name: Observed data
   values:
@@ -716,6 +724,10 @@ dependent_variables:
     - label: ''
       symerror: 5.1962
     value: 27.0
+  - errors:
+    - label: ''
+      symerror: 6.5574
+    value: 43.0
 independent_variables:
 - header:
     name: Bin index
@@ -838,3 +850,5 @@ independent_variables:
     low: 58
   - high: 60
     low: 59
+  - high: 61
+    low: 60

@@ -4,6 +4,12 @@ additional_resources:
   location: https://doi.org/10.5281/zenodo.1217998
 - description: Webpage with all figures and tables
   location: https://cms-results.web.cern.ch/cms-results/public-results/preliminary-results/EXO-22-013/
+- description: MG5 and Pythia settings for DY to LL + jets
+  location: DYtoLL_cards.txt
+- description: MG5 card for DY to LL + jets (2016)
+  location: 2016_dyellell012j_5f_NLO_FXFX_M500to700_run_card.dat
+- description: MG5 card for DY to LL + jets (2017-18)
+  location: 2017-18_dyellell012j_5f_NLO_FXFX_M500to700_run_card.dat
 comment: '  A search for $t$-channel exchange of leptoquarks (LQs) is performed using
   proton-proton collision data collected at $\sqrt{s}=13$ TeV with the CMS detector
   at the CERN LHC. The data correspond to an integrated luminosity of $138\text{ fb}^{-1}$.
@@ -45,7 +51,7 @@ name: Figure 3
 ---
 data_file: figure_11_(left).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{e u}|$, versus
-  $m_{LQ}$ for scalar LQs coupled to electrons.
+  $S_{e u}$ mass for scalar LQs coupled to electrons.
 keywords:
 - name: observables
   values:
@@ -81,7 +87,7 @@ name: Figure 4
 ---
 data_file: figure_11_(right).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{e d}|$, versus
-  $m_{LQ}$ for scalar LQs coupled to electrons.
+  $S_{e d}$ mass for scalar LQs coupled to electrons.
 keywords:
 - name: observables
   values:
@@ -117,7 +123,7 @@ name: Figure 5
 ---
 data_file: figure_12_(left).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{\mu u}|$,
-  versus $m_{LQ}$ for scalar LQs coupled to muons.
+  versus $S_{\mu u}$ mass for scalar LQs coupled to muons.
 keywords:
 - name: observables
   values:
@@ -153,7 +159,7 @@ name: Figure 6
 ---
 data_file: figure_12_(right).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|y_{\mu d}|$,
-  versus $m_{LQ}$ for scalar LQs coupled to muons.
+  versus $S_{\mu d}$ mass for scalar LQs coupled to muons.
 keywords:
 - name: observables
   values:
@@ -189,7 +195,7 @@ name: Figure 7
 ---
 data_file: figure_13_(left).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{e u}|$, versus
-  $m_{LQ}$ for vector LQs coupled to electrons.
+  $V_{e u}$ mass for vector LQs coupled to electrons.
 keywords:
 - name: observables
   values:
@@ -225,7 +231,7 @@ name: Figure 8
 ---
 data_file: figure_13_(right).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{e d}|$, versus
-  $m_{LQ}$ for vector LQs coupled to electrons.
+  $V_{e d}$ mass for vector LQs coupled to electrons.
 keywords:
 - name: observables
   values:
@@ -261,7 +267,7 @@ name: Figure 9
 ---
 data_file: figure_14_(left).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{\mu u}|$,
-  versus $m_{LQ}$ for vector LQs coupled to muons.
+  versus $V_{\mu u}$ mass for vector LQs coupled to muons.
 keywords:
 - name: observables
   values:
@@ -297,7 +303,7 @@ name: Figure 10
 ---
 data_file: figure_14_(right).yaml
 description: Upper limits at $95\%$ CL on the LQ-fermion couplings, $|g_{\mu d}|$,
-  versus $m_{LQ}$ for vector LQs coupled to muons.
+  versus $V_{\mu d}$ mass for vector LQs coupled to muons.
 keywords:
 - name: observables
   values:

@@ -1,0 +1,29 @@
+MadGraph cards and Pythia settings for DY to $\ell\ell$ can be found here:
+
+2016:
+
+The MadGraph card has been uploaded as a separate file. The card corresponds to event generation for the dilepton mass bin from 500-700 GeV. For the other mass bins, the following parameter value can be changed:
+
+"700 = mll_sf ! Min inv. mass of all opp. sign same-flavor lepton pairs"
+
+2017/2018:
+
+The MadGraph card has been uploaded as a separate file. The card corresponds to event generation for the dilepton mass bin from 500-700 GeV. For the other mass bins, the following parameter value can be changed:
+
+"700 = mll_sf ! Min inv. mass of all opp. sign same-flavor lepton pairs"
+
+Pythia settings:
+
+JetMatching:setMad = off
+JetMatching:scheme = 1
+JetMatching:merge = on
+JetMatching:jetAlgorithm = 2
+JetMatching:etaJetMax = 999.
+JetMatching:coneRadius = 1.
+JetMatching:slowJetPower = 1
+JetMatching:qCut = 40. #this is the actual merging scale
+JetMatching:doFxFx = on
+JetMatching:qCutME = 10.#this must match the ptj cut in the lhe generation step
+JetMatching:nQmatch = 5 #4 corresponds to 4-flavour scheme (no matching of b-quarks), 5 for 5-flavour scheme
+JetMatching:nJetMax = 2 #number of partons in born matrix element for highest multiplicity
+TimeShower:mMaxGamma = 4.0
