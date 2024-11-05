@@ -360,7 +360,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextColor(kRed+1);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
-				latext2.SetTextSize(0.03)
+				latext2.SetTextSize(0.035)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				#text_center_bins = [18,54,90]
@@ -456,7 +456,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
-					l = TLine(line_x, ratio_range[0], line_x, ratio_range[1])
+					#l = TLine(line_x, ratio_range[0], line_x, ratio_range[1])
+					l = TLine(line_x, 0.5, line_x, 1.5)
 					l.SetLineColor(ROOT.kBlack)
 					l.SetLineStyle(lstyle)
 					l.SetLineWidth(lwidth)
