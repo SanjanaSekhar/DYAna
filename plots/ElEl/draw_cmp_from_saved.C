@@ -343,7 +343,7 @@ void draw_cmp_from_saved(){
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
-    leg1->SetHeader("Dielectron signal region");
+    leg1->SetHeader("Dielectron SR");
 
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
     TLegend *leg3 = (TLegend *) leg1->Clone("leg3");
@@ -354,36 +354,32 @@ void draw_cmp_from_saved(){
      leg2->AddEntry(data_m, "Data", "pe");
      leg3->AddEntry(data_m, "Data", "pe");
 
-    leg1->AddEntry(dy_m, "DY ", "f");
-    leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
-    leg1->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    //leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
-    leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg1->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}=2.0)");
-    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}=1.0)");
+leg1->AddEntry(dy_m, "DY ", "f");
+leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+    leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg1->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)");
+    leg1->AddEntry(QCD_m, "W+jets + QCD", "f");
+    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)");
     leg1->SetTextSize(0.05);
 
 
-    leg2->AddEntry(dy_m, "DY ", "f");
+   leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
+leg2->AddEntry(dy_m, "DY ", "f");
+leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
-    leg2->AddEntry(QCD_m, "QCD and W+jets", "f");
-    leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    //leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
-    leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg2->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}=2.0)");
-    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}=1.0)");
+    leg2->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)");
+    leg2->AddEntry(QCD_m, "W+jets + QCD", "f");
+    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)");
     leg2->SetTextSize(0.05);
 
-
-    leg3->AddEntry(dy_m, "DY ", "f");
-    leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
-    leg3->AddEntry(QCD_m, "QCD and W+jets", "f");
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
-    //leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #bf{ee}", "f");
-    leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
-    leg3->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}=2.0)");
-    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}=1.0)");
+leg3->AddEntry(dy_m, "DY ", "f");
+leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+    leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
+    leg3->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)");
+    leg3->AddEntry(QCD_m, "W+jets + QCD", "f");
+    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)");
     leg3->SetTextSize(0.05);
 
     leg1->SetX1NDC(0.7);
@@ -424,7 +420,7 @@ void draw_cmp_from_saved(){
     //    hmax *= 0.75;
 
     float hmin = 0.001;
-    sprintf(y_ax_label, "Events / GeV");
+    sprintf(y_ax_label, "<Events / GeV>");
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     //CMS_lumi(p_m, year, 11 );
     CMS_lumi(c_m, year, 11 );

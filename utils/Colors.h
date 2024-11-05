@@ -38,7 +38,7 @@ tautau_co = TColor.GetColor("#92dadd");
 
 */
 
-Color_t LQ_color = TColor::GetColor("#ffa90e");
+Color_t LQ_color = TColor::GetColor("#fff600");
 Color_t LQvec_color = TColor::GetColor("#3f90da");
 Color_t DY_color = TColor::GetColor("#832db6");
 Color_t ttbar_color = TColor::GetColor("#b9ac70");
