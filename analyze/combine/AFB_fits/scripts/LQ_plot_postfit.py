@@ -241,7 +241,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				data_leg_title = hist.GetTitle()
 				if len(titles) > 0:
 					hist.SetTitle(titles[hist_index])
-				hist.GetYaxis().SetTitleOffset(TOffset+0.3)
+				hist.GetYaxis().SetTitleOffset(TOffset+0.2)
 				hist.GetXaxis().SetTitleOffset(1.2)
 				hist.GetYaxis().SetTitle('Events / bin')
 				hist.GetYaxis().SetLabelSize(mLS)
@@ -360,7 +360,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2.SetTextColor(kRed+1);
                                 latext2.SetTextAlign(22); #center
                                 latext2.SetTextFont(42);
-				latext2.SetTextSize(0.04)
+				latext2.SetTextSize(0.03)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				#text_center_bins = [18,54,90]
