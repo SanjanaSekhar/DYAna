@@ -46,7 +46,7 @@ def plotLimits(channel):
     line_sp = ROOT.TGraph(4,x,y)
 
     line_pp = ROOT.TLine(1435,0.,1435,3.05)
-    axis.GetXaxis().SetTitleOffset(1.2)
+    axis.GetYaxis().SetTitleOffset(1)
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('V_{#mu%s} mass (TeV)'%(channel[0]))
@@ -91,7 +91,7 @@ def plotLimits(channel):
 	legend.AddEntry(line_sp,"Ref.[19]","L")
     	legend.AddEntry(line_pp,"Ref.[20]","L")
     '''
-    legend.SetHeader("95\% CL upper limits")
+    legend.SetHeader("95%% CL upper limits")
     legend.SetFillColorAlpha(0,1) 
     legend.Draw()
      
