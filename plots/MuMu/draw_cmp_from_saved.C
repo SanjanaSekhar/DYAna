@@ -365,7 +365,7 @@ leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
 
    leg2->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
 leg2->AddEntry(dy_m, "DY ", "f");
-leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
     leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg2->AddEntry(LQu_m, "2.5 TeV S_{#muu} (y_{#muu}= 2.0)");
     leg2->AddEntry(QCD_m, "W+jets + QCD", "f");
@@ -374,7 +374,7 @@ leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
 
    leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
 leg3->AddEntry(dy_m, "DY ", "f");
-leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
     leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg3->AddEntry(LQu_m, "2.5 TeV S_{#muu} (y_{#muu}= 2.0)");
     leg3->AddEntry(QCD_m, "W+jets + QCD", "f");
