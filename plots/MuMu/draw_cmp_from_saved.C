@@ -355,7 +355,7 @@ dy_cost->SetLineColor(DY_color);
 
     leg1->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
 leg1->AddEntry(dy_m, "DY ", "f");
-leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
+leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
     leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
     leg1->AddEntry(LQu_m, "2.5 TeV S_{#muu} (y_{#muu}= 2.0)");
     leg1->AddEntry(QCD_m, "W+jets + QCD", "f");
