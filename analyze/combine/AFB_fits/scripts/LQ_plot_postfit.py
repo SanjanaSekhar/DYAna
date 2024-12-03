@@ -52,7 +52,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 	if len(histlist) == 1:
-		width = 2900
+		width = 3100
 		height = 3000
 		padx = 1
 		pady = 1
@@ -175,11 +175,11 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				# Set margins and make these two pads primitives of the division, thisPad
 				mains[hist_index].SetBottomMargin(0.04)
-				mains[hist_index].SetLeftMargin(0.2)
+				mains[hist_index].SetLeftMargin(0.1)
 				mains[hist_index].SetRightMargin(0.05)
 				mains[hist_index].SetTopMargin(0.08)
 
-				subs[hist_index].SetLeftMargin(0.2)
+				subs[hist_index].SetLeftMargin(0.1)
 				subs[hist_index].SetRightMargin(0.05)
 				subs[hist_index].SetTopMargin(0.01)
 				subs[hist_index].SetBottomMargin(0.5)
