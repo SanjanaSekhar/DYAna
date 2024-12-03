@@ -182,7 +182,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				subs[hist_index].SetLeftMargin(0.1)
 				subs[hist_index].SetRightMargin(0.05)
 				subs[hist_index].SetTopMargin(0.01)
-				subs[hist_index].SetBottomMargin(0.5)
+				subs[hist_index].SetBottomMargin(0.3)
 				mains[hist_index].SetFillColorAlpha(0,1)
 				subs[hist_index].SetFillColorAlpha(0,1)
 				mains[hist_index].SetLineColorAlpha(0,1)
