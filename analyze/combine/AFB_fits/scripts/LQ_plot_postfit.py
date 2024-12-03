@@ -52,9 +52,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 
 	if len(histlist) == 1:
-		width = 4000
-		height = 4000
-		padx = 1
+		width = 32000
+		height = 3000
+		padx = 2
 		pady = 1
 	elif len(histlist) == 2:
 		width = 2000
@@ -951,12 +951,12 @@ scale = 10
 
 label_color_map = dict()
 label_color_map['dy'] = ("DY", DY_co)
-label_color_map['top'] = ("t#bar{t} + Single t", ttbar_co)
+label_color_map['top'] = ("t#bar{t} + single t", ttbar_co)
 label_color_map['db'] = ("WW + WZ + ZZ",  diboson_co)
 label_color_map['tautau'] = ("DY #tau#tau Bkg.", tautau_co)
-label_color_map['gam'] = ("#gamma#gamma ", gamgam_co)
-label_color_map['qcd'] = ("W+Jets + QCD", qcd_co)
-label_color_map['LQ'] = ("-%i * %s_{%s} Signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), LQ_co)
+label_color_map['gam'] = ("#gamma#gamma #to %s " %("#mu#mu" if options.chan=="mumu" else "ee"), gamgam_co)
+label_color_map['qcd'] = ("W+jets + QCD", qcd_co)
+label_color_map['LQ'] = ("-%i * %s_{%s} signal"%(scale,"V" if options.vec else "S", "#mu"+options.q if options.chan=="mumu" else "e"+options.q), LQ_co)
 label_color_map['alpha'] = ("alpha", kGreen)
 label_color_map['fmn'] = ("DY minus", kBlue)
 label_color_map['fpl'] = ("DY plus", kRed)
