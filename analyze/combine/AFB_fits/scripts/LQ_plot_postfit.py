@@ -336,6 +336,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				#text labels
 				latext = TLatex()
+				latext.SetTextFont(42)
 				latext.SetNDC()
 				latext.SetTextColor(kBlack)
 				latext.SetTextAlign(22) #center
@@ -356,6 +357,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
+				latext2.SetTextFont(42)
                                 latext2.SetNDC()
                                 latext2.SetTextColor(kRed+1)
                                 latext2.SetTextAlign(22) #center
