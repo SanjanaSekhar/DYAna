@@ -11,7 +11,7 @@ import CMS_lumi, tdrstyle
 gStyle.SetOptStat(0)
 gROOT.SetBatch(1)
 
-# colors
+gStyle.SetTextFont(42)
 
 DY_c = 2011;
 ttbar_c = 2022;
