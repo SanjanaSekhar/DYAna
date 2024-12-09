@@ -344,6 +344,7 @@ dy_cost->SetLineColor(DY_color);
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
+    leg1->SetTextFont(42);
     leg1->SetHeader("Dimuon SR");
 
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
@@ -441,7 +442,7 @@ leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow #mu#mu", "f");
     // if(year == 2018)
     //     hmax *= 0.4;
 
-    sprintf(y_ax_label, "<Events / GeV>");
+    sprintf(y_ax_label, "#LTEvents / GeV#GT");
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{#mu#mu} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     CMS_lumi(c_m, year, 11 );
     p_m->cd();

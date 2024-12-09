@@ -1,9 +1,10 @@
 import numpy as np 
 import os, sys
 mLQ = 2500
-final = "\hline"
+final = ""
 for vec in [False, True]:
-    final = np.vstack((final,"Channel & $%s$ & Statistical unc. & Systematic unc. & Total unc.\\\\"%('\glq^2' if vec else '\ylq^2')))
+    #final = np.vstack((final,"Channel & $%s$ & Statistical unc. & Systematic unc. & Total unc.\\\\"%('\glq^2' if vec else '\ylq^2')))
+    final = np.vstack((final,"Channel  %s  Statistical unc.  Systematic unc.  Total unc."%('glq^2' if vec else 'ylq^2')))
     for chan in ["ee","mumu"]:
         for q in ["u","d"]:
 
@@ -24,11 +25,15 @@ for vec in [False, True]:
             '''
             \PVmd & 0.01 $\pm$ 0.05  & 1.61 $\pm$ 0.06 & 0.14 $\pm$ 0.05 (stat) $\pm$ 0.09 (syst) \\
             '''
-            result_str = "\P%s%s%s & $%0.2f$ & $%0.2f/+%0.2f$ & $-%0.2f/+%0.2f$ & $%0.2f/+%0.2f$\\\\" %(('V' if vec else 'S'), chan[0], q,
+            # result_str = "\P%s%s%s & $%0.2f$ & $%0.2f/+%0.2f$ & $-%0.2f/+%0.2f$ & $%0.2f/+%0.2f$\\\\" %(('V' if vec else 'S'), chan[0], q,
+            #                     results[2][0], results_stat[2][1], results_stat[2][2],
+            #                     sys_unc[1], sys_unc[2],
+            #                     results[2][1], results[2][2])
+            result_str = "%s%s%s  %0.3f  %0.3f/+%0.3f  -%0.3f/+%0.3f  %0.3f/+%0.3f" %(('V' if vec else 'S'), chan[0], q,
                                 results[2][0], results_stat[2][1], results_stat[2][2],
                                 sys_unc[1], sys_unc[2],
                                 results[2][1], results[2][2])
             final = np.vstack((final, result_str))
 
-
+print(final)
 np.savetxt("unblinded_results.txt",final, delimiter=" ", fmt="%s")

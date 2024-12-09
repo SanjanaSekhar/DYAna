@@ -343,6 +343,7 @@ void draw_cmp_from_saved(){
     //TLegend *leg1 = new TLegend(x_center - x_size/2, y_center - y_size/2, x_center + x_size/2, y_center + y_size/2);
     TLegend *leg1 = new TLegend(x_size, y_size);
     leg1->SetNColumns(2);
+    leg1->SetTextFont(42);
     leg1->SetHeader("Dielectron SR");
 
     TLegend *leg2 = (TLegend *) leg1->Clone("leg2");
@@ -420,7 +421,7 @@ leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     //    hmax *= 0.75;
 
     float hmin = 0.001;
-    sprintf(y_ax_label, "<Events / GeV>");
+    sprintf(y_ax_label, "#LTEvents / GeV#GT");
     std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     //CMS_lumi(p_m, year, 11 );
     CMS_lumi(c_m, year, 11 );

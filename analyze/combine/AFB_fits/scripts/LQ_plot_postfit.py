@@ -336,10 +336,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 
 				#text labels
 				latext = TLatex()
-				latext.SetNDC();
-				latext.SetTextColor(kBlack);
+				latext.SetNDC()
+				latext.SetTextColor(kBlack)
 				latext.SetTextAlign(22); #center
-				latext.SetTextFont(42);
+				latext.SetTextFont(42)
 				if(mbin <= 5):
 					latext.SetTextSize(0.050);    
 				else:
@@ -356,10 +356,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				# mass bin labels
 				#text labels
                                 latext2 = TLatex()
-                                latext2.SetNDC();
-                                latext2.SetTextColor(kRed+1);
+                                latext2.SetNDC()
+                                latext2.SetTextColor(kRed+1)
                                 latext2.SetTextAlign(22); #center
-                                latext2.SetTextFont(42);
+                                latext2.SetTextFont(42)
 				latext2.SetTextSize(0.035)
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
@@ -372,6 +372,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
 				legends[hist_index].SetTextSize(0.035)
+				legends[hist_index].SetTextFont(42)
 				legends[hist_index].SetFillColor(-1)
 				
 				for entry in legends_list[hist_index][::-1]:
