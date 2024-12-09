@@ -290,8 +290,8 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				if(mbin <=5):
 					line_vals = [8, 16, 22]
 					text_center_bins = [4, 12, 19, 25]
-					text_strs = ["#bf{|y|} #splitline{#bf{ #epsilon [0,}}{#bf{ 0.6]}}", "#bf{|y|} #splitline{#bf{ #epsilon [0.6,}}{#bf{ 1.0]}}", "    #bf{|y|} #splitline{#bf{ #epsilon [1.0,}}{#bf{ 1.5]}}", 
-							" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
+					text_strs = ["|y| #splitline{ #epsilon [0,}{ 0.6]}", "|y| #splitline{#epsilon [0.6,}{ 1.0]}", "    |y| #splitline{ #epsilon [1.0,}{ 1.5]}", 
+							" |y|#splitline{ #epsilon [1.5,}{ 2.4]}"]
 				else:
 					line_vals = [8, 14, 20, 28, 34, 40, 48, 54 ]
 					#line_vals = range(6,107,6)
@@ -301,9 +301,9 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					text_strs = [#"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-2.4,}}{#bf{ -1]}}}",
                                  #               "#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-1,}}{#bf{ -0.6]}}}",
                                  #               "#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[-0.6,}}{#bf{ 0]}}}",
-						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[0,}}{#bf{ 0.6]}}}", 
-						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[0.6,}}{#bf{ 1]}}}", 
-						"#splitline{#bf{|y| #epsilon}}{#splitline{#bf{[1,}}{#bf{ 2.4]}}}"]
+						"#splitline{|y| #epsilon}{#splitline{[0,}{ 0.6]}}", 
+						"#splitline{|y| #epsilon}{#splitline{[0.6,}{ 1]}}", 
+						"#splitline{|y| #epsilon}{#splitline{[1,}{ 2.4]}}"]
 						#" #bf{|y|}#splitline{#bf{ #epsilon [1.5,}}{#bf{ 2.4]}}"]
 					text_strs+=(text_strs+text_strs)
 
