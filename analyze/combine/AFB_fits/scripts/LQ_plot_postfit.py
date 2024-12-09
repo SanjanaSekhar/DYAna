@@ -338,16 +338,16 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				latext = TLatex()
 				latext.SetNDC()
 				latext.SetTextColor(kBlack)
-				latext.SetTextAlign(22); #center
+				latext.SetTextAlign(22) #center
 				latext.SetTextFont(42)
 				if(mbin <= 5):
-					latext.SetTextSize(0.050);    
+					latext.SetTextSize(0.050)   
 				else:
-					latext.SetTextSize(0.034);    
+					latext.SetTextSize(0.034)    
 				text_y = 0.43
 
-				l_margin = gPad.GetLeftMargin();
-				r_margin = gPad.GetRightMargin();
+				l_margin = gPad.GetLeftMargin()
+				r_margin = gPad.GetRightMargin()
 				nbins = float(hist.GetNbinsX())
 
 				for idx,text_str in enumerate(text_strs):
@@ -358,7 +358,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                 latext2 = TLatex()
                                 latext2.SetNDC()
                                 latext2.SetTextColor(kRed+1)
-                                latext2.SetTextAlign(22); #center
+                                latext2.SetTextAlign(22) #center
                                 latext2.SetTextFont(42)
 				latext2.SetTextSize(0.035)
 				#line_vals = [20,40,60]
@@ -369,10 +369,11 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
                                         latext2.DrawLatex(text_center, text_y+0.23, text_str)
 
+				legends[hist_index].SetTextFont(42)
 				legends[hist_index].SetHeader(titles[0], "c")
 				legends[hist_index].SetNColumns(2)
 				legends[hist_index].SetTextSize(0.035)
-				legends[hist_index].SetTextFont(42)
+				
 				legends[hist_index].SetFillColor(-1)
 				
 				for entry in legends_list[hist_index][::-1]:
