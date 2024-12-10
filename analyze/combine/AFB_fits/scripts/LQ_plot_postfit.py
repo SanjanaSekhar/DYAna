@@ -366,7 +366,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				#line_vals = [20,40,60]
 				text_center_bins = [10,30,50]
 				#text_center_bins = [18,54,90]
-				text_strs = ["#bf{m_{ll} #epsilon [500, 700] GeV}", "#bf{m_{ll} #epsilon [700, 1000] GeV}", "#bf{m_{ll} > 1000 GeV}"]
+				text_strs = ["m_{ll} #epsilon [500, 700] GeV", "m_{ll} #epsilon [700, 1000] GeV", "m_{ll} > 1000 GeV"]
 				for idx,text_str in enumerate(text_strs):
                                         text_center = l_margin + (text_center_bins[idx] / nbins) * (1.-l_margin - r_margin)
                                         latext2.DrawLatex(text_center, text_y+0.23, text_str)
