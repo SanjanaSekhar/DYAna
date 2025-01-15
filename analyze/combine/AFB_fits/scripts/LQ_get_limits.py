@@ -50,10 +50,12 @@ def plotLimits(channel):
     if is_vec:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('V_{#mu%s} mass (TeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('|g_{#mu%s}|'%(channel[0]))
+		#axis.GetYaxis().SetTitle('|g_{#mu%s}|'%(channel[0]))
+        	axis.GetYaxis().SetTitle('g_{#mu%s}^2'%(channel[0]))
 	else: 
 		axis.GetXaxis().SetTitle('V_{e%s} mass (TeV)'%(channel[0]))
-		axis.GetYaxis().SetTitle('|g_{e%s}|'%(channel[0]))
+		#axis.GetYaxis().SetTitle('|g_{e%s}|'%(channel[0]))
+        	axis.GetYaxis().SetTitle('g_{e%s}^2'%(channel[0]))
     else:
 	if 'm' in channel: 
 		axis.GetXaxis().SetTitle('S_{#mu%s} mass (TeV)'%(channel[0]))
@@ -236,7 +238,7 @@ if options.hadd:
                 #for mass in ['1000.0','1500.0','2000.0','2500.0','3000.0','3500.0','4000.0','4500.0','5000.0','5500.0','6000.0','6500.0','7000.0','7500.0','8000.0','8500.0','9000.0']:
                 for lim in data[str(m)+".0"]:
                     yLQ2 = data[str(m)+".0"][lim]
-                    data[str(m)+".0"][lim] = sqrt(yLQ2)
+                    #data[str(m)+".0"][lim] = sqrt(yLQ2)
 		    print(yLQ2,sqrt(yLQ2))
 	 	limits[str(m/1000.)]=data[str(m)+".0"]
                 f.seek(0)        # <--- should reset file position to the beginning.
