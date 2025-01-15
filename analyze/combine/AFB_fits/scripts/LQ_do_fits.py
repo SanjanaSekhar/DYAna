@@ -23,8 +23,8 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-#for y in [2016,2017,2018]:
-for y in [-1]:
+for y in [2016,2017,2018]:
+#for y in [-1]:
     #for options.chan in ["mumu"]:
     for options.chan in ["ee","mumu"]:
         for options.q in ["u","d"]:
@@ -73,7 +73,7 @@ for y in [-1]:
                 
                 print(" \n \n Starting fit for LQ m = %i\n\n",mLQ)
 		plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
-		'''
+		
                 workspace="workspaces/%s_LQ.root" % (options.chan)
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 
@@ -86,7 +86,7 @@ for y in [-1]:
                 else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
-                '''
+                
 		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
                 if(not statuncs):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
