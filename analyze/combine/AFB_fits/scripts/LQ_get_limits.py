@@ -166,7 +166,7 @@ if channel=='dm' or channel=='sm':
 
 #for mass in [1500]:#,1500,2000,2500,3000,3500,4000,4500,5000,5500,6000,6500,7000,7500,8000,8500,9000]:
 
-workspace ="LQ_cards/%s/%i/workspace_%s_%i.root"%(channel,mass,channel,mass)
+workspace ="LQ_cards/%s/%i/workspace_%s%s_%i.root"%(channel,mass,channel,("_vec" if is_vec else ""),mass)
 #workspace = "workspaces/%s_LQ.root"%channel
 comb_card ="LQ_cards/%s/%i/combined_fit_%s_LQm%i.txt"%(channel,mass,channel,mass) 
 #comb_card ="cards/combined_fit_%s_LQm%i.txt"%(channel,mass)
@@ -260,9 +260,12 @@ else:
     
 
     if not options.HybridNew: 
-
-        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 "%(workspace,mass)) #INCORRECT -> print_and_do("combineTool.py -d %s -M AsymptoticLimits -t -1  -m %i -n .limit --there"%(workspace,mass))
-        print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
+	#for pt in np.linspace(0.2,1.5,30):
+	#	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -s -1 --singlePoint %.4f -n _%s%s_%i"%(workspace,mass,pt,channel,("_vec" if is_vec else ""),mass))
+	#print_and_do("hadd LQ_cards/%s/%i/limits_%s%s_%i.root higgsCombine_%s%s_%i*.AsymptoticLimits.*"%(channel,mass,channel,("_vec" if is_vec else ""),mass,channel,("_vec" if is_vec else ""),mass))
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --freezeParameters elIDBARPT"%(workspace,mass)) 
+        #print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --getLimitFromGrid limits_%s%s_%i.root"%(workspace,mass,channel,("_vec" if is_vec else ""),mass))
+	print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
         print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
         print("\n========= collecting limits for channel %s and making json =========\n"%(channel))
         print_and_do("combineTool.py -M CollectLimits LQ_cards/%s/%i/*.limit.* --use-dirs -o LQ_cards/%s/%i/limits.json"%(channel,mass,channel,mass))

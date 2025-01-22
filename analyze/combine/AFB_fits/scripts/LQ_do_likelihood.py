@@ -8,8 +8,8 @@ plt.ioff()
 
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
-parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
-parser.add_option("--q",  default="combined", type="string", help="What channels to run the fit over (combined, u, or d)")
+parser.add_option("--chan",  default="ee", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
+parser.add_option("--q",  default="u", type="string", help="What channels to run the fit over (combined, u, or d)")
 parser.add_option("--plot",  default=False, action="store_true", help="make plots")
 parser.add_option("--no_sys",  default=False, action="store_true", help="Use fit template without any shape systematics")
 parser.add_option("--fake_data",  default=True, action="store_true", help="Use fit template without any shape systematics and no fakes")
