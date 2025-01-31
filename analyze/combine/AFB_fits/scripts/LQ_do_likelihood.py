@@ -17,7 +17,7 @@ parser.add_option("--vec",  default=False, action="store_true", help="vec")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("--mLQ", default = 2500, type='int', help="LQ mass")
 parser.add_option("--poi", default = 'yLQ2', type='string', help="poi to run the likelihood_scan")
-parser.add_option("--ending", default = 'yLQ2', type='string', help="ending string")
+parser.add_option("--ending", default = '013125', type='string', help="ending string")
 parser.add_option("--statuncs", default = False,  help="freeze allConstrainedNuisances")
 parser.add_option("--noSymMCStats", default = True, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--gen_level",  default=False, action="store_true", help="gen level fits")
@@ -47,7 +47,7 @@ def save_likelihoods(f,label):
     deltaNLL = np.array(deltaNLL)[idx]
     with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan,options.q,("_vec" if is_vec else ""), mLQ, poi[0]), 'w') as f:
         for ylq,dnll in zip(poi_list, deltaNLL):
-            f.write("%f %f\n" %(ylq,2*dnll))
+            f.write("%f %f\n" %(ylq, dnll))
         #print(np.amax(poi_list),np.amin(poi_list))
 
 is_vec = options.vec
@@ -101,15 +101,15 @@ if options.plot:
     for poi in pois:
         for options.year in [2016,2017,2018]:
             # # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
-            # label = "expected_%i_" % options.year
+            label = "expected_%i_" % options.year
             # #label = "%i_" % options.year
             # #is_vec = True
-            # print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
-            #         %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            # label = "%i_" % options.year
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+            label = "%i_" % options.year
             # #is_vec = False
-            # print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
-            #         %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
             label = "%i_" % options.year
             respull = []
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
@@ -131,13 +131,13 @@ if options.plot:
             deltaNLL_exp = respull[:,1].tolist()
 
             #plt.xlim(-1,1)
-            plt.ylim(0,5)          
-            plt.plot(poi_list,deltaNLL,label='observed')
-            plt.plot(poi_list_exp,deltaNLL_exp,label='expected (asimov dataset)')
-            plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[1],linestyle='dashed',c='g')
-            plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[2],linestyle='dashed',c='g')
+                      
+            plt.plot(poi_list,deltaNLL,label='Real data')
+            plt.plot(poi_list_exp,deltaNLL_exp,label='b-only postfit Asimov dataset')
+            plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[1],linestyle='dashed',c='g',label=r'$1\sigma$')
+            plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[3.84],linestyle='dashed',c='r',label=r'$2\sigma$')
             plt.xlabel("%s"%poi)
-            plt.ylabel("-2deltaLL")
+            plt.ylabel(r"2\Delta NLL")
             plt.legend()
             plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV, %s"%(options.chan,options.q,mLQ,(options.year if options.year > 0 else "2016,2017,2018")))
             plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_%s_cmp.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,poi,options.year))
@@ -152,7 +152,7 @@ else:
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
     
     label = "expected_%i_" % options.year
-    combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 30 --squareDistPoiStep  --autoRange 3 --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1" %(workspace, extra_params)
+    combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 50 --squareDistPoiStep  --autoRange 5 --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1 --toysFrequentist" %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
     print_and_do(combine_cmd)
@@ -161,7 +161,7 @@ else:
     save_likelihoods(f,label)
     
     label = "%i_" % options.year
-    combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 30 --squareDistPoiStep  --autoRange 3  --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params)
+    combine_cmd = "combine %s -M MultiDimFit --forceRecreateNLL --algo grid --points 50 --squareDistPoiStep  --autoRange 5  --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
     print_and_do(combine_cmd)

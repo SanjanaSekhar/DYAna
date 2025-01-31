@@ -265,6 +265,8 @@ else:
 	#print_and_do("hadd LQ_cards/%s/%i/limits_%s%s_%i.root higgsCombine_%s%s_%i*.AsymptoticLimits.*"%(channel,mass,channel,("_vec" if is_vec else ""),mass,channel,("_vec" if is_vec else ""),mass))
         print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run observed"%(workspace,mass)) 
         print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run blind"%(workspace,mass))
+	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run expected"%(workspace,mass))
+	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 "%(workspace,mass))
 	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --getLimitFromGrid limits_%s%s_%i.root"%(workspace,mass,channel,("_vec" if is_vec else ""),mass))
 	print_and_do("mkdir LQ_cards/%s/limit_json/"%(channel))
         print_and_do("mkdir LQ_cards/%s/limit_plots/"%(channel))
