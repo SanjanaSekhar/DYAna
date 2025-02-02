@@ -2,9 +2,9 @@
 from LQ_utils import *
 import ROOT
 from ROOT import *
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from array import array
-#plt.ioff()
+plt.ioff()
 
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
@@ -99,8 +99,9 @@ if options.plot:
         poi_list.append("prop_binY18_bin" + str(i))
     '''
     for poi in pois:
-        for options.year in [2016,2017,2018]:
-            # # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
+        for options.year in [-1,2016,2017,2018]:
+            # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
+	    # like_scan_2018_mumu_d_vec_m2500_yLQ2.txt
             label = "expected_%i_" % options.year
             # #label = "%i_" % options.year
             # #is_vec = True
