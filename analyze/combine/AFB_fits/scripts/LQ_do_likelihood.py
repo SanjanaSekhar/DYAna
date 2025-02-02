@@ -131,7 +131,7 @@ if options.plot:
             poi_list_exp = respull[:,0].tolist()
             deltaNLL_exp = respull[:,1].tolist()
 
-            #plt.xlim(-1,1)
+            plt.xlim(-0.5,1.1)
                       
             plt.plot(poi_list,deltaNLL,label='Real data')
             plt.plot(poi_list_exp,deltaNLL_exp,label='b-only postfit Asimov dataset')
