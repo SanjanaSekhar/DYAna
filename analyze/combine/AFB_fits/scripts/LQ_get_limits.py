@@ -263,8 +263,10 @@ else:
 	#for pt in np.linspace(0.2,1.5,30):
 	#	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -s -1 --singlePoint %.4f -n _%s%s_%i"%(workspace,mass,pt,channel,("_vec" if is_vec else ""),mass))
 	#print_and_do("hadd LQ_cards/%s/%i/limits_%s%s_%i.root higgsCombine_%s%s_%i*.AsymptoticLimits.*"%(channel,mass,channel,("_vec" if is_vec else ""),mass,channel,("_vec" if is_vec else ""),mass))
-        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run observed"%(workspace,mass)) 
-        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run blind"%(workspace,mass))
+	if chan=="ee": extra_arg = "--freezeParameters elIDBARPT,nlo_sys"
+	else: extra_arg = "--freezeParameters dy_xsec,nlo_sys"
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run observed %s "%(workspace,mass,extra_arg)) 
+        print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run blind %s "%(workspace,mass,extra_arg))
 	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run expected"%(workspace,mass))
 	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 "%(workspace,mass))
 	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --getLimitFromGrid limits_%s%s_%i.root"%(workspace,mass,channel,("_vec" if is_vec else ""),mass))
