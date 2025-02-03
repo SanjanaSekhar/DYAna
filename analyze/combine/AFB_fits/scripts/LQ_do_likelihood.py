@@ -153,7 +153,7 @@ else:
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
     
     label = "expected_%i_" % options.year
-    combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 60  --autoRange 4 --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1 --toysFrequentist" %(workspace, extra_params)
+    combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 60  --autoRange 10 --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1 --toysFrequentist" %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
     print_and_do(combine_cmd)
@@ -162,7 +162,7 @@ else:
     save_likelihoods(f,label)
     
     label = "%i_" % options.year
-    combine_cmd = "combine %s -M MultiDimFit --forceRecreateNLL --algo grid --points 60  --autoRange 4  --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params)
+    combine_cmd = "combine %s -M MultiDimFit --forceRecreateNLL --algo grid --points 60  --autoRange 10  --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
     print_and_do(combine_cmd)
