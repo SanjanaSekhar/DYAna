@@ -102,16 +102,16 @@ if options.plot:
         for options.year in [-1,2016,2017,2018]:
             # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
 	    # like_scan_2018_mumu_d_vec_m2500_yLQ2.txt
-            label = "expected_%i_" % options.year
+            label = "expected_decor_%i_" % options.year
             # #label = "%i_" % options.year
             # #is_vec = True
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
                      %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            label = "%i_" % options.year
+            label = "decor_%i_" % options.year
             # #is_vec = False
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
                      %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            label = "%i_" % options.year
+            label = "decor_%i_" % options.year
             respull = []
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
                 for line in f.readlines():
@@ -120,7 +120,7 @@ if options.plot:
             respull = np.asarray(respull, dtype=float)
             poi_list = respull[:,0].tolist()
             deltaNLL = respull[:,1].tolist()
-            label = "expected_%i_" % options.year
+            label = "expected_decor_%i_" % options.year
             respull = []
             #is_vec = True
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
@@ -141,7 +141,7 @@ if options.plot:
             plt.ylabel(r"2\Delta NLL")
             plt.legend()
             plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV, %s"%(options.chan,options.q,mLQ,(options.year if options.year > 0 else "2016,2017,2018")))
-            plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_%s_cmp.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,poi,options.year))
+            plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_cmp.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,label))
             plt.close()
 
         
@@ -152,7 +152,7 @@ else:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
     
-    label = "expected_%i_" % options.year
+    label = "expected_decor_%i_" % options.year
     combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 60  --autoRange 10 --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1 --toysFrequentist" %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
@@ -161,7 +161,7 @@ else:
     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi[0],options.chan,options.q),"READ")
     save_likelihoods(f,label)
     
-    label = "%i_" % options.year
+    label = "decor_%i_" % options.year
     combine_cmd = "combine %s -M MultiDimFit --forceRecreateNLL --algo grid --points 60  --autoRange 10  --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
