@@ -131,12 +131,12 @@ if options.plot:
             poi_list_exp = respull[:,0].tolist()
             deltaNLL_exp = respull[:,1].tolist()
 
-            plt.xlim(-0.5,1.1)
+            plt.xlim(-0.4,0.8)
                       
             plt.plot(poi_list,deltaNLL,label='Real data')
             plt.plot(poi_list_exp,deltaNLL_exp,label='b-only postfit Asimov dataset')
             plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[1],linestyle='dashed',c='g',label=r'$1\sigma$')
-            plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[3.84],linestyle='dashed',c='r',label=r'$2\sigma$')
+            plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[2.7],linestyle='dashed',c='r',label=r'$2\sigma$')
             plt.xlabel("%s"%poi)
             plt.ylabel(r"2\Delta NLL")
             plt.legend()

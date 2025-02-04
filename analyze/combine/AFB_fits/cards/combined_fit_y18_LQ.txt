@@ -18,16 +18,16 @@ process                  alpha   fpl     fmn     top      db      gam      qcd		
 process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
+dy_xsec18         lnN     1.03   1.03    1.03      -        -        -       -		1.03     -     	  -		
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	    lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
 
-nlo_sys         lnN      -       -        -      -        -        -       -            -        2.200000    1.600000
+nlo_sys18         lnN      -       -        -      -        -        -       -            -        2.200000    1.600000
 
 elFakes18       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
-xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys #elFakes16 elFakes17 elFakes18
+#xsecs group = dy_xsec db_xsec top_xsec gam_xsec nlo_sys #elFakes16 elFakes17 elFakes18
 
 #Lumi values get set to allow correlations between years, following twiki: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#TabLum
 lumi18           lnN     1.015    1.015     1.015   1.015     1.015   1.015     -			1.015    	1.015	1.015		
@@ -67,12 +67,12 @@ elHLTENDPT18   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 
 elHLTs18 group = elHLTENDPT18  elHLTBARPT18   
 
-elIDBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDBARPT18     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 #elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPT18     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 #elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPT elIDENDPT
+#elIDs group = elIDBARPT elIDENDPT
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
