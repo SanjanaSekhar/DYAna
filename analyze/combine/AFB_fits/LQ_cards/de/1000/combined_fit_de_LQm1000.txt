@@ -49,12 +49,12 @@ REFAC1718               shape        1.0           1.0           1.0           -
 RENORM1718              shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
 alphaS1718              shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
 db_xsec                 lnN          -             -             -             -             1.05          -             -             -             -             -           
-dy_xsec                 lnN          -             -             1.03          -             -             1.03          -             1.03          -             1.03        
+dy_xsec18               lnN          -             -             1.03          -             -             1.03          -             1.03          -             1.03        
 elFakes18               lnN          -             -             -             -             -             -             -             -             1.5           -           
 elHLTBARPT18            shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 elHLTENDPT18            shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-elIDBARPT               shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
-elIDENDPT               shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+elIDBARPT18             shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
+elIDENDPT18             shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 elRECOBARPT             shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 elRECOENDPT             shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 elScaleGain18           shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
@@ -74,7 +74,7 @@ lumi18                  lnN          1.015         1.015         1.015         1
 lumiBC                  lnN          1.002         1.002         1.002         1.002         1.002         1.002         1.002         1.002         -             1.002       
 lumiLS                  lnN          1.002         1.002         1.002         1.002         1.002         1.002         1.002         1.002         -             1.002       
 lumiXY                  lnN          1.02          1.02          1.02          1.02          1.02          1.02          1.02          1.02          -             1.02        
-nlo_sys                 lnN          2.2           1.6           -             -             -             -             -             -             -             -           
+nlo_sys18               lnN          2.2           1.6           -             -             -             -             -             -             -             -           
 pdf1                    shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 pdf10                   shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 pdf11                   shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
@@ -139,12 +139,10 @@ prefire18               shape        1.0           1.0           1.0           1
 top_xsec                lnN          -             -             -             1.05          -             -             -             -             -             -           
 elRECOs group = elRECOBARPT elRECOENDPT
 elScales18 group = elScaleGain18 elScaleSyst elSmear elScaleStat18
-xsecs group = dy_xsec db_xsec gam_xsec nlo_sys top_xsec
 MCStatBin18 group = MCStatBin16y18 MCStatBin30y18 MCStatBin42y18 MCStatBin37y18 MCStatBin24y18 MCStatBin51y18 MCStatBin2y18 MCStatBin11y18 MCStatBin29y18 MCStatBin3y18 MCStatBin10y18 MCStatBin1y18 MCStatBin15y18 MCStatBin43y18 MCStatBin23y18 MCStatBin44y18 MCStatBin55y18 MCStatBin57y18 MCStatBin50y18 MCStatBin22y18 MCStatBin49y18 MCStatBin36y18 MCStatBin9y18 MCStatBin4y18 MCStatBin31y18 MCStatBin41y18 MCStatBin17y18 MCStatBin35y18 MCStatBin56y18 MCStatBin21y18
 RFscales1718 group = REFAC1718 alphaS1718 RENORM1718 FAC1718
 emucostrws1718 group = emucostrw1b1718 emucostrw4b1718 emucostrw2b1718 emucostrw3b1718
 pdfs group = pdf13 pdf14 pdf15 pdf34 pdf18 pdf17 pdf21 pdf20 pdf23 pdf22 pdf25 pdf24 pdf27 pdf26 pdf29 pdf28 pdf49 pdf48 pdf43 pdf42 pdf41 pdf40 pdf47 pdf60 pdf45 pdf44 pdf54 pdf35 pdf33 pdf19 pdf31 pdf30 pdf8 pdf9 pdf2 pdf3 pdf1 pdf6 pdf7 pdf4 pdf5 pdf32 pdf55 pdf56 pdf57 pdf50 pdf37 pdf52 pdf53 pdf10 pdf36 pdf12 pdf39 pdf58 pdf59 pdf16 pdf46 pdf11 pdf51 pdf38
-elIDs group = elIDBARPT elIDENDPT
-elHLTs18 group = elHLTENDPT18 elHLTBARPT18
 elfakesrws18 group = elfakesrw2b18 elfakesrw3b18 elfakesrw1b18 elfakesrw4b18
+elHLTs18 group = elHLTENDPT18 elHLTBARPT18
 Y18 autoMCStats 1 0 1
