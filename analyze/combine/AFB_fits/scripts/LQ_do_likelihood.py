@@ -2,9 +2,9 @@
 from LQ_utils import *
 import ROOT
 from ROOT import *
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from array import array
-#plt.ioff()
+plt.ioff()
 
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")

@@ -122,7 +122,7 @@ def plotLimits(channel):
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--mLQ",  default=1000, type='int', help="mLQ")
 parser.add_option("--vec",  default=False, help="is vec?")
-parser.add_option("-o", "--odir", default="LQ_cards/condor/", help = "output directory")
+parser.add_option("-o", "--odir", default="LQ_cards/", help = "output directory")
 parser.add_option("--chan",  default="ee", help="channel ee or mumu ")
 parser.add_option("--q",  default="u", help=" channel u,d,c,s ")
 parser.add_option("--ending",  default="102022", help=" date ")
