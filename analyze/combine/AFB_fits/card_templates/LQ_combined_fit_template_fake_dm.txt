@@ -17,11 +17,11 @@ process                  alpha   fpl     fmn     top      db      gam      qcd		
 process                  1      2       3      4        5      6        7       8        -1        -2		
 rate                     -1      -1      -1      -1       -1      -1       -1		-1       -1        -1		
 ---------------------------------------------------------------------------------------------------------------------------------------
-dy_xsecYR         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -		
+dy_xsec         lnN     1.03   1.03    1.03      -        -        -       -		1.03      -       -		
 db_xsec         lnN      -       -        -      -       1.05      -       -		-         -       -			
 top_xsec	lnN      -       -        -    1.05       -        -       -		-         -       -			
 gam_xsec        lnN      -       -        -      -        -       1.05     - 		-         -       -       	
-nlo_sysYR         lnN      -       -        -      -        -        -       -            -        NLO_SYS4    NLO_SYS2
+nlo_sys         lnN      -       -        -      -        -        -       -            -        NLO_SYS4    NLO_SYS2
 
 muFakesYR       lnN      -       -        -      -        -       -       1.5		-         -       -		
 
