@@ -1,9 +1,9 @@
 Combination of Y18=cards/combined_fit_y18_LQ.txt
 imax 1 number of bins
 jmax 9 number of processes minus 1
-kmax 118 number of nuisance parameters
+kmax 124 number of nuisance parameters
 ----------------------------------------------------------------------------------------------------------------------------------
-shapes *    Y18  cards/LQm1000_48bins_templates18_020923.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
+shapes *    Y18  cards/LQm1000_merge_templates18_020923.root LQ/ee18_$PROCESS LQ/ee18_$PROCESS_$SYSTEMATIC
 ----------------------------------------------------------------------------------------------------------------------------------
 bin          Y18  
 observation  -1   
@@ -36,7 +36,13 @@ MCStatBin41y18          shape        1.0           1.0           1.0           -
 MCStatBin42y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 MCStatBin43y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 MCStatBin44y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin49y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 MCStatBin4y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin50y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin51y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin55y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin56y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
+MCStatBin57y18          shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 MCStatBin9y18           shape        1.0           1.0           1.0           -             -             1.0           -             -             -             1.0         
 Pu                      shape        1.0           1.0           1.0           1.0           1.0           1.0           1.0           1.0           -             1.0         
 REFAC1718               shape        1.0           1.0           1.0           -             -             1.0           -             1.0           -             1.0         
@@ -133,9 +139,11 @@ prefire18               shape        1.0           1.0           1.0           1
 top_xsec                lnN          -             -             -             1.05          -             -             -             -             -             -           
 elRECOs group = elRECOBARPT elRECOENDPT
 elScales18 group = elScaleGain18 elScaleSyst elSmear elScaleStat18
+MCStatBin18 group = MCStatBin16y18 MCStatBin30y18 MCStatBin42y18 MCStatBin37y18 MCStatBin24y18 MCStatBin51y18 MCStatBin2y18 MCStatBin11y18 MCStatBin29y18 MCStatBin3y18 MCStatBin10y18 MCStatBin1y18 MCStatBin15y18 MCStatBin43y18 MCStatBin23y18 MCStatBin44y18 MCStatBin55y18 MCStatBin57y18 MCStatBin50y18 MCStatBin22y18 MCStatBin49y18 MCStatBin36y18 MCStatBin9y18 MCStatBin4y18 MCStatBin31y18 MCStatBin41y18 MCStatBin17y18 MCStatBin35y18 MCStatBin56y18 MCStatBin21y18
 RFscales1718 group = REFAC1718 alphaS1718 RENORM1718 FAC1718
 emucostrws1718 group = emucostrw1b1718 emucostrw4b1718 emucostrw2b1718 emucostrw3b1718
 pdfs group = pdf13 pdf14 pdf15 pdf34 pdf18 pdf17 pdf21 pdf20 pdf23 pdf22 pdf25 pdf24 pdf27 pdf26 pdf29 pdf28 pdf49 pdf48 pdf43 pdf42 pdf41 pdf40 pdf47 pdf60 pdf45 pdf44 pdf54 pdf35 pdf33 pdf19 pdf31 pdf30 pdf8 pdf9 pdf2 pdf3 pdf1 pdf6 pdf7 pdf4 pdf5 pdf32 pdf55 pdf56 pdf57 pdf50 pdf37 pdf52 pdf53 pdf10 pdf36 pdf12 pdf39 pdf58 pdf59 pdf16 pdf46 pdf11 pdf51 pdf38
-elfakesrws18 group = elfakesrw2b18 elfakesrw3b18 elfakesrw1b18 elfakesrw4b18
+elIDs group = elIDBARPT elIDENDPT
 elHLTs18 group = elHLTENDPT18 elHLTBARPT18
+elfakesrws18 group = elfakesrw2b18 elfakesrw3b18 elfakesrw1b18 elfakesrw4b18
 Y18 autoMCStats 1 0 1

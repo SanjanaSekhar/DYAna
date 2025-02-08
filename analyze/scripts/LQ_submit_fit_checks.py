@@ -100,42 +100,42 @@ if options.limits:
     #"python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
     #"python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
     #"python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
-    #"python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
-    #"python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
+    "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
  
     ]
 
     labels = [
         #"limits_ee_u","limits_ee_d","limits_mumu_u","limits_mumu_d",
-        #"limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec",
-        #"limits_mumu_d_vec"
+        #"limits_ee_u_vec","limits_ee_d_vec","limits_mumu_u_vec","limits_mumu_d_vec"
         #"limits_ee_s","limits_mumu_s",
-        #"limits_ee_d_vec","limits_mumu_d_vec"
-	"limits_mumu_u_vec_HybridNew"
+        "limits_ee_d_vec","limits_mumu_d_vec"
+	#"limits_mumu_u_vec_HybridNew"
     ]
     
     year = -1
-    cpy_cmd = "xrdcp -f limits_HybridNew/* $1 \n"
+    cpy_cmd = "xrdcp -f limits/* $1 \n"
 
     for i,cmd in enumerate(cmds):
-	   for m in [2500]:
-	   	for point in np.arange(0.01,0.05,0.005):
-	    		for ite in range(0,10):
-            			#regular templates
-            			script_name = "scripts/script3.sh"
-            			print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
-            			script_file = open(script_name, 'a+')
-            			script_file.write("mkdir limits_HybridNew\n")
-            			script_file.write(cmd+" --HybridNew true --mLQ %i --year %i --inject_yLQ2 %.5f --ntoys 20 --iterations 1 \n"%(m,year,point))
-            			script_file.write(cpy_cmd)
-            			script_file.close()
-            			#print_and_do("cat %s" % script_name)
-            			print_and_do("chmod +x %s" % script_name)
-            			#print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_y%i_%s"  % (n_m_bins, script_name, labels[i], m, year-2000, date))
+	   for m in range(1000,5500,500):
+		for year in [-1,2016,2017,2018]:
+	   		#for point in np.arange(0.01,0.05,0.005):
+	   		#for ite in range(0,10):
+           		#regular templates
+            		script_name = "scripts/script3.sh"
+            		print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
+            		script_file = open(script_name, 'a+')
+            		script_file.write("mkdir limits\n")
+            		script_file.write(cmd+"  --mLQ %i --year %i \n"%(m,year))
+            		script_file.write(cpy_cmd)
+            		script_file.close()
+            		#print_and_do("cat %s" % script_name)
+            		print_and_do("chmod +x %s" % script_name)
+            		print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_m%i_y%i_%s"  % (n_m_bins, script_name, labels[i], m, year-2000, date))
             			
-				print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename -s %s -n %s_m%i_p%.5f_%i"% (n_m_bins, script_name, labels[i], m, point, ite))
-				print_and_do("rm scripts/script3.sh")
+			#print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename -s %s -n %s_m%i_p%.5f_%i"% (n_m_bins, script_name, labels[i], m, point, ite))
+			print_and_do("rm scripts/script3.sh")
 
 if options.gof:
 
@@ -320,21 +320,24 @@ if options.likelihood:
     cmds = [
   
     
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u  -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d  -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u --vec true -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u  -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d  -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u --vec true -o likelihood_scans ",
     "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d --vec true -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u  -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d  -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u --vec true -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u  -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d  -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u --vec true -o likelihood_scans ",
     "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d --vec true -o likelihood_scans ",
  
     ]
 
     labels = [
-     "likelihood_ee_u","likelihood_ee_d",
-     "likelihood_ee_u_vec","likelihood_ee_d_vec",
-     "likelihood_mumu_u","likelihood_mumu_d","likelihood_mumu_u_vec","likelihood_mumu_d_vec"
+     #"likelihood_ee_u","likelihood_ee_d",
+     #"likelihood_ee_u_vec",
+     "likelihood_ee_d_vec",
+     #"likelihood_mumu_u","likelihood_mumu_d",
+     #"likelihood_mumu_u_vec",
+     "likelihood_mumu_d_vec"
     ]
 
 
@@ -344,8 +347,8 @@ if options.likelihood:
  
     #["muISOBAR17", "muISOEND17","muIDEND17","muIDBAR17", "mufakesrw1b17", "mufakesrw2b17", "mufakesrw3b17", "mufakesrw4b17", "muISOBAR16", "muISOEND16","muIDEND16","muIDBAR16", "mufakesrw1b18", "mufakesrw2b18", "mufakesrw3b18", "mufakesrw4b18"]
     #poi_list = ["elScaleStat16", "elSmear", "elScaleGain16", "elScaleSyst","elScaleStat17","elScaleGain17","elScaleGain18", "elScaleStat17"]
-    #poi_list = ["elIDENDPT", "elIDBARPT"]
-    poi_list=["RENORM16", "alphaS16", "REFAC16", "FAC16","REFAC1718", "RENORM1718", "FAC1718", "alphaS1718"]
+    poi_list = ["yLQ2"]
+    #poi_list=["RENORM16", "alphaS16", "REFAC16", "FAC16","REFAC1718", "RENORM1718", "FAC1718", "alphaS1718"]
     '''
     poi_list = ["MCStatBin1", "MCStatBin2", "MCStatBin3", "MCStatBin4", "MCStatBin9", "MCStatBin10",
      "MCStatBin11", "MCStatBin15", "MCStatBin16", "MCStatBin17", "MCStatBin21", "MCStatBin22", "MCStatBin23",
@@ -362,7 +365,7 @@ if options.likelihood:
         poi_list.append("prop_binY18_bin" + str(i))
     '''
     for poi in poi_list:
-        for year in [-1]:
+        for year in [-1,2016,2017,2018]:
            for i,cmd in enumerate(cmds):
                #for m in range(1000,9500,500):
                #for point in np.arange(0.28,1.5,0.005):
