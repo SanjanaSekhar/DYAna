@@ -72,7 +72,7 @@ elIDBARPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       
 elIDENDPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 #elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPTYR elIDENDPTYR
+elIDsYR group = elIDBARPTYR elIDENDPTYR
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
@@ -82,12 +82,12 @@ elRECOENDPT   	shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1
 
 elRECOs group = elRECOBARPT elRECOENDPT
 
-alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
-FACYRC               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
-REFACYRC             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+alphaSYR            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+RENORMYR            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
+FACYR               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
+REFACYR             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 
-RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
+RFscalesYR group = alphaSYR RENORMYR FACYR REFACYR
                                                                                                                                   
 #emu cost reweighting                                                                                                 
 emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        

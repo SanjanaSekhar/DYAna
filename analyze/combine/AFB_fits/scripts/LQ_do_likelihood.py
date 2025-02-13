@@ -19,7 +19,8 @@ parser.add_option("--ending", default = '013125', type='string', help="ending st
 parser.add_option("--statuncs", default = False,  help="freeze allConstrainedNuisances")
 parser.add_option("--noSymMCStats", default = True, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--gen_level",  default=False, action="store_true", help="gen level fits")
-#parser.add_option("--fake_data",  default=True, action="store_true", help="Use fit template without any shape systematics and no fakes")
+parser.add_option("--freezeParameters",  default=None, type="string",  help="freeze parameters")
+parser.add_option("--freezeNuisanceGroups",  default=None, type="string", help="freeze nuisance groups")
 parser.add_option("--no_LQ",  default=False, action="store_true", help="For sanity check purposes remove LQ temps")
 parser.add_option("-o", "--odir", default="likelihood_scans/", help = "output directory")
 (options, args) = parser.parse_args()
@@ -63,10 +64,8 @@ ending = options.ending
 #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
 
-
-if options.chan=="ee": extra_params = " --freezeNuisanceGroups %s"%("elfakesrws%s"%(year-2000) if year!=-1 else "elfakesrws16,elfakesrws17,elfakesrws18")
-else: extra_params = " --freezeNuisanceGroups %s"%("mufakesrws%s"%(year-2000) if year!=-1 else "mufakesrws16,mufakesrws17,mufakesrws18")
-extra_params += ",%s " %("MCStatBin%s"%(year-2000) if year!=-1 else "MCStatBin16,MCStatBin17,MCStatBin18")
+if options.freezeParameters: extra_params += " --freezeParameters %s "%(options.freezeParameters)
+if options.freezeNuisanceGroups: extra_params += " --freezeNuisanceGroups %s "%(options.freezeNuisanceGroups)
     
 fit_name = options.chan
 if(options.no_sys): 
@@ -111,16 +110,16 @@ if options.plot:
         for options.year in [-1,2016,2017,2018]:
             # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
 	    # like_scan_2018_mumu_d_vec_m2500_yLQ2.txt
-            label = "expected_freezeMCStats_%i_" % options.year
+            label = "expected_%s_%i_" % (options.ending,options.year)
             # #label = "%i_" % options.year
             # #is_vec = True
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
-                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            label = "freezeMCStats_%i_" % options.year
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, options.ending, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+            label = "%s_%i_" % (options.ending,options.year)
             # #is_vec = False
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
-                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            label = "freezeMCStats_%i_" % options.year
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, options.ending, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+            label = "%s_%i_" % (options.ending,options.year)
             respull = []
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
                 for line in f.readlines():
@@ -129,7 +128,7 @@ if options.plot:
             respull = np.asarray(respull, dtype=float)
             poi_list = respull[:,0].tolist()
             deltaNLL = respull[:,1].tolist()
-            label = "expected_freezeMCStats_%i_" % options.year
+            label = "expected_%s_%i_" % (options.ending,options.year)
             respull = []
             #is_vec = True
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
@@ -161,7 +160,7 @@ else:
     workspace="workspaces/%s_LQ.root" % (options.chan)
     make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = True)
     
-    label = "expected_freezeMCStats_%i_" % options.year
+    label = "expected_%s_%i_" % (options.ending,options.year)
     combine_cmd = "combine %s -M MultiDimFit  --algo grid --points 60  --autoRange 10 --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s -t -1 --toysFrequentist" %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p
@@ -170,7 +169,7 @@ else:
     f = ROOT.TFile.Open("higgsCombineTest.MultiDimFit.%s%s_%s_%s.root"%(label,poi[0],options.chan,options.q),"READ")
     save_likelihoods(f,label)
     
-    label = "freezeMCStats_%i_" % options.year
+    label = "%s_%i_" % (options.ending,options.year)
     combine_cmd = "combine %s -M MultiDimFit --forceRecreateNLL --algo grid --points 60  --autoRange 10  --floatOtherPOIs 1   --saveWorkspace --saveFitResult --robustFit 1  %s " %(workspace, extra_params)
     for p in poi:
         combine_cmd+=" -P %s "%p

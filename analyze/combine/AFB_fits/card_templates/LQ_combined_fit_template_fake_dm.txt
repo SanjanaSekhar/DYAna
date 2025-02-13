@@ -64,12 +64,12 @@ muISOSYS     shape      1.0     1.0     1.0    1.0      1.0    1.0      -       
 muIDsYR group  = muIDBARYR muISOBARYR muIDENDYR muISOENDYR muIDSYS muISOSYS
 muHLTsYR group = muHLTBARYR muHLTENDYR
                                                                                                                                   
-alphaSYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
-RENORMYRC            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
-FACYRC               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
-REFACYRC             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+alphaSYR            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
+RENORMYR            shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0        
+FACYR               shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0       
+REFACYR             shape    1.0     1.0     1.0      -        -      -     -      1.0     1.0     1.0     
 
-RFscalesYRC group = alphaSYRC RENORMYRC FACYRC REFACYRC
+RFscalesYR group = alphaSYR RENORMYR FACYR REFACYR
                                                                                                                                   
 #emu cost reweighting                                                                                                 
 emucostrw1bYRC        shape    -       -        -     1.0      1.0     -      -       -       -       -        
