@@ -24,6 +24,8 @@ parser.add_option("--no_LQ",  default=False, action="store_true", help="For sani
 parser.add_option("-o", "--odir", default="likelihood_scans/", help = "output directory")
 (options, args) = parser.parse_args()
 
+year = options.year
+
 def save_likelihoods(f,label):
     deltaNLL, poi_list = [],[]
 
@@ -60,10 +62,11 @@ ending = options.ending
 
 #extra_params += " --cminApproxPreFitTolerance 1.0 --cminDefaultMinimizerTolerance 0.5 --cminDefaultMinimizerStrategy 0 "
 if statuncs: extra_params += " --freezeParameters allConstrainedNuisances"
-extra_params += " --freezeNuisanceGroups %s"%("MCStatBin%s"%(options.year-2000) if options.year!=-1 else "MCStatBin16,MCStatBin17,MCStatBin18")
-#if options.chan == "ee": extra_params = "--freezeNuisanceGroups elIDs,elScales%s --freezeParameters dy_xsec,nlo_sys "%(options.year-2000)
-#else: extra_params = "--freezeNuisanceGroups RFscales%s --freezeParameters dy_xsec,nlo_sys "%("16" if options.year==2016 else "1718")
 
+
+if options.chan=="ee": extra_params = " --freezeNuisanceGroups %s"%("elfakesrws%s"%(year-2000) if year!=-1 else "elfakesrws16,elfakesrws17,elfakesrws18")
+else: extra_params = " --freezeNuisanceGroups %s"%("mufakesrws%s"%(year-2000) if year!=-1 else "mufakesrws16,mufakesrws17,mufakesrws18")
+extra_params += ",%s " %("MCStatBin%s"%(year-2000) if year!=-1 else "MCStatBin16,MCStatBin17,MCStatBin18")
     
 fit_name = options.chan
 if(options.no_sys): 

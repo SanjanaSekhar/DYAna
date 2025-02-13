@@ -67,12 +67,12 @@ elHLTENDPTYR   	 shape    1.0     1.0     1.0     1.0      1.0    1.0    -      
 
 elHLTsYR group = elHLTENDPTYR  elHLTBARPTYR   
 
-#elIDBARPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-#elIDENDPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
-elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDBARPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDBARPT   	  shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+elIDENDPTYR     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
+#elIDENDPT      shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
 
-elIDs group = elIDBARPT elIDENDPT
+elIDs group = elIDBARPTYR elIDENDPTYR
 #elIDs group =  elIDENDPTHIGH elIDENDPTLOW
 
 elRECOBARPT     shape    1.0     1.0     1.0     1.0      1.0    1.0    -       1.0      1.0      1.0    
