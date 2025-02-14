@@ -133,6 +133,8 @@ parser.add_option("--iterations",  default=1, type='int', help="no of iterations
 parser.add_option("--hadd",  default=False, help="hadd")
 parser.add_option("--HybridNew",  default=False, help="use HybridNew instead of AsymptoticLimits")
 parser.add_option("--year",  default=-1,type='int', help="year")
+parser.add_option("--freezeParameters",  default=None, type="string",  help="freeze parameters")
+parser.add_option("--freezeNuisanceGroups",  default=None, type="string", help="freeze nuisance groups")
 (options, args) = parser.parse_args()
 
 
@@ -264,10 +266,8 @@ else:
 	#	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -s -1 --singlePoint %.4f -n _%s%s_%i"%(workspace,mass,pt,channel,("_vec" if is_vec else ""),mass))
 	#print_and_do("hadd LQ_cards/%s/%i/limits_%s%s_%i.root higgsCombine_%s%s_%i*.AsymptoticLimits.*"%(channel,mass,channel,("_vec" if is_vec else ""),mass,channel,("_vec" if is_vec else ""),mass))
 	#extra_arg = "--freezeParameters allConstrainedNuisances"
-	if options.chan=="ee": extra_arg = " --freezeNuisanceGroups %s"%("elfakesrws%s"%(year-2000) if year!=-1 else "elfakesrws16,elfakesrws17,elfakesrws18")
-	else: extra_arg = " --freezeNuisanceGroups %s"%("mufakesrws%s"%(year-2000) if year!=-1 else "mufakesrws16,mufakesrws17,mufakesrws18")
-	extra_arg += ",%s " %("MCStatBin%s"%(year-2000) if year!=-1 else "MCStatBin16,MCStatBin17,MCStatBin18") 
-	
+	if options.freezeParameters: extra_arg += " --freezeParameters %s "%(options.freezeParameters)
+	if options.freezeNuisanceGroups: extra_arg += " --freezeNuisanceGroups %s "%(options.freezeNuisanceGroups)	
 	print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run observed %s "%(workspace,mass,extra_arg)) 
         print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run blind %s "%(workspace,mass,extra_arg))
 	#print_and_do("combineTool.py -d %s -M AsymptoticLimits  -m %i -n .limit --there -s -1 --run expected"%(workspace,mass))
