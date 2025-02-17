@@ -127,7 +127,7 @@ if options.plot:
 
             respull = np.asarray(respull, dtype=float)
             poi_list = respull[:,0].tolist()
-            deltaNLL = respull[:,1].tolist()
+            deltaNLL = (2*respull[:,1]).tolist()
             label = "expected_%s_%i_" % (options.ending,options.year)
             respull = []
             #is_vec = True
@@ -137,7 +137,7 @@ if options.plot:
 
             respull = np.asarray(respull, dtype=float)
             poi_list_exp = respull[:,0].tolist()
-            deltaNLL_exp = respull[:,1].tolist()
+            deltaNLL_exp = (2*respull[:,1]).tolist()
 
             plt.xlim(-0.5,1)
             plt.ylim(0,10)          
@@ -146,7 +146,7 @@ if options.plot:
             plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[1],linestyle='dashed',c='g',label=r'$1\sigma$')
             plt.plot(poi_list+poi_list_exp,len(poi_list+poi_list_exp)*[2.7],linestyle='dashed',c='r',label=r'$2\sigma$')
             plt.xlabel("%s"%poi)
-            plt.ylabel(r"2\Delta NLL")
+            plt.ylabel("2 * delta NLL")
             plt.legend()
             plt.title("Likelihood Scan: channel %s %s, mLQ = %i GeV, %s"%(options.chan,options.q,mLQ,(options.year if options.year > 0 else "2016,2017,2018")))
             plt.savefig("%s/like_scan_%s_%s%s_m%s_%s_cmp.jpg"%(options.odir,options.chan,options.q,("_vec" if is_vec else ""), mLQ,label))
