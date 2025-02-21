@@ -113,12 +113,12 @@ if options.plot:
             label = "expected_%s_%i_" % (options.ending,options.year)
             # #label = "%i_" % options.year
             # #is_vec = True
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
-                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, options.ending, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi,  label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
             label = "%s_%i_" % (options.ending,options.year)
             # #is_vec = False
-            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
-                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi, options.ending, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
+            print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
+                     %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi,  label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
             label = "%s_%i_" % (options.ending,options.year)
             respull = []
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
