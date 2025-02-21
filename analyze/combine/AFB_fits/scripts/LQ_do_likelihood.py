@@ -15,7 +15,7 @@ parser.add_option("--vec",  default=False, action="store_true", help="vec")
 parser.add_option("-y", "--year", default = -1, type='int', help="Only do fits for this single year (2016,2017, or 2018), default is all years")
 parser.add_option("--mLQ", default = 2500, type='int', help="LQ mass")
 parser.add_option("--poi", default = 'yLQ2', type='string', help="poi to run the likelihood_scan")
-parser.add_option("--ending", default = '013125', type='string', help="ending string")
+parser.add_option("--ending", default = "", type='string', help="ending string")
 parser.add_option("--statuncs", default = False,  help="freeze allConstrainedNuisances")
 parser.add_option("--noSymMCStats", default = True, action="store_true",  help="Don't add constraints to mcStat nuisances")
 parser.add_option("--gen_level",  default=False, action="store_true", help="gen level fits")
@@ -110,17 +110,20 @@ if options.plot:
         for options.year in [-1,2016,2017,2018]:
             # like_scan_expected_2016_mumu_d_vec_m2500_yLQ2.txt
 	    # like_scan_2018_mumu_d_vec_m2500_yLQ2.txt
-            label = "expected_%s_%i_" % (options.ending,options.year)
+            #label = "expected_%s_%i_" % (options.ending,options.year)
+	    label = "expected_%i_" % (options.year)
             # #label = "%i_" % options.year
             # #is_vec = True
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
                      %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi,  label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            label = "%s_%i_" % (options.ending,options.year)
+            #label = "%s_%i_" % (options.ending,options.year)
+	    label = "%i_" % (options.year)
             # #is_vec = False
             print_and_do("xrdcp -f root://cmseos.fnal.gov//store/user/ssekhar/Condor_outputs/likelihood_%s_%s%s_%s_%s/like_scan_%s%s_%s%s_m%s_%s.txt %s"
                      %(options.chan, options.q, ("_vec" if is_vec else ""),  options.year, poi,  label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi, options.odir))
-            label = "%s_%i_" % (options.ending,options.year)
-            respull = []
+            #label = "%s_%i_" % (options.ending,options.year)
+            label = "%i_" % (options.year)
+	    respull = []
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
                 for line in f.readlines():
                     respull.append(line.split(' '))
@@ -128,7 +131,8 @@ if options.plot:
             respull = np.asarray(respull, dtype=float)
             poi_list = respull[:,0].tolist()
             deltaNLL = (2*respull[:,1]).tolist()
-            label = "expected_%s_%i_" % (options.ending,options.year)
+            #label = "expected_%s_%i_" % (options.ending,options.year)
+	    label = "expected_%i_" % (options.year)
             respull = []
             #is_vec = True
             with open('%s/like_scan_%s%s_%s%s_m%i_%s.txt'%(options.odir, label, options.chan, options.q, ("_vec" if is_vec else ""), mLQ, poi), 'r') as f:
