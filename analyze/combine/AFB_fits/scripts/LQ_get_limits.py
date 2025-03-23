@@ -108,7 +108,7 @@ def plotLimits(channel):
      # Adjust the y-axis range such that the maximum graph value sits 25% below
      # the top of the frame. Fix the minimum to zero.
     #FixBothRanges(pads[0], 0, 0, GetPadYMax(pads[0]), 0.25)
-    FixBothRanges(pads[0], 0, 0, 2.3, 0.25)
+    FixBothRanges(pads[0], 0, 0, 7, 0.25)
      
      
 # Standard CMS logo
@@ -280,17 +280,18 @@ else:
         print_and_do("cp LQ_cards/%s/%i/limits_%s.json %s/limits_%s_m%i.json"%(channel,mass,channel,options.odir,channel,mass))
     
     else:
-        #options.ntoys = 10
-        #options.iterations = 1
-        #for options.inject_yLQ2 in np.linspace(0.01, 0.05, 10):
- 
-        print_and_do("combineTool.py %s -M HybridNew  --LHCmode LHC-limits -m %i --clsAcc 0 --singlePoint %f -s -1  -T %i -i %i --saveHybridResult -n .approval"
-        %(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations))
+        options.ntoys = 100
+        options.iterations = 2
+        for options.inject_yLQ2 in np.linspace(0.55, 1.5, 10):
+ 		
+        	print_and_do("combineTool.py %s -M HybridNew  --LHCmode LHC-limits -m %i --clsAcc 0 --singlePoint %f -s -1  -T %i -i %i --saveHybridResult -n .approval"
+        	%(workspace,mass,options.inject_yLQ2,options.ntoys,options.iterations))
+		
 	#print_and_do("hadd merged.root *.approval*")
 	#print_and_do("combineTool.py %s -M HybridNew  --LHCmode LHC-limits --readHybridResults --grid=merged.root"%(workspace))        
         #print_and_do("combineTool.py %s -M HybridNew -H AsymptoticLimits --LHCmode LHC-limits -m %i  -s -1  --saveHybridResult -v 2"
 	#	%(workspace,mass))
-	print_and_do("cp *.approval* %s"%(options.odir))
+	#print_and_do("cp *.approval* %s"%(options.odir))
    
 
 

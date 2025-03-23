@@ -4,7 +4,7 @@ import ROOT
 from ROOT import *
 #import matplotlib.pyplot as plt
 from array import array
-
+import json, csv
 
 parser = OptionParser(usage="usage: %prog [options] in.root  \nrun with --help to get list of options")
 parser.add_option("--chan",  default="combined", type="string", help="What channels to run the fit over (combined, ee, or mumu)")
@@ -23,9 +23,9 @@ parser.add_option("--gen_level",  default=False, action="store_true", help="gen 
 
 
 
-for y in [-1,2016,2017,2018]:
+for y in [-1]:
 #for y in [-1]:
-    for options.chan in ["mumu"]:
+    for options.chan in ["ee"]:
     #for options.chan in ["ee","mumu"]:
         for options.q in ["d"]:
             mLQ_list = [2500]
@@ -78,14 +78,14 @@ for y in [-1,2016,2017,2018]:
                 make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 
                 print("\n plotdir = ", plotdir)
-
+		
 		print_and_do("rm -r %s" % (plotdir))
                 print_and_do("mkdir %s" % (plotdir))
                 if not statuncs:
-		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456 " %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456 --robustHesse 1" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
                 else:
-		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456" %(workspace, extra_params))
-		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456")
+		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456 --robustHesse 1" %(workspace, extra_params))
+		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456 --robustHesse 1")
                 
 		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
                 if(not statuncs):
@@ -99,7 +99,7 @@ for y in [-1,2016,2017,2018]:
                     print_and_do("python scripts/my_diffNuisances.py multidimfit.%s_%s%s_%i.root --multidim --mLQ %i --prefit fitDiagnosticsTest.root -p yLQ2 --skipFitB -g %s" % (options.chan,options.q,("_vec" if is_vec else ""),options.year,mLQ, plotdir))
                     print_and_do("mv %s_fit_shapes_LQ.root %s" %(fit_name, plotdir))
                     #if(not options.no_cleanup): print_and_do("rm fitDiagnosticsTest.root higgsCombineTest.FitDiagnostics.mH120.root")
-
+		
 	        if not statuncs: f = ROOT.TFile.Open("multidimfit.%s_%s%s_%i.root"%(options.chan,options.q,("_vec" if is_vec else ""),options.year), 'READ')
 		else: f = ROOT.TFile.Open("multidimfitTest.root",'READ')
                 fit_mdf = f.Get("fit_mdf")
@@ -115,6 +115,20 @@ for y in [-1,2016,2017,2018]:
 		p = [A0.getErrorHi(), A4.getErrorHi(), yLQ2.getErrorHi()]
 		lohi_results = np.vstack((c,m,p)).T	
 		np.savetxt("%s/results_%s_m%i.txt"%(plotdir,fit_name,mLQ),lohi_results)
+		
+		sys_l = []
+		for name in ["dy_xsec16","dy_xsec17","dy_xsec18","nlo_sys16","nlo_sys17","nlo_sys18","alphaS16","alphaS17","alphaS18","FAC16","FAC17","FAC18","REFAC16","REFAC17","REFAC18","RENORM16","RENORM17","RENORM18"]:#,"elIDBARPT16","elIDBARPT17","elIDBARPT18","elIDENDPT16","elIDENDPT17","elIDENDPT18","elScaleGain16","elScaleGain17","elScaleGain18","elScaleStat16","elScaleStat17","elScaleStat18"]:
+			idx = a.index(name) 
+			sys = a.at(idx)
+			sys_l.append([name,np.round(sys.getErrorLo(),decimals=3), np.round(sys.getValV(),decimals=3), np.round(sys.getErrorHi(),decimals=3)])
+		
+		#sys_results = np.array(sys_l)
+		print(sys_l)
+		
+		filepath = "%s/systematics_%s_m%i.csv"%(plotdir,fit_name,mLQ)
+		with open(filepath,"w") as file:
+			writer = csv.writer(file, delimiter=" ")
+			writer.writerows(sys_l)
 		f.Close()
 		
                 #print_and_do("""echo "fit_mdf->Print();" > cmd.txt""")
