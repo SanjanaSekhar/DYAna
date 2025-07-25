@@ -506,7 +506,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data, TH1F *h_LQ, TH1F
     h_stack->GetXaxis()->SetTickLength(0.06);
     h_stack->GetXaxis()->SetTitle(xlabel);
     h_stack->GetXaxis()->SetTitleSize(TS);
-    h_stack->GetXaxis()->SetTitleOffset(rTOffset + 0.55);
+    h_stack->GetXaxis()->SetTitleOffset(rTOffset + 0.65);
     h_stack->GetXaxis()->SetLabelSize(LS);
 
     
@@ -546,7 +546,7 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data, TH1F *h_LQ, TH1F
     h_ratio->GetXaxis()->SetTickLength(0.06);
     h_ratio->GetXaxis()->SetTitle(xlabel);
     h_ratio->GetXaxis()->SetTitleSize(TS+0.1);
-    h_ratio->GetXaxis()->SetTitleOffset(rTOffset + 0.55);
+    h_ratio->GetXaxis()->SetTitleOffset(rTOffset + 0.7);
     h_ratio->GetXaxis()->SetLabelSize(LS+0.08);
     h_ratio->GetXaxis()->SetLabelOffset(0.04);
 

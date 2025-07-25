@@ -100,9 +100,9 @@ if options.limits:
     #"python scripts/LQ_get_limits.py --chan mumu --q u -o limits/ --ending %s "%date,
     #"python scripts/LQ_get_limits.py --chan mumu --q d -o limits/ --ending %s "%date,
     #"python scripts/LQ_get_limits.py --chan ee --q u --vec True -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --ending %s  "%date,
+    "python scripts/LQ_get_limits.py --chan ee --q d --vec True -o limits/ --freezeParameters nlo_sys%i,dy_xsec%i --freezeNuisanceGroups elIDs%i,elScales%i --ending %s  ",
     #"python scripts/LQ_get_limits.py --chan mumu --q u --vec True -o limits/ --ending %s "%date,
-    "python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --ending %s  "%date,
+    #"python scripts/LQ_get_limits.py --chan mumu --q d --vec True -o limits/ --freezeParameters nlo_sys%i,dy_xsec%i,RFscales%i --ending %s  ",
  
     ]
 
@@ -117,12 +117,13 @@ if options.limits:
     year = -1
     cpy_cmd = "xrdcp -f limits/* $1 \n"
 
-    for i,cmd in enumerate(cmds):
+    for year in [2016,2017,2018]:
 	   for m in range(1000,5500,500):
-		for year in [-1,2016,2017,2018]:
+		for i,cmd in enumerate(cmds):
+			cmd = cmd % (year-2000,year-2000,year-2000,year-2000,date)
 	   		#for point in np.arange(0.01,0.05,0.005):
 	   		#for ite in range(0,10):
-           		#regular templates
+			print(cmd)
             		script_name = "scripts/script3.sh"
             		print_and_do("cp scripts/LQ_combine_template.sh %s" % script_name)
             		script_file = open(script_name, 'a+')
@@ -323,13 +324,15 @@ if options.likelihood:
     #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u  -o likelihood_scans ",
     #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d  -o likelihood_scans ",
     #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q u --vec true -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d --vec true -o likelihood_scans ",
+    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan ee --q d --vec true -o likelihood_scans --freezeParameters nlo_sys%s,dy_xsec%s --freezeNuisanceGroups elIDs%s,elScales%s --ending %s",
     #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u  -o likelihood_scans ",
     #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d  -o likelihood_scans ",
     #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q u --vec true -o likelihood_scans ",
-    "python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d --vec true -o likelihood_scans ",
+    #"python scripts/LQ_do_likelihood.py --mLQ 2500 --chan mumu --q d --vec true -o likelihood_scans --freezeParameters nlo_sys%s,dy_xsec%s,RFscales%s --ending %s",
  
     ]
+    
+    # --freezeParameters nlo_sys16,nlo_sys17,nlo_sys18,dy_xsec16,dy_xsec17,dy_xsec18
 
     labels = [
      #"likelihood_ee_u","likelihood_ee_d",
@@ -365,8 +368,10 @@ if options.likelihood:
         poi_list.append("prop_binY18_bin" + str(i))
     '''
     for poi in poi_list:
-        for year in [-1,2016,2017,2018]:
+        for year in [2016,2017,2018]:
            for i,cmd in enumerate(cmds):
+	       cmd = cmd % (year-2000,year-2000,year-2000,year-2000,date)
+	       #else: cmd = cmd % (year-2000,date)
                #for m in range(1000,9500,500):
                #for point in np.arange(0.28,1.5,0.005):
                #for q in [0.025,0.16,0.5,0.84,0.975]:
@@ -380,5 +385,5 @@ if options.likelihood:
                script_file.close()
                #print_and_do("cat %s" % script_name)
                print_and_do("chmod +x %s" % script_name)
-               print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s_%s"  % (n_m_bins, script_name, labels[i], year,poi))
+               print_and_do("python LQ_doCondor.py --njobs %i --combine --sub --no_rename  -s %s -n %s_%s_%s_%s"  % (n_m_bins, script_name, labels[i], year, poi, date))
                print_and_do("rm scripts/script3.sh")

@@ -120,7 +120,7 @@ def submit_jobs(lofjobs):
         condor_file.write('Requirements = OpSys == "LINUX"&& (Arch != "DUMMY" )\n')
         #condor_file.write('request_disk = 500000\n') # modify these requirements depending on job
         #if(options.with_combine): 
-        condor_file.write('request_memory = 4000\n')
+        condor_file.write('request_memory = 10000\n')
         condor_file.write('request_cpus = 4\n')
         condor_file.write('Should_Transfer_Files = YES\n')
         condor_file.write("Transfer_Input_Files = %s, %s \n" %(script_location, sub_file))
@@ -146,8 +146,8 @@ if options.tar:
     if options.DY:
         print "Using DY tarball options"
         excludeList = ['LQ_Analysis/DYAna/analyze/input_files', 'LQ_Analysis/DYAna/analyze/condor_jobs', 'LQ_Analysis/DYAna/analyze/output_files', 'LQ_Analysis/DYAna/generator_stuff', 
-                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results', 'LQ_Analysis/DYAna/analyze/combine/LQ_cards',
-                       'LQ_Analysis/DYAna/analyze/combine/AFB_fits/postfit_plots','LQ_Analysis/DYAna/analyze/combine/AFB_fits/combine_review/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/gofs/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/gof_b_only/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/signal_injection/','LQ_Analysis/DYAna/analyze/combine/AFB_fits/impacts/' ,'LQ_Analysis/DYAna/analyze/combine/AFB_fits/likelihood_scans/']
+                       'LQ_Analysis/DYAna/test','LQ_Analysis/DYAna/plots','LQ_Analysis/DYAna/analyze/combine/AFB_fits/fit_results', 'LQ_Analysis/DYAna/analyze/combine/LQ_cards',
+                       'LQ_Analysis/DYAna/analyze/combine/AFB_fits/postfit_plots','LQ_Analysis/DYAna/analyze/combine/AFB_fits/combine_review','LQ_Analysis/DYAna/analyze/combine/AFB_fits/gofs','LQ_Analysis/DYAna/analyze/combine/AFB_fits/gof_b_only','LQ_Analysis/DYAna/analyze/combine/AFB_fits/signal_injection','LQ_Analysis/DYAna/analyze/combine/AFB_fits/impacts' ,'LQ_Analysis/DYAna/analyze/combine/AFB_fits/likelihood_scans',]
         options.tarname = "LQ_Analysis"
         for item in excludeList:
             #tar_cmd += " --exclude='`%s`' " % ("echo $CMSSW_BASE/src/" + item)
