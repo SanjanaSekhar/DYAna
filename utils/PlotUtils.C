@@ -399,10 +399,8 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data, TH1F *h_LQ, TH1F
     if(logy) c->SetLogy();
     if(logx) c->SetLogx();
 
-    h_LQ->Draw("hist ");
-    h_LQ_vec->Draw("hist  same");
 
-    h_stack->Draw("hist same");
+    h_stack->Draw("hist");
 
 
 
@@ -414,6 +412,11 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data, TH1F *h_LQ, TH1F
     if(logy) hmax *=1000;
     h_stack->SetMaximum(hmax);
     h_stack->SetMinimum(1e-3);
+
+
+    h_LQ->Draw("hist same");
+    h_LQ_vec->Draw("hist  same");
+
 
     if(draw_sys_unc){
         gStyle->SetHatchesLineWidth(2);
