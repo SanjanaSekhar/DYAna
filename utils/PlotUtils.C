@@ -315,7 +315,7 @@ TCanvas* make_ratio_plot(std::string title, TH1* h1, char h1_label[80], TH1* h2,
 }
 
 
-std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel, TString plot_label,
+std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data, TH1F *h_LQ, TH1F *h_LQ_vec, THStack *h_stack, TLegend *leg, TString label, TString xlabel,  TString ylabel, TString plot_label,
         float hmax =-1., bool logy = true, bool logx= false, bool draw_sys_unc = false, float ratio_range = 1.0, bool draw_chi2 = false, float hmin = -1.){
 
 
@@ -398,7 +398,11 @@ std::tuple<TCanvas*, TPad*> make_stack_ratio_plot(TH1F *h_data,  THStack *h_stac
     if(logx) pad1->SetLogx();
     if(logy) c->SetLogy();
     if(logx) c->SetLogx();
-    h_stack->Draw("hist");
+
+    h_LQ->Draw("hist ");
+    h_LQ_vec->Draw("hist  same");
+
+    h_stack->Draw("hist same");
 
 
 
