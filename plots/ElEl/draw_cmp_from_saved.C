@@ -359,9 +359,9 @@ void draw_cmp_from_saved(){
 leg1->AddEntry(dy_m, "DY ", "f");
 leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg1->AddEntry(top_m, "t#bar{t} + single t", "f");
-    leg1->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)");
+    leg1->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)","L");
     leg1->AddEntry(QCD_m, "W+jets + QCD", "f");
-    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)");
+    leg1->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)","L");
     leg1->SetTextSize(0.05);
 
 
@@ -369,18 +369,18 @@ leg1->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
 leg2->AddEntry(dy_m, "DY ", "f");
 leg2->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg2->AddEntry(top_m, "t#bar{t} + single t", "f");
-    leg2->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)");
+    leg2->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)","L");
     leg2->AddEntry(QCD_m, "W+jets + QCD", "f");
-    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)");
+    leg2->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)","L");
     leg2->SetTextSize(0.05);
 
     leg3->AddEntry(diboson_m, "WW + WZ + ZZ  ", "f");
 leg3->AddEntry(dy_m, "DY ", "f");
 leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
     leg3->AddEntry(top_m, "t#bar{t} + single t", "f");
-    leg3->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)");
+    leg3->AddEntry(LQu_m, "2.5 TeV S_{eu} (y_{eu}= 2.0)","L");
     leg3->AddEntry(QCD_m, "W+jets + QCD", "f");
-    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)");
+    leg3->AddEntry(LQu_vec_m, "2.5 TeV V_{eu} (g_{eu}= 1.0)","L");
     leg3->SetTextSize(0.05);
 
     leg1->SetX1NDC(0.7);
