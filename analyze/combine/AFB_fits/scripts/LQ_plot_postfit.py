@@ -280,7 +280,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				totlist[hist_index].SetMarkerSize(0.08)
 
 				totlist[hist_index].Draw('e2 same')
-
+				legends_list[hist_index].append((totlist[hist_index], "Sys. unc.", "f"))
 				if not dataOff:
 					legends_list[hist_index].append((hist,dataName,datastyle))
 					hist.Draw(datastyle+' same')
@@ -390,7 +390,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 					#chi2 += pull.GetBinContent(i)**2;
 				#print("Chi2/nbin for chan %s is %.1f/%i" % (titles[hist_index], chi2, pull.GetNbinsX()))
 
-				legends[hist_index].AddEntry(ratio_sys_unc, "Total fit unc.", "f")
+				#legends[hist_index].AddEntry(ratio_sys_unc, "Total fit unc.", "f")
 
 
 
@@ -431,7 +431,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				ratio_sys_unc.GetYaxis().SetLabelSize(LS)
 				ratio_sys_unc.GetYaxis().SetTitleSize(YTS)
 				ratio_sys_unc.GetYaxis().SetNdivisions(NDiv)
-				ratio_sys_unc.GetYaxis().SetTitle("Data / fit")
+				ratio_sys_unc.GetYaxis().SetTitle("Data / Exp.")
 
 				ratio_sys_unc.GetXaxis().SetRangeUser(0., hist.GetNbinsX()-.08)
 				ratio_sys_unc.GetXaxis().SetTitleOffset(1.5)
@@ -455,9 +455,10 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				ratio.Draw('p0e0Z same')
 				
 				line = TLine(0, 1.0, hist.GetNbinsX() - 0.08, 1.0)
-				line.SetLineStyle(9)
+				line.SetLineStyle(7)
+				line.SetLineWidth(2)
 				line.Draw()
-
+				'''
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
 					#l = TLine(line_x, ratio_range[0], line_x, ratio_range[1])
@@ -471,7 +472,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						l.SetLineWidth(3) 
 					l.Draw()
 					lines.append(l)
-
+				'''
 				if logy == True:
 					mains[hist_index].SetLogy()
 

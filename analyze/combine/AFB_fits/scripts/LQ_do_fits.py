@@ -75,7 +75,8 @@ for y in [-1]:
 		plotdir="postfit_plots/%s_LQ_m%i" % (fit_name,mLQ)
 		
                 workspace="workspaces/%s_LQ.root" % (options.chan)
-                make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
+                '''
+		make_workspace(workspace, options.gen_level, options.chan, options.q, is_vec, options.no_LQ, options.no_sys, options.fake_data, mLQ, year = options.year,noSymMCStats = options.noSymMCStats)
                 
                 print("\n plotdir = ", plotdir)
 		
@@ -83,10 +84,11 @@ for y in [-1]:
                 print_and_do("mkdir %s" % (plotdir))
                 if not statuncs:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1 --trackErrors yLQ2 %s  -n .%s_%s%s_%i -s 3456 --robustHesse 1" %(workspace, extra_params,options.chan,options.q,("_vec" if is_vec else ""),options.year))
-                else:
+                
+		else:
 		   print_and_do("combine %s -M MultiDimFit   --saveWorkspace --saveFitResult --robustFit 1  %s  -n .snapshot -s 3456 --robustHesse 1" %(workspace, extra_params))
 		   print_and_do("combine  -M MultiDimFit higgsCombine.snapshot.MultiDimFit.mH120.3456.root  --saveWorkspace --saveFitResult --robustFit 1  --freezeParameters allConstrainedNuisances --snapshotName MultiDimFit -s 3456 --robustHesse 1")
-                
+                '''
 		# higgsCombine.mumu_u_vec_2016.MultiDimFit.mH120.root
                 if(not statuncs):
                     print_and_do("PostFitShapesFromWorkspace -w higgsCombine.%s_%s%s_%i.MultiDimFit.mH120.3456.root -f multidimfit.%s_%s%s_%i.root:fit_mdf --postfit -o %s_fit_shapes_LQ.root --sampling --samples 100"
