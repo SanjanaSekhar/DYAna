@@ -422,7 +422,7 @@ leg3->AddEntry(gg_m, "#gamma#gamma #rightarrow ee", "f");
 
     float hmin = 0.001;
     sprintf(y_ax_label, "#LTEvents / GeV#GT");
-    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, LQu_m, LQu_vec_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, true, hmin);
+    std::tie(c_m, p_m) = make_stack_ratio_plot(data_m, LQu_m, LQu_vec_m, m_stack, leg1, "m", "m_{ee} (GeV)",y_ax_label, plot_label, hmax, logy, logx, draw_sys_uncs, ratio_range, false, hmin);
     //CMS_lumi(p_m, year, 11 );
     CMS_lumi(c_m, year, 11 );
     // p_m->cd();
