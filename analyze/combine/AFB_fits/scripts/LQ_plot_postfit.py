@@ -458,7 +458,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 				line.SetLineStyle(7)
 				line.SetLineWidth(2)
 				line.Draw()
-				'''
+				
 				for idx in range(len(line_vals)):
 					line_x = line_vals[idx] + line_eps
 					#l = TLine(line_x, ratio_range[0], line_x, ratio_range[1])
@@ -472,7 +472,7 @@ def makeCan(name, tag, histlist, bkglist=[],signals=[],totlist = [], colors=[],t
 						l.SetLineWidth(3) 
 					l.Draw()
 					lines.append(l)
-				'''
+				
 				if logy == True:
 					mains[hist_index].SetLogy()
 
